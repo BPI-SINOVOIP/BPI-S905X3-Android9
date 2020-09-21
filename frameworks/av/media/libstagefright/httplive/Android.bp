@@ -1,0 +1,55 @@
+cc_library {
+    name: "libstagefright_httplive",
+
+    srcs: [
+        "HTTPDownloader.cpp",
+        "LiveDataSource.cpp",
+        "LiveSession.cpp",
+        "M3UParser.cpp",
+        "PlaylistFetcher.cpp",
+    ],
+
+    include_dirs: [
+        "frameworks/av/media/libstagefright",
+        "frameworks/native/include/media/openmax",
+    ],
+
+    cflags: [
+        "-Werror",
+        "-Wall",
+    ],
+
+    sanitize: {
+        misc_undefined: [
+            "signed-integer-overflow",
+            "unsigned-integer-overflow",
+        ],
+        cfi: true,
+        diag: {
+            cfi: true,
+        },
+    },
+
+    shared_libs: [
+        "liblog",
+        "libbinder",
+        "libcrypto",
+        "libcutils",
+        "libmedia",
+        "libmediaextractor",
+        "libstagefright",
+        "libstagefright_foundation",
+        "libutils",
+        "libhidlallocatorutils",
+        "libhidlbase",
+        "android.hardware.cas@1.0",
+        "android.hardware.cas.native@1.0",
+    ],
+
+    static_libs: [
+        "libstagefright_id3",
+        "libstagefright_metadatautils",
+        "libstagefright_mpeg2support",
+    ],
+
+}

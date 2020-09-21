@@ -1,0 +1,1 @@
+#define BT_HOST_VERSION "001"

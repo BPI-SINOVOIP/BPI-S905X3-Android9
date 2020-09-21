@@ -1,0 +1,135 @@
+# Build list
+
+targetList := drivers drivers_firmware
+targetList += wpa_supplicant_config wpa_supplicant hostapd sigmadut_build rootfs_build
+targetList += patch_BT
+
+default: ${targetList}
+
+#################################################################################################################################
+export SIGMADUT_TOPDIR=${ATH_TOPDIR}/apps/sigma-dut
+export BE_TEST_TOPDIR=${ATH_TOPDIR}/build/scripts/x86
+export APP_TOPDIR=$(ATH_TOPDIR)/apps
+export WLAN_DRIVER_TOPDIR=$(ATH_TOPDIR)/drivers
+export ATHDIAG_TOPDIR=${ATH_TOPDIR}/drivers/qcacld-new/tools/athdiag
+
+#################################################################################################################################
+#
+# driver patch
+#
+
+drivers_patch:
+	@echo Patch drivers
+drivers_patch_R:
+	@echo Revert drivers patch
+
+wpa_supplicant_config:
+	@cp ${ATH_TOPDIR}/drivers/patches/supplicant/wpa_supplicant.config ${ATH_TOPDIR}/apps/hostap/wpa_supplicant/.config
+	@cp ${ATH_TOPDIR}/drivers/patches/supplicant/hostapd.config ${ATH_TOPDIR}/apps/hostap/hostapd/.config
+#################################################################################################################################
+#
+# BT Patches and make
+#
+patch_BT:bt_code bt_code_patch
+	@echo Patch patch_BT
+patch_BT_R:bt_code
+	@echo Revert patch_BT
+
+bt_code:
+	@echo ---------------------------Copying bt_code
+	mkdir -p ${APP_TOPDIR}/bt_workspace
+	@echo Copying libbt-vendor
+	mkdir -p ${APP_TOPDIR}/bt_workspace/hardware/qcom
+	rm -rf  ${APP_TOPDIR}/bt_workspace/hardware/qcom/bt
+	mkdir -p ${APP_TOPDIR}/bt_workspace/hardware/qcom/bt
+	cp -rf ${APP_TOPDIR}/libbt_vendor/* ${APP_TOPDIR}/bt_workspace/hardware/qcom/bt/
+	@echo Copying libhardware
+	mkdir -p ${APP_TOPDIR}/bt_workspace/hardware
+	rm -rf ${APP_TOPDIR}/bt_workspace/hardware/libhardware
+	mkdir -p  ${APP_TOPDIR}/bt_workspace/hardware/libhardware
+	cp -rf ${APP_TOPDIR}/libhardware/* ${APP_TOPDIR}/bt_workspace/hardware/libhardware/
+	@echo Copying fluoride
+	rm -rf ${APP_TOPDIR}/bt_workspace/system/bt
+	mkdir -p ${APP_TOPDIR}/bt_workspace/system/bt
+	cp -rf ${APP_TOPDIR}/fluoride/* ${APP_TOPDIR}/bt_workspace/system/bt/
+	@echo Copying Vendor
+	mkdir -p ${APP_TOPDIR}/bt_workspace/vendor/qcom/opensource
+	rm -rf ${APP_TOPDIR}/bt_workspace/vendor/qcom/opensource/bluetooth
+	cp -rf ${APP_TOPDIR}/bluetooth ${APP_TOPDIR}/bt_workspace/vendor/qcom/opensource/
+	@echo Copying Bt-app
+	rm -rf ${APP_TOPDIR}/bt_workspace/qcom-opensource/bt
+	mkdir -p ${APP_TOPDIR}/bt_workspace/qcom-opensource/bt
+	cp -rf ${APP_TOPDIR}/app/* ${APP_TOPDIR}/bt_workspace/qcom-opensource/bt/
+ifneq ($(IF_TYPE),USB)
+	mkdir -p ${APP_TOPDIR}/bt_workspace/vendor/qcom-proprietary/ship/bt
+	rm -rf ${APP_TOPDIR}/bt_workspace/vendor/qcom-proprietary/ship/bt/wcnss_filter
+	unzip ${WLAN_DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/wcnss_filter.zip -d ${APP_TOPDIR}/bt_workspace/vendor/qcom-proprietary/ship/bt
+endif
+	@echo ---------------------------Done copying bt_code
+
+bt_code_patch:
+	@echo ---------------------------bt_code_patch
+	cd ${APP_TOPDIR}/bt_workspace/hardware/qcom/bt && patch -s -p1 < ${WLAN_DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/hw_qcom_bt_libbt_vendor_base.patch
+	cd ${APP_TOPDIR}/bt_workspace/hardware/qcom/bt && patch -s -p1 < ${WLAN_DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/hw_qcom_bt_libbt_vendor_lea.patch
+	cp ${WLAN_DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/bootstrap ${APP_TOPDIR}/bt_workspace/hardware/qcom/bt/libbt-vendor/
+	chmod 777 ${APP_TOPDIR}/bt_workspace/hardware/qcom/bt/libbt-vendor/bootstrap
+	cd ${APP_TOPDIR}/bt_workspace/hardware/libhardware && patch -s -p1 < ${WLAN_DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/hw_libhw_lea.patch
+	cp ${WLAN_DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/bootstrap ${APP_TOPDIR}/bt_workspace/hardware/libhardware/
+	chmod 777 ${APP_TOPDIR}/bt_workspace/hardware/libhardware/bootstrap
+	cd ${APP_TOPDIR}/bt_workspace/system/bt && patch -s -p1 < ${WLAN_DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/system_bt_base.patch
+	cd ${APP_TOPDIR}/bt_workspace/system/bt && patch -s -p1 < ${WLAN_DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/system_bt_lea.patch
+	cp ${WLAN_DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/bootstrap ${APP_TOPDIR}/bt_workspace/system/bt/
+	chmod 777 ${APP_TOPDIR}/bt_workspace/system/bt/bootstrap
+	cd ${APP_TOPDIR}/bt_workspace/vendor/qcom/opensource/bluetooth && patch -s -p1 < ${WLAN_DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/vendor_qcom_bt_base.patch
+	cd ${APP_TOPDIR}/bt_workspace/vendor/qcom/opensource/bluetooth && patch -s -p1 < ${WLAN_DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/vendor_qcom_bt_lea.patch
+	cd ${APP_TOPDIR}/bt_workspace/qcom-opensource/bt && patch -s -p1 < ${WLAN_DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/qcom_opensource_btapp_base.patch
+	cd ${APP_TOPDIR}/bt_workspace/qcom-opensource/bt && patch -s -p1 < ${WLAN_DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/qcom_opensource_btapp_lea.patch
+	cp ${WLAN_DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/bootstrap ${APP_TOPDIR}/bt_workspace/qcom-opensource/bt/gatt/
+	chmod 777 ${APP_TOPDIR}/bt_workspace/qcom-opensource/bt/gatt/bootstrap
+	cp ${WLAN_DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/bootstrap ${APP_TOPDIR}/bt_workspace/qcom-opensource/bt/property-ops/
+	chmod 777 ${APP_TOPDIR}/bt_workspace/qcom-opensource/bt/property-ops/bootstrap
+	cp ${WLAN_DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/bootstrap ${APP_TOPDIR}/bt_workspace/qcom-opensource/bt/bt-app/
+	chmod 777 ${APP_TOPDIR}/bt_workspace/qcom-opensource/bt/bt-app/bootstrap
+ifneq ($(IF_TYPE),USB)
+	cp ${WLAN_DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/bootstrap ${APP_TOPDIR}/bt_workspace/vendor/qcom-proprietary/ship/bt/wcnss_filter/
+	chmod 777 ${APP_TOPDIR}/bt_workspace/vendor/qcom-proprietary/ship/bt/wcnss_filter/bootstrap
+endif
+	@echo Done with applying BT patches!
+
+#################################################################################################################################
+#
+# Sigma-DUT package
+#
+sigmadut_build: rootfs_prep sigmadut_clean
+	@echo Build Sigma-DUT
+	cd $(SIGMADUT_TOPDIR) && \
+	${MAKEARCH} && \
+	cp $(SIGMADUT_TOPDIR)/sigma_dut $(INSTALL_ROOT)/sbin
+
+sigmadut_clean:
+	@echo Clean Sigma-DUT
+	cd $(SIGMADUT_TOPDIR) && \
+	${MAKEARCH} clean
+
+#################################################################################################################################
+#
+# athdiag
+#
+athdiag_build: rootfs_prep athdiag_clean
+	@echo Build athdiag tool
+	cd $(ATHDIAG_TOPDIR) && \
+	${MAKEARCH} && \
+	cp $(ATHDIAG_TOPDIR)/athdiag $(INSTALL_ROOT)/sbin
+
+athdiag_clean:
+	@echo Clean athdiag tool
+	cd $(ATHDIAG_TOPDIR) && \
+	${MAKEARCH} clean
+
+#
+# SPE_BE_TEST package
+#
+spe_package:
+	@echo Build SPE_BE_TEST
+	cd ${BE_TEST_TOPDIR} && \
+	./gen_spe_package.sh

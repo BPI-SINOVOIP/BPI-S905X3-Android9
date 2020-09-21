@@ -1,0 +1,8 @@
+all:
+	/opt/mipsel-gcc472-glibc216-mips32/bin/mipsel-linux-gcc -c -o ssv_smartlink-mipsel.o ssv_smartlink.c
+	/opt/mipsel-gcc472-glibc216-mips32/bin/mipsel-linux-ar rcs libssv_smartlink-mipsel.a ssv_smartlink-mipsel.o
+
+	gcc -c -o ssv_smartlink-x64.o ssv_smartlink.c
+	ar rcs libssv_smartlink-x64.a ssv_smartlink-x64.o
+clean:
+	rm -rf *.a *.o

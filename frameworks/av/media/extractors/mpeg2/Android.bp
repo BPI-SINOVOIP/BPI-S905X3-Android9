@@ -1,0 +1,56 @@
+cc_library_shared {
+
+    srcs: [
+        "ExtractorBundle.cpp",
+        "MPEG2PSExtractor.cpp",
+        "MPEG2TSExtractor.cpp",
+    ],
+
+    include_dirs: [
+        "frameworks/av/media/libstagefright",
+        "frameworks/av/media/libstagefright/include",
+    ],
+
+    shared_libs: [
+        "android.hardware.cas@1.0",
+        "android.hardware.cas.native@1.0",
+        "android.hidl.token@1.0-utils",
+        "libbinder",
+        "libcrypto",
+        "libcutils",
+        "libhidlallocatorutils",
+        "libhidlbase",
+        "liblog",
+        "libmediaextractor",
+        "libstagefright_foundation",
+    ],
+
+    static_libs: [
+        "libstagefright_mpeg2support",
+        "libutils",
+    ],
+
+    name: "libmpeg2extractor",
+    relative_install_path: "extractors",
+
+    compile_multilib: "first",
+
+    cflags: [
+        "-Werror",
+        "-Wall",
+        "-fvisibility=hidden",
+    ],
+    version_script: "exports.lds",
+
+    sanitize: {
+        cfi: true,
+        misc_undefined: [
+            "unsigned-integer-overflow",
+            "signed-integer-overflow",
+        ],
+        diag: {
+            cfi: true,
+        },
+    },
+
+}

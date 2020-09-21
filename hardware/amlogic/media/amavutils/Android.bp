@@ -1,0 +1,87 @@
+cc_library_shared {
+    cflags: ["-DNO_USE_SYSWRITE"] + ["-DFB_BUFFER_NUM=3"] + ["-DANDROID_PLATFORM_SDK_VERSION=28"] + [
+        "-Werror",
+        "-Wformat",
+        "-Wimplicit-function-declaration",
+    ],
+    srcs: [
+        "*.c",
+        "*.cpp",
+        "mediaconfig/*.cpp",
+        "mediactl/*.cpp",
+    ],
+
+    include_dirs: [
+        "frameworks/native/services",
+        "frameworks/native/include",
+        "vendor/amlogic/common/frameworks/services",
+        "frameworks/native/libs/nativewindow/include",
+        "frameworks/native/opengl/include",
+        "hardware/amlogic/media/amcodec/include",
+    ],
+    local_include_dirs: [
+        "include",
+    ],
+
+    shared_libs: [
+        "libutils",
+        "libcutils",
+        "libc",
+        "libdl",
+        "libbinder",
+        "liblog",
+        "libui",
+    ],
+
+    product_specific: true,
+    vendor_available: true,
+
+
+    name: "libamavutils",
+
+
+}
+
+cc_library_shared {
+    cflags: ["-DNO_USE_SYSWRITE"] + ["-DFB_BUFFER_NUM=3"] + ["-DANDROID_PLATFORM_SDK_VERSION=28"] + [
+        "-Werror",
+        "-Wformat",
+        "-Wimplicit-function-declaration",
+    ],
+    srcs: [
+        "*.c",
+        "*.cpp",
+        "mediaconfig/*.cpp",
+        "mediactl/*.cpp",
+    ],
+
+    include_dirs: [
+        "frameworks/native/services",
+        "frameworks/native/include",
+        "vendor/amlogic/common/frameworks/services",
+        "frameworks/native/libs/nativewindow/include",
+        "frameworks/native/opengl/include",
+        "hardware/amlogic/media/amcodec/include",
+    ],
+    local_include_dirs: [
+        "include",
+    ],
+
+    shared_libs: [
+        "libutils",
+        "libcutils",
+        "libc",
+        "libdl",
+        "libbinder",
+        "liblog",
+        "libui",
+    ],
+
+    product_specific: true,
+    vendor_available: true,
+
+
+    name: "libamavutils_sys",
+
+
+}

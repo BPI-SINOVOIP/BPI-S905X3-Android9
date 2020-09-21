@@ -1,0 +1,13 @@
+service wpantund /system/bin/wpantund -s ${ro.lowpan.wpantund.socket:-system:/system/bin/lowpan_hdlc_adapter} -o Config:Daemon:ExternalNetifManagement 1 -I ${lowpan.interface:-wpan0}
+    disabled
+    class main
+    user lowpan
+    group lowpan inet vpn
+    capabilities NET_ADMIN NET_RAW
+    setenv SHELL /system/bin/sh
+
+on property:ro.lowpan.hal.device=*
+    enable lowpan_hal_1_0
+
+on property:init.svc.lowpan_hal_1_0=running
+    enable wpantund

@@ -1,0 +1,5 @@
+all:
+	/opt/mipsel-gcc472-glibc216-mips32/bin/mipsel-linux-gcc -o smarticomm-mipsel smarticomm.c libssv_smartlink-mipsel.a
+	gcc -o smarticomm-x86 smarticomm.c libssv_smartlink-x64.a
+	
+clean:

@@ -1,0 +1,136 @@
+config ATBM_APOLLO
+       tristate "ATBM_APOLLO WLAN support"
+       select ATBM_MAC80211
+       help
+
+         This is an experimental driver for the ATBM_APOLLO chip-set.
+         Enabling this option enables the generic driver without
+         any platform support.
+
+         Please select the appropriate platform below.
+
+if ATBM_APOLLO
+choice
+      prompt "select which atbm Wi-Fi product  will be used:ATBM601x,ATBM602x,default:ATBM602x"
+      default ATBM602x
+      depends on ATBM_APOLLO
+      help
+        Here,you must make sure which atbm Wi-Fi product you will want to use,ATBM601x,ATBM602x
+config ATBM601x
+      bool "ATBM601x chip"
+      depends on ATBM_APOLLO
+      help
+        we will use ATBM601x chip
+config ATBM602x
+      bool "ATBM602x chip"
+      depends on ATBM_APOLLO
+      help
+	we will use ATBM602x chip
+
+endchoice
+
+choice
+      prompt "select which bus will be used"
+      default ATBM_USB_BUS
+      depends on ATBM_APOLLO
+      help
+        Here,you must make sure what interface you will want to use,usb
+        sdio or spi
+config ATBM_USB_BUS
+      bool "usb bus"
+      depends on ATBM_APOLLO
+      help
+        we will use usb bus
+config ATBM_SDIO_BUS
+      bool "sdio bus"
+      depends on ATBM_APOLLO
+      help
+
+config ATBM_SPI_BUS
+      bool "spi bus"
+      depends on ATBM_APOLLO
+      help
+        we will use spi bus
+endchoice
+
+config ATBM_APOLLO_USE_GPIO_IRQ
+      bool "Use GPIO interrupt"
+      depends on ATBM_APOLLO && ATBM_SDIO_BUS
+      default n
+      help
+        Say Y here if you want to include GPIO IRQ support instead of SDIO IRQ.
+        If unsure, say N.
+choice
+      prompt "select which sido dpll freq used:24M or 40M.default:40M"
+      default ATBM_SDIO_40M
+      depends on ATBM_APOLLO && ATBM_SDIO_BUS
+      help
+        Here,you must make sure the sdio interface use 40M or 24M dpll
+config ATBM_SDIO_40M
+      bool "SDIO 40M"
+      depends on ATBM_APOLLO && ATBM_SDIO_BUS
+      help
+        we will use SDIO 40M
+config ATBM_SDIO_24M
+      bool "SDIO 24M"
+      depends on ATBM_APOLLO && ATBM_SDIO_BUS
+      help
+        we will use SDIO 24M
+
+endchoice
+
+config ATBM_APOLLO_WAPI_SUPPORT
+      bool "WAPI support"
+      depends on ATBM_APOLLO
+      default n
+      help
+        Say Y if your compat-wireless support WAPI.
+        If unsure, say N.
+
+
+
+config ATBM_APOLLO_SUPPORT_SGI
+      bool "Use short GI support"
+      depends on ATBM_APOLLO
+      default y
+      help
+        Say Y here if you want to include short gi support
+        If unsure, say N.
+
+
+menu "Driver debug features"
+      depends on ATBM_APOLLO
+
+config ATBM_APOLLO_DEBUGFS
+      bool "Expose driver internals to DebugFS (DEVELOPMENT)"
+
+config ATBM_APOLLO_DEBUG_ON_BOOT
+      bool "Enable selected driver debug messages during boot time (DEVELOPMENT)"
+
+config ATBM_APOLLO_BH_DEBUG
+      bool "Enable low-level device communication logs (DEVELOPMENT)"
+
+config ATBM_APOLLO_WSM_DEBUG
+      bool "Enable WSM API debug messages (DEVELOPMENT)"
+
+config ATBM_APOLLO_WSM_DUMPS
+      bool "Verbose WSM API logging (DEVELOPMENT)"
+
+config ATBM_APOLLO_WSM_DUMPS_SHORT
+      bool "Dump only first x bytes (default 20) (DEVELOPMENT)"
+
+config ATBM_APOLLO_TXRX_DEBUG
+      bool "Enable TX/RX debug messages (DEVELOPMENT)"
+
+config ATBM_APOLLO_TX_POLICY_DEBUG
+      bool "Enable TX policy debug (DEVELOPMENT)"
+
+config ATBM_APOLLO_STA_DEBUG
+      bool "Enable STA/AP debug (DEVELOPMENT)"
+
+config ATBM_APOLLO_DUMP_ON_ERROR
+      bool "Dump kernel in case of critical error (DEVELOPMENT)"
+
+endmenu
+source "drivers/net/wireless/atbm_wifi_40M/hal_apollo/mac80211/Kconfig"
+endif

@@ -1,0 +1,4 @@
+all:
+	/opt/mipsel-gcc472-glibc216-mips32/bin/mipsel-linux-gcc -o qqlink-mipsel qqlink.c libssv_smartlink-mipsel.a qqlink-lib-mipsel/lib/libtxdevicesdk.a -lstdc++ -lm -lpthread -lrt
+	
+clean:

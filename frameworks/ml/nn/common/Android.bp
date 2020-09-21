@@ -1,0 +1,185 @@
+/*
+ * Copyright 2017 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+cc_library_headers {
+    name: "libneuralnetworks_common_headers",
+    host_supported: false,
+    export_include_dirs: ["include"],
+}
+
+cc_library_static {
+    name: "libneuralnetworks_utils",
+    defaults: ["neuralnetworks_defaults"],
+    host_supported: false,
+    vendor_available: true,
+    export_include_dirs: ["include"],
+    srcs: [
+        "Utils.cpp",
+    ],
+    header_libs: [
+        "libneuralnetworks_headers",
+    ],
+    shared_libs: [
+        "libhidltransport",
+        "libhidlmemory",
+        "android.hardware.neuralnetworks@1.0",
+        "android.hardware.neuralnetworks@1.1",
+        "android.hidl.allocator@1.0",
+        "android.hidl.memory@1.0",
+    ],
+}
+
+cc_library_static {
+    name: "libneuralnetworks_common",
+    defaults: ["neuralnetworks_defaults"],
+    host_supported: false,
+    vendor_available: true,
+    openmp: true,
+    export_include_dirs: ["include"],
+
+    srcs: [
+        "CpuExecutor.cpp",
+        "GraphDump.cpp",
+        "OperationsUtils.cpp",
+        "Utils.cpp",
+        "ValidateHal.cpp",
+        "operations/Activation.cpp",
+        "operations/Concatenation.cpp",
+        "operations/Conv2D.cpp",
+        "operations/DepthwiseConv2D.cpp",
+        "operations/EmbeddingLookup.cpp",
+        "operations/FullyConnected.cpp",
+        "operations/HashtableLookup.cpp",
+        "operations/LSHProjection.cpp",
+        "operations/LSTM.cpp",
+        "operations/Normalization.cpp",
+        "operations/Pooling.cpp",
+        "operations/Reshape.cpp",
+        "operations/RNN.cpp",
+        "operations/SimpleMath.cpp",
+        "operations/StridedSlice.cpp",
+        "operations/SVDF.cpp",
+    ],
+    shared_libs: [
+        "libbase",
+        "libhidlbase",
+        "libhidltransport",
+        "libhidlmemory",
+        "libtextclassifier_hash",
+        "liblog",
+        "libutils",
+        "android.hardware.neuralnetworks@1.0",
+        "android.hardware.neuralnetworks@1.1",
+        "android.hidl.allocator@1.0",
+        "android.hidl.memory@1.0",
+    ],
+    header_libs: [
+        "libneuralnetworks_headers",
+        "libtextclassifier_hash_headers",
+        "libeigen",
+        "gemmlowp_headers",
+        "tensorflow_headers",
+    ],
+    whole_static_libs: [
+        "libtflite_kernel_utils",
+    ],
+
+    cflags: [
+        "-DNAMESPACE_FOR_HASH_FUNCTIONS=farmhash",
+        "-Werror",
+        "-Wall",
+        "-Wextra",
+        "-Wno-extern-c-compat",
+        "-Wno-unused-parameter",
+        "-Wno-unused-variable",
+        "-Wno-invalid-partial-specialization",
+    ],
+
+}
+
+cc_defaults {
+    name: "neuralnetworks_op_test_defaults",
+    shared_libs: [
+        "libneuralnetworks",
+    ],
+    static_libs: [
+        "libgmock",
+    ],
+    cflags: [
+        "-Wno-extern-c-compat",
+    ]
+}
+
+cc_test {
+    name: "embedding_lookup_test",
+    defaults: ["neuralnetworks_op_test_defaults"],
+    srcs: [
+        "operations/EmbeddingLookupTest.cpp",
+    ],
+}
+
+cc_test {
+    name: "hashtable_lookup_test",
+    defaults: ["neuralnetworks_op_test_defaults"],
+    srcs: [
+        "operations/HashtableLookupTest.cpp",
+    ],
+}
+
+cc_test {
+    name: "lsh_projection_test",
+    defaults: ["neuralnetworks_op_test_defaults"],
+    srcs: [
+        "operations/LSHProjectionTest.cpp",
+    ],
+    local_include_dirs: [ "include" ],
+    header_libs: [
+        "tensorflow_headers",
+    ],
+}
+
+cc_test {
+    name: "lstm_test",
+    defaults: ["neuralnetworks_op_test_defaults"],
+    srcs: [
+        "operations/LSTMTest.cpp",
+    ],
+    local_include_dirs: [ "include" ],
+    header_libs: [
+        "tensorflow_headers",
+    ],
+}
+
+cc_test {
+    name: "rnn_test",
+    defaults: ["neuralnetworks_op_test_defaults"],
+    srcs: [
+        "operations/RNNTest.cpp",
+    ],
+    local_include_dirs: [ "include" ],
+}
+
+cc_test {
+    name: "svdf_test",
+    defaults: ["neuralnetworks_op_test_defaults"],
+    srcs: [
+        "operations/SVDFTest.cpp",
+    ],
+    local_include_dirs: [ "include" ],
+    header_libs: [
+        "tensorflow_headers",
+    ],
+}

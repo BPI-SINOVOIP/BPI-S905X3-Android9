@@ -1,0 +1,128 @@
+/*
+ * Copyright (C) 2016 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package android.hardware.radio@1.2;
+
+import @1.0::RadioResponseInfo;
+import @1.1::IRadioResponse;
+
+/**
+ * Interface declaring response functions to solicited radio requests.
+ */
+interface IRadioResponse extends @1.1::IRadioResponse {
+
+    /**
+     * @param info Response info struct containing response type, serial no. and error
+     * @param cellInfo List of current cell information known to radio
+     *
+     * Valid errors returned:
+     *   RadioError:NONE
+     *   RadioError:RADIO_NOT_AVAILABLE
+     *   RadioError:NO_MEMORY
+     *   RadioError:INTERNAL_ERR
+     *   RadioError:SYSTEM_ERR
+     *   RadioError:MODEM_ERR
+     *   RadioError:NO_NETWORK_FOUND
+     *   RadioError:REQUEST_NOT_SUPPORTED
+     *   RadioError:NO_RESOURCES
+     *   RadioError:CANCELLED
+     */
+    oneway getCellInfoListResponse_1_2(RadioResponseInfo info, vec<CellInfo> cellInfo);
+
+    /**
+     * @param info Response info struct containing response type, serial no. and error
+     * @param cardStatus ICC card status as defined by CardStatus in types.hal
+     *
+     * Valid errors returned:
+     *   RadioError:NONE
+     */
+    oneway getIccCardStatusResponse_1_2(RadioResponseInfo info, CardStatus cardStatus);
+
+    /**
+     * @param info Response info struct containing response type, serial no. and error
+     *
+     * Valid errors returned:
+     *   RadioError:NONE
+     *   RadioError:INVALID_ARGUMENTS
+     *   RadioError:RADIO_NOT_AVAILABLE
+     *   RadioError:INTERNAL_ERR
+     */
+    oneway setSignalStrengthReportingCriteriaResponse(RadioResponseInfo info);
+
+    /**
+     * @param info Response info struct containing response type, serial no. and error
+     *
+     * Valid errors returned:
+     *   RadioError:NONE
+     *   RadioError:INVALID_ARGUMENTS
+     *   RadioError:RADIO_NOT_AVAILABLE
+     *   RadioError:INTERNAL_ERR
+     */
+    oneway setLinkCapacityReportingCriteriaResponse(RadioResponseInfo info);
+
+    /**
+     * @param calls Current call list
+     *
+     * Valid errors returned:
+     *   RadioError:NONE
+     *   RadioError:RADIO_NOT_AVAILABLE
+     *   RadioError:NO_MEMORY
+     *   RadioError:INTERNAL_ERR
+     *   RadioError:SYSTEM_ERR
+     *   RadioError:INVALID_ARGUMENTS
+     *   RadioError:REQUEST_NOT_SUPPORTED
+     *   RadioError:NO_RESOURCES
+     *   RadioError:CANCELLED
+     */
+    oneway getCurrentCallsResponse_1_2(RadioResponseInfo info, vec<Call> calls);
+
+    /**
+     * @param signalStrength Current signal strength
+     *
+     * Valid errors returned:
+     *   RadioError:NONE
+     *   RadioError:RADIO_NOT_AVAILABLE
+     *   RadioError:INTERNAL_ERR
+     */
+    oneway getSignalStrengthResponse_1_2(RadioResponseInfo info, SignalStrength signalStrength);
+
+    /**
+     * @param info Response info struct containing response type, serial no. and error
+     * @param voiceRegResponse Current Voice registration response as defined by VoiceRegStateResult
+     *        in types.hal
+     *
+     * Valid errors returned:
+     *   RadioError:NONE
+     *   RadioError:RADIO_NOT_AVAILABLE
+     *   RadioError:INTERNAL_ERR
+     */
+    oneway getVoiceRegistrationStateResponse_1_2(RadioResponseInfo info,
+            VoiceRegStateResult voiceRegResponse);
+
+    /**
+     * @param info Response info struct containing response type, serial no. and error
+     * @param dataRegResponse Current Data registration response as defined by DataRegStateResult in
+     *        types.hal
+     *
+     * Valid errors returned:
+     *   RadioError:NONE
+     *   RadioError:RADIO_NOT_AVAILABLE
+     *   RadioError:INTERNAL_ERR
+     *   RadioError:NOT_PROVISIONED
+     */
+    oneway getDataRegistrationStateResponse_1_2(RadioResponseInfo info,
+            DataRegStateResult dataRegResponse);
+};

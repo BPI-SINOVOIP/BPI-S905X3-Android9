@@ -1,0 +1,4078 @@
+[33mcommit 0dec2e419e8de0d7f1dcc409e08f893c0ce9c2db[m[33m ([m[1;36mHEAD -> [m[1;32mp-amlogic-mainline_9.2.1811_21-dev[m[33m, [m[1;31mm/p-amlogic[m[33m, [m[1;31minter/p-amlogic-mainline_9.2.1811_21-dev[m[33m, [m[1;31mamlogic/p-amlogic-mainline_9.2.1811_21-dev[m[33m)[m
+Author: yujie.wu <yujie.wu@amlogic.com>
+Date:   Wed Dec 25 15:03:01 2019 +0800
+
+    audio: Fix MS12 RF/Line mode not work [1/1]
+    
+    PD#SWPL-20883
+    
+    Problem:
+      When set RF or Line mode, there is no
+      difference
+    
+    Solution:
+      Add MS12 RF & Line mode config
+    
+    Verify:
+      U212
+    
+    Change-Id: Ifad6bf9ac41437381bd5199c9d78fc9b13f89baf
+    Signed-off-by: yujie.wu <yujie.wu@amlogic.com>
+
+[33mcommit f586dabbb01f131afe1783d5edb629fc4b889690[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Mon Mar 2 11:10:01 2020 +0800
+
+    audio: fix dolby av sync issue [1/3]
+    
+    PD#SWPL-19627
+    
+    Problem:
+    local playback,AVsync latency is 180ms+
+    
+    Solution:
+    Optimize av sync  mechanism
+    
+    Verify:
+    AC214
+    
+    Change-Id: I9d7a4437ee0d3d47367cf185c3d2f6813aa3d14e
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit ff5a24c5abb438701793369c9ba7e101d2cfd41e[m
+Author: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date:   Wed Apr 8 13:31:32 2020 +0800
+
+    Audio Hal: update parent control av mute flag [1/1]
+    
+    PD# SWPL-23381
+    
+    Problem:
+    Parental mute becomes unmuted on locked channels after HDMI plug-out/plug-in
+    
+    Solution:
+    update parent control av mute flag when ott platform update audio patch status
+    
+    Verify:
+    verify by newton
+    
+    Change-Id: I1b43ff2ff379d555023bf5366e5a54e8519c9dd3
+    Signed-off-by: Chaomin Zheng <chaomin.zheng@amlogic.com>
+
+[33mcommit 581781890c1136246bcccbf4c419e4e9ab276d70[m
+Author: hongchao.yin <hongchao.yin@amlogic.com>
+Date:   Mon Jan 6 14:13:11 2020 +0800
+
+    audio_hal: fixed noise when play bt in tvinput [2/2]
+    
+    PD#SWPL-19178
+    
+    Problem:
+    {Audio}{Bluetooth}Output "popo" noise after connect to bluetooth speaker
+    for a while in DTV/AV source.(5/5, no contrast)
+    
+    Solution:
+    use the AML_AUDIO_SIMPLE_RESAMPLE resampler type
+    
+    Verify:
+    verified by marconi
+    
+    Change-Id: I065af1972b068c7da8ecd742a45fdd9fe8276846
+    Signed-off-by: hongchao.yin <hongchao.yin@amlogic.com>
+
+[33mcommit 2397220368931782f1d66b0760868484b74ef708[m
+Author: yujie.wu <yujie.wu@amlogic.com>
+Date:   Fri Apr 3 16:06:51 2020 +0800
+
+    audio: Add volume control for dtv ddp case  [1/1]
+    
+    PD#SWPL-23106
+    
+    Problem:
+      The volume can't be changed when DTV play dd/ddp
+    
+    Solution:
+      Add volume control for dtv dd/ddp case
+    
+    Verify:
+      U212
+    
+    Change-Id: Ieddb8ebae7a62a62654a12b7772d9060d3dc5e99
+    Signed-off-by: yujie.wu <yujie.wu@amlogic.com>
+
+[33mcommit e769fdbf92eabd6a709a064872ef7ca634442311[m
+Author: Gongwei Chen <gongwei.chen@amlogic.com>
+Date:   Thu Apr 9 18:48:28 2020 +0800
+
+    PD#SWPL-20882
+    
+    Problem:
+    SWPL-20882, SWPL-22116, SWPL-15925, SWPL-22221
+    {Audio}[DTVkit+AOSP][MS12 blocker issue:2041] ddp 7.1
+    passthrough DTV playback gaps.3/3,disable ms12 is ok,
+    local playback is ok
+    
+    Solution:
+    correct the sound-card when choose it.
+    
+    Verify:
+    Newton(DTV DD+&passthrough and Local DD+).
+    
+    Change-Id: I8d94b310cda3a38c183fe189addff1a9f1cc23d5
+    Signed-off-by: Xiushan Lu <xiushan.lu@amlogic.com>
+
+[33mcommit 580007a91dc6848d90611fc28aa0e0aa1194863e[m
+Author: Gongwei Chen <gongwei.chen@amlogic.com>
+Date:   Thu Apr 9 14:34:26 2020 +0800
+
+    Revert "audio: ddp passthrough choose wrong sound-card [1/1]"
+    
+    This reverts commit b3abc97c435f0363d2b0e847aa964d26d8083c3d.
+
+[33mcommit ab582cadacde65f96dc616e3c33be471adeb0650[m
+Author: Xiushan Lu <xiushan.lu@amlogic.com>
+Date:   Fri Nov 15 19:52:24 2019 +0800
+
+    audio: ddp passthrough choose wrong sound-card [1/1]
+    
+    PD#SWPL-20882
+    
+    Problem:
+    SWPL-20882, SWPL-22116, SWPL-15925, SWPL-22221
+    {Audio}[DTVkit+AOSP][MS12 blocker issue:2041] ddp 7.1
+    passthrough DTV playback gaps.3/3,disable ms12 is ok,
+    local playback is ok
+    
+    Solution:
+    correct the sound-card when choose it.
+    
+    Verify:
+    Newton(DTV DD+&passthrough and Local DD+).
+    
+    Change-Id: I8801a738e21bc8d43b8871e9dac6e00890d4f49d
+    Signed-off-by: Xiushan Lu <xiushan.lu@amlogic.com>
+    (cherry picked from commit e973c25b273fd44b642402c1dce4987289cb43e6)
+
+[33mcommit b3abc97c435f0363d2b0e847aa964d26d8083c3d[m
+Author: Xiushan Lu <xiushan.lu@amlogic.com>
+Date:   Fri Nov 15 19:52:24 2019 +0800
+
+    audio: ddp passthrough choose wrong sound-card [1/1]
+    
+    PD#SWPL-15925
+    
+    Problem:
+    DTV playback, DD+ passthrough(Audio Mixing=Off),
+    the sound is silence.
+    
+    Solution:
+    correct the sound-card when choose it.
+    
+    Verify:
+    Newton(DTV DD+&passthrough and Local DD+).
+    
+    Change-Id: I8801a738e21bc8d43b8871e9dac6e00890d4f49d
+    Signed-off-by: Xiushan Lu <xiushan.lu@amlogic.com>
+
+[33mcommit c0a36b3a1e3de1d85294221ff33490ba5a9cecb5[m
+Author: wenbiao zhang <wenbiao.zhang@amlogic.com>
+Date:   Tue Mar 31 17:12:39 2020 +0800
+
+    a2dp: fix bt output noise when switch audio format [1/1]
+    
+    PD#SWPL-21853
+    
+    Problem:
+    bt output noise when switch audio format
+    
+    Solution:
+    hdmi would reconnect when switch audio format, and it changed
+    the output format to dolby, if a2dp connected, keep pcm output
+    
+    Verify:
+    franklin
+    
+    Change-Id: If606f950ede1910bd5ce9b3eb3edb6fec446f82c
+    Signed-off-by: wenbiao zhang <wenbiao.zhang@amlogic.com>
+
+[33mcommit cea18687b07de3987e6f7ceb0a25b3bdba32b2b4[m[33m ([m[1;31mopenlinux/p-amlogic-mainline_9.2.1811_21-dev[m[33m)[m
+Author: hongchao.yin <hongchao.yin@amlogic.com>
+Date:   Thu Apr 2 20:41:17 2020 +0800
+
+    audio_hal: fixed crash when playback dtv [1/1]
+    
+    PD#SWPL-23101
+    
+    Problem:
+    [DTVKIT]play MPEG SD  stream when the stream playback not audio output
+    (2/10)
+    
+    Solution:
+    use out_buf_size fill mute data size;
+    
+    Verify:
+    verified by newton
+    
+    Change-Id: I51ae13f7e9285cd663a97e8d076fe589dd995073
+    Signed-off-by: shenzhen engineers <hongchao.yin@droid13.amlogic.com>
+
+[33mcommit cc0d20a18ebf9d965e1cfe6795624982fb7948f3[m
+Author: Zhizhong Zhang <zhizhong.zhang@amlogic.com>
+Date:   Wed Mar 18 19:53:18 2020 +0800
+
+    audio: Adjust clock with short pace and many times [2/2]
+    
+    PD#SWPL-14955
+    
+    Problem:
+    pcm playback is mute after replaying multiple times
+    
+    Solution:
+    Adjust the clock with 100 pace and once 1s
+    Add condition to avoid wrong mute logic
+    
+    Verify:
+    Verified ok on patch-build
+    
+    Change-Id: I8f7efdd0ae43312e5e100d575b7aa886ee8d5351
+    Signed-off-by: Zhizhong Zhang <zhizhong.zhang@amlogic.com>
+
+[33mcommit aa476778d3ab61f921e3f6cfbc291255d4d59862[m
+Author: Gongwei Chen <gongwei.chen@amlogic.com>
+Date:   Tue Mar 17 14:52:09 2020 +0800
+
+    optimize DTV switch channels [1/1]
+    PD#SWPL-22042
+    
+    Problem:
+    DTV switch channels time is too long
+    
+    Solution:
+    PD#SWPL-22042
+    
+    Verify:
+    verify by newton
+    
+    Change-Id: Ib2ef2f553fece0a533b56a4ac6cc7a2a910f0f4e
+    Signed-off-by: GongWei Chen <gongwei.chen@amlogic.com>
+
+[33mcommit 45e0b8adf03ad40f4ccd6f611dedebc21cc56962[m
+Author: Gongwei Chen <gongwei.chen@amlogic.com>
+Date:   Mon Mar 16 15:47:24 2020 +0800
+
+    Revert "dtv: use AV sync mode when start playing [1/1]"
+    
+    This reverts commit 8f7c525238380ca80acc354d81f7aafab7f1b0e9.
+
+[33mcommit 8f7c525238380ca80acc354d81f7aafab7f1b0e9[m
+Author: Gongwei Chen <gongwei.chen@amlogic.com>
+Date:   Sat Mar 14 13:53:21 2020 +0800
+
+    dtv: use AV sync mode when start playing [1/1]
+    
+    PD#SWPL-21608
+    
+    Problem:
+    audio played before video when start playing
+    
+    Solution:
+    use AV sync mode when start playing
+    
+    Verify:
+    verify by newton
+    
+    Signed-off-by: Gongwei Chen <gongwei.chen@amlogic.com>
+    Change-Id: I877d8caa5db91a025ff1989076ea108b277e7da2
+
+[33mcommit b0fa7eb6109616c7b6d4db0d1084566d6f448617[m
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Fri Mar 13 13:31:49 2020 +0800
+
+    audio: fix no sound issue when dtv passthrough [1/1]
+    
+    PD#SWPL-20821
+    
+    Problem:
+    spdif format was clear when system sound standy by
+    
+    Solution:
+    Do not clear the spdif format when system sound standby.
+    It will cause the another pass through stream got the
+    wrong output alsa configure when initiation
+    
+    Verify:
+    AC214
+    
+    Change-Id: I70f748f634d9087b372fae98459e83dc23e02bd4
+    Signed-off-by: Jian Xu <jian.xu@amlogic.com>
+
+[33mcommit 71f1c1d55163765526b9c2f6613b8a61dba923b6[m
+Author: Zhizhong Zhang <zhizhong.zhang@amlogic.com>
+Date:   Thu Mar 5 18:34:18 2020 +0800
+
+    avsync: Reset the audio port when Bluetooth speaker connected [1/1]
+    
+    PD#SWPL-21669
+    
+    Problem:
+    Bluetooth speaker AC off / on, audio and video are out of sync
+    
+    Solution:
+    1.Reset the audio port when Bluetooth speaker connected
+    2.Enable the av-sync tuning for A2DP
+    3.Add av-sync monitor patch sync from OTT-7302
+    4.Remove unnecessary frequent ad print log
+    
+    Verify:
+    Verified ok on patch-build
+    
+    Change-Id: I1fc7dcf6a89370ff4c1c5e6569a0a26b3159db67
+    Signed-off-by: Zhizhong Zhang <zhizhong.zhang@amlogic.com>
+
+[33mcommit 5258cd4d8d1e02086038d2c181c114f892908a18[m
+Author: chen.chen1 <chen.chen1@amlogic.com>
+Date:   Wed Mar 11 17:06:08 2020 +0800
+
+    audio_hal: add audio mute function when start apts < vpts . [1/1]
+    
+    PD#SWPL-21624
+    
+    Problem:
+    audio comes before video because of apts < vpts
+    
+    Solution:
+    add audio mute function
+    
+    Verify:
+    verified on S905X3-AC214
+    
+    Change-Id: I2950e832081b23812b4f3a9198b7d53f9c29018d
+    Signed-off-by: Chen Chen <chen.chen1@amlogic.com>
+
+[33mcommit c1b10d5f0191ba4253327a11892956eac6a7724b[m
+Author: Zhizhong Zhang <zhizhong.zhang@amlogic.com>
+Date:   Thu Mar 5 14:51:41 2020 +0800
+
+    dtv: fix av sync need long time [2/2]
+    
+    PD#SWPL-21670
+    
+    Problem:
+    video stuck,and av sync need long time.
+    insert 0 have problem, modify it
+    
+    Solution:
+    Merge code from SWPL-21122
+    1) modify insert 0 function
+    2) modify pcr pts type
+    
+    Verify:
+    AC214
+    
+    Change-Id: Icd62558d7476a0972db8cbb8716f41019959308e
+    Signed-off-by: Zhizhong Zhang <zhizhong.zhang@amlogic.com>
+
+[33mcommit 4a715bf04d892b5b98ceef458c0fbf1493745cb9[m
+Author: Zhizhong Zhang <zhizhong.zhang@amlogic.com>
+Date:   Fri Jan 17 09:37:51 2020 +0800
+
+    audio: Not adjust the i2s clock for passthrough output for box [1/1]
+    
+    PD#SWPL-20038
+    
+    Problem:
+    Audio loss observed on Dolby audio on Live TV playback
+    
+    Solution:
+    Not adjust the i2s clock for passthrough output for box
+    
+    Verify:
+    Patch build on AC214
+    
+    Change-Id: I2c90be1d31d785ab444b1e955d4f0197edbe3ada
+    Signed-off-by: Zhizhong Zhang <zhizhong.zhang@amlogic.com>
+
+[33mcommit a59a39fad1716fe3ac10baa2e5c6a556637d1524[m
+Author: yujie.wu <yujie.wu@amlogic.com>
+Date:   Thu Jan 16 15:13:41 2020 +0800
+
+    audio: Fix DTS audio issue when set spdif  [1/1]
+    
+    PD#SWPL-19994
+    
+    Problem:
+      Set audio format to Spdif,DTS outputs PCM
+    
+    Solution:
+      When set spdif, let dts bypass
+    
+    Verify:
+      AC214
+    
+    Change-Id: I6dbbe138a72d3f4ed412ff449f01d073a24a8631
+    Signed-off-by: yujie.wu <yujie.wu@amlogic.com>
+
+[33mcommit 5e7c03095337e386ead9c1428ac773cea54f3277[m
+Author: yujie.wu <yujie.wu@amlogic.com>
+Date:   Mon Jan 13 20:38:07 2020 +0800
+
+    audio: Fix DTS pass through failed issue  [1/1]
+    
+    PD#SWPL-18378
+    
+    Problem:
+      When MS12 is enabled, dts pass through is failed
+    
+    Solution:
+      Fix DTS bypass failed issue
+    
+    Verify:
+      U212
+    
+    Change-Id: I0136836cbe3320613419044410a326850da9cf68
+    Signed-off-by: yujie.wu <yujie.wu@amlogic.com>
+
+[33mcommit 571e3779d84d8b97955806a537d6285ba05dbc81[m
+Author: yujie.wu <yujie.wu@amlogic.com>
+Date:   Wed Jan 15 16:39:46 2020 +0800
+
+    audio: Fix dolby PCM play error   [3/3]
+    
+    PD#SWPL-18380
+    
+    Problem:
+      When play dolby with pcm, there is error
+    
+    Solution:
+      Merge code from SWPL-15941
+    
+    Verify:
+      AC214
+    
+    Change-Id: I3c1ff769262c93d1483c6507c8e672f7ae752685
+    Signed-off-by: yujie.wu <yujie.wu@amlogic.com>
+
+[33mcommit 07ecf1373c65d52045ac30b35388736e8bff7fa5[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Tue Jan 7 09:39:36 2020 +0800
+
+    auido: fixed dd stream nosie when connected bluetooth [1/1]
+    
+    PD#SWPL-16938
+    
+    Problem:
+      Play any DD stream the Bluetooth speakers output  noise
+    
+    Solution:
+      when connect bluetooth ,dolby decoder output pcm data.
+    
+    Verify:
+      Newton
+    
+    Change-Id: Ie97aa87aabe7a61386662d464a35b1ba883e6f85
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit 5feff9693dbc2b7988084a78074512e999f98b2f[m
+Author: Cheng Tong <cheng.tong@amlogic.com>
+Date:   Fri Nov 29 10:22:14 2019 +0800
+
+    audio: merge code about tunnel mode of A2DP [1/3]
+    
+    PD#SWPL-17389
+    
+    Problem:
+    merge code about tunnel mode of A2DP
+    
+    Solution:
+    1.fix bt volume can't adjust for dvb playing
+    2.fix dtv_audio_tune always be AUDIO_DROP
+    3.merge code from hailstorm p-amlogic-mainline_9.2.1811_21
+      1)SWPL-3581,audio: support bt a2dp tunnel mode [3/3]
+      2)SWPL-11781,audio: fix a2dp tunnel mode without ms12 [1/1]
+      3)SWPL-11727,audio: fix a2dp audio abnormal after pause/play netflix [1/1]
+      4)OTT-6414,audio: fix bt no sound when quickly exit and replay netflix [1/1]
+      5)OTT-6429,audio: fix bt audio for dvb playing [1/1]
+      6)OTT-5752,audio: support dolby input for a2dp [1/1]
+    
+    Verify:
+    X301
+    
+    Change-Id: Iad513821beb5b366bdad5b0082e8092617c17b60
+    Signed-off-by: Cheng Tong <cheng.tong@amlogic.com>
+
+[33mcommit 01dc4bd7f11536642e5dc2f15856e45f57fac25a[m
+Author: yujie.wu <yujie.wu@amlogic.com>
+Date:   Fri Sep 20 15:40:49 2019 +0800
+
+    audio: Fix DTS 96Khz audio issue    [1/1]
+    
+    PD#SWPL-18398
+    
+    Problem:
+      When play 96/192Khz DTS, the video is not
+      smooth
+    
+    Solution:
+      For high samplerate audio, we need use spdif
+      to output it instead of I2S
+    
+    Verify:
+      U212
+    
+    Change-Id: I175127fbe4c3a40f7f77f839abab0cb97b9a4027
+    Signed-off-by: yujie.wu <yujie.wu@amlogic.com>
+
+[33mcommit f730d996f0e03373737a53f6a206f25acc4110a1[m
+Author: zhiyuan.zhu <zhiyuan.zhu@amlogic.com>
+Date:   Mon Dec 30 19:11:10 2019 +0800
+
+    audio_hal: audio format is error [1/1]
+    
+    PD#SWPL-18918
+    
+    Problem:
+    play DD steam，than play non DD video in movieplayer TV not  audio output
+    
+    Solution:
+    Exit dtvkit and reset audio format to PCM
+    
+    Verify:
+    verify by AC214
+    
+    Change-Id: Ieb58200255382a1fc8b826172942b3f2941d5502
+    Signed-off-by: zhiyuan.zhu <zhiyuan.zhu@amlogic.com>
+
+[33mcommit aabefe7d406b7997f1348ea7edef35048ce207b2[m
+Author: Gongwei Chen <gongwei.chen@amlogic.com>
+Date:   Fri Dec 27 15:47:10 2019 +0800
+
+    Revert "audio: Fix DTV DDP volume can't control [1/1]"
+    
+    This reverts commit 6f30e13816073424eea1fdf7dd5b649f11dea7f1.
+
+[33mcommit fdf0ce6df72db5bdca5f141b8e54b2271123a392[m
+Author: Shuai Li <shuai.li@amlogic.com>
+Date:   Wed Dec 18 10:48:11 2019 +0800
+
+    audio: tunnel mode pause tsync whatever the easing status [1/1]
+    
+    PD#OTT-7728
+    
+    Problem:
+    PLAY-001-TC4 test case failed after seek to a new location.
+    Failed to send tsync pause if not enough easing data.
+    
+    Solution:
+    Send tsync pause whatever the easing status.
+    
+    Verify:
+    SM1.
+    
+    Change-Id: I7e5ddbf21659172357b1b374ca4a304a61034aca
+    Signed-off-by: Shuai Li <shuai.li@amlogic.com>
+
+[33mcommit 6f30e13816073424eea1fdf7dd5b649f11dea7f1[m
+Author: yujie.wu <yujie.wu@amlogic.com>
+Date:   Fri Dec 6 17:12:30 2019 +0800
+
+    audio: Fix DTV DDP volume can't control [1/1]
+    
+    PD#SWPL-17925
+    
+    Problem:
+      When play DTV DDP stream and set audio out
+      as auto, the volume can't be controlled.
+    
+    Solution:
+      Add volume control for DTV case
+    
+    Verify:
+      AC214
+    
+    Change-Id: I5bd1574619d9f650e66aae95e6d0e9d8c2a002ed
+    Signed-off-by: yujie.wu <yujie.wu@amlogic.com>
+    (cherry picked from commit 41eba8f5ab01f2cac4879a77fcbd81589dfaa563)
+
+[33mcommit a0e09f22e61e9e62ed05d95ef2a9bd88f91e6c90[m
+Author: Gongwei Chen <gongwei.chen@amlogic.com>
+Date:   Thu Dec 26 14:24:41 2019 +0800
+
+    Revert "audio: Fix DTV "ca" noise during pcm/bitstream switch [1/1]"
+    
+    This reverts commit 2e3ce1ec7e925d849bfa44401515df9ee1fdd31c.
+    
+    Change-Id: I0db9608bbf861fa865aaaa6a6f7135014406a1a3
+
+[33mcommit 2e3ce1ec7e925d849bfa44401515df9ee1fdd31c[m
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Wed Dec 18 16:05:17 2019 +0800
+
+    audio: Fix DTV "ca" noise during pcm/bitstream switch [1/1]
+    
+    PD#SWPL-18652
+    
+    Problem:
+      When pause/resume or siwtch audio track, sometimes
+      there is a "ca" noise
+    
+    Solution:
+      During the data format switching, the bitstream is
+      treated as pcm which causes audio noise, now we mute
+      the first frame during the switching to avoid such
+      noise.
+    
+    Verify:
+      U212
+    
+    Change-Id: I3ee67c1e152938d90d3442d4d7217c3c35dc2899
+    Signed-off-by: Jian Xu <jian.xu@amlogic.com>
+
+[33mcommit 2c5991919fbb179d695a1da23338f433a21affec[m
+Author: Shuai Li <shuai.li@amlogic.com>
+Date:   Fri Nov 29 15:28:31 2019 +0800
+
+    audio: standy mixer port before switch to DTV [1/1]
+    
+    PD#SWPL-16155
+    
+    Problem:
+    DTV-Play no sound after back to launcher and enter again.
+    
+    Solution:
+    Add standby mixer port before switch to DTV.
+    This will close the pcm which hold by out port.
+    
+    Verify:
+    SM1
+    
+    Change-Id: Ie5b80fbe5fc701c86937e3e4ed58b4d597f35d79
+    Signed-off-by: Shuai Li <shuai.li@amlogic.com>
+
+[33mcommit c59f46899484ff76b8bd11558f85ee0b0c457d4c[m
+Author: Chengshun Wang <chengshun.wang@amlogic.com>
+Date:   Fri Nov 29 16:36:31 2019 +0800
+
+    dtv: fix ad not valid when ad foramt and pid had set [1/1]
+    
+    PD#SWPL-17416
+    
+    Problem:
+    multi-language ad not match dtvkit set format
+    
+    Solution:
+    1) sometimes ad audio foramt and pid set after dtv patch start,
+       so need in threadloop to detect it.
+    2) add ad es data dump interface
+    
+    Verify:
+    AC214
+    
+    Change-Id: I31ee406030ba3bcf65f0f133c7db08fecd8825af
+    Signed-off-by: Chengshun Wang <chengshun.wang@amlogic.com>
+
+[33mcommit a55553eca866149f54271b35f7558eda607ab1c1[m
+Author: Shuai Li <shuai.li@amlogic.com>
+Date:   Thu Nov 28 14:54:30 2019 +0800
+
+    audio: VtsHalAudioV4_0Target exist 16 failures [1/1]
+    
+    PD#OTT-7440
+    
+    Problem:
+    Vts fails at get_presentation().
+    
+    Solution:
+    Correct the PTS calculation.
+    
+    Verify:
+    SM1.
+    
+    Change-Id: I624f490ca9417e4308485f3f18e4a03b9a0800d1
+    Signed-off-by: Shuai Li <shuai.li@amlogic.com>
+
+[33mcommit 92d8e733399faeb2c6e0576135cde7ed6f3be26d[m
+Author: Zhizhong Zhang <zhizhong.zhang@amlogic.com>
+Date:   Wed Oct 30 21:34:48 2019 +0800
+
+    dtv: fix audio gaps in dolby stream replay [1/3]
+    
+    PD#SWPL-16660
+    
+    Problem:
+    Audio gaps happened at the end of some Dolby files playback
+    
+    Solution:
+    when audio discontinue and underrun, mute sound avoid noise
+    
+    Verify:
+    AC214
+    
+    Change-Id: I57bf5660358c225a706af09d05976be2e354b117
+    Signed-off-by: Zhizhong Zhang <zhizhong.zhang@amlogic.com>
+
+[33mcommit bbe42984a502d57dcc247838b808157695e80aa3[m
+Author: Zhizhong Zhang <zhizhong.zhang@amlogic.com>
+Date:   Wed Nov 27 13:11:46 2019 +0800
+
+    PD#SWPL-15953
+    
+    Problem:
+    AV-sync audio is delayed than video 90ms~130ms
+    
+    Solution:
+    Add audio delay prop to adjust audio pts
+    
+    Verify:
+    Verify ok on AC214
+    
+    Change-Id: I94bcf20b71faed14864d1ad0a51bf7ad6210c3f6
+    Signed-off-by: Zhizhong Zhang <zhizhong.zhang@amlogic.com>
+
+[33mcommit bd1a9dd16d96a718f8bbebc24fd963415e60d687[m
+Author: Zhe Wang <Zhe.Wang@amlogic.com>
+Date:   Sat Nov 16 17:10:43 2019 +0800
+
+    audio: Add Raw data detection for SPDIFIN source [1/1]
+    
+    PD#SWPL-15732
+    
+    Problem:
+    raw data from spdifin can't be detected
+    
+    Solution:
+    Add Raw data detection for SPDIFIN source
+    
+    Verify:
+    AB311
+    
+    Change-Id: I10e9468d5c83842128f2e213c8d10d06ec6d7e19
+    Signed-off-by: Zhe Wang <Zhe.Wang@amlogic.com>
+
+[33mcommit 1d868b69b45353bd5ec8a5fcf5344e22a7fe0274[m
+Author: Luan Yuan <luan.yuan@amlogic.com>
+Date:   Mon Nov 18 17:16:07 2019 +0800
+
+    audio_hal: update the hal code to the new lastest. [1/1]
+    
+    PD#NONE
+    
+    Problem:
+    update the hal code to the new lastest.
+    
+    Solution:
+    update the hal code to the new lastest.
+    081dc74 audio_hal: fixed DTS-HD play and format change no sound when BT play [1/1]
+    b05dc7f AudioHal: config earc pcm handle [1/1]
+    d984b0b audio: hal: add lentency and capability for eARC RX/TX [1/1]
+    128d2c4 audio: Unify the SPDIF alsa name [2/2]
+    2b62914 audio: Fix Tunnel mode bypass audio issue [1/1]
+    0692ba0 audio: hal: fix memory leaks issuse when play dts-hd in hdmi source
+    dd72eb0 audio: hal: fix non-6ch dts source sound abnormal issuse [2/2]
+    3d851a8 audio: hal: rm virtualx's counter [2/3]
+    e428317 Tvinput: add earc in support [5/5]
+    
+    Verify:
+    no need.
+    
+    Change-Id: Id1152cd90e9914798068a0ee4d2a0102f9c46ec7
+    Signed-off-by: Luan Yuan <luan.yuan@amlogic.com>
+
+[33mcommit 9304552c2e4658940b53f01464ed6a5f89116969[m
+Author: Shuai Li <shuai.li@amlogic.com>
+Date:   Fri Aug 2 16:37:48 2019 +0800
+
+    audio: process pdm mic for record [1/1]
+    
+    PD#IPTV-3723
+    
+    Problem:
+    [CMCC]multi-processes access mic card for mic+loopback and mic in the same time
+    
+    Solution:
+    Enable the PDM mic.
+    
+    Verify:
+    SM1.
+    
+    Change-Id: I1ea50deadc287abac3240637123c19c2a51bbb04
+    Signed-off-by: Shuai Li <shuai.li@amlogic.com>
+    Signed-off-by: Luan Yuan <luan.yuan@amlogic.com>
+
+[33mcommit 698e1376e296fb95efd194fed4392ad751303066[m
+Author: hongchao.yin <hongchao.yin@amlogic.com>
+Date:   Tue Jul 2 13:14:50 2019 +0800
+
+    audio_hal: fixed bt/usb noise when switch audio format in hdmi src [1/1]
+    
+    PD#SWPL-8622
+    
+    Problem:
+    {Score:1}CLONE - [X30A2][T972][9.0][Audio]:BT/USB speaker sing a slap
+    when HDMI source play dolby/DTS video.(100%, X301NG)
+    
+    Solution:
+    add three period delay buffer for play pcm stream at usb/bt play.
+    
+    Verify:
+    verified by r311 x301
+    
+    Change-Id: Ibf6b48af149ce5767e6dee5d83a766f02700c1b9
+    Signed-off-by: hongchao.yin <hongchao.yin@amlogic.com>
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit 0dd7109182559dc8c22e2af02f9360b48f4882c8[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Wed Jul 17 10:43:32 2019 +0800
+
+    audio: support local sound track mode setting [1/5]
+    
+    PD#OTT-5064
+    
+    Problem:
+      Play dolby multi-sound video, set fo PCM mode,
+      Sound track -->Left mono or Right mono , both
+      can hear two sounds.
+    
+    Solution:
+      support local sound track mode setting
+    
+    Verify:
+      X301
+    
+    Change-Id: I32cc0d6a69ef391028a786524f488366b8aedc0f
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit a4d61b3f33fae1db6821365529839a1b76f9b910[m
+Author: qiu.zeng <qiu.zeng@amlogic.com>
+Date:   Tue Jul 9 17:31:13 2019 +0800
+
+    BT: qw_bt remote and ok google voice interact [1/1]
+    
+    PD#SWPL-8894
+    
+    Problem:
+    qw_bt remote and ok google voice Mutual influence
+    lead to qw_bt voice can't use
+    
+    Solution:
+    add if Judgement condition
+    
+    Verify:
+    Verifying on Public Edition AC213
+    
+    Change-Id: I1012f3561b8aedf16b131f948833c112862b08ca
+    Signed-off-by: qiu.zeng <qiu.zeng@amlogic.com>
+
+[33mcommit aa67d6d2ea62b964d5d9a5a28f6bd11710f198c6[m
+Author: Shuai Li <shuai.li@amlogic.com>
+Date:   Tue Jul 2 15:15:48 2019 +0800
+
+    audio: BT speaker no audio output [1/1]
+    
+    PD#SWPL-10221
+    
+    Problem:
+    BT speaker have no audio output when connect BT speaker
+    The input device mask MSB bit is 1.
+    So needs to remove it and then using &.
+    
+    Solution:
+    Add devices &= ~AUDIO_DEVICE_BIT_IN before check.
+    
+    Verify:
+    Tl1.
+    
+    Change-Id: I77f9d6ee45abdac5e675a72acbe61653f4bb91f7
+    Signed-off-by: Shuai Li <shuai.li@amlogic.com>
+
+[33mcommit 4ef07d4753e26f037cf0f46215c621803b00088c[m
+Author: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date:   Fri Jun 28 09:54:10 2019 +0800
+
+    Audio Hal: non auge sound card chips remove alsa port convert [1/1]
+    
+    PD# SWPL-9263
+    
+    Problem:
+    [einstein]CtsNativeMediaAAudioTestCases module 13 fail
+    
+    Solution:
+    non auge sound card chips remove alsa port convert
+    
+    Verify:
+    verify by einstein
+    
+    Change-Id: Ide43a81ca0faf7785192084abd1a195100e3c2dd
+    Signed-off-by: Chaomin Zheng <chaomin.zheng@amlogic.com>
+
+[33mcommit 6e02fdddde7ba3e82dae88e5ff31913141887e92[m
+Author: Shuai Li <shuai.li@amlogic.com>
+Date:   Thu Jun 27 11:07:25 2019 +0800
+
+    audio: Aec initial value abnormal [1/1]
+    
+    PD#SWPL-10264
+    
+    Problem:
+    Wrong initial value cause AEC crash.
+    
+    Solution:
+    Using the correct value of samplerate.
+    
+    Verify:
+    U212.
+    
+    Change-Id: I138112ef417d37bf054a6b0a037cd1b78b759110
+    Signed-off-by: Shuai Li <shuai.li@amlogic.com>
+
+[33mcommit 753514f080d2c9fcb270b0f96a6cae41bb646d6c[m
+Author: Lei Qian <lei.qian@amlogic.com>
+Date:   Mon Jun 24 21:51:04 2019 +0800
+
+    audio: add amlogic license file [1/1]
+    
+    PD#SWPL-9657
+    
+    Problem:
+    no license file on andoird P
+    
+    Solution:
+    add amlogic license file;
+    
+    Verify:
+    local build OK
+    
+    Change-Id: I3b8664c4de692daa695619e6a65310b602c1f174
+    Signed-off-by: Lei Qian <lei.qian@amlogic.com>
+
+[33mcommit 4600250663098faa59029f8ea2e275128649192b[m
+Author: Shuai Li <shuai.li@amlogic.com>
+Date:   Mon Jun 24 19:32:58 2019 +0800
+
+    audio: fix wrong SCO port judgement [1/1]
+    
+    PD#SWPL-9113
+    
+    Problem:
+    SCO port judgement is wrong which bring
+    in no audio.
+    
+    Solution:
+    Correct the wrong SCO judgement
+    
+    Verify:
+    U212
+    
+    Change-Id: Ibab0c2fe4afa00f2b43143fe066f5755d49eea86
+    Signed-off-by: Shuai Li <shuai.li@amlogic.com>
+
+[33mcommit 5993e9513408cd1747f4c7061fa3025f5e42c73b[m
+Author: Shuai Li <shuai.li@amlogic.com>
+Date:   Thu Jun 20 11:33:08 2019 +0800
+
+    audio: add bt sco headset mic audio patch support [1/4]
+    
+    PD#SWPL-4711
+    
+    Problem:
+    Pair with a Bluetooth headset, open the blerecorder.apk and talk to
+    BT headset, the BT headset cannot record
+    
+    Solution:
+    add bt sco headset mic audio patch support
+    
+    Verify:
+    verify by ampere
+    
+    Change-Id: I0225f96c1b5c7b2cd848a3fbe960d97813cb52b3
+    Signed-off-by: Shuai Li <shuai.li@amlogic.com>
+
+[33mcommit 04309e271b5a9c5989056eec21e36ad7a5caa156[m
+Author: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date:   Wed Apr 10 17:18:43 2019 +0800
+
+    AudioHal: add bt sco headset mic audio patch support [1/4]
+    
+    PD# SWPL-4711
+    
+    Problem:
+    Pair with a Bluetooth headset, open the blerecorder.apk and talk to
+    BT headset, the BT headset cannot record
+    
+    Solution:
+    add bt sco headset mic audio patch support
+    
+    Verify:
+    verify by ampere
+    
+    Change-Id: I4929cfbffc89d5d9871d24ea7cc19b027a16ca03
+    Signed-off-by: Chaomin Zheng <chaomin.zheng@amlogic.com>
+    Signed-off-by: Shuai Li <shuai.li@amlogic.com>
+
+[33mcommit c070720e4e7faf05fca786d6dfa1d88b4416cf9e[m
+Author: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date:   Thu May 30 19:39:52 2019 +0800
+
+    AudioHal: atv source mute 200ms and start fade in [3/3]
+    
+    PD# SWPL-8945
+    
+    Problem:
+    ATV/DTV channel, the AMP-ARC has no sound after CEC switch set off/on
+    
+    Solution:
+    atv source mute 200ms and start fade in
+    
+    Verify:
+    verify by x301
+    
+    Change-Id: Ia491bbe1697a0f05072e8d47fcbdd7dfda719e29
+    Signed-off-by: Chaomin Zheng <chaomin.zheng@amlogic.com>
+
+[33mcommit 67c2a9b500db54dbb46a0629c7a6c384959fa685[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Wed Jun 12 22:13:34 2019 +0800
+
+    audio: fixed pcm switch to raw output nosie issue in  usb soundcard case [1/1]
+    
+    PD#SWPL-3132
+    
+    Problem:
+    Plug in USB speaker, play DD/DD+/DTS files in HDMI,
+    it will temporarily output audio noise when change bewteen
+    different audio encoded files or change from other source to HDMI.
+    
+    Solution:
+    because hardware detection raw slow than playback,so delay pcm output
+    one frame to avoid nosie.
+    
+    Verify:
+    X301
+    
+    Change-Id: Icd49d1aac218ed19d4c6855e4055657cf8076ad2
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit 2c971d7e4e0c030eded0dc11142081a2f1ea1837[m
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Thu Jun 13 13:23:02 2019 +0800
+
+    audio: fix MS12 stuck when receive pause frame format  [1/1]
+    
+    PD#SWPL-7436
+    
+    Problem:
+    when MS12 set the main format as AUDIO_FORMAT_INVALID.
+    the ms12 will stuck inside.
+    
+    Solution:
+    we treat AUDIO_FORMAT_INVALID as AUDIO_FORMAT_PCM_16_BIT
+    and mute the frame.
+    
+    Verify:
+    verify by r311
+    
+    Change-Id: I50f4b33885db602a23aca77c2027de8f3e0e23b5
+    Signed-off-by: Jian Xu <jian.xu@amlogic.com>
+
+[33mcommit 314a5c9e59fb88c2b989412fc25e82c4f3057c90[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Mon Jun 3 17:01:28 2019 +0800
+
+    audio: fixed raw output seek mute issue [1/1]
+    
+    PD#SWPL-8293
+    
+    Problem:
+    when raw playback and seek,sound mute becasue
+    of using adev->pcm_handle not right.
+    
+    Solution:
+    manange adev->pcm_handle properly
+    
+    Verify:
+    verify by r311
+    
+    Change-Id: I8a20a31894261cf164c7dcab703124fe330ce7c4
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit 51dd9551bef69115a79bd30e1c56aa166ca99b5d[m
+Author: hongchao.yin <hongchao.yin@amlogic.com>
+Date:   Wed Jun 12 11:01:14 2019 +0800
+
+    audio_hal: add license declaration [1/3]
+    
+    PD#SWPL-9663
+    
+    Problem:
+    clean audio no license file
+    
+    Solution:
+    add license declaration
+    
+    Verify:
+    verrify by marconi
+    
+    Change-Id: I7cd4d426fdf10b5f9ab1319994a633cb7c7d7b50
+    Signed-off-by: hongchao.yin <hongchao.yin@amlogic.com>
+
+[33mcommit b8ab3ae1b59bc4b3bf4021922d3cd0bcc9d6bb91[m
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Thu Jun 6 19:48:27 2019 +0800
+
+    audio_hal: fix the dcv decoder function null pointer issue  [1/1]
+    
+    PD#SWPL-8623
+    
+    Problem:
+    when Dolby MS12 is enabled, the DCV API function pointer
+    is null, in that case,when device->mixer patch.if will
+    cause audio server crash.
+    
+    Solution:
+    Load the decoder api in all cases.
+    
+    Verify:
+    verified by marconi
+    
+    Change-Id: Ib164e77c9536079694485b24ef2cc02bff02b2a5
+    Signed-off-by: Jian Xu <jian.xu@amlogic.com>
+
+[33mcommit b7c0756546674c0dd4289d2ebab4d6c74a218e2a[m
+Author: Shuai Li <shuai.li@amlogic.com>
+Date:   Tue May 21 15:28:16 2019 +0800
+
+    audio: add standby for output thread [1/1]
+    
+    PD#IPTV-2359
+    
+    Problem:
+    there is no voice while playing music by tinyplay
+    
+    Solution:
+    Add standby to the output thread
+    
+    Verify:
+    U212.
+    
+    Change-Id: Iefdd7e4cbed30f79b5b5648a8e33f7155a14f376
+    Signed-off-by: Shuai Li <shuai.li@amlogic.com>
+
+[33mcommit 80a0956bafa6748c51565fa84c9546eba9adaea0[m
+Author: Zhe Wang <Zhe.Wang@amlogic.com>
+Date:   Mon May 20 15:13:04 2019 +0800
+
+    audio: check hdmi/spdif input sr to reset hw resample [2/2]
+    
+    PD#TV-5865
+    
+    Problem:
+    HMDIIN audio freq. responds test fail
+    
+    Solution:
+    reset hw resample when audio input sr is changed
+    
+    Verify:
+    X301
+    
+    Change-Id: Ie71034a7e7ec2acb35f0f244708509e9f104a443
+    Signed-off-by: Zhe Wang <Zhe.Wang@amlogic.com>
+
+[33mcommit 2f463aab3c79f06e47ef550310e87c286955e396[m
+Author: Rui Wang <rui.wang@amlogic.com>
+Date:   Tue Jun 11 13:58:38 2019 +0800
+
+    audio: fix no sound when switching channels for STB [1/1]
+    
+    PD#SWPL-9585
+    
+    Problem:
+    There is no sound when switching channels.
+    
+    Solution:
+    Added null pointer protection.
+    
+    Verify:
+    verify it on franklin
+    
+    Change-Id: I775e5f8d05221c162cffc8decd402a403a353a2b
+    Signed-off-by: Rui Wang <rui.wang@amlogic.com>
+
+[33mcommit 3a0b7b2068674923a4c0f765b211a5e158083fbd[m
+Author: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date:   Tue May 14 20:59:16 2019 +0800
+
+    Audio Hal: set adev patch src inval when release patch [1/2]
+    
+    PD# TV-5726
+    
+    Problem:
+    mute does not work when switching from DTV to ATV
+    
+    Solution:
+    set adev patch src inval when release patch
+    
+    Verify:
+    verify by x301
+    
+    Change-Id: Ic5e52a15da2f4c4d1382eb93186c9f75d3ba82ba
+    Signed-off-by: Chaomin Zheng <chaomin.zheng@amlogic.com>
+
+[33mcommit 334f06e4bf80f5ee988541217b6962385f641e82[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Thu May 30 10:13:16 2019 +0800
+
+    audio: fix dts switch ms12 mute issue [1/3]
+    
+    PD#TV-6051
+    
+    Problem:
+    when dts switch to ms12 ,audio mute
+    
+    Solution:
+    when dts playback end,enbale ms12
+    
+    Verify:
+    verify by r311
+    
+    Change-Id: I53588a5a4a8b340ed2a63a7965e9894d906c8117
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit efc145154dc6b97f71c60522c30cf9e515dd87ba[m
+Author: Shuai Li <shuai.li@amlogic.com>
+Date:   Thu May 16 15:22:18 2019 +0800
+
+    audio: audiohal: noise issue when switch sources or channel [1/2]
+    
+    PD#TV-4286
+    
+    Problem:
+    Noise could be heard when switch sources.
+    The pop is from large sound sudden down to zero.
+    
+    Solution:
+    Add easing in/out func.
+    
+    Verify:
+    X301
+    
+    Change-Id: Ibf60285214362ffc35fd4d79ae998796f9206466
+    Signed-off-by: Shuai Li <shuai.li@amlogic.com>
+
+[33mcommit 82535596013564a5cc9f7fa4b522dd22b3b175c0[m
+Author: Xiaoming Sui <xiaoming.sui@amlogic.com>
+Date:   Sat May 25 20:40:54 2019 +0800
+
+    audio: add dtv sample rate support when pll  [1/1]
+    
+    PD#SWPL-8590
+    
+    Problem:
+    32K&44k1 audio, frequency is unstable.
+    
+    Solution:
+    add dtv sample rate support from stream when pll, and
+    add the check of "alsa_device_is_auge".
+    
+    Verify:
+    X301
+    
+    Change-Id: I4ea15298de2ea7119072e39d990473e8f02461ae
+    Signed-off-by: Xiaoming Sui <xiaoming.sui@amlogic.com>
+
+[33mcommit 045035ba053a178ba5db59348ee02595d96a01aa[m
+Author: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date:   Fri May 24 14:42:54 2019 +0800
+
+    AudioHAL: adjust alsa port compare sequence [1/1]
+    
+    PD# SWPL-8939
+    
+    Problem:
+    dolby&DTS passthroungh playback failed,AMP shows decoder off
+    and the progress bar of videoplayer is stuck
+    
+    Solution:
+    adjust alsa port compare sequence
+    
+    Verify:
+    verify by x301
+    
+    Change-Id: I3602d985dcfc7a3df2291a6361bd39a94fb5f591
+    Signed-off-by: Chaomin Zheng <chaomin.zheng@amlogic.com>
+    Signed-off-by: Jian Xu <jian.xu@amlogic.com>
+
+[33mcommit c54bbc30dc4439582eb47effffec15dc39a021de[m
+Author: Shuai Li <shuai.li@amlogic.com>
+Date:   Thu Apr 4 15:35:20 2019 +0800
+
+    audio: prop to tune hdmi latency [1/1]
+    
+    PD#SWPL-5664
+    
+    Problem:
+    Eyepatch test fails
+    
+    Solution:
+    Add prop to tune the audio delay
+    
+    Verify:
+    Local tested based on P212
+    
+    Change-Id: Ifa4606d7d36cbd95bc8d3a3d35b45866d1fedb63
+    Signed-off-by: Shuai Li <shuai.li@amlogic.com>
+
+[33mcommit 307a4e2c75d07ffcc622e425dded4adb3d7c6ac1[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Thu May 9 10:37:33 2019 +0800
+
+    audio: fixed audio hdmi adapter profile issue [1/1]
+    
+    PD#SWPL-7088
+    
+    Problem:
+    when support ddp and dtshd ,profile ch  support should
+    reach 8ch.
+    
+    Solution:
+    add 6ch and 8ch support for hdmi adapter
+    
+    Verify:
+    verify by w400
+    
+    Change-Id: If8aaa465304bdcab1ef19a0a19c897197d0af2b5
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit ece3be1e0130e5580f5cbcef2572062ad215a076[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Wed Apr 3 14:40:56 2019 +0800
+
+    audio: compatible for tunnel mode v1 and v2 [1/1]
+    
+    PD#OTT-2468
+    
+    Problem:
+       do not support tunnel in Prime player
+    
+    Solution:
+       Prime player packet tunnel data using v1,
+    but android p common api using v2,so we add
+    compatible for tunnel mode v1 and v2
+    
+    Verify:
+      verified by ampere
+    
+    Change-Id: I595cbe6a8df7154977d886d299855e05737dd4f1
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit 9f4344661f85a69d16062b0c0f5d3b09a10cb119[m
+Author: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date:   Sat May 11 15:12:52 2019 +0800
+
+    Audio HAL : when start built in mic stream, open mic port [1/1]
+    
+    PD# SWPL-7409
+    
+    Problem:
+    CtsNativeMediaAAudioTestCases module 13 fail
+    
+    Solution:
+    when start built in mic stream, open mic port
+    
+    Verify:
+    verify by x301
+    
+    Change-Id: I58280810300d6ca51ca1e760e586bf6eb4963327
+    Signed-off-by: Chaomin Zheng <chaomin.zheng@amlogic.com>
+
+[33mcommit 473453a72029cb7f7996b984fcde75dae973ac0d[m
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Sat Jan 26 17:45:35 2019 +0800
+
+    audio: far field function [1/1]
+    
+    PD#SWPL-7741
+    
+    Problem:
+    Need far field func.
+    
+    Solution:
+    Enabel far field.
+    
+    Verify:
+    SM1, AC213
+    
+    Change-Id: I8d488ad0dd2d6be38891a49685c4494de189f29c
+    Signed-off-by: Jian Xu <jian.xu@amlogic.com>
+    Signed-off-by: Zhe Wang <Zhe.Wang@amlogic.com>
+    Signed-off-by: Shuai Li <shuai.li@amlogic.com>
+
+[33mcommit 5b3f41ae720920f1ecfcccf8c854c48dbf6bc66e[m
+Author: Zhe Wang <Zhe.Wang@amlogic.com>
+Date:   Thu May 16 11:00:43 2019 +0800
+
+    audio: optimize audio volume application to increase SNR [1/1]
+    
+    PD#TV-5659
+    
+    Problem:
+    playing low amplitude audio stream with low volume,
+    white noise is heard.
+    
+    Solution:
+    optimize audio volume application to increase SNR
+    
+    Verify:
+    verify on X301
+    
+    Change-Id: Ia31bf4b29d0171fac6269cac61e1e6692e199e83
+    Signed-off-by: Zhe Wang <Zhe.Wang@amlogic.com>
+
+[33mcommit 795aef95b4cd89d863df736ede4ffd8635f13ea6[m
+Author: Cheng Tong <cheng.tong@amlogic.com>
+Date:   Tue May 14 11:57:03 2019 +0800
+
+    audio: fix cvbs output can't control volume issue [1/1]
+    
+    PD#OTT-3797
+    
+    Problem:
+    cvbs output can't control volume
+    
+    Solution:
+    get volume from active outport decive
+    
+    Verify:
+    verify it on franklin
+    
+    Change-Id: I0a75e5c841ce1ef83150bd2c8c00f71cb01e4361
+    Signed-off-by: Cheng Tong <cheng.tong@amlogic.com>
+
+[33mcommit 51b609754e0435bae32213cc62ec6b49185086f3[m
+Author: Xiaoming Sui <xiaoming.sui@amlogic.com>
+Date:   Fri May 10 14:05:19 2019 +0800
+
+    dtv: audio: fix the issue of radio channel was blocked [1/2]
+    
+    PD#SWPL-8261
+    
+    Problem:
+    when play the radio channel, there is no audio output
+    for some times, or displayed "NO SIGNAL"
+    
+    Solution:
+    enable the "has_dtv_video" function and reduce the
+    abuffer level threshold when playback.
+    
+    Verify:
+    X301
+    
+    Change-Id: Ib360eae2ea2fd883a8ca91b23b2ee0f21e9e795d
+    Signed-off-by: Xiaoming Sui <xiaoming.sui@amlogic.com>
+
+[33mcommit 75d1b5dcd0eb07dc2030c70aa34fba78468f1bd1[m
+Author: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date:   Thu May 9 20:50:57 2019 +0800
+
+    AudioHal: remove virtual microphones info [1/1]
+    
+    PD# SWPL-7350
+    
+    Problem:
+    VtsHalAudioV4_0Target module can not be executed with VTS R7
+    
+    Solution:
+    remove virtual microphones info for new vts test case
+    
+    Verify:
+    verify by x301
+    
+    Change-Id: I9ca1d9096dcae557e96cda085a7bd99aceb916bb
+    Signed-off-by: Chaomin Zheng <chaomin.zheng@amlogic.com>
+
+[33mcommit 6830f9c663e889091e0b2597cba7ca61826cae60[m
+Author: Xiaoming Sui <xiaoming.sui@amlogic.com>
+Date:   Wed May 8 11:24:19 2019 +0800
+
+    audio: fix aac avsync issue [1/1]
+    
+    PD#SWPL-7849
+    
+    Problem:
+    aac audio is out of avsync range
+    
+    Solution:
+    make avsync for pcm audio and
+    add the pll protection
+    
+    Verify:
+    X301
+    
+    Change-Id: I181ee4c1668efc467cd17d245a8a2fcd44214c80
+    Signed-off-by: Xiaoming Sui <xiaoming.sui@amlogic.com>
+
+[33mcommit b6572a2ea2eec2119b60a56a286b62eb2c82337f[m
+Author: Luan Yuan <luan.yuan@amlogic.com>
+Date:   Thu May 9 10:35:49 2019 +0800
+
+    6041484 audio: reconfig audio period size only by HBR switching [1/2]
+    d66b3f3 avsync: audio: fix dtv avsync problem when arc pluged [1/3]
+    6dac313 audio: fix dd stream sometimes no vioce when arc pll [1/1]
+    fae63fc audio: fix the crash issue when channel switched [1/1]
+    73f9b6b audio_hal: fixed play passthrough stream bluetooth noise [1/1]
+    7e986d7 audio: fix the audio output  over head of video [1/1]
+    ce00ff9 audio: fixed hdmi in dts passthrough lib mute issue [1/1]
+    7a0426a audio: fix process avsync crash issue [1/1]
+    4d1525a audio: fix AD sound leak issue [1/1]
+    bed6468 audio: fixed dts coreless stream nonlicence lib passthrough
+    issue [1/1]
+    81fa414 audio: Fix audio abnormal after exit NTS [1/1]
+    520ca04 audio: fix spk noise when BT connected [1/1]
+    0e56f89 audiohal: add libam_adp_vendor.so for AD funtion [2/2]
+    766722c avsync: audiohal: fix the avsync for ms12 [2/4]
+    
+    Change-Id: I75afc7dc197ad92059a6b1410bf561735aa82144
+    Signed-off-by: Luan Yuan <luan.yuan@amlogic.com>
+
+[33mcommit 3a690086dcaa0246f9c7db49c2ae98fc555be902[m
+Author: Cheng Tong <cheng.tong@amlogic.com>
+Date:   Fri Apr 19 16:08:20 2019 +0800
+
+    audio: fix pause play audio can't stop immediately issue [1/1]
+    
+    PD# OTT-3315
+    
+    Problem:
+    pause play audio can't stop immediately
+    
+    Solution:
+    when pasue status, skip read audio data
+    
+    Verify:
+    verify by u212
+    
+    Change-Id: Ic7504a7fe995970b41878c6282e35233d336f2d6
+    Signed-off-by: Cheng Tong <cheng.tong@amlogic.com>
+
+[33mcommit 5636550579d878f220af3ca0b7a3632b45bedb42[m
+Author: Cheng Tong <cheng.tong@amlogic.com>
+Date:   Wed Apr 17 17:59:17 2019 +0800
+
+    audio: STB switch left/right channel has no function [1/1]
+    
+    PD# SWPL-7297
+    
+    Problem:
+    STB switch left/right channel has no function
+    
+    Solution:
+    add the function support
+    
+    Verify:
+    verify by u212
+    
+    Change-Id: I65e9d0450cb43c10ce09d0198d445deb0eb57186
+    Signed-off-by: Cheng Tong <cheng.tong@amlogic.com>
+
+[33mcommit 57b170860574bf6e272118496426af3ffd971e38[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Wed Apr 17 09:48:39 2019 +0800
+
+    audio: fixed stb dtv output noise issue [2/2]
+    
+    PD#SWPL-5816
+    
+    Problem:
+    Dolby/DTS audio playback mute(or noise) on S905X2+DVB
+    board when connecting to a TV unspported Dolby/DTS
+    
+    Solution:
+    1.local playback support hdmi dynamic adaption
+    2.dtv shuld not support raw output when hdmi edid
+    not support
+    
+    Verify:
+    Local verified by u212
+    
+    Change-Id: I5d197ce2b2b7bd3290032b5d82c1d3e4bce45ca2
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit 28333d9b0740223c926491dae5a96eba1d375dc8[m
+Author: Xiushan Lu <xiushan.lu@amlogic.com>
+Date:   Sat Apr 6 11:44:36 2019 +0800
+
+    audio: provide AudioSystem.getparameter("HDMI ARC Switch") [1/3]
+    
+    PD#SWPL-6424
+    
+    Problem:
+    Provide an method to tune the A/V sync.
+    
+    Solution:
+    in the product within Dolby MS12 Library.
+    1.if the audio output is speaker,
+    setprop media.amnuplayer.audio.delayus -80000,
+    this command will be an static default value,
+    this could keep the avsync in [-30~+100]
+    2.if the audio output device is HDMI ARC,
+    the property 'media.amnuplayer.audio.delayus' is tunning by UI.
+    
+    Verify:
+    X301-T962X2
+    
+    Change-Id: Ia5b0a5f3bb915f4a1ba425bbb370bffd2929faf1
+    Signed-off-by: Xiushan Lu <xiushan.lu@amlogic.com>
+    Signed-off-by: Luan Yuan <luan.yuan@amlogic.com>
+
+[33mcommit b2a040a925ed789cec51f97fc1dec82d638c94a2[m
+Author: Xiaoming Sui <xiaoming.sui@amlogic.com>
+Date:   Tue Mar 5 20:14:24 2019 +0800
+
+    avsync: audio: fix blackscrean issue when replayed [2/2]
+    
+    PD#TV-2802
+    
+    Problem:
+    The image is stuck or blackscrean for a few seconds
+    when the DTV stream is replayed.
+    
+    Solution:
+    when audio pts and video pts discontinue, then
+    adjust the pcr source clock.
+    
+    Verify:
+    X301
+    
+    Change-Id: Icf4acbcf84692c03736448878ed31ca088c7d9d1
+    Signed-off-by: Xiaoming Sui <xiaoming.sui@amlogic.com>
+
+[33mcommit 4f56296dbb7d0d66644827dbdfaf29da3c80aa92[m
+Author: Luan Yuan <luan.yuan@amlogic.com>
+Date:   Mon Apr 15 15:28:20 2019 +0800
+
+    audio: add delay to cal dual output render position accurately [1/2]
+    
+    PD#SWPL-5307
+    
+    Problem:
+    avsync latency over 100ms when replaying or switching programs
+    
+    Solution:
+    add delay to cal dual output render position accurately
+    
+    Verify:
+    verified by X301
+    
+    Change-Id: Ice5ed3c8994ce83baf5453332670a00de422d308
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+    
+    Signed-off-by: Luan Yuan <luan.yuan@amlogic.com>
+
+[33mcommit 187c87c6a8699a0cd924cd331e08ed0e506f4c33[m
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Wed Mar 27 23:57:18 2019 +0800
+
+    audio: add hwsync payload data rewrite code [1/1]
+    
+    PD#SWPL-5988
+    
+    Problem:
+    Sometimes the audio flinger burst data is not totally completely
+    consumed by audio hal as payload size is smaller than burst size.
+    In that case, the audioflinger will rewrite the remained data again.
+    when seek operation, the last remained data will be treated as new
+    fresh data which may cause audio pts gap.
+    
+    Solution:
+    Consume the audio flinger burst data totally.
+    
+    Verify:
+    Local tested on P212.
+    
+    Change-Id: I01149dbc226e3ef470facce7a063e809be48e17b
+
+[33mcommit b86b4e19bec74ea30ce1bf682398f1b513d39d91[m
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Mon Feb 18 20:42:29 2019 +0800
+
+    audio: Fix G12a/b raw pass through issue [1/1]
+    
+    PD#SWPL-4931
+    
+    Problem:
+      G12a/b raw pass through no sound.
+    
+    Solution:
+      check the right device id for spdif pass through.
+      use the ALSA-spdif device instead of spdifb2hdmi.
+    
+    Verify:
+      w200
+    
+    Change-Id: I435ef1a34b041c2f51a2a4d9f672643d2d0a53f5
+    Signed-off-by: Jian Xu <jian.xu@amlogic.com>
+
+[33mcommit 0bb7f24e27af84e4b4d1ccd8a97652e56f5a935f[m
+Author: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date:   Fri Feb 22 20:34:31 2019 +0800
+
+    AudioHal: resample input stream [1/1]
+    
+    PD# SWPL-4422
+    
+    Problem:
+    connect BT speaker,the sound output slowly and abnormal in DTV/ATV/HDMI
+    
+    Solution:
+    resample input stream
+    
+    Verify:
+    verify by x301
+    
+    Change-Id: I7742b924871a740dacbc3c7cbb565d1880f49722
+    Signed-off-by: Chaomin Zheng <chaomin.zheng@amlogic.com>
+
+[33mcommit cebdeeb5620078208cd1c04e6c6b8ccfe5a95fce[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Tue Feb 26 19:23:13 2019 +0800
+
+    audio: fixed auge chip raw output blocked issue [1/1]
+    
+    PD#SWPL-5146
+    
+    Problem:
+       for auge,if write i2s first and the write
+    spdif,pcm_write will blocked
+    
+    Solution:
+       if decoder not packet a IEC data,do not write i2s.
+    
+    Verify:
+      verified by X301
+    
+    Change-Id: Ifec9a48c51d161e39215643146f8bc24f8859dc4
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit 65023a2814995019710ead930fa995ee38ecb6cd[m
+Author: Cheng Tong <cheng.tong@amlogic.com>
+Date:   Wed Jan 30 15:31:05 2019 +0800
+
+    audio: U212 dvb HDMI raw output failed [1/1]
+    
+    PD#SWPL-4458
+    
+    Problem:
+    in Mbox+dvb case, dolby raw data didn't write
+    
+    Solution:
+    add this case.
+    
+    Verify:
+    verified by u212
+    
+    Change-Id: I6b44364383dd5e8619af7b84a80c3e464f85cfbf
+    Signed-off-by: Cheng Tong <cheng.tong@amlogic.com>
+
+[33mcommit 3d959c1ea1e4842ee030dcf918f7339d599d7797[m
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Wed Feb 20 13:51:11 2019 +0800
+
+    audio: fix DTV spdif device not close issue after ARC raw output [1/1]
+    
+    PD#SWPL-4277
+    
+    Problem:
+      LPCM no sound after DTV ARC DD/DD+ output
+    
+    Solution:
+      For DTV user case, the adev_open_output_stream_new is called with LPCM format.
+      so the device id is selected as I2S edvice, so when "aml_alsa_output_close"
+      is called.the spdif device is not called . which will cause the alsa driver
+      same source failed as the spdif device is not closed. now,we updated
+      the device id when call "aml_alsa_output_open".
+    
+    Verify:
+      marconi
+    
+    Change-Id: Ib3e21aa86442dfde4e221a060fed1473f24ba974
+    Signed-off-by: Jian Xu <jian.xu@amlogic.com>
+
+[33mcommit a43ec0923cc7a4ab938bb84fd5d5bd4d4a8a96b5[m
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Wed Dec 19 22:09:59 2018 +0800
+
+    audio: auge: tl1 acodec mapping to data 1 [2/2]
+    
+    PD#SWPL-3277
+    
+    Problem:
+    tl1 internal codec volume can by adjusted
+    
+    Solution:
+    configure the acodec data layout mapping
+    to a fixed volume
+    
+    Verify:
+    x301
+    
+    Change-Id: I62dc4aaeba61543bc3b52324ffcccbd9c76c1a45
+    Signed-off-by: Jian Xu <jian.xu@amlogic.com>
+
+[33mcommit 89beb199db13fcff6442492381f18fdd09fe1856[m
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Thu Nov 29 19:30:20 2018 +0800
+
+    Audio: AudioHal: fix TL1 audio volume can not change issue [1/1]
+    
+    PD#SWPL-2614
+    
+    Problem:
+        TL1 speaker output is masked to i2s in data 0-1 channel, which
+        the audio is fixed as it is used to AV/Optical output.
+    
+    Solution:
+        Seperate the volume control from TL1 chip with TXLX/TLX chip
+        let audio channel volume can be controled.
+        TODO:need fix that in kernel dts to re-map the channel layout.
+    
+    Verify:
+        X301
+    
+    Change-Id: I9c8af96f954ee89a8b0fc3bf11db5f26670e5729
+    Signed-off-by: Jian Xu <jian.xu@amlogic.com>
+
+[33mcommit 83f374d6d5136423cdadfdebdc850e44f660eaf6[m
+Author: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date:   Fri Jan 18 14:13:46 2019 +0800
+
+    AudioHal: fixed arc plug out in  dtv no output issue [1/1]
+    
+    PD# SWPL-3651
+    
+    Problem:
+    when arc plug out in,dtv no audio output
+    
+    Solution:
+    if dtv patch is released, recreate.
+    
+    Verify:
+    verify by x301
+    
+    Change-Id: I654d4290258746b25de4f74ed5ae5759cd4e880c
+    Signed-off-by: Chaomin Zheng <chaomin.zheng@amlogic.com>
+
+[33mcommit 132853bbc094c48aa700b1c4269cfeaa35ab5e12[m
+Author: Xiaoming Sui <xiaoming.sui@amlogic.com>
+Date:   Tue Jan 22 16:33:26 2019 +0800
+
+    audio: fix ddp audio latency issue [1/1]
+    
+    PD#SWPL-3148
+    
+    Problem:
+    Play bitstream：AVS+.ts, HDMI3 connect to AMP,
+    it will always print audio pts information in CRT
+    
+    Solution:
+    When calculating the dtv audio latency, if output
+    format is ddp, then the latency divide 4
+    
+    Verify:
+    P321
+    
+    Change-Id: I0df2a50ea2554278d088c009cb50f912320e91b0
+    Signed-off-by: Xiaoming Sui <xiaoming.sui@amlogic.com>
+
+[33mcommit 1e9281bf11431f1a13ee7592978774bd70311c08[m
+Author: Xiaoming Sui <xiaoming.sui@amlogic.com>
+Date:   Mon Jan 28 17:40:31 2019 +0800
+
+    audio: fix random switch source no audio issue [1/1]
+    
+    PD#SWPL-4547
+    
+    Problem:
+    Random switch source one night cause the system
+    have no audio output
+    
+    Solution:
+    when there is no audio, the android framework killed
+    the audioserver from the logcat info. the cause is
+    audio patch output thread is blocked by alsa pcm handle,
+    so modify alsa_pcm_lock mutex to protect the pcm handle.
+    
+    Verify:
+    X301
+    
+    Change-Id: If8ac3106bd8b208761cc8fc00f0d72b0a72fd003
+    Signed-off-by: Xiaoming Sui <xiaoming.sui@amlogic.com>
+
+[33mcommit 2accca44bdec5cbda7b526558dfd5926a91f4c60[m
+Author: Xiaoming Sui <xiaoming.sui@amlogic.com>
+Date:   Fri Jan 18 18:10:13 2019 +0800
+
+    audio: fix usb speaker volume uncontrollable [1/1]
+    
+    PD#SWPL-3790
+    
+    Problem:
+    usb speaker volume uncontrollable
+    
+    Solution:
+    add apply_volume to control volume
+    and reomove the patch_src check for swpl-4141
+    
+    Verify:
+    P321
+    
+    Change-Id: I2a813c379efe3e20e6a92e4d21d1e6ce915f2aef
+    Signed-off-by: Xiaoming Sui <xiaoming.sui@amlogic.com>
+
+[33mcommit 35e776615cb94553517098b0fd3faf63048de366[m
+Author: Xiaoming Sui <xiaoming.sui@amlogic.com>
+Date:   Wed Jan 2 11:09:45 2019 +0800
+
+    audio: add codes to support usb speadker in dtv mode [1/1]
+    
+    PD#SWPL-1874
+    
+    Problem:
+    no audio output from USB speaker in DTV source
+    
+    Solution:
+    add a ringbuffer in audio patch, the src is audio hal pcm data,
+    the dest is usb speaker in_read buffer, it works in dtv source.
+    
+    Verify:
+    R311
+    
+    Change-Id: I424382a9b92f95fea9d4e81a65833b60d62491e9
+    Signed-off-by: Xiaoming Sui <xiaoming.sui@amlogic.com>
+
+[33mcommit 33789de93c3861483969a09604ffcfc55f58b8f6[m
+Author: Shen Liu <shen.liu@amlogic.com>
+Date:   Sat Mar 16 04:00:42 2019 +0800
+
+    audio: change hal buffer size from 768 to 788
+    
+    PD#SWPL-5664
+    
+    Problem:
+    Eyepatch test fails
+    
+    Solution:
+    Add prop to tune the audio delay
+    
+    Verify:
+    Local tested.
+    
+    Change-Id: I76b6e0aa3dba6c22c18f4bc10788111350338a53
+    Signed-off-by: Shuai Li <shuai.li@amlogic.com>
+    Signed-off-by: Luan Yuan <luan.yuan@amlogic.com>
+
+[33mcommit a3995ab19a55d6f9e848a37e570920326e27d6f2[m
+Author: Shuai Li <shuai.li@amlogic.com>
+Date:   Sun Mar 10 11:42:58 2019 +0800
+
+    audio: prop to tune hdmi latency [1/1]
+    
+    PD#SWPL-5664
+    
+    Problem:
+    Eyepatch test fails
+    
+    Solution:
+    Add prop to tune the audio delay
+    
+    Verify:
+    Local tested.
+    
+    Change-Id: Ibd917d62932f38f5476aa2aa1530f0ec43c7d5b1
+    Signed-off-by: Shuai Li <shuai.li@amlogic.com>
+
+[33mcommit b4bc203c9b7645819ab573e9139ccb2c9b506395[m
+Author: Shuai Li <shuai.li@amlogic.com>
+Date:   Fri Mar 1 22:41:16 2019 +0800
+
+    audio: fix noise on tracks change [1/1]
+    
+    PD#SWPL-5112
+    
+    Problem:
+    Random noise appears when switching tracks
+    between PCM and RAW stream. The Raw data
+    is treated as PCM by AVR.
+    
+    Solution:
+    Add one mute package to depop the first raw data.
+    
+    Verify:
+    Local tested.
+    
+    Change-Id: I2da1f46f2ca901613076b761c0f3f564f1bdb1af
+    Signed-off-by: Shuai Li <shuai.li@amlogic.com>
+
+[33mcommit bd86ed35c06ecb1b9e64c91054281ae016336e8d[m
+Author: wenbiao zhang <wenbiao.zhang@amlogic.com>
+Date:   Thu Feb 28 16:58:25 2019 +0800
+
+    audio: send AUDIO_STOP in adev_close_output_stream_new [1/1]
+    
+    PD#SWPL-5227
+    
+    Problem:
+    nts VIDEO-009-TC2 cause video freeze
+    the first time play,audio pts change to a large value, and set pcr,
+    for the second time play, pcr is much larger than vpts, so it show
+    video direct, when audio pts arrive, it would sync av and video freeze
+    for 1s.
+    
+    Solution:
+    send AUDIO_STOP in adev_close_output_stream_new to clear pcr
+    
+    Verify:
+    u212
+    
+    Change-Id: I164d0dee206122eccf3cfba3c301dd7f4a1c4748
+    Signed-off-by: wenbiao zhang <wenbiao.zhang@amlogic.com>
+
+[33mcommit 7766cec3624ba6861b732849d90e97f3316efd7b[m
+Author: Shuai Li <shuai.li@amlogic.com>
+Date:   Tue Feb 26 15:26:42 2019 +0800
+
+    audio: fix too many calls of resume [1/1]
+    
+    PD#SWPL-5147
+    
+    Problem:
+    Too many calls of resume will bring in
+    lots of kernel printk which may affect
+    the IRQ.
+    
+    Solution:
+    Set the correct flag to let the resume call only once
+    
+    Verify:
+    Need stress tests.
+    
+    Change-Id: I66f55689e044621250ecc2e07007766864575b8b
+    Signed-off-by: Shuai Li <shuai.li@amlogic.com>
+
+[33mcommit 6f7b348ca8bdc8e0567a0bb46d95dde95548c4ac[m
+Author: qiu.zeng <qiu.zeng@amlogic.com>
+Date:   Fri Jan 18 15:08:26 2019 +0800
+
+    audio: bt audio:add new vid and pid of bt remote [1/1]
+    
+    PD#TV-2192
+    
+    Problem:
+    add new vid and pid of bt remote
+    
+    Solution:
+    Revised vid and pid
+    
+    Verify:
+    Verfied by ampere
+    
+    Change-Id: I5791d271480ae759b5c96020d1c07cb4d0dc7b8b
+    Signed-off-by: Qiu Zeng <qiu.zeng@amlogic.com>
+
+[33mcommit 7ed31103d14ca8c9a984d14793216b228634201d[m
+Author: qiu.zeng <qiu.zeng@amlogic.com>
+Date:   Thu Jan 17 09:19:23 2019 +0800
+
+    audio: bt audio:updata vid and pid of bt remote [1/2]
+    
+    PD#TV-2192
+    
+    Problem:
+    haier's remote vid and pid is the same with kehwin
+    
+    Solution:
+    Revised vid and pid
+    
+    Verify:
+    Verfied by ampere
+    
+    Change-Id: I02e1780cd12a6fefb08872d91765279751a4cb38
+    Signed-off-by: Qiu Zeng <qiu.zeng@amlogic.com>
+
+[33mcommit 8298c2422247d4e83fd5aeb306257676fcff6323[m
+Author: Kuibao Zhang <kuibao.zhang@amlogic.com>
+Date:   Fri Dec 28 19:18:29 2018 +0800
+
+    BT: QW RCU cause audio crash [1/1]
+    
+    PD#SWPL-3421
+    
+    Problem:
+        QW RCU cause audio crash when play any audio
+    
+    Solution:
+        Modify the the audio of QW RCU.
+    
+    Verify:
+        Einstein.
+    
+    Change-Id: I57d9377f1c897de9795a595720f9f886c2294908
+    Signed-off-by: Kuibao Zhang <kuibao.zhang@amlogic.com>
+
+[33mcommit e69d52bdf6d41409d8ec99e574d81cc49d0ba307[m
+Author: Luan Yuan <luan.yuan@amlogic.com>
+Date:   Wed Feb 27 13:09:34 2019 +0800
+
+    Revert "audio: add silence threshold to pcm config [1/1]"
+    
+    This reverts commit c62d25dbb88483ef6deb907e52d224e1ffc26de6.
+
+[33mcommit 355d70ab78daa986a5941005c323acc0ec1f7e12[m
+Author: Shuai Li <shuai.li@amlogic.com>
+Date:   Mon Feb 25 15:44:47 2019 +0800
+
+    audio: setting SPDIF output av unsync [1/1]
+    
+    PD#SWPL-5114
+    
+    Problem:
+    AUDIO is set to SPDIF, play pause/resume,
+    audio and video out of sync
+    
+    Solution:
+    Fix the wrong condition which transcoder
+    does not skip audio.
+    Which will cause av unsync.
+    
+    Verify:
+    Local verified.
+    
+    Change-Id: Ia9bbdabf9a0cf75a2b083c174f425a321ddea176
+    Signed-off-by: Shuai Li <shuai.li@amlogic.com>
+
+[33mcommit 57997124b038998a0ff2fa98204a290304a43d71[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Fri Jan 25 20:39:10 2019 +0800
+
+    audio: add dd+ to dd convert function [1/1]
+    
+    PD#SWPL-3028
+    
+    Problem:
+      nts need DD+ to dd convert function
+    
+    Solution:
+      add dd+ to dd convert function
+    
+    Verify:
+      s905x-p212
+    
+    Change-Id: I8b77dde03088aa1e5ded11676a9a429cb9d4dacc
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit baa66348d00a99cfc42d69cee3536ee09a02820f[m[33m ([m[1;31mamlogic/p-amlogic-iptv[m[33m)[m
+Author: Shuai Li <shuai.li@amlogic.com>
+Date:   Sat Jan 19 19:39:43 2019 +0800
+
+    audio: continous output when tunnel pcm starts [1/1]
+    
+    PD#SWPL-3797
+    
+    Problem:
+    on Sony TV,from 5.1 ch switch to 2.0 ch,
+    2-3s has no sound output;Probability:
+    5/5 of the times comparison: always exits
+    
+    Solution:
+    Enable the HDMI clock ahead of switching
+    to fix the sony TV 2~3s no audio issue.
+    
+    Verify:
+    Local tests OK.
+    
+    Change-Id: I685476184a0244b103ede9748b3c5beea7755d70
+    Signed-off-by: Shuai Li <shuai.li@amlogic.com>
+
+[33mcommit 301f378aa47aedce0f53deb40d2239775ab7ea95[m
+Author: Shuai Li <shuai.li@amlogic.com>
+Date:   Sun Jan 13 14:10:44 2019 +0800
+
+    audio: fix the wrong calced frame positon [1/1]
+    
+    PD#SWPL-3626
+    
+    Problem:
+    In hw avsync mode, we found that the frame position
+    return to audio track is doubled. This will cause a
+    wrong position for app to do the av sync.
+    
+    Solution:
+    Delete the unneccesary increment for audio frame counter.
+    
+    Verify:
+    Local verified.
+    
+    Change-Id: I61e918e4ae3e30740a6c30819c56f63703b48bf3
+    Signed-off-by: Shuai Li <shuai.li@amlogic.com>
+
+[33mcommit 65de87d9f6b3a766e4e27cfbf786392c9ee90769[m
+Author: Luan Yuan <luan.yuan@amlogic.com>
+Date:   Sat Jan 12 17:12:30 2019 +0800
+
+    Revert "audio: audiohal: fix the replay problem of dolby files [1/1]"
+    
+    This reverts commit 94746a2bd5370d5c85062f2126aa8ab29d98354b.
+
+[33mcommit 3870b03d375fd790c7d4c43c65e888ee5dd8b3a5[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Thu Jan 10 15:11:37 2019 +0800
+
+    audio: support multi instance for dolby decoder [3/4]
+    
+    PD#SWPL-3800
+    
+    Problem:
+       dolby deocoer api changes
+    
+    Solution:
+       tv audio hal adapter to new decoder api
+    
+    Verify:
+      verified by p321
+    
+    Change-Id: Ic9c84bd9f6a034f8a9bcbbb2138cf24a9f0eb387
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit 32f95acbb94a1bf8610766344d421324df7c1e67[m
+Author: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date:   Wed Dec 19 21:33:40 2018 +0800
+
+    AudioHal: add dd+ decoder null pointer protection to fix crash [2/2]
+    
+    PD# SWPL-3139
+    
+    Problem:
+    audioserver crash,audio patch status not right,no sound out
+    
+    Solution:
+    add dd+ decoder null pointer protection to fix crash
+    
+    Verify:
+    verify by p321
+    
+    Change-Id: I5b67ef144e651086b20d78e627e1c17b25e0eb43
+    Signed-off-by: Chaomin Zheng <chaomin.zheng@amlogic.com>
+
+[33mcommit 346fe531c61b5610b78d326cbba9688c014ee1b8[m
+Author: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date:   Thu Jan 10 16:25:45 2019 +0800
+
+    AudioHal: change microphone interface for vts r5 test [1/1]
+    
+    PD# SWPL-4055
+    
+    Problem:
+    VtsHalAudioV4_0Target incomplete,audio server probability crash
+    
+    Solution:
+    change microphone interface not use global mic
+    
+    Verify:
+    verify by u212,test 20 times
+    
+    Change-Id: I40e2b9a2eb161df35fc001c9695d2f33d4e62ff5
+    Signed-off-by: Chaomin Zheng <chaomin.zheng@amlogic.com>
+
+[33mcommit 94746a2bd5370d5c85062f2126aa8ab29d98354b[m
+Author: Xiaoming Sui <xiaoming.sui@amlogic.com>
+Date:   Fri Jan 4 09:57:26 2019 +0800
+
+    audio: audiohal: fix the replay problem of dolby files [1/1]
+    
+    PD#SWPL-3103
+    
+    Problem:
+    dolby files have no sounds after replay
+    
+    Solution:
+    when checks apts lookup, Add a counter to accumulate
+    the number of retries, If the counter is > 5, then
+    break and begin to play.
+    
+    Verify:
+    X301
+    
+    Change-Id: I934865a8b4836d6986c5e377fc57b47766becd9a
+    Signed-off-by: Xiaoming Sui <xiaoming.sui@amlogic.com>
+
+[33mcommit 85cfb45d48084b3c2e9de46ac0c84618c928c562[m
+Author: Xiaoming Sui <xiaoming.sui@amlogic.com>
+Date:   Tue Jan 8 18:30:30 2019 +0800
+
+    audio: fix no audio output problem after switch channel [1/1]
+    
+    PD#SWPL-2696
+    
+    Problem:
+    there is no audio output after switch the channel from
+    hdmiin(dts audio) to dtv(ac3 audio)
+    
+    Solution:
+    the reason is that the dual output handle(spdif pcm handle) is
+    not released when switch the channel from hdmiin to dtv, so close
+    it to fix it
+    
+    Verify:
+    P321
+    
+    Change-Id: Ie76d4cbff82ca93c9c306c864c622e217b0e1899
+    Signed-off-by: Xiaoming Sui <xiaoming.sui@amlogic.com>
+
+[33mcommit c62d25dbb88483ef6deb907e52d224e1ffc26de6[m
+Author: Shuai Li <shuai.li@amlogic.com>
+Date:   Fri Dec 28 17:48:34 2018 +0800
+
+    audio: add silence threshold to pcm config [1/1]
+    
+    PD#SWPL-3629
+    
+    Problem:
+    There is an audio gap when closing playback
+    When underrun occur, the HW pointer may output
+    the old data which cause pop.
+    
+    Solution:
+    Add silence threshold to pcm config.
+    So that when xrun occur, the audio will output zero.
+    
+    Verify:
+    Local tested.
+    
+    Change-Id: I2189b0061b55c35b107ecf325f0695aa3e4b0982
+    Signed-off-by: Shuai Li <shuai.li@amlogic.com>
+
+[33mcommit 5be2ebf019f252821ef72e96b6bbcd70fb30ffb3[m
+Author: Shuai Li <shuai.li@amlogic.com>
+Date:   Tue Jan 1 14:38:26 2019 +0800
+
+    audio: add mute to DDP5.1 passthrough [1/1]
+    
+    PD#SWPL-3741
+    
+    Problem:
+    DDP5.1 Mute is invalid.
+    
+    Solution:
+    Add mute interface to DDP5.1 passthrough.
+    
+    Verify:
+    Local verified.
+    
+    Change-Id: Ib85ab78e0054c718e5492c38275a3fb224d4feb3
+    Signed-off-by: Shuai Li <shuai.li@amlogic.com>
+
+[33mcommit 74f5a4ffb6f775685978c0ac27498249623e0a71[m
+Author: Shuai Li <shuai.li@amlogic.com>
+Date:   Sun Nov 25 19:23:16 2018 +0800
+
+    audio: adjust audio HAL buffer to 1024 [1/1]
+    
+    PD#SWPL-805
+    
+    Problem:
+    NTS pop and gap noise.
+    
+    Solution:
+    1. Adjust the HAL buffer to 1024.
+    2. Padding zeros before first time write to avoid a large write which easily
+       cause audiofligner underrun.
+    3. Tuning DDP5.1 and HEAAC hwsync calculation
+       in order to pass eye-patch AVSYNC test.
+    
+    Verify:
+    Local verified
+    
+    Change-Id: I1c8b5b14af0e70c36c6d926e09d0638d32ebec15
+    Signed-off-by: Shuai Li <shuai.li@amlogic.com>
+
+[33mcommit 75672d83849e188ad777fcf2d548e9f599097659[m
+Author: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date:   Thu Dec 27 15:19:46 2018 +0800
+
+    AudioHal: improve microphone interface for vtsR5 test [1/1]
+    
+    PD# SWPL-3566
+    
+    Problem:
+    VtsHalAudioV4_0Target module r5 vts microphone test fail
+    
+    Solution:
+    improve microphone interface for vtsR5 test
+    
+    Verify:
+    verify by p321
+    
+    Change-Id: I2c75e4655cab0f6264820fca5f0a179b83bc5d53
+    Signed-off-by: Chaomin Zheng <chaomin.zheng@amlogic.com>
+
+[33mcommit 193d8861983b0343abf8334f0f9fb60678af8682[m
+Author: live.li <live.li@amlogic.com>
+Date:   Thu Dec 20 17:24:37 2018 +0800
+
+    audio: fix null point isue when dtv change channel [1/2]
+    
+    PD#SWPL-2769
+    
+    Problem:
+    p321 null point issue
+    
+    00 pc 0001f944 /vendor/lib/hw/audio.primary.amlogic.so
+     (dtv_patch_get_cmd+40)
+    01 pc 00020e87 /vendor/lib/hw/audio.primary.amlogic.so
+     (patch_thread_get_cmd+54)
+    02 pc 000207ad /vendor/lib/hw/audio.primary.amlogic.so
+     (audio_dtv_patch_process_threadloop+296)
+    03 pc 00063c15 /system/lib/libc.so
+     (__pthread_start(void*)+22)
+    04 pc 0001e065 /system/lib/libc.so
+     (__start_thread+22)
+    
+    Solution:
+    fix null point issue
+    
+    Verify:
+    test pass on txl p321 board
+    
+    Change-Id: I053f24165302e7dbdbcddcf4258cc5dc98244cd9
+    Signed-off-by: Sandy Luo <sandy.luo@amlogic.com>
+
+[33mcommit 0b5f9a6abe351385bb3607feadd7a9140dc3ac59[m
+Author: weijia.zhu <weijia.zhu@amlogic.com>
+Date:   Wed Dec 26 15:25:51 2018 +0800
+
+    audio: remove redundant log in MS12 [1/1]
+    
+    PD#SWPL-3624
+    
+    Problem:
+      remove redundant log in MS12
+    
+    Solution:
+      remove redundant log in MS12
+    
+    Verify:
+      verified by p212
+    
+    Change-Id: I5314f0ab7159bd4a292b10e6f4a720385d0ad2ca
+    Signed-off-by: weijia.zhu <weijia.zhu@amlogic.com>
+
+[33mcommit 517bc1b6e3a5fccf69cb8d5327308eb60a6d7c67[m
+Author: weijia.zhu <weijia.zhu@amlogic.com>
+Date:   Mon Dec 17 19:05:57 2018 +0800
+
+    audio: MS12 NTS fail to mute [1/1]
+    
+    PD#SWPL-2871
+    
+    Problem:
+        MS12 NTS testcase fail to change volume
+    
+    Solution:
+        1. add set_dolby_ms12_primary_input_db_gain() for DD input
+        2. change PCM volume in tunnel mode in mixer_main_buffer_write()
+        3. remove lock setting volume
+        4. same volume didn't set to MS12
+        5. add interface to only update MS12 gain.
+        6. restore ms12 volume when switching stream.
+    
+    Verify:
+         verified by p212
+    
+    Change-Id: I65b16ce8556e02355dfe791d87c614f950058839
+    Signed-off-by: weijia.zhu <weijia.zhu@amlogic.com>
+
+[33mcommit 862548bc97b50d8bb92e2ee615788eab5ff942f9[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Thu Dec 13 22:09:03 2018 +0800
+
+    audio: fix dts raw output timestamp wrong issue [1/1]
+    
+    PD#SWPL-2513
+    
+    Problem:
+       set digital audio format is auto,play DTS video in movie
+       player,the video play not smooth.
+    
+    Solution:
+       add lasttimestamp to store timestamp,becasue when read
+       the timestamp,the timestamp maybe been writting.so the
+       lasttimestamp is always valid.
+    
+    Verify:
+      verified by p321
+    
+    Change-Id: Ic8e3fe194ed7752095b862b305e2a164b2904703
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit 36d451b3a4b6b4ae16a6f2f3ddd0285592c6ed98[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Tue Dec 18 19:30:16 2018 +0800
+
+    audio: fixed tunnel mode pcm playback blocked issue [1/1]
+    
+    PD#SWPL-3361
+    
+    Problem:
+       nts tunnel mode pcm playback blocked
+    
+    Solution:
+       when fixed issue SWPL-2513,to tunnel pcm
+       timestamp,should also use lasttimestamp.
+    
+    Verify:
+      verified by ampere
+    
+    Change-Id: Ib3cadd499722d8917287e0c8cfefb69802b61895
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit ddc1786bc288b217be34639fb6f5b726011106bf[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Thu Nov 22 18:56:04 2018 +0800
+
+    audio: fixed arc plug out in  dtv no output issue [2/2]
+    
+    PD# SWPL-1987
+    
+    Problem:
+       when arc plug out in,dtv no audio output
+    
+    Solution:
+      if dtv patch is released, recreate.
+    
+    Verify:
+      verified by p321
+    
+    Change-Id: I090978af2dc0ed9f2bcc1418f76aef2970c4f82d
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit c7438b4aa9bfb63a7f88aa0ed11d5f38bd9d4805[m
+Author: Luan Yuan <luan.yuan@amlogic.com>
+Date:   Tue Dec 18 19:18:40 2018 +0800
+
+    Revert "audio: fix dts raw output timestamp wrong issue [1/1]"
+    
+    This reverts commit 9c1d44956772f2e7809f58c5a82c1010f206dbaf.
+
+[33mcommit 9c1d44956772f2e7809f58c5a82c1010f206dbaf[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Thu Dec 13 22:09:03 2018 +0800
+
+    audio: fix dts raw output timestamp wrong issue [1/1]
+    
+    PD#SWPL-2513
+    
+    Problem:
+       set digital audio format is auto,play DTS video in movie
+       player,the video play not smooth.
+    
+    Solution:
+       add lasttimestamp to store timestamp,becasue when read
+       the timestamp,the timestamp maybe been writting.so the
+       lasttimestamp is always valid.
+    
+    Verify:
+      verified by p321
+    
+    Change-Id: Ic8e3fe194ed7752095b862b305e2a164b2904703
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit 0e2871f0880024995cee1f8d3c1fd958b8478b7c[m
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Tue Dec 11 20:08:44 2018 +0800
+
+    audio:  fix spdif raw passthough issue  [1/1]
+    
+    PD#SWPL-2957
+    
+    Problem:
+          SPDIF passthrough has no sound
+    
+    Solution:
+         Correct the tl1 spdif device id to device 4, before tl1
+         tv chip, the spdif output device is fixed to device 1.
+         now we use a common function to  check the device id
+         when spdif pass through.
+    
+    Verify:
+         verified by x301
+    
+    Change-Id: Id44b245c0e72031ea4ba0e14c302619292c40b76
+    Signed-off-by: Jian Xu <jian.xu@amlogic.com>
+
+[33mcommit 84ddfb6c64e0d11db9571f4be7fe0df3ff3f62ab[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Mon Dec 10 11:24:32 2018 +0800
+
+    audio: fix usb playback noise when hdmi in raw case [1/1]
+    
+    PD#SWPL-1865
+    
+    Problem:
+       when hdmi in raw data and use usb card playback,
+       switch between atv and hdmi in,nosie issue happens.
+    
+    Solution:
+      1.the issue is cased by IS_ATOM_PROJECT is not used
+      property,when IS_ATOM_PROJECT is not defined,the pcm
+      read and raw read logic is wrong.so use if else to
+      distinguish.
+      2. for switch between atv and hdmi  nosie issue is
+      casued by tuner2mix_patch is not set true when tuner
+      to mix case.
+    
+    Verify:
+      verified by p321
+    
+    Change-Id: Ie94e031e104ca282bc8ddea116d58013ed858e8a
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit a55922c5f36e44054b306c634dd12b1b6822516c[m
+Author: weijia.zhu <weijia.zhu@amlogic.com>
+Date:   Mon Nov 26 17:15:38 2018 +0800
+
+    audio: Netflix playback with Dolby MS12 enabled, init version [1/1]
+    
+    PD#SWPL-652
+    
+    Problem:
+      P-main-line not adapted MS12 with Netflix case
+    
+    Solution:
+      Adapt MS12 code with Netflix case.
+      Always continous output.
+      Init version
+    
+    Verify:
+      verified by p212
+    
+    Change-Id: I2280a98bf52e28527ed499eff06acfbb5d2ecd9c
+    Signed-off-by: weijia.zhu <weijia.zhu@amlogic.com>
+
+[33mcommit 1cfc86a0c341b511b74bb5d3a22da3eff57507af[m
+Author: Cheng Tong <cheng.tong@amlogic.com>
+Date:   Thu Nov 22 14:56:18 2018 +0800
+
+    audio: timeshift after press speed key,sound cannot sync [1/1]
+    
+    PD#SWPL-1001
+    
+    Problem:
+    1.when timeshift seek,audio patch need restart.
+      but when audio patch pasue, restart fail.
+    2.if can't get first apts,use checkin firstapts
+    
+    Solution:
+    when audio patch pasue,can do stop operation
+    
+    Verify:
+    verified by r311
+    
+    Change-Id: I1d3ae06ad3472d303e56b5c951e42be4e500ed77
+    Signed-off-by: Cheng Tong <cheng.tong@amlogic.com>
+
+[33mcommit 94c1d625fa3d2dc7324a4aedeec77f95380e6e12[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Wed Dec 5 21:46:53 2018 +0800
+
+    audio: solve raw switch pcm mute issue [1/1]
+    
+    PD#SWPL-2910
+    
+    Problem:
+       when raw swich to pcm output,alsa mute.
+    
+    Solution:
+      pcm_stop(handle) to reset alsa driver.
+    
+    Verify:
+      verified by p212
+    
+    Change-Id: I1c6d66338032809546146045696d48e16867e211
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit 6b6c3461379e69cbc9097c31aa4a0fcc766ce5d9[m
+Author: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date:   Sat Dec 1 15:44:22 2018 +0800
+
+    AudioHal: fix vts getsupportedformat test fail items [1/2]
+    
+    PD# SWPL-2380
+    
+    Problem:
+    VtsHalAudioV4_0Target module 23 fail
+    
+    Solution:
+    add supported formats para
+    
+    Verify:
+    verify by p321
+    
+    Change-Id: Ibddf0bf0e5ee398492e1ece642fff2f973302b34
+    Signed-off-by: Chaomin Zheng <chaomin.zheng@amlogic.com>
+
+[33mcommit f99922df114be3242ab7b1eb16c84382427e0375[m
+Author: xiaoming.sui <xiaoming.sui@amlogic.com>
+Date:   Tue Nov 27 16:00:49 2018 +0800
+
+    Audio: AudioHal: fix the multi-audio tracks switch problem [1/1]
+    
+    PD#SWPL-2474
+    
+    Problem:
+    change audio track between MPEG/DRA and DD,
+    the output of AMP is abnormal
+    
+    Solution:
+    when connect ARC device , and change the audio track,
+    we need to change the spidif format , but now we dont
+    reconfig the spidif format ,so now we destory the
+    output stream ,and recreate the output stream
+    
+    Verify:
+    P321
+    
+    Change-Id: I9a5c7d8625a8a3aab200596993b098a4468ea3c6
+    Signed-off-by: xiaoming.sui <xiaoming.sui@amlogic.com>
+
+[33mcommit 5be06722e9efcc2e3565aba30299e9bba71b855c[m
+Author: Yinming Ding <yinming.ding@amlogic.com>
+Date:   Wed Nov 28 13:18:26 2018 +0800
+
+    audio: fix last few seconds of the DD+ stream are not smooth [2/4]
+    
+    PD#SWPL-714
+    
+    Problem:
+    The last few seconds of the DD+ stream are not smooth by DTV playback.
+    
+    Solution:
+    check the apts and vpts both discontinue,then replay the stream.
+    
+    Verify:
+    P321
+    
+    Change-Id: Ibdad4a2c5f4d5fb8ee3a070eeaf6826460e34a68
+    Signed-off-by: Yinming Ding <yinming.ding@amlogic.com>
+
+[33mcommit 4d77b0c55c0f3faf2d3da23dab02d9ecfbdf97b7[m
+Author: live.li <live.li@amlogic.com>
+Date:   Thu Nov 29 08:06:24 2018 +0800
+
+    audio: audioHal: fix memory leak problem [1/1]
+    
+    PD#SWPL-2514
+    
+    Problem:
+    DTV switch channel, audio sever leaked,
+    causing exit
+    
+    Solution:
+    1. resample buff dong release correct.
+    2. when close the output stream , the hwsync buffer
+    dont release .
+    add release code to avoid memory leak
+    
+    Verify:
+    P321
+    
+    Change-Id: I7045c274bd5d495ff928f3c206caacf145a114b9
+    Signed-off-by: live.li <live.li@amlogic.com>
+
+[33mcommit 401db6cfb43d1751d948ee41306d966ea50b4e53[m
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Sun Nov 25 09:58:40 2018 +0800
+
+    audio: fixed multi-channel LPCM goes to tunnel mode issue [1/1]
+    
+    PD#SWPL-2492
+    
+    Problem:
+       Multi-channel LPCM is treated as tunnel mode LPCM to cause abnormal
+    
+    Solution:
+       treated as Frankline, declare to support stereo lpcm in audio hal,
+       then audioflinger will downmix that to 2 ch lpcm and that stream
+       when goes to mixer  thread, not direct thread.
+       TODO.For OTT, I think this case should be handle inside the amlogic
+       audio port,and do the 5.1--> 2.0 downmix or direct goes to audio hw
+       to maintain the original channel content.
+    
+    Verify:
+      verified by ampere
+    
+    Change-Id: Ia9041080196c6f48836286da1826aca9b54a3f6c
+    Signed-off-by: Jian Xu <jian.xu@amlogic.com>
+
+[33mcommit 928a3852db73b101c92d409bb559acecfcf91a61[m
+Author: qiu.zeng <qiu.zeng@amlogic.com>
+Date:   Wed Nov 14 10:21:54 2018 +0800
+
+    audio: bt audio:intergration of Kehwin remote voice V9.0 [1/2]
+    
+    PD#SWPL-1981
+    
+    Problem:
+    Add the voice part of Kehwin remote control
+    
+    Solution:
+    Add the voice part of Kehwin remote control
+    to Public Edition
+    
+    Verify:
+    Verfied by ampere
+    
+    Change-Id: I7f11189fb61b0e282f135cac852d05b78d299e11
+    Signed-off-by: Qiu Zeng <qiu.zeng@amlogic.com>
+
+[33mcommit 6343e6dea95b647d443e1f5dbce2485acd145daf[m
+Merge: fc4e1ac1 ca73557e
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Thu Nov 22 06:10:50 2018 -0800
+
+    Merge "audio hal: update mixer for tv [2/2]" into p-amlogic-mainline
+
+[33mcommit ca73557ea84ccfd7e88e19ffc2dc78c9a607c8a6[m
+Author: Xing Wang <xing.wang@amlogic.com>
+Date:   Thu Nov 22 18:32:22 2018 +0800
+
+    audio hal: update mixer for tv [2/2]
+    
+    PD#172587
+    
+    Problem:
+    missing mixer for tl1
+    
+    Solution:
+    add mixer controls for tl1
+    fix atv source
+    
+    Verify:
+    x301
+    
+    Change-Id: Ib29b31f984d7f13bfd6415e34d17735fcc997b5f
+    Signed-off-by: Xing Wang <xing.wang@amlogic.com>
+
+[33mcommit fc4e1ac147462426485549a9a75892fbf500aa97[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Thu Nov 22 17:07:34 2018 +0800
+
+    audio: fixed SUBMIXER_V1_1 cause raw output issue [1/1]
+    
+    PD#SWPL-2369
+    
+    Problem:
+       when SUBMIXER_V1_1 bring,pause resume, output blocked
+    
+    Solution:
+      tv don't use SubMixing temporary.
+    
+    Verify:
+      verified by p321
+    
+    Change-Id: I6cd149dd1fc3c96c1075fad4d43dc3cc9db911f3
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit 8d0fddc97c7a83c931bb4897126aa190d5bc355c[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Wed Nov 21 15:16:35 2018 +0800
+
+    audio: fixed SUBMIXER_V1_1 cause raw output issue [1/1]
+    
+    PD#SWPL-2321
+    
+    Problem:
+       when SUBMIXER_V1_1 bring,raw output could not work
+    
+    Solution:
+      tv don't use SubMixing temporary.
+    
+    Verify:
+      verified by p321
+    
+    Change-Id: Icf0e28ff6d8ae2e24f445e99f3db8b94637fd77d
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit e199723a1e36d010fa0bbacce5fc3f3aba41bb37[m
+Author: live.li <live.li@amlogic.com>
+Date:   Tue Nov 20 15:19:42 2018 +0800
+
+    auido: audiohal: fix mutex deadlock issue [1/1]
+    
+    PD#SWPL-694
+    
+    Problem:
+     switch channel for 14 hours and the screen is black
+    
+    Solution:
+     when release the dtv patch , the fuction will obtain
+     dtv_patch_mutex,but the process thread will get
+     the cmd from the message queue , it also try to
+     obtain dtv_patch_mutex, so it will cause
+     deadlock ,so add other mutext to
+     protect the message queue to avoid deadlock.
+    
+    Verify:
+     R311
+    
+    Change-Id: I6583c9c01243590c5e60b37184ff63e978b7f49e
+    Signed-off-by: live.li <live.li@amlogic.com>
+
+[33mcommit 1686185eae98e4fdd1725d6fea0eab118e7ac221[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Tue Nov 20 20:37:18 2018 +0800
+
+    audio: solve tv presskey avsync issue [1/1]
+    
+    PD#SWPL-1171
+    
+    Problem:
+       randomly operate the menu during playing DD,
+     avsync is wrong.
+    
+    Solution:
+      1.enlarge mixing write size for aux write may hold the mixing lock
+      2.update ddp_dec->outlen_pcm ddp_dec->outlen_raw value when a new
+      frame in.
+    
+    Verify:
+      verified by p321
+    
+    Change-Id: Ib5cbdd926501eb03b36faa925210c1339a57c86e
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit 488bbe5210d1dc15e56f7b2220bbb024634bf2d3[m
+Merge: 687c7c88 42bd381d
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Tue Nov 20 02:56:42 2018 -0800
+
+    Merge "adec: adec: add handle for Mpeg audio [1/1]" into p-amlogic-mainline
+
+[33mcommit 687c7c88d1514f99808a730e820bfcc24d97022f[m
+Merge: 17f55f29 2a4a095b
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Tue Nov 20 02:55:26 2018 -0800
+
+    Merge "audio: V2.0 for threaded output to depop [1/1]" into p-amlogic-mainline
+
+[33mcommit 42bd381d18213cbf80c1a6e0bc75c24a7be3ba52[m
+Author: Yinming Ding <yinming.ding@amlogic.com>
+Date:   Wed Nov 14 15:02:13 2018 +0800
+
+    adec: adec: add handle for Mpeg audio [1/1]
+    
+    PD#SWPL-1607
+    
+    Problem:
+    change audio language from DD to Mpeg encoded,
+    the audio become abnormal
+    
+    Solution:
+    add handle for Mpeg audio.
+    
+    Verify:
+    p321
+    
+    Change-Id: I74adf9220f54781c8715184e63eccec41453d0b6
+    Signed-off-by: Yinming Ding <yinming.ding@amlogic.com>
+
+[33mcommit 2a4a095b2dc60ab85ea6271184323d93bc3a1782[m
+Author: Shuai Li <shuai.li@amlogic.com>
+Date:   Tue Oct 23 13:44:20 2018 +0800
+
+    audio: V2.0 for threaded output to depop [1/1]
+    
+    PD#SWPL-830
+    
+    Problem:
+      audio gaps and pops could be heard randomly
+    
+    Solution:
+      Using new output thread to do the ALSA output,
+      this will fix the close/open case when switching output.
+      Fix VTS test fails.
+    
+    Verify:
+      verified by atom.
+    
+    Conflicts:
+      audio_hal/audio_hw.c
+    
+    Change-Id: I5440d6b2d3e615c19d7bb01a3f88cf0401ed1306
+    Signed-off-by: Shuai Li <shuai.li@amlogic.com>
+
+[33mcommit 17f55f298218c7468e71781ffc558ba534f817db[m
+Author: nengwen.chen <nengwen.chen@amlogic.com>
+Date:   Mon Nov 19 13:56:14 2018 +0800
+
+    audio_hal: Output big "PO" sound when change source from ATV [2/3]
+    
+    PD#SWPL-318
+    
+    Problem:
+    Output big "PO" sound when change source from ATV to others,
+    or switch between small window and full screen in ATV source.
+    
+    Solution:
+    1.disable or delay atv status early when exit ATV source.
+    2.discard dirst buffer when atv stable.
+    
+    Verify:
+    verified by p321
+    
+    Change-Id: I3d1e8fa354e4a75ada0f6a3edef72d85361eccae
+    Signed-off-by: nengwen.chen <nengwen.chen@amlogic.com>
+
+[33mcommit b7ae2f6d4b5f792fde0823d71a0d8b2f815fe194[m
+Merge: 752e3cf7 1b2fd750
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Mon Nov 19 01:08:38 2018 -0800
+
+    Merge "audio hal: add audio input for TV [2/2]" into p-amlogic-mainline
+
+[33mcommit 1b2fd750713bfd692d2b83e3a2809d9c1d03d83e[m
+Author: Xing Wang <xing.wang@amlogic.com>
+Date:   Wed Oct 31 22:02:17 2018 +0800
+
+    audio hal: add audio input for TV [2/2]
+    
+    PD#172587
+    
+    Problem:
+    get alsaPort for TV
+    
+    Solution:
+    add new alsaPort for TV
+    add I2S only playback and only capture alsaPort
+    remove redundant code getting card and pcm index
+    add frhdmirx port
+    
+    Verify:
+    Verify on u200 now
+    
+    Change-Id: If719815781d936f9c107d30bf5ee2cde77c2b893
+    Signed-off-by: Xing Wang <xing.wang@amlogic.com>
+
+[33mcommit 752e3cf78a530f871ec1953c6ccc8ae56e167046[m
+Author: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date:   Mon Nov 19 15:23:27 2018 +0800
+
+    AudioHal: do not check passthrough status when switch audio track [1/2]
+    
+    PD# SWPL-1957
+    
+    Problem:
+    when switch audio track,amnuplayer passthough status changed
+    
+    Solution:
+    do not check passthrough status when switch audio track
+    
+    Verify:
+    verify by p321
+    
+    Change-Id: Iaeeec560edd62a89c22b274da29c4fb578a70647
+    Signed-off-by: Chaomin Zheng <chaomin.zheng@amlogic.com>
+
+[33mcommit 28becb9150a1830ae146b8d00ffb7390a422162b[m
+Author: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date:   Wed Nov 14 21:25:57 2018 +0800
+
+    AudioHal: update set audio port config [3/3]
+    
+    PD# SWPL-1982
+    
+    Problem:
+    speaker volume changed when switch devices settings
+    
+    Solution:
+    adjust sink device gain value settings
+    
+    Verify:
+    verify by p321
+    
+    Change-Id: I23fd4f4087e53b931388d3cccaeba6779cb80aef
+    Signed-off-by: Chaomin Zheng <chaomin.zheng@amlogic.com>
+
+[33mcommit c9e30f2b09302f8cd1faab7df8326f08241dfcc2[m
+Merge: 4bb50755 b4a4030a
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Fri Nov 16 03:13:21 2018 -0800
+
+    Merge "audio: solve tv dts passthrough issue [2/2]" into p-amlogic-mainline
+
+[33mcommit 4bb5075562211ce4be48a74da5c5283233deb319[m
+Merge: 02c258a9 2fe51a5c
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Thu Nov 15 01:44:48 2018 -0800
+
+    Merge "audio: audio_hal: add license header [2/3]" into p-amlogic-mainline
+
+[33mcommit 2fe51a5c436d8935ee8059e601bf5d9624d43004[m
+Author: jiejing.wang <jiejing.wang@amlogic.com>
+Date:   Thu Nov 15 14:54:33 2018 +0800
+
+    audio: audio_hal: add license header [2/3]
+    
+    PD#SWPL-2111
+    
+    Problem:
+    no license source files
+    
+    Solution:
+    add license header
+    
+    Verify:
+    verify by locally
+    
+    Change-Id: Ib67c73dd6c02e8fb3d2f07a78716bfb76f4dcf71
+    Signed-off-by: jiejing.wang <jiejing.wang@amlogic.com>
+
+[33mcommit 02c258a9d7b879872a6b24c5987cb75c86df6ca2[m
+Merge: c28a2d88 b8a2ca38
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Wed Nov 14 19:32:26 2018 -0800
+
+    Merge "audio: fix dts 2048frame dual output speaker noise issue [1/1]" into p-amlogic-mainline
+
+[33mcommit c28a2d886d96d36908508524a5b15723ced25a84[m
+Merge: be325d46 2dc71adf
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Wed Nov 14 18:10:35 2018 -0800
+
+    Merge "adec: adec: fix apts set bug [2/2]" into p-amlogic-mainline
+
+[33mcommit 2dc71adf43e6e75ddc80d5fa154567525d72be85[m
+Author: live.li <live.li@amlogic.com>
+Date:   Tue Nov 6 15:06:15 2018 +0800
+
+    adec: adec: fix apts set bug [2/2]
+    
+    PD#SWPL-1774
+    
+    Problem:
+    the apts set to kernel,but retrun fail.
+    
+    Solution:
+    the kernel layer call kstrtoint to parse
+    the input parameters, then return faild,
+    so change the input parameters format
+    and then it work right
+    
+    Verify:
+    P321
+    
+    Change-Id: I9a3ababb00339c435eeed66c18585e514a445f24
+    Signed-off-by: live.li <live.li@amlogic.com>
+
+[33mcommit be325d467c73df9218bd73fac247d255819a114d[m
+Merge: 2082ecf7 729018f2
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Wed Nov 14 01:00:20 2018 -0800
+
+    Merge "audio: solve dtv dolby playback stuck issue [2/2]" into p-amlogic-mainline
+
+[33mcommit b8a2ca38ace90b74a24e808263a4b31c4d4b3f9c[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Wed Nov 14 16:35:13 2018 +0800
+
+    audio: fix dts 2048frame dual output speaker noise issue [1/1]
+    
+    PD#SWPL-1953
+    
+    Problem:
+      dts 2048frame dual output speaker noise
+    
+    Solution:
+      memory bounds,enlager buffer size.
+    
+    Verify:
+      verified by r311
+    
+    Change-Id: I6fdd7e91677d4c547bea3d252f3378658722cdb4
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit b4a4030a8377451e6666f44df1da59df18cb4d26[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Wed Nov 14 10:29:55 2018 +0800
+
+    audio: solve tv dts passthrough issue [2/2]
+    
+    PD#SWPL-1951
+    
+    Problem:
+      dts raw output wrong because some frame lost
+    
+    Solution:
+      put write raw data at the front
+    
+    Verify:
+      verified by r311
+    
+    Change-Id: I9cc6f24674c574ccef15df30bf8f016a11f465da
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit 2082ecf7fbd764906de26d82e5b41d28bd45e091[m
+Author: live.li <live.li@amlogic.com>
+Date:   Tue Nov 6 16:18:36 2018 +0800
+
+    adec: adec: add protect of dtv cmd list [1/1]
+    
+    PD#SWPL-694
+    
+    Problem:
+    change channel will cause audioserver
+    crash randomly
+    
+    Solution:
+    add protect of dtv cmd list to avoid
+    audio server binder call blocked.
+    
+    Verify:
+    p321
+    
+    Change-Id: Ib9b2c647d99df53a55f4fcb7103a723df7cbc4cf
+    Signed-off-by: live.li <live.li@amlogic.com>
+
+[33mcommit 729018f22bd1bb6c9c316e162d9e6db9d53ad346[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Tue Nov 13 15:23:20 2018 +0800
+
+    audio: solve dtv dolby playback stuck issue [2/2]
+    
+    PD#SWPL-783
+    
+    Problem:
+      dtv dolby playback stuck
+    
+    Solution:
+      for dolby sleep 50ms is too long,use 20ms instead.
+    
+    Verify:
+      verified by r311
+    
+    Change-Id: If7f03e936341d3cc1fac2a655476966ce8f47b31
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit 78576eccce8c29cbba8ad48697e3f33c3c756c1a[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Mon Nov 12 16:12:54 2018 +0800
+
+    audio: fix dtv dd+ raw out ch lost issue [1/1]
+    
+    PD#SWPL-1903
+    
+    Problem:
+      dtv eac3 raw output filter some frame
+    
+    Solution:
+      dolby strmtyp which valued one  is normal
+    
+    Verify:
+      verified by r311
+    
+    Change-Id: Ib3db2b3598ccd3bd68eba3d863a34b583d0597e1
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit 560676dab48173ab10de20c4ccc7a04be39cf586[m
+Author: weijia.zhu <weijia.zhu@amlogic.com>
+Date:   Thu Nov 8 16:37:18 2018 +0800
+
+    audio: audio glitch playing some DTV AC3 stream [1/1]
+    
+    PD#SWPL-952
+    
+    Problem:
+      audio glith when playing DTV ac3 stream
+      Cause:
+      input AC3 stream from DTV loop is too fast.
+      cause DTV buffer drained up.
+      DCV decoder fail to get enough data for some time.
+    
+    Solution:
+      make speed match when sending data to decoder
+    
+    Verify:
+      verified by p321
+    
+    Change-Id: I80a9a9065961fa7c7305e8ce0581078583089e9a
+    Signed-off-by: weijia.zhu <weijia.zhu@amlogic.com>
+
+[33mcommit 44d313232c752a9599e657ca8e8a8b7d5fa23ba2[m
+Author: Cheng Tong <cheng.tong@amlogic.com>
+Date:   Thu Nov 8 17:39:39 2018 +0800
+
+    audio: dtv: fix no sound issue on mbox platfrom v2.0 [1/1]
+    
+    PD#SWPL-1016
+    
+    Problem:
+    didn't need audio effect process on mbox platform
+    
+    Solution:
+    delete audio effect process if mbox platform
+    fix local play no sound issue
+    
+    Verify:
+    Verify by Android P braun ampere
+    
+    Change-Id: Id62b3edd9fa52d4c0302f5475a6153a9fa133a08
+    Signed-off-by: Cheng Tong <cheng.tong@amlogic.com>
+
+[33mcommit 73f3c0733b1c71456cc4506232a971670f00e1c3[m
+Merge: 992f6711 2404eafe
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Thu Nov 8 00:55:05 2018 -0800
+
+    Merge "AudioHal: change mixer buffer size [1/1]" into p-amlogic-mainline
+
+[33mcommit 992f6711936f462a35abc2b73277c20480912828[m
+Merge: 5e49936b 0e84d431
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Wed Nov 7 21:26:37 2018 -0800
+
+    Merge "audio: fix DTS file fail to playback [1/1]" into p-amlogic-mainline
+
+[33mcommit 5e49936b9d1626f1126112820462982463a228ea[m
+Merge: 10e645a7 1fcb8050
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Wed Nov 7 05:17:37 2018 -0800
+
+    Merge "audio: HDMI in play DD+ raw crash [1/1]" into p-amlogic-mainline
+
+[33mcommit 10e645a7c736090010b408acf05fd063f66531d1[m
+Author: Luan Yuan <luan.yuan@amlogic.com>
+Date:   Wed Nov 7 17:46:10 2018 +0800
+
+    Revert "audio: dtv: fix no sound issue on mbox platfrom [1/1]"
+    
+    This reverts commit 18fc73a490a4ae7dcb479341aff294db5c78a6fb.
+    
+    Change-Id: I57e39512886ad8228465e29bc3665a8c2d00f733
+
+[33mcommit 0e84d431fccb2f28a624ea61e9f1940a0efb12e4[m
+Author: weijia.zhu <weijia.zhu@amlogic.com>
+Date:   Fri Nov 2 08:19:35 2018 +0800
+
+    audio: fix DTS file fail to playback [1/1]
+    
+    PD#SWPL-1053
+    
+    Problem:
+      DTS file fail to playback locally
+      input DTS raw data recognized as AC3 data.
+      using the AC3 decoder, which is wrong.
+    
+    Solution:
+      correct DTS raw data identification method
+    
+    Verify:
+      verified by r311
+    
+    Change-Id: I2aea2eae1e6202c806a2961030ae27bdccd68e7c
+    Signed-off-by: weijia.zhu <weijia.zhu@amlogic.com>
+
+[33mcommit 1fcb8050c8b729396cd03e96a52ed50bbd64e2b1[m
+Author: weijia.zhu <weijia.zhu@amlogic.com>
+Date:   Wed Nov 7 08:13:47 2018 +0800
+
+    audio: HDMI in play DD+ raw crash [1/1]
+    
+    PD#SWPL-1632
+    
+    Problem:
+      In HDMI input DD+ raw data
+      Press "Home" and "OK" key to switch between
+      sub-window and full screen, audio crash
+    
+      Cause:
+      when switch between sub-window and full screen.
+      audio hal recieve release patch and create patch command
+      audio hal will tear down hdmi route and re-route again.
+      when recreating hdmi route.
+      In audio_patch_input_threadloop, it will first
+      malloc 6144 byte size patch->in_buf,
+      but when found input is EAC3, it's really used size
+      is 24576, memory access goes to un-malloced size.
+      Then system crashs.
+      In audio_patch_output_threadloop, have similar issue.
+      real malloced size is 2048,but access size is 8192.
+      This is code bug. Need to be fixed.
+    
+    Solution:
+      realloc buf if real used size is differ from it's malloc size.
+    
+    Verify:
+      verified by r311
+    
+    Change-Id: I18fcd766ebe66e53018feb646b7f0e646a293876
+    Signed-off-by: weijia.zhu <weijia.zhu@amlogic.com>
+
+[33mcommit 4ac5539b50592b2585fbac217f53f29742cee804[m
+Merge: 039d34e0 0383e261
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Tue Nov 6 20:31:54 2018 -0800
+
+    Merge "audio: fix hadware EQ&DRC not work issue [1/2]" into p-amlogic-mainline
+
+[33mcommit 039d34e0ee42e848997bbf88a6e927461888d01a[m
+Merge: aa0c19a9 18fc73a4
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Tue Nov 6 03:08:23 2018 -0800
+
+    Merge "audio: dtv: fix no sound issue on mbox platfrom [1/1]" into p-amlogic-mainline
+
+[33mcommit 18fc73a490a4ae7dcb479341aff294db5c78a6fb[m
+Author: Cheng Tong <cheng.tong@amlogic.com>
+Date:   Fri Oct 26 11:32:37 2018 +0800
+
+    audio: dtv: fix no sound issue on mbox platfrom [1/1]
+    
+    PD#SWPL-1016
+    
+    Problem:
+    didn't need audio effect process on mbox platform
+    
+    Solution:
+    delete audio effect process if mbox platform
+    
+    Verify:
+    Verify by Android P braun
+    
+    Change-Id: Ifea3768070c412eab095274f6a631ae7a6be2440
+    Signed-off-by: Cheng Tong <cheng.tong@amlogic.com>
+
+[33mcommit aa0c19a903740ab0127574891bf047328defb98c[m
+Merge: 4bd92c4e 0944b8ab
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Tue Nov 6 01:26:34 2018 -0800
+
+    Merge "audio: solve spdif raw 32k 44.1k stuck issue [1/1]" into p-amlogic-mainline
+
+[33mcommit 0944b8ab4b7231f07ad0398e25aa42f4e82ce9d7[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Tue Nov 6 16:16:20 2018 +0800
+
+    audio: solve spdif raw 32k 44.1k stuck issue [1/1]
+    
+    PD#SWPL-761
+    
+    Problem:
+      spdif out,32k 44.1k passthrough stuck
+    
+    Solution:
+      passthrough stuck becasue of alsa
+      config sr wrong,use true sr.
+    
+    Verify:
+      verified by r311
+    
+    Change-Id: If0a914b3da11da31f64c9f639f337a170e5ec067
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit 4bd92c4e959d8959383e8b47c8b79f1d831dd14f[m
+Merge: 1811860f 8fcf999b
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Mon Nov 5 23:44:03 2018 -0800
+
+    Merge "audio: solve atsc dtv dolby playback issue [1/1]" into p-amlogic-mainline
+
+[33mcommit 8fcf999b520a58ea4e6a126b2fa03787f3a89278[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Thu Nov 1 13:22:49 2018 +0800
+
+    audio: solve atsc dtv dolby playback issue [1/1]
+    
+    PD#SWPL-763
+    
+    Problem:
+      32k 44.1k passthrough stuck
+    
+    Solution:
+      passthrough stuck becasue of alsa
+      config sr wrong,use true sr.
+    
+    Verify:
+      verified by r311
+    
+    Change-Id: Ib0423c7cce9960d26a00fccd0ba1634ae572440e
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit 1811860facea6920fcee890b1cace1ec810149d1[m
+Merge: d0ea260d 37643103
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Mon Nov 5 17:56:38 2018 -0800
+
+    Merge "audio: solve tv local raw  play seek issue [1/1]" into p-amlogic-mainline
+
+[33mcommit d0ea260dda9271e40ceb8185e7b4c41ce6088033[m
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Mon Nov 5 13:44:21 2018 +0800
+
+    audio: control: fix tv board set hdmitx mute control cause crash issue [1/1]
+    
+    PD#SWPL-832
+    
+    Problem:
+    kernel crash when hdmitx is not resigtered
+    
+    Solution:
+    audio hal has a interface to control the hdmitx audio mute/unmute,
+    but for tv board, the hdmitx module is not registered in kernel.
+    the mixer api will cause kernel exception of null pointer.
+    So only apply that when in OTT module.
+    
+    Verify:
+    not yet.
+    
+    Change-Id: I1f27e771db654745c924a96909d05ee5f142ad06
+    Signed-off-by: Jian Xu <jian.xu@amlogic.com>
+
+[33mcommit 376431039609974345f0892c3e27e37c857d61e4[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Mon Nov 5 19:24:23 2018 +0800
+
+    audio: solve tv local raw  play seek issue [1/1]
+    
+    PD#SWPL-1164
+    
+    Problem:
+      tv raw output seeked then playback blocked
+    
+    Solution:
+      when flush,clear the out->input_bytes_size to zero
+    
+    Verify:
+      verified by r311
+    
+    Change-Id: Ib605cd1c0c929cef1bb8d517690b2942c96bb05e
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit 0383e261262dda43190ba83a570592241a83b853[m
+Author: Che Song <che.song@amlogic.com>
+Date:   Mon Nov 5 16:24:28 2018 +0800
+
+    audio: fix hadware EQ&DRC not work issue [1/2]
+    
+    PD#SWPL-1657
+    
+    Problem:
+      hardware EQ&DRC can not set successfully
+    
+    Solution:
+      use alsa kcontrol interface to set EQ&DRC parameter
+    
+    Verify:
+      verifiled by r311
+    
+    Change-Id: I7c64d6bf447640017c81256c45ca8baa118bcd4e
+    Signed-off-by: Che Song <che.song@amlogic.com>
+
+[33mcommit 9be1cf4614bb83bff0ddd7c14417412e69c8db76[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Thu Oct 18 16:38:09 2018 +0800
+
+    audio: volume: solve av out output level low issue [1/2]
+    
+    PD#SWPL-766
+    PD#SWPL-502
+    
+    Problem:
+      av output level only 100mv
+    
+    Solution:
+      we map the spdif/av/speaker output to different
+      DMA buffer layout for TV.only speaker output
+      apply volume control and post process
+    
+    Verify:
+      verified by r311
+    
+    Change-Id: Ic0d7cb52e01f09f25ecf54703aed38cc5f5721dd
+    Signed-off-by: Jian Xu <jian.xu@amlogic.com>
+
+[33mcommit 1ecd39f07a100ac9f56e6a05f093d07133e508a2[m
+Author: Lei Qian <lei.qian@amlogic.com>
+Date:   Thu Nov 1 20:38:21 2018 +0800
+
+    audio: fix prop access denied issue [1/1]
+    
+    PD#SWPL-773
+    
+    Problem:
+    "audio." prop access denied
+    
+    Solution:
+    change to media prop
+    
+    Verify:
+    verify by p321
+    
+    Change-Id: I6640ca0d0777c1299471c63b07f9df621733954d
+    Signed-off-by: Lei Qian <lei.qian@amlogic.com>
+
+[33mcommit ce57c5213abaff12da63410b66b08388ffe41535[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Tue Oct 30 17:32:29 2018 +0800
+
+    audio: solve first api audio prop issue [1/2]
+    
+    PD#SWPL-773
+    
+    Problem:
+      tv has no sound
+    
+    Solution:
+      add first api support
+    
+    Verify:
+      verified by p321
+    
+    Change-Id: Ie0fcac6c3e38ed763d7b23d3f9e3f2ab564a760c
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit 705eca4c7507424041f72cb749d5218ba4e2d84a[m
+Merge: 9c1c3319 2ac37227
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Tue Oct 30 02:31:48 2018 -0700
+
+    Merge "AudioHal: fix audio4.0 vts fail cases [1/1]" into p-amlogic-mainline
+
+[33mcommit 9c1c3319b6a6a64b1ebaedfd13335c35a7b17257[m
+Merge: 74df367c eecbfd3c
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Mon Oct 29 19:57:56 2018 -0700
+
+    Merge "adec: adec:  fix no dd output avsync problem [1/2]" into p-amlogic-mainline
+
+[33mcommit 74df367cf5474a6c0dc6bdb0f63d07759ba884b8[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Mon Oct 29 21:22:13 2018 +0800
+
+    audio: solve hbo passthrough blocked issue[1/1]
+    
+    PD#SWPL-1083
+    
+    Problem:
+      hbo passthrough blocked,pts not right
+    
+    Solution:
+      give the right pts to player
+    
+    Verify:
+      verified by ampere
+    
+    Change-Id: I57f82eecabf7593fcdb07c983b146d1ffa7dfeab
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit eecbfd3cc7194b42eace411bdcb33c6e86f3e41d[m
+Author: live.li <live.li@amlogic.com>
+Date:   Fri Oct 26 17:26:05 2018 +0800
+
+    adec: adec:  fix no dd output avsync problem [1/2]
+    
+    PD#SWPL-1051
+    
+    Problem:
+    The video and audio are not synchronous
+    when play non DD encoded bitstreams in
+    DTV
+    
+    Solution:
+    change the audio pts get interface ,cant use old
+    interface to get the apts
+    
+    Verify:
+    P321
+    
+    Change-Id: I0b5ae77e41476d552db05e3ac10e913e22903099
+    Signed-off-by: live.li <live.li@amlogic.com>
+
+[33mcommit 2ac372275b32d31eba8ebbe1919344bdd4aa092e[m
+Author: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date:   Sat Oct 27 20:58:56 2018 +0800
+
+    AudioHal: fix audio4.0 vts fail cases [1/1]
+    
+    PD# SWPL-999
+    
+    Problem:
+    VtsHalAudioV4_0Target module 38 fail
+    
+    Solution:
+    fix audio4.0 vts test fail cases
+    
+    Verify:
+    verify by ampere
+    
+    Change-Id: Id9db1189513214144732fc92ba8f6f335ae3d15e
+    Signed-off-by: Chaomin Zheng <chaomin.zheng@amlogic.com>
+
+[33mcommit 4d162a9e7b071572fcc246e1773303542921eb62[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Sat Oct 27 15:44:06 2018 +0800
+
+    audio: solve auge chips raw pause resume blocked issue [1/1]
+    
+    PD#SWPL-1080
+    
+    Problem:
+      u211 raw output blocked when resume after pause status
+    
+    Solution:
+      adev lock is only for start output stream when write
+      for resume api, if auge chip raw output ,use
+      SNDRV_PCM_IOCTL_PREPARE to work.
+    
+    Verify:
+      verified by u211
+    
+    Change-Id: If5e4e4823f35d6b0d2f8e3efcf3340bf96a43a62
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit 91dfdd120e6bd1cf273c4060a85ee963c26cac35[m
+Merge: 9ed2023c 65bf153f
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Thu Oct 25 23:48:43 2018 -0700
+
+    Merge "audio: support 32k ddp passthrough issue [3/3]" into p-amlogic-mainline
+
+[33mcommit 65bf153ff4f6b23d9866a6cc7826c417bd60f37a[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Thu Oct 25 16:16:05 2018 +0800
+
+    audio: support 32k ddp passthrough issue [3/3]
+    
+    PD#SWPL-979
+    
+    Problem:
+      128k 2ch IECfomat profile not support
+    
+    Solution:
+      add profile for 128k 2ch IECformat
+    
+    Verify:
+      verified by ampere
+    
+    Change-Id: I30bd97d0e2499d934109f7cf5663483a6ef8a9f2
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit 2404eafe26afcf1c34022b23e25bcfa7726911e4[m
+Author: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date:   Thu Oct 25 15:51:47 2018 +0800
+
+    AudioHal: change mixer buffer size [1/1]
+    
+    PD# SWPL-534
+    
+    Problem:
+    sometimes without keypad tone output when operate system in source
+    
+    Solution:
+    change mixer buffer size and retry count
+    
+    Verify:
+    verify on p321
+    
+    Change-Id: Ib78002d8e6b7bb620cf7b07996c69af98e723c4a
+    Signed-off-by: Chaomin Zheng <chaomin.zheng@amlogic.com>
+
+[33mcommit 9ed2023ca7b3c756f504ac689c7eee3eda7a1495[m
+Merge: ee6a4373 d534f461
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Wed Oct 24 20:05:39 2018 -0700
+
+    Merge "audio: passthrough: support passthrough and dual output for tv [2/2]" into p-amlogic-mainline
+
+[33mcommit d534f461345cc1e6a377c788b077bb3dbfc83461[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Mon Oct 22 21:38:22 2018 +0800
+
+    audio: passthrough: support passthrough and dual output for tv [2/2]
+    
+    PD#SWPL-742
+    
+    Problem:
+    dolby raw data output stuck
+    
+    Solution:
+    1.change the buffer size to santify dcv decoder
+    process rate.
+    2.change the ringbuffer read size for dual output
+    3.enlarge the ddpdec inbuf to solve crash issue
+    
+    Verify:
+    verified by p321
+    
+    Change-Id: I1ce15394f451dae37f85a25b2b580c0d84d06380
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit ee6a437395a205a7cb6b95f1770cfd11ae720295[m
+Merge: 1618c7e1 3cfc3d13
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Mon Oct 22 02:00:52 2018 -0700
+
+    Merge "audio: dtv: solve dtv channel lock not work issue [1/1]" into p-amlogic-mainline
+
+[33mcommit 3cfc3d131080e97a601e2dfd7dc187d23a7de9b7[m
+Author: weijia.zhu <weijia.zhu@amlogic.com>
+Date:   Thu Oct 18 08:21:41 2018 +0800
+
+    audio: dtv: solve dtv channel lock not work issue [1/1]
+    
+    PD#SWPL-412
+    
+    Problem:
+      channel lock doesn't work on DTV
+    
+    Solution:
+      when recieve "parental_control_av_mute" message, for ATV and LINE IN
+      have already muted audio output.
+      DTV is a new module in audio hal.We need to also mute audio in DTV
+      when recieve "parental_control_av_mute" msg.
+      There are 2 place to add mute logic:
+      1. aml_alsa_output_write() for SPEAKER output.
+      2. aml_audio_spdif_output() for SPDIF and HDMI output
+    
+    Verify:
+      verified by r311
+    
+    Change-Id: I8654edfa9e521841188258c1b9eb238af7030aca
+    Signed-off-by: weijia.zhu <weijia.zhu@amlogic.com>
+
+[33mcommit 1618c7e127cb147c32c800fa1fa6d5ad638b8323[m
+Author: live.li <live.li@amlogic.com>
+Date:   Sat Oct 20 10:39:51 2018 +0800
+
+    audio: dtv: fix dtv a/v sync problem [1/1]
+    
+    PD#SWPL-276
+    
+    Problem:
+    dtv audio avsync problem
+    
+    Solution:
+    change the audio pts calc algorithm
+    1. output handle is NULL ,so dont use direct_active
+      to get the output handle,use the stream out to get
+      the output handle;
+    2. decoder_apts_lookup cant get every frame pts,so
+    when the frame has no pts ,we must use pts+calc_pts
+    ase the cur frame pts,so we must
+    use dtv_hal_get_pts instead
+    
+    Verify:
+     R311 32bit kernel & 64bit kernel version
+    
+    Change-Id: I3704f22008b75502b4a4a91460c7464d0288f252
+    Signed-off-by: live.li <live.li@amlogic.com>
+    Signed-off-by: Jian Xu <jian.xu@amlogic.com>
+
+[33mcommit 53fd79ee4c686510f8601cd1735541b3eea815f8[m
+Author: Che Song <che.song@amlogic.com>
+Date:   Thu Oct 18 11:12:14 2018 +0800
+
+    audio: dtv: solve dtv dolby speaker nosie issue [1/1]
+    
+    PD#SWPL-607
+    
+    Problem:
+      when arc is not really connected,the
+      audio hal send the raw data to the
+      speaker.
+    
+    Solution:
+      only send raw data when active output port is ARC.
+    
+    Verify:
+      verified by p321
+    
+    Change-Id: I39b630c01124ea18caa3d94d9a7ec6018289e02c
+    Signed-off-by:Che Song <che.song@amlogic.com>
+    Signed-off-by: Jian Xu <jian.xu@amlogic.com>
+
+[33mcommit c74c32124a30078c0f288577f261a526f31b751b[m
+Merge: 6173941b c9378828
+Author: Lei Qian <lei.qian@amlogic.com>
+Date:   Thu Oct 18 22:36:27 2018 -0700
+
+    Merge "audio:  fix no audio output issue in tv platform [1/2]" into p-amlogic-mainline
+
+[33mcommit 6173941bcb00d90879c9679f69e44c2e3a6cd585[m
+Merge: efba3e50 f8a7540b
+Author: Lei Qian <lei.qian@amlogic.com>
+Date:   Thu Oct 18 22:31:28 2018 -0700
+
+    Merge "audio: kodi: solve kodi raw passthrough issue [1/1]" into p-amlogic-mainline
+
+[33mcommit c93788285ecfca7feab972b02762d2ba474a7c26[m
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Fri Oct 19 09:37:14 2018 +0800
+
+    audio:  fix no audio output issue in tv platform [1/2]
+    
+    PD#SWPL-773
+    
+    Problem:
+    when SHIPPING API 28 is enabled,tv platform can not access
+    some system prop,and wrong configured to ott 16 2ch mode,
+    which cause no sound output.
+    
+    Solution:
+    We use a Variable in tv_product.mk to define the TV product,
+    and in the audio hal makefile,we will read that variable to
+    determine if we need 32 bit 8 ch ouput or 2 ch 16 bit output.
+    
+    Verify:
+        compile  pass verified using Darwin and Franklin
+    
+    Change-Id: Icaa90187997a295b0d3758bb0c5bc5aa04a494ea
+    Signed-off-by: Jian Xu <jian.xu@amlogic.com>
+
+[33mcommit f8a7540bf757d641947b59a639f2500f5158d97e[m
+Author: Jian Xu <jian.xu@amlogic.com>
+Date:   Thu Oct 18 10:16:17 2018 +0800
+
+    audio: kodi: solve kodi raw passthrough issue [1/1]
+    
+    PD#SWPL-339
+    
+    Problem:
+       when kodi dd+/dd/dts passthrough, in audio hal,
+       wrong output device was selected (device 1),should
+       select spdif output device through the device suffix string.
+    
+    Solution:
+       There are several output device since a113/g12a/g12b.
+       00-00: TDM-A-dummy-alsaPORT-i2s multicodec-0 :  : playback 1 : capture 1
+       00-01: TDM-B-dummy multicodec-1 :  : playback 1 : capture 1
+       00-02: TDM-C-dummy multicodec-2 :  : playback 1 : capture 1
+       00-03: PDM-dummy-alsaPORT-pdm dummy-3 :  : capture 1
+       00-04: SPDIF-dummy-alsaPORT-spdifb2hdmi dummy-4 :  : playback 1 : capture 1
+       00-05: SPDIF-B-dummy-alsaPORT-spdif dummy-5 :  : playback 1
+       normally for raw output to hdmitx or to spdif output, we need select
+       SPDIF interface,such as device 4,device 5. device 5 is now using our
+       spdifb module which is targeted to hdmitx, to make sure optical output
+       and hdmitx have the same raw data input.we are now using spdifa module
+       which can be shared to optical output and hdmitx.
+       TODO:the spdifb2hdmi suffix is confused as it is actually spdifa module.
+       need change the kernel dts definition and the hal string matching at
+       the same time to make it more clear.
+    
+    Verify:
+       verified by frankline
+    
+    Change-Id: Icbd02504c6b65fc4e1d905c7a85fd44f6d289b30
+    Signed-off-by: Jian Xu <jian.xu@amlogic.com>
+
+[33mcommit efba3e506ee9156432feddd0980133b8a223bd92[m
+Merge: b4339918 2ae4e05f
+Author: Tellen Yu <tellen.yu@amlogic.com>
+Date:   Wed Oct 17 03:16:54 2018 -0700
+
+    Merge "audio: enable PRODUCT_SHIPPING_API_LEVEL := 28 [15/16]" into p-amlogic-mainline
+
+[33mcommit 2ae4e05fb0c98a549f442a5236239810976db58c[m
+Author: Tellen Yu <tellen.yu@amlogic.com>
+Date:   Wed Oct 3 17:52:37 2018 +0800
+
+    audio: enable PRODUCT_SHIPPING_API_LEVEL := 28 [15/16]
+    
+    PD#SWPL-227
+    
+    Problem:
+    shipping api level is 28, need Tighter access properties
+    
+    Solution:
+    add some selinux policies
+    
+    Verify:
+    verify it on Ampere
+    
+    we must use PartnerPrefixes properties:
+    init.svc.vendor.
+    ro.vendor.
+    persist.vendor.
+    vendor.
+    init.svc.odm.
+    ro.odm.
+    persist.odm.
+    odm.
+    ro.boot.
+    and we don't use hidden apis
+    
+    Change-Id: I92f101d3af2a5ee51bf00efb5d47342929745cfa
+
+[33mcommit b4339918b4574e57ca3c59cab4f5a705e43e76ef[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Wed Oct 10 17:19:03 2018 +0800
+
+    audio: dtv: solve dtv dolby mute issue[1/1]
+    
+    PD#SWPL-454
+    
+    Problem:
+      when dtv playback dolby, switch between
+      dolby and other format, decoder crash.
+    
+    Solution:
+      put decdoer init and process into one thread
+      to git rid of Asynchronous risk.
+    
+    Verify:
+    verified by p321
+    
+    Change-Id: I41d1cea0b0cbd96f51273811a5a3ecf3fd4e2418
+    Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+
+[33mcommit b0c102cee9c958b904cb93035bcba72aa88f39f1[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Wed Oct 10 09:50:51 2018 +0800
+
+    audio: solve outport switch mute issue [1/1]
+    
+    PD#SWPL-452
+       since audio in threadloop and out threadloop
+       crash casue audio mute and find that some buf
+       double release, so got rid of that.
+    
+    Change-Id: Iee0ca7d3a060fad0c7dea61af24f4890b24bb7b2
+
+[33mcommit cef955357257e3e00cacf8ca4d5183ce36ad38ca[m
+Author: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date:   Thu Sep 27 10:52:41 2018 +0800
+
+    audio: merge trunk and p-ref to mainline for audio hw[1/1]
+    
+    PD#174117
+    
+          for dtv function
+          cts issues
+          vol ctrol
+    
+    Change-Id: I98c4a6f4037395525062835d1794af2fc3371617
+
+[33mcommit 119703b5dce30cf2b358c514f3a9f8a2dc9fe552[m
+Author: weijia.zhu <weijia.zhu@amlogic.com>
+Date:   Fri Sep 28 12:29:27 2018 +0800
+
+    audio: add hw detection for Hdmi stream type for TXL chip[1/1]
+    
+    PD#174170: HDMI noise when playing DD/DDP stream
+    
+    Change-Id: Ide55ba89261130aa9d4e731330f20ba2e518bea6
+    Signed-off-by: weijia.zhu <weijia.zhu@amlogic.com>
+
+[33mcommit 7bf9823cd4a07b57c9fb90d12d2ee6cd5237373c[m
+Author: Lei Qian <lei.qian@amlogic.com>
+Date:   Thu Sep 20 17:56:38 2018 +0800
+
+    Initial empty repository
+    
+    Change-Id: I82a7c934369c8674b511651fd3d301b496ba98c3

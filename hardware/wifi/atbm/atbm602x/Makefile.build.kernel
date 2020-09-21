@@ -1,0 +1,48 @@
+#############################################################################
+#               Makefile For Kernel
+############################################################################
+
+NOSTDINC_FLAGS := -I$(src)/include/ \
+	-include $(src)/include/linux/compat-2.6.h \
+	-DCOMPAT_STATIC
+
+ifneq ($(ATBM_MAKEFILE_SUB),y)
+export
+ifeq ($(CONFIG_ATBM601x),y)
+CONFIG_NOT_SUPPORT_40M_CHW = y
+CONFIG_ATHENAB ?= y
+MODULES_NAME = atbm601x_wifi
+else ifeq ($(CONFIG_ATBM602x),y)
+CONFIG_ATHENAB ?= y
+MODULES_NAME = atbm602x_wifi
+else
+CONFIG_ATHENAB ?= y
+endif
+
+ifeq ($(CONFIG_ATBM_USB_BUS),y)
+USB_BUS=y
+SPI_BUS=n
+SDIO_BUS=n
+MULT_NAME=y
+else ifeq ($(CONFIG_ATBM_SDIO_BUS),y)
+SDIO_BUS=y
+USB_BUS=n
+SPI_BUS=n
+MULT_NAME=y
+ifeq ($(CONFIG_ATBM_SDIO_24M),y)
+ifeq ($(CONFIG_ATHENAB),y)
+CONFIG_ATHENAB_24M = y
+CONFIG_ATHENAB=n
+endif
+endif
+else ifeq ($(CONFIG_ATBM_SPI_BUS),y)
+SDIO_BUS=n
+USB_BUS=n
+SPI_BUS=y
+MULT_NAME=y
+endif
+
+endif
+ 
+obj-$(CONFIG_ATBM_APOLLO) += hal_apollo/
+

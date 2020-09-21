@@ -1,0 +1,15 @@
+plugins {
+    id("SupportAndroidTestAppPlugin")
+}
+
+dependencies {
+    implementation(project(":transition"))
+    implementation(project(":appcompat"))
+}
+
+android {
+    aaptOptions {
+        additionalParameters "--no-version-transitions"
+    }
+}
+

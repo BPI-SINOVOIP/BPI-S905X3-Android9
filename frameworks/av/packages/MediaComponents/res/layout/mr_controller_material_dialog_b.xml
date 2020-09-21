@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mr_expandable_area"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <LinearLayout android:id="@+id/mr_dialog_area"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:background="?android:attr/colorBackgroundFloating">
+        <LinearLayout android:id="@+id/mr_title_bar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="24dp"
+            android:paddingRight="12dp"
+            android:orientation="horizontal" >
+            <TextView android:id="@+id/mr_name"
+                android:layout_width="0dp"
+                android:layout_height="72dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textAppearance="@style/TextAppearance.MediaRouter.Title" />
+            <ImageButton android:id="@+id/mr_close"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_vertical"
+                android:contentDescription="@string/mr_controller_close_description"
+                android:src="?attr/mediaRouteCloseDrawable"
+                android:background="?android:attr/selectableItemBackgroundBorderless" />
+        </LinearLayout>
+        <FrameLayout android:id="@+id/mr_custom_control"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+        <FrameLayout android:id="@+id/mr_default_control"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <ImageView android:id="@+id/mr_art"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:background="?android:attr/colorPrimary"
+                android:layout_gravity="top"
+                android:contentDescription="@string/mr_controller_album_art"
+                android:visibility="gone" />
+            <LinearLayout android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="bottom"
+                android:splitMotionEvents="false">
+                <LinearLayout android:id="@+id/mr_media_main_control"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:layout_gravity="bottom"
+                    android:theme="?attr/mediaRouteControlPanelThemeOverlay">
+                    <RelativeLayout
+                        android:id="@+id/mr_playback_control"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingLeft="24dp"
+                        android:paddingRight="12dp" >
+                        <ImageButton android:id="@+id/mr_control_playback_ctrl"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:contentDescription="@string/mr_controller_play"
+                            android:background="?android:attr/selectableItemBackgroundBorderless"
+                            android:visibility="gone" />
+                        <LinearLayout android:id="@+id/mr_control_title_container"
+                            android:orientation="vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toLeftOf="@id/mr_control_playback_ctrl"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true">
+                            <TextView android:id="@+id/mr_control_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="@style/TextAppearance.MediaRouter.PrimaryText"
+                                android:singleLine="true" />
+                            <TextView android:id="@+id/mr_control_subtitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="@style/TextAppearance.MediaRouter.SecondaryText"
+                                android:singleLine="true" />
+                        </LinearLayout>
+                    </RelativeLayout>
+                    <View android:id="@+id/mr_control_divider"
+                        android:layout_width="fill_parent"
+                        android:layout_height="8dp"
+                        android:visibility="gone" />
+                    <LinearLayout
+                        android:id="@+id/mr_volume_control"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="48dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="24dp"
+                        android:paddingRight="12dp"
+                        android:splitMotionEvents="false">
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="?attr/mediaRouteAudioTrackDrawable"
+                            android:gravity="center"
+                            android:scaleType="center"/>
+                        <!-- Since dialog's top layout mr_expandable_area is clickable, it propagates pressed state
+                             to its non-clickable children. Specify android:clickable="true" to prevent volume slider
+                             from having false pressed state. -->
+                        <com.android.support.mediarouter.app.MediaRouteVolumeSlider
+                            android:id="@+id/mr_volume_slider"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:minHeight="48dp"
+                            android:maxHeight="48dp"
+                            android:layout_weight="1"
+                            android:clickable="true"
+                            android:contentDescription="@string/mr_controller_volume_slider" />
+                        <com.android.support.mediarouter.app.MediaRouteExpandCollapseButton
+                            android:id="@+id/mr_group_expand_collapse"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:padding="12dp"
+                            android:background="?android:attr/selectableItemBackgroundBorderless"
+                            android:visibility="gone"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <com.android.support.mediarouter.app.OverlayListView
+                    android:id="@+id/mr_volume_group_list"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/mr_controller_volume_group_list_padding_top"
+                    android:scrollbarStyle="outsideOverlay"
+                    android:clipToPadding="false"
+                    android:visibility="gone"
+                    android:splitMotionEvents="false"
+                    android:theme="?attr/mediaRouteControlPanelThemeOverlay" />
+            </LinearLayout>
+        </FrameLayout>
+        <ScrollView
+            android:id="@+id/buttonPanel"
+            style="?attr/buttonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
+            android:scrollIndicators="top|bottom">
+            <android.support.v7.widget.ButtonBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:layoutDirection="locale"
+                android:orientation="horizontal"
+                android:paddingBottom="4dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="4dp">
+                <Button
+                    android:id="@android:id/button3"
+                    style="?android:attr/buttonBarNeutralButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <android.support.v4.widget.Space
+                    android:id="@+id/spacer"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:visibility="invisible"/>
+                <Button
+                    android:id="@android:id/button2"
+                    style="?android:attr/buttonBarNegativeButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <Button
+                    android:id="@android:id/button1"
+                    style="?android:attr/buttonBarPositiveButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </android.support.v7.widget.ButtonBarLayout>
+        </ScrollView>
+    </LinearLayout>
+</FrameLayout>

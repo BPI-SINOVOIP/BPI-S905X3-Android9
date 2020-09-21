@@ -1,0 +1,68 @@
+cc_library_shared {
+    name: "libstagefright_bufferqueue_helper",
+    vendor_available: true,
+    vndk: {
+        enabled: true,
+    },
+
+    srcs: [
+        "Conversion.cpp",
+        "FrameDropper.cpp",
+        "GraphicBufferSource.cpp",
+        "WProducerListener.cpp",
+    ],
+
+    export_include_dirs: [
+        "include",
+    ],
+
+    header_libs: [
+        "media_plugin_headers",
+    ],
+
+    export_header_lib_headers: [
+        "media_plugin_headers",
+    ],
+
+    shared_libs: [
+        "libbase",
+        "libbinder",
+        "libcutils",
+        "libgui",
+        "libhidlbase",
+        "libhidlmemory",
+        "libhidltransport",
+        "liblog",
+        "libstagefright_foundation",
+        "libui",
+        "libutils",
+
+        "android.hardware.graphics.bufferqueue@1.0",
+
+        "libnativewindow", // TODO(b/62923479): use header library
+    ],
+
+    export_shared_lib_headers: [
+        "libgui",
+        "libhidlmemory",
+        "libstagefright_foundation",
+    ],
+
+    cflags: [
+        "-Werror",
+        "-Wall",
+        "-Wno-unused-parameter",
+        "-Wno-documentation",
+    ],
+
+    sanitize: {
+        misc_undefined: [
+            "signed-integer-overflow",
+            "unsigned-integer-overflow",
+        ],
+        cfi: true,
+        diag: {
+            cfi: true,
+        },
+    },
+}

@@ -1,0 +1,591 @@
+/*
+ * Copyright (C) 2017 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package android.hardware.radio@1.2;
+
+import @1.0::Call;
+import @1.0::CardState;
+import @1.0::CardStatus;
+import @1.0::CdmaSignalStrength;
+import @1.0::CellIdentityCdma;
+import @1.0::CellIdentityGsm;
+import @1.0::CellIdentityLte;
+import @1.0::CellIdentityTdscdma;
+import @1.0::CellIdentityWcdma;
+import @1.0::CellInfoTdscdma;
+import @1.0::CellInfoType;
+import @1.0::EvdoSignalStrength;
+import @1.0::GsmSignalStrength;
+import @1.0::LteSignalStrength;
+import @1.0::RadioConst;
+import @1.0::RadioError;
+import @1.0::RegState;
+import @1.0::SignalStrength;
+import @1.0::TdScdmaSignalStrength;
+import @1.0::TimeStampType;
+import @1.0::WcdmaSignalStrength;
+import @1.1::RadioAccessSpecifier;
+import @1.1::ScanStatus;
+import @1.1::ScanType;
+
+enum RadioConst : @1.0::RadioConst {
+    RADIO_ACCESS_SPECIFIER_MAX_SIZE = 8,
+};
+
+/**
+ * values are in seconds
+ */
+enum ScanIntervalRange : int32_t {
+    MIN = 5,
+    MAX = 300,
+};
+
+/**
+ * value are in seconds
+ */
+enum MaxSearchTimeRange : int32_t {
+    MIN = 60,
+    MAX = 3600,
+};
+
+/**
+ * values are in seconds
+ */
+enum IncrementalResultsPeriodicityRange : int32_t {
+    MIN = 1,
+    MAX = 10,
+};
+
+enum CellConnectionStatus : int32_t {
+    /**
+     * Cell is not a serving cell.
+     */
+    NONE = 0,
+    /**
+     * UE has connection to cell for signalling and possibly data (3GPP 36.331, 25.331).
+     */
+    PRIMARY_SERVING,
+    /**
+     * UE has connection to cell for data (3GPP 36.331, 25.331).
+     */
+    SECONDARY_SERVING,
+};
+
+/**
+ * Overwritten from @1.0::IndicationFilter in order to redefine ALL. In the future, this should
+ * be extended instead of overwritten.
+ */
+enum IndicationFilter : int32_t {
+    NONE = 0,
+    ALL = ~0,
+    /**
+     * When this bit is set, modem must send the signal strength update through
+     * IRadioIndication.currentSignalStrength() when all criteria specified by
+     * IRadio.setSignalStrengthReportingCriteria() are met.
+     */
+    SIGNAL_STRENGTH = 1 << 0,
+    /**
+     * When this bit is set, modem must invoke IRadioIndication.networkStateChanged() when any field
+     * in VoiceRegStateResult or DataRegStateResult changes. When this bit is not set, modem must
+     * suppress IRadioIndication.networkStateChanged() when there are only changes from
+     * insignificant fields. Modem must invoke IRadioIndication.networkStateChanged() when
+     * significant fields are updated regardless of whether this bit is set.
+     *
+     * The following fields are considered significant: VoiceRegStateResult.regState,
+     * VoiceRegStateResult.rat, DataRegStateResult.regState, DataRegStateResult.rat.
+     */
+    FULL_NETWORK_STATE = 1 << 1,
+    /**
+     * When this bit is set, modem must send IRadioIndication.dataCallListChanged() whenever any
+     * field in ITypes.SetupDataCallResult changes. When this bit is not set, modem must suppress
+     * the indication when the only changed field is 'active' (for data dormancy). For all other
+     * field changes, the modem must send IRadioIndication.dataCallListChanged() regardless of
+     * whether this bit is set.
+     */
+    DATA_CALL_DORMANCY_CHANGED = 1 << 2,
+    /**
+     * When this bit is set, modem must send the link capacity update through
+     * IRadioIndication.currentLinkCapacityEstimate() when all criteria specified by
+     * IRadio.setLinkCapacityReportingCriteria() are met.
+     */
+    LINK_CAPACITY_ESTIMATE = 1 << 3,
+    /**
+     * When this bit is set, the modem must send the physical channel configuration update through
+     * IRadioIndication.currentPhysicalChannelConfigs() when the configuration has changed. It is
+     * recommended that this be reported whenever link capacity or signal strength is reported.
+     */
+    PHYSICAL_CHANNEL_CONFIG = 1 << 4,
+};
+
+/**
+ * Audio codec which is used on GSM, UMTS, and CDMA. These values must be opaque
+ * to the Android framework. Only for display.
+ */
+enum AudioQuality : int32_t {
+    /** Unspecified audio codec */
+    UNSPECIFIED,
+    /** AMR (Narrowband) audio codec */
+    AMR,
+    /** AMR (Wideband) audio codec */
+    AMR_WB,
+    /** GSM Enhanced Full-Rate audio codec */
+    GSM_EFR,
+    /** GSM Full-Rate audio codec */
+    GSM_FR,
+    /** GSM Half-Rate audio codec */
+    GSM_HR,
+    /** Enhanced Variable rate codec */
+    EVRC,
+    /** Enhanced Variable rate codec revision B */
+    EVRC_B,
+    /** Enhanced Variable rate codec (Wideband) */
+    EVRC_WB,
+    /** Enhanced Variable rate codec (Narrowband) */
+    EVRC_NW,
+};
+
+struct NetworkScanRequest {
+    ScanType type;
+
+    /**
+     * Time interval in seconds between periodic scans, only valid when type = PERIODIC
+     * Range: ScanIntervalRange:MIN to ScanIntervalRange:MAX
+     */
+    int32_t interval;
+
+    /**
+     * Networks with bands/channels to scan
+     * Maximum length of the vector is
+     * RadioConst:RADIO_ACCESS_SPECIFIER_MAX_SIZE
+     */
+    vec<RadioAccessSpecifier> specifiers;
+
+    /**
+     * Maximum duration of the periodic search (in seconds).
+     * Expected range for the input is [MaxSearchTimeRange:MIN - MaxSearchTimeRange:MAX]
+     * If the search lasts maxSearchTime, it must be terminated.
+     */
+    int32_t maxSearchTime;
+
+    /**
+     * Indicates whether the modem must report incremental results of the network scan
+     * to the client.
+     * FALSE – Incremental results must not be reported.
+     * TRUE  – Incremental must be reported.
+     */
+    bool incrementalResults;
+
+    /**
+     * Indicates the periodicity with which the modem must report incremental results to
+     * the client (in seconds).
+     * Expected range for the input is
+     * [IncrementalResultsPeriodicityRange:MIN - IncrementalResultsPeriodicityRange:MAX]
+     * This value must be less than or equal to maxSearchTime.
+     */
+    int32_t incrementalResultsPeriodicity;
+
+    /**
+     * Describes the List of PLMN ids (MCC-MNC)
+     * If any PLMN of this list is found, search must end at that point and results with all
+     * PLMN found until that point should be sent as response.
+     * If the list is not sent, search to be completed until end and all PLMNs found to be
+     * reported.
+     */
+    vec<string> mccMncs;
+};
+
+struct NetworkScanResult {
+    /**
+     * The status of the scan.
+     */
+    ScanStatus status;
+
+    /**
+     * The error code of the incremental result.
+     */
+    RadioError error;
+
+    /**
+     * List of network information as CellInfo.
+     */
+    vec<CellInfo> networkInfos;
+};
+
+struct CellIdentityOperatorNames {
+    /**
+     * Long alpha Operator Name String or Enhanced Operator Name String.
+     */
+    string alphaLong;
+
+    /**
+     * Short alpha Operator Name String or Enhanced Operator Name String
+     */
+    string alphaShort;
+};
+
+struct CellIdentityCdma {
+    @1.0::CellIdentityCdma base;
+    CellIdentityOperatorNames operatorNames;
+};
+
+struct CellIdentityGsm {
+    @1.0::CellIdentityGsm base;
+    CellIdentityOperatorNames operatorNames;
+};
+
+struct CellIdentityLte {
+    @1.0::CellIdentityLte base;
+    CellIdentityOperatorNames operatorNames;
+    /**
+     * Cell bandwidth, in kHz.
+     */
+    int32_t bandwidth;
+};
+
+struct CellIdentityTdscdma {
+    @1.0::CellIdentityTdscdma base;
+    /**
+     * 16-bit UMTS Absolute RF Channel Number defined in TS 25.102 5.4.4; this value must be valid.
+     */
+    int32_t uarfcn;
+    CellIdentityOperatorNames operatorNames;
+};
+
+struct CellIdentityWcdma {
+    @1.0::CellIdentityWcdma base;
+    CellIdentityOperatorNames operatorNames;
+};
+
+struct CellInfoGsm {
+    CellIdentityGsm cellIdentityGsm;
+    GsmSignalStrength signalStrengthGsm;
+};
+
+struct CellInfoWcdma {
+    CellIdentityWcdma cellIdentityWcdma;
+    WcdmaSignalStrength signalStrengthWcdma;
+};
+
+struct CellInfoCdma {
+    CellIdentityCdma cellIdentityCdma;
+    CdmaSignalStrength signalStrengthCdma;
+    EvdoSignalStrength signalStrengthEvdo;
+};
+
+struct CellInfoLte {
+    CellIdentityLte cellIdentityLte;
+    LteSignalStrength signalStrengthLte;
+};
+
+struct CellInfoTdscdma {
+    CellIdentityTdscdma cellIdentityTdscdma;
+    TdscdmaSignalStrength signalStrengthTdscdma;
+};
+
+struct CellInfo {
+    /**
+     * Cell type for selecting from union CellInfo.
+     */
+    CellInfoType cellInfoType;
+    /**
+     * True if this cell is registered false if not registered.
+     */
+    bool registered;
+    /**
+     * Type of time stamp represented by timeStamp.
+     */
+    TimeStampType timeStampType;
+    /**
+     * Time in nanos as returned by ril_nano_time.
+     */
+    uint64_t timeStamp;
+    /**
+     * Only one of the below vectors must be of size 1 based on the CellInfoType and others must be
+     * of size 0.
+     */
+    vec<CellInfoGsm> gsm;
+    /**
+     * Valid only if type = cdma and size = 1 else must be empty.
+     */
+    vec<CellInfoCdma> cdma;
+    /**
+     * Valid only if type = lte and size = 1 else must be empty.
+     */
+    vec<CellInfoLte> lte;
+    /**
+     * Valid only if type = wcdma and size = 1 else must be empty.
+     */
+    vec<CellInfoWcdma> wcdma;
+    /**
+     * Valid only if type = tdscdma and size = 1 else must be empty.
+     */
+    vec<CellInfoTdscdma> tdscdma;
+    /**
+     * Connection status for the cell.
+     */
+    CellConnectionStatus connectionStatus;
+};
+
+struct CardStatus {
+    @1.0::CardStatus base;
+    uint32_t physicalSlotId;
+    /**
+     * An Answer To Reset (ATR) is a message output by a Smart Card conforming to ISO/IEC 7816
+     * standards, following electrical reset of the card's chip. The ATR conveys information about
+     * the communication parameters proposed by the card, and the card's nature and state.
+     *
+     * This data is applicable only when cardState is CardState:PRESENT.
+     */
+    string atr;
+    /**
+     * Integrated Circuit Card IDentifier (ICCID) is Unique Identifier of the SIM CARD. File is
+     * located in the SIM card at EFiccid (0x2FE2) as per ETSI 102.221. The ICCID is defined by
+     * the ITU-T recommendation E.118 ISO/IEC 7816.
+     *
+     * This data is applicable only when cardState is CardState:PRESENT.
+     */
+    string iccid;
+};
+
+struct LinkCapacityEstimate {
+    /**
+     * Estimated downlink capacity in kbps. This bandwidth estimate shall be the estimated
+     * maximum sustainable link bandwidth (as would be measured at the Upper PDCP or SNDCP SAP).
+     * If the DL Aggregate Maximum Bit Rate is known, this value shall not exceed the DL-AMBR
+     * for the Internet PDN connection.
+     */
+    uint32_t downlinkCapacityKbps;
+    /**
+     * Estimated uplink capacity in kbps. This bandwidth estimate shall be the estimated
+     * maximum sustainable link bandwidth (as would be measured at the Upper PDCP or SNDCP SAP).
+     * If the UL Aggregate Maximum Bit Rate is known, this value shall not exceed the UL-AMBR
+     * for the Internet PDN connection.
+     */
+    uint32_t uplinkCapacityKbps;
+};
+
+struct PhysicalChannelConfig {
+    /**
+     * Connection status for cell. Valid values are PRIMARY_SERVING and SECONDARY_SERVING.
+     */
+    CellConnectionStatus status;
+    /**
+     * Cell bandwidth, in kHz.
+     */
+    int32_t cellBandwidthDownlink;
+};
+
+enum AccessNetwork : int32_t {
+    /** GSM EDGE Radio Access Network */
+    GERAN       = 1,
+    /** Universal Terrestrial Radio Access Network */
+    UTRAN       = 2,
+    /** Evolved Universal Terrestrial Radio Access Network */
+    EUTRAN      = 3,
+    /** CDMA 2000 network */
+    CDMA2000    = 4,
+    /** Interworking Wireless LAN */
+    IWLAN       = 5
+};
+
+enum DataRequestReason : int32_t {
+    /**
+     * The reason of the data request is normal
+     */
+    NORMAL    = 0x01,
+    /**
+     * The reason of the data request is device shutdown
+     */
+    SHUTDOWN  = 0x02,
+    /**
+     * The reason of the data request is IWLAN data handover to another transport
+     * (e.g. from cellular to wifi or vise versa)
+     */
+    HANDOVER  = 0x03,
+};
+
+struct Call {
+    @1.0::Call base;
+    AudioQuality audioQuality;
+};
+
+struct WcdmaSignalStrength {
+    @1.0::WcdmaSignalStrength base;
+    /**
+     * CPICH RSCP as defined in TS 25.215 5.1.1
+     * Valid values are (0-96, 255) as defined in TS 27.007 8.69
+     */
+    uint32_t rscp;
+    /**
+     * Ec/No value as defined in TS 25.215 5.1.5
+     * Valid values are (0-49, 255) as defined in TS 27.007 8.69
+     */
+    uint32_t ecno;
+
+};
+
+struct TdscdmaSignalStrength {
+    /**
+     * UTRA carrier RSSI as defined in TS 25.225 5.1.4
+     * Valid values are (0-31, 99) as defined in TS 27.007 8.5
+     */
+    uint32_t signalStrength;
+    /**
+     * Transport Channel BER as defined in TS 25.225 5.2.5
+     * Valid values are (0-7, 99) as defined in TS 27.007 8.5
+     */
+    uint32_t bitErrorRate;
+    /**
+     * P-CCPCH RSCP as defined in TS 25.225 5.1.1
+     * Valid values are (0-96, 255) as defined in TS 27.007 8.69
+     */
+    uint32_t rscp;
+};
+
+struct SignalStrength {
+    GsmSignalStrength gsm;
+    CdmaSignalStrength cdma;
+    EvdoSignalStrength evdo;
+    LteSignalStrength lte;
+    TdScdmaSignalStrength tdScdma;
+    WcdmaSignalStrength wcdma;
+};
+
+struct CellIdentity {
+    /**
+     * Cell type for selecting from union CellInfo.
+     * Only one of the below vectors must be of size 1 based on a
+     * valid CellInfoType and others must be of size 0.
+     * If cell info type is NONE, then all the vectors must be of size 0.
+     */
+    CellInfoType cellInfoType;
+    vec<CellIdentityGsm> cellIdentityGsm;
+    vec<CellIdentityWcdma> cellIdentityWcdma;
+    vec<CellIdentityCdma> cellIdentityCdma;
+    vec<CellIdentityLte> cellIdentityLte;
+    vec<CellIdentityTdscdma> cellIdentityTdscdma;
+};
+
+struct VoiceRegStateResult {
+    /**
+     * Valid reg states are NOT_REG_MT_NOT_SEARCHING_OP,
+     * REG_HOME, NOT_REG_MT_SEARCHING_OP, REG_DENIED,
+     * UNKNOWN, REG_ROAMING defined in RegState
+     */
+    RegState regState;
+    /**
+     * Indicates the available voice radio technology, valid values as
+     * defined by RadioTechnology.
+     */
+    int32_t rat;
+    /**
+     * concurrent services support indicator. if registered on a CDMA system.
+     * false - Concurrent services not supported,
+     * true - Concurrent services supported
+     */
+    bool cssSupported;
+    /**
+     * TSB-58 Roaming Indicator if registered on a CDMA or EVDO system or -1 if not.
+     * Valid values are 0-255.
+     */
+    int32_t roamingIndicator;
+    /**
+     * Indicates whether the current system is in the PRL if registered on a CDMA or EVDO system
+     * or -1 if not. 0=not in the PRL, 1=in the PRL
+     */
+    int32_t systemIsInPrl;
+    /**
+     * Default Roaming Indicator from the PRL if registered on a CDMA or EVDO system or -1 if not.
+     * Valid values are 0-255.
+     */
+    int32_t defaultRoamingIndicator;
+    /**
+     * reasonForDenial if registration state is 3
+     * (Registration denied) this is an enumerated reason why
+     * registration was denied. See 3GPP TS 24.008,
+     * 10.5.3.6 and Annex G.
+     * 0 - General
+     * 1 - Authentication Failure
+     * 2 - IMSI unknown in HLR
+     * 3 - Illegal MS
+     * 4 - Illegal ME
+     * 5 - PLMN not allowed
+     * 6 - Location area not allowed
+     * 7 - Roaming not allowed
+     * 8 - No Suitable Cells in this Location Area
+     * 9 - Network failure
+     * 10 - Persistent location update reject
+     * 11 - PLMN not allowed
+     * 12 - Location area not allowed
+     * 13 - Roaming not allowed in this Location Area
+     * 15 - No Suitable Cells in this Location Area
+     * 17 - Network Failure
+     * 20 - MAC Failure
+     * 21 - Sync Failure
+     * 22 - Congestion
+     * 23 - GSM Authentication unacceptable
+     * 25 - Not Authorized for this CSG
+     * 32 - Service option not supported
+     * 33 - Requested service option not subscribed
+     * 34 - Service option temporarily out of order
+     * 38 - Call cannot be identified
+     * 48-63 - Retry upon entry into a new cell
+     * 95 - Semantically incorrect message
+     * 96 - Invalid mandatory information
+     * 97 - Message type non-existent or not implemented
+     * 98 - Message type not compatible with protocol state
+     * 99 - Information element non-existent or not implemented
+     * 100 - Conditional IE error
+     * 101 - Message not compatible with protocol state
+     * 111 - Protocol error, unspecified
+     */
+    int32_t reasonForDenial;
+
+    CellIdentity cellIdentity;
+};
+
+struct DataRegStateResult {
+    /**
+     * Valid reg states are NOT_REG_MT_NOT_SEARCHING_OP,
+     * REG_HOME, NOT_REG_MT_SEARCHING_OP, REG_DENIED,
+     * UNKNOWN, REG_ROAMING defined in RegState
+     */
+    RegState regState;
+    /**
+     * Indicates the available data radio technology,
+     * valid values as defined by RadioTechnology.
+     */
+    int32_t rat;
+    /**
+     * If registration state is 3 (Registration
+     * denied) this is an enumerated reason why
+     * registration was denied. See 3GPP TS 24.008,
+     * Annex G.6 "Additional cause codes for GMM".
+     * 7 == GPRS services not allowed
+     * 8 == GPRS services and non-GPRS services not allowed
+     * 9 == MS identity cannot be derived by the network
+     * 10 == Implicitly detached
+     * 14 == GPRS services not allowed in this PLMN
+     * 16 == MSC temporarily not reachable
+     * 40 == No PDP context activated
+     */
+    int32_t reasonDataDenied;
+    /**
+     * The maximum number of simultaneous Data Calls must be established using setupDataCall().
+     */
+    int32_t maxDataCalls;
+    CellIdentity cellIdentity;
+};

@@ -1,0 +1,50 @@
+cc_library {
+    name: "libmediaextractor",
+
+    include_dirs: [
+        "frameworks/av/include",
+        "frameworks/av/media/libmediaextractor/include",
+    ],
+
+    export_include_dirs: ["include"],
+
+    cflags: [
+        "-Wno-multichar",
+        "-Werror",
+        "-Wall",
+    ],
+
+    shared_libs: [
+        "libbinder",
+        "libstagefright_foundation",
+        "libutils",
+        "libcutils",
+        "liblog",
+    ],
+
+    srcs: [
+        "DataSourceBase.cpp",
+        "MediaBuffer.cpp",
+        "MediaBufferBase.cpp",
+        "MediaBufferGroup.cpp",
+        "MediaSource.cpp",
+        "MediaTrack.cpp",
+        "MediaExtractor.cpp",
+        "MetaData.cpp",
+        "MetaDataBase.cpp",
+        "VorbisComment.cpp",
+    ],
+
+    clang: true,
+
+    sanitize: {
+        misc_undefined: [
+            "unsigned-integer-overflow",
+            "signed-integer-overflow",
+        ],
+        cfi: true,
+        diag: {
+            cfi: true,
+        },
+    },
+}

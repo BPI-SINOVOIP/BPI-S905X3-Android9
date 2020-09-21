@@ -1,0 +1,28 @@
+cc_library_shared {
+
+    name: "libnblog",
+
+    srcs: [
+        "NBLog.cpp",
+        "PerformanceAnalysis.cpp",
+        "ReportPerformance.cpp",
+    ],
+
+    shared_libs: [
+        "libaudioutils",
+        "libbinder",
+        "libcutils",
+        "liblog",
+        "libutils",
+    ],
+
+    cflags: [
+        "-Werror",
+        "-Wall",
+    ],
+
+    include_dirs: ["system/media/audio_utils/include"],
+
+    export_include_dirs: ["include"],
+
+}

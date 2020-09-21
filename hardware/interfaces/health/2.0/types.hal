@@ -1,0 +1,154 @@
+/*
+ * Copyright (C) 2017 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package android.hardware.health@2.0;
+
+import @1.0::HealthInfo;
+import @1.0::Result;
+
+/**
+ * Status values for HAL methods.
+ */
+enum Result : @1.0::Result {
+    NOT_FOUND,
+    CALLBACK_DIED,
+};
+
+/*
+ * Identification attributes for a storage device.
+ */
+struct StorageAttribute {
+    /**
+     * Set to true if internal storage
+     */
+    bool isInternal;
+    /**
+     * Set to true if this is the boot device.
+     */
+    bool isBootDevice;
+    /**
+     * Name of the storage device.
+     */
+    string name;
+};
+
+/*
+ * Information on storage device including life time estimates, end of life
+ * information and other attributes.
+ */
+struct StorageInfo {
+    /**
+     * Attributes of the storage device whose info is contained by the struct.
+     */
+    StorageAttribute attr;
+    /**
+     * pre-eol (end of life) information. Follows JEDEC standard No.84-B50.
+     */
+    uint16_t eol;
+    /**
+     * device life time estimation (type A). Follows JEDEC standard No.84-B50.
+     */
+    uint16_t lifetimeA;
+    /**
+     * device life time estimation (type B). Follows JEDEC standard No.84-B50.
+     */
+    uint16_t lifetimeB;
+    /**
+     * version string
+     */
+    string version;
+};
+/*
+ * Disk statistics since boot.
+ */
+struct DiskStats {
+    /**
+     * Number of reads processed.
+     */
+    uint64_t reads;
+    /**
+     * number of read I/Os merged with in-queue I/Os.
+     */
+    uint64_t readMerges;
+    /**
+     * number of sectors read.
+     */
+    uint64_t readSectors;
+    /**
+     * total wait time for read requests.
+     */
+    uint64_t readTicks;
+    /**
+     * number of writes processed.
+     */
+    uint64_t writes;
+    /**
+     * number of writes merged with in-queue I/Os.
+     */
+    uint64_t writeMerges;
+    /**
+     * number of sectors written.
+     */
+    uint64_t writeSectors;
+    /**
+     * total wait time for write requests.
+     */
+    uint64_t writeTicks;
+    /**
+     * number of I/Os currently in flight.
+     */
+    uint64_t ioInFlight;
+    /**
+     * total time this block device has been active.
+     */
+    uint64_t ioTicks;
+    /**
+     * total wait time for all requests.
+     */
+    uint64_t ioInQueue;
+    /**
+     * Attributes of the memory device.
+     */
+    StorageAttribute attr;
+};
+
+/**
+ * Combined Health Information.
+ */
+struct HealthInfo {
+    /**
+     * V1.0 HealthInfo.
+     * If a member is unsupported, it is filled with:
+     * - 0 (for integers);
+     * - false (for booleans);
+     * - empty string (for strings);
+     * - UNKNOWN (for BatteryStatus and BatteryHealth).
+     */
+    @1.0::HealthInfo legacy;
+    /**
+     * Average battery current in uA. Will be 0 if unsupported.
+     */
+    int32_t batteryCurrentAverage;
+    /**
+     * Disk Statistics. Will be an empty vector if unsupported.
+     */
+    vec<DiskStats> diskStats;
+    /**
+     * Information on storage devices. Will be an empty vector if
+     * unsupported.
+     */
+    vec<StorageInfo> storageInfos;
+};

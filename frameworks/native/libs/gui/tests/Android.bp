@@ -1,0 +1,83 @@
+// Build the unit tests,
+
+// Build the binary to $(TARGET_OUT_DATA_NATIVE_TESTS)/$(LOCAL_MODULE)
+// to integrate with auto-test framework.
+cc_test {
+    name: "libgui_test",
+    test_suites: ["device-tests"],
+
+    clang: true,
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+
+    srcs: [
+        "BufferItemConsumer_test.cpp",
+        "BufferQueue_test.cpp",
+        "CpuConsumer_test.cpp",
+        "FillBuffer.cpp",
+        "GLTest.cpp",
+        "IGraphicBufferProducer_test.cpp",
+        "Malicious.cpp",
+        "MultiTextureConsumer_test.cpp",
+        "StreamSplitter_test.cpp",
+        "SurfaceTextureClient_test.cpp",
+        "SurfaceTextureFBO_test.cpp",
+        "SurfaceTextureGLThreadToGL_test.cpp",
+        "SurfaceTextureGLToGL_test.cpp",
+        "SurfaceTextureGL_test.cpp",
+        "SurfaceTextureMultiContextGL_test.cpp",
+        "Surface_test.cpp",
+        "TextureRenderer.cpp",
+    ],
+
+    shared_libs: [
+        "android.hardware.configstore@1.0",
+        "android.hardware.configstore-utils",
+        "liblog",
+        "libEGL",
+        "libGLESv1_CM",
+        "libGLESv2",
+        "libbinder",
+        "libcutils",
+        "libgui",
+        "libhidlbase",
+        "libhidltransport",
+        "libui",
+        "libutils",
+        "libnativewindow"
+    ],
+}
+
+// Build a separate binary for each source file to $(TARGET_OUT_DATA_NATIVE_TESTS)/$(LOCAL_MODULE)
+cc_test {
+    name: "libgui_separate_binary_test",
+    test_suites: ["device-tests"],
+
+    clang: true,
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+
+    test_per_src: true,
+    srcs: [
+        "SurfaceParcelable_test.cpp",
+    ],
+
+    shared_libs: [
+        "liblog",
+        "libbinder",
+        "libcutils",
+        "libgui",
+        "libui",
+        "libutils",
+        "libbufferhubqueue",  // TODO(b/70046255): Remove these once BufferHub is integrated into libgui.
+        "libpdx_default_transport",
+    ],
+
+    header_libs: [
+        "libdvr_headers",
+    ],
+}

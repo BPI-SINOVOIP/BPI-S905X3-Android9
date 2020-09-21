@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Eclipse would pass PROJ_PATH to make. Use it to strip out project path 
+# to shorten messages. Or at least remove path prefix in wine environment.
+
+if [ -z "$PROJ_PATH" ]; then
+    PREFIX=${HOME}/.wine/dosdevices/z:
+else
+    PREFIX=${HOME}/.wine/dosdevices/z:${PROJ_PATH}/
+fi
+    
+
+function run_lint
+{
+    wine "z:/opt/toolchain/lint/lint-nt.exe" \
+	-e1904 +v  -i"z:\\opt\\toolchain\\lint\\lnt" \
+	-i"z:\\opt\\toolchain\\lint" env-si std \
+	-"format=\n%t:%n: ##%f##:%l: %m\n------\n" gcc_inc defs CAB $*
+}
+
+run_lint $* \
+    | sed -e 's#\\#/#g' \
+    | sed -r 's/(.*):([0-9+]*): ##(.*)##:([0-9+]*):/echo -n `winepath -u \3`:; echo -n "\4: \1:\2:"/ge' \
+    | sed -e "s#${PREFIX}##g"
+

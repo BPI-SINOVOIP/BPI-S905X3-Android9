@@ -1,0 +1,38 @@
+cc_library_shared {
+    name: "libammediaext",
+
+    vendor_available: true,
+
+    srcs: ["AmMediaDefsExt.cpp"],
+
+    include_dirs: [
+        "frameworks/native/include/media/openmax",
+        "system/core/include/utils",
+    ],
+
+    shared_libs: [
+        "liblog",
+        "libcutils",
+        "libdl",
+        "libutils",
+    ],
+
+
+    cflags: [
+        "-Werror",
+        "-Wall",
+    ],
+
+    sanitize: {
+        cfi: true,
+        misc_undefined: [
+            "unsigned-integer-overflow",
+            "signed-integer-overflow",
+        ],
+        diag: {
+            cfi: true,
+        },
+    },
+
+}
+

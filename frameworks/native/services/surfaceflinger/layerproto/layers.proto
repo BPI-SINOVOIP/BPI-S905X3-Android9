@@ -1,0 +1,133 @@
+// Definitions for SurfaceFlinger layers.
+
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+package android.surfaceflinger;
+
+// Contains a list of all layers.
+message LayersProto {
+  repeated LayerProto layers = 1;
+  optional SizeProto resolution = 2;
+  optional string color_mode = 3;
+  optional string color_transform = 4;
+  optional int32 global_transform = 5;
+}
+
+// Information about each layer.
+message LayerProto {
+  // unique id per layer.
+  optional int32 id = 1;
+  // unique name per layer.
+  optional string name = 2;
+  // list of children this layer may have. May be empty.
+  repeated int32 children = 3;
+  // list of layers that are z order relative to this layer.
+  repeated int32 relatives = 4;
+  // The type of layer, ex Color, Layer
+  optional string type = 5;
+  optional RegionProto transparent_region = 6;
+  optional RegionProto visible_region = 7;
+  optional RegionProto damage_region = 8;
+  optional uint32 layer_stack = 9;
+  // The layer's z order. Can be z order in layer stack, relative to parent,
+  // or relative to another layer specified in zOrderRelative.
+  optional int32 z = 10;
+  // The layer's position on the display.
+  optional PositionProto position = 11;
+  // The layer's requested position.
+  optional PositionProto requested_position = 12;
+  // The layer's size.
+  optional SizeProto size = 13;
+  // The layer's crop in it's own bounds.
+  optional RectProto crop = 14;
+  // The layer's crop in it's parent's bounds.
+  optional RectProto final_crop = 15;
+  optional bool is_opaque = 16;
+  optional bool invalidate = 17;
+  optional string dataspace = 18;
+  optional string pixel_format = 19;
+  // The layer's actual color.
+  optional ColorProto color = 20;
+  // The layer's requested color.
+  optional ColorProto requested_color = 21;
+  // Can be any combination of
+  //    hidden = 0x01
+  //    opaque = 0x02,
+  //    secure = 0x80,
+  optional uint32 flags = 22;
+  // The layer's actual transform
+  optional TransformProto transform = 23;
+  // The layer's requested transform.
+  optional TransformProto requested_transform = 24;
+  // The parent layer. This value can be null if there is no parent.
+  optional int32 parent = 25 [default = -1];
+  // The layer that this layer has a z order relative to. This value can be null.
+  optional int32 z_order_relative_of = 26 [default = -1];
+  // This value can be null if there's nothing to draw.
+  optional ActiveBufferProto active_buffer = 27;
+  // The number of frames available.
+  optional int32 queued_frames = 28;
+  optional bool refresh_pending = 29;
+  // The layer's composer backend destination frame
+  optional RectProto hwc_frame = 30;
+  // The layer's composer backend source crop
+  optional FloatRectProto hwc_crop = 31;
+  // The layer's composer backend transform
+  optional int32 hwc_transform = 32;
+  optional int32 window_type = 33;
+  optional int32 app_id = 34;
+  // The layer's composition type
+  optional int32 hwc_composition_type = 35;
+  // If it's a buffer layer, indicate if the content is protected
+  optional bool is_protected = 36;
+}
+
+message PositionProto {
+  optional float x = 1;
+  optional float y = 2;
+}
+
+message SizeProto {
+  optional int32 w = 1;
+  optional int32 h = 2;
+}
+
+message TransformProto {
+  optional float dsdx = 1;
+  optional float dtdx = 2;
+  optional float dsdy = 3;
+  optional float dtdy = 4;
+}
+
+message RegionProto {
+  optional uint64 id = 1;
+  repeated RectProto rect = 2;
+}
+
+message RectProto {
+  optional int32 left   = 1;
+  optional int32 top    = 2;
+  optional int32 right  = 3;
+  optional int32 bottom = 4;
+}
+
+message FloatRectProto {
+  optional float left = 1;
+  optional float top = 2;
+  optional float right = 3;
+  optional float bottom = 4;
+}
+
+message ActiveBufferProto {
+  optional uint32 width = 1;
+  optional uint32 height = 2;
+  optional uint32 stride = 3;
+  optional int32 format = 4;
+}
+
+message ColorProto {
+  optional float r = 1;
+  optional float g = 2;
+  optional float b = 3;
+  optional float a = 4;
+}

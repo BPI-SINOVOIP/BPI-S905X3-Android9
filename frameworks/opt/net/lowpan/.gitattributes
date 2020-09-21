@@ -1,0 +1,5 @@
+*.java text whitespace=trailing-space,tab-in-indent,tabwidth=4,blank-at-eol,blank-at-eof
+*.cpp text whitespace=trailing-space,tab-in-indent,tabwidth=4,blank-at-eol,blank-at-eof
+*.h text whitespace=trailing-space,tab-in-indent,tabwidth=4,blank-at-eol,blank-at-eof
+*.aidl text whitespace=trailing-space,tab-in-indent,tabwidth=4,blank-at-eol,blank-at-eof
+*.xml text whitespace=trailing-space,tab-in-indent,tabwidth=4,blank-at-eol,blank-at-eof

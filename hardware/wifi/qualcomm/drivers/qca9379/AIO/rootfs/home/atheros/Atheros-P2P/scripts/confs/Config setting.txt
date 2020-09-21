@@ -1,0 +1,26 @@
+NAHT20: 
+gSapDot11Mode=4
+gChannelBondingMode5GHz =0
+gVhtChannelWidth=0
+
+NAHT40:
+gSapDot11Mode=4
+gChannelBondingMode5GHz =1
+gVhtChannelWidth=1
+
+
+
+ACVHT20:
+gSapDot11Mode=0
+gChannelBondingMode5GHz=0
+gVhtChannelWidth=0
+
+ACVHT40:
+gSapDot11Mode=0
+gChannelBondingMode5GHz=1
+gVhtChannelWidth=1
+
+ACVHT80:
+gSapDot11Mode=0
+gChannelBondingMode5GHz=1
+gVhtChannelWidth=2

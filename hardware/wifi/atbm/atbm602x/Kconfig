@@ -1,0 +1,8 @@
+menuconfig ATBM_WIRELESS
+	tristate "altobeam apollo sdio/usb WiFi"
+	help
+	  need SDIO/USB support, used mac80211/cfg80211
+
+if ATBM_WIRELESS
+source "drivers/net/wireless/atbm_wifi_40M/hal_apollo/Kconfig"
+endif

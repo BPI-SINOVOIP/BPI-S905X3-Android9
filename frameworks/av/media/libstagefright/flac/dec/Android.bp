@@ -1,0 +1,46 @@
+cc_library {
+    name: "libstagefright_flacdec",
+    vendor_available: true,
+    vndk: {
+        enabled: true,
+    },
+
+    srcs: [
+        "FLACDecoder.cpp",
+    ],
+
+    export_include_dirs: [ "." ],
+
+    include_dirs: [
+        "external/flac/include",
+        "frameworks/av/media/libstagefright/include",
+    ],
+
+    cflags: ["-Werror"],
+
+    sanitize: {
+        misc_undefined: [
+            "signed-integer-overflow",
+            "unsigned-integer-overflow",
+        ],
+        cfi: true,
+        diag: {
+            cfi: true,
+        },
+    },
+
+    static: {
+        whole_static_libs: ["libFLAC"],
+    },
+
+    shared: {
+        static_libs: ["libFLAC"],
+    },
+
+    shared_libs: [
+        "liblog",
+        "libstagefright_foundation",
+        "libutils",
+    ],
+    header_libs: ["libmedia_headers"],
+}

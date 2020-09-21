@@ -1,0 +1,222 @@
+cc_defaults {
+    name: "surfaceflinger_defaults",
+    cflags: [
+        "-DLOG_TAG=\"SurfaceFlinger\"",
+        "-Wall",
+        "-Werror",
+        "-Wthread-safety",
+        "-Wunused",
+        "-Wunreachable-code",
+    ],
+    cppflags: ["-std=c++1z"],
+}
+
+cc_defaults {
+    name: "libsurfaceflinger_defaults",
+    defaults: ["surfaceflinger_defaults"],
+    cflags: [
+        "-DGL_GLEXT_PROTOTYPES",
+        "-DEGL_EGLEXT_PROTOTYPES",
+    ],
+    shared_libs: [
+        "android.frameworks.vr.composer@1.0",
+        "android.hardware.configstore-utils",
+        "android.hardware.configstore@1.0",
+        "android.hardware.configstore@1.1",
+        "android.hardware.graphics.allocator@2.0",
+        "android.hardware.graphics.composer@2.1",
+        "android.hardware.graphics.composer@2.2",
+        "android.hardware.power@1.0",
+        "libbase",
+        "libbinder",
+        "libbufferhubqueue",
+        "libcutils",
+        "libdl",
+        "libEGL",
+        "libfmq",
+        "libGLESv1_CM",
+        "libGLESv2",
+        "libgui",
+        "libhardware",
+        "libhidlbase",
+        "libhidltransport",
+        "libhwbinder",
+        "liblayers_proto",
+        "liblog",
+        "libpdx_default_transport",
+        "libprotobuf-cpp-lite",
+        "libsync",
+        "libtimestats_proto",
+        "libui",
+        "libutils",
+        "libvulkan",
+    ],
+    static_libs: [
+        "libserviceutils",
+        "libtrace_proto",
+        "libvkjson",
+        "libvr_manager",
+        "libvrflinger",
+    ],
+    header_libs: [
+        "android.hardware.graphics.composer@2.1-command-buffer",
+        "android.hardware.graphics.composer@2.2-command-buffer",
+    ],
+    export_static_lib_headers: [
+        "libserviceutils",
+    ],
+    export_shared_lib_headers: [
+        "android.hardware.graphics.allocator@2.0",
+        "android.hardware.graphics.composer@2.1",
+        "android.hardware.graphics.composer@2.2",
+        "libhidlbase",
+        "libhidltransport",
+        "libhwbinder",
+    ],
+}
+
+cc_library_headers {
+    name: "libsurfaceflinger_headers",
+    export_include_dirs: ["."],
+    static_libs: ["libserviceutils"],
+    export_static_lib_headers: ["libserviceutils"],
+}
+
+filegroup {
+    name: "libsurfaceflinger_sources",
+    srcs: [
+        "BufferLayer.cpp",
+        "BufferLayerConsumer.cpp",
+        "Client.cpp",
+        "ColorLayer.cpp",
+        "ContainerLayer.cpp",
+        "DisplayDevice.cpp",
+        "DisplayHardware/ComposerHal.cpp",
+        "DisplayHardware/FramebufferSurface.cpp",
+        "DisplayHardware/HWC2.cpp",
+        "DisplayHardware/HWComposer.cpp",
+        "DisplayHardware/HWComposerBufferCache.cpp",
+        "DisplayHardware/VirtualDisplaySurface.cpp",
+        "DispSync.cpp",
+        "Effects/Daltonizer.cpp",
+        "EventControlThread.cpp",
+        "EventLog/EventLog.cpp",
+        "EventThread.cpp",
+        "FrameTracker.cpp",
+        "GpuService.cpp",
+        "Layer.cpp",
+        "LayerProtoHelper.cpp",
+        "LayerRejecter.cpp",
+        "LayerStats.cpp",
+        "LayerVector.cpp",
+        "MessageQueue.cpp",
+        "MonitoredProducer.cpp",
+        "RenderArea.cpp",
+        "RenderEngine/Description.cpp",
+        "RenderEngine/GLES20RenderEngine.cpp",
+        "RenderEngine/GLExtensions.cpp",
+        "RenderEngine/Image.cpp",
+        "RenderEngine/Mesh.cpp",
+        "RenderEngine/Program.cpp",
+        "RenderEngine/ProgramCache.cpp",
+        "RenderEngine/RenderEngine.cpp",
+        "RenderEngine/Surface.cpp",
+        "RenderEngine/Texture.cpp",
+        "StartPropertySetThread.cpp",
+        "SurfaceFlinger.cpp",
+        "SurfaceInterceptor.cpp",
+        "SurfaceTracing.cpp",
+        "TimeStats/TimeStats.cpp",
+        "Transform.cpp",
+    ],
+}
+
+cc_library_shared {
+    name: "libsurfaceflinger",
+    defaults: ["libsurfaceflinger_defaults"],
+    cflags: [
+        "-fvisibility=hidden",
+        "-Werror=format",
+    ],
+    srcs: [
+        ":libsurfaceflinger_sources",
+    ],
+    logtags: ["EventLog/EventLogTags.logtags"],
+    include_dirs: [
+        "frameworks/native/vulkan/vkjson",
+        "frameworks/native/vulkan/include",
+    ],
+    cppflags: [
+        "-fwhole-program-vtables", // requires ThinLTO
+    ],
+    lto: {
+        thin: true,
+    },
+}
+
+cc_binary {
+    name: "surfaceflinger",
+    defaults: ["surfaceflinger_defaults"],
+    init_rc: ["surfaceflinger.rc"],
+    srcs: ["main_surfaceflinger.cpp"],
+    whole_static_libs: [
+        "libsigchain",
+    ],
+    shared_libs: [
+        "android.frameworks.displayservice@1.0",
+        "android.hardware.configstore-utils",
+        "android.hardware.configstore@1.0",
+        "android.hardware.graphics.allocator@2.0",
+        "libbinder",
+        "libcutils",
+        "libdisplayservicehidl",
+        "libhidlbase",
+        "libhidltransport",
+        "liblayers_proto",
+        "liblog",
+        "libsurfaceflinger",
+        "libtimestats_proto",
+        "libutils",
+    ],
+    static_libs: [
+        "libserviceutils",
+        "libtrace_proto",
+    ],
+    ldflags: ["-Wl,--export-dynamic"],
+
+    // TODO(b/71715793): These version-scripts are required due to the use of
+    // whole_static_libs to pull in libsigchain. To work, the files had to be
+    // locally duplicated from their original location
+    // $ANDROID_ROOT/art/sigchainlib/
+    multilib: {
+        lib32: {
+            version_script: "version-script32.txt",
+        },
+        lib64: {
+            version_script: "version-script64.txt",
+        },
+    },
+}
+
+cc_library_shared {
+    name: "libsurfaceflinger_ddmconnection",
+    defaults: ["surfaceflinger_defaults"],
+    srcs: ["DdmConnection.cpp"],
+    shared_libs: [
+        "libcutils",
+        "libdl",
+        "liblog",
+    ],
+    product_variables: {
+        // uses jni which may not be available in PDK
+        pdk: {
+            enabled: false,
+        },
+    },
+}
+
+subdirs = [
+    "layerproto",
+    "TimeStats/timestatsproto",
+    "tests",
+]

@@ -1,0 +1,194 @@
+#!/bin/bash
+# Add na-f30 specific patches
+
+# subverion
+BRD_TYPE_VER=na-f30
+
+#
+# For each board type,
+# determine which components should be downloaded.
+# The settings here will overwrite the default in aio_gen_bit.sh.
+#
+# ONLY add/enable those components need download.
+#
+# 1. patch files
+DOWNLOAD_PATCH=n
+
+# 2. kernel
+DOWNLOAD_KERNEL_BACKPORT_3_12=n
+
+# 3. WLAN host driver snapshot
+DOWNLOAD_DRIVER_WLAN_HOST=y
+# If we want to get the driver git branch. So clone.
+CLONE_DRIVER_WLAN_HOST=n
+
+# 4. APPs
+DOWNLOAD_APP_WLAN_WPA_SUPPLICANT_8=n #Dont download the default Supplicant
+DOWNLOAD_APP_WLAN_LIBNL_3_2_25=y
+
+DOWNLOAD_LIBBT_VENDOR=y
+DOWNLOAD_LIBHARDWARE=y
+DOWNLOAD_FLUORIDE=y
+DOWNLOAD_VENDOR=y
+DOWNLOAD_WLAN_COMPONENTS=y
+DOWNLOAD_APP_WLAN_HOSTAP_2_4=n
+
+# 5.Patch dir
+OSS_ENGPATH_DIR=${AIO_TOP}/../../fixce_oss_patch/patch
+
+
+OLD_DIR=`pwd`
+
+if [ ${DOWNLOAD_LIBBT_VENDOR} == "y" ]
+then
+    echo "========================================================"
+    echo " Downloading libbt-vendor ..."
+    echo "========================================================"
+    cd ${AIO_TOP}/apps
+    git clone https://source.codeaurora.org/quic/la/platform/hardware/qcom/bt -b bt.lnx.2.1-rel
+    cd bt
+    git checkout 98a63b9f6db239735a2057a03848bfc57962ba13
+    cd ..
+    mv bt libbt_vendor
+fi
+
+if [ ${DOWNLOAD_LIBHARDWARE} == "y" ]
+then
+    echo "========================================================"
+    echo " Downloading libhardware ..."
+    echo "========================================================"
+    cd ${AIO_TOP}/apps
+    git clone https://source.codeaurora.org/quic/la/platform/hardware/libhardware -b android-framework.lnx.2.0-rel
+    cd libhardware
+    git checkout 19eded8325b734d42775a7326d2d88e06b770766
+fi
+
+if [ ${DOWNLOAD_FLUORIDE} == "y" ]
+then
+    echo "========================================================"
+    echo " Downloading fluoride ..."
+    echo "========================================================"
+    cd ${AIO_TOP}/apps
+    git clone https://source.codeaurora.org/quic/la/platform/system/bt -b bt.lnx.2.1-rel
+    cd bt
+    git checkout 9a47e121be9931d87755c92efdc03cbdde25fe15
+    cd ${AIO_TOP}/apps
+    mv bt fluoride
+fi
+
+if [ ${DOWNLOAD_VENDOR} == "y" ]
+then
+    echo "========================================================"
+    echo " Downloading Vendor ..."
+    echo "========================================================"
+    cd ${AIO_TOP}/apps
+    git clone https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/bluetooth -b bt-qc.lnx.1.0-rel.1.0
+    cd bluetooth
+    git checkout f1bf05ffa71767cff4edbacd39acd38478066bdd
+fi
+
+if [ ${DOWNLOAD_WLAN_COMPONENTS} == "y" ]
+then
+    echo "===================================="
+    echo " Downloading hostap ..."
+    echo "===================================="
+########################################
+	echo "Start to clone"
+	git clone http://w1.fi/hostap.git
+    cd hostap
+    git reset --hard 2a9c5217b18be9462a5329626e2f95cc7dd8d4f1
+	cd wpa_supplicant
+	ln -s ../src src
+	cd ../hostapd
+	ln -s ../src src
+    cd ../..
+	mv -f hostap ${AIO_TOP}/apps
+	echo "Done! clone hostap completed!"
+	
+	echo "Start to clone hardware/qcom/wlan"
+    rm -rf wlan
+    git clone https://android.googlesource.com/platform/hardware/qcom/wlan
+	cd wlan
+	git checkout android-7.1.1_r33
+	cd ..
+	mv -f wlan ${AIO_TOP}/apps
+    echo "Done! clone hardware/qcom/wlan completed!"
+########################################
+
+    echo "===================================="
+    echo " Downloading sigma-dut"
+    echo "===================================="
+    git clone https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/wlan/utils/sigma-dut -b github-qca/master
+    mv -f sigma-dut ${AIO_TOP}/apps
+    cd ${AIO_TOP}/apps/sigma-dut
+    git reset --hard fd7359aed6aaba745e31dd0a9fed80578372d554
+    cd -
+    if [ ${KTAG} == "v4.4" ]
+    then
+        echo "===================================="
+        echo " Downloading Kernel"
+        echo "===================================="
+	git clone https://git.code.sf.net/p/android-x86/kernel -b kernel-4.4
+        mv -f kernel ${AIO_TOP}/apps/kernel_v4.4
+    fi
+
+    if [ ${CLONE_DRIVER_WLAN_HOST} == "y" ]
+    then
+        echo "======================================================="
+        echo " Downloading qcacld-2.0 branch ${HOST_DRIVER_BRANCH}"
+        echo "======================================================="
+        if [ -d ${AIO_TOP}/drivers/qcacld-new ]
+        then
+            rm -rf ${AIO_TOP}/drivers/qcacld-2.0_old
+            mv -f ${AIO_TOP}/drivers/qcacld-new ${AIO_TOP}/drivers/qcacld-old
+        fi
+
+        cd ${AIO_TOP}/drivers/
+        git clone https://source.codeaurora.org/external/wlan/qcacld-2.0 -b ${HOST_DRIVER_BRANCH}
+
+        if [ ${HOST_DRIVER_VERSION} != "" ]
+        then
+            cd qcacld-2.0
+            echo "======================================================="
+            echo "Pointing to qcacld-2.0 version ${HOST_DRIVER_VERSION}"
+            echo "======================================================="
+            git reset --hard v${HOST_DRIVER_VERSION}
+            cd ../
+        fi
+
+        mv qcacld-2.0 qcacld-new
+        cd ${OLD_DIR}
+    fi
+fi
+
+if [ $ENG_PATCH == 0 ]
+then
+    echo "========================================================"
+    echo " Downloading Wlan patches ..."
+    echo "========================================================"
+    CAF_PATH=https://source.codeaurora.org/patches/external/wlan/fixce/3rdparty/patches
+    if [ ${KTAG} == "v4.9" ]
+    then
+      wget -e robots=off -A.patch -nd -rH --no-check-certificate -P "${BRD_TYPE_VER}/${KTAG}" "${CAF_PATH}/wlan_patches/kernel/v4.9.11"
+    elif [ ${KTAG} == "v4.4" ]
+    then
+      wget -e robots=off -A.patch -nd -rH --no-check-certificate -P "${BRD_TYPE_VER}/${KTAG}" "${CAF_PATH}/wlan_patches/kernel/v4.4.15"
+    fi
+    wget -e robots=off -A.patch -A.config -nd -rH --no-check-certificate -P "${BRD_TYPE_VER}/common/Supplicant" "${CAF_PATH}/wlan_patches/supplicant/"
+    wget -e robots=off -A.patch -nd -rH --no-check-certificate -P "${BRD_TYPE_VER}/common/driver" "${CAF_PATH}/wlan_patches/cld2_0/common/"
+    wget -e robots=off -A.patch -nd -rH --no-check-certificate -P "${BRD_TYPE_VER}/common/android_x86" "${CAF_PATH}/wlan_patches/android_x86"
+    wget -e robots=off -A.patch -nd -rH --no-check-certificate -P "${BRD_TYPE_VER}/common/sigma_dut" "${CAF_PATH}/wlan_patches/sigma_dut"
+    mv -f ${BRD_TYPE_VER} ${AIO_TOP}/drivers/patches/
+
+	echo "========================================================"
+	echo " Downloading BT patches ..."
+	echo "========================================================"
+	PATCH_PATH=${AIO_TOP}/drivers/patches/na-f30
+	wget -e robots=off -A.patch -nd -rH --no-check-certificate -P "${BRD_TYPE_VER}/BT" "${CAF_PATH}/${BRD_TYPE_VER}/BT"
+	mv -f ${BRD_TYPE_VER}/BT ${PATCH_PATH}/
+	cp -fr ${ENGPATCHDIR}/na-f30/BT ${PATCH_PATH}/
+else
+   cp -rf $OSS_ENGPATH_DIR/$BRD_TYPE_VER ${AIO_TOP}/drivers/patches/
+fi
+
+cd ${OLD_DIR}

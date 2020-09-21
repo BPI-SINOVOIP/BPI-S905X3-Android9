@@ -1,0 +1,75 @@
+/*
+ * Copyright (C) 2016 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package android.hardware.radio@1.2;
+
+import @1.0::RadioIndicationType;
+import @1.1::IRadioIndication;
+
+/**
+ * Interface declaring unsolicited radio indications.
+ */
+interface IRadioIndication extends @1.1::IRadioIndication {
+
+    /**
+     * Incremental network scan results
+     */
+    oneway networkScanResult_1_2(RadioIndicationType type, NetworkScanResult result);
+
+    /**
+     * Request all of the current cell information known to the radio.
+     * Same information as returned by getCellInfoList() in 1.0::IRadio.
+     *
+     * @param type Type of radio indication
+     * @param records Current cell information
+     */
+     oneway cellInfoList_1_2(RadioIndicationType type, vec<CellInfo> records);
+
+    /**
+     * Indicates current link capacity estimate.
+     *
+     * This replaces @1.0::IRadioIndication.lceData(). The framework must be able to handle
+     * either this function or @1.0::IRadioIndication.lceData(). Implementations supporting
+     * v1.2 must call this function instead of lceData().
+     *
+     * This indication is sent whenever the reporting criteria, as set by
+     * @1.2::IRadio.setLinkCapacityReportingCriteria, are met and the indication is not
+     * suppressed by @1.2::IRadio.setIndicationFilter_1_2().
+     *
+     * @param type Type of radio indication
+     * @param lce LinkCapacityEstimate
+     */
+    oneway currentLinkCapacityEstimate(RadioIndicationType type, LinkCapacityEstimate lce);
+
+    /**
+     * Indicates physical channel configurations.
+     *
+     * An empty configs list indicates that the radio is in idle mode.
+     *
+     * @param type Type of radio indication
+     * @param configs Vector of PhysicalChannelConfigs
+     */
+    oneway currentPhysicalChannelConfigs(RadioIndicationType type,
+            vec<PhysicalChannelConfig> configs);
+
+    /**
+     * Indicates current signal strength of the radio.
+     *
+     * @param type Type of radio indication
+     * @param signalStrength SignalStrength information
+     */
+    oneway currentSignalStrength_1_2(RadioIndicationType type, SignalStrength signalStrength);
+};

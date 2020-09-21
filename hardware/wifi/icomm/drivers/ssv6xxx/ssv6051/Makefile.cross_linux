@@ -1,0 +1,97 @@
+PLATFORMS =
+KMODULE_NAME=ssv6051
+
+KBUILD_TOP := drivers/net/wireless/ssv6xxx
+ifeq ($(MAKELEVEL),0)
+KBUILD_TOP := .
+endif
+
+include $(KBUILD_TOP)/$(PLATFORMS).cfg
+include $(KBUILD_TOP)/platform-config.mak
+
+# Generate version strings
+# GEN_VER := $(shell cd $(KBUILD_TOP); ./ver_info.pl include/ssv_version.h)
+# Generate include/ssv_conf_parser.h
+# GEN_CONF_PARSER := $(shell cd $(KBUILD_TOP); env ccflags="$(ccflags-y)" ./parser-conf.sh include/ssv_conf_parser.h)
+# Generate $(KMODULE_NAME)-wifi.cfg
+BKP_CFG := $(shell cp $(KBUILD_TOP)/$(PLATFORMS)-wifi.cfg $(KBUILD_TOP)/image/$(KMODULE_NAME)-wifi.cfg)
+
+EXTRA_CFLAGS := -I$(KBUILD_TOP) -I$(KBUILD_TOP)/include
+
+DEF_PARSER_H = $(KBUILD_TOP)/include/ssv_conf_parser.h
+$(shell env ccflags="$(ccflags-y)" $(KBUILD_TOP)/parser-conf.sh $(DEF_PARSER_H))
+
+KERN_SRCS := ssvdevice/ssvdevice.c
+KERN_SRCS += ssvdevice/ssv_cmd.c
+
+KERN_SRCS += hci/ssv_hci.c
+
+KERN_SRCS += smac/init.c
+KERN_SRCS += smac/dev.c
+KERN_SRCS += smac/ssv_rc.c
+KERN_SRCS += smac/ssv_ht_rc.c
+KERN_SRCS += smac/ap.c
+KERN_SRCS += smac/ampdu.c
+KERN_SRCS += smac/ssv6xxx_debugfs.c
+KERN_SRCS += smac/sec_ccmp.c
+KERN_SRCS += smac/sec_tkip.c
+KERN_SRCS += smac/sec_wep.c
+KERN_SRCS += smac/wapi_sms4.c
+KERN_SRCS += smac/sec_wpi.c
+KERN_SRCS += smac/efuse.c
+KERN_SRCS += smac/ssv_pm.c
+
+ifeq ($(findstring -DCONFIG_SSV_SMARTLINK, $(ccflags-y)), -DCONFIG_SSV_SMARTLINK)
+KERN_SRCS += smac/smartlink.c
+endif
+
+KERN_SRCS += hwif/sdio/sdio.c
+
+ifeq ($(findstring -DCONFIG_SSV_SUPPORT_AES_ASM, $(ccflags-y)), -DCONFIG_SSV_SUPPORT_AES_ASM)
+KERN_SRCS += crypto/aes_glue.c
+KERN_SRCS += crypto/sha1_glue.c
+KERN_SRCS_S := crypto/aes-armv4.S
+KERN_SRCS_S += crypto/sha1-armv4-large.S
+endif
+
+KERN_SRCS += $(PLATFORMS)-generic-wlan.c
+
+$(KMODULE_NAME)-y += $(KERN_SRCS_S:.S=.o)
+$(KMODULE_NAME)-y += $(KERN_SRCS:.c=.o)
+
+obj-$(CONFIG_SSV6XXX) += $(KMODULE_NAME).o
+
+export CONFIG_SSV6XXX=m
+
+.PHONY: all ver modules clean
+
+all: modules
+	
+modules:
+	$(MAKE) ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) -C $(KSRC) M=$(shell pwd) modules
+
+strip:
+	$(CROSS_COMPILE)strip $(MODULE_NAME).ko --strip-unneeded
+
+#install:
+#	install -p -m 644 $(MODULE_NAME).ko  $(MODDESTDIR)
+#	/sbin/depmod -a ${KVER}
+#
+#uninstall:
+#	rm -f $(MODDESTDIR)/$(MODULE_NAME).ko
+#	/sbin/depmod -a ${KVER}
+
+clean:
+	rm -fr *.mod.c *.mod *.o .*.cmd *.ko *~
+	rm -fr .tmp_versions
+	rm -fr Module.symvers
+	rm -fr Module.markers
+	rm -fr modules.order
+	rm -fr image/$(KMODULE_NAME)-wifi.cfg
+	cd ssvdevice/; 		rm -fr *.mod.c *.mod *.o .*.cmd *.ko
+	cd hci/; 			rm -fr *.mod.c *.mod *.o .*.cmd *.ko
+	cd smac/; 	rm -fr *.mod.c *.mod *.o .*.cmd *.ko
+	cd hwif/; 			rm -fr *.mod.c *.mod *.o .*.cmd *.ko
+	cd hwif/sdio/; 			rm -fr *.mod.c *.mod *.o .*.cmd *.ko
+	cd crypto/; 		rm -fr *.mod.c *.mod *.o .*.cmd *.ko
+

@@ -1,0 +1,38 @@
+diff --git a/hardware/amlogic/LibAudio/amadec_ctc/adec-ffmpeg-mgt.c b/hardware/amlogic/LibAudio/amadec_ctc/adec-ffmpeg-mgt.c
+index 96b4acc884..eab3193d0b 100644
+--- a/hardware/amlogic/LibAudio/amadec_ctc/adec-ffmpeg-mgt.c
++++ b/hardware/amlogic/LibAudio/amadec_ctc/adec-ffmpeg-mgt.c
+@@ -1260,6 +1260,8 @@ void *audio_decode_loop(void *args)
+     nNextFrameSize = adec_ops->nInBufSize;
+     adec_ops->nAudioDecoderType = audec->format;
+     adec_print("[%s %d]", __FUNCTION__, __LINE__);
++    FILE *fp1;
++    int flen = 0;
+     while (1) {
+         //exit_decode_loop:
+         if (audec->exit_decode_thread) { //detect quit condition
+@@ -1386,6 +1388,14 @@ void *audio_decode_loop(void *args)
+                             amthreadpool_thread_usleep(100000);
+                             continue;
+                         }
++			#if 1
++			fp1 = fopen("/data/audio_out.pcm", "a+");
++			if(fp1)
++				flen = fwrite((char *)outbuf, 1, outlen, fp1);
++			else
++				adec_print("could not open file fp1\n");
++
++			#endif
+                         wlen = write_pcm_buffer(outbuf, g_bst, outlen);
+ 
+                         if (fdr > 0) {
+@@ -1414,7 +1424,8 @@ void *audio_decode_loop(void *args)
+ 	   close(fdr);
+ 	   fdr = -1;
+ 	}
+-
++    if(fp1 > 0)
++	fclose(fp1);
+     adec_print("[%s]exit adec_armdec_loop Thread finished!", __FUNCTION__);
+     pthread_exit(NULL);
+ //	error:

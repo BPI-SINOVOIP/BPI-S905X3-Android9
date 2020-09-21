@@ -1,0 +1,86 @@
+#ifndef __SSV_MOD_CONF_H__
+#define __SSV_MOD_CONF_H__
+#ifndef __CHECK_ENDIAN__
+#define __CHECK_ENDIAN__
+#endif
+#ifndef DEBUG
+#define DEBUG
+#endif
+#ifndef SSV_SUPPORT_HAL
+#define SSV_SUPPORT_HAL
+#endif
+#ifndef SSV_SUPPORT_SSV6006
+#define SSV_SUPPORT_SSV6006
+#endif
+#ifndef CONFIG_SSV_CABRIO_E
+#define CONFIG_SSV_CABRIO_E
+#endif
+#ifndef CONFIG_SSV6200_CLI_ENABLE
+#define CONFIG_SSV6200_CLI_ENABLE
+#endif
+#ifndef CONFIG_SSV_TX_LOWTHRESHOLD
+#define CONFIG_SSV_TX_LOWTHRESHOLD
+#endif
+#ifndef RATE_CONTROL_REALTIME_UPDATE
+#define RATE_CONTROL_REALTIME_UPDATE
+#endif
+#ifndef CONFIG_SSV6200_HAS_RX_WORKQUEUE
+#define CONFIG_SSV6200_HAS_RX_WORKQUEUE
+#endif
+#ifndef USE_THREAD_RX
+#define USE_THREAD_RX
+#endif
+#ifndef USE_THREAD_TX
+#define USE_THREAD_TX
+#endif
+#ifndef ENABLE_AGGREGATE_IN_TIME
+#define ENABLE_AGGREGATE_IN_TIME
+#endif
+#ifndef ENABLE_INCREMENTAL_AGGREGATION
+#define ENABLE_INCREMENTAL_AGGREGATION
+#endif
+#ifndef USE_GENERIC_DECI_TBL
+#define USE_GENERIC_DECI_TBL
+#endif
+#ifndef USE_LOCAL_CRYPTO
+#define USE_LOCAL_CRYPTO
+#endif
+#ifndef USE_LOCAL_WEP_CRYPTO
+#define USE_LOCAL_WEP_CRYPTO
+#endif
+#ifndef USE_LOCAL_TKIP_CRYPTO
+#define USE_LOCAL_TKIP_CRYPTO
+#endif
+#ifndef USE_LOCAL_CCMP_CRYPTO
+#define USE_LOCAL_CCMP_CRYPTO
+#endif
+#ifndef USE_LOCAL_SMS4_CRYPTO
+#define USE_LOCAL_SMS4_CRYPTO
+#endif
+#ifndef CONFIG_SSV_WAPI
+#define CONFIG_SSV_WAPI
+#endif
+#ifndef HAS_CRYPTO_LOCK
+#define HAS_CRYPTO_LOCK
+#endif
+#ifndef SSV6200_ECO
+#define SSV6200_ECO
+#endif
+#ifndef CONFIG_SSV_CCI_IMPROVEMENT
+#define CONFIG_SSV_CCI_IMPROVEMENT
+#endif
+#ifndef REPORT_TX_STATUS_DIRECTLY
+#define REPORT_TX_STATUS_DIRECTLY
+#endif
+#ifndef CONFIG_IRQ_DEBUG_COUNT
+#define CONFIG_IRQ_DEBUG_COUNT
+#endif
+#ifndef CONFIG_SSV6XXX_DEBUGFS
+#define CONFIG_SSV6XXX_DEBUGFS
+#endif
+#define __must_check
+#define __devinit
+#define __devexit
+#define __init
+#define __exit
+#endif // __SSV_MOD_CONF_H__

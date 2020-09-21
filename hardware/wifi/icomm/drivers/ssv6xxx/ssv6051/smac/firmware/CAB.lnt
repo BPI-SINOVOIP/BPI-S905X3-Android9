@@ -1,0 +1,49 @@
+-fff
+-fcp
+-e1904 
+-e1923
+-e952
+-e537
+-e963  // Note 963: Qualifier const or volatile precedes a type; use +fqb to reverse the test
+-e1501 // Warning 1501: data member 'variable' has zero size
+-e726  // Info 726: Extraneous comma ignored
+-e534  // Warning 534: Ignoring return value of function 'XXX'
+-e715  // Info 715: Symbol 'XXX' (line ??) not referenced
+-e1924 // Note 1924: C-style cast -- More Effective C++ #2
+-e835  // Info 835: A zero has been given as left argument to operator '<<'
+-e717  // Info 717: do ... while(0);
+-e438  // Warning 438: Last value assigned to variable 'xxx' (defined at line ??) not used
+-e762  // Info 762: Redundantly declared symbol
+-e818  // Info 818: Pointer parameter 'xx' (line 142) could be declared as pointing to const --- Eff. C++ 3rd Ed. item 3
+-e801  // Info 801: Use of goto is deprecated
+-e826  // Info 826: Suspicious pointer-to-pointer conversion (area too small)
+-e750  // Info 750: local macro 'xxx' (line ??) not referenced
+-e506  // Warning 506: Constant value Boolean
+-e757  // Info 757: global declarator '...' not referenced
+-e714  // Info 714: Symbol 'xxx' (line ???, file yyy)  not referenced
+-e755  // Info 755: global macro 'XXX' (line ???, file yyy) not referenced
+-e526  // Warning 526: Symbol 'XXX' (line ??, file yyy) not defined
+-e756  // Info 756: global typedef 'XXX' (line ??, file yyy) not referenced
+-e758  // Info 758: global enum 'XXX' (line ??, file yyy ) not referenced
+-e769  // Info 769: global enumeration constant 'XXX' (line ??, file yyy ) not referenced
+-e768  // Info 768: global struct member 'XXX' (line ??, file yyy) not referenced
+-e766  // Info 766: Header file 'XXX' not used in module 'YYY'
+-e953  // Note 953: Variable 'xxx' (line ???) could be declared as const --- Eff. C++ 3rd Ed. item 3
+-e123  // Error 123: Macro 'xx' defined with arguments at line ??? -- this is just a warning
+-e778  // Info 778: Constant expression evaluates to 0 in operation '&'
+-e840  // Info 840: Use of nul character in a string literal
+-e754  // Info 754: local structure member 'XX' (line ???, file YYY) not referenced
+-e525  // Warning 525: Negative indentation from line ???
+-e641  // Warning 641: Converting enum 'sec_type_en' to int
+-e725  // Info 725: Expected positive indentation from line ???
+-e572  // Warning 572: Excessive shift value (precision ? shifted right by ?)
+-e587  // Warning 587: Predicate '>' can be pre-determined and always evaluates to True
+-e839  // Info 839: Storage class of symbol 'XXX' assumed static (line ??)
+-e46   // Error 46: field type should be  _Bool, unsigned int or signed int
+-function( exit, vAssertCalled )
+-function( exit, vPortEndScheduler )
+-e157  // Error 157: No data may follow an incomplete array
+-e765  // Info 765: external 'XXX' (line ???, file YYY) could be made static
+-e759  // Info 759: header declaration for symbol 'XXX' defined at (line ???, file YYY) could be moved from header to module
+-esym(628, __builtin_va_start) 
+-sem( __builtin_va_start, inout(1) )

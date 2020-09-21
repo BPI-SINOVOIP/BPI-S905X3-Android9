@@ -1,0 +1,10 @@
+<config>
+  <image_tree>
+    <name>CNSS.LEA_NPL.3.0</name>
+    <build_id>CNSS.LEA_NPL.3.0-00014-QCA9379LEANPLZ-1</build_id>
+    <branch_point_revision/>
+    <revision>00014</revision>
+    <spin>1</spin>
+    <client>QCA9379LEANPLZ</client>
+  </image_tree>
+</config>

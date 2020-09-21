@@ -1,0 +1,28 @@
+cc_library_shared {
+    name: "libarcvideobridge",
+    product_variables: {
+        arc: {
+            srcs: [
+                "IArcVideoBridge.cpp",
+            ],
+            shared_libs: [
+                "libarcbridge",
+                "libarcbridgeservice",
+                "libbinder",
+                "libchrome",
+                "liblog",
+                "libmojo",
+                "libutils",
+            ],
+            cflags: [
+                "-Wall",
+                "-Werror",
+                "-Wunused",
+                "-Wunreachable-code",
+            ],
+            include_dirs: [
+                "frameworks/native/include/media/arcvideobridge",
+            ]
+        }
+    }
+}

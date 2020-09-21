@@ -1,0 +1,11 @@
+if [ "${1}" = "" ]; then
+	echo "None TB Target Parameter. Set q201 as defalut"
+	TB_TARGET="q201"
+else
+	echo "TB Target is $1"
+	TB_TARGET=$1
+fi
+
+make KDIR=../../../common O=../out/target/product/$TB_TARGET/obj/KERNEL_OBJ ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- CONFIG_TB_DETECT=m clean tb_detect
+
+unset TB_TARGET

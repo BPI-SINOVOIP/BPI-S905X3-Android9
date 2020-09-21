@@ -1,0 +1,126 @@
+cc_defaults {
+    name: "installd_defaults",
+
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wextra",
+
+        "-Wunreachable-code",
+        "-Wunreachable-code-break",
+        "-Wunreachable-code-return",
+    ],
+    srcs: [
+        "CacheItem.cpp",
+        "CacheTracker.cpp",
+        "InstalldNativeService.cpp",
+        "dexopt.cpp",
+        "globals.cpp",
+        "utils.cpp",
+        ":installd_aidl",
+    ],
+    header_libs: [
+        "dex2oat_headers",
+    ],
+    shared_libs: [
+        "libbase",
+        "libbinder",
+        "libcrypto",
+        "libcutils",
+        "liblog",
+        "liblogwrap",
+        "libselinux",
+        "libutils",
+    ],
+
+    clang: true,
+
+    tidy: true,
+    tidy_checks: [
+        "-*",
+        "clang-analyzer-security*",
+        "cert-*",
+        "-cert-err58-cpp",
+    ],
+    tidy_flags: [
+        "-warnings-as-errors=clang-analyzer-security*,cert-*"
+    ],
+}
+
+//
+// Static library used in testing and executable
+//
+
+cc_library_static {
+    name: "libinstalld",
+    defaults: ["installd_defaults"],
+
+    export_include_dirs: ["."],
+    aidl: {
+        export_aidl_headers: true,
+    },
+}
+
+//
+// Executable
+//
+
+cc_binary {
+    name: "installd",
+    defaults: ["installd_defaults"],
+    srcs: ["installd.cpp"],
+
+    static_libs: ["libdiskusage"],
+
+    init_rc: ["installd.rc"],
+}
+
+// OTA chroot tool
+
+cc_binary {
+    name: "otapreopt_chroot",
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+    clang: true,
+
+    srcs: ["otapreopt_chroot.cpp"],
+    shared_libs: [
+        "libbase",
+        "liblog",
+    ],
+}
+
+filegroup {
+    name: "installd_aidl",
+    srcs: [
+        "binder/android/os/IInstalld.aidl",
+    ],
+}
+
+//
+// Static library for otapreopt used in testing
+//
+cc_library_static {
+    name: "libotapreoptparameters",
+    cflags: [
+        "-Wall",
+        "-Werror"
+    ],
+    clang: true,
+
+    srcs: [
+        "otapreopt_parameters.cpp"],
+
+    export_include_dirs: ["."],
+
+    shared_libs: [
+        "libbase",
+        "libcutils",
+        "liblog",
+        "libutils",
+    ],
+}
+
+subdirs = ["tests"]

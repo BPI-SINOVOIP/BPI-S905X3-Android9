@@ -1,0 +1,264 @@
+# Build list
+
+targetList := drivers drivers_firmware
+#targetList += wpa_supplicant hostapd rootfs_build
+
+default: ${targetList}
+
+#################################################################################################################################
+export SIGMADUT_TOPDIR=${ATH_TOPDIR}/apps/sigma-dut
+export DRIVER_TOPDIR=$(ATH_TOPDIR)/drivers
+export APP_TOPDIR=$(ATH_TOPDIR)/apps
+export ATHDIAG_TOPDIR=${ATH_TOPDIR}/drivers/qcacld-new/tools/athdiag
+export ROOTFS_PATH=${ATH_TOPDIR}/rootfs-${BOARD_TYPE}.build
+#################################################################################################################################
+#
+# driver patch
+#
+
+drivers_patch:
+	@echo Patch drivers
+
+drivers_patch_R:
+	@echo Revert drivers patch
+
+android_patch: wlan_components kernel_patch drivers_patch android_patch_BT
+	@echo Patch Android-x86 BSP
+	@echo --------------------------Patch Android-x86
+	@mkdir -p ${ANDROID_X86_PROJ_PATH}/out/target/product/x86/system/etc
+	#patch Framework
+	cd ${ANDROID_X86_PROJ_PATH} && patch -p1 --no-backup-if-mismatch < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/common/android_x86/device.patch
+	cd ${ANDROID_X86_PROJ_PATH} && patch -p1 --no-backup-if-mismatch < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/common/android_x86/framework.patch
+	cd ${ANDROID_X86_PROJ_PATH} && patch -p1 --no-backup-if-mismatch < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/common/android_x86/hardware.patch
+	cd ${ANDROID_X86_PROJ_PATH} && patch -p1 --no-backup-if-mismatch < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/common/android_x86/WifiApDialog_5GH.patch
+	cd ${ANDROID_X86_PROJ_PATH}/hardware/broadcom/wlan && patch -p1 --no-backup-if-mismatch < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/common/android_x86/0001-This-patch-is-to-remove-the-conflict-While-using-hostap.patch
+	cd ${ANDROID_X86_PROJ_PATH}/hardware/qcom/wlan && patch -p1 --no-backup-if-mismatch < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/common/android_x86/Remove-wpa_supplicant_8-and-add-hostap-on-all-Androi.patch
+	#Patch Wpa_supplicant/hostapd
+	cd ${ANDROID_X86_PROJ_PATH}/external/hostap/ && patch -p1 --no-backup-if-mismatch < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/common/Supplicant/wpa_supplicant-Wifi-Cert-P2P-TC-5.1.9-Fix.patch
+	#patch Sigma-dut
+	cd ${ANDROID_X86_PROJ_PATH}/vendor/qcom/proprietary/sigma-dut && patch -p1 --no-backup-if-mismatch < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/common/sigma_dut/0001-Add-handling-of-DYN_BW_SGNL-command-for-AP-mode.patch
+	cd ${ANDROID_X86_PROJ_PATH}/vendor/qcom/proprietary/sigma-dut && patch -p1 --no-backup-if-mismatch < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/common/sigma_dut/0001-Add-handling-of-DYN_BW_SGNL-command-for-DRIVER_LINUX.patch
+	@echo Done with applying patches!
+
+android_patch_R: kernel_patch_R android_patch_BT_R drivers_patch_R
+	@echo --------------------------Reverting Android Patches
+	cd ${ANDROID_X86_PROJ_PATH}/packages/apps/Settings && git stash
+	cd ${ANDROID_X86_PROJ_PATH}/external/hostap/ && git stash
+	cd ${ANDROID_X86_PROJ_PATH}/kernel && git stash
+	cd ${ANDROID_X86_PROJ_PATH}/kernel/drivers/misc && git stash
+	cd ${ANDROID_X86_PROJ_PATH}/kernel/arch/x86/configs && git stash
+	cd ${ANDROID_X86_PROJ_PATH}/device/generic/common && git stash
+	cd ${ANDROID_X86_PROJ_PATH}/packages/apps/Bluetooth && git stash
+	cd ${ANDROID_X86_PROJ_PATH}/frameworks/base && git stash
+	cd ${ANDROID_X86_PROJ_PATH}/hardware/libhardware_legacy && git stash
+	cd ${ANDROID_X86_PROJ_PATH}/hardware/qcom/wlan && git stash
+	cd ${ANDROID_X86_PROJ_PATH}/hardware/broadcom/wlan && git stash
+	cd ${ANDROID_X86_PROJ_PATH}/system/core && git stash
+
+kernel_patch: kernel_patch_R
+	@echo ---------------------------Applying Kernel Patches
+ifeq ($(KTAG),v4.9)
+	cd ${ANDROID_X86_PROJ_PATH}/kernel && git am ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/${KTAG}/*.patch
+	cd ${ANDROID_X86_PROJ_PATH}/kernel && patch -p1 --no-backup-if-mismatch < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/common/android_x86/kernel_4.9_config.patch
+	cd ${ANDROID_X86_PROJ_PATH}/kernel && patch -p1 --no-backup-if-mismatch < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/common/android_x86/kernel_4.9_x64_config.patch
+else ifeq ($(KTAG),v4.4)
+	cd ${ANDROID_X86_PROJ_PATH}/kernel && git am --keep-cr ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/${KTAG}/*.patch
+	cd ${ANDROID_X86_PROJ_PATH}/kernel && patch -p1 --no-backup-if-mismatch < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/common/android_x86/kernel_4.4_config.patch
+endif
+
+kernel_patch_R:
+	@echo ---------------------------Reverting Kernel Patches
+ifeq ($(KTAG),v4.9)
+	cd ${ANDROID_X86_PROJ_PATH}/kernel && git checkout fb63269e5adade6556d888a7ff6e5dd6302aa40f
+else ifeq ($(KTAG),v4.4)
+	cd ${ANDROID_X86_PROJ_PATH}/kernel && git checkout b03a773be2bdf8fdcb003afb20594e56df3ebea5
+endif
+	rm -rf ${ANDROID_X86_PROJ_PATH}/kernel/.git/rebase-apply
+
+wlan_components:
+	@echo ---------------------------Copy Wlan Components
+	rm -rf ${ANDROID_X86_PROJ_PATH}/external/wpa_supplicant_8 2>/dev/null || :
+	rm -rf ${ANDROID_X86_PROJ_PATH}/external/hostap 2>/dev/null || :
+	cp -rf $(ATH_TOPDIR)/apps/hostap ${ANDROID_X86_PROJ_PATH}/external/
+	####copy supplicant config file
+	####copy hostapd config file
+	@cp ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/common/Supplicant/wpa_supplicant.config ${ANDROID_X86_PROJ_PATH}/external/hostap/wpa_supplicant/
+	@cp ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/common/Supplicant/hostapd.config ${ANDROID_X86_PROJ_PATH}/external/hostap/hostapd/
+	rm -rf ${ANDROID_X86_PROJ_PATH}/hardware/qcom/wlan
+	mkdir -p ${ANDROID_X86_PROJ_PATH}/hardware/qcom
+	cp -rf $(ATH_TOPDIR)/apps/wlan ${ANDROID_X86_PROJ_PATH}/hardware/qcom/
+	mkdir -p ${ANDROID_X86_PROJ_PATH}/vendor/qcom/proprietary/
+	cp -rf $(ATH_TOPDIR)/apps/sigma-dut ${ANDROID_X86_PROJ_PATH}/vendor/qcom/proprietary/
+ifeq ($(KTAG),v4.4)
+	rm -rf ${ANDROID_X86_PROJ_PATH}/kernel
+	cp -rf $(ATH_TOPDIR)/apps/kernel_v4.4 ${ANDROID_X86_PROJ_PATH}/kernel
+endif
+
+#make change_interface iface=SDIO
+change_interface:
+	@echo ---------------------------Previous IF_TYPE $(IF_TYPE)
+	sed -i -e 's/'"$(IF_TYPE)"'/'"$(iface)"'/g' $(ATH_TOPDIR)/build/env.makefile
+	@echo ---------------------------now IF_TYPE $(iface)
+
+
+#################################################################################################################################
+#
+# BT Patch
+#
+#################################################################################################################################
+
+android_patch_BT: bt_code patch_bt
+	@echo ---------------------------Patch Android needed for BT
+ifeq ($(IF_TYPE),PCIE-USB)
+ifeq ($(KTAG),v4.9)
+	cd ${ANDROID_X86_PROJ_PATH}/kernel && patch -p1 --no-backup-if-mismatch < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/btusb_4_9.patch
+else ifeq ($(KTAG),v4.4)
+	cd ${ANDROID_X86_PROJ_PATH}/kernel && patch -p1 --no-backup-if-mismatch < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/btusb_4_4.patch
+endif
+endif
+
+ifeq ($(IF_TYPE),PCIE-USB)
+	cd ${ANDROID_X86_PROJ_PATH}/device/generic/common && patch -p1 --no-backup-if-mismatch < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/ueventd.x86.rc.patch
+endif
+
+ifeq ($(IF_TYPE),USB)
+ifeq ($(KTAG),v4.9)
+	cd ${ANDROID_X86_PROJ_PATH}/kernel && patch -p1 --no-backup-if-mismatch < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/btusb_4_9.patch
+else ifeq ($(KTAG),v4.4)
+	cd ${ANDROID_X86_PROJ_PATH}/kernel && patch -p1 --no-backup-if-mismatch < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/btusb_4_4.patch
+endif
+endif
+
+ifeq ($(IF_TYPE),USB)
+	cd ${ANDROID_X86_PROJ_PATH}/device/generic/common && patch -p1 --no-backup-if-mismatch < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/ueventd.x86.rc.patch
+endif
+
+	cd ${ANDROID_X86_PROJ_PATH}/packages/apps/Bluetooth && patch -p1 --no-backup-if-mismatch < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/packages-apps-Bluetooth.patch
+	cd ${ANDROID_X86_PROJ_PATH}/system/keymaster && patch -p1 --no-backup-if-mismatch < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/system-keymaster.patch
+	cd ${ANDROID_X86_PROJ_PATH}/hardware/libaudio && patch -p1 --no-backup-if-mismatch < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/a2dpsrc_hw_libaudio.patch
+	cd ${ANDROID_X86_PROJ_PATH}/frameworks/base && patch -p1 --no-backup-if-mismatch < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/framework-base-core-config.patch
+ifeq ($(IF_TYPE),SDIO)
+	cd ${ANDROID_X86_PROJ_PATH}/build && patch -p1 --no-backup-if-mismatch < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/build_uart.patch
+	cd ${ANDROID_X86_PROJ_PATH}/device/generic/common && patch -p1 --no-backup-if-mismatch < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/device_generic_common_uart.patch
+endif
+ifeq ($(IF_TYPE),PCIE)
+	cd ${ANDROID_X86_PROJ_PATH}/build && patch -p1 --no-backup-if-mismatch < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/build_uart.patch
+	cd ${ANDROID_X86_PROJ_PATH}/device/generic/common && patch -p1 --no-backup-if-mismatch < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/device_generic_common_uart.patch
+endif
+	@echo Done with applying patches!
+
+android_patch_BT_R: bt_code
+	@echo ---------------------------Reverting Patch Android needed for BT
+	rm -rf ${ANDROID_X86_PROJ_PATH}/frameworks/base/core/java/android/bluetooth/BluetoothAvrcpInfo.aidl
+	rm -rf ${ANDROID_X86_PROJ_PATH}/frameworks/base/core/java/android/bluetooth/BluetoothAvrcpInfo.java
+	cd ${ANDROID_X86_PROJ_PATH}/kernel && git stash
+	cd ${ANDROID_X86_PROJ_PATH}/device/generic/common && git stash
+	cd ${ANDROID_X86_PROJ_PATH}/packages/apps/Bluetooth && git stash
+	cd ${ANDROID_X86_PROJ_PATH}/system/keymaster && git stash
+	cd ${ANDROID_X86_PROJ_PATH}/hardware/libaudio && git stash
+	cd ${ANDROID_X86_PROJ_PATH}/frameworks/base && git stash
+	cd ${ANDROID_X86_PROJ_PATH}/build && git stash
+	rm -rf ${ANDROID_X86_PROJ_PATH}/build/target/board/generic/sepolicy/bluetooth.te
+	rm -rf ${ANDROID_X86_PROJ_PATH}/build/target/board/generic/sepolicy/start_hci_filter.te
+	rm -rf ${ANDROID_X86_PROJ_PATH}/build/target/board/generic/sepolicy/wcnss_filter.te
+	rm -rf ${ANDROID_X86_PROJ_PATH}/build/target/board/generic/sepolicy/wcnss_service.te
+ifeq ($(IF_TYPE),SDIO)
+	@echo Removing WCNSS Filter
+	rm -rf ${ANDROID_X86_PROJ_PATH}/vendor/qcom-proprietary
+endif
+ifeq ($(IF_TYPE),PCIE)
+	@echo Removing WCNSS Filter
+	rm -rf ${ANDROID_X86_PROJ_PATH}/vendor/qcom-proprietary
+endif
+
+bt_code:
+	@echo Copying libbt-vendor
+	mkdir -p ${ANDROID_X86_PROJ_PATH}/hardware/qcom
+	rm -rf  ${ANDROID_X86_PROJ_PATH}/hardware/qcom/bt
+	mkdir -p ${ANDROID_X86_PROJ_PATH}/hardware/qcom/bt
+	cp -rf ${APP_TOPDIR}/libbt_vendor/* ${ANDROID_X86_PROJ_PATH}/hardware/qcom/bt/
+	@echo Copying libhardware
+	mkdir -p ${ANDROID_X86_PROJ_PATH}/hardware
+	rm -rf ${ANDROID_X86_PROJ_PATH}/hardware/libhardware
+	mkdir -p  ${ANDROID_X86_PROJ_PATH}/hardware/libhardware
+	cp -rf ${APP_TOPDIR}/libhardware/* ${ANDROID_X86_PROJ_PATH}/hardware/libhardware/
+	@echo Copying fluoride
+	rm -rf ${ANDROID_X86_PROJ_PATH}/system/bt
+	mkdir -p ${ANDROID_X86_PROJ_PATH}/system/bt
+	cp -rf ${APP_TOPDIR}/fluoride/* ${ANDROID_X86_PROJ_PATH}/system/bt/
+	@echo Copying Vendor
+	mkdir -p ${ANDROID_X86_PROJ_PATH}/vendor/qcom/opensource
+	rm -rf ${ANDROID_X86_PROJ_PATH}/vendor/qcom/opensource/bluetooth
+	cp -rf ${APP_TOPDIR}/bluetooth ${ANDROID_X86_PROJ_PATH}/vendor/qcom/opensource/
+ifeq ($(IF_TYPE),PCIE)
+	@echo Unzipping WCNSS filter
+	mkdir -p ${ANDROID_X86_PROJ_PATH}/vendor/qcom-proprietary/ship/bt
+	rm -rf ${ANDROID_X86_PROJ_PATH}/vendor/qcom-proprietary/ship/bt/wcnss_filter
+	unzip ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/wcnss_filter.zip -d ${ANDROID_X86_PROJ_PATH}/vendor/qcom-proprietary/ship/bt
+endif
+ifeq ($(IF_TYPE),SDIO)
+	@echo Unzipping WCNSS filter
+	mkdir -p ${ANDROID_X86_PROJ_PATH}/vendor/qcom-proprietary/ship/bt
+	rm -rf ${ANDROID_X86_PROJ_PATH}/vendor/qcom-proprietary/ship/bt/wcnss_filter
+	unzip ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/wcnss_filter.zip -d ${ANDROID_X86_PROJ_PATH}/vendor/qcom-proprietary/ship/bt
+endif
+patch_bt:
+	@echo ---------------------------Patch BT
+	cd ${ANDROID_X86_PROJ_PATH}/hardware/qcom/bt && patch -s -p1 < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/hw_qcom_bt_libbt_vendor_caf_base.patch
+	cd ${ANDROID_X86_PROJ_PATH}/hardware/qcom/bt && patch -s -p1 < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/hw_qcom_bt_libbt_vendor_lea.patch
+	chmod 777 ${ANDROID_X86_PROJ_PATH}/hardware/qcom/bt/libbt-vendor/gen-buildcfg.sh
+	cd ${ANDROID_X86_PROJ_PATH}/hardware/libhardware && patch -s -p1 < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/hw_libhw_caf_base.patch
+	cd ${ANDROID_X86_PROJ_PATH}/system/bt && patch -s -p1 < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/system_bt_caf_base.patch
+	cd ${ANDROID_X86_PROJ_PATH}/system/bt && patch -s -p1 < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/system_bt_lea.patch
+	cd ${ANDROID_X86_PROJ_PATH}/vendor/qcom/opensource/bluetooth && patch -s -p1 < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/vendor_qcom_bt_caf_base.patch
+	cd ${ANDROID_X86_PROJ_PATH}/vendor/qcom/opensource/bluetooth && patch -s -p1 < ${DRIVER_TOPDIR}/patches/${BOARD_TYPE}/BT/vendor_qcom_bt_lea.patch
+
+#################################################################################################################################
+#
+# Sigma-DUT package
+#
+sigmadut_build: rootfs_prep sigmadut_clean
+	@echo Build Sigma-DUT
+	cd $(SIGMADUT_TOPDIR) && \
+	${MAKEARCH} && \
+	cp $(SIGMADUT_TOPDIR)/sigma_dut $(INSTALL_ROOT)/sbin
+
+sigmadut_clean:
+	@echo Clean Sigma-DUT
+	cd $(SIGMADUT_TOPDIR) && \
+	${MAKEARCH} clean
+
+#################################################################################################################################
+#
+# athdiag
+#
+athdiag_build: rootfs_prep athdiag_clean
+	@echo Build athdiag tool
+	cd $(ATHDIAG_TOPDIR) && \
+	${MAKEARCH} && \
+	cp $(ATHDIAG_TOPDIR)/athdiag $(INSTALL_ROOT)/sbin
+
+athdiag_clean:
+	@echo Clean athdiag tool
+	cd $(ATHDIAG_TOPDIR) && \
+	${MAKEARCH} clean
+
+#
+#strip wlan module & copy binary files to Android-x86 project
+#
+install:
+	@echo Strip Unneeded for WLAN Module first
+	cd ${ROOTFS_PATH}/lib/modules && ${CROSS_COMPILE}strip --strip-unneeded *
+	@echo Copy BINARY to Android-x86 project
+	cp ${ROOTFS_PATH}/lib/modules/* ${ANDROID_X86_PROJ_VENDOR_PATH}
+	cp ${ROOTFS_PATH}/lib/modules/* ${ANDROID_X86_PROJ_PATH}/out/target/product/${ARCH}/system/lib/modules/
+#	cp -rf ${ROOTFS_PATH}/lib/firmware/WLAN-firmware/*  ${ANDROID_X86_PROJ_WLANFW_PATH}
+	mkdir -p ${ANDROID_X86_PROJ_WLAN_PATH}
+#	cp ${ROOTFS_PATH}/lib/firmware/wlan/* ${ANDROID_X86_PROJ_WLAN_PATH}
+	mkdir -p ${ANDROID_X86_PROJ_BTFW_PATH}
+#	cp -rf ${ROOTFS_PATH}/lib/firmware/BT-firmware/* ${ANDROID_X86_PROJ_BTFW_PATH}
+	@echo ========================
+	@echo Copying firmwares
+	cp -vrf ${ATH_TOPDIR}/../firmware/WLAN-firmware/*  ${ANDROID_X86_PROJ_WLANFW_PATH}
+#	cp -rf ${ATH_TOPDIR}/../firmware/BT-firmware/* ${ANDROID_X86_PROJ_BTFW_PATH} 2>/dev/null || :
+	@echo Copy BINARY DONE!

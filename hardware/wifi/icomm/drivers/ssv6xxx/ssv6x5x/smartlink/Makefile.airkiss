@@ -1,0 +1,8 @@
+all:
+#	/opt/mipsel-gcc472-glibc216-mips32/bin/mipsel-linux-gcc -o airkiss-mipsel airkiss.c libssv_airkiss.a airkiss-lib/mipsel/libairkiss.a
+#	/opt/mipsel-gcc472-glibc216-mips32/bin/mipsel-linux-gcc -o airkiss airkiss.c libssv_airkiss.a airkiss-lib/mipsel/libairkiss_log.a
+	/opt/mipsel-gcc472-glibc216-mips32/bin/mipsel-linux-gcc -o airkiss-mipsel airkiss.c libssv_smartlink-mipsel.a airkiss-lib/mipsel/libairkiss_aes.a
+#	/opt/mipsel-gcc472-glibc216-mips32/bin/mipsel-linux-gcc -o airkiss airkiss.c libssv_airkiss.a airkiss-lib/mipsel/libairkiss_aes_log.a
+
+	gcc -o airkiss-x64 airkiss.c libssv_smartlink-x64.a airkiss-lib/x64/libairkiss_aes.a
+clean:

@@ -1,0 +1,145 @@
+package android.app {
+
+  public class Notification implements android.os.Parcelable {
+    method public static java.lang.Class<? extends android.app.Notification.Style> getNotificationStyleClass(java.lang.String);
+  }
+
+  public static final class Notification.TvExtender implements android.app.Notification.Extender {
+    method public deprecated java.lang.String getChannel();
+  }
+
+}
+
+package android.app.admin {
+
+  public class DevicePolicyManager {
+    method public deprecated java.lang.String getDeviceInitializerApp();
+    method public deprecated android.content.ComponentName getDeviceInitializerComponent();
+  }
+
+}
+
+package android.content {
+
+  public class Intent implements java.lang.Cloneable android.os.Parcelable {
+    field public static final deprecated java.lang.String ACTION_DEVICE_INITIALIZATION_WIZARD = "android.intent.action.DEVICE_INITIALIZATION_WIZARD";
+    field public static final deprecated java.lang.String ACTION_MASTER_CLEAR = "android.intent.action.MASTER_CLEAR";
+    field public static final deprecated java.lang.String ACTION_SERVICE_STATE = "android.intent.action.SERVICE_STATE";
+    field public static final deprecated java.lang.String EXTRA_CDMA_DEFAULT_ROAMING_INDICATOR = "cdmaDefaultRoamingIndicator";
+    field public static final deprecated java.lang.String EXTRA_CDMA_ROAMING_INDICATOR = "cdmaRoamingIndicator";
+    field public static final deprecated java.lang.String EXTRA_CSS_INDICATOR = "cssIndicator";
+    field public static final deprecated java.lang.String EXTRA_DATA_OPERATOR_ALPHA_LONG = "data-operator-alpha-long";
+    field public static final deprecated java.lang.String EXTRA_DATA_OPERATOR_ALPHA_SHORT = "data-operator-alpha-short";
+    field public static final deprecated java.lang.String EXTRA_DATA_OPERATOR_NUMERIC = "data-operator-numeric";
+    field public static final deprecated java.lang.String EXTRA_DATA_RADIO_TECH = "dataRadioTechnology";
+    field public static final deprecated java.lang.String EXTRA_DATA_REG_STATE = "dataRegState";
+    field public static final deprecated java.lang.String EXTRA_DATA_ROAMING_TYPE = "dataRoamingType";
+    field public static final deprecated java.lang.String EXTRA_EMERGENCY_ONLY = "emergencyOnly";
+    field public static final deprecated java.lang.String EXTRA_IS_DATA_ROAMING_FROM_REGISTRATION = "isDataRoamingFromRegistration";
+    field public static final deprecated java.lang.String EXTRA_IS_USING_CARRIER_AGGREGATION = "isUsingCarrierAggregation";
+    field public static final deprecated java.lang.String EXTRA_LTE_EARFCN_RSRP_BOOST = "LteEarfcnRsrpBoost";
+    field public static final deprecated java.lang.String EXTRA_MANUAL = "manual";
+    field public static final deprecated java.lang.String EXTRA_NETWORK_ID = "networkId";
+    field public static final deprecated java.lang.String EXTRA_OPERATOR_ALPHA_LONG = "operator-alpha-long";
+    field public static final deprecated java.lang.String EXTRA_OPERATOR_ALPHA_SHORT = "operator-alpha-short";
+    field public static final deprecated java.lang.String EXTRA_OPERATOR_NUMERIC = "operator-numeric";
+    field public static final deprecated java.lang.String EXTRA_SYSTEM_ID = "systemId";
+    field public static final deprecated java.lang.String EXTRA_VOICE_RADIO_TECH = "radioTechnology";
+    field public static final deprecated java.lang.String EXTRA_VOICE_REG_STATE = "voiceRegState";
+    field public static final deprecated java.lang.String EXTRA_VOICE_ROAMING_TYPE = "voiceRoamingType";
+  }
+
+}
+
+package android.media.tv {
+
+  public final class TvInputManager {
+    method public android.media.tv.TvInputManager.Hardware acquireTvInputHardware(int, android.media.tv.TvInputManager.HardwareCallback, android.media.tv.TvInputInfo);
+  }
+
+  public static final class TvInputManager.Hardware {
+    method public boolean dispatchKeyEventToHdmi(android.view.KeyEvent);
+  }
+
+}
+
+package android.net.wifi {
+
+  public deprecated class BatchedScanResult implements android.os.Parcelable {
+    ctor public BatchedScanResult();
+    ctor public BatchedScanResult(android.net.wifi.BatchedScanResult);
+    field public final java.util.List<android.net.wifi.ScanResult> scanResults;
+    field public boolean truncated;
+  }
+
+  public class ScanResult implements android.os.Parcelable {
+    field public boolean untrusted;
+  }
+
+}
+
+package android.os {
+
+  public class Build {
+    field public static final boolean PERMISSIONS_REVIEW_REQUIRED;
+  }
+
+  public final class PowerManager {
+    method public deprecated boolean isScreenBrightnessBoosted();
+    field public static final deprecated java.lang.String ACTION_SCREEN_BRIGHTNESS_BOOST_CHANGED = "android.os.action.SCREEN_BRIGHTNESS_BOOST_CHANGED";
+  }
+
+}
+
+package android.security.keystore.recovery {
+
+  public final class KeyChainSnapshot implements android.os.Parcelable {
+    method public deprecated byte[] getTrustedHardwarePublicKey();
+  }
+
+  public class RecoveryController {
+    method public deprecated byte[] generateAndStoreKey(java.lang.String, byte[]) throws android.security.keystore.recovery.InternalRecoveryServiceException, android.security.keystore.recovery.LockScreenRequiredException;
+    method public deprecated java.security.Key generateKey(java.lang.String, byte[]) throws android.security.keystore.recovery.InternalRecoveryServiceException, android.security.keystore.recovery.LockScreenRequiredException;
+    method public deprecated java.util.List<java.lang.String> getAliases(java.lang.String) throws android.security.keystore.recovery.InternalRecoveryServiceException;
+    method public deprecated android.security.keystore.recovery.KeyChainSnapshot getRecoveryData() throws android.security.keystore.recovery.InternalRecoveryServiceException;
+    method public deprecated int getRecoveryStatus(java.lang.String, java.lang.String) throws android.security.keystore.recovery.InternalRecoveryServiceException;
+    method public deprecated void initRecoveryService(java.lang.String, byte[]) throws java.security.cert.CertificateException, android.security.keystore.recovery.InternalRecoveryServiceException;
+    method public deprecated void setRecoveryStatus(java.lang.String, java.lang.String, int) throws android.security.keystore.recovery.InternalRecoveryServiceException, android.content.pm.PackageManager.NameNotFoundException;
+  }
+
+  public class RecoverySession implements java.lang.AutoCloseable {
+    method public deprecated java.util.Map<java.lang.String, byte[]> recoverKeys(byte[], java.util.List<android.security.keystore.recovery.WrappedApplicationKey>) throws android.security.keystore.recovery.DecryptionFailedException, android.security.keystore.recovery.InternalRecoveryServiceException, android.security.keystore.recovery.SessionExpiredException;
+    method public deprecated byte[] start(byte[], byte[], byte[], java.util.List<android.security.keystore.recovery.KeyChainProtectionParams>) throws java.security.cert.CertificateException, android.security.keystore.recovery.InternalRecoveryServiceException;
+    method public deprecated byte[] start(java.security.cert.CertPath, byte[], byte[], java.util.List<android.security.keystore.recovery.KeyChainProtectionParams>) throws java.security.cert.CertificateException, android.security.keystore.recovery.InternalRecoveryServiceException;
+  }
+
+  public final class WrappedApplicationKey implements android.os.Parcelable {
+    method public deprecated byte[] getAccount();
+  }
+
+  public static class WrappedApplicationKey.Builder {
+    method public deprecated android.security.keystore.recovery.WrappedApplicationKey.Builder setAccount(byte[]);
+  }
+
+}
+
+package android.service.notification {
+
+  public abstract class NotificationListenerService extends android.app.Service {
+    method public android.service.notification.StatusBarNotification[] getActiveNotifications(int);
+    method public android.service.notification.StatusBarNotification[] getActiveNotifications(java.lang.String[], int);
+    method public void registerAsSystemService(android.content.Context, android.content.ComponentName, int) throws android.os.RemoteException;
+    method public final void setOnNotificationPostedTrim(int);
+    method public final void snoozeNotification(java.lang.String, java.lang.String);
+    method public void unregisterAsSystemService() throws android.os.RemoteException;
+    field public static final int TRIM_FULL = 0; // 0x0
+    field public static final int TRIM_LIGHT = 1; // 0x1
+  }
+
+  public static class NotificationListenerService.Ranking {
+    method public java.util.List<java.lang.String> getAdditionalPeople();
+    method public java.util.List<android.service.notification.SnoozeCriterion> getSnoozeCriteria();
+  }
+
+}
+

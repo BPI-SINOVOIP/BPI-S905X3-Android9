@@ -1,0 +1,79 @@
+cc_library_headers {
+    name: "libmediaplayer2_headers",
+    vendor_available: true,
+    export_include_dirs: ["include"],
+}
+
+cc_library {
+    name: "libmediaplayer2",
+
+    srcs: [
+        "JAudioTrack.cpp",
+        "MediaPlayer2AudioOutput.cpp",
+        "mediaplayer2.cpp",
+    ],
+
+    shared_libs: [
+        "libandroid_runtime",
+        "libaudioclient",
+        "libbinder",
+        "libcutils",
+        "libgui",
+        "liblog",
+        "libmedia_omx",
+        "libmedia_player2_util",
+        "libmediaextractor",
+        "libstagefright_foundation",
+        "libui",
+        "libutils",
+
+        "libcrypto",
+        "libmediadrm",
+        "libmediametrics",
+        "libmediandk",
+        "libmediautils",
+        "libmemunreachable",
+        "libnativewindow",
+        "libpowermanager",
+        "libstagefright_httplive",
+        "libstagefright_player2",
+    ],
+
+    export_shared_lib_headers: [
+        "libaudioclient",
+        "libbinder",
+        "libmedia_omx",
+    ],
+
+    header_libs: [
+        "media_plugin_headers",
+    ],
+
+    static_libs: [
+        "libmedia_helper",
+        "libstagefright_nuplayer2",
+        "libstagefright_rtsp",
+        "libstagefright_timedtext",
+    ],
+
+    export_include_dirs: [
+        "include",
+    ],
+
+    cflags: [
+        "-Werror",
+        "-Wno-error=deprecated-declarations",
+        "-Wall",
+    ],
+
+    sanitize: {
+        misc_undefined: [
+            "unsigned-integer-overflow",
+            "signed-integer-overflow",
+        ],
+        cfi: true,
+        diag: {
+            cfi: true,
+        },
+    },
+}

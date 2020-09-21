@@ -1,0 +1,290 @@
+#!/bin/bash
+# Add customer specific patches download.
+# Add components need to be downloaded.
+# 
+
+# subversion of AIO
+BRD_TYPE_VER=ne-f30
+
+#
+# For each board type,
+# determine which components should be downloaded.
+# The settings here will overwrite the default in aio_gen_bit.sh.
+# 
+# ONLY add/enable those components need download.
+#
+# 1. patch files
+DOWNLOAD_PATCH=y
+DOWNLOAD_COMMON_PATCH=n
+
+# 2. kernel
+DOWNLOAD_KERNEL_BACKPORT_3_12=n
+# For ne-f30 patches are on stable kernel. No more backports
+CLONE_KERNEL=n
+# Cloned kernel path
+CLONE_KERNEL_PATH=
+
+# 3. WLAN host driver snapshot
+DOWNLOAD_DRIVER_WLAN_HOST=y
+# If we want to get the driver git branch. So clone.
+CLONE_DRIVER_WLAN_HOST=n
+
+# 4. APPs
+DOWNLOAD_APP_WLAN_WPA_SUPPLICANT_8=n
+DOWNLOAD_APP_WLAN_LIBNL_3_2_25=y
+DOWNLOAD_APP_WLAN_IW_3_0=y
+DOWNLOAD_WLAN_SUPPLICANT=y
+DOWNLOAD_APP_WLAN_HOSTAP_2_4=n
+
+#5. Bt related
+DOWNLOAD_LIBBT_VENDOR=y
+DOWNLOAD_LIBHARDWARE=y
+DOWNLOAD_FLUORIDE=y
+DOWNLOAD_VENDOR=y
+DOWNLOAD_BT_APP=y
+
+# replace this with proper version
+WPA_SUPPLICANT_NAME=
+DOWNLOAD_SIGMA_DUT=y
+SIGMA_DUT_NAME="github-qca/master"
+SIGMA_DUT_CAF="https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/wlan/utils/sigma-dut/snapshot"
+
+# Convert to "cus12_9" from "cus12-9".
+BOARD_TYPE_PREFIX=${INPUT_BOARD_TYPE/-/_}
+
+# Please add the correct link on CAF if related folder released
+#BOARD_TYPE_AIO_PATCH_CAF="https://www.codeaurora.org/patches/external/wlan/fixce/3rdparty/patches/ne-f10"
+BOARD_TYPE_AIO_PATCH_CAF="https://portland.source.codeaurora.org/patches/external/wlan/fixce/3rdparty/patches/wlan_patches"
+
+OLD_DIR=`pwd`
+
+if [ ${DOWNLOAD_LIBBT_VENDOR} == "y" ]
+then
+    echo "========================================================"
+    echo " Downloading libbt-vendor ..."
+    echo "========================================================"
+    cd ${AIO_TOP}/apps
+    git clone https://source.codeaurora.org/quic/la/platform/hardware/qcom/bt -b bt.lnx.2.1-rel
+    cd bt
+    git checkout 98a63b9f6db239735a2057a03848bfc57962ba13
+    cd ..
+    mv bt libbt_vendor
+    cd ${OLD_DIR}
+fi
+
+if [ ${DOWNLOAD_LIBHARDWARE} == "y" ]
+then
+    echo "========================================================"
+    echo " Downloading libhardware ..."
+    echo "========================================================"
+    cd ${AIO_TOP}/apps
+    git clone https://source.codeaurora.org/quic/la/platform/hardware/libhardware -b le-blast.lnx.1.1-rel
+    cd libhardware
+    git checkout 2964e92c59460d4d5b5a4c28f5a0d28b1ecb8a64
+    cd ${OLD_DIR}
+fi
+
+if [ ${DOWNLOAD_FLUORIDE} == "y" ]
+then
+    echo "========================================================"
+    echo " Downloading fluoride ..."
+    echo "========================================================"
+    cd ${AIO_TOP}/apps
+    git clone https://source.codeaurora.org/quic/la/platform/system/bt -b bt.lnx.2.1-rel
+    cd bt
+    git checkout 9a47e121be9931d87755c92efdc03cbdde25fe15
+    cd ${AIO_TOP}/apps
+    mv bt fluoride
+    cd ${OLD_DIR}
+fi
+
+if [ ${DOWNLOAD_VENDOR} == "y" ]
+then
+    echo "========================================================"
+    echo " Downloading Vendor ..."
+    echo "========================================================"
+    cd ${AIO_TOP}/apps
+    git clone https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/bluetooth -b bt-qc.lnx.1.0-rel.1.0
+    cd bluetooth
+    git checkout f1bf05ffa71767cff4edbacd39acd38478066bdd
+    cd ${OLD_DIR}
+fi
+
+if [ ${DOWNLOAD_BT_APP} == "y" ]
+then
+    echo "========================================================"
+    echo " Downloading BT app ..."
+    echo "========================================================"
+    cd ${AIO_TOP}/apps
+    git clone https://source.codeaurora.org/quic/le/platform/qcom-opensource/bt -b bt-fluoride.le.1.0-rel
+    cd bt
+    git checkout 3aadd61d68a9397e4dd9a458063883d691392052
+    cd ${AIO_TOP}/apps
+    mv bt app
+    cd ${OLD_DIR}
+fi
+
+if [ ${CLONE_DRIVER_WLAN_HOST} == "y" ]
+then
+    echo "======================================================="
+    echo " Downloading qcacld-2.0 branch ${HOST_DRIVER_BRANCH}"
+    echo "======================================================="
+    if [ -d ${AIO_TOP}/drivers/qcacld-new ]
+    then
+        rm -rf ${AIO_TOP}/drivers/qcacld-2.0_old
+        mv -f ${AIO_TOP}/drivers/qcacld-new ${AIO_TOP}/drivers/qcacld-old
+    fi
+
+    cd ${AIO_TOP}/drivers/
+    git clone https://source.codeaurora.org/external/wlan/qcacld-2.0 -b ${HOST_DRIVER_BRANCH}
+
+    if [ ${HOST_DRIVER_VERSION} != "" ]
+    then
+        cd qcacld-2.0
+        echo "======================================================="
+        echo "Pointing to qcacld-2.0 version ${HOST_DRIVER_VERSION}" 
+        echo "======================================================="
+        git reset --hard v${HOST_DRIVER_VERSION}
+        cd ../
+    fi
+
+    mv qcacld-2.0 qcacld-new
+    cd ${OLD_DIR}
+fi
+
+echo "======================================================="
+if [ -z "${CLONE_KERNEL_PATH}" ]
+then
+    echo "Kernel clone directory unspecified. Assuming default:"
+    CLONE_KERNEL_PATH=${TOPDIR}/..
+fi
+
+echo ${CLONE_KERNEL_PATH}
+echo "======================================================="
+
+if [ ${CLONE_KERNEL} == "y" ] && [ -n "${KTAG}" ]
+then
+    if [ -d ${CLONE_KERNEL_PATH}/linux-stable ]
+    then
+        echo "======================================================="
+        echo "Kernel already exists skip clone"
+        echo "======================================================="
+    else
+        echo "======================================================="
+        echo " Downloading the kernel version ${KTAG} and applying patches"
+        echo "======================================================="
+        git clone git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+	cd linux-stable
+        git checkout ${KTAG}
+
+	cd -
+        mkdir -p ${CLONE_KERNEL_PATH}
+        mv linux-stable ${CLONE_KERNEL_PATH}/.
+    fi
+fi
+
+if [ -d ${CLONE_KERNEL_PATH}/linux-stable ] && [ -n "${KTAG}" ]
+then
+    echo "======================================================="
+    echo " Trying to patch kernel"
+    echo "======================================================="
+    cd ${CLONE_KERNEL_PATH}/linux-stable
+    git checkout ${KTAG}
+    if [ $ENG_PATCH == 0 ]
+    then
+        rm -rf ./${INPUT_BOARD_TYPE}
+        wget -e robots=off -A.patch -nd -rH --no-check-certificate -P "${INPUT_BOARD_TYPE}/${KTAG}" "${BOARD_TYPE_AIO_PATCH_CAF}/kernel/${KTAG}"
+        git am ${INPUT_BOARD_TYPE}/${KTAG}/*.patch
+        ret=$?
+        mkdir -p ${TOPDIR}/../patch
+        cp -rf ${INPUT_BOARD_TYPE}/${KTAG} ${TOPDIR}/../patch/
+        rm -rf ./${INPUT_BOARD_TYPE}
+    else
+        git am ${OSS_ENGPATH_DIR}/${INPUT_BOARD_TYPE}/${KTAG}/*.patch
+        ret=$?
+    fi
+    if [ "$ret" -eq 0 ]
+    then
+         echo "Applied all patches successfully"
+    else
+         echo "Failed. Perhaps already patched or do not match. Exiting"
+         git am --abort
+         exit 1
+    fi
+    cd -
+else
+    echo "======================================================="
+    echo "Check if these are correctly set..!"
+    echo "CLONE_KERNEL=${CLONE_KERNEL}"
+    echo "CLONE_KERNEL_PATH=${CLONE_KERNEL_PATH}"
+    echo "KTAG=${KTAG}"
+    echo "======================================================="
+fi
+
+if [ "$DOWNLOAD_SIGMA_DUT" == "y" ]
+then
+    echo "===================================="
+    echo " Downloading sigma-dut ..."
+    echo "===================================="
+    git clone https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/wlan/utils/sigma-dut -b ${SIGMA_DUT_NAME}
+    mv -f sigma-dut ${AIO_TOP}/apps
+    cd ${AIO_TOP}/apps/sigma-dut
+    git reset --hard fd7359aed6aaba745e31dd0a9fed80578372d554
+    wget -e robots=off -A.patch -nd -rH --no-check-certificate -P "sigma-dut_patch" "${BOARD_TYPE_AIO_PATCH_CAF}/sigma_dut/"
+    git am sigma-dut_patch/*.patch
+    cd -
+fi
+
+if [ ${DOWNLOAD_WLAN_SUPPLICANT} == "y" ]
+then
+    echo "===================================="
+    echo " Downloading hostap ..."
+    echo "===================================="
+    git clone http://w1.fi/hostap.git
+    mv -f hostap ${AIO_TOP}/apps
+    cd ${AIO_TOP}/apps/hostap
+    git reset --hard 2a9c5217b18be9462a5329626e2f95cc7dd8d4f1
+    wget -e robots=off -A.config -A.patch -nd -rH --no-check-certificate -P "${INPUT_BOARD_TYPE}/supplicant" "${BOARD_TYPE_AIO_PATCH_CAF}/supplicant"
+    git am ${INPUT_BOARD_TYPE}/supplicant/*.patch
+    mkdir -p ${AIO_TOP}/drivers/patches/
+    cp -rf ${INPUT_BOARD_TYPE}/supplicant ${AIO_TOP}/drivers/patches/
+    rm -rf ./${INPUT_BOARD_TYPE}
+    cd -
+fi
+
+if [ ${IF_TYPE} == "USB" ]
+then
+    echo "========================================================"
+    echo " Downloading BT CAF patches ..."
+    echo "========================================================"
+    CAF_PATH=https://source.codeaurora.org/patches/external/wlan/fixce/3rdparty
+    wget -e robots=off -A.patch -nd -rH --no-check-certificate -P "${BRD_TYPE_VER}/xyz" "${CAF_PATH}/patches/${BRD_TYPE_VER}/BT"
+    cp -rf ${BRD_TYPE_VER}/xyz/* ${ENGPATCHDIR}/${BRD_TYPE_VER}/BT/
+    rm -rf ${BRD_TYPE_VER}
+    cd ${CLONE_KERNEL_PATH}/linux-stable
+    if [ ${KTAG} == "v4.11" ]
+    then
+        patch -p1 --no-backup-if-mismatch < ${ENGPATCHDIR}/${BRD_TYPE_VER}/BT/btusb_4_11.patch
+    elif [ ${KTAG} == "v4.9.11" ]
+    then
+        patch -p1 --no-backup-if-mismatch < ${ENGPATCHDIR}/${BRD_TYPE_VER}/BT/btusb_4_9.patch
+    elif [ ${KTAG} == "v4.4.15" ]
+    then
+        patch -p1 --no-backup-if-mismatch < ${ENGPATCHDIR}/${BRD_TYPE_VER}/BT/btusb_4_4.patch
+    fi
+    cd -
+fi
+
+grep -rl interface_type ${OLD_DIR}/build/scripts/${BRD_TYPE_VER}/bt.sh | xargs sed -i "s~interface_type~'${IF_TYPE}'~g"
+#PATCH_PATH=${AIO_TOP}/drivers/patches/${BRD_TYPE_VER}
+#CAF_PATH=https://source.codeaurora.org/patches/external/wlan/fixce/3rdparty
+
+#echo "======================================================="
+#echo " Downloading the patches from ${CAF_PATH} to ${PATCH_PATH}"
+#echo "======================================================="
+
+# Kernel patches - These are anyway copied from the local patch directory in aio_gen_bit.sh. When CAF patches are available lets enable this
+#wget ${CAF_PATH}/patches/ne-f10/WLAN/${KTAG}/0001-xyz.patch -O ${AIO_TOP}/drivers/patches/0001-xyz.patch
+
+
+cd ${OLD_DIR}

@@ -1,0 +1,92 @@
+config ATBM_MAC80211
+	tristate "Generic IEEE 802.11 Networking Stack (mac80211)"
+	select CRYPTO
+	select CRYPTO_ARC4
+	select CRYPTO_AES
+	select CRC32
+	select AVERAGE
+	---help---
+	  This option enables the hardware independent IEEE 802.11
+	  networking stack.
+
+if ATBM_MAC80211 != n
+
+config MAC80211_ATBM_HAS_RC
+	bool
+
+config MAC80211_ATBM_RC_PID
+	bool "PID controller based rate control algorithm" if EXPERT
+	select MAC80211_ATBM_HAS_RC
+	---help---
+	  This option enables a TX rate control algorithm for
+	  mac80211 that uses a PID controller to select the TX
+	  rate.
+
+config MAC80211_ATBM_RC_MINSTREL
+	bool "Minstrel" if EXPERT
+	select MAC80211_ATBM_HAS_RC
+	default y
+	---help---
+	  This option enables the 'minstrel' TX rate control algorithm
+
+config MAC80211_ATBM_RC_MINSTREL_HT
+	bool "Minstrel 802.11n support"
+	depends on MAC80211_ATBM_RC_MINSTREL
+	default y
+	---help---
+	  This option enables the 'minstrel_ht' TX rate control algorithm
+
+choice
+	prompt "Default rate control algorithm"
+	depends on MAC80211_ATBM_HAS_RC
+	default MAC80211_ATBM_RC_DEFAULT_MINSTREL
+	---help---
+	  This option selects the default rate control algorithm
+	  mac80211 will use. Note that this default can still be
+	  overridden through the ieee80211_default_rc_algo module
+	  parameter if different algorithms are available.
+
+config MAC80211_ATBM_RC_DEFAULT_PID
+	bool "PID controller based rate control algorithm"
+	depends on MAC80211_ATBM_RC_PID
+	---help---
+	  Select the PID controller based rate control as the
+	  default rate control algorithm. You should choose
+	  this unless you know what you are doing.
+
+config MAC80211_ATBM_RC_DEFAULT_MINSTREL
+	bool "Minstrel"
+	depends on MAC80211_ATBM_RC_MINSTREL
+	---help---
+	  Select Minstrel as the default rate control algorithm.
+
+
+endchoice
+
+config MAC80211_ATBM_RC_DEFAULT
+	string
+	default "minstrel_ht" if MAC80211_ATBM_RC_DEFAULT_MINSTREL && MAC80211_ATBM_RC_MINSTREL_HT
+	default "minstrel" if MAC80211_ATBM_RC_DEFAULT_MINSTREL
+	default "pid" if MAC80211_ATBM_RC_DEFAULT_PID
+	default ""
+
+endif
+
+comment "Some wireless drivers require a rate control algorithm"
+	depends on ATBM_MAC80211 && MAC80211_ATBM_HAS_RC
+
+config MAC80211_ATBM_NOINLINE
+	bool "Do not inline TX/RX handlers"
+	depends on MAC80211_ATBM_DEBUG_MENU
+	---help---
+	  This option affects code generation in mac80211, when
+	  selected some functions are marked "noinline" to allow
+	  easier debugging of problems in the transmit and receive
+	  paths.
+
+	  This option increases code size a bit and inserts a lot
+	  of function calls in the code, but is otherwise safe to
+	  enable.
+
+	  If unsure, say N unless you expect to be finding problems
+	  in mac80211.

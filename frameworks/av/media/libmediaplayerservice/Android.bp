@@ -1,0 +1,78 @@
+cc_library_shared {
+
+    srcs: [
+        "ActivityManager.cpp",
+        "MediaPlayerFactory.cpp",
+        "MediaPlayerService.cpp",
+        "MediaRecorderClient.cpp",
+        "MetadataRetrieverClient.cpp",
+        "StagefrightRecorder.cpp",
+        "TestPlayerStub.cpp",
+    ],
+
+    shared_libs: [
+        "android.hardware.media.omx@1.0",
+        "libaudioclient",
+        "libbinder",
+        "libcamera_client",
+        "libcrypto",
+        "libcutils",
+        "libdl",
+        "libgui",
+        "libhidlbase",
+        "libhidlmemory",
+        "liblog",
+        "libmedia",
+        "libmedia_omx",
+        "libmediaextractor",
+        "libmediadrm",
+        "libmediametrics",
+        "libmediautils",
+        "libmemunreachable",
+        "libpowermanager",
+        "libstagefright",
+        "libstagefright_foundation",
+        "libstagefright_httplive",
+        "libutils",
+    ],
+
+    header_libs: [
+        "media_plugin_headers",
+    ],
+
+    static_libs: [
+        "libstagefright_nuplayer",
+        "libstagefright_rtsp",
+        "libstagefright_timedtext",
+    ],
+
+    export_shared_lib_headers: ["libmedia"],
+
+    include_dirs: [
+        "frameworks/av/media/libstagefright/rtsp",
+        "frameworks/av/media/libstagefright/webm",
+    ],
+
+    local_include_dirs: ["include"],
+
+    cflags: [
+        "-Werror",
+        "-Wno-error=deprecated-declarations",
+        "-Wall",
+    ],
+
+    name: "libmediaplayerservice",
+
+    compile_multilib: "32",
+
+    sanitize: {
+        cfi: true,
+        diag: {
+            cfi: true,
+        },
+    },
+
+}
+
+subdirs = ["*"]
+
