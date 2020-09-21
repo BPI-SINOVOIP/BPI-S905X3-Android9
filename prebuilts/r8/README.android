@@ -1,0 +1,7 @@
+- D8 is a dexer that converts java byte code to dex code.
+- R8 is a java program shrinking and minification tool that converts java byte
+  code to optimized dex code.
+
+Sources available from:
+  git clone https://r8.googlesource.com/r8
+
