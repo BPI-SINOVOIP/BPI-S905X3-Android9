@@ -1,0 +1,14 @@
+diff --git a/libs/binder/Android.bp b/libs/binder/Android.bp
+index 57c87756e..0f34bcff7 100644
+--- a/libs/binder/Android.bp
++++ b/libs/binder/Android.bp
+@@ -80,7 +80,9 @@ cc_library {
+         "-Wall",
+         "-Wextra",
+         "-Werror",
++        CFLAGS_FOR_BENCH_SUITE
+     ],
++    ldflags: [LDFLAGS_FOR_BENCH_SUITE],
+     product_variables: {
+         binder32bit: {
+             cflags: ["-DBINDER_IPC_32BIT=1"],

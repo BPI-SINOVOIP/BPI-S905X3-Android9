@@ -1,0 +1,1259 @@
+diff --git a/server/site_tests/android_Binder/android_Binder.py b/server/site_tests/android_Binder/android_Binder.py
+new file mode 100644
+index 000000000..b233b586a
+--- /dev/null
++++ b/server/site_tests/android_Binder/android_Binder.py
+@@ -0,0 +1,57 @@
++# Tests for android Binder
++from __future__ import print_function
++
++import bench_config
++import logging
++import os
++import re
++
++from autotest_lib.server import test
++
++class android_Binder(test.test):
++    version = 1
++
++    def run_once(self, host=None):
++        self.client = host
++
++        out_dir = os.path.join(bench_config.android_home,
++                              'out/target/product/' + bench_config.product)
++
++        # Set binary directories
++        lib_dir = os.path.join(out_dir, 'system/lib/libbinder.so')
++        lib_dir_DUT = '/system/lib/libbinder.so'
++        lib64_dir = os.path.join(out_dir, 'system/lib64/libbinder.so')
++        lib64_dir_DUT = '/system/lib64/libbinder.so'
++        bench_dir = os.path.join(out_dir,
++                                 'symbols/data/nativetest64',
++                                 'binderThroughputTest/binderThroughputTest')
++        bench_dir_DUT = os.path.join('/data/local/tmp',
++                                     'binderThroughputTest')
++
++        # Push binary to the device
++        print('Pushing binaries of Binder benchmark onto device!')
++        host.send_file(bench_dir, bench_dir_DUT, delete_dest=True)
++        host.send_file(lib_dir, lib_dir_DUT, delete_dest=True)
++        host.send_file(lib64_dir, lib64_dir_DUT, delete_dest=True)
++
++        # Make sure the binary is executable
++        self.client.run('chmod u+x ' + bench_dir_DUT)
++
++        print('Running tests on the device...')
++        # First run creates bench_result
++        self.client.run('taskset %s /data/local/tmp/'
++                        'binderThroughputTest > /data/local/tmp/bench_result'
++                        % os.getenv('TEST_MODE'))
++        # Next 4 runs add to bench_result
++        for i in xrange(4):
++          self.client.run('taskset %s /data/local/tmp/'
++                          'binderThroughputTest >> '
++                          '/data/local/tmp/bench_result'
++                          % os.getenv('TEST_MODE'))
++
++        # Pull result from the device
++        out_dir = bench_config.bench_suite_dir
++        result_dir_DUT = '/data/local/tmp/bench_result'
++
++        host.get_file(result_dir_DUT, out_dir, delete_dest=True)
++        print('Result has been pulled back to file bench_result!')
+diff --git a/server/site_tests/android_Binder/bench_config.py b/server/site_tests/android_Binder/bench_config.py
+new file mode 100644
+index 000000000..20f685eb9
+--- /dev/null
++++ b/server/site_tests/android_Binder/bench_config.py
+@@ -0,0 +1,19 @@
++#!/bin/bash/python
++import os
++
++home = os.environ["HOME"]
++
++android_home = os.getenv("ANDROID_HOME",
++                         default=os.path.join(home,
++                                 'android_source/master-googleplex/'))
++bench_suite_dir = os.getenv('BENCH_SUITE_DIR',
++                            default=os.path.join(android_home,
++                                                 'benchtoolchain'))
++
++synthmark_dir = 'framework/native/libs/binder'
++
++real_synthmark_dir = os.path.join(android_home, synthmark_dir)
++
++out_dir = os.path.join(android_home, 'out')
++
++product = os.getenv("PRODUCT", default="generic")
+diff --git a/server/site_tests/android_Binder/control b/server/site_tests/android_Binder/control
+new file mode 100644
+index 000000000..d91854b11
+--- /dev/null
++++ b/server/site_tests/android_Binder/control
+@@ -0,0 +1,19 @@
++#Control
++
++NAME = "Binder"
++AUTHOR = "Zhizhou Yang"
++ATTRIBUTES = "suite:android_toolchain_benchmark"
++TIME = "MEDIUM"
++TEST_CATEGORY = "Functional"
++TEST_CLASS = "application"
++TEST_TYPE = "server"
++
++DOC = """
++
++"""
++
++def run_binder_test(machine):
++    host = hosts.create_host(machine)
++    job.run_test("android_Binder", host=host)
++
++parallel_simple(run_binder_test, machines)
+diff --git a/server/site_tests/android_Dex2oat/android_Dex2oat.py b/server/site_tests/android_Dex2oat/android_Dex2oat.py
+new file mode 100644
+index 000000000..dd6af0b53
+--- /dev/null
++++ b/server/site_tests/android_Dex2oat/android_Dex2oat.py
+@@ -0,0 +1,70 @@
++# Copyright (c) 2012 The Chromium OS Authors. All rights reserved.
++# Use of this source code is governed by a BSD-style license that can be
++# found in the LICENSE file.
++
++import bench_config
++import time
++import logging
++import os
++import re
++
++from autotest_lib.client.common_lib import error
++from autotest_lib.server import test
++
++class android_Dex2oat(test.test):
++    version = 1
++
++    def run_once(self, host=None):
++        self.client = host
++
++        out_dir = os.path.join(bench_config.android_home,
++                              'out/target/product/',
++                               bench_config.product)
++
++        # Set binary directories
++        bench_dir = os.path.join(out_dir, 'system/lib/libart-compiler.so')
++        bench_dir_DUT = '/system/lib/libart-compiler.so'
++        bench64_dir = os.path.join(out_dir, 'system/lib64/libart-compiler.so')
++        bench64_dir_DUT = '/system/lib64/libart-compiler.so'
++
++        # Push libart-compiler.so to the device
++        print('Pushing binaries of newly generated library onto device!')
++        host.send_file(bench_dir, bench_dir_DUT, delete_dest=True)
++        host.send_file(bench64_dir, bench64_dir_DUT, delete_dest=True)
++
++        # Set testcase directories
++        test_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)),
++                                 'dex2oat_input')
++        test_dir_DUT = '/data/local/tmp/'
++
++        # Push testcases to the device
++        print('Pushing tests onto device!')
++        host.send_file(test_dir, test_dir_DUT, delete_dest=True)
++
++        # Open file to write the result
++        with open(os.path.join(bench_config.bench_suite_dir,
++                               'bench_result'), 'w') as f:
++
++          # There are two benchmarks, chrome and camera.
++          for i in xrange(2):
++            f.write('Test %d:\n' % i)
++            total_time = 0
++            # Run benchmark for several times for accurancy
++            for j in xrange(3):
++              f.write('Iteration %d: ' % j)
++              result = self.client.run('time taskset %s dex2oat'
++                         ' --dex-file=data/local/tmp/dex2oat_input/test%d.apk'
++                         ' --oat-file=data/local/tmp/dex2oat_input/test%d.oat'
++                         % (os.getenv('TEST_MODE'), i+1, i+1))
++              # Find and record real time of the run
++              time_str = ''
++              for t in result.stdout.split() + result.stderr.split():
++                if 'm' in t and 's' in t:
++                  time_str = t.split('m')
++                  break
++              time_sec = float(time_str[0]) * 60
++              time_sec += float(time_str[1].split('s')[0])
++              f.write('User Time: %.2f seconds\n' % time_sec)
++              total_time += time_sec
++
++            f.write('Total elapsed time: %.2f seconds.\n\n' % total_time)
+diff --git a/server/site_tests/android_Dex2oat/bench_config.py b/server/site_tests/android_Dex2oat/bench_config.py
+new file mode 100644
+index 000000000..d2855f22c
+--- /dev/null
++++ b/server/site_tests/android_Dex2oat/bench_config.py
+@@ -0,0 +1,15 @@
++#!/bin/bash/python
++import os
++
++home = os.environ["HOME"]
++
++android_home = os.getenv("ANDROID_HOME",
++                         default=os.path.join(home,
++                                 'android_source/master-googleplex/'))
++bench_suite_dir = os.getenv('BENCH_SUITE_DIR',
++                            default=os.path.join(android_home,
++                                                 'benchtoolchain'))
++
++out_dir = os.path.join(android_home, 'out')
++
++product = os.getenv("PRODUCT", default="generic")
+diff --git a/server/site_tests/android_Dex2oat/control b/server/site_tests/android_Dex2oat/control
+new file mode 100644
+index 000000000..763864f3a
+--- /dev/null
++++ b/server/site_tests/android_Dex2oat/control
+@@ -0,0 +1,21 @@
++# Copyright (c) 2012 The Chromium OS Authors. All rights reserved.
++# Use of this source code is governed by a BSD-style license that can be
++# found in the LICENSE file.
++
++NAME = "Dex2oat"
++AUTHOR = "Zhizhou Yang"
++ATTRIBUTES = "suite:android_toolchain_benchmark"
++TIME = "SHORT"
++TEST_CATEGORY = "Functional"
++TEST_CLASS = "kernel"
++TEST_TYPE = "server"
++
++DOC = """
++
++"""
++
++def run_dex2oat(machine):
++    host = hosts.create_host(machine)
++    job.run_test("android_Dex2oat", host=host)
++
++parallel_simple(run_dex2oat, machines)
+diff --git a/server/site_tests/android_Hwui/android_Hwui.py b/server/site_tests/android_Hwui/android_Hwui.py
+new file mode 100644
+index 000000000..21e77fd54
+--- /dev/null
++++ b/server/site_tests/android_Hwui/android_Hwui.py
+@@ -0,0 +1,67 @@
++# Tests for android Hwui
++from __future__ import print_function
++
++import bench_config
++import logging
++import os
++import re
++
++from autotest_lib.server import test
++
++class android_Hwui(test.test):
++    version = 1
++
++    def run_once(self, host=None):
++        self.client = host
++
++        out_dir = os.path.join(bench_config.android_home,
++                              'out/target/product/' + bench_config.product)
++
++        lib_dir = os.path.join(out_dir, 'system/lib/libhwui.so')
++        lib_dir_DUT = '/system/lib/libhwui.so'
++        lib64_dir = os.path.join(out_dir, 'system/lib64/libhwui.so')
++        lib64_dir_DUT = '/system/lib64/libhwui.so'
++        bench_dir = os.path.join(out_dir,
++                                 'symbols/data/benchmarktest64/',
++                                 'hwuimicro/hwuimicro')
++        bench_dir_DUT = '/data/local/tmp/hwuimicro'
++
++        # Push binary to the device
++        print('Pushing Hwui benchmark onto device!')
++        host.send_file(bench_dir, bench_dir_DUT, delete_dest=True)
++        host.send_file(lib_dir, lib_dir_DUT, delete_dest=True)
++        host.send_file(lib64_dir, lib64_dir_DUT, delete_dest=True)
++
++        # Make sure the binary is executable
++        self.client.run('chmod u+x ' + bench_dir_DUT)
++
++
++        print('Running tests on the device...')
++        self.client.run('taskset %s /data/local/tmp/hwuimicro'
++                        ' > /data/local/tmp/bench_result'
++                        % os.getenv('TEST_MODE'))
++
++        # Pull result from the device
++        out_dir = bench_config.bench_suite_dir
++        result_dir_DUT = '/data/local/tmp/bench_result'
++
++        host.get_file(result_dir_DUT, out_dir, delete_dest=True)
++
++        # Update total time of the test
++        t = 0
++        with open(os.path.join(out_dir, 'bench_result'), 'r') as fin:
++
++          for lines in fin:
++            line = lines.split()
++            print(line)
++
++            # Check if there is test result in this line
++            if len(line) == 8:
++              # Accumulate the Run time for the testcase
++              t += int(line[2])
++
++        # Append total time to the file
++        with open(os.path.join(out_dir, 'bench_result'), 'a') as fout:
++          fout.write('\nTotal elapsed time: %d ns.\n' % t)
++
++        print('Result has been pulled back to file bench_result!')
+diff --git a/server/site_tests/android_Hwui/bench_config.py b/server/site_tests/android_Hwui/bench_config.py
+new file mode 100644
+index 000000000..a98d259f9
+--- /dev/null
++++ b/server/site_tests/android_Hwui/bench_config.py
+@@ -0,0 +1,19 @@
++#!/bin/bash/python
++import os
++
++home = os.environ["HOME"]
++
++android_home = os.getenv("ANDROID_HOME",
++                         default=os.path.join(home,
++                                 'android_source/master-googleplex/'))
++bench_suite_dir = os.getenv('BENCH_SUITE_DIR',
++                            default=os.path.join(android_home,
++                                                 'benchtoolchain'))
++
++hwui_dir = 'frameworks/base/libs/hwui/'
++
++real_hwui_dir = os.path.join(android_home, hwui_dir)
++
++out_dir = os.path.join(android_home, 'out')
++
++product = os.getenv("PRODUCT", default="generic")
+diff --git a/server/site_tests/android_Hwui/control b/server/site_tests/android_Hwui/control
+new file mode 100644
+index 000000000..89c47da20
+--- /dev/null
++++ b/server/site_tests/android_Hwui/control
+@@ -0,0 +1,19 @@
++#Control
++
++NAME = "Hwui"
++AUTHOR = "Zhizhou Yang"
++ATTRIBUTES = "suite:android_toolchain_benchmark"
++TIME = "MEDIUM"
++TEST_CATEGORY = "Functional"
++TEST_CLASS = "library"
++TEST_TYPE = "server"
++
++DOC = """
++
++"""
++
++def run_hwui_test(machine):
++    host = hosts.create_host(machine)
++    job.run_test("android_Hwui", host=host)
++
++parallel_simple(run_hwui_test, machines)
+diff --git a/server/site_tests/android_Panorama/android_Panorama.py b/server/site_tests/android_Panorama/android_Panorama.py
+new file mode 100644
+index 000000000..89b2355e5
+--- /dev/null
++++ b/server/site_tests/android_Panorama/android_Panorama.py
+@@ -0,0 +1,53 @@
++# Tests for android Panorama
++from __future__ import print_function
++
++import bench_config
++import logging
++import os
++import re
++
++from autotest_lib.server import test
++
++class android_Panorama(test.test):
++    version = 1
++
++    def run_once(self, host=None):
++        self.client = host
++
++        out_dir = os.path.join(bench_config.android_home,
++                              'out/target/product/' + bench_config.product)
++
++        # Set binary directories
++        bench_dir = os.path.join(out_dir,
++                                 'data/local/tmp/panorama_bench64')
++        bench_dir_DUT = '/data/local/tmp/panorama_bench64'
++
++        # Set tests directories
++        tests_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)),
++                                                 'panorama_input')
++        tests_dir_DUT = '/data/local/tmp/panorama_input/'
++
++        # Push binary to the device
++        print('Pushing binaries of Panorama benchmark onto device!')
++        host.send_file(bench_dir, bench_dir_DUT, delete_dest=True)
++
++        # Make sure the binary is executable
++        self.client.run('chmod u+x ' + bench_dir_DUT)
++
++        # Push testcases to the device
++        print('Pushing tests onto device!')
++        host.send_file(tests_dir, tests_dir_DUT, delete_dest=True)
++
++        print('Running tests on the device...')
++        self.client.run('taskset %s /data/local/tmp/panorama_bench64 '
++                        '/data/local/tmp/panorama_input/panorama_input/test '
++                        '/data/local/tmp/panorama.ppm'
++                        ' > /data/local/tmp/bench_result'
++                        % os.getenv('TEST_MODE'))
++
++        # Pull result from the device
++        out_dir = bench_config.bench_suite_dir
++        result_dir_DUT = '/data/local/tmp/bench_result'
++
++        host.get_file(result_dir_DUT, out_dir, delete_dest=True)
++        print('Result has been pulled back to file bench_result!')
+diff --git a/server/site_tests/android_Panorama/bench_config.py b/server/site_tests/android_Panorama/bench_config.py
+new file mode 100644
+index 000000000..075beec76
+--- /dev/null
++++ b/server/site_tests/android_Panorama/bench_config.py
+@@ -0,0 +1,19 @@
++#!/bin/bash/python
++import os
++
++home = os.environ["HOME"]
++
++android_home = os.getenv("ANDROID_HOME",
++                         default=os.path.join(home,
++                                 'android_source/master-googleplex/'))
++bench_suite_dir = os.getenv('BENCH_SUITE_DIR',
++                            default=os.path.join(android_home,
++                                                 'benchtoolchain'))
++
++panorama_dir = 'perftests/panorama/'
++
++real_panorama_dir = os.path.join(android_home, panorama_dir)
++
++out_dir = os.path.join(android_home, 'out')
++
++product = os.getenv("PRODUCT", default="generic")
+diff --git a/server/site_tests/android_Panorama/control b/server/site_tests/android_Panorama/control
+new file mode 100644
+index 000000000..3cd589eed
+--- /dev/null
++++ b/server/site_tests/android_Panorama/control
+@@ -0,0 +1,19 @@
++#Control
++
++NAME = "Panorama"
++AUTHOR = "Zhizhou Yang"
++ATTRIBUTES = "suite:android_toolchain_benchmark"
++TIME = "MEDIUM"
++TEST_CATEGORY = "Functional"
++TEST_CLASS = "application"
++TEST_TYPE = "server"
++
++DOC = """
++
++"""
++
++def run_panorama_test(machine):
++    host = hosts.create_host(machine)
++    job.run_test("android_Panorama", host=host)
++
++parallel_simple(run_panorama_test, machines)
+diff --git a/server/site_tests/android_Pull/android_Pull.py b/server/site_tests/android_Pull/android_Pull.py
+new file mode 100644
+index 000000000..cff373899
+--- /dev/null
++++ b/server/site_tests/android_Pull/android_Pull.py
+@@ -0,0 +1,30 @@
++# Pull profraw data from device
++from __future__ import print_function
++
++import bench_config
++
++from autotest_lib.server import test
++
++class android_Pull(test.test):
++    version = 1
++
++    def run_once(self, host=None):
++        self.client = host
++
++        # Tar all the files in profraw directory
++        tar_file= bench_config.location_DUT + '.tar'
++        raw_cmd = ('tar -cvf {tar_file} {location_DUT}'.format(
++                      tar_file=tar_file,
++                      location_DUT=bench_config.location_DUT))
++        self.client.run(raw_cmd)
++
++        # Pull tar of profraw data from the device
++        out_dir = bench_config.location
++
++        host.get_file(tar_file, out_dir, delete_dest=True)
++
++        # Remove the data on the device
++        self.client.run('rm %s' % tar_file)
++        self.client.run('rm -rf %s' % bench_config.location_DUT)
++
++        print('Profraw data has been pulled from device to local.')
+diff --git a/server/site_tests/android_Pull/bench_config.py b/server/site_tests/android_Pull/bench_config.py
+new file mode 100644
+index 000000000..37967c2f9
+--- /dev/null
++++ b/server/site_tests/android_Pull/bench_config.py
+@@ -0,0 +1,19 @@
++#!/bin/bash/python
++import os
++
++home = os.environ["HOME"]
++
++android_home = os.getenv("ANDROID_HOME",
++                         default=os.path.join(home,
++                                 'android_source/master-googleplex/'))
++bench_suite_dir = os.getenv('BENCH_SUITE_DIR',
++                            default=os.path.join(android_home,
++                                                 'benchtoolchain'))
++
++bench = os.getenv('BENCH', default='Hwui')
++location_DUT = os.getenv('LOCATION_DUT',
++                         default=os.path.join('/data/local/tmp',
++                                              bench + '_profraw'))
++location = os.getenv('LOCATION', default=bench_suite_dir)
++
++product = os.getenv("PRODUCT", default="generic")
+diff --git a/server/site_tests/android_Pull/control b/server/site_tests/android_Pull/control
+new file mode 100644
+index 000000000..7b00df7cb
+--- /dev/null
++++ b/server/site_tests/android_Pull/control
+@@ -0,0 +1,19 @@
++#Control
++
++NAME = "Pull"
++AUTHOR = "Zhizhou Yang"
++ATTRIBUTES = "suite:android_toolchain_benchmark"
++TIME = "MEDIUM"
++TEST_CATEGORY = "Functional"
++TEST_CLASS = "library"
++TEST_TYPE = "server"
++
++DOC = """
++
++"""
++
++def run_pull_test(machine):
++    host = hosts.create_host(machine)
++    job.run_test("android_Pull", host=host)
++
++parallel_simple(run_pull_test, machines)
+diff --git a/server/site_tests/android_SetDevice/android_SetDevice.py b/server/site_tests/android_SetDevice/android_SetDevice.py
+new file mode 100644
+index 000000000..7a7134d58
+--- /dev/null
++++ b/server/site_tests/android_SetDevice/android_SetDevice.py
+@@ -0,0 +1,77 @@
++# Set device modes such as cpu frequency
++from __future__ import print_function
++
++import logging
++import os
++import re
++import time
++
++from autotest_lib.server import test
++
++def _get_cat_value(result):
++    return result.stdout.split('\n')[0]
++
++class android_SetDevice(test.test):
++    version = 1
++
++    def run_once(self, host=None):
++        self.client = host
++
++        # Disable GPU
++        self.client.run('setprop debug.rs.default-GPU-driver 1')
++
++        # Freeze system
++        # Stop perfd, mpdecision and thermal-engine to ensure setting runs
++        # without unexpected errors.
++        self.client.run('stop thermal-engine')
++        self.client.run('stop mpdecision')
++        self.client.run('stop perfd')
++
++        # Set airplane mode on the device
++        self.client.run('settings put global airplane_mode_on 1')
++
++        print('Setting frequency on the device...')
++        frequency = os.getenv('FREQUENCY')
++
++        # Get number of cores on device
++        result = self.client.run('ls /sys/devices/system/cpu/ '
++                                 '| grep cpu[0-9].*')
++        cores = result.stdout.splitlines()
++        for core in cores:
++          if core.startswith('cpu'):
++            # First set all cores online
++            online = os.path.join('/sys/devices/system/cpu', core, 'online')
++            online_status = _get_cat_value(self.client.run('cat %s' % online))
++            if online_status == '0':
++              self.client.run('echo %s > %s' % ('1', online))
++
++            freq_path = os.path.join('/sys/devices/system/cpu', core,
++                                     'cpufreq')
++
++            # Check if the frequency user entered is legal or not.
++            available_freq = self.client.run('cat %s/'
++                                             'scaling_available_frequencies'
++                                             % (freq_path))
++            available_freq_list = _get_cat_value(available_freq).split()
++
++            if frequency not in available_freq_list:
++              raise ValueError('Wrong freqeuncy input, '
++                               'please select from: \n%s'
++                               % (' '.join(available_freq_list)))
++
++            # Set frequency
++            self.client.run('echo %s > %s/scaling_min_freq'
++                            % (frequency, freq_path))
++            self.client.run('echo %s > %s/scaling_max_freq'
++                            % (frequency, freq_path))
++
++            # Sleep for 2 seconds, let device update the frequency.
++            time.sleep(2)
++
++            # Get current frequency
++            freq = self.client.run('cat %s/cpuinfo_cur_freq' % freq_path)
++            f = _get_cat_value(freq)
++            if f != frequency:
++              raise RuntimeError('Expected frequency for %s to be %s, '
++                                 'but is %s' % (core, frequency, f))
++            print('CPU frequency has been set to %s' % (frequency))
+diff --git a/server/site_tests/android_SetDevice/control b/server/site_tests/android_SetDevice/control
+new file mode 100644
+index 000000000..85163706d
+--- /dev/null
++++ b/server/site_tests/android_SetDevice/control
+@@ -0,0 +1,19 @@
++# Control
++
++NAME = "SetDevice"
++AUTHOR = "Zhizhou Yang"
++ATTRIBUTES = "suite:android_toolchain_benchmark"
++TIME = "MEDIUM"
++TEST_CATEGORY = "Functional"
++TEST_CLASS = "application"
++TEST_TYPE = "server"
++
++DOC = """
++Set the core frequency and which core online for devices.
++"""
++
++def run_set_device_test(machine):
++    host = hosts.create_host(machine)
++    job.run_test("android_SetDevice", host=host)
++
++parallel_simple(run_set_device_test, machines)
+diff --git a/server/site_tests/android_Skia/android_Skia.py b/server/site_tests/android_Skia/android_Skia.py
+new file mode 100644
+index 000000000..80b39a027
+--- /dev/null
++++ b/server/site_tests/android_Skia/android_Skia.py
+@@ -0,0 +1,59 @@
++# Tests for android Skia
++from __future__ import print_function
++
++import bench_config
++import logging
++import os
++import re
++
++from autotest_lib.server import test
++
++class android_Skia(test.test):
++    version = 1
++
++    def run_once(self, host=None):
++        self.client = host
++
++        out_dir = os.path.join(bench_config.android_home,
++                              'out/target/product/' + bench_config.product)
++
++        # Set binary directories
++        bench_dir = os.path.join(out_dir,
++                                 'data/nativetest64/',
++                                 'skia_nanobench/skia_nanobench')
++        bench_dir_DUT = '/data/local/tmp/skia_nanobench'
++
++        # Push binary to the device
++        print('Pushing Skia benchmark onto device!')
++        host.send_file(bench_dir, bench_dir_DUT, delete_dest=True)
++
++        # Make sure the binary is executable
++        self.client.run('chmod u+x ' + bench_dir_DUT)
++
++        # Set resource directory
++        resource_dir = os.path.join(bench_config.real_skia_dir, 'resources')
++        resource_dir_DUT = '/data/local/tmp/skia_resources/'
++
++        # Push binary to the device
++        print('Pushing Skia resources onto device!')
++        host.send_file(resource_dir, resource_dir_DUT, delete_dest=True)
++
++        # Run tests
++        print('Running tests on the device...')
++        try:
++          self.client.run('taskset %s ./data/local/tmp/skia_nanobench'
++                          ' --outResultsFile /data/local/tmp/bench_result'
++                          ' --samples 25'
++                          ' --config nonrendering'
++                          % os.getenv('TEST_MODE'))
++        except:
++          # Ignore Abort caused failure
++          None
++
++        # Pull result from the device
++        out_dir = bench_config.bench_suite_dir
++        result_dir_DUT = '/data/local/tmp/bench_result'
++
++        host.get_file(result_dir_DUT, out_dir, delete_dest=True)
++
++        print('Result has been pulled back to file bench_result!')
+diff --git a/server/site_tests/android_Skia/bench_config.py b/server/site_tests/android_Skia/bench_config.py
+new file mode 100644
+index 000000000..5d38d452f
+--- /dev/null
++++ b/server/site_tests/android_Skia/bench_config.py
+@@ -0,0 +1,19 @@
++#!/bin/bash/python
++import os
++
++home = os.environ["HOME"]
++
++android_home = os.getenv("ANDROID_HOME",
++                         default=os.path.join(home,
++                                 'android_source/master-googleplex/'))
++bench_suite_dir = os.getenv('BENCH_SUITE_DIR',
++                            default=os.path.join(android_home,
++                                                 'benchtoolchain'))
++
++skia_dir = 'external/skia'
++
++real_skia_dir = os.path.join(android_home, skia_dir)
++
++out_dir = os.path.join(android_home, 'out')
++
++product = os.getenv("PRODUCT", default="generic")
+diff --git a/server/site_tests/android_Skia/control b/server/site_tests/android_Skia/control
+new file mode 100644
+index 000000000..e38195a8c
+--- /dev/null
++++ b/server/site_tests/android_Skia/control
+@@ -0,0 +1,19 @@
++#Control
++
++NAME = "Skia"
++AUTHOR = "Zhizhou Yang"
++ATTRIBUTES = "suite:android_toolchain_benchmark"
++TIME = "MEDIUM"
++TEST_CATEGORY = "Functional"
++TEST_CLASS = "library"
++TEST_TYPE = "server"
++
++DOC = """
++
++"""
++
++def run_skia_test(machine):
++    host = hosts.create_host(machine)
++    job.run_test("android_Skia", host=host)
++
++parallel_simple(run_skia_test, machines)
+diff --git a/server/site_tests/android_Synthmark/android_Synthmark.py b/server/site_tests/android_Synthmark/android_Synthmark.py
+new file mode 100644
+index 000000000..b317bd0f3
+--- /dev/null
++++ b/server/site_tests/android_Synthmark/android_Synthmark.py
+@@ -0,0 +1,48 @@
++# Tests for android Synthmark
++from __future__ import print_function
++
++import bench_config
++import logging
++import os
++import re
++
++from autotest_lib.server import test
++
++class android_Synthmark(test.test):
++    version = 1
++
++    def run_once(self, host=None):
++        self.client = host
++
++        out_dir = os.path.join(bench_config.android_home,
++                              'out/target/product/' + bench_config.product)
++
++        # Set binary directories
++        bench_dir = os.path.join(out_dir,
++                                 'symbols/system/bin/synthmark')
++        bench_dir_DUT = '/data/local/tmp/synthmark'
++
++        # Push binary to the device
++        print('Pushing binaries of Synthmark benchmark onto device!')
++        host.send_file(bench_dir, bench_dir_DUT, delete_dest=True)
++
++        # Make sure the binary is executable
++        self.client.run('chmod u+x ' + bench_dir_DUT)
++
++        print('Running tests on the device...')
++        # First run creates bench_result
++        self.client.run('taskset %s /data/local/tmp/synthmark'
++                        ' > /data/local/tmp/bench_result'
++                        % os.getenv('TEST_MODE'))
++        # Next 4 runs add to bench_result
++        for i in xrange(4):
++          self.client.run('taskset %s /data/local/tmp/synthmark'
++                          ' >> /data/local/tmp/bench_result'
++                          % os.getenv('TEST_MODE'))
++
++        # Pull result from the device
++        out_dir = bench_config.bench_suite_dir
++        result_dir_DUT = '/data/local/tmp/bench_result'
++
++        host.get_file(result_dir_DUT, out_dir, delete_dest=True)
++        print('Result has been pulled back to file bench_result!')
+diff --git a/server/site_tests/android_Synthmark/bench_config.py b/server/site_tests/android_Synthmark/bench_config.py
+new file mode 100644
+index 000000000..7d7aacacd
+--- /dev/null
++++ b/server/site_tests/android_Synthmark/bench_config.py
+@@ -0,0 +1,19 @@
++#!/bin/bash/python
++import os
++
++home = os.environ["HOME"]
++
++android_home = os.getenv("ANDROID_HOME",
++                         default=os.path.join(home,
++                                 'android_source/master-googleplex/'))
++bench_suite_dir = os.getenv('BENCH_SUITE_DIR',
++                            default=os.path.join(android_home,
++                                                 'benchtoolchain'))
++
++synthmark_dir = 'synthmark'
++
++real_synthmark_dir = os.path.join(android_home, synthmark_dir)
++
++out_dir = os.path.join(android_home, 'out')
++
++product = os.getenv("PRODUCT", default="generic")
+diff --git a/server/site_tests/android_Synthmark/control b/server/site_tests/android_Synthmark/control
+new file mode 100644
+index 000000000..144766351
+--- /dev/null
++++ b/server/site_tests/android_Synthmark/control
+@@ -0,0 +1,19 @@
++#Control
++
++NAME = "Synthmark"
++AUTHOR = "Zhizhou Yang"
++ATTRIBUTES = "suite:android_toolchain_benchmark"
++TIME = "MEDIUM"
++TEST_CATEGORY = "Functional"
++TEST_CLASS = "application"
++TEST_TYPE = "server"
++
++DOC = """
++
++"""
++
++def run_synthmark_test(machine):
++    host = hosts.create_host(machine)
++    job.run_test("android_Synthmark", host=host)
++
++parallel_simple(run_synthmark_test, machines)
+diff --git a/site_utils/pull_device.py b/site_utils/pull_device.py
+new file mode 100755
+index 000000000..959c4443d
+--- /dev/null
++++ b/site_utils/pull_device.py
+@@ -0,0 +1,116 @@
++#!/usr/bin/python
++#
++# Script to pull data from android device
++from __future__ import print_function
++
++import argparse
++import common
++import logging
++import os
++import sys
++
++# Turn the logging level to INFO before importing other autotest
++# code, to avoid having failed import logging messages confuse the
++# test_droid user.
++logging.basicConfig(level=logging.INFO)
++
++# Unfortunately, autotest depends on external packages for assorted
++# functionality regardless of whether or not it is needed in a particular
++# context.
++# Since we can't depend on people to import these utilities in any principled
++# way, we dynamically download code before any autotest imports.
++try:
++    import chromite.lib.terminal  # pylint: disable=unused-import
++    import django.http  # pylint: disable=unused-import
++except ImportError:
++    # Ensure the chromite site-package is installed.
++    import subprocess
++    build_externals_path = os.path.join(
++            os.path.dirname(os.path.dirname(os.path.realpath(__file__))),
++            'utils', 'build_externals.py')
++    subprocess.check_call([build_externals_path, '--names_to_check',
++                           'chromiterepo', 'django'])
++    # Restart the script so python now finds the autotest site-packages.
++    sys.exit(os.execv(__file__, sys.argv))
++
++from autotest_lib.client.common_lib import utils
++from autotest_lib.server.hosts import adb_host
++from autotest_lib.site_utils import test_runner_utils
++from autotest_lib.site_utils import tester_feedback
++
++def _parse_arguments_internal(argv):
++    """
++    Parse command line arguments
++
++    @param argv: argument list to parse
++
++    @returns:    tuple of parsed arguments and argv suitable for remote runs
++
++    @raises SystemExit if arguments are malformed, or required arguments
++            are not present.
++    """
++
++    parser = argparse.ArgumentParser(description='Run remote tests.')
++
++    parser.add_argument('-b', '--bench', metavar='BENCH', required=True,
++                        help='Select the benchmark want to be run for '
++                             'test.')
++    parser.add_argument('-s', '--serials', metavar='SERIALS',
++                        help='Comma separate list of device serials under '
++                             'test.')
++    parser.add_argument('-r', '--remote', metavar='REMOTE',
++                        default='localhost',
++                        help='hostname[:port] if the ADB device is connected '
++                             'to a remote machine. Ensure this workstation '
++                             'is configured for passwordless ssh access as '
++                             'users "root" or "adb"')
++
++    parser.add_argument('-d', '--pathDUT',
++                        help='Specify the location to put the file on DUT.')
++    parser.add_argument('-p', '--path',
++                        help='Specify the location to put the file locally.')
++
++    return parser.parse_args(argv)
++
++def main(argv):
++    """
++    Entry point for pull_device script.
++
++    @param argv: arguments list
++    """
++    arguments = _parse_arguments_internal(argv)
++
++    serials = arguments.serials
++    if serials is None:
++        result = utils.run(['adb', 'devices'])
++        devices = adb_host.ADBHost.parse_device_serials(result.stdout)
++        if len(devices) != 1:
++            logging.error('Could not detect exactly one device; please select '
++                          'one with -s: %s', devices)
++            return 1
++        serials = devices[0]
++
++    autotest_path = os.path.dirname(os.path.dirname(
++            os.path.realpath(__file__)))
++    site_utils_path = os.path.join(autotest_path, 'site_utils')
++    realpath = os.path.realpath(__file__)
++    site_utils_path = os.path.realpath(site_utils_path)
++    host_attributes = {'serials': serials,
++                       'os_type': 'android'}
++    results_directory = test_runner_utils.create_results_directory(None)
++
++    os.environ['BENCH'] = arguments.bench
++    os.environ['LOCATION_DUT'] = arguments.pathDUT
++    os.environ['LOCATION'] = arguments.path
++
++    tests = ['Pull']
++
++    if test_runner_utils.perform_run_from_autotest_root(
++                      autotest_path, argv, tests, arguments.remote,
++                      host_attributes=host_attributes,
++                      results_directory=results_directory):
++        logging.error('Error while running on device.')
++        return 1
++
++if __name__ == '__main__':
++    sys.exit(main(sys.argv[1:]))
+diff --git a/site_utils/set_device.py b/site_utils/set_device.py
+new file mode 100755
+index 000000000..abb8a8dcc
+--- /dev/null
++++ b/site_utils/set_device.py
+@@ -0,0 +1,110 @@
++#!/usr/bin/python
++from __future__ import print_function
++
++import argparse
++import common
++import logging
++import os
++import sys
++
++# Turn the logging level to INFO before importing other autotest code, to avoid
++# having failed import logging messages confuse the test_droid user.
++logging.basicConfig(level=logging.INFO)
++
++# Unfortunately, autotest depends on external packages for assorted
++# functionality regardless of whether or not it is needed in a particular
++# context.  Since we can't depend on people to import these utilities in any
++# principled way, we dynamically download code before any autotest imports.
++try:
++    import chromite.lib.terminal  # pylint: disable=unused-import
++    import django.http  # pylint: disable=unused-import
++except ImportError:
++    # Ensure the chromite site-package is installed.
++    import subprocess
++    build_externals_path = os.path.join(
++            os.path.dirname(os.path.dirname(os.path.realpath(__file__))),
++            'utils', 'build_externals.py')
++    subprocess.check_call([build_externals_path, '--names_to_check',
++                           'chromiterepo', 'django'])
++    # Restart the script so python now finds the autotest site-packages.
++    sys.exit(os.execv(__file__, sys.argv))
++
++from autotest_lib.client.common_lib import utils
++from autotest_lib.server.hosts import adb_host
++from autotest_lib.site_utils import test_runner_utils
++from autotest_lib.site_utils import tester_feedback
++
++def _parse_arguments_internal(argv):
++    """
++    Parse command line arguments
++
++    @param argv: argument list to parse
++
++    @returns:    tuple of parsed arguments and argv suitable for remote runs
++
++    @raises SystemExit if arguments are malformed, or required arguments
++            are not present.
++    """
++
++    parser = argparse.ArgumentParser(description='Set device cpu cores and '
++                                                 'frequency.')
++
++    parser.add_argument('-s', '--serials', metavar='SERIALS',
++                        help='Comma separate list of device serials under '
++                             'test.')
++    parser.add_argument('-r', '--remote', metavar='REMOTE',
++                        default='localhost',
++                        help='hostname[:port] if the ADB device is connected '
++                             'to a remote machine. Ensure this workstation '
++                             'is configured for passwordless ssh access as '
++                             'users "root" or "adb"')
++    parser.add_argument('-q', '--frequency', type=int, default=960000,
++                        help='Specify the CPU frequency of the device, lower '
++                             'frequency will slow down the performance but '
++                             'reduce noise.')
++
++    return parser.parse_args(argv)
++
++def main(argv):
++    """
++    Entry point for set_device script.
++
++    @param argv: arguments list
++    """
++    arguments = _parse_arguments_internal(argv)
++
++    serials = arguments.serials
++    if serials is None:
++        result = utils.run(['adb', 'devices'])
++        devices = adb_host.ADBHost.parse_device_serials(result.stdout)
++        if len(devices) != 1:
++            logging.error('Could not detect exactly one device; please select '
++                          'one with -s: %s', devices)
++            return 1
++        serials = devices[0]
++
++    autotest_path = os.path.dirname(os.path.dirname(
++            os.path.realpath(__file__)))
++    site_utils_path = os.path.join(autotest_path, 'site_utils')
++    realpath = os.path.realpath(__file__)
++    site_utils_path = os.path.realpath(site_utils_path)
++    host_attributes = {'serials': serials,
++                       'os_type': 'android'}
++    results_directory = test_runner_utils.create_results_directory(None)
++
++    logging.info('Start setting CPU frequency on the device...')
++
++    os.environ['FREQUENCY'] = str(arguments.frequency)
++
++    set_device = ['SetDevice']
++    if test_runner_utils.perform_run_from_autotest_root(
++                      autotest_path, argv, set_device, arguments.remote,
++                      host_attributes=host_attributes,
++                      results_directory=results_directory):
++      logging.error('Error while setting device!')
++      return 1
++
++    return 0
++
++if __name__ == '__main__':
++    sys.exit(main(sys.argv[1:]))
+diff --git a/site_utils/test_bench.py b/site_utils/test_bench.py
+new file mode 100755
+index 000000000..4d0773ad9
+--- /dev/null
++++ b/site_utils/test_bench.py
+@@ -0,0 +1,133 @@
++#!/usr/bin/python
++from __future__ import print_function
++
++import argparse
++import common
++import logging
++import os
++import sys
++
++# Turn the logging level to INFO before importing other autotest
++# code, to avoid having failed import logging messages confuse the
++# test_droid user.
++logging.basicConfig(level=logging.INFO)
++
++# Unfortunately, autotest depends on external packages for assorted
++# functionality regardless of whether or not it is needed in a particular
++# context.
++# Since we can't depend on people to import these utilities in any principled
++# way, we dynamically download code before any autotest imports.
++try:
++    import chromite.lib.terminal  # pylint: disable=unused-import
++    import django.http  # pylint: disable=unused-import
++except ImportError:
++    # Ensure the chromite site-package is installed.
++    import subprocess
++    build_externals_path = os.path.join(
++            os.path.dirname(os.path.dirname(os.path.realpath(__file__))),
++            'utils', 'build_externals.py')
++    subprocess.check_call([build_externals_path, '--names_to_check',
++                           'chromiterepo', 'django'])
++    # Restart the script so python now finds the autotest site-packages.
++    sys.exit(os.execv(__file__, sys.argv))
++
++from autotest_lib.client.common_lib import utils
++from autotest_lib.server.hosts import adb_host
++from autotest_lib.site_utils import test_runner_utils
++from autotest_lib.site_utils import tester_feedback
++
++def _parse_arguments_internal(argv):
++    """
++    Parse command line arguments
++
++    @param argv: argument list to parse
++
++    @returns:    tuple of parsed arguments and argv suitable for remote runs
++
++    @raises SystemExit if arguments are malformed, or required arguments
++            are not present.
++    """
++
++    parser = argparse.ArgumentParser(description='Run remote tests.')
++
++    parser.add_argument('-b', '--bench', metavar='BENCH', required=True,
++                        help='Select the benchmark want to be run for '
++                             'test.')
++    parser.add_argument('-s', '--serials', metavar='SERIALS',
++                        help='Comma separate list of device serials under '
++                             'test.')
++    parser.add_argument('-r', '--remote', metavar='REMOTE',
++                        default='localhost',
++                        help='hostname[:port] if the ADB device is connected '
++                             'to a remote machine. Ensure this workstation '
++                             'is configured for passwordless ssh access as '
++                             'users "root" or "adb"')
++    parser.add_argument('-m', '--mode', default='little',
++                        help='Two modes can be chosen, little mode runs on a '
++                             'single core of Cortex-A53, while big mode runs '
++                             'on single core of Cortex-A57.')
++
++    return parser.parse_args(argv)
++
++def main(argv):
++    """
++    Entry point for test_bench script.
++
++    @param argv: arguments list
++    """
++    arguments = _parse_arguments_internal(argv)
++
++    serials = arguments.serials
++    if serials is None:
++        result = utils.run(['adb', 'devices'])
++        devices = adb_host.ADBHost.parse_device_serials(result.stdout)
++        if len(devices) != 1:
++            logging.error('Could not detect exactly one device; please select '
++                          'one with -s: %s', devices)
++            return 1
++        serials = devices[0]
++
++    autotest_path = os.path.dirname(os.path.dirname(
++            os.path.realpath(__file__)))
++    site_utils_path = os.path.join(autotest_path, 'site_utils')
++    realpath = os.path.realpath(__file__)
++    site_utils_path = os.path.realpath(site_utils_path)
++    host_attributes = {'serials': serials,
++                       'os_type': 'android'}
++    results_directory = test_runner_utils.create_results_directory(None)
++
++    bench = arguments.bench
++
++    benchlist = ['Panorama', 'Skia', 'Dex2oat', 'Hwui', "Synthmark", "Binder"]
++
++    logging.info('Start testing benchmark on the device...')
++
++    if bench not in benchlist:
++        logging.error('Please select one benchmark from the list below: \n%s',
++                      '\n'.join(benchlist))
++        return 1
++
++    # Use taskset command to run benchmarks with different CPU core settings.
++    #
++    # TEST_MODE variable is set to either 7 or 56 for coremask in taskset.
++    #
++    # While Nexus 6P has 8 cores and 5X has 6 cores. CPU number 0-3 in both
++    # devices belongs to Cortex 53, which are slow. CPU number 4-5 in 5X and 4-7
++    # in 6P belongs to Cortex 57, which are fast.
++    #
++    # So we set 7(0x00000111) for little mode, that runs the benchmark on three
++    # slow cores; 56(0x00111000) for big mode, that runs the benchmark on two
++    # fast and one slow cores.
++    os.environ['TEST_MODE'] = '7' if arguments.mode == 'little' else '56'
++
++    tests = [bench]
++
++    if test_runner_utils.perform_run_from_autotest_root(
++                      autotest_path, argv, tests, arguments.remote,
++                      host_attributes=host_attributes,
++                      results_directory=results_directory):
++      logging.error('Error while testing on device.')
++      return 1
++
++if __name__ == '__main__':
++    sys.exit(main(sys.argv[1:]))

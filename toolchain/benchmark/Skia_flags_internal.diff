@@ -1,0 +1,51 @@
+# TO CLARIFY:
+# This patch will remove the attempt to copy resources to device,
+# because there is a bug (http://b/71906438) forbiding copying subdirectory.
+# Since we are using mma to build and copy resources manually to device,
+# at this moment we remove this part to work around with the bug.
+
+diff --git a/Android.bp b/Android.bp
+index 9b7dd9b4a2..3bf20bd38c 100644
+--- a/Android.bp
++++ b/Android.bp
+@@ -58,8 +58,11 @@ cc_library_static {
+         "-Wsign-compare",
+         "-Wvla",
+         "-fvisibility=hidden",
++        CFLAGS_FOR_BENCH_SUITE
+     ],
+ 
++    ldflags: [LDFLAGS_FOR_BENCH_SUITE],
++
+     cppflags:[
+         "-Wno-abstract-vbase-init",
+         "-Wno-c++98-compat",
+@@ -985,6 +988,9 @@ cc_test {
+         "skia_tool_deps"
+     ],
+ 
++    cflags: [CFLAGS_FOR_BENCH_SUITE],
++    ldflags: [LDFLAGS_FOR_BENCH_SUITE],
++
+     local_include_dirs: [
+         "experimental/skottie/",
+         "experimental/sksg/",
+@@ -1803,6 +1809,9 @@ cc_test {
+         "skia_tool_deps"
+     ],
+ 
++    cflags: [CFLAGS_FOR_BENCH_SUITE],
++    ldflags: [LDFLAGS_FOR_BENCH_SUITE],
++
+     local_include_dirs: [
+         "bench/",
+         "experimental/sksg/",
+@@ -2388,8 +2397,4 @@ cc_test {
+         "tools/trace/SkDebugfTracer.cpp",
+         "tools/trace/SkEventTracingPriv.cpp",
+     ],
+-
+-    data: [
+-        "resources/*",
+-    ],
+ }

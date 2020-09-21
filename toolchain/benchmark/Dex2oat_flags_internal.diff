@@ -1,0 +1,14 @@
+diff --git a/compiler/Android.bp b/compiler/Android.bp
+index 2e60e7d658..51f20a86ef 100644
+--- a/compiler/Android.bp
++++ b/compiler/Android.bp
+@@ -195,6 +195,9 @@ art_cc_defaults {
+     ],
+ 
+     export_include_dirs: ["."],
++
++    cflags: [CFLAGS_FOR_BENCH_SUITE],
++    ldflags: [LDFLAGS_FOR_BENCH_SUITE],
+ }
+ 
+ gensrcs {

@@ -1,0 +1,14 @@
+diff --git a/libs/hwui/Android.bp b/libs/hwui/Android.bp
+index 24d819e93ff2..bdb1bee13bde 100644
+--- a/libs/hwui/Android.bp
++++ b/libs/hwui/Android.bp
+@@ -31,7 +31,9 @@ cc_defaults {
+         // TODO: Linear blending should be enabled by default, but we are
+         // TODO: making it an opt-in while it's a work in progress
+         //"-DANDROID_ENABLE_LINEAR_BLENDING",
++        CFLAGS_FOR_BENCH_SUITE
+     ],
++    ldflags: [LDFLAGS_FOR_BENCH_SUITE],
+ 
+     include_dirs: [
+         "external/skia/include/private",

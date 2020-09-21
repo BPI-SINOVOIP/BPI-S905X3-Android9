@@ -1,0 +1,36 @@
+diff --git a/Android.bp b/Android.bp
+index 7676cd3ef0..dc4e9c8115 100644
+--- a/Android.bp
++++ b/Android.bp
+@@ -10,8 +10,11 @@ cc_library {
+         "-D_FORTIFY_SOURCE=1",
+         "-DSKIA_IMPLEMENTATION=1",
+         "-DATRACE_TAG=ATRACE_TAG_VIEW",
++        CFLAGS_FOR_BENCH_SUITE
+     ],
+ 
++    ldflags: [LDFLAGS_FOR_BENCH_SUITE],
++
+     export_include_dirs: [
+         "include/android/",
+         "include/c/",
+@@ -861,7 +864,9 @@ cc_test {
+     cflags: [
+         "-Wno-unused-parameter",
+         "-Wno-unused-variable",
++        CFLAGS_FOR_BENCH_SUITE
+     ],
++    ldflags:[LDFLAGS_FOR_BENCH_SUITE],
+ 
+     local_include_dirs: [
+         "experimental/svg/model/",
+@@ -1640,7 +1645,9 @@ cc_test {
+     cflags: [
+         "-Wno-unused-parameter",
+         "-Wno-unused-variable",
++        CFLAGS_FOR_BENCH_SUITE
+     ],
++    ldflags:[LDFLAGS_FOR_BENCH_SUITE],
+ 
+     local_include_dirs: [
+         "bench/",
