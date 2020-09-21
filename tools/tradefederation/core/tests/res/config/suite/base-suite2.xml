@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 Google Inc. All Rights Reserved. -->
+<!-- A second test suite used to test module-arg matching by test name. -->
+<configuration description="Sample test suite config with BaseTestSuite runner.">
+    <option name="test-tag" value="sample-suite-2" />
+    <test class="com.android.tradefed.testtype.suite.BaseTestSuite"/>
+</configuration>

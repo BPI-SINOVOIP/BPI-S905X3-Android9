@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2016 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<configuration description="VTS GCE (Google Compute Engine) Test Plan (Experimental)">
+  <include name="vts-base" />
+  <option name="gce-device" value="true" />
+  <option name="vts-plan-result:plan-name" value="vts-gce" />
+
+  <build_provider class="com.google.android.tradefed.build.DeviceLaunchControlProvider">
+      <option name="test-tag" value="staging-gce" />
+      <option name="skip-download" value="BOOTLOADER" />
+      <option name="skip-download" value="BASEBAND" />
+      <option name="skip-download" value="DEVICE_IMAGE" />
+      <option name="build-blacklist" value="/home/build/google3/wireless/android/test_tools/tradefed/common/build_blacklist.txt" />
+  </build_provider>
+
+  <device_options class="com.google.android.tradefed.device.GceAvdTestDeviceOptions" />
+  <device_requirements class="com.google.android.tradefed.device.GoogleDeviceSelectionOptions" />
+
+  <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup" />
+
+  <option name="plan" value="vts" />
+  <option name="test-tag" value="vts-star" />
+
+  <option name="compatibility:include-filter" value="SampleShellTest" />
+
+</configuration>

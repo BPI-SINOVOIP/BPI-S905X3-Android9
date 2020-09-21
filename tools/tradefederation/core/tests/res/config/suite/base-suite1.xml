@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 Google Inc. All Rights Reserved. -->
+<configuration description="Sample test suite config with BaseTestSuite runner.">
+    <option name="test-tag" value="sample-suite-1" />
+    <test class="com.android.tradefed.testtype.suite.BaseTestSuite"/>
+</configuration>

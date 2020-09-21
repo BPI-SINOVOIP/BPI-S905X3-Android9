@@ -1,0 +1,20 @@
+Test to sanitize the ouput: only the JSON should be parsed
+CPU ID assignments in /proc/cpuinfo seem messed up. This is usually caused by a bad BIOS.
+{
+  "context": {
+    "date": "2017-11-09 06:57:51",
+    "num_cpus": 2,
+    "mhz_per_cpu": 1,
+    "cpu_scaling_enabled": false,
+    "library_build_type": "release"
+  },
+  "benchmarks": [
+    {
+      "name": "BM_addInts",
+      "iterations": 36464,
+      "real_time": 44930,
+      "cpu_time": 19361,
+      "time_unit": "ns"
+    }
+  ]
+}

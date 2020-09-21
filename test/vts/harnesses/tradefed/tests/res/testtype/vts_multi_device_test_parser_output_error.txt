@@ -1,0 +1,68 @@
+07-08 11:56:25 I/VtsMultiDeviceTestResultParser: Standard output: [VTS-Example] 07-08 11:56:25.218 INFO ==========> SampleLightTest <==========
+07-08 11:56:25 I/VtsMultiDeviceTestResultParser: Standard output: [VTS-Example] 07-08 11:56:25.512 INFO TcpServer Thread-1 started (127.0.0.1:8293)
+07-08 11:56:25 I/VtsMultiDeviceTestResultParser: Standard output: [VTS-Example] 07-08 11:56:25.515 INFO sending a command (type SET_HOST_INFO)
+07-08 11:56:25 I/VtsMultiDeviceTestResultParser: Standard output: [VTS-Example] 07-08 11:56:25.515 INFO command command_type: SET_HOST_INFO
+07-08 11:56:25 I/VtsMultiDeviceTestResultParser: Standard output: callback_port: 8293
+07-08 11:56:25 I/VtsMultiDeviceTestResultParser: Standard output
+07-08 11:56:25 I/VtsMultiDeviceTestResultParser: Standard output: [VTS-Example] 07-08 11:56:25.518 ERROR Failed to setup SampleLightTest.
+07-08 11:56:25 I/VtsMultiDeviceTestResultParser: Standard output: Traceback (most recent call last):
+07-08 11:56:25 I/VtsMultiDeviceTestResultParser: Standard output:   File "/usr/local/yim/cloudandroid/android/master-real/test/vts/runners/host/base_test.py", line 510, in run
+07-08 11:56:25 I/VtsMultiDeviceTestResultParser: Standard output:     if self._setUpClass() is False:
+07-08 11:56:25 I/VtsMultiDeviceTestResultParser: Standard output:   File "/usr/local/yim/cloudandroid/android/master-real/test/vts/runners/host/base_test.py", line 112, in _setUpClass
+07-08 11:56:25 I/VtsMultiDeviceTestResultParser: Standard output:     return self.setUpClass()
+07-08 11:56:25 I/VtsMultiDeviceTestResultParser: Standard output:   File "/usr/local/yim/cloudandroid/android/master-real/test/vts/testcases/host/sample/SampleLightTest.py", line 33, in setUpClass
+07-08 11:56:25 I/VtsMultiDeviceTestResultParser: Standard output:     bits=32)
+07-08 11:56:25 I/VtsMultiDeviceTestResultParser: Standard output:   File "/usr/local/yim/cloudandroid/android/master-real/test/vts/utils/python/mirror/hal_mirror.py", line 106, in InitConventionalHal
+07-08 11:56:25 I/VtsMultiDeviceTestResultParser: Standard output:     bits=bits)
+07-08 11:56:25 I/VtsMultiDeviceTestResultParser: Standard output:   File "/usr/local/yim/cloudandroid/android/master-real/test/vts/utils/python/mirror/hal_mirror.py", line 173, in _CreateMirrorObject
+07-08 11:56:25 I/VtsMultiDeviceTestResultParser: Standard output:     callback_port=self._host_callback_port)
+07-08 11:56:25 I/VtsMultiDeviceTestResultParser: Standard output:   File "/usr/local/yim/cloudandroid/android/master-real/test/vts/runners/host/tcp_client/vts_tcp_client.py", line 92, in Connect
+07-08 11:56:25 I/VtsMultiDeviceTestResultParser: Standard output:     resp = self.RecvResponse()
+07-08 11:56:25 I/VtsMultiDeviceTestResultParser: Standard output:   File "/usr/local/yim/cloudandroid/android/master-real/test/vts/runners/host/tcp_client/vts_tcp_client.py", line 263, in RecvResponse
+07-08 11:56:25 I/VtsMultiDeviceTestResultParser: Standard output:     header = self.channel.readline()
+07-08 11:56:25 I/VtsMultiDeviceTestResultParser: Standard output:   File "/usr/lib/python2.7/socket.py", line 447, in readline
+07-08 11:56:25 I/VtsMultiDeviceTestResultParser: Standard output:     data = self._sock.recv(self._rbufsize)
+07-08 11:56:25 I/VtsMultiDeviceTestResultParser: Standard output: error: [Errno 104] Connection reset by peer
+07-08 11:56:25 D/ModuleListener: ModuleListener.testRunStarted(VtsHostDrivenTest, 0)
+07-08 11:56:25 I/ConsoleReporter: [009283827981beee] Starting armeabi-v7a SampleCameraTest with 0 test
+07-08 11:56:25 D/ModuleListener: ModuleListener.testRunEnded(0, {})
+07-08 11:56:25 I/ConsoleReporter: [009283827981beee] armeabi-v7a SampleCameraTest completed in 0 ms. 0 passed, 0 failed, 0 not executed
+07-08 11:56:25 D/ModuleDef: Cleaner: FilePusher
+07-08 11:56:25 W/CompatibilityTest: Inaccurate runtime hint for armeabi-v7a SampleCameraTest, expected 1m 0s was 744 ms
+07-08 11:56:25 I/CompatibilityTest: Running system status checker after module execution: SampleCameraTest
+07-08 11:56:26 I/MonitoringUtils: Connectivity: passed check.
+07-08 11:56:26 I/CompatibilityTest: Running system status checker before module execution: SampleCameraTest
+07-08 11:56:26 D/ModuleDef: Preparer: FilePusher
+07-08 11:56:26 E/PushFilePreparer: Trying to push local 'libvts_common.so' to remote '/data/local/tmp/libvts_common.so'
+07-08 11:56:26 E/PushFilePreparer: not absolute
+07-08 11:56:26 I/FilePusher: Copying from /usr/local/yim/cloudandroid/android/master-real/out/host/linux-x86/vts/android-vts/testcases/libvts_common.so
+07-08 11:56:26 D/ModuleDef: Test: VtsMultiDeviceTest
+07-08 11:56:26 D/RunUtil: Running command with timeout: 1000ms
+07-08 11:56:26 D/RunUtil: Running [which, python]
+07-08 11:56:26 D/RunUtil: Running command with timeout: 300000ms
+07-08 11:56:26 D/RunUtil: Running [/usr/bin/python, -m, test/vts/testcases/host/sample/SampleLightTest, test/vts/testcases/host/sample/SampleLightTest.config]
+07-08 11:56:27 I/VtsMultiDeviceTest: Standard output is: [VTS-Example] 07-08 11:56:26.877 INFO ==========> SampleLightTest <==========
+[VTS-Example] 07-08 11:56:27.147 INFO TcpServer Thread-1 started (127.0.0.1:3617)
+[VTS-Example] 07-08 11:56:27.149 INFO sending a command (type SET_HOST_INFO)
+[VTS-Example] 07-08 11:56:27.150 INFO command command_type: SET_HOST_INFO
+callback_port: 3617
+
+[VTS-Example] 07-08 11:56:27.151 ERROR Failed to setup SampleLightTest.
+Traceback (most recent call last):
+  File "/usr/local/yim/cloudandroid/android/master-real/test/vts/runners/host/base_test.py", line 510, in run
+    if self._setUpClass() is False:
+  File "/usr/local/yim/cloudandroid/android/master-real/test/vts/runners/host/base_test.py", line 112, in _setUpClass
+    return self.setUpClass()
+  File "/usr/local/yim/cloudandroid/android/master-real/test/vts/testcases/host/sample/SampleLightTest.py", line 33, in setUpClass
+    bits=32)
+  File "/usr/local/yim/cloudandroid/android/master-real/test/vts/utils/python/mirror/hal_mirror.py", line 106, in InitConventionalHal
+    bits=bits)
+  File "/usr/local/yim/cloudandroid/android/master-real/test/vts/utils/python/mirror/hal_mirror.py", line 173, in _CreateMirrorObject
+    callback_port=self._host_callback_port)
+  File "/usr/local/yim/cloudandroid/android/master-real/test/vts/runners/host/tcp_client/vts_tcp_client.py", line 92, in Connect
+    resp = self.RecvResponse()
+  File "/usr/local/yim/cloudandroid/android/master-real/test/vts/runners/host/tcp_client/vts_tcp_client.py", line 263, in RecvResponse
+    header = self.channel.readline()
+  File "/usr/lib/python2.7/socket.py", line 447, in readline
+    data = self._sock.recv(self._rbufsize)
+error: [Errno 104] Connection reset by peer

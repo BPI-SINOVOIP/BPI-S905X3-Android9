@@ -1,0 +1,5 @@
+DATA/lib/libvts_profiling_utils.so->/data/local/tmp/32/libvts_profiling_utils.so
+DATA/lib64/libvts_profiling_utils.so->/data/local/tmp/64/libvts_profiling_utils.so
+
+DATA/lib/libvts_profiling.so->/data/local/tmp/32/libvts_profiling.so
+DATA/lib64/libvts_profiling.so->/data/local/tmp/64/libvts_profiling.so

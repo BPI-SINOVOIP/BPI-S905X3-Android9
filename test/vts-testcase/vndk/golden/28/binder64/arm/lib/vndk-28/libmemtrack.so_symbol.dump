@@ -1,0 +1,9 @@
+memtrack_proc_destroy
+memtrack_proc_get
+memtrack_proc_gl_pss
+memtrack_proc_gl_total
+memtrack_proc_graphics_pss
+memtrack_proc_graphics_total
+memtrack_proc_new
+memtrack_proc_other_pss
+memtrack_proc_other_total

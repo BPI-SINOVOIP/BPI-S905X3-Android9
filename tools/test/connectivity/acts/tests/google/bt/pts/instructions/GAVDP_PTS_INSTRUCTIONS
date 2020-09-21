@@ -1,0 +1,40 @@
+# Copyright (C) 2016 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may not
+# use this file except in compliance with the License. You may obtain a copy of
+# the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations under
+# the License.
+
+GAVDP
+=================================================================
+
+TC_ACP_APP_CON_BV_01_C
+  bta_start_pairing_helper
+  bta_set_scan_mode connectable_discoverable
+  bta_tts_speak
+
+TC_ACP_APP_TRC_BV_02_C
+  bta_start_pairing_helper
+  bta_set_scan_mode connectable_discoverable
+  bta_connect_profiles
+  bta_tts_speak
+
+TC_INT_APP_CONN_BV_01_C
+  bta_start_pairing_helper
+  bta_set_scan_mode connectable_discoverable
+  bta_connect_profiles
+  bta_tts_speak
+
+TC_INT_APP_TRC_BV_02_C
+  bta_start_pairing_helper
+  bta_set_scan_mode connectable_discoverable
+  bta_connect_profiles
+  bta_tts_speak
+  bta_tts_speak

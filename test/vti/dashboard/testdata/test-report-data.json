@@ -1,0 +1,272 @@
+{
+  "testList": [
+    {
+      "testRunList": [
+        {
+          "testName": "BionicUnitTests",
+          "type": 1,
+          "startTimestamp":1515562811,
+          "endTimestamp": 1515389691,
+          "testBuildId": "4075328",
+          "hostName": "test.google.com",
+          "passCount": 1861,
+          "failCount": 1,
+          "coveredLineCount": 223,
+          "totalLineCount": 23423432,
+          "testCaseIds": [2120003,9120003,7140003,9110002,7150002,110006,2160001,130003],
+          "failingTestcaseIds": [2120003,9120003,7140003,9110002],
+          "failingTestcaseOffsets": [212,234,388,384],
+          "links": ["https://google.com/test_run_details.txt","https://google.com/BionicUnitTests_1496812169433653.log","https://google.com/BionicUnitTests_1496812169433653.txt"],
+          "coverageList": [
+            {
+              "group": "wkejfiowfe",
+              "coveredLineCount": 23423,
+              "totalLineCount": 234324,
+              "filePath": "/wjefoiwejfio/jwoiejfiwef",
+              "projectName": "wklejfoiwjefio",
+              "projectVersion": "weoifj",
+              "lineCoverage": [
+                "0",
+                "3",
+                "34"
+              ]
+            }
+          ],
+          "profilingList": [
+            {
+              "name": "skldjfwoief",
+              "type": 2,
+              "regressionMode": 2,
+              "labels": [
+                "slkdfjwoiefj",
+                "woiejfoiwefjoiwef",
+                "wieojfiowef"
+              ],
+              "values": [
+                23487234,
+                23984798324,
+                29837498324,
+                29837489635
+              ],
+              "xLabel": "slkdjfoiwef",
+              "yLabel": "slkdjfoiwef",
+              "options": [
+                "skldjfiwef",
+                "woiejfiowf",
+                "wioejf"
+              ]
+            }
+          ],
+          "testCaseRunList": [
+            {
+              "testCaseNames": [
+                "stdatomic.atomic_exchange_64bit",
+                "stdatomic.atomic_compare_exchange_64bit",
+                "stdatomic.atomic_exchange_64bit",
+                "stdatomic.atomic_compare_exchange_64bit",
+                "stdatomic.atomic_exchange_64bit",
+                "stdatomic.atomic_compare_exchange_64bit"
+              ],
+              "results": [
+                2,
+                2,
+                2,
+                2,
+                2,
+                2
+              ]
+            }
+          ],
+          "deviceInfoList": [
+            {
+              "branch": "master",
+              "product": "sailfish",
+              "buildFlavor": "sailfish-userdebug",
+              "buildId": "4531434",
+              "abiBitness": "64",
+              "abiName": "arm64-v8a"
+            },
+            {
+              "branch": "master",
+              "product": "sailfish",
+              "buildFlavor": "sailfish-userdebug",
+              "buildId": "4531434",
+              "abiBitness": "32",
+              "abiName": "armeabi-v7a"
+            },
+            {
+              "branch": "master",
+              "product": "sailfish",
+              "buildFlavor": "sailfish-userdebug",
+              "buildId": "4531434",
+              "abiBitness": "64",
+              "abiName": "armeabi-v7a"
+            },
+            {
+              "branch": "master",
+              "product": "sailfish",
+              "buildFlavor": "sailfish-userdebug",
+              "buildId": "4531434",
+              "abiBitness": "32",
+              "abiName": "arm64-v8a"
+            }
+          ],
+          "buildTargetList": [
+            {
+              "targetName": "aosp_sailfish-userdebug"
+            },
+            {
+              "targetName": "aosp_arm64_ab-userdebug"
+            },
+            {
+              "targetName": "basic-userdebug"
+            }
+          ],
+          "branchList": [
+            {
+              "branchName": "master"
+            },
+            {
+              "branchName": "aaaa.170902.001"
+            },
+            {
+              "branchName": "oc"
+            }
+          ]
+        },
+        {
+          "testName": "CpuProfilingTest",
+          "type": 2,
+          "startTimestamp":1515562811,
+          "endTimestamp": 1515303611,
+          "testBuildId": "4075338",
+          "hostName": "test.google.com",
+          "passCount": 1361,
+          "failCount": 3,
+          "coveredLineCount": 34562,
+          "totalLineCount": 2343932,
+          "testCaseIds": [2120003,9120003,7140003,9110002,7150002,110006,2160001,130003],
+          "failingTestcaseIds": [2120003,9120003,7140003,9110002],
+          "failingTestcaseOffsets": [212,234,388,384],
+          "links": ["https://google.com/test_run_details.txt","https://google.com/BionicUnitTests_1496812169433653.log","https://google.com/BionicUnitTests_1496812169433653.txt"],
+          "coverageList": [
+            {
+              "group": "wkejfiowfe",
+              "coveredLineCount": 23423,
+              "totalLineCount": 234324,
+              "filePath": "/wjefoiwejfio/jwoiejfiwef",
+              "projectName": "wklejfoiwjefio",
+              "projectVersion": "weoifj",
+              "lineCoverage": [
+                "0",
+                "3",
+                "34"
+              ]
+            }
+          ],
+          "profilingList": [
+            {
+              "name": "skldjfwoief",
+              "type": 2,
+              "regressionMode": 0,
+              "labels": [
+                "slkdfjwoiefj",
+                "woiejfoiwefjoiwef",
+                "wieojfiowef"
+              ],
+              "values": [
+                23487234,
+                23984798324,
+                29837498324,
+                29837489635
+              ],
+              "xLabel": "slkdjfoiwef",
+              "yLabel": "slkdjfoiwef",
+              "options": [
+                "skldjfiwef",
+                "woiejfiowf",
+                "wioejf"
+              ]
+            }
+          ],
+          "testCaseRunList": [
+            {
+              "testCaseNames": [
+                "stdatomic.atomic_exchange_64bit",
+                "stdatomic.atomic_compare_exchange_64bit",
+                "stdatomic.atomic_exchange_64bit",
+                "stdatomic.atomic_compare_exchange_64bit",
+                "stdatomic.atomic_exchange_64bit",
+                "stdatomic.atomic_compare_exchange_64bit"
+              ],
+              "results": [
+                2,
+                2,
+                2,
+                2,
+                2,
+                2
+              ]
+            }
+          ],
+          "deviceInfoList": [
+            {
+              "branch": "master",
+              "product": "sailfish",
+              "buildFlavor": "sailfish-userdebug",
+              "buildId": "4531434",
+              "abiBitness": "64",
+              "abiName": "arm64-v8a"
+            },
+            {
+              "branch": "master",
+              "product": "sailfish",
+              "buildFlavor": "sailfish-userdebug",
+              "buildId": "4531434",
+              "abiBitness": "32",
+              "abiName": "armeabi-v7a"
+            },
+            {
+              "branch": "master",
+              "product": "sailfish",
+              "buildFlavor": "sailfish-userdebug",
+              "buildId": "4531434",
+              "abiBitness": "64",
+              "abiName": "armeabi-v7a"
+            },
+            {
+              "branch": "master",
+              "product": "sailfish",
+              "buildFlavor": "sailfish-userdebug",
+              "buildId": "4531434",
+              "abiBitness": "32",
+              "abiName": "arm64-v8a"
+            }
+          ],
+          "buildTargetList": [
+            {
+              "targetName": "aosp_sailfish-userdebug"
+            },
+            {
+              "targetName": "aosp_arm64_ab-userdebug"
+            },
+            {
+              "targetName": "basic-userdebug"
+            }
+          ],
+          "branchList": [
+            {
+              "branchName": "master"
+            },
+            {
+              "branchName": "aaaa.170902.001"
+            },
+            {
+              "branchName": "oc"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+{% autoescape true %}
+<html>
+  <head>
+    <!-- [START css] -->
+    <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.css">
+    <!-- [END css] -->
+    <style type="text/css">
+      body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #f5f5f5;
+      }
+      blockquote {
+        margin-bottom: 10px;
+        border-left-color: #bbb;
+      }
+      form {
+        margin-top: 10px;
+      }
+      .form-signin input[type="text"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+      }
+      .row {
+        margin-left: 0px;
+        margin-top: 10px;
+        overflow: scroll;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse"
+               data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">VTS Test Scheduler</a>
+           <a class="brand" href="/result">Result</a>
+           <a class="brand" href="/build">Build</a>
+           <a class="brand" href="/schedule">Schedule</a>
+           <a class="brand" href="/device">Device &amp; Lab</a>
+           <a class="brand" href="/job">Job Queue</a>
+          <div class="nav-collapse collapse pull-right">
+            <a href="{{ url|safe }}" class="btn">{{ url_linktext }}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <h1>Job Queue</h1>
+      <p>Shortcuts: <a href=#>8.0 (oc)</a> <a href=#>8.1 (oc-mr1)</a> <a href=#>9.0 (pi)</a></p>
+      <p><a href="/create_job_template">Create a job</a></p>
+      <p>{{ message }}</p>
+      <table>
+      <tr>
+        <td>
+          <select>
+            <option value="all">all</option>
+            <option value="git_master">git_master</option>
+            <option value="git_pi-release">git_pi-release</option>
+          </select>
+      </tr>
+      </table>
+      <table border=1>
+      <tr>
+        <td>#
+        <td>manifest_branch
+        <td>build_target
+        <td>test_name
+        <td>device
+        <td>period
+        <td>shards
+        <td>retry_count
+        <td>param
+        <td>hostname
+        <td>priority
+        <td>serial
+        <td>build_id<br>(PAB account ID)
+        <td>GSI
+        <td>test suite
+        <td>status
+        <td>created
+        <td>last heartbeat
+      </tr>
+      {% set index = 1 %}
+      {% for job in jobs %}
+      <tr>
+        <td>
+          {{ index }}
+          {% set index = index + 1 %}
+        <td>
+          {{ job.manifest_branch }}
+        <td>
+          {{ job.build_target }}
+        <td>
+          {{ job.test_name }}
+        <td>
+          {{ job.device }}
+        <td>
+          {{ job.period }}
+        <td>
+          {{ job.shards }}
+        <td>
+          {{ job.retry_count }}
+        <td>
+          {{ job.param }}
+        <td>
+          {{ job.hostname }}
+        <td>
+          {{ job.priority }}
+        <td>
+          {{ job.serial }}
+        <td>
+          {{ job.build_id }}
+          ({{ job.pab_account_id }})
+        <td>
+          {{ job.gsi_branch }} /
+          {{ job.gsi_build_id }} /
+          {{ job.gsi_build_target }}
+          ({{ job.gsi_pab_account_id }})
+        <td>
+          {{ job.test_branch }} /
+          {{ job.test_build_id }} /
+          {{ job.test_build_target }}
+          ({{ job.test_pab_account_id }})
+        <td>
+          {{ {0: "ready",
+              1: "leased",
+              2: "complete",
+              3: "infra-err"}[job.status] | default("status key error") }}
+          {% if job.infra_log_url %}
+            <a href="{{ job.infra_log_url }}" download>(download log)</a>
+          {% endif %}
+        <td>
+          {{ job.timestamp }}
+        <td>
+          {{ job.heartbeat_stamp }}
+      </tr>
+      {% endfor %}
+      </table>
+      <hr>
+    </div>
+  </body>
+</html>
+{% endautoescape %}

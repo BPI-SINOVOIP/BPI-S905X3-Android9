@@ -1,0 +1,82 @@
+//
+// Copyright (C) 2017 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+cc_library_shared {
+
+    name: "libvts_profiling_utils",
+    host_supported: true,
+
+    srcs: ["VtsProfilingUtil.cpp"],
+
+    shared_libs: [
+        "libprotobuf-cpp-full",
+    ],
+
+    cflags: [
+        "-Werror",
+        "-Wall",
+    ],
+
+    export_include_dirs: ["."],
+}
+
+cc_library_shared {
+
+    name: "libvts_profiling",
+
+    srcs: ["VtsProfilingInterface.cpp"],
+
+    shared_libs: [
+        "libbase",
+        "libcutils",
+        "libhidlbase",
+        "libprotobuf-cpp-full",
+        "libvts_multidevice_proto",
+        "libvts_profiling_utils",
+    ],
+
+    cflags: [
+        "-Werror",
+        "-Wall",
+    ],
+
+    multilib: {
+        lib32: {
+            ldflags: ["-Wl,--rpath,/data/local/tmp/32"],
+        },
+        lib64: {
+            ldflags: ["-Wl,--rpath,/data/local/tmp/64"],
+        },
+    },
+
+    export_include_dirs: ["."],
+}
+
+cc_binary {
+    name: "vts_profiling_configure",
+
+    srcs: ["VtsProfilingConfigureMain.cpp"],
+
+    cflags: ["-Wall", "-Werror"],
+
+    shared_libs: [
+        "libbase",
+        "libutils",
+        "libcutils",
+        "libhidlbase",
+        "libhidltransport",
+    ],
+}

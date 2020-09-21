@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <!-- Copyright 2012 Google Inc. All Rights Reserved -->
+<configuration description="Runs package manager ota host-based tests">
+
+    <test class="com.android.framework.tests.PackageManagerOTATests">
+    </test>
+    <logger class="com.android.tradefed.log.FileLogger" />
+    <result_reporter class="com.android.tradefed.result.XmlResultReporter" />
+</configuration>

@@ -1,0 +1,13 @@
+03-22 14:04:02 E/SubprocessResultsReporter: TEST_RUN_STARTED {"testCount":4,"runName":"arm64-v8a CtsGestureTestCases"}
+03-22 14:04:02 E/SubprocessResultsReporter: TEST_STARTED {"start_time":1489160957284,"className":"android.gesture.cts.GestureLibraryTest","testName":"testIsReadOnly"}
+03-22 14:04:02 E/SubprocessResultsReporter: TEST_ENDED {"end_time":1489160958359,"className":"android.gesture.cts.GestureLibraryTest","testName":"testIsReadOnly"}
+03-22 14:04:02 E/SubprocessResultsReporter: TEST_STARTED {"start_time":1489160957284,"className":"android.gesture.cts.GestureLibraryTest","testName":"testGetGestureEntries"}
+03-22 14:04:02 E/SubprocessResultsReporter: TEST_FAILED {"className":"android.gesture.cts.GestureLibraryTest","testName":"testGetGestureEntries", "trace":"Failed deal with it"}
+03-22 14:04:02 E/SubprocessResultsReporter: TEST_ENDED {"end_time":1489160958359,"className":"android.gesture.cts.GestureLibraryTest","testName":"testGetGestureEntries"}
+03-22 14:04:02 E/SubprocessResultsReporter: TEST_STARTED {"start_time":1489160957284,"className":"android.gesture.cts.GestureLibraryTest","testName":"testGetGestures"}
+03-22 14:04:02 E/SubprocessResultsReporter: TEST_IGNORED {"className":"android.gesture.cts.GestureLibraryTest","testName":"testGetGestures"}
+03-22 14:04:02 E/SubprocessResultsReporter: TEST_ENDED {"end_time":1489160958359,"className":"android.gesture.cts.GestureLibraryTest","testName":"testGetGestures"}
+03-22 14:04:02 E/SubprocessResultsReporter: TEST_STARTED {"start_time":1489160957285,"className":"android.gesture.cts.GestureLibraryTest","testName":"testRecognize"}
+03-22 14:04:02 E/SubprocessResultsReporter: TEST_ASSUMPTION_FAILURE {"className":"android.gesture.cts.GestureLibraryTest","testName":"testRecognize", "trace":"assume I fail..."}
+03-22 14:04:02 E/SubprocessResultsReporter: TEST_ENDED {"end_time":1489160958359,"className":"android.gesture.cts.GestureLibraryTest","testName":"testRecognize"}
+03-22 14:04:02 E/SubprocessResultsReporter: TEST_RUN_ENDED {"time":259}

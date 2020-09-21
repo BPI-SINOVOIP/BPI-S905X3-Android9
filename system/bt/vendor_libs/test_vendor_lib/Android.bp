@@ -1,0 +1,102 @@
+// simulation library for testing virtual devices
+// ========================================================
+cc_library_static {
+    name: "libbt-rootcanal",
+    defaults: ["libchrome_support_defaults"],
+    proprietary: true,
+    srcs: [
+        "src/acl_packet.cc",
+        "src/async_manager.cc",
+        "src/beacon.cc",
+        "src/beacon_swarm.cc",
+        "src/broken_adv.cc",
+        "src/bt_address.cc",
+        "src/classic.cc",
+        "src/command_packet.cc",
+        "src/connection.cc",
+        "src/device.cc",
+        "src/device_factory.cc",
+        "src/device_properties.cc",
+        "src/dual_mode_controller.cc",
+        "src/event_packet.cc",
+        "src/hci_packet.cc",
+        "src/keyboard.cc",
+        "src/l2cap_packet.cc",
+        "src/l2cap_sdu.cc",
+        "src/packet.cc",
+        "src/packet_stream.cc",
+        "src/sco_packet.cc",
+        "src/test_channel_transport.cc",
+    ],
+    cflags: [
+        "-fvisibility=hidden",
+        "-DHAS_NO_BDROID_BUILDCFG",
+    ],
+    local_include_dirs: [
+        "include",
+    ],
+    export_include_dirs: ["include"],
+    header_libs: [
+        "libbluetooth_headers",
+    ],
+    include_dirs: [
+        "system/bt",
+        "system/bt/utils/include",
+        "system/bt/hci/include",
+        "system/bt/internal_include",
+        "system/bt/stack/include",
+    ],
+    shared_libs: [
+        "libbase",
+        "liblog",
+    ],
+    static_libs: [
+        "libbluetooth-types",
+    ]
+}
+
+// test-vendor unit tests for host
+// ========================================================
+cc_test_host {
+    name: "test-vendor_test_host",
+    defaults: ["libchrome_support_defaults"],
+    srcs: [
+        "src/async_manager.cc",
+        "src/bt_address.cc",
+        "src/hci_packet.cc",
+        "src/command_packet.cc",
+        "src/event_packet.cc",
+        "src/packet.cc",
+        "src/packet_stream.cc",
+        "src/l2cap_packet.cc",
+        "src/l2cap_sdu.cc",
+        "test/async_manager_unittest.cc",
+        "test/bt_address_unittest.cc",
+        "test/packet_stream_unittest.cc",
+        "test/iterator_test.cc",
+        "test/l2cap_test.cc",
+        "test/l2cap_sdu_test.cc",
+    ],
+    header_libs: [
+        "libbluetooth_headers",
+    ],
+    local_include_dirs: [
+        "include",
+    ],
+    include_dirs: [
+        "system/bt",
+        "system/bt/utils/include",
+        "system/bt/hci/include",
+        "system/bt/stack/include",
+    ],
+    shared_libs: [
+        "liblog",
+    ],
+    static_libs: [
+        "libbluetooth-types",
+    ],
+    cflags: [
+        "-fvisibility=hidden",
+        "-DLOG_NDEBUG=1",
+    ],
+}

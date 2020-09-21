@@ -1,0 +1,65 @@
+vtable for android::frameworks::schedulerservice::V1_0::BpHwSchedulingPolicyService
+_ZTVN7android10frameworks16schedulerservice4V1_027BpHwSchedulingPolicyServiceE: 19 entries
+16    (int (*)(...)) _ZN7android10frameworks16schedulerservice4V1_027BpHwSchedulingPolicyService14interfaceChainENSt3__18functionIFvRKNS_8hardware8hidl_vecINS6_11hidl_stringEEEEEE
+20    (int (*)(...)) _ZN7android10frameworks16schedulerservice4V1_027BpHwSchedulingPolicyService5debugERKNS_8hardware11hidl_handleERKNS4_8hidl_vecINS4_11hidl_stringEEE
+24    (int (*)(...)) _ZN7android10frameworks16schedulerservice4V1_027BpHwSchedulingPolicyService19interfaceDescriptorENSt3__18functionIFvRKNS_8hardware11hidl_stringEEEE
+28    (int (*)(...)) _ZN7android10frameworks16schedulerservice4V1_027BpHwSchedulingPolicyService12getHashChainENSt3__18functionIFvRKNS_8hardware8hidl_vecINS6_10hidl_arrayIhLj32EJEEEEEEEE
+32    (int (*)(...)) _ZN7android10frameworks16schedulerservice4V1_027BpHwSchedulingPolicyService21setHALInstrumentationEv
+36    (int (*)(...)) _ZN7android10frameworks16schedulerservice4V1_027BpHwSchedulingPolicyService11linkToDeathERKNS_2spINS_8hardware20hidl_death_recipientEEEy
+40    (int (*)(...)) _ZN7android10frameworks16schedulerservice4V1_027BpHwSchedulingPolicyService4pingEv
+44    (int (*)(...)) _ZN7android10frameworks16schedulerservice4V1_027BpHwSchedulingPolicyService12getDebugInfoENSt3__18functionIFvRKNS_4hidl4base4V1_09DebugInfoEEEE
+48    (int (*)(...)) _ZN7android10frameworks16schedulerservice4V1_027BpHwSchedulingPolicyService21notifySyspropsChangedEv
+52    (int (*)(...)) _ZN7android10frameworks16schedulerservice4V1_027BpHwSchedulingPolicyService13unlinkToDeathERKNS_2spINS_8hardware20hidl_death_recipientEEE
+64    (int (*)(...)) _ZN7android10frameworks16schedulerservice4V1_027BpHwSchedulingPolicyService15requestPriorityEiii
+68    (int (*)(...)) _ZN7android10frameworks16schedulerservice4V1_027BpHwSchedulingPolicyService21getMaxAllowedPriorityEv
+120    (int (*)(...)) _ZN7android8hardware11BpHwRefBase10onFirstRefEv
+124    (int (*)(...)) _ZN7android8hardware11BpHwRefBase15onLastStrongRefEPKv
+128    (int (*)(...)) _ZN7android8hardware11BpHwRefBase20onIncStrongAttemptedEjPKv
+184    (int (*)(...)) _ZTv0_n16_N7android8hardware11BpHwRefBase10onFirstRefEv
+188    (int (*)(...)) _ZTv0_n20_N7android8hardware11BpHwRefBase15onLastStrongRefEPKv
+192    (int (*)(...)) _ZTv0_n24_N7android8hardware11BpHwRefBase20onIncStrongAttemptedEjPKv
+196    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+
+
+vtable for android::frameworks::schedulerservice::V1_0::BnHwSchedulingPolicyService
+_ZTVN7android10frameworks16schedulerservice4V1_027BnHwSchedulingPolicyServiceE: 21 entries
+12    (int (*)(...)) _ZN7android8hardware9BHwBinder8transactEjRKNS0_6ParcelEPS2_jNSt3__18functionIFvRS2_EEE
+16    (int (*)(...)) _ZN7android8hardware9BHwBinder11linkToDeathERKNS_2spINS0_7IBinder14DeathRecipientEEEPvj
+20    (int (*)(...)) _ZN7android8hardware9BHwBinder13unlinkToDeathERKNS_2wpINS0_7IBinder14DeathRecipientEEEPvjPS5_
+24    (int (*)(...)) _ZNK7android8hardware7IBinder13checkSubclassEPKv
+28    (int (*)(...)) _ZN7android8hardware9BHwBinder12attachObjectEPKvPvS4_PFvS3_S4_S4_E
+32    (int (*)(...)) _ZNK7android8hardware9BHwBinder10findObjectEPKv
+36    (int (*)(...)) _ZN7android8hardware9BHwBinder12detachObjectEPKv
+40    (int (*)(...)) _ZN7android8hardware9BHwBinder11localBinderEv
+44    (int (*)(...)) _ZN7android8hardware7IBinder12remoteBinderEv
+48    (int (*)(...)) _ZN7android10frameworks16schedulerservice4V1_027BnHwSchedulingPolicyServiceD1Ev
+52    (int (*)(...)) _ZN7android10frameworks16schedulerservice4V1_027BnHwSchedulingPolicyServiceD0Ev
+56    (int (*)(...)) _ZN7android10frameworks16schedulerservice4V1_027BnHwSchedulingPolicyService10onTransactEjRKNS_8hardware6ParcelEPS5_jNSt3__18functionIFvRS5_EEE
+68    (int (*)(...)) _ZThn20_N7android10frameworks16schedulerservice4V1_027BnHwSchedulingPolicyServiceD1Ev
+72    (int (*)(...)) _ZThn20_N7android10frameworks16schedulerservice4V1_027BnHwSchedulingPolicyServiceD0Ev
+104    (int (*)(...)) _ZTv0_n12_N7android10frameworks16schedulerservice4V1_027BnHwSchedulingPolicyServiceD1Ev
+108    (int (*)(...)) _ZTv0_n12_N7android10frameworks16schedulerservice4V1_027BnHwSchedulingPolicyServiceD0Ev
+112    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+116    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+120    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+124    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+128    (int (*)(...)) _ZTVN7android10frameworks16schedulerservice4V1_027BnHwSchedulingPolicyServiceE
+
+
+vtable for android::frameworks::schedulerservice::V1_0::ISchedulingPolicyService
+_ZTVN7android10frameworks16schedulerservice4V1_024ISchedulingPolicyServiceE: 15 entries
+16    (int (*)(...)) _ZN7android10frameworks16schedulerservice4V1_024ISchedulingPolicyService14interfaceChainENSt3__18functionIFvRKNS_8hardware8hidl_vecINS6_11hidl_stringEEEEEE
+20    (int (*)(...)) _ZN7android10frameworks16schedulerservice4V1_024ISchedulingPolicyService5debugERKNS_8hardware11hidl_handleERKNS4_8hidl_vecINS4_11hidl_stringEEE
+24    (int (*)(...)) _ZN7android10frameworks16schedulerservice4V1_024ISchedulingPolicyService19interfaceDescriptorENSt3__18functionIFvRKNS_8hardware11hidl_stringEEEE
+28    (int (*)(...)) _ZN7android10frameworks16schedulerservice4V1_024ISchedulingPolicyService12getHashChainENSt3__18functionIFvRKNS_8hardware8hidl_vecINS6_10hidl_arrayIhLj32EJEEEEEEEE
+32    (int (*)(...)) _ZN7android10frameworks16schedulerservice4V1_024ISchedulingPolicyService21setHALInstrumentationEv
+36    (int (*)(...)) _ZN7android10frameworks16schedulerservice4V1_024ISchedulingPolicyService11linkToDeathERKNS_2spINS_8hardware20hidl_death_recipientEEEy
+40    (int (*)(...)) _ZN7android10frameworks16schedulerservice4V1_024ISchedulingPolicyService4pingEv
+44    (int (*)(...)) _ZN7android10frameworks16schedulerservice4V1_024ISchedulingPolicyService12getDebugInfoENSt3__18functionIFvRKNS_4hidl4base4V1_09DebugInfoEEEE
+48    (int (*)(...)) _ZN7android10frameworks16schedulerservice4V1_024ISchedulingPolicyService21notifySyspropsChangedEv
+52    (int (*)(...)) _ZN7android10frameworks16schedulerservice4V1_024ISchedulingPolicyService13unlinkToDeathERKNS_2spINS_8hardware20hidl_death_recipientEEE
+108    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+112    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+116    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+120    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+124    (int (*)(...)) _ZTVN7android10frameworks16schedulerservice4V1_024ISchedulingPolicyServiceE

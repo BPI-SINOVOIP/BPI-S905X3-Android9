@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2012 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<configuration description="Run monkey using existing pre-prepared device with defaults appropriate for a single application being targeted. Use --package to specify application.">
+    <option name = "enable-root" value="false" />
+    <option name = "reboot-device" value="false" />
+    <test class="com.android.monkey.MonkeyMetricsTest">
+        <option name="category" value="android.intent.category.CAR_DOCK" />
+        <option name="category" value="android.intent.category.INFO" />
+        <option name="category" value="android.intent.category.LAUNCHER" />
+        <option name="category" value="android.intent.category.MONKEY" />
+        <option name="category" value="android.intent.category.SAMPLE_CODE" />
+        <option name="target-count" value="10000" />
+        <option name="throttle" value="100" />
+        <option name="idle-time" value="0" />
+        <!-- 30 minute timeout for the monkey -->
+        <option name="monkey-timeout" value="30" />
+        <option name="retry-on-failure" value="true" />
+    </test>
+</configuration>

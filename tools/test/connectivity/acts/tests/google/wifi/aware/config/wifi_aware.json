@@ -1,0 +1,15 @@
+{
+    "_description": "This is a test configuration file for Wi-Fi Aware tests in INTERACTIVE (high-power) mode.",
+    "testbed":
+    [
+        {
+            "_description": "Wi-Fi Aware testbed: auto-detect all attached devices",
+            "name": "WifiAwareAllAttached",
+            "AndroidDevice": "*"
+        }
+    ],
+    "logpath": "~/logs",
+    "testpaths": ["./tools/test/connectivity/acts/tests/google/wifi"],
+    "adb_logcat_param": "-b all",
+    "aware_default_power_mode": "INTERACTIVE"
+}

@@ -1,0 +1,25 @@
+RecordingCanvas.
+  emptyPlayback
+  clipRect
+  emptyClipRect
+  drawArc
+  drawLines
+  drawRect
+  drawText
+  drawText_strikeThruAndUnderline
+  drawText_forceAlignLeft
+  drawColor
+  backgroundAndImage
+  saveLayer_simple
+  saveLayer_missingRestore
+  saveLayer_simpleUnclipped
+  saveLayer_addClipFlag
+  saveLayer_viewportCrop
+  saveLayer_rotateUnclipped
+  saveLayer_rotateClipped
+  drawRenderNode_rejection
+  drawRenderNode_projection
+  firstClipWillReplace
+  insertReorderBarrier
+  refPaint
+Leak check took 77ms

@@ -1,0 +1,13 @@
+MACRO f0 = 0
+MACRO f1 = 1
+MACRO f2 = 2
+MACRO f3 = 3
+
+LONG MACRO f
+f0()
+f1()
+f2()
+f3()
+END MACRO
+
+recharge --max-battery f() --noisy-dry-run

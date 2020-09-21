@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 Google Inc. All Rights Reserved -->
+<!-- Required options: branch build-flavor -->
+<configuration description="Downloads build, flashes on device, and runs media stress tests">
+    <include name="google/common/asit" />
+    <option name="test-tag" value="media_stress" />
+    <option name="device-unavail-email:destination" value="jnoguchi@google.com" />
+    <option name="google-device-setup:local-data-path" value="/google/data/ro/teams/tradefed/testdata/media/media_api/" />
+    <option name="invocation-failure-email:destination" value="jnoguchi@google.com" />
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="mediaframeworktest.apk" />
+    </target_preparer>
+    <test class="com.android.media.tests.MediaStressTest" />
+</configuration>

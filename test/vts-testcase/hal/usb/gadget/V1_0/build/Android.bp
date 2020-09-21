@@ -1,0 +1,99 @@
+// This file was auto-generated. Do not edit manually.
+// Use launch_hal_test.py or update_makefiles.py in test/vts-testcase/hal/script/ to generate this file.
+
+// Generate .vts spec files.
+hal2vts {
+    name: "android.hardware.usb.gadget@1.0-vts.spec",
+    hidl_gen_args: "-r android.hardware:hardware/interfaces",
+    srcs: [
+        ":android.hardware.usb.gadget@1.0_hal",
+    ],
+    out: [
+        "android/hardware/usb/gadget/1.0/UsbGadget.vts",
+        "android/hardware/usb/gadget/1.0/UsbGadgetCallback.vts",
+        "android/hardware/usb/gadget/1.0/types.vts",
+    ],
+}
+
+// Build VTS driver.
+genrule {
+    name: "android.hardware.usb.gadget@1.0-vts.driver_genc++",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -r android.hardware:hardware/interfaces android.hardware.usb.gadget@1.0 && $(location vtsc) -mDRIVER -tSOURCE -b$(genDir) android/hardware/usb/gadget/1.0/ $(genDir)/android/hardware/usb/gadget/1.0/",
+    srcs: [
+        ":android.hardware.usb.gadget@1.0_hal",
+    ],
+    out: [
+        "android/hardware/usb/gadget/1.0/UsbGadget.vts.cpp",
+        "android/hardware/usb/gadget/1.0/UsbGadgetCallback.vts.cpp",
+        "android/hardware/usb/gadget/1.0/types.vts.cpp",
+    ],
+}
+
+genrule {
+    name: "android.hardware.usb.gadget@1.0-vts.driver_genc++_headers",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -r android.hardware:hardware/interfaces android.hardware.usb.gadget@1.0 && $(location vtsc) -mDRIVER -tHEADER -b$(genDir) android/hardware/usb/gadget/1.0/ $(genDir)/android/hardware/usb/gadget/1.0/",
+    srcs: [
+        ":android.hardware.usb.gadget@1.0_hal",
+    ],
+    out: [
+        "android/hardware/usb/gadget/1.0/UsbGadget.vts.h",
+        "android/hardware/usb/gadget/1.0/UsbGadgetCallback.vts.h",
+        "android/hardware/usb/gadget/1.0/types.vts.h",
+    ],
+}
+
+cc_library_shared {
+    name: "android.hardware.usb.gadget@1.0-vts.driver",
+    generated_sources: ["android.hardware.usb.gadget@1.0-vts.driver_genc++"],
+    generated_headers: ["android.hardware.usb.gadget@1.0-vts.driver_genc++_headers"],
+    export_generated_headers: ["android.hardware.usb.gadget@1.0-vts.driver_genc++_headers"],
+    defaults: ["VtsHalDriverDefaults"],
+    shared_libs: [],
+    static_libs: [
+        "android.hardware.usb.gadget@1.0",
+    ],
+}
+
+// Build VTS profiler.
+genrule {
+    name: "android.hardware.usb.gadget@1.0-vts.profiler_genc++",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -r android.hardware:hardware/interfaces android.hardware.usb.gadget@1.0 && $(location vtsc) -mPROFILER -tSOURCE -b$(genDir) android/hardware/usb/gadget/1.0/ $(genDir)/android/hardware/usb/gadget/1.0/",
+    srcs: [
+        ":android.hardware.usb.gadget@1.0_hal",
+    ],
+    out: [
+        "android/hardware/usb/gadget/1.0/UsbGadget.vts.cpp",
+        "android/hardware/usb/gadget/1.0/UsbGadgetCallback.vts.cpp",
+        "android/hardware/usb/gadget/1.0/types.vts.cpp",
+    ],
+}
+
+genrule {
+    name: "android.hardware.usb.gadget@1.0-vts.profiler_genc++_headers",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -r android.hardware:hardware/interfaces android.hardware.usb.gadget@1.0 && $(location vtsc) -mPROFILER -tHEADER -b$(genDir) android/hardware/usb/gadget/1.0/ $(genDir)/android/hardware/usb/gadget/1.0/",
+    srcs: [
+        ":android.hardware.usb.gadget@1.0_hal",
+    ],
+    out: [
+        "android/hardware/usb/gadget/1.0/UsbGadget.vts.h",
+        "android/hardware/usb/gadget/1.0/UsbGadgetCallback.vts.h",
+        "android/hardware/usb/gadget/1.0/types.vts.h",
+    ],
+}
+
+cc_library_shared {
+    name: "android.hardware.usb.gadget@1.0-vts.profiler",
+    generated_sources: ["android.hardware.usb.gadget@1.0-vts.profiler_genc++"],
+    generated_headers: ["android.hardware.usb.gadget@1.0-vts.profiler_genc++_headers"],
+    export_generated_headers: ["android.hardware.usb.gadget@1.0-vts.profiler_genc++_headers"],
+    defaults: ["VtsHalProfilerDefaults"],
+    shared_libs: [],
+    static_libs: [
+        "android.hardware.usb.gadget@1.0",
+    ],
+}
+

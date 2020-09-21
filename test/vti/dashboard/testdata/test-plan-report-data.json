@@ -1,0 +1,14 @@
+{
+  "testPlanList": [
+    {
+      "testPlanName": "vts-serving-staging-fuzz",
+      "testModules": ["BionicUnitTests", "CpuProfilingTest"],
+      "testTimes": [1515562811, 1515562811]
+    },
+    {
+      "testPlanName": "vts-serving-staging-hal-conventional",
+      "testModules": ["BionicUnitTests", "CpuProfilingTest"],
+      "testTimes": [1515562811, 1515562811]
+    }
+  ]
+}

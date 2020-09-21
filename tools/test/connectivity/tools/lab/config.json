@@ -1,0 +1,60 @@
+{
+  "disk": {
+    "percent_used": {
+      "constant": 70,
+      "compare": "LESS_THAN"
+    },
+    "avail": {
+      "constant": 200,
+      "compare": "GREATER_THAN"
+    }
+  },
+  "ram": {
+    "free": {
+      "constant": 100,
+      "compare": "GREATER_THAN"
+    }
+  },
+  "name": {
+    "name": {
+      "constant": "None",
+      "compare": "IP_ADDR"
+    }
+  },
+  "time_sync": {
+    "is_synchronized": {
+      "constant": true,
+      "compare": "EQUALS"
+    }
+  },
+  "network": {
+    "connected": {
+      "constant": true,
+      "compare": "EQUALS_DICT"
+    }
+  },
+  "process_time": {
+    "num_adb_processes": {
+      "constant": 0,
+      "compare": "EQUALS"
+    }
+  },
+  "verify": {
+    "total_unhealthy": {
+      "constant": "0",
+      "compare": "EQUALS"
+    }
+  },
+  "kernel_version": {
+    "kernel_release": {
+      "constant": "3.19",
+      "compare": "STARTS_WITH"
+    }
+  },
+  "zombie": {
+    "num_adb_zombies": {
+      "constant": 0,
+      "compare": "EQUALS"
+    }
+  }
+}

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2017 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<configuration description="Config for VTS VtsHalAudioEffectV2_0TargetReplay test cases">
+    <option name="config-descriptor:metadata" key="plan" value="vts-misc" />
+    <target_preparer class="com.android.compatibility.common.tradefed.targetprep.VtsFilePusher">
+        <option name="abort-on-push-failure" value="false"/>
+        <option name="push-group" value="HalHidlHostTest.push"/>
+        <option name="cleanup" value="true"/>
+        <option name="push" value="spec/hardware/interfaces/audio/common/2.0/vts/types.vts->/data/local/tmp/spec/android/hardware/audio/common/2.0/types.vts"/>
+        <option name="push" value="DATA/lib/android.hardware.audio.common@2.0-vts.driver.so->/data/local/tmp/32/android.hardware.audio.common@2.0-vts.driver.so"/>
+        <option name="push" value="DATA/lib64/android.hardware.audio.common@2.0-vts.driver.so->/data/local/tmp/64/android.hardware.audio.common@2.0-vts.driver.so"/>
+        <option name="push" value="spec/hardware/interfaces/audio/effect/2.0/vts/AcousticEchoCancelerEffect.vts->/data/local/tmp/spec/android/hardware/audio/effect/2.0/AcousticEchoCancelerEffect.vts"/>
+        <option name="push" value="spec/hardware/interfaces/audio/effect/2.0/vts/AutomaticGainControlEffect.vts->/data/local/tmp/spec/android/hardware/audio/effect/2.0/AutomaticGainControlEffect.vts"/>
+        <option name="push" value="spec/hardware/interfaces/audio/effect/2.0/vts/BassBoostEffect.vts->/data/local/tmp/spec/android/hardware/audio/effect/2.0/BassBoostEffect.vts"/>
+        <option name="push" value="spec/hardware/interfaces/audio/effect/2.0/vts/DownmixEffect.vts->/data/local/tmp/spec/android/hardware/audio/effect/2.0/DownmixEffect.vts"/>
+        <option name="push" value="spec/hardware/interfaces/audio/effect/2.0/vts/Effect.vts->/data/local/tmp/spec/android/hardware/audio/effect/2.0/Effect.vts"/>
+        <option name="push" value="spec/hardware/interfaces/audio/effect/2.0/vts/EffectBufferProviderCallback.vts->/data/local/tmp/spec/android/hardware/audio/effect/2.0/EffectBufferProviderCallback.vts"/>
+        <option name="push" value="spec/hardware/interfaces/audio/effect/2.0/vts/EffectsFactory.vts->/data/local/tmp/spec/android/hardware/audio/effect/2.0/EffectsFactory.vts"/>
+        <option name="push" value="spec/hardware/interfaces/audio/effect/2.0/vts/EnvironmentalReverbEffect.vts->/data/local/tmp/spec/android/hardware/audio/effect/2.0/EnvironmentalReverbEffect.vts"/>
+        <option name="push" value="spec/hardware/interfaces/audio/effect/2.0/vts/EqualizerEffect.vts->/data/local/tmp/spec/android/hardware/audio/effect/2.0/EqualizerEffect.vts"/>
+        <option name="push" value="spec/hardware/interfaces/audio/effect/2.0/vts/LoudnessEnhancerEffect.vts->/data/local/tmp/spec/android/hardware/audio/effect/2.0/LoudnessEnhancerEffect.vts"/>
+        <option name="push" value="spec/hardware/interfaces/audio/effect/2.0/vts/NoiseSuppressionEffect.vts->/data/local/tmp/spec/android/hardware/audio/effect/2.0/NoiseSuppressionEffect.vts"/>
+        <option name="push" value="spec/hardware/interfaces/audio/effect/2.0/vts/PresetReverbEffect.vts->/data/local/tmp/spec/android/hardware/audio/effect/2.0/PresetReverbEffect.vts"/>
+        <option name="push" value="spec/hardware/interfaces/audio/effect/2.0/vts/VirtualizerEffect.vts->/data/local/tmp/spec/android/hardware/audio/effect/2.0/VirtualizerEffect.vts"/>
+        <option name="push" value="spec/hardware/interfaces/audio/effect/2.0/vts/VisualizerEffect.vts->/data/local/tmp/spec/android/hardware/audio/effect/2.0/VisualizerEffect.vts"/>
+        <option name="push" value="spec/hardware/interfaces/audio/effect/2.0/vts/types.vts->/data/local/tmp/spec/android/hardware/audio/effect/2.0/types.vts"/>
+        <option name="push" value="DATA/lib/android.hardware.audio.effect@2.0-vts.driver.so->/data/local/tmp/32/android.hardware.audio.effect@2.0-vts.driver.so"/>
+        <option name="push" value="DATA/lib64/android.hardware.audio.effect@2.0-vts.driver.so->/data/local/tmp/64/android.hardware.audio.effect@2.0-vts.driver.so"/>
+    </target_preparer>
+    <test class="com.android.tradefed.testtype.VtsMultiDeviceTest">
+        <option name="test-module-name" value="VtsHalAudioEffectV2_0TargetReplay"/>
+        <option name="binary-test-type" value="hal_hidl_replay_test"/>
+        <option name="hal-hidl-replay-test-trace-path" value="test/vts-testcase/hal-trace/audio/effect/V2_0/android.hardware.audio.effect_2.0_32249473887.vts.trace"/>
+        <option name="hal-hidl-replay-test-trace-path" value="test/vts-testcase/hal-trace/audio/effect/V2_0/android.hardware.audio.effect_2.0_486896798397.vts.trace"/>
+        <option name="hal-hidl-replay-test-trace-path" value="test/vts-testcase/hal-trace/audio/effect/V2_0/android.hardware.audio.effect_2.0_61278401310.vts.trace"/>
+        <option name="hal-hidl-replay-test-trace-path" value="test/vts-testcase/hal-trace/audio/effect/V2_0/android.hardware.audio.effect_2.0_89221826074.vts.trace"/>
+        <option name="binary-test-disable-framework" value="true"/>
+        <option name="test-timeout" value="6m"/>
+    </test>
+</configuration>

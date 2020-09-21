@@ -1,0 +1,40 @@
+vtable for gatekeeper::VerifyRequest
+_ZTVN10gatekeeper13VerifyRequestE: 5 entries
+8    (int (*)(...)) _ZN10gatekeeper13VerifyRequestD2Ev
+12    (int (*)(...)) _ZN10gatekeeper13VerifyRequestD0Ev
+16    (int (*)(...)) _ZNK10gatekeeper13VerifyRequest22nonErrorSerializedSizeEv
+20    (int (*)(...)) _ZNK10gatekeeper13VerifyRequest17nonErrorSerializeEPh
+24    (int (*)(...)) _ZN10gatekeeper13VerifyRequest19nonErrorDeserializeEPKhS2_
+
+
+vtable for gatekeeper::VerifyResponse
+_ZTVN10gatekeeper14VerifyResponseE: 5 entries
+8    (int (*)(...)) _ZN10gatekeeper14VerifyResponseD2Ev
+12    (int (*)(...)) _ZN10gatekeeper14VerifyResponseD0Ev
+16    (int (*)(...)) _ZNK10gatekeeper14VerifyResponse22nonErrorSerializedSizeEv
+20    (int (*)(...)) _ZNK10gatekeeper14VerifyResponse17nonErrorSerializeEPh
+24    (int (*)(...)) _ZN10gatekeeper14VerifyResponse19nonErrorDeserializeEPKhS2_
+
+
+vtable for gatekeeper::EnrollRequest
+_ZTVN10gatekeeper13EnrollRequestE: 5 entries
+8    (int (*)(...)) _ZN10gatekeeper13EnrollRequestD2Ev
+12    (int (*)(...)) _ZN10gatekeeper13EnrollRequestD0Ev
+16    (int (*)(...)) _ZNK10gatekeeper13EnrollRequest22nonErrorSerializedSizeEv
+20    (int (*)(...)) _ZNK10gatekeeper13EnrollRequest17nonErrorSerializeEPh
+24    (int (*)(...)) _ZN10gatekeeper13EnrollRequest19nonErrorDeserializeEPKhS2_
+
+
+vtable for gatekeeper::EnrollResponse
+_ZTVN10gatekeeper14EnrollResponseE: 5 entries
+8    (int (*)(...)) _ZN10gatekeeper14EnrollResponseD2Ev
+12    (int (*)(...)) _ZN10gatekeeper14EnrollResponseD0Ev
+16    (int (*)(...)) _ZNK10gatekeeper14EnrollResponse22nonErrorSerializedSizeEv
+20    (int (*)(...)) _ZNK10gatekeeper14EnrollResponse17nonErrorSerializeEPh
+24    (int (*)(...)) _ZN10gatekeeper14EnrollResponse19nonErrorDeserializeEPKhS2_
+
+
+vtable for gatekeeper::GateKeeper
+_ZTVN10gatekeeper10GateKeeperE: 2 entries
+52    (int (*)(...)) _ZN10gatekeeper10GateKeeper19ComputeRetryTimeoutEPKNS_16failure_record_tE
+60    (int (*)(...)) _ZN10gatekeeper10GateKeeper8DoVerifyEPKNS_17password_handle_tERKNS_11SizedBufferE

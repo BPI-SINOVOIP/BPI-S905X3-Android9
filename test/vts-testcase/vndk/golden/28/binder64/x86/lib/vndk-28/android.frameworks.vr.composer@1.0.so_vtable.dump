@@ -1,0 +1,85 @@
+vtable for android::frameworks::vr::composer::V1_0::BpHwVrComposerClient
+_ZTVN7android10frameworks2vr8composer4V1_020BpHwVrComposerClientE: 40 entries
+16    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient14interfaceChainENSt3__18functionIFvRKNS_8hardware8hidl_vecINS7_11hidl_stringEEEEEE
+20    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient5debugERKNS_8hardware11hidl_handleERKNS5_8hidl_vecINS5_11hidl_stringEEE
+24    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient19interfaceDescriptorENSt3__18functionIFvRKNS_8hardware11hidl_stringEEEE
+28    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient12getHashChainENSt3__18functionIFvRKNS_8hardware8hidl_vecINS7_10hidl_arrayIhLj32EJEEEEEEEE
+32    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient21setHALInstrumentationEv
+36    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient11linkToDeathERKNS_2spINS_8hardware20hidl_death_recipientEEEy
+40    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient4pingEv
+44    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient12getDebugInfoENSt3__18functionIFvRKNS_4hidl4base4V1_09DebugInfoEEEE
+48    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient21notifySyspropsChangedEv
+52    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient13unlinkToDeathERKNS_2spINS_8hardware20hidl_death_recipientEEE
+64    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient16registerCallbackERKNS_2spINS_8hardware8graphics8composer4V2_117IComposerCallbackEEE
+68    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient25getMaxVirtualDisplayCountEv
+72    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient20createVirtualDisplayEjjNS_8hardware8graphics6common4V1_011PixelFormatEjNSt3__18functionIFvNS6_8composer4V2_15ErrorEyS9_EEE
+76    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient21destroyVirtualDisplayEy
+80    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient11createLayerEyjNSt3__18functionIFvNS_8hardware8graphics8composer4V2_15ErrorEyEEE
+84    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient12destroyLayerEyy
+88    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient15getActiveConfigEyNSt3__18functionIFvNS_8hardware8graphics8composer4V2_15ErrorEjEEE
+92    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient22getClientTargetSupportEyjjNS_8hardware8graphics6common4V1_011PixelFormatENS8_9DataspaceE
+96    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient13getColorModesEyNSt3__18functionIFvNS_8hardware8graphics8composer4V2_15ErrorERKNS7_8hidl_vecINS8_6common4V1_09ColorModeEEEEEE
+100    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient19getDisplayAttributeEyjNS_8hardware8graphics8composer4V2_115IComposerClient9AttributeENSt3__18functionIFvNS8_5ErrorEiEEE
+104    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient17getDisplayConfigsEyNSt3__18functionIFvNS_8hardware8graphics8composer4V2_15ErrorERKNS7_8hidl_vecIjEEEEE
+108    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient14getDisplayNameEyNSt3__18functionIFvNS_8hardware8graphics8composer4V2_15ErrorERKNS7_11hidl_stringEEEE
+112    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient14getDisplayTypeEyNSt3__18functionIFvNS_8hardware8graphics8composer4V2_15ErrorENSA_15IComposerClient11DisplayTypeEEEE
+116    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient14getDozeSupportEyNSt3__18functionIFvNS_8hardware8graphics8composer4V2_15ErrorEbEEE
+120    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient18getHdrCapabilitiesEyNSt3__18functionIFvNS_8hardware8graphics8composer4V2_15ErrorERKNS7_8hidl_vecINS8_6common4V1_03HdrEEEfffEEE
+124    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient24setClientTargetSlotCountEyj
+128    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient15setActiveConfigEyj
+132    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient12setColorModeEyNS_8hardware8graphics6common4V1_09ColorModeE
+136    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient12setPowerModeEyNS_8hardware8graphics8composer4V2_115IComposerClient9PowerModeE
+140    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient15setVsyncEnabledEyNS_8hardware8graphics8composer4V2_115IComposerClient5VsyncE
+144    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient20setInputCommandQueueERKNS_8hardware12MQDescriptorIjLNS5_8MQFlavorE1EEE
+148    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient21getOutputCommandQueueENSt3__18functionIFvNS_8hardware8graphics8composer4V2_15ErrorERKNS7_12MQDescriptorIjLNS7_8MQFlavorE1EEEEEE
+152    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BpHwVrComposerClient15executeCommandsEjRKNS_8hardware8hidl_vecINS5_11hidl_handleEEENSt3__18functionIFvNS5_8graphics8composer4V2_15ErrorEbjSA_EEE
+204    (int (*)(...)) _ZN7android8hardware11BpHwRefBase10onFirstRefEv
+208    (int (*)(...)) _ZN7android8hardware11BpHwRefBase15onLastStrongRefEPKv
+212    (int (*)(...)) _ZN7android8hardware11BpHwRefBase20onIncStrongAttemptedEjPKv
+268    (int (*)(...)) _ZTv0_n16_N7android8hardware11BpHwRefBase10onFirstRefEv
+272    (int (*)(...)) _ZTv0_n20_N7android8hardware11BpHwRefBase15onLastStrongRefEPKv
+276    (int (*)(...)) _ZTv0_n24_N7android8hardware11BpHwRefBase20onIncStrongAttemptedEjPKv
+280    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+
+
+vtable for android::frameworks::vr::composer::V1_0::BnHwVrComposerClient
+_ZTVN7android10frameworks2vr8composer4V1_020BnHwVrComposerClientE: 20 entries
+12    (int (*)(...)) _ZN7android8hardware9BHwBinder8transactEjRKNS0_6ParcelEPS2_jNSt3__18functionIFvRS2_EEE
+16    (int (*)(...)) _ZN7android8hardware9BHwBinder11linkToDeathERKNS_2spINS0_7IBinder14DeathRecipientEEEPvj
+20    (int (*)(...)) _ZN7android8hardware9BHwBinder13unlinkToDeathERKNS_2wpINS0_7IBinder14DeathRecipientEEEPvjPS5_
+24    (int (*)(...)) _ZNK7android8hardware7IBinder13checkSubclassEPKv
+28    (int (*)(...)) _ZN7android8hardware9BHwBinder12attachObjectEPKvPvS4_PFvS3_S4_S4_E
+32    (int (*)(...)) _ZNK7android8hardware9BHwBinder10findObjectEPKv
+36    (int (*)(...)) _ZN7android8hardware9BHwBinder12detachObjectEPKv
+40    (int (*)(...)) _ZN7android8hardware9BHwBinder11localBinderEv
+44    (int (*)(...)) _ZN7android8hardware7IBinder12remoteBinderEv
+48    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BnHwVrComposerClientD1Ev
+52    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BnHwVrComposerClientD0Ev
+56    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_020BnHwVrComposerClient10onTransactEjRKNS_8hardware6ParcelEPS6_jNSt3__18functionIFvRS6_EEE
+68    (int (*)(...)) _ZThn20_N7android10frameworks2vr8composer4V1_020BnHwVrComposerClientD1Ev
+72    (int (*)(...)) _ZThn20_N7android10frameworks2vr8composer4V1_020BnHwVrComposerClientD0Ev
+104    (int (*)(...)) _ZTv0_n12_N7android10frameworks2vr8composer4V1_020BnHwVrComposerClientD1Ev
+108    (int (*)(...)) _ZTv0_n12_N7android10frameworks2vr8composer4V1_020BnHwVrComposerClientD0Ev
+112    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+116    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+120    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+124    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+
+
+vtable for android::frameworks::vr::composer::V1_0::IVrComposerClient
+_ZTVN7android10frameworks2vr8composer4V1_017IVrComposerClientE: 15 entries
+16    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_017IVrComposerClient14interfaceChainENSt3__18functionIFvRKNS_8hardware8hidl_vecINS7_11hidl_stringEEEEEE
+20    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_017IVrComposerClient5debugERKNS_8hardware11hidl_handleERKNS5_8hidl_vecINS5_11hidl_stringEEE
+24    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_017IVrComposerClient19interfaceDescriptorENSt3__18functionIFvRKNS_8hardware11hidl_stringEEEE
+28    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_017IVrComposerClient12getHashChainENSt3__18functionIFvRKNS_8hardware8hidl_vecINS7_10hidl_arrayIhLj32EJEEEEEEEE
+32    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_017IVrComposerClient21setHALInstrumentationEv
+36    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_017IVrComposerClient11linkToDeathERKNS_2spINS_8hardware20hidl_death_recipientEEEy
+40    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_017IVrComposerClient4pingEv
+44    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_017IVrComposerClient12getDebugInfoENSt3__18functionIFvRKNS_4hidl4base4V1_09DebugInfoEEEE
+48    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_017IVrComposerClient21notifySyspropsChangedEv
+52    (int (*)(...)) _ZN7android10frameworks2vr8composer4V1_017IVrComposerClient13unlinkToDeathERKNS_2spINS_8hardware20hidl_death_recipientEEE
+192    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+196    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+200    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+204    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+208    (int (*)(...)) _ZTVN7android10frameworks2vr8composer4V1_017IVrComposerClientE

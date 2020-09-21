@@ -1,0 +1,27 @@
+[MESSAGES CONTROL]
+
+disable=relative-import,too-few-public-methods,fixme
+
+[BASIC]
+
+# Naming hint for method names
+method-name-hint=(([a-z][a-z0-9_]{2,50})|(_[a-z0-9_]*))$
+
+# Regular expression matching correct method names
+method-rgx=(([a-z][a-z0-9_]{2,50})|(_[a-z0-9_]*))$
+
+[DESIGN]
+
+# Maximum number of return / yield for function / method body
+max-returns=10
+
+# Maximum number of public methods for a class (see R0904).
+max-public-methods=40
+
+# Maximum number of attributes for a class (see R0902).
+max-attributes=20
+
+[SIMILARITIES]
+
+# Ignore similar imports.
+ignore-imports=y

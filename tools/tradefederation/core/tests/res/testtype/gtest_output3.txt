@@ -1,0 +1,6 @@
+Repeating all tests (iteration 1) . . .
+
+Note: Google Test filter = None
+[==========] Running 0 tests from 0 test cases.
+[==========] 0 tests from 0 test cases ran.
+[  PASSED  ] 0 tests.

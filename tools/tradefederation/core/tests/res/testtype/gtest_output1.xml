@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="6" failures="0" disabled="0" errors="0" timestamp="2016-03-02T13:48:44" time="0.004" name="AllTests">
+  <testsuite name="InteropTest" tests="3" failures="0" disabled="0" errors="0" time="0.003">
+    <testcase name="test_lookup_hit" status="run" time="0.001" classname="InteropTest" />
+    <testcase name="test_lookup_miss" status="run" time="0.001" classname="InteropTest" />
+    <testcase name="test_dynamic" status="run" time="0.001" classname="InteropTest" />
+  </testsuite>
+  <testsuite name="ClassicPeerTest" tests="3" failures="0" disabled="0" errors="0" time="0.001">
+    <testcase name="test_basic_get" status="run" time="0" classname="ClassicPeerTest" />
+    <testcase name="test_multi_get_are_same" status="run" time="0" classname="ClassicPeerTest" />
+    <testcase name="test_multi_get_different" status="run" time="0" classname="ClassicPeerTest" />
+  </testsuite>
+</testsuites>

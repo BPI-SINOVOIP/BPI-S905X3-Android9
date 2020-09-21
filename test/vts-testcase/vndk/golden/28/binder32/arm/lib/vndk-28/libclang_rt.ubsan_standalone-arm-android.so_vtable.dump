@@ -1,0 +1,187 @@
+vtable for __cxxabiv1::__shim_type_info
+_ZTVN10__cxxabiv116__shim_type_infoE: 5 entries
+4    (int (*)(...)) _ZTIN10__cxxabiv116__shim_type_infoE
+8    (int (*)(...)) _ZN10__cxxabiv116__shim_type_infoD2Ev
+12    (int (*)(...)) _ZN10__cxxabiv116__shim_type_infoD0Ev
+16    (int (*)(...)) _ZNK10__cxxabiv116__shim_type_info5noop1Ev
+20    (int (*)(...)) _ZNK10__cxxabiv116__shim_type_info5noop2Ev
+
+
+vtable for __cxxabiv1::__fundamental_type_info
+_ZTVN10__cxxabiv123__fundamental_type_infoE: 7 entries
+4    (int (*)(...)) _ZTIN10__cxxabiv123__fundamental_type_infoE
+8    (int (*)(...)) _ZN10__cxxabiv123__fundamental_type_infoD2Ev
+12    (int (*)(...)) _ZN10__cxxabiv123__fundamental_type_infoD0Ev
+16    (int (*)(...)) _ZNK10__cxxabiv116__shim_type_info5noop1Ev
+20    (int (*)(...)) _ZNK10__cxxabiv116__shim_type_info5noop2Ev
+24    (int (*)(...)) _ZNK10__cxxabiv123__fundamental_type_info9can_catchEPKNS_16__shim_type_infoERPv
+28    (int (*)(...)) _ZTVN10__cxxabiv120__si_class_type_infoE
+
+
+vtable for __cxxabiv1::__array_type_info
+_ZTVN10__cxxabiv117__array_type_infoE: 7 entries
+4    (int (*)(...)) _ZTIN10__cxxabiv117__array_type_infoE
+8    (int (*)(...)) _ZN10__cxxabiv117__array_type_infoD2Ev
+12    (int (*)(...)) _ZN10__cxxabiv117__array_type_infoD0Ev
+16    (int (*)(...)) _ZNK10__cxxabiv116__shim_type_info5noop1Ev
+20    (int (*)(...)) _ZNK10__cxxabiv116__shim_type_info5noop2Ev
+24    (int (*)(...)) _ZNK10__cxxabiv117__array_type_info9can_catchEPKNS_16__shim_type_infoERPv
+28    (int (*)(...)) _ZTVN10__cxxabiv120__si_class_type_infoE
+
+
+vtable for __cxxabiv1::__function_type_info
+_ZTVN10__cxxabiv120__function_type_infoE: 6 entries
+4    (int (*)(...)) _ZTIN10__cxxabiv120__function_type_infoE
+8    (int (*)(...)) _ZN10__cxxabiv120__function_type_infoD2Ev
+12    (int (*)(...)) _ZN10__cxxabiv120__function_type_infoD0Ev
+16    (int (*)(...)) _ZNK10__cxxabiv116__shim_type_info5noop1Ev
+20    (int (*)(...)) _ZNK10__cxxabiv116__shim_type_info5noop2Ev
+24    (int (*)(...)) _ZNK10__cxxabiv120__function_type_info9can_catchEPKNS_16__shim_type_infoERPv
+
+
+vtable for __cxxabiv1::__enum_type_info
+_ZTVN10__cxxabiv116__enum_type_infoE: 7 entries
+4    (int (*)(...)) _ZTIN10__cxxabiv116__enum_type_infoE
+8    (int (*)(...)) _ZN10__cxxabiv116__enum_type_infoD2Ev
+12    (int (*)(...)) _ZN10__cxxabiv116__enum_type_infoD0Ev
+16    (int (*)(...)) _ZNK10__cxxabiv116__shim_type_info5noop1Ev
+20    (int (*)(...)) _ZNK10__cxxabiv116__shim_type_info5noop2Ev
+24    (int (*)(...)) _ZNK10__cxxabiv116__enum_type_info9can_catchEPKNS_16__shim_type_infoERPv
+28    (int (*)(...)) _ZTVN10__cxxabiv120__si_class_type_infoE
+
+
+vtable for __cxxabiv1::__class_type_info
+_ZTVN10__cxxabiv117__class_type_infoE: 9 entries
+4    (int (*)(...)) _ZTIN10__cxxabiv117__class_type_infoE
+8    (int (*)(...)) _ZN10__cxxabiv117__class_type_infoD2Ev
+12    (int (*)(...)) _ZN10__cxxabiv117__class_type_infoD0Ev
+16    (int (*)(...)) _ZNK10__cxxabiv116__shim_type_info5noop1Ev
+20    (int (*)(...)) _ZNK10__cxxabiv116__shim_type_info5noop2Ev
+24    (int (*)(...)) _ZNK10__cxxabiv117__class_type_info9can_catchEPKNS_16__shim_type_infoERPv
+28    (int (*)(...)) _ZNK10__cxxabiv117__class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib
+32    (int (*)(...)) _ZNK10__cxxabiv117__class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib
+36    (int (*)(...)) _ZNK10__cxxabiv117__class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi
+
+
+vtable for __cxxabiv1::__si_class_type_info
+_ZTVN10__cxxabiv120__si_class_type_infoE: 10 entries
+4    (int (*)(...)) _ZTIN10__cxxabiv120__si_class_type_infoE
+8    (int (*)(...)) _ZN10__cxxabiv120__si_class_type_infoD2Ev
+12    (int (*)(...)) _ZN10__cxxabiv120__si_class_type_infoD0Ev
+16    (int (*)(...)) _ZNK10__cxxabiv116__shim_type_info5noop1Ev
+20    (int (*)(...)) _ZNK10__cxxabiv116__shim_type_info5noop2Ev
+24    (int (*)(...)) _ZNK10__cxxabiv117__class_type_info9can_catchEPKNS_16__shim_type_infoERPv
+28    (int (*)(...)) _ZNK10__cxxabiv120__si_class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib
+32    (int (*)(...)) _ZNK10__cxxabiv120__si_class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib
+36    (int (*)(...)) _ZNK10__cxxabiv120__si_class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi
+40    (int (*)(...)) _ZTVN10__cxxabiv120__si_class_type_infoE
+
+
+vtable for __cxxabiv1::__vmi_class_type_info
+_ZTVN10__cxxabiv121__vmi_class_type_infoE: 10 entries
+4    (int (*)(...)) _ZTIN10__cxxabiv121__vmi_class_type_infoE
+8    (int (*)(...)) _ZN10__cxxabiv121__vmi_class_type_infoD2Ev
+12    (int (*)(...)) _ZN10__cxxabiv121__vmi_class_type_infoD0Ev
+16    (int (*)(...)) _ZNK10__cxxabiv116__shim_type_info5noop1Ev
+20    (int (*)(...)) _ZNK10__cxxabiv116__shim_type_info5noop2Ev
+24    (int (*)(...)) _ZNK10__cxxabiv117__class_type_info9can_catchEPKNS_16__shim_type_infoERPv
+28    (int (*)(...)) _ZNK10__cxxabiv121__vmi_class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib
+32    (int (*)(...)) _ZNK10__cxxabiv121__vmi_class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib
+36    (int (*)(...)) _ZNK10__cxxabiv121__vmi_class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi
+40    (int (*)(...)) _ZTVN10__cxxabiv120__si_class_type_infoE
+
+
+vtable for __cxxabiv1::__pbase_type_info
+_ZTVN10__cxxabiv117__pbase_type_infoE: 6 entries
+4    (int (*)(...)) _ZTIN10__cxxabiv117__pbase_type_infoE
+8    (int (*)(...)) _ZN10__cxxabiv117__pbase_type_infoD2Ev
+12    (int (*)(...)) _ZN10__cxxabiv117__pbase_type_infoD0Ev
+16    (int (*)(...)) _ZNK10__cxxabiv116__shim_type_info5noop1Ev
+20    (int (*)(...)) _ZNK10__cxxabiv116__shim_type_info5noop2Ev
+24    (int (*)(...)) _ZNK10__cxxabiv117__pbase_type_info9can_catchEPKNS_16__shim_type_infoERPv
+
+
+vtable for __cxxabiv1::__pointer_type_info
+_ZTVN10__cxxabiv119__pointer_type_infoE: 6 entries
+4    (int (*)(...)) _ZTIN10__cxxabiv119__pointer_type_infoE
+8    (int (*)(...)) _ZN10__cxxabiv119__pointer_type_infoD2Ev
+12    (int (*)(...)) _ZN10__cxxabiv119__pointer_type_infoD0Ev
+16    (int (*)(...)) _ZNK10__cxxabiv116__shim_type_info5noop1Ev
+20    (int (*)(...)) _ZNK10__cxxabiv116__shim_type_info5noop2Ev
+24    (int (*)(...)) _ZNK10__cxxabiv119__pointer_type_info9can_catchEPKNS_16__shim_type_infoERPv
+
+
+vtable for __cxxabiv1::__pointer_to_member_type_info
+_ZTVN10__cxxabiv129__pointer_to_member_type_infoE: 6 entries
+4    (int (*)(...)) _ZTIN10__cxxabiv129__pointer_to_member_type_infoE
+8    (int (*)(...)) _ZN10__cxxabiv129__pointer_to_member_type_infoD2Ev
+12    (int (*)(...)) _ZN10__cxxabiv129__pointer_to_member_type_infoD0Ev
+16    (int (*)(...)) _ZNK10__cxxabiv116__shim_type_info5noop1Ev
+20    (int (*)(...)) _ZNK10__cxxabiv116__shim_type_info5noop2Ev
+24    (int (*)(...)) _ZNK10__cxxabiv129__pointer_to_member_type_info9can_catchEPKNS_16__shim_type_infoERPv
+
+
+vtable for std::bad_cast
+_ZTVSt8bad_cast: 4 entries
+4    (int (*)(...)) _ZTISt8bad_cast
+8    (int (*)(...)) _ZNSt8bad_castD2Ev
+12    (int (*)(...)) _ZNSt8bad_castD0Ev
+16    (int (*)(...)) _ZNKSt8bad_cast4whatEv
+
+
+vtable for std::bad_typeid
+_ZTVSt10bad_typeid: 4 entries
+4    (int (*)(...)) _ZTISt10bad_typeid
+8    (int (*)(...)) _ZNSt10bad_typeidD2Ev
+12    (int (*)(...)) _ZNSt10bad_typeidD0Ev
+16    (int (*)(...)) _ZNKSt10bad_typeid4whatEv
+
+
+vtable for std::type_info
+_ZTVSt9type_info: 4 entries
+4    (int (*)(...)) _ZTISt9type_info
+8    (int (*)(...)) _ZNSt9type_infoD2Ev
+12    (int (*)(...)) _ZNSt9type_infoD0Ev
+16    (int (*)(...)) _ZTVN10__cxxabiv117__class_type_infoE
+
+
+vtable for std::bad_alloc
+_ZTVSt9bad_alloc: 4 entries
+4    (int (*)(...)) _ZTISt9bad_alloc
+8    (int (*)(...)) _ZNSt9exceptionD2Ev
+12    (int (*)(...)) _ZNSt9bad_allocD0Ev
+16    (int (*)(...)) _ZNKSt9bad_alloc4whatEv
+
+
+vtable for std::bad_array_new_length
+_ZTVSt20bad_array_new_length: 4 entries
+4    (int (*)(...)) _ZTISt20bad_array_new_length
+8    (int (*)(...)) _ZNSt9exceptionD2Ev
+12    (int (*)(...)) _ZNSt20bad_array_new_lengthD0Ev
+16    (int (*)(...)) _ZNKSt20bad_array_new_length4whatEv
+
+
+vtable for std::bad_array_length
+_ZTVSt16bad_array_length: 4 entries
+4    (int (*)(...)) _ZTISt16bad_array_length
+8    (int (*)(...)) _ZNSt9exceptionD2Ev
+12    (int (*)(...)) _ZNSt16bad_array_lengthD0Ev
+16    (int (*)(...)) _ZNKSt16bad_array_length4whatEv
+
+
+vtable for std::exception
+_ZTVSt9exception: 5 entries
+4    (int (*)(...)) _ZTISt9exception
+8    (int (*)(...)) _ZNSt9exceptionD2Ev
+12    (int (*)(...)) _ZNSt9exceptionD0Ev
+16    (int (*)(...)) _ZNKSt9exception4whatEv
+20    (int (*)(...)) _ZTVN10__cxxabiv117__class_type_infoE
+
+
+vtable for std::bad_exception
+_ZTVSt13bad_exception: 5 entries
+4    (int (*)(...)) _ZTISt13bad_exception
+8    (int (*)(...)) _ZNSt9exceptionD2Ev
+12    (int (*)(...)) _ZNSt13bad_exceptionD0Ev
+16    (int (*)(...)) _ZNKSt13bad_exception4whatEv
+20    (int (*)(...)) _ZTVN10__cxxabiv120__si_class_type_infoE

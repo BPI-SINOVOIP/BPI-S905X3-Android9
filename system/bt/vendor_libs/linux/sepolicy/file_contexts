@@ -1,0 +1,2 @@
+/sys/class/rfkill/rfkill[0-9]/state    u:object_r:sysfs_bluetooth_writable:s0
+/system/vendor/bin/hw/android\.hardware\.bluetooth@1\.0-service\.btlinux    u:object_r:hal_bluetooth_btlinux_exec:s0

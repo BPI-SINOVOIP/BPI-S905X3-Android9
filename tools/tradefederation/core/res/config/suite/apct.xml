@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved. -->
+<configuration description="Android APCT test suite config.">
+    <test class="com.android.tradefed.testtype.suite.BaseTestSuite">
+        <option name="run-suite-tag" value="apct" />
+        <!-- Do not load from the Jar's resources, only from the tests dir -->
+        <option name="skip-loading-config-jar" value="true" />
+        <!-- Explicitly requests only AndroidTest modules -->
+        <option name="config-patterns" value=".*.config" />
+    </test>
+</configuration>

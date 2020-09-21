@@ -1,0 +1,145 @@
+vtable for keymaster::EcdsaKeymaster0KeyFactory
+_ZTVN9keymaster25EcdsaKeymaster0KeyFactoryE: 9 entries
+8    (int (*)(...)) _ZN9keymaster19SoftKeymasterDevice9hw_deviceEv
+16    (int (*)(...)) _ZNK9keymaster25EcdsaKeymaster0KeyFactory11GenerateKeyERKNS_16AuthorizationSetEPNS_14TKeymasterBlobI20keymaster_key_blob_tEEPS1_S8_
+20    (int (*)(...)) _ZNK9keymaster25EcdsaKeymaster0KeyFactory9ImportKeyERKNS_16AuthorizationSetE22keymaster_key_format_tRKNS_14TKeymasterBlobI20keymaster_key_blob_tEEPS7_PS1_SB_
+24    (int (*)(...)) _ZNK9keymaster25EcdsaKeymaster0KeyFactory7LoadKeyEONS_14TKeymasterBlobI20keymaster_key_blob_tEERKNS_16AuthorizationSetEOS5_S8_PNS_9UniquePtrINS_3KeyENS_13DefaultDeleteISA_EEEE
+28    (int (*)(...)) _ZNK9keymaster12EcKeyFactory19GetOperationFactoryE19keymaster_purpose_t
+32    (int (*)(...)) _ZNK9keymaster20AsymmetricKeyFactory22SupportedImportFormatsEPj
+36    (int (*)(...)) _ZNK9keymaster20AsymmetricKeyFactory22SupportedExportFormatsEPj
+40    (int (*)(...)) _ZNK9keymaster12EcKeyFactory14CreateEmptyKeyEONS_16AuthorizationSetES2_PNS_9UniquePtrINS_13AsymmetricKeyENS_13DefaultDeleteIS4_EEEE
+60    (int (*)(...)) _ZN9keymaster19SoftKeymasterDevice9hw_deviceEv
+
+
+vtable for keymaster::EcdsaKeymaster1KeyFactory
+_ZTVN9keymaster25EcdsaKeymaster1KeyFactoryE: 7 entries
+16    (int (*)(...)) _ZNK9keymaster25EcdsaKeymaster1KeyFactory11GenerateKeyERKNS_16AuthorizationSetEPNS_14TKeymasterBlobI20keymaster_key_blob_tEEPS1_S8_
+20    (int (*)(...)) _ZNK9keymaster25EcdsaKeymaster1KeyFactory9ImportKeyERKNS_16AuthorizationSetE22keymaster_key_format_tRKNS_14TKeymasterBlobI20keymaster_key_blob_tEEPS7_PS1_SB_
+24    (int (*)(...)) _ZNK9keymaster25EcdsaKeymaster1KeyFactory7LoadKeyEONS_14TKeymasterBlobI20keymaster_key_blob_tEERKNS_16AuthorizationSetEOS5_S8_PNS_9UniquePtrINS_3KeyENS_13DefaultDeleteISA_EEEE
+28    (int (*)(...)) _ZNK9keymaster25EcdsaKeymaster1KeyFactory19GetOperationFactoryE19keymaster_purpose_t
+32    (int (*)(...)) _ZNK9keymaster20AsymmetricKeyFactory22SupportedImportFormatsEPj
+36    (int (*)(...)) _ZNK9keymaster20AsymmetricKeyFactory22SupportedExportFormatsEPj
+40    (int (*)(...)) _ZNK9keymaster12EcKeyFactory14CreateEmptyKeyEONS_16AuthorizationSetES2_PNS_9UniquePtrINS_13AsymmetricKeyENS_13DefaultDeleteIS4_EEEE
+
+
+vtable for keymaster::EcdsaKeymaster1OperationFactory
+_ZTVN9keymaster31EcdsaKeymaster1OperationFactoryE: 5 entries
+8    (int (*)(...)) _ZN9keymaster19SoftKeymasterDevice9hw_deviceEv
+20    (int (*)(...)) _ZN9keymaster31EcdsaKeymaster1OperationFactory15CreateOperationEONS_3KeyERKNS_16AuthorizationSetEP17keymaster_error_t
+24    (int (*)(...)) _ZNK9keymaster31EcdsaKeymaster1OperationFactory21SupportedPaddingModesEPj
+28    (int (*)(...)) _ZNK9keymaster31EcdsaKeymaster1OperationFactory21SupportedPaddingModesEPj
+32    (int (*)(...)) _ZNK9keymaster31EcdsaKeymaster1OperationFactory16SupportedDigestsEPj
+
+
+vtable for keymaster::RsaKeymaster0KeyFactory
+_ZTVN9keymaster23RsaKeymaster0KeyFactoryE: 9 entries
+8    (int (*)(...)) _ZN9keymaster19SoftKeymasterDevice9hw_deviceEv
+16    (int (*)(...)) _ZNK9keymaster23RsaKeymaster0KeyFactory11GenerateKeyERKNS_16AuthorizationSetEPNS_14TKeymasterBlobI20keymaster_key_blob_tEEPS1_S8_
+20    (int (*)(...)) _ZNK9keymaster23RsaKeymaster0KeyFactory9ImportKeyERKNS_16AuthorizationSetE22keymaster_key_format_tRKNS_14TKeymasterBlobI20keymaster_key_blob_tEEPS7_PS1_SB_
+24    (int (*)(...)) _ZNK9keymaster23RsaKeymaster0KeyFactory7LoadKeyEONS_14TKeymasterBlobI20keymaster_key_blob_tEERKNS_16AuthorizationSetEOS5_S8_PNS_9UniquePtrINS_3KeyENS_13DefaultDeleteISA_EEEE
+28    (int (*)(...)) _ZNK9keymaster13RsaKeyFactory19GetOperationFactoryE19keymaster_purpose_t
+32    (int (*)(...)) _ZNK9keymaster20AsymmetricKeyFactory22SupportedImportFormatsEPj
+36    (int (*)(...)) _ZNK9keymaster20AsymmetricKeyFactory22SupportedExportFormatsEPj
+40    (int (*)(...)) _ZNK9keymaster13RsaKeyFactory14CreateEmptyKeyEONS_16AuthorizationSetES2_PNS_9UniquePtrINS_13AsymmetricKeyENS_13DefaultDeleteIS4_EEEE
+60    (int (*)(...)) _ZN9keymaster19SoftKeymasterDevice9hw_deviceEv
+
+
+vtable for keymaster::RsaKeymaster1KeyFactory
+_ZTVN9keymaster23RsaKeymaster1KeyFactoryE: 7 entries
+16    (int (*)(...)) _ZNK9keymaster23RsaKeymaster1KeyFactory11GenerateKeyERKNS_16AuthorizationSetEPNS_14TKeymasterBlobI20keymaster_key_blob_tEEPS1_S8_
+20    (int (*)(...)) _ZNK9keymaster23RsaKeymaster1KeyFactory9ImportKeyERKNS_16AuthorizationSetE22keymaster_key_format_tRKNS_14TKeymasterBlobI20keymaster_key_blob_tEEPS7_PS1_SB_
+24    (int (*)(...)) _ZNK9keymaster23RsaKeymaster1KeyFactory7LoadKeyEONS_14TKeymasterBlobI20keymaster_key_blob_tEERKNS_16AuthorizationSetEOS5_S8_PNS_9UniquePtrINS_3KeyENS_13DefaultDeleteISA_EEEE
+28    (int (*)(...)) _ZNK9keymaster23RsaKeymaster1KeyFactory19GetOperationFactoryE19keymaster_purpose_t
+32    (int (*)(...)) _ZNK9keymaster20AsymmetricKeyFactory22SupportedImportFormatsEPj
+36    (int (*)(...)) _ZNK9keymaster20AsymmetricKeyFactory22SupportedExportFormatsEPj
+40    (int (*)(...)) _ZNK9keymaster13RsaKeyFactory14CreateEmptyKeyEONS_16AuthorizationSetES2_PNS_9UniquePtrINS_13AsymmetricKeyENS_13DefaultDeleteIS4_EEEE
+
+
+vtable for keymaster::RsaKeymaster1OperationFactory
+_ZTVN9keymaster29RsaKeymaster1OperationFactoryE: 5 entries
+8    (int (*)(...)) _ZN9keymaster19SoftKeymasterDevice9hw_deviceEv
+20    (int (*)(...)) _ZN9keymaster29RsaKeymaster1OperationFactory15CreateOperationEONS_3KeyERKNS_16AuthorizationSetEP17keymaster_error_t
+24    (int (*)(...)) _ZNK9keymaster29RsaKeymaster1OperationFactory21SupportedPaddingModesEPj
+28    (int (*)(...)) _ZNK9keymaster31EcdsaKeymaster1OperationFactory21SupportedPaddingModesEPj
+32    (int (*)(...)) _ZNK9keymaster29RsaKeymaster1OperationFactory16SupportedDigestsEPj
+
+
+vtable for keymaster::SoftKeymasterContext
+_ZTVN9keymaster20SoftKeymasterContextE: 28 entries
+8    (int (*)(...)) _ZN9keymaster20SoftKeymasterContextD2Ev
+12    (int (*)(...)) _ZN9keymaster20SoftKeymasterContextD0Ev
+16    (int (*)(...)) _ZN9keymaster20SoftKeymasterContext16SetSystemVersionEjj
+20    (int (*)(...)) _ZNK9keymaster20SoftKeymasterContext16GetSystemVersionEPjS1_
+24    (int (*)(...)) _ZNK9keymaster20SoftKeymasterContext13GetKeyFactoryE21keymaster_algorithm_t
+28    (int (*)(...)) _ZNK9keymaster20SoftKeymasterContext19GetOperationFactoryE21keymaster_algorithm_t19keymaster_purpose_t
+32    (int (*)(...)) _ZNK9keymaster20SoftKeymasterContext22GetSupportedAlgorithmsEPj
+36    (int (*)(...)) _ZNK9keymaster20SoftKeymasterContext14UpgradeKeyBlobERKNS_14TKeymasterBlobI20keymaster_key_blob_tEERKNS_16AuthorizationSetEPS3_
+40    (int (*)(...)) _ZNK9keymaster20SoftKeymasterContext12ParseKeyBlobERKNS_14TKeymasterBlobI20keymaster_key_blob_tEERKNS_16AuthorizationSetEPNS_9UniquePtrINS_3KeyENS_13DefaultDeleteISA_EEEE
+44    (int (*)(...)) _ZNK9keymaster20SoftKeymasterContext9DeleteKeyERKNS_14TKeymasterBlobI20keymaster_key_blob_tEE
+48    (int (*)(...)) _ZNK9keymaster20SoftKeymasterContext13DeleteAllKeysEv
+52    (int (*)(...)) _ZNK9keymaster20SoftKeymasterContext13AddRngEntropyEPKhj
+56    (int (*)(...)) _ZNK9keymaster24PureSoftKeymasterContext13DeleteAllKeysEv
+60    (int (*)(...)) _ZNK9keymaster20SoftKeymasterContext19GenerateAttestationERKNS_3KeyERKNS_16AuthorizationSetEPNS_9UniquePtrI22keymaster_cert_chain_tNS_22CertificateChainDeleteEEE
+64    (int (*)(...)) _ZNK9keymaster20SoftKeymasterContext9UnwrapKeyERKNS_14TKeymasterBlobI20keymaster_key_blob_tEES5_RKNS_16AuthorizationSetES5_PS6_P22keymaster_key_format_tPS3_
+68    (int (*)(...)) _ZNK9keymaster20SoftKeymasterContext13CreateKeyBlobERKNS_16AuthorizationSetE22keymaster_key_origin_tRKNS_14TKeymasterBlobI20keymaster_key_blob_tEEPS7_PS1_SB_
+80    (int (*)(...)) _ZThn4_N9keymaster20SoftKeymasterContextD1Ev
+84    (int (*)(...)) _ZThn4_N9keymaster20SoftKeymasterContextD0Ev
+88    (int (*)(...)) _ZThn4_NK9keymaster20SoftKeymasterContext13CreateKeyBlobERKNS_16AuthorizationSetE22keymaster_key_origin_tRKNS_14TKeymasterBlobI20keymaster_key_blob_tEEPS7_PS1_SB_
+100    (int (*)(...)) _ZThn8_N9keymaster20SoftKeymasterContextD1Ev
+104    (int (*)(...)) _ZThn8_N9keymaster20SoftKeymasterContextD0Ev
+108    (int (*)(...)) _ZNK9keymaster20SoftwareRandomSource14GenerateRandomEPhj
+120    (int (*)(...)) _ZThn12_N9keymaster20SoftKeymasterContextD1Ev
+124    (int (*)(...)) _ZThn12_N9keymaster20SoftKeymasterContextD0Ev
+128    (int (*)(...)) _ZNK9keymaster24PureSoftKeymasterContext13DeleteAllKeysEv
+132    (int (*)(...)) _ZNK9keymaster20SoftKeymasterContext9UnwrapKeyERKNS_14TKeymasterBlobI20keymaster_key_blob_tEES5_RKNS_16AuthorizationSetES5_PS6_P22keymaster_key_format_tPS3_
+136    (int (*)(...)) _ZNK9keymaster20SoftKeymasterContext9UnwrapKeyERKNS_14TKeymasterBlobI20keymaster_key_blob_tEES5_RKNS_16AuthorizationSetES5_PS6_P22keymaster_key_format_tPS3_
+140    (int (*)(...)) _ZNK9keymaster20SoftKeymasterContext9UnwrapKeyERKNS_14TKeymasterBlobI20keymaster_key_blob_tEES5_RKNS_16AuthorizationSetES5_PS6_P22keymaster_key_format_tPS3_
+
+
+vtable for keymaster::PureSoftKeymasterContext
+_ZTVN9keymaster24PureSoftKeymasterContextE: 27 entries
+8    (int (*)(...)) _ZN9keymaster24PureSoftKeymasterContextD2Ev
+12    (int (*)(...)) _ZN9keymaster24PureSoftKeymasterContextD0Ev
+16    (int (*)(...)) _ZN9keymaster24PureSoftKeymasterContext16SetSystemVersionEjj
+20    (int (*)(...)) _ZNK9keymaster24PureSoftKeymasterContext16GetSystemVersionEPjS1_
+24    (int (*)(...)) _ZNK9keymaster24PureSoftKeymasterContext13GetKeyFactoryE21keymaster_algorithm_t
+28    (int (*)(...)) _ZNK9keymaster24PureSoftKeymasterContext19GetOperationFactoryE21keymaster_algorithm_t19keymaster_purpose_t
+32    (int (*)(...)) _ZNK9keymaster24PureSoftKeymasterContext22GetSupportedAlgorithmsEPj
+36    (int (*)(...)) _ZNK9keymaster24PureSoftKeymasterContext14UpgradeKeyBlobERKNS_14TKeymasterBlobI20keymaster_key_blob_tEERKNS_16AuthorizationSetEPS3_
+40    (int (*)(...)) _ZNK9keymaster24PureSoftKeymasterContext12ParseKeyBlobERKNS_14TKeymasterBlobI20keymaster_key_blob_tEERKNS_16AuthorizationSetEPNS_9UniquePtrINS_3KeyENS_13DefaultDeleteISA_EEEE
+44    (int (*)(...)) _ZNK9keymaster24PureSoftKeymasterContext9DeleteKeyERKNS_14TKeymasterBlobI20keymaster_key_blob_tEE
+48    (int (*)(...)) _ZNK9keymaster24PureSoftKeymasterContext13DeleteAllKeysEv
+52    (int (*)(...)) _ZNK9keymaster24PureSoftKeymasterContext13AddRngEntropyEPKhj
+60    (int (*)(...)) _ZNK9keymaster24PureSoftKeymasterContext19GenerateAttestationERKNS_3KeyERKNS_16AuthorizationSetEPNS_9UniquePtrI22keymaster_cert_chain_tNS_22CertificateChainDeleteEEE
+64    (int (*)(...)) _ZNK9keymaster24PureSoftKeymasterContext9UnwrapKeyERKNS_14TKeymasterBlobI20keymaster_key_blob_tEES5_RKNS_16AuthorizationSetES5_PS6_P22keymaster_key_format_tPS3_
+68    (int (*)(...)) _ZNK9keymaster24PureSoftKeymasterContext13CreateKeyBlobERKNS_16AuthorizationSetE22keymaster_key_origin_tRKNS_14TKeymasterBlobI20keymaster_key_blob_tEEPS7_PS1_SB_
+80    (int (*)(...)) _ZThn4_N9keymaster24PureSoftKeymasterContextD1Ev
+84    (int (*)(...)) _ZThn4_N9keymaster24PureSoftKeymasterContextD0Ev
+88    (int (*)(...)) _ZThn4_NK9keymaster24PureSoftKeymasterContext13CreateKeyBlobERKNS_16AuthorizationSetE22keymaster_key_origin_tRKNS_14TKeymasterBlobI20keymaster_key_blob_tEEPS7_PS1_SB_
+100    (int (*)(...)) _ZThn8_N9keymaster24PureSoftKeymasterContextD1Ev
+104    (int (*)(...)) _ZThn8_N9keymaster24PureSoftKeymasterContextD0Ev
+108    (int (*)(...)) _ZNK9keymaster24PureSoftKeymasterContext13DeleteAllKeysEv
+112    (int (*)(...)) _ZNK9keymaster20SoftKeymasterContext9UnwrapKeyERKNS_14TKeymasterBlobI20keymaster_key_blob_tEES5_RKNS_16AuthorizationSetES5_PS6_P22keymaster_key_format_tPS3_
+116    (int (*)(...)) _ZNK9keymaster20SoftKeymasterContext9UnwrapKeyERKNS_14TKeymasterBlobI20keymaster_key_blob_tEES5_RKNS_16AuthorizationSetES5_PS6_P22keymaster_key_format_tPS3_
+120    (int (*)(...)) _ZNK9keymaster20SoftKeymasterContext9UnwrapKeyERKNS_14TKeymasterBlobI20keymaster_key_blob_tEES5_RKNS_16AuthorizationSetES5_PS6_P22keymaster_key_format_tPS3_
+132    (int (*)(...)) _ZThn12_N9keymaster24PureSoftKeymasterContextD1Ev
+136    (int (*)(...)) _ZThn12_N9keymaster24PureSoftKeymasterContextD0Ev
+140    (int (*)(...)) _ZNK9keymaster20SoftwareRandomSource14GenerateRandomEPhj
+
+
+vtable for keymaster::SoftKeymasterEnforcement
+_ZTVN9keymaster24SoftKeymasterEnforcementE: 8 entries
+20    (int (*)(...)) _ZNK9keymaster24PureSoftKeymasterContext13DeleteAllKeysEv
+24    (int (*)(...)) _ZNK9keymaster24PureSoftKeymasterContext13DeleteAllKeysEv
+28    (int (*)(...)) _ZNK9keymaster24SoftKeymasterEnforcement19get_current_time_msEv
+32    (int (*)(...)) _ZNK9keymaster24PureSoftKeymasterContext13DeleteAllKeysEv
+40    (int (*)(...)) _ZN9keymaster24SoftKeymasterEnforcement24GetHmacSharingParametersEPNS_21HmacSharingParametersE
+44    (int (*)(...)) _ZN9keymaster24SoftKeymasterEnforcement17ComputeSharedHmacERKNS_26HmacSharingParametersArrayEPNS_14TKeymasterBlobI16keymaster_blob_tEE
+48    (int (*)(...)) _ZN9keymaster24SoftKeymasterEnforcement19VerifyAuthorizationERKNS_26VerifyAuthorizationRequestE
+52    (int (*)(...)) _ZNK9keymaster24SoftKeymasterEnforcement11CreateKeyIdERK20keymaster_key_blob_tPy
+
+
+vtable for keymaster::SoftKeymasterLogger
+_ZTVN9keymaster19SoftKeymasterLoggerE: 2 entries
+8    (int (*)(...)) _ZN9keymaster19SoftKeymasterDevice9hw_deviceEv
+16    (int (*)(...)) _ZNK9keymaster19SoftKeymasterLogger7log_msgENS_6Logger8LogLevelEPKcSt9__va_list

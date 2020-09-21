@@ -1,0 +1,35 @@
+{
+  "presubmit": [
+    {
+      "name": "test1"
+    }
+  ],
+  "postsubmit": [
+    {
+      "name": "test2",
+      "options": [
+        {
+          "instrumentation-arg": "annotation=android.platform.test.annotations.Presubmit"
+        }
+      ]
+    },
+    {
+      "name": "instrument",
+      "options": [
+        {
+          "run-name": "some-name"
+        }
+      ]
+    }
+  ],
+  "othertype": [
+    {
+      "name": "test3",
+      "options": [
+        {
+          "just-an-option": ""
+        }
+      ]
+    }
+  ]
+}

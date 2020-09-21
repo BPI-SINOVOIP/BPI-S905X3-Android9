@@ -1,0 +1,74 @@
+vtable for android::FrameDropper
+_ZTVN7android12FrameDropperE: 6 entries
+8    (int (*)(...)) _ZN7android12FrameDropperD2Ev
+12    (int (*)(...)) _ZN7android12FrameDropperD0Ev
+16    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+20    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+24    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+28    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+
+
+vtable for android::GraphicBufferSource
+_ZTVN7android19GraphicBufferSourceE: 15 entries
+12    (int (*)(...)) _ZN7android19GraphicBufferSourceD1Ev
+16    (int (*)(...)) _ZN7android19GraphicBufferSourceD0Ev
+20    (int (*)(...)) _ZN7android19GraphicBufferSource23onSidebandStreamChangedEv
+24    (int (*)(...)) _ZN7android19GraphicBufferSource16onFrameAvailableERKNS_10BufferItemE
+28    (int (*)(...)) _ZN7android19GraphicBufferSource23onSidebandStreamChangedEv
+32    (int (*)(...)) _ZN7android19GraphicBufferSource17onBuffersReleasedEv
+36    (int (*)(...)) _ZN7android19GraphicBufferSource23onSidebandStreamChangedEv
+40    (int (*)(...)) _ZN7android19GraphicBufferSource23onSidebandStreamChangedEv
+72    (int (*)(...)) _ZTv0_n12_N7android19GraphicBufferSourceD1Ev
+76    (int (*)(...)) _ZTv0_n12_N7android19GraphicBufferSourceD0Ev
+80    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+84    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+88    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+92    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+96    (int (*)(...)) _ZTVN7android19GraphicBufferSourceE
+
+
+vtable for android::TWProducerListener
+_ZTVN7android18TWProducerListenerE: 16 entries
+16    (int (*)(...)) _ZN7android8hardware8graphics11bufferqueue4V1_017IProducerListener14interfaceChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_11hidl_stringEEEEEE
+20    (int (*)(...)) _ZN7android8hardware8graphics11bufferqueue4V1_017IProducerListener5debugERKNS0_11hidl_handleERKNS0_8hidl_vecINS0_11hidl_stringEEE
+24    (int (*)(...)) _ZN7android8hardware8graphics11bufferqueue4V1_017IProducerListener19interfaceDescriptorENSt3__18functionIFvRKNS0_11hidl_stringEEEE
+28    (int (*)(...)) _ZN7android8hardware8graphics11bufferqueue4V1_017IProducerListener12getHashChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_10hidl_arrayIhLj32EJEEEEEEEE
+32    (int (*)(...)) _ZN7android8hardware8graphics11bufferqueue4V1_017IProducerListener21setHALInstrumentationEv
+36    (int (*)(...)) _ZN7android8hardware8graphics11bufferqueue4V1_017IProducerListener11linkToDeathERKNS_2spINS0_20hidl_death_recipientEEEy
+40    (int (*)(...)) _ZN7android8hardware8graphics11bufferqueue4V1_017IProducerListener4pingEv
+44    (int (*)(...)) _ZN7android8hardware8graphics11bufferqueue4V1_017IProducerListener12getDebugInfoENSt3__18functionIFvRKNS_4hidl4base4V1_09DebugInfoEEEE
+48    (int (*)(...)) _ZN7android8hardware8graphics11bufferqueue4V1_017IProducerListener21notifySyspropsChangedEv
+52    (int (*)(...)) _ZN7android8hardware8graphics11bufferqueue4V1_017IProducerListener13unlinkToDeathERKNS_2spINS0_20hidl_death_recipientEEE
+64    (int (*)(...)) _ZN7android18TWProducerListener16onBufferReleasedEv
+68    (int (*)(...)) _ZN7android18TWProducerListener18needsReleaseNotifyEv
+108    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+112    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+116    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+120    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+
+
+vtable for android::LWProducerListener
+_ZTVN7android18LWProducerListenerE: 23 entries
+20    (int (*)(...)) _ZN7android18LWProducerListener16onBufferReleasedEv
+24    (int (*)(...)) _ZN7android18LWProducerListener18needsReleaseNotifyEv
+36    (int (*)(...)) _ZN7android11BnInterfaceINS_17IProducerListenerEE10onAsBinderEv
+40    (int (*)(...)) _ZN7android18BnProducerListener10onTransactEjRKNS_6ParcelEPS1_j
+64    (int (*)(...)) _ZThn4_N7android11BnInterfaceINS_17IProducerListenerEE10onAsBinderEv
+88    (int (*)(...)) _ZNK7android7BBinder13isBinderAliveEv
+92    (int (*)(...)) _ZN7android7BBinder10pingBinderEv
+96    (int (*)(...)) _ZN7android7BBinder4dumpEiRKNS_6VectorINS_8String16EEE
+100    (int (*)(...)) _ZN7android7BBinder8transactEjRKNS_6ParcelEPS1_j
+104    (int (*)(...)) _ZN7android7BBinder11linkToDeathERKNS_2spINS_7IBinder14DeathRecipientEEEPvj
+108    (int (*)(...)) _ZN7android7BBinder13unlinkToDeathERKNS_2wpINS_7IBinder14DeathRecipientEEEPvjPS4_
+112    (int (*)(...)) _ZNK7android7IBinder13checkSubclassEPKv
+116    (int (*)(...)) _ZN7android7BBinder12attachObjectEPKvPvS3_PFvS2_S3_S3_E
+120    (int (*)(...)) _ZNK7android7BBinder10findObjectEPKv
+124    (int (*)(...)) _ZN7android7BBinder12detachObjectEPKv
+128    (int (*)(...)) _ZN7android7BBinder11localBinderEv
+132    (int (*)(...)) _ZN7android7IBinder12remoteBinderEv
+144    (int (*)(...)) _ZThn8_N7android18BnProducerListener10onTransactEjRKNS_6ParcelEPS1_j
+184    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+188    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+192    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+196    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+200    (int (*)(...)) _ZTVN7android18LWProducerListenerE

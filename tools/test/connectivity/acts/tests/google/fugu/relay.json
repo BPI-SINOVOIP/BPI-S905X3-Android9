@@ -1,0 +1,21 @@
+{
+    "boards": [
+        {
+            "type": "SainSmartBoard",
+            "name": "ss0",
+            "base_url": "http://192.168.1.4/30000/"
+        }
+    ],
+    "devices": [
+        {
+            "type": "FuguRemote",
+            "name": "Fugu0",
+            "mac_address" : "AC:9E:17:53:AC:3A",
+            "relays": {
+                "Play": "ss0/1",
+                "Home": "ss0/2",
+                "Back": "ss0/3"
+            }
+        }
+    ]
+}

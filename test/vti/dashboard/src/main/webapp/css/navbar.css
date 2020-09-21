@@ -1,0 +1,69 @@
+/* Copyright (C) 2016 The Android Open Source Project
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+*/
+nav#navbar {
+    height: auto;
+    margin-bottom: 30px;
+    user-select: none;
+}
+nav#navbar .nav-wrapper {
+    height: auto;
+}
+nav#navbar ul.nav-list {
+    display: inline-block;
+}
+nav#navbar ul li {
+    transition: background-color .3s;
+    float: left;
+    padding: 0;
+}
+nav#navbar ul li.active {
+    background-color: rgba(0,0,0,0.1);
+}
+nav#navbar ul li a:hover, nav#navbar ul li.active {
+    background-color: #ea454b;
+}
+nav#navbar ul a.nav-list-item {
+    font-size: 1.2rem;
+}
+nav#navbar #nav-sublist {
+    line-height: 35px;
+    background: white;
+    padding-left: 15px;
+    width: 100%;
+    display: inline-block;
+    position: relative;
+}
+nav#navbar #nav-sublist .breadcrumb.nav-sublist-item {
+    font-size: 15px;
+    font-weight: 400;
+    color: rgba(238, 110, 115, 0.85);
+    line-height: 35px;
+}
+nav#navbar #nav-sublist .breadcrumb.nav-sublist-item:last-child {
+    color: rgb(238, 110, 115);
+    font-weight: 500;
+}
+nav#navbar #nav-sublist .breadcrumb.nav-sublist-item::before {
+    font-size: 22px;
+    color: rgba(238, 110, 115, 0.85);
+    line-height: 35px;
+    margin: 0 5px;
+}
+nav#navbar #dropdown-button {
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.75);
+    margin-left: 0;
+    margin-top: 0;
+}

@@ -1,0 +1,64 @@
+{   "_description": "Sample config file for live network testing",
+    "testbed":
+    [
+        {
+            "_description": "2 Android devices with Live SIMs.",
+            "name": "sample_basic",
+            "AndroidDevice": [{"serial" : "<serial_1>", "adb_logcat_param": "-b all"},
+                            {"serial" : "<serial_2>", "adb_logcat_pram": "-b all"} ]
+        },
+        {
+            "_description": "3 Android devices with Live SIMs usable for Conference Calling.",
+            "name": "sample_conference",
+            "AndroidDevice": [{"serial" : "<serial_1>", "adb_logcat_param": "-b all"},
+                            {"serial" : "<serial_2>", "adb_logcat_pram": "-b all"},
+                            {"serial" : "<serial_3>", "adb_logcat_pram": "-b all"} ]
+        },
+        {
+            "_description": "2 Android devices, 2 attenuators (control DUT's WiFi or Cellular RSSI)",
+            "name": "sample_mobility",
+            "AndroidDevice": [{"serial" : "<serial_1>", "adb_logcat_param": "-b all"},
+                            {"serial" : "<serial_2>", "adb_logcat_pram": "-b all"} ],
+            "Attenuator": [ {"Model": "<attenuator model name>",
+                             "InstrumentCount": "<number of instrument>",
+                             "Address":"<attenuator IP address>",
+                             "Port":"<attenuator port number>",
+                             "Paths":["<attenuator paths>"]},
+                            {"Model": "<attenuator model name>",
+                             "InstrumentCount": "<number of instrument>",
+                             "Address":"<attenuator IP address>",
+                             "Port":"<attenuator port number>",
+                             "Paths":["<attenuator paths>"]}]
+        },
+        {
+            "_description": "2 Multi-SIM Android Devices with live network SIMs",
+            "name": "sample_msim",
+            "AndroidDevice": [
+                    {"serial": "<MSIM_device_serial_1>",
+                     "default_voice_sim_slot_index": 1,
+                     "default_data_sim_slot_index": 0,
+                     "default_message_sim_slot_index": 0,
+                     "incoming_voice_sim_slot_index": 1,
+                     "incoming_message_sim_slot_index": 1},
+                    {"serial": "<MSIM_device_serial_2>",
+                     "default_voice_sim_slot_index": 1,
+                     "default_data_sim_slot_index": 0,
+                     "default_message_sim_slot_index": 0,
+                     "incoming_voice_sim_slot_index": 1,
+                     "incoming_message_sim_slot_index": 1}]
+        },
+        {
+            "_description": "1 Android device and 1 Monsoon Power Monitor.",
+            "name": "sample_power",
+            "AndroidDevice": [{"serial" : "<serial_1>", "adb_logcat_param": "-b all"}],
+            "Monsoon": ["<monsoon serial>"]
+        }
+    ],
+    "logpath": "/tmp/logs",
+    "testpaths": ["../tests/sample"],
+    "sim_conf_file": "./sample_simcard_list.json",
+    "stress_test_number" : 100,
+    "wifi_network_ssid" : "wifi_ssid",
+    "wifi_network_pass" : "wifi_password"
+}
+

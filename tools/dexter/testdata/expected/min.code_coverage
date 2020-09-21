@@ -1,0 +1,18 @@
+       1: mi=0 s=0 e=2
+       2: mi=0 s=5 e=5
+
+method Minimal.<init>():void
+{
+	.src "min.java"
+	.line 2
+	.prologue_end
+	.line 2
+	    0| const v0, #+1 (0x00000001 | 1.40130e-45)
+	    3| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	    6| move-object v1, v3
+	    7| move-object v2, v1
+	    8| invoke-direct {v2}, java.lang.Object.<init>():void
+	   11| const v0, #+2 (0x00000002 | 2.80260e-45)
+	   14| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   17| return-void
+}

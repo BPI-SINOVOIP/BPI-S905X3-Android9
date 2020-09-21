@@ -1,0 +1,76 @@
+//
+// Copyright (C) 2016 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+cc_library_host_shared {
+
+    name: "libvtsc",
+
+    srcs: [
+        "VtsCompilerUtils.cpp",
+        "code_gen/CodeGenBase.cpp",
+        "code_gen/common/HalHidlCodeGenUtils.cpp",
+        "code_gen/driver/DriverCodeGenBase.cpp",
+        "code_gen/driver/HalCodeGen.cpp",
+        "code_gen/driver/HalHidlCodeGen.cpp",
+        "code_gen/driver/LibSharedCodeGen.cpp",
+        "code_gen/fuzzer/FuzzerCodeGenBase.cpp",
+        "code_gen/fuzzer/HalHidlFuzzerCodeGen.cpp",
+        "code_gen/profiler/ProfilerCodeGenBase.cpp",
+        "code_gen/profiler/HalHidlProfilerCodeGen.cpp",
+    ],
+
+    include_dirs: ["test/vts/drivers/hal/common"],
+
+    static_libs: ["libz"],
+
+    shared_libs: [
+        "libbase",
+        "libhidl-gen-utils",
+        "libprotobuf-cpp-full",
+        "libvts_common",
+        "libvts_multidevice_proto",
+    ],
+
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+
+}
+
+cc_binary_host {
+
+    name: "vtsc",
+
+    srcs: ["VtsCompilerMain.cpp"],
+
+    include_dirs: ["test/vts/drivers/hal/common"],
+
+    static_libs: ["libz"],
+
+    shared_libs: [
+        "libbase",
+        "libhidl-gen-utils",
+        "libvts_multidevice_proto",
+        "libvtsc",
+    ],
+
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+
+}

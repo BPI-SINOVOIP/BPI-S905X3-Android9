@@ -1,0 +1,130 @@
+vtable for android::Printer
+_ZTVN7android7PrinterE: 3 entries
+12    (int (*)(...)) _ZN7android7Printer15printFormatLineEPKcz
+16    (int (*)(...)) _ZN7android7PrinterD1Ev
+20    (int (*)(...)) _ZN7android7PrinterD0Ev
+
+
+vtable for android::LogPrinter
+_ZTVN7android10LogPrinterE: 3 entries
+8    (int (*)(...)) _ZN7android10LogPrinter9printLineEPKc
+12    (int (*)(...)) _ZN7android7Printer15printFormatLineEPKcz
+16    (int (*)(...)) _ZN7android7PrinterD1Ev
+
+
+vtable for android::FdPrinter
+_ZTVN7android9FdPrinterE: 3 entries
+8    (int (*)(...)) _ZN7android9FdPrinter9printLineEPKc
+12    (int (*)(...)) _ZN7android7Printer15printFormatLineEPKcz
+16    (int (*)(...)) _ZN7android7PrinterD1Ev
+
+
+vtable for android::String8Printer
+_ZTVN7android14String8PrinterE: 3 entries
+8    (int (*)(...)) _ZN7android14String8Printer9printLineEPKc
+12    (int (*)(...)) _ZN7android7Printer15printFormatLineEPKcz
+16    (int (*)(...)) _ZN7android7PrinterD1Ev
+
+
+vtable for android::PrefixPrinter
+_ZTVN7android13PrefixPrinterE: 3 entries
+8    (int (*)(...)) _ZN7android13PrefixPrinter9printLineEPKc
+12    (int (*)(...)) _ZN7android7Printer15printFormatLineEPKcz
+16    (int (*)(...)) _ZN7android7PrinterD1Ev
+
+
+vtable for android::RefBase
+_ZTVN7android7RefBaseE: 6 entries
+8    (int (*)(...)) _ZN7android7RefBaseD1Ev
+12    (int (*)(...)) _ZN7android7RefBaseD0Ev
+16    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+20    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+24    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+28    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+
+
+vtable for android::Thread
+_ZTVN7android6ThreadE: 11 entries
+12    (int (*)(...)) _ZN7android6ThreadD1Ev
+16    (int (*)(...)) _ZN7android6ThreadD0Ev
+20    (int (*)(...)) _ZN7android6Thread3runEPKcij
+24    (int (*)(...)) _ZN7android6Thread11requestExitEv
+28    (int (*)(...)) _ZN7android6Thread10readyToRunEv
+64    (int (*)(...)) _ZTv0_n12_N7android6ThreadD1Ev
+68    (int (*)(...)) _ZTv0_n12_N7android6ThreadD0Ev
+72    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+76    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+80    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+84    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+
+
+vtable for android::VectorImpl
+_ZTVN7android10VectorImplE: 2 entries
+8    (int (*)(...)) _ZN7android10VectorImplD1Ev
+12    (int (*)(...)) _ZN7android10VectorImplD0Ev
+
+
+vtable for android::SortedVectorImpl
+_ZTVN7android16SortedVectorImplE: 2 entries
+8    (int (*)(...)) _ZN7android16SortedVectorImplD1Ev
+12    (int (*)(...)) _ZN7android16SortedVectorImplD0Ev
+
+
+vtable for android::WeakMessageHandler
+_ZTVN7android18WeakMessageHandlerE: 9 entries
+12    (int (*)(...)) _ZN7android18WeakMessageHandlerD1Ev
+16    (int (*)(...)) _ZN7android18WeakMessageHandlerD0Ev
+20    (int (*)(...)) _ZN7android18WeakMessageHandler13handleMessageERKNS_7MessageE
+52    (int (*)(...)) _ZTv0_n12_N7android18WeakMessageHandlerD1Ev
+56    (int (*)(...)) _ZTv0_n12_N7android18WeakMessageHandlerD0Ev
+60    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+64    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+68    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+72    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+
+
+vtable for android::SimpleLooperCallback
+_ZTVN7android20SimpleLooperCallbackE: 9 entries
+12    (int (*)(...)) _ZN7android20SimpleLooperCallbackD1Ev
+16    (int (*)(...)) _ZN7android20SimpleLooperCallbackD0Ev
+20    (int (*)(...)) _ZN7android20SimpleLooperCallback11handleEventEiiPv
+52    (int (*)(...)) _ZTv0_n12_N7android20SimpleLooperCallbackD1Ev
+56    (int (*)(...)) _ZTv0_n12_N7android20SimpleLooperCallbackD0Ev
+60    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+64    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+68    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+72    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+
+
+vtable for android::Looper
+_ZTVN7android6LooperE: 6 entries
+8    (int (*)(...)) _ZN7android6LooperD1Ev
+12    (int (*)(...)) _ZN7android6LooperD0Ev
+16    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+20    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+24    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+28    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+
+
+vtable for android::MessageHandler
+_ZTVN7android14MessageHandlerE: 8 entries
+12    (int (*)(...)) _ZN7android14MessageHandlerD1Ev
+16    (int (*)(...)) _ZN7android14MessageHandlerD0Ev
+52    (int (*)(...)) _ZTv0_n12_N7android14MessageHandlerD1Ev
+56    (int (*)(...)) _ZTv0_n12_N7android14MessageHandlerD0Ev
+60    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+64    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+68    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+72    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+
+
+vtable for android::LooperCallback
+_ZTVN7android14LooperCallbackE: 8 entries
+12    (int (*)(...)) _ZN7android14LooperCallbackD1Ev
+16    (int (*)(...)) _ZN7android14LooperCallbackD0Ev
+52    (int (*)(...)) _ZTv0_n12_N7android14LooperCallbackD1Ev
+56    (int (*)(...)) _ZTv0_n12_N7android14LooperCallbackD0Ev
+60    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+64    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+68    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+72    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv

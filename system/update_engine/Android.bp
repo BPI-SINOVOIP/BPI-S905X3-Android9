@@ -1,0 +1,8 @@
+// AIDL interface between libupdate_engine and framework.jar
+filegroup {
+    name: "libupdate_engine_aidl",
+    srcs: [
+        "binder_bindings/android/os/IUpdateEngine.aidl",
+        "binder_bindings/android/os/IUpdateEngineCallback.aidl",
+    ],
+}

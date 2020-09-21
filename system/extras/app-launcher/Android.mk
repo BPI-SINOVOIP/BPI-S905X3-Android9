@@ -1,0 +1,26 @@
+LOCAL_PATH:= $(call my-dir)
+
+include $(CLEAR_VARS)
+#LOCAL_32_BIT_ONLY = true
+LOCAL_MODULE_HOST_OS := linux
+LOCAL_SRC_FILES := computestatsf.c
+LOCAL_MODULE := computestatsf
+LOCAL_CFLAGS := -Wall -Werror
+LOCAL_MODULE_TAGS := debug
+include $(BUILD_HOST_EXECUTABLE)
+
+include $(CLEAR_VARS)
+#LOCAL_32_BIT_ONLY = true
+LOCAL_MODULE_HOST_OS := linux
+LOCAL_SRC_FILES := computestats.c
+LOCAL_MODULE := computestats
+LOCAL_CFLAGS := -Wall -Werror
+LOCAL_MODULE_TAGS := debug
+include $(BUILD_HOST_EXECUTABLE)
+
+include $(CLEAR_VARS)
+LOCAL_PREBUILT_EXECUTABLES := app-launcher
+LOCAL_MODULE_HOST_OS := linux
+LOCAL_MODULE_TAGS := debug
+LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
+include $(BUILD_HOST_PREBUILT)

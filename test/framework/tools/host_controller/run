@@ -1,0 +1,48 @@
+#!/bin/bash
+# Copyright (C) 2017 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# launcher script for vts-hc (host controller)
+# can be used from an Android build environment, or a standalone vts zip
+
+# get OS
+HOST=`uname`
+if [ "$HOST" == "Linux" ]; then
+    OS="linux-x86"
+elif [ "$HOST" == "Darwin" ]; then
+    OS="darwin-x86"
+else
+    echo "Unrecognized OS"
+    exit
+fi
+
+# check if in Android build env
+if [ ! -z "${ANDROID_BUILD_TOP}" ]; then
+    if [ ! -z "${ANDROID_HOST_OUT}" ]; then
+        VTS_ROOT=${ANDROID_HOST_OUT}/vtslab
+    else
+        VTS_ROOT=${ANDROID_BUILD_TOP}/${OUT_DIR:-out}/host/${OS}/vtslab
+    fi
+    if [ ! -d ${VTS_ROOT} ]; then
+        echo "Could not find $VTS_ROOT in Android build environment. Try 'make vts'"
+        exit
+    fi;
+fi;
+
+if [ -z ${VTS_ROOT} ]; then
+    # assume we're in an extracted vts install
+    VTS_ROOT="$(dirname $(readlink -e $0))/../.."
+fi;
+
+cd ${VTS_ROOT}/android-vtslab/testcases/; python -m host_controller.main "$@"

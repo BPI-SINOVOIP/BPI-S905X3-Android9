@@ -1,0 +1,320 @@
+# Copyright (C) 2016 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may not
+# use this file except in compliance with the License. You may obtain a copy of
+# the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations under
+# the License.
+
+Requires mcap_tool, Bluetooth to be off on the phone before starting mcap_tool
+
+MCAP
+=================================================================
+
+Note: Replace all occurances of <mac_addr> with the PTS MAC address for easy copy paste code.
+
+How to install:
+From AOSP root, assuming your target is already built.
+cd system/bt/tools/mcap_tool
+mm -j19
+adb root
+adb remount
+adb push <aosp_root>/out/target/product/<target_name>/system/bin/mcap_tool /system/bin/
+Turn Bluetooth off in the UI
+adb shell
+> mcap_tool
+set_aid_and_cap : pid 6794, uid 0 gid 0[0613/142107:INFO:mcap_tool.cc(935)] Fluoride MCAP test app is starting
+
+
+
+Current addr: <mac_addr>
+Available cmds:
+enable_bluetooth No argument
+disable_bluetooth No argument
+pair pair BD_ADDR<xx:xx:xx:xx:xx:xx>
+register ctrl_psm<hex>, data_psm<hex>, security_mask<0-10>
+deregister No argument
+create_mdep type<0-Echo, 1-Normal>
+delete_mdep mdep_handle<int>
+connect_mcl BD_ADDR<xx:xx:xx:xx:xx:xx>, ctrl_psm<hex>, security_mask<0-10>
+disconnect_mcl BD_ADDR<xx:xx:xx:xx:xx:xx>
+create_mdl BD_ADDR<xx:xx:xx:xx:xx:xx> mdep_handle<int> data_psm<hex>mdl_id <int> peer_dep_id<int> cfg<hex>
+close_mdl BD_ADDR<xx:xx:xx:xx:xx:xx> mdl_id<int>
+reconnect_mdl BD_ADDR<xx:xx:xx:xx:xx:xx> mdl_id<int> data_psm<hex>
+
+TC_MCAP_CE_BV_01_C
+  register 1003 1005 0
+    save data psm which is 1005
+  create_mdep 1
+  create_mdep 0
+  connect_mcl <mac_addr> 1003 0
+  Save handle from create mdep
+  create_mdl <mac_addr> 1 1005 1 1 0
+  create_mdl <mac_addr> 1 1005 2 1 0
+  create_mdl <mac_addr> 1 1005 3 1 0
+  create_mdl <mac_addr> 1 1005 4 1 0
+
+TC_MCAP_CE_BV_02_C
+  register 1003 1005 0
+  create_mdep 1
+  create_mdep 0
+
+TC_MCAP_CE_BV_03_C
+  register 1003 1005 0
+  create_mdep 1
+  create_mdep 0
+
+TC_MCAP_CE_BV_04_C
+  register 1003 1005 0
+  save data psm which is 1005
+  create_mdep 1
+  create_mdep 0
+  connect_mcl <mac_addr> 1003 0
+  Save handle from create mdep
+  create_mdl <mac_addr> 1 1005 1 1 0
+  create_mdl <mac_addr> 1 1005 2 1 0
+  create_mdl <mac_addr> 1 1005 3 1 0
+  create_mdl <mac_addr> 1 1005 4 1 0
+
+TC_MCAP_CM_ABT_BV_01_C
+  register 1003 1005 0
+  connect_mcl <mac_addr> 1003 0
+  create_mdep 1
+  create_mdep 0
+  create_mdl <mac_addr> 1 1005 1 1 0 1
+  abort_mdl <mac_addr> 1
+
+TC_MCAP_CM_ABT_BV_02_C
+  register 1003 1005 0
+  connect_mcl <mac_addr> 1003 0
+  create_mdep 1
+
+TC_MCAP_CM_ABT_BV_03_C
+  register 1003 1005 0
+  connect_mcl <mac_addr> 1003 0
+
+TC_MCAP_CM_DEL_BV_01_C
+  register 1003 1005 0
+  create_mdep 1
+  create_mdep 0
+  delete_mdl <mac_addr> 1
+
+TC_MCAP_CM_DEL_BV_02_C
+  register 1003 1005 0
+  create_mdep 1
+
+TC_MCAP_CM_DEL_BV_03_C
+  register 1003 1005 0
+  create_mdep 1
+  create_mdep 0
+  delete_mdl <mac_addr> 65535
+
+TC_MCAP_CM_DEL_BV_04_C
+  register 1003 1005 0
+  create_mdep 1
+
+TC_MCAP_CM_DIS_BV_01_C
+  register 1003 1005 0
+  create_mdep 1
+  disconnect_mcl <mac_addr>
+
+TC_MCAP_CM_DIS_BV_02_C
+  register 1003 1005 0
+  create_mdep 1
+
+TC_MCAP_CM_DIS_BV_03_C
+  register 1003 1005 0
+  create_mdep 1
+
+TC_MCAP_CM_DIS_BV_04_C
+  register 1003 1005 0
+  create_mdep 1
+  disconnect_mcl <mac_addr>
+
+TC_MCAP_CM_DIS_BV_05_C
+  register 1003 1005 0
+  create_mdep 1
+
+TC_MCAP_CM_REC_BV_01_C
+  register 1003 1005 0
+  create_mdep 1
+  create_mdep 0
+  disconnect_mcl <mac_addr>
+  connect_mcl <mac_addr> 1005 0
+  reconnect_mdl <mac_addr> 1005 1
+
+TC_MCAP_CM_REC_BV_02_C
+  register 1003 1005 0
+  create_mdep 1
+
+TC_MCAP_CM_REC_BV_03_C
+  register 1003 1005 0
+  create_mdep 1
+  [PTS Interaction] Bring device out of range to create link loss
+  [PTS Interaction] Bring device back in range
+  connect_mcl <mac_addr> 1005 0
+  create_mdl <mac_addr> 1 1005 1 1 0
+  reconnect_mdl <mac_addr> 1005 1
+  disconnect_mdl <mac_addr>
+
+TC_MCAP_CM_REC_BV_04_C
+  register 1003 1005 0
+  create_mdep 1
+  [PTS Interaction] Bring device out of range to create link loss
+  [PTS Interaction] Bring device back in range, presss OK
+
+TC_MCAP_CM_REC_BV_05_C
+  register 1003 1005 0
+  create_mdep 1
+  create_mdep 0
+  close_mcl <mac_addr> 1
+  reconnect_mcl <mac_addr> 1005 1
+  disconnect_mcl <mac_addr>
+
+TC_MCAP_CM_REC_BV_06_C
+  register 1003 1005 0
+  create_mdep 1
+
+TC_MCAP_ERR_BI_01_C
+  register 1003 1005 0
+  create_mdep 1
+
+TC_MCAP_ERR_BI_02_C
+  register 1003 1005 0
+  create_mdep 1
+  create_mdep_0
+  create_mdl <mac_addr> 1 1005 1 1 0
+
+TC_MCAP_ERR_BI_03_C
+  register 1003 1005 0
+  create_mdep 1
+  create_mdep_0
+
+TC_MCAP_ERR_BI_04_C
+  register 1003 1005 0
+  create_mdep 1
+  create_mdep_0
+  create_mdl <mac_addr> 1 1005 1 1 0
+
+TC_MCAP_ERR_BI_05_C
+  register 1003 1005 0
+  create_mdep 1
+
+TC_MCAP_ERR_BI_06_C
+  register 1003 1005 0
+  create_mdep 1
+  create_mdl <mac_addr> 1 1003 1 1 1
+
+TC_MCAP_ERR_BI_07_C
+  register 1003 1005 0
+  create_mdep 1
+  create_mdep_0
+
+TC_MCAP_ERR_BI_08_C
+  register 1003 1005 0
+  create_mdep 1
+  create_mdep_0
+  create_mdl <mac_addr> 1 1003 1 1 1
+
+TC_MCAP_ERR_BI_09_C
+  register 1003 1005 0
+  create_mdep 1
+
+TC_MCAP_ERR_BI_10_C
+  register 1003 1005 0
+  create_mdep 1
+
+TC_MCAP_ERR_BI_11_C
+  register 1003 1005 0
+  create_mdep 1
+  create_mdep_0
+  create_mdl <mac_addr> 1 1005 1 1 0
+
+TC_MCAP_ERR_BI_12_C
+  register 1003 1005 0
+  create_mdep 1
+  create_mdep_0
+  create_mdl <mac_addr> 1 1005 1 1 0
+
+TC_MCAP_ERR_BI_13_C
+  register 1003 1005 0
+  create_mdep 1
+
+TC_MCAP_ERR_BI_14_C
+  register 1003 1005 0
+  create_mdep 1
+
+TC_MCAP_ERR_BI_15_C
+  register 1003 1005 0
+  create_mdep 1
+  create_mdep_0
+  create_mdl <mac_addr> 1 1005 1 1 0
+
+TC_MCAP_ERR_BI_16_C
+  register 1003 1005 0
+  create_mdep 1
+  create_mdep_0
+  [PTS Interaction] Press Cancel
+
+TC_MCAP_ERR_BI_17_C
+  register 1003 1005 0
+  create_mdep 1
+  create_mdep 0
+  create_mdl <mac_addr> 1 1005 1 1 0 1
+
+TC_MCAP_ERR_BI_18_C
+  register 1003 1005 0
+  create_mdep 1
+  create_mdep_0
+  create_mdl <mac_addr> 1 1005 1 1 0
+
+TC_MCAP_ERR_BI_19_C
+  register 1003 1005 0
+  create_mdep 1
+
+TC_MCAP_INV_BI_01_C
+  register 1003 1005 0
+  save data psm which is 1005
+  create_mdep 1
+  create_mdep 0
+  connect_mcl <mac_addr> 1003 0
+  Save handle from create mdep
+  create_mdl <mac_addr> 1 1005 1 1 0
+
+TC_MCAP_INV_BI_02_C
+  register 1003 1005 0
+  save data psm which is 1005
+  create_mdep 1
+  create_mdep 0
+  create_mdl <mac_addr> 1 1005 1 1 0
+
+TC_MCAP_INV_BI_03_C
+  register 1003 1005 0
+  save data psm which is 1005
+  create_mdep 1
+  create_mdep 0
+  connect_mcl <mac_addr> 1003 0
+  Save handle from create mdep
+  create_mdl <mac_addr> 1 1005 1 1 0
+
+TC_MCAP_INV_BI_04_C
+  register 1003 1005 0
+  create_mdep 1
+
+TC_MCAP_INV_BI_05_C
+  register 1003 1005 0
+  create_mdep 1
+
+TC_MCAP_INV_BI_06_C
+  register 1003 1005 0
+  create_mdep 1
+
+TC_MCAP_INV_BI_07_C
+  register 1003 1005 0
+  create_mdep 1

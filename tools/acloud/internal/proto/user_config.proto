@@ -1,0 +1,62 @@
+// Copyright 2016 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto2";
+
+package acloud.internal.proto;
+
+// Hold configurations from user.
+message UserConfig {
+  // Account information for accessing Cloud API
+  optional string service_account_name = 1;
+  optional string service_account_private_key_path = 2;
+
+  // Compute Engine project name
+  optional string project = 3;
+  // Compute Engine zone name, e.g. "us-central1-f"
+  optional string zone = 4;
+  optional string machine_type = 5;
+  // Compute Engine network name, e.g. "default"
+  optional string network = 6;
+
+  // SSH key configuration
+  optional string ssh_private_key_path = 7;
+  optional string ssh_public_key_path = 8;
+
+  // Storage configuration
+  optional string storage_bucket_name = 9;
+
+  // Desired orientation, e.g. 'portrait' or 'landscape'
+  optional string orientation = 10;
+  // Desired resolution
+  optional string resolution = 11;
+  // Size of extra data disk.
+  optional int32 extra_data_disk_size_gb = 12;
+  // Metadata for creating Compute Engine instance
+  map <string, string>  metadata_variable = 13;
+
+  // client_id and client secret are required when user authenticates via
+  // Oauth2 flow with their user account (not service account).
+  //   * They are created in the cloud project console -> API manager.
+  //   * They are used to authorize the app to talk to the cloud project
+  //     on behalf of the user.
+  //   * They by themselves do not authenticate the user.
+  //   * They are stored as plain text in the configuration file so they are
+  //     not that secret. Generally, we should not share it with people we
+  //     don't trust.
+  //   * All users talking to the same cloud project can share the same
+  //     client_id and client_secret.
+  optional string client_id = 14;
+  optional string client_secret = 15;
+}

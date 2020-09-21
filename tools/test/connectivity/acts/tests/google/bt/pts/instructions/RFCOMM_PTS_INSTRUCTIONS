@@ -1,0 +1,98 @@
+# Copyright (C) 2016 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may not
+# use this file except in compliance with the License. You may obtain a copy of
+# the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations under
+# the License.
+
+RFCOMM
+=================================================================
+TC_RFCOMM_DEVA_RFC_BV_01_C
+  bta_start_pairing_helper
+  bta_set_scan_mode connectable
+  rfcomm_connect 00001101-0000-1000-8000-00805F9B34FB
+
+TC_RFCOMM_DEVA_RFC_BV_05_C
+  bta_start_pairing_helper
+  bta_set_scan_mode connectable
+  rfcomm_connect 00001101-0000-1000-8000-00805F9B34FB
+
+TC_RFCOMM_DEVB_RFC_BV_02_C
+  bta_start_pairing_helper
+  Note: If not bonded run:  bta_set_scan_mode connectable_discoverable
+
+TC_RFCOMM_DEVB_RFC_BV_06_C
+  bta_start_pairing_helper
+  Note: If not bonded run:  bta_set_scan_mode connectable_discoverable
+
+TC_RFCOMM_DEVA-DEVB_RFC_BV_03_C
+  bta_start_pairing_helper
+  Note: If not bonded run:  bta_set_scan_mode connectable_discoverable
+
+TC_RFCOMM_DEVA-DEVB_RFC_BV_04_C
+  bta_start_pairing_helper
+  Note: If not bonded run:  bta_set_scan_mode connectable_discoverable
+  [Wait for PTS prompt]
+  bta_disable
+  bta_enable
+
+TC_RFCOMM_DEVA-DEVB_RFC_BV_07_C
+  bta_start_pairing_helper
+  Note: If not bonded run:  bta_set_scan_mode connectable_discoverable
+  [Wait for PTS prompt]
+  bta_disable
+  bta_enable
+
+TC_RFCOMM_DEVA-DEVB_RFC_BV_08_C
+  bta_start_pairing_helper
+  Note: If not bonded run:  bta_set_scan_mode connectable_discoverable
+
+TC_RFCOMM_DEVA-DEVB_RFC_BV_11_C
+  bta_start_pairing_helper
+  Note: If not bonded run:  bta_set_scan_mode connectable_discoverable
+
+TC_RFCOMM_DEVA-DEVB_RFC_BV_13_C
+  bta_start_pairing_helper
+  Note: If not bonded run:  bta_set_scan_mode connectable_discoverable
+
+TC_RFCOMM_DEVA-DEVB_RFC_BV_14_C
+  bta_start_pairing_helper
+  Note: If not bonded run:  bta_set_scan_mode connectable_discoverable
+  Wait 30 seconds
+
+TC_RFCOMM_DEVA-DEVB_RFC_BV_15_C
+  bta_start_pairing_helper
+  Note: If not bonded run:  bta_set_scan_mode connectable_discoverable
+
+TC_RFCOMM_DEVA-DEVB_RFC_BV_17_C
+  bta_start_pairing_helper
+  Note: If not bonded run:  bta_set_scan_mode connectable_discoverable
+
+TC_RFCOMM_DEVA-DEVB_RFC_BV_19_C
+  bta_start_pairing_helper
+  Note: If not bonded run:  bta_set_scan_mode connectable_discoverable
+
+TC_RFCOMM_DEVA-DEVB_RFC_BV_21_C
+  bta_start_pairing_helper
+  Note: If not bonded run:  bta_set_scan_mode connectable_discoverable
+  [Wait for PTS prompt]
+  bta_disable
+  bta_enable
+
+TC_RFCOMM_DEVA-DEVB_RFC_BV_22_C
+  bta_start_pairing_helper
+  Note: If not bonded run:  bta_set_scan_mode connectable_discoverable
+  [Wait for PTS prompt]
+  bta_disable
+  bta_enable
+
+TC_RFCOMM_DEVA-DEVB_RFC_BV_25_C
+  bta_start_pairing_helper
+  Note: If not bonded run:  bta_set_scan_mode connectable_discoverable

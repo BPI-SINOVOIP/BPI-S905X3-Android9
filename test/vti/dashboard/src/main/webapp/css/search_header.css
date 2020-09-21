@@ -1,0 +1,97 @@
+/* Copyright (C) 2017 The Android Open Source Project
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+*/
+.row.card.search-bar {
+    margin-left: 0;
+    margin-right: 0;
+}
+.row.card.search-bar.expanded {
+    border-radius: 0 0 15px 15px;
+}
+.search-bar .section-header {
+    color: rgb(97, 97, 97);
+    font-weight: 300;
+    padding: 15px 20px 15px;
+    margin: 0;
+    cursor: default;
+    user-select: none;
+    display: inline-block;
+}
+.search-bar .section-header b {
+    color: #ee6e73;
+}
+.search-bar .search-icon-wrapper {
+    text-align: center;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    height: 57px;
+    width: 57px;
+    cursor: pointer;
+    user-select: none;
+}
+.search-bar .search-icon-wrapper i {
+    line-height: 57px;
+    color: rgb(97, 97, 97);
+}
+.search-bar .search-wrapper {
+    border-top: 1px solid rgb(221, 221, 221);
+}
+.search-bar .search-wrapper .refresh-wrapper a {
+    float: right;
+    margin-top: 17px;
+}
+.search-bar .input-field input[type=text].invalid {
+    color: #F44336;
+}
+.search-bar .search-wrapper .run-type-wrapper {
+    margin: 20px 0;
+}
+.search-bar .search-wrapper .run-type-wrapper [type="checkbox"]+label {
+    margin-right: 35px;
+}
+.search-bar .search-wrapper .input-field .filter-input+label {
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    white-space: nowrap;
+    width: calc(100% - 1.5rem);
+    pointer-events: none;
+}
+.search-bar .search-wrapper .input-field .filter-input:focus+label.active {
+    background-color: white;
+    z-index: 10000;
+    text-overflow: inherit;
+    overflow-x: visible;
+    width:auto;
+}
+.search-bar-menu.ui-menu {
+    overflow: auto;
+    z-index: 100;
+    max-height: 75%;
+}
+.search-bar-menu .ui-menu-item {
+    font-size: 16px;
+    padding: 4px 10px;
+    transition: background-color .25s;
+}
+.search-bar-menu .ui-menu-item:hover {
+    background-color: #e0f2f1;
+}
+
+.search-bar-menu .ui-menu-item:active {
+    background-color: #b2dfdb;
+}
+.ui-helper-hidden-accessible {
+    display: none;
+}

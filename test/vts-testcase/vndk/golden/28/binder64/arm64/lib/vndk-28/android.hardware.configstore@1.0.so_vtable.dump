@@ -1,0 +1,76 @@
+vtable for android::hardware::configstore::V1_0::BpHwSurfaceFlingerConfigs
+_ZTVN7android8hardware11configstore4V1_025BpHwSurfaceFlingerConfigsE: 30 entries
+16    (int (*)(...)) _ZN7android8hardware11configstore4V1_025BpHwSurfaceFlingerConfigs14interfaceChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_11hidl_stringEEEEEE
+20    (int (*)(...)) _ZN7android8hardware11configstore4V1_025BpHwSurfaceFlingerConfigs5debugERKNS0_11hidl_handleERKNS0_8hidl_vecINS0_11hidl_stringEEE
+24    (int (*)(...)) _ZN7android8hardware11configstore4V1_025BpHwSurfaceFlingerConfigs19interfaceDescriptorENSt3__18functionIFvRKNS0_11hidl_stringEEEE
+28    (int (*)(...)) _ZN7android8hardware11configstore4V1_025BpHwSurfaceFlingerConfigs12getHashChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_10hidl_arrayIhLj32EJEEEEEEEE
+32    (int (*)(...)) _ZN7android8hardware11configstore4V1_025BpHwSurfaceFlingerConfigs21setHALInstrumentationEv
+36    (int (*)(...)) _ZN7android8hardware11configstore4V1_025BpHwSurfaceFlingerConfigs11linkToDeathERKNS_2spINS0_20hidl_death_recipientEEEy
+40    (int (*)(...)) _ZN7android8hardware11configstore4V1_025BpHwSurfaceFlingerConfigs4pingEv
+44    (int (*)(...)) _ZN7android8hardware11configstore4V1_025BpHwSurfaceFlingerConfigs12getDebugInfoENSt3__18functionIFvRKNS_4hidl4base4V1_09DebugInfoEEEE
+48    (int (*)(...)) _ZN7android8hardware11configstore4V1_025BpHwSurfaceFlingerConfigs21notifySyspropsChangedEv
+52    (int (*)(...)) _ZN7android8hardware11configstore4V1_025BpHwSurfaceFlingerConfigs13unlinkToDeathERKNS_2spINS0_20hidl_death_recipientEEE
+64    (int (*)(...)) _ZN7android8hardware11configstore4V1_025BpHwSurfaceFlingerConfigs23vsyncEventPhaseOffsetNsENSt3__18functionIFvRKNS2_13OptionalInt64EEEE
+68    (int (*)(...)) _ZN7android8hardware11configstore4V1_025BpHwSurfaceFlingerConfigs25vsyncSfEventPhaseOffsetNsENSt3__18functionIFvRKNS2_13OptionalInt64EEEE
+72    (int (*)(...)) _ZN7android8hardware11configstore4V1_025BpHwSurfaceFlingerConfigs18useContextPriorityENSt3__18functionIFvRKNS2_12OptionalBoolEEEE
+76    (int (*)(...)) _ZN7android8hardware11configstore4V1_025BpHwSurfaceFlingerConfigs19hasWideColorDisplayENSt3__18functionIFvRKNS2_12OptionalBoolEEEE
+80    (int (*)(...)) _ZN7android8hardware11configstore4V1_025BpHwSurfaceFlingerConfigs13hasHDRDisplayENSt3__18functionIFvRKNS2_12OptionalBoolEEEE
+84    (int (*)(...)) _ZN7android8hardware11configstore4V1_025BpHwSurfaceFlingerConfigs28presentTimeOffsetFromVSyncNsENSt3__18functionIFvRKNS2_13OptionalInt64EEEE
+88    (int (*)(...)) _ZN7android8hardware11configstore4V1_025BpHwSurfaceFlingerConfigs17useHwcForRGBtoYUVENSt3__18functionIFvRKNS2_12OptionalBoolEEEE
+92    (int (*)(...)) _ZN7android8hardware11configstore4V1_025BpHwSurfaceFlingerConfigs21maxVirtualDisplaySizeENSt3__18functionIFvRKNS2_14OptionalUInt64EEEE
+96    (int (*)(...)) _ZN7android8hardware11configstore4V1_025BpHwSurfaceFlingerConfigs16hasSyncFrameworkENSt3__18functionIFvRKNS2_12OptionalBoolEEEE
+100    (int (*)(...)) _ZN7android8hardware11configstore4V1_025BpHwSurfaceFlingerConfigs12useVrFlingerENSt3__18functionIFvRKNS2_12OptionalBoolEEEE
+104    (int (*)(...)) _ZN7android8hardware11configstore4V1_025BpHwSurfaceFlingerConfigs29maxFrameBufferAcquiredBuffersENSt3__18functionIFvRKNS2_13OptionalInt64EEEE
+108    (int (*)(...)) _ZN7android8hardware11configstore4V1_025BpHwSurfaceFlingerConfigs29startGraphicsAllocatorServiceENSt3__18functionIFvRKNS2_12OptionalBoolEEEE
+160    (int (*)(...)) _ZN7android8hardware11BpHwRefBase10onFirstRefEv
+164    (int (*)(...)) _ZN7android8hardware11BpHwRefBase15onLastStrongRefEPKv
+168    (int (*)(...)) _ZN7android8hardware11BpHwRefBase20onIncStrongAttemptedEjPKv
+224    (int (*)(...)) _ZTv0_n16_N7android8hardware11BpHwRefBase10onFirstRefEv
+228    (int (*)(...)) _ZTv0_n20_N7android8hardware11BpHwRefBase15onLastStrongRefEPKv
+232    (int (*)(...)) _ZTv0_n24_N7android8hardware11BpHwRefBase20onIncStrongAttemptedEjPKv
+236    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+240    (int (*)(...)) _ZTVN7android8hardware11configstore4V1_025BpHwSurfaceFlingerConfigsE
+
+
+vtable for android::hardware::configstore::V1_0::BnHwSurfaceFlingerConfigs
+_ZTVN7android8hardware11configstore4V1_025BnHwSurfaceFlingerConfigsE: 21 entries
+12    (int (*)(...)) _ZN7android8hardware9BHwBinder8transactEjRKNS0_6ParcelEPS2_jNSt3__18functionIFvRS2_EEE
+16    (int (*)(...)) _ZN7android8hardware9BHwBinder11linkToDeathERKNS_2spINS0_7IBinder14DeathRecipientEEEPvj
+20    (int (*)(...)) _ZN7android8hardware9BHwBinder13unlinkToDeathERKNS_2wpINS0_7IBinder14DeathRecipientEEEPvjPS5_
+24    (int (*)(...)) _ZNK7android8hardware7IBinder13checkSubclassEPKv
+28    (int (*)(...)) _ZN7android8hardware9BHwBinder12attachObjectEPKvPvS4_PFvS3_S4_S4_E
+32    (int (*)(...)) _ZNK7android8hardware9BHwBinder10findObjectEPKv
+36    (int (*)(...)) _ZN7android8hardware9BHwBinder12detachObjectEPKv
+40    (int (*)(...)) _ZN7android8hardware9BHwBinder11localBinderEv
+44    (int (*)(...)) _ZN7android8hardware7IBinder12remoteBinderEv
+48    (int (*)(...)) _ZN7android8hardware11configstore4V1_025BnHwSurfaceFlingerConfigsD1Ev
+52    (int (*)(...)) _ZN7android8hardware11configstore4V1_025BnHwSurfaceFlingerConfigsD0Ev
+56    (int (*)(...)) _ZN7android8hardware11configstore4V1_025BnHwSurfaceFlingerConfigs10onTransactEjRKNS0_6ParcelEPS4_jNSt3__18functionIFvRS4_EEE
+68    (int (*)(...)) _ZThn20_N7android8hardware11configstore4V1_025BnHwSurfaceFlingerConfigsD1Ev
+72    (int (*)(...)) _ZThn20_N7android8hardware11configstore4V1_025BnHwSurfaceFlingerConfigsD0Ev
+104    (int (*)(...)) _ZTv0_n12_N7android8hardware11configstore4V1_025BnHwSurfaceFlingerConfigsD1Ev
+108    (int (*)(...)) _ZTv0_n12_N7android8hardware11configstore4V1_025BnHwSurfaceFlingerConfigsD0Ev
+112    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+116    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+120    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+124    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+128    (int (*)(...)) _ZTVN7android8hardware11configstore4V1_025BnHwSurfaceFlingerConfigsE
+
+
+vtable for android::hardware::configstore::V1_0::ISurfaceFlingerConfigs
+_ZTVN7android8hardware11configstore4V1_022ISurfaceFlingerConfigsE: 15 entries
+16    (int (*)(...)) _ZN7android8hardware11configstore4V1_022ISurfaceFlingerConfigs14interfaceChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_11hidl_stringEEEEEE
+20    (int (*)(...)) _ZN7android8hardware11configstore4V1_022ISurfaceFlingerConfigs5debugERKNS0_11hidl_handleERKNS0_8hidl_vecINS0_11hidl_stringEEE
+24    (int (*)(...)) _ZN7android8hardware11configstore4V1_022ISurfaceFlingerConfigs19interfaceDescriptorENSt3__18functionIFvRKNS0_11hidl_stringEEEE
+28    (int (*)(...)) _ZN7android8hardware11configstore4V1_022ISurfaceFlingerConfigs12getHashChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_10hidl_arrayIhLj32EJEEEEEEEE
+32    (int (*)(...)) _ZN7android8hardware11configstore4V1_022ISurfaceFlingerConfigs21setHALInstrumentationEv
+36    (int (*)(...)) _ZN7android8hardware11configstore4V1_022ISurfaceFlingerConfigs11linkToDeathERKNS_2spINS0_20hidl_death_recipientEEEy
+40    (int (*)(...)) _ZN7android8hardware11configstore4V1_022ISurfaceFlingerConfigs4pingEv
+44    (int (*)(...)) _ZN7android8hardware11configstore4V1_022ISurfaceFlingerConfigs12getDebugInfoENSt3__18functionIFvRKNS_4hidl4base4V1_09DebugInfoEEEE
+48    (int (*)(...)) _ZN7android8hardware11configstore4V1_022ISurfaceFlingerConfigs21notifySyspropsChangedEv
+52    (int (*)(...)) _ZN7android8hardware11configstore4V1_022ISurfaceFlingerConfigs13unlinkToDeathERKNS_2spINS0_20hidl_death_recipientEEE
+148    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+152    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+156    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+160    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+164    (int (*)(...)) _ZTVN7android8hardware11configstore4V1_022ISurfaceFlingerConfigsE

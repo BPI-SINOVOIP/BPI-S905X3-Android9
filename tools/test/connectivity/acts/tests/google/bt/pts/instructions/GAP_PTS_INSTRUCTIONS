@@ -1,0 +1,530 @@
+# Copyright (C) 2016 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may not
+# use this file except in compliance with the License. You may obtain a copy of
+# the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations under
+# the License.
+
+GAP
+=================================================================
+Note: Use this stack change to test all LE testcases:
+https://android-review.googlesource.com/#/c/319838/1/stack/btm/btm_ble_multi_adv.cc TSPC_bd_addr_iut should be set to 4AF441CF285A.
+This sets the random address to a static address.
+
+TC_MOD_NDIS_BV_01_C
+  bta_set_scan_mode none
+  [PTS Interaction]
+
+TC_MOD_GDIS_BV_01_C
+  bta_set_scan_mode connectable_discoverable
+
+TC_MOD_GDIS_BV_02_C
+  bta_set_scan_mode connectable_discoverable
+
+TC_MOD_NCON_BV_01_C
+  bta_set_scan_mode none
+
+TC_MOD_CON_BV_01_C
+  bta_set_scan_mode connectable_discoverable
+
+TC_DISC_NONM_BV_01_C
+  Note: Requires https://android-review.googlesource.com/344824
+  ble_start_generic_nonconnectable_advertisement
+  [PTS Interaction] Enter Yes
+
+TC_DISC_NONM_BV_02_C
+  Note: Requires https://android-review.googlesource.com/344824
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction] Enter Yes
+
+TC_DISC_GENM_BV_01_C
+  [PTS Interaction] Answer NO to non-connectable adv question
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction]
+  ble_stop_all_advertisements
+
+TC_DISC_GENM_BV_02_C
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction]
+
+TC_DESC_GENP_BV_01_C
+  bta_start_discovery
+  [PTS Interaction]
+  bta_get_discovered_devices
+  [Verify output contains PTS GAP Device]
+  [PTS Interaction]
+
+TC_DESC_GENP_BV_02_C
+  bta_start_discovery
+  [PTS Interaction]
+  bta_get_discovered_devices
+  [Verify output contains PTS GAP Device]
+  [PTS Interaction]
+
+TC_DESC_GENP_BV_03_C
+  bta_start_discovery
+  [PTS Interaction]
+  bta_get_discovered_devices
+  [Verify output does not contain PTS GAP Device]
+  [PTS Interaction]
+
+TC_DESC_GENP_BV_04_C
+  bta_start_discovery
+  [PTS Interaction]
+  bta_get_discovered_devices
+  [Verify output does not contain PTS GAP Device]
+  [PTS Interaction]
+
+TC_DESC_GENP_BV_05_C
+  bta_start_discovery
+  [PTS Interaction]
+  bta_get_discovered_devices
+  [Verify output does not contain PTS GAP Device]
+  [PTS Interaction]
+
+TC_IDLE_GIN_BV_01_C
+  bta_start_discovery
+  bta_get_discovered_devices
+  [Verify output contains PTS GAP Device]
+  [PTS Interaction]
+  [PTS Interaction]
+
+TC_IDLE_NAMP_BV_01_C
+  [PTS Interaction] Yes
+  gattc_connect_over_le
+  gattc_read_char_by_instance_id 3
+  gattc_disconnect
+
+TC_IDLE_NAMP_BV_02_C
+  [PTS Interaction] No
+  gatts_open
+  ble_start_generic_connectable_advertisement
+
+TC_GAP_IDLE_DED_BV_01_C
+  [PTS Interaction] Yes
+  bta_start_discovery
+  bta_get_discovered_devices
+  [PTS Interaction]
+
+TC_GAP_IDLE_DED_BV_02_C
+  [PTS Interaction] Yes
+  [PTS Interaction] Yes
+  bta_start_discovery
+  bta_get_discovered_devices
+  [PTS Interaction}
+
+TC_CONN_NCON_BV_01_C
+  ble_start_generic_nonconnectable_advertisement
+
+TC_CONN_NCON_BV_02_C
+  [PTS Interaction] Answer NO
+  [PTS Interaction] Press OK
+  ble_start_generic_nonconnectable_advertisement
+
+TC_CONN_UCON_BV_01_C
+  ble_start_generic_connectable_advertisement
+
+TC_CONN_UCON_BV_02_C
+  ble_start_generic_connectable_advertisement
+
+TC_CONN_ACEP_BV_01_C
+  Note: PTS is very flacky, rerun multiple times to pass.
+  Note: Start the connection fast after PTS interaction
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction]
+  gattc_connect_over_le true
+  gattc_disconnect
+
+TC_CONN_GCEP_BV_01_C
+  Note: Start the connection fast after PTS interaction
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction]
+  gattc_connect_over_le
+  gattc_disconnect
+
+TC_CONN_GCEP_BV_02_C
+  [PTS Interaction]
+  gattc_connect_over_le
+  gattc_disconnect
+
+TC_CONN_DCEP_BV_01_C
+  gattc_connect_over_le
+  gattc_disconnect
+
+TC_CONN_DCEP_BV_03_C
+  gattc_connect_over_le
+  gattc_disconnect
+
+TC_CONN_CPUP_BV_01_C
+  ble_start_generic_connectable_advertisement
+  gattc_connect_over_le
+
+TC_CONN_CPUP_BV_02_C
+  ble_start_generic_connectable_advertisement
+  gattc_connect_over_le
+
+TC_CONN_CPUP_BV_03_C
+  ble_start_generic_connectable_advertisement
+  gattc_connect_over_le
+
+TC_CONN_CPUP_BV_04_C
+  gattc_connect_over_le
+  gattc_disconnect
+
+TC_CONN_CPUP_BV_05_C
+  gattc_connect_over_le
+  gattc_disconnect
+
+TC_CONN_TERM_BV_01_CF
+  gattc_connect_over_le
+  gattc_disconnect
+
+Note: Run the test a first time and it will fail. Change the address to
+be the peer address in the PTS logs that start with:
+  SEC_LE?SEC_LE_REMOTE_CSRK_REQUEST_IND=PDU
+    peerAddr: 'xxxxxxxxxxxx'O
+TC_BOND_NBON_BV_01_C
+  Set PTS IXIT value iut_privacy_enabled to False
+  config_set_nonbond
+  gattc_connect_over_le
+  [PTS Interaction] OK
+  Note: Do not accept pairing on phone until after you accept it on PTS
+  Enter pin from phone to PTS
+  [PTS Interactoin] OK to disconnect
+  gattc_connect_over_le
+  [PTS Interaction] OK
+  Enter pin from phone to PTS
+  [PTS Interactoin] OK to disconnect
+  config_reset
+
+Note: Run the test a first time and it will fail. Change the address to
+be the peer address in the PTS logs that start with: 
+  SEC_LE?SEC_LE_REMOTE_CSRK_REQUEST_IND=PDU
+    peerAddr: 'xxxxxxxxxxxx'OK
+TC_BOND_NBON_BV_02_C
+  Set PTS IXIT value iut_privacy_enabled to False
+  config_set_nonbond
+  gattc_connect_over_le
+  bta_bond
+  Enter pin from phone to PTS
+  [PTS Interaction] OK to disconnect
+  gattc_connect_over_le
+  bta_bond
+  Enter pin from phone to PTS
+  [PTS Interaction] OK to disconnect
+  config_reset
+
+TC_BOND_NBON_BV_03_C
+  Set PTS IXIT value iut_privacy_enabled to False
+  config_set_nonbond
+  ble_start_generic_connectable_advertisement
+  Note: Do not accept pairing on phone until after you accept it on PTS
+  Enter pin from PTS to phone
+  config_reset
+
+TC_BOND_BON_BV_01_C
+  Note: Do not use static LE address
+  Set PTS IXIT value iut_privacy_enabled to True
+  ble_start_generic_connectable_advertisement
+  bta_start_pairing_helper
+  Enter Address into PTS
+  Start test
+  bta_bond
+  Note: Make sure we keep the link open always
+  gattc_connect_over_le
+  [PTS Interaction] Enter PIN from PTS to phone (hit ok on phone before PTSbt   )
+  [PTS Interaction] Hit OK
+  Wait 5-10 seconds
+  [PTS Interaction] Hit Ok to disconnect
+  Wait 5-10 seconds
+  [PTS Interaction] Hit Ok to disconnect
+  bta_unbond
+
+Note: Run the test a first time and it will fail. Change the address to
+be the peer address in the PTS logs that start with: 
+  SEC_LE?SEC_LE_REMOTE_CSRK_REQUEST_IND=PDU
+    peerAddr: 'xxxxxxxxxxxx'O
+TC_BOND_BON_BV_02_C
+  Set PTS IXIT value iut_privacy_enabled to False
+  config_set_disable_mitm
+  bta_start_pairing_helper
+  gattc_connect_over_le
+  bta_bond
+  Wait 5-10 seconds when PTS prompt comes up to disconnect
+  [PTS Interaction] Press OK to disconnect
+  gattc_connect_over_le
+  Wait 5-10 seconds when PTS prompt comes up to disconnect
+  [PTS Interaction] Press OK to disconnect
+  config_reset
+
+Note: Run the test a first time and it will fail. Change the address to
+be the peer address in the PTS logs that start with: 
+  SEC_LE?SEC_LE_REMOTE_CSRK_REQUEST_IND=PDU
+    peerAddr: 'xxxxxxxxxxxx'O
+TC_BOND_BON_BV_03
+  config_reset
+  Note: Send conenction request before pairing happens
+  gattc_connect_over_le
+  Do not accept pairing on phone until after you accept it on PTS
+  [PTS Interaction] Enter Pin from PTS to phone
+  [PTS Interaction] Press OK to disconnect
+  [PTS Interaction] Press OK to disconnect
+
+TC_BOND_BON_BV_04_C
+  gattc_connect_over_le
+  [PTS Interaction] Enter PIN from Phone to PTS
+  gattc_disconnect
+  gattc_connect_over_le
+  bta_unbond
+
+TC_SEC_AUT_BV_11_C
+  ble_start_pairing_helper
+  gatts_setup_database LARGE_DB_3
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_INSUFFICIENT_AUTHENTICATION
+  [PTS interaction] Enter pin from PTS to phone
+  gatts_send_response GATT_SUCCESS
+  [Wait 30 seconds for PTS to complete]
+
+Note: Run the test a first time and it will fail. Change the address to
+be the peer address in the PTS logs that start with: 
+  SEC_LE?SEC_LE_REMOTE_CSRK_REQUEST_IND=PDU
+    peerAddr: 'xxxxxxxxxxxx'O
+TC_SEC_AUT_BV_14_C
+  Set PTS IXIT value iut_privacy_enabled to False
+  config_set_disable_mitm
+  bta_start_pairing_helper
+  ble_start_generic_connectable_advertisement
+  gatts_setup_database LARGE_DB_1
+  Enter address in PTS and run test
+  As PTS is connecting to you run this command at the same time:
+    gattc_connect_over_le
+  [PTS Interaction] Enter 002a
+  gatts_send_response GATT_INSUFFICIENT_AUTHENTICATION
+  Note: Do not accept pairing on phone until after you accept it on PTS
+  Enter Pin from PTS to Phone
+  gatts_send_response GATT_SUCCESS
+  config_reset
+
+
+Note: Run the test a first time and it will fail. Change the address to
+be the peer address in the PTS logs that start with: 
+  SEC_LE?SEC_LE_REMOTE_CSRK_REQUEST_IND=PDU
+    peerAddr: 'xxxxxxxxxxxx'O
+TC_SEC_AUT_BV_17_C
+  Use PEER Address
+  config_set_disable_mitm
+  gatts_setup_database LARGE_DB_1
+  [PTS asks us to discover services]
+  gattc_connect_over_le
+  gattc_list_all_uuids
+  gattc_read_char_by_instance_id 7
+  bta_bond
+  gattc_read_char_by_instance_id 7
+
+TC_SEC_AUT_BV_18_C
+  Use LE address
+  config_set_disable_mitm
+  gatts_setup_database LARGE_DB_1
+  [PTS asks us to discover services]
+  gattc_connect_over_le
+  gattc_list_all_uuids
+  gattc_read_char_by_instance_id 7
+  bta_bond
+  gattc_read_char_by_instance_id 7
+TC_ADV_BV_01_C
+  ble_adv_add_service_uuid_list 1802 1801
+  ble_start_generic_connectable_advertisement true
+
+Note: Very flacky
+Note: Run the test a first time and it will fail. Change the address to
+be the peer address in the PTS logs that start with: 
+  SEC_LE?SEC_LE_REMOTE_CSRK_REQUEST_IND=PDU
+    peerAddr: 'xxxxxxxxxxxx'O
+TC_SEC_AUT_BV_19_C
+  config_set_disable_mtim
+  gattc_connect_over_le
+  bta_bond
+  [PTS Interaction] Press OK to disconnect
+  Note: Before PTS asks you to reconnect via gatt, perform next two commands quickly
+  bta_unbond
+  gattc_disconnect
+  gattc_connect_over_le
+  gattc_list_all_uuids
+  gattc_read_all_char
+  gattc_disconnect
+
+TC_SEC_AUT_BV_20_C
+  Note: Set IXIT value requires MITM to false
+  config_set_disable_mitm
+  bta_start_pairing_helper false
+  ble_start_generic_connectable_advertisement
+  Note: During pairing establish a gatt connection
+  gattc_connect_over_le
+  Accept Pairing on Phone (check contacts box)
+  [PTS Interaction] Press OK to disconnect
+  gattc_connect_over_le
+  gattc_list_all_uuids
+  gattc_read_char_by_instance_id 7
+  Wait 5 seconds for PTS to process and finish up
+
+TC_SEC_AUT_BV_22_C
+  pixit mitm was false
+  config_set_disable_mitm
+  bta_start_pairing_helper
+  ble_adv_start_generic_advertisement
+  bta_unbond
+  [PTS Interaction] Select ok on PTS
+  config_reset
+
+TC_SEC_AUT_BV_24_C
+  Include workaround BLE_DELAY_REQUEST_ENC set to TRUE
+  config disable mitm
+  gatts_setup_database TEST_DB_2
+  gattc_connect_over_le
+  [PTS Interaction] enter pin from phone to pts
+  gattc_disconnect
+  gattc_connect_over_le
+  [PTS Interaction] enter 002a to pts
+  Note: PTS LIES, send GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+
+TC_ADV_BV_02_C
+  ble_adv_data_include_local_name true
+  ble_start_generic_connectable_advertisement
+
+TC_ADV_BV_03_C
+  ble_start_generic_connectable_advertisement
+
+TC_ADV_BV_04_C
+  ble_adv_data_add_manufacturer_data 1 1 2 3
+  ble_start_generic_connectable_advertisement true
+
+TC_ADV_BV_05_C
+  do_ble_adv_data_include_tx_power_level true
+  ble_start_generic_connectable_advertisement true
+
+TC_ADV_BV_13_C
+  CL Required: https://googleplex-android-review.git.corp.google.com/1819227
+  ble_start_generic_connectable_advertisement true
+
+TC_GAT_BV_01_C
+  [PTS Interaction] No
+  ble_start_generic_connectable_advertisement
+
+TC_DM_NCON_BV_01_C
+  [PTS Interaction] OK
+  [PTS Notification to start a non-connectable advertisement]
+  ble_start_generic_nonconnectable_advertisement
+
+TC_DM_CON_BV_01_C
+  Note: Use Bluetooth Public Address
+  bta_set_scan_mode connectable
+  [PTS Interaction]
+
+TC_DM_BON_BV_01_C
+  Note: This one may take multiple tries
+  Note: Use Bluetooth Public Address
+  bta_set_scan_mode connectable_discoverable
+  bta_start_pairing_helper
+  [PTS Interaction]
+  [PTS will ask to disconnect, during this time run next cmd ASAP]
+    bta_unbond
+  gattc_connect_over_le
+  bta_bond
+  [PTS will ask to disconnect, during this time run next cmd ASAP]
+    bta_unbond
+  [PTS Interaction]
+  gattc_connect_over_le
+  bta_bond
+  [PTS Interaction]
+  bta_unbond
+
+TC_DM_NAD_BV_01_C
+  bta_start_discovery
+  [Wait 10 seconds]
+  bta_get_discovered_devices
+  Verify PTS device is discovered
+  [PTS Interaction]
+
+TC_DM_NAD_BV_02_C
+  gattc_connect_over_le
+  gattc_read_all_char
+  gattc_disconnect
+
+TC_DM_LEP_BV_01_C
+  Note: Use Bluetooth Public Address
+  bta_set_device_name [TSPX_iut_device_name_in_adv_packet_for_random_address]
+  bta_set_scan_mode connectable_discoverable
+  [PTS Interaction]
+  ble_adv_data_include_local_name true
+  ble_start_generic_connectable_advertisement
+
+TC_DM_LEP_BV_02_C
+  [PTS Interation]
+  [PTS Interation]
+  bta_set_scan_mode connectable_discoverable
+  bta_disable
+  bta_enable
+
+TC_DM_LEP_BV_04_C
+  rfcomm_connect
+  rfcomm_disconnect
+
+TC_DM_LEP_BV_05_C
+  [PTS Interation]
+  rfcomm_connect
+  rfcomm_disconnect
+
+TC_DM_LEP_BV_06_C
+  gattc_connect_over_le
+
+TC_DM_LEP_BV_07_C
+  Note: Use Bluetooth Public Address
+  Note: Run these commands before executing the testcase on PTS Side
+  bta_set_device_name [TSPX_iut_device_name_in_adv_packet_for_random_address]
+  bta_set_scan_mode connectable_discoverable
+  ble_adv_data_include_local_name true
+  ble_start_generic_connectable_advertisement
+
+TC_DM_LEP_BV_08_C
+  Note: Use Bluetooth Public Address
+  Note: Run these commands before executing the testcase on PTS Side
+  bta_set_device_name [TSPX_iut_device_name_in_adv_packet_for_random_address]
+  bta_set_scan_mode connectable_discoverable
+  ble_adv_data_include_local_name true
+  ble_start_generic_connectable_advertisement
+
+TC_DM_LEP_BV_09_C
+  rfcomm_connect
+
+TC_DM_LEP_BV_10_C
+  Note: Use Bluetooth Public Address
+  Note: Run the first 4 commands before executing the testcase on PTS Side
+  bta_set_device_name [TSPX_iut_device_name_in_adv_packet_for_random_address]
+  bta_set_scan_mode connectable_discoverable
+  ble_adv_data_include_local_name true
+  ble_start_generic_connectable_advertisement
+  bta_start_discovery
+  [Wait 10 seconds]
+  bta_get_discovered_devices
+  [Verify PTS device in list of discovered devices]
+  [PTS Interaction]
+  gattc_connect_over_bredr
+
+TC_DM_LEP_BV_11_C
+  Note: Use Bluetooth Public Address
+  Note: Run the first 4 commands before executing the testcase on PTS Side
+  bta_set_device_name [TSPX_iut_device_name_in_adv_packet_for_random_address]
+  bta_set_scan_mode connectable_discoverable
+  ble_adv_data_include_local_name true
+  ble_start_generic_connectable_advertisement
+  gattc_connect_over_le
+  gattc_disconnect

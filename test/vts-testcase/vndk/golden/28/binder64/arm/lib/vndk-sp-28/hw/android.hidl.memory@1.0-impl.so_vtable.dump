@@ -1,0 +1,46 @@
+vtable for android::hidl::memory::V1_0::implementation::AshmemMapper
+_ZTVN7android4hidl6memory4V1_014implementation12AshmemMapperE: 15 entries
+16    (int (*)(...)) _ZN7android4hidl6memory4V1_07IMapper14interfaceChainENSt3__18functionIFvRKNS_8hardware8hidl_vecINS6_11hidl_stringEEEEEE
+20    (int (*)(...)) _ZN7android4hidl6memory4V1_07IMapper5debugERKNS_8hardware11hidl_handleERKNS4_8hidl_vecINS4_11hidl_stringEEE
+24    (int (*)(...)) _ZN7android4hidl6memory4V1_07IMapper19interfaceDescriptorENSt3__18functionIFvRKNS_8hardware11hidl_stringEEEE
+28    (int (*)(...)) _ZN7android4hidl6memory4V1_07IMapper12getHashChainENSt3__18functionIFvRKNS_8hardware8hidl_vecINS6_10hidl_arrayIhLj32EJEEEEEEEE
+32    (int (*)(...)) _ZN7android4hidl6memory4V1_07IMapper21setHALInstrumentationEv
+36    (int (*)(...)) _ZN7android4hidl6memory4V1_07IMapper11linkToDeathERKNS_2spINS_8hardware20hidl_death_recipientEEEy
+40    (int (*)(...)) _ZN7android4hidl6memory4V1_07IMapper4pingEv
+44    (int (*)(...)) _ZN7android4hidl6memory4V1_07IMapper12getDebugInfoENSt3__18functionIFvRKNS0_4base4V1_09DebugInfoEEEE
+48    (int (*)(...)) _ZN7android4hidl6memory4V1_07IMapper21notifySyspropsChangedEv
+52    (int (*)(...)) _ZN7android4hidl6memory4V1_07IMapper13unlinkToDeathERKNS_2spINS_8hardware20hidl_death_recipientEEE
+64    (int (*)(...)) _ZN7android4hidl6memory4V1_014implementation12AshmemMapper9mapMemoryERKNS_8hardware11hidl_memoryE
+104    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+108    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+112    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+116    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+
+
+vtable for android::hidl::memory::V1_0::implementation::AshmemMemory
+_ZTVN7android4hidl6memory4V1_014implementation12AshmemMemoryE: 25 entries
+16    (int (*)(...)) _ZN7android4hidl6memory4V1_07IMemory14interfaceChainENSt3__18functionIFvRKNS_8hardware8hidl_vecINS6_11hidl_stringEEEEEE
+20    (int (*)(...)) _ZN7android4hidl6memory4V1_07IMemory5debugERKNS_8hardware11hidl_handleERKNS4_8hidl_vecINS4_11hidl_stringEEE
+24    (int (*)(...)) _ZN7android4hidl6memory4V1_07IMemory19interfaceDescriptorENSt3__18functionIFvRKNS_8hardware11hidl_stringEEEE
+28    (int (*)(...)) _ZN7android4hidl6memory4V1_07IMemory12getHashChainENSt3__18functionIFvRKNS_8hardware8hidl_vecINS6_10hidl_arrayIhLj32EJEEEEEEEE
+32    (int (*)(...)) _ZN7android4hidl6memory4V1_07IMemory21setHALInstrumentationEv
+36    (int (*)(...)) _ZN7android4hidl6memory4V1_07IMemory11linkToDeathERKNS_2spINS_8hardware20hidl_death_recipientEEEy
+40    (int (*)(...)) _ZN7android4hidl6memory4V1_07IMemory4pingEv
+44    (int (*)(...)) _ZN7android4hidl6memory4V1_07IMemory12getDebugInfoENSt3__18functionIFvRKNS0_4base4V1_09DebugInfoEEEE
+48    (int (*)(...)) _ZN7android4hidl6memory4V1_07IMemory21notifySyspropsChangedEv
+52    (int (*)(...)) _ZN7android4hidl6memory4V1_07IMemory13unlinkToDeathERKNS_2spINS_8hardware20hidl_death_recipientEEE
+56    (int (*)(...)) _ZN7android4hidl6memory4V1_014implementation12AshmemMemoryD1Ev
+60    (int (*)(...)) _ZN7android4hidl6memory4V1_014implementation12AshmemMemoryD0Ev
+64    (int (*)(...)) _ZN7android4hidl6memory4V1_014implementation12AshmemMemory6updateEv
+68    (int (*)(...)) _ZN7android4hidl6memory4V1_014implementation12AshmemMemory11updateRangeEyy
+72    (int (*)(...)) _ZN7android4hidl6memory4V1_014implementation12AshmemMemory4readEv
+76    (int (*)(...)) _ZN7android4hidl6memory4V1_014implementation12AshmemMemory9readRangeEyy
+80    (int (*)(...)) _ZN7android4hidl6memory4V1_014implementation12AshmemMemory6commitEv
+84    (int (*)(...)) _ZN7android4hidl6memory4V1_014implementation12AshmemMemory10getPointerEv
+88    (int (*)(...)) _ZN7android4hidl6memory4V1_014implementation12AshmemMemory7getSizeEv
+120    (int (*)(...)) _ZTv0_n12_N7android4hidl6memory4V1_014implementation12AshmemMemoryD1Ev
+124    (int (*)(...)) _ZTv0_n12_N7android4hidl6memory4V1_014implementation12AshmemMemoryD0Ev
+128    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+132    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+136    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+140    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv

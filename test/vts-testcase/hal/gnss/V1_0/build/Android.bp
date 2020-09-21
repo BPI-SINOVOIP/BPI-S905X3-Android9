@@ -1,0 +1,189 @@
+// This file was auto-generated. Do not edit manually.
+// Use launch_hal_test.py or update_makefiles.py in test/vts-testcase/hal/script/ to generate this file.
+
+// Generate .vts spec files.
+hal2vts {
+    name: "android.hardware.gnss@1.0-vts.spec",
+    hidl_gen_args: "-r android.hardware:hardware/interfaces",
+    srcs: [
+        ":android.hardware.gnss@1.0_hal",
+    ],
+    out: [
+        "android/hardware/gnss/1.0/AGnss.vts",
+        "android/hardware/gnss/1.0/AGnssCallback.vts",
+        "android/hardware/gnss/1.0/AGnssRil.vts",
+        "android/hardware/gnss/1.0/AGnssRilCallback.vts",
+        "android/hardware/gnss/1.0/Gnss.vts",
+        "android/hardware/gnss/1.0/GnssBatching.vts",
+        "android/hardware/gnss/1.0/GnssBatchingCallback.vts",
+        "android/hardware/gnss/1.0/GnssCallback.vts",
+        "android/hardware/gnss/1.0/GnssConfiguration.vts",
+        "android/hardware/gnss/1.0/GnssDebug.vts",
+        "android/hardware/gnss/1.0/GnssGeofenceCallback.vts",
+        "android/hardware/gnss/1.0/GnssGeofencing.vts",
+        "android/hardware/gnss/1.0/GnssMeasurement.vts",
+        "android/hardware/gnss/1.0/GnssMeasurementCallback.vts",
+        "android/hardware/gnss/1.0/GnssNavigationMessage.vts",
+        "android/hardware/gnss/1.0/GnssNavigationMessageCallback.vts",
+        "android/hardware/gnss/1.0/GnssNi.vts",
+        "android/hardware/gnss/1.0/GnssNiCallback.vts",
+        "android/hardware/gnss/1.0/GnssXtra.vts",
+        "android/hardware/gnss/1.0/GnssXtraCallback.vts",
+        "android/hardware/gnss/1.0/types.vts",
+    ],
+}
+
+// Build VTS driver.
+genrule {
+    name: "android.hardware.gnss@1.0-vts.driver_genc++",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -r android.hardware:hardware/interfaces android.hardware.gnss@1.0 && $(location vtsc) -mDRIVER -tSOURCE -b$(genDir) android/hardware/gnss/1.0/ $(genDir)/android/hardware/gnss/1.0/",
+    srcs: [
+        ":android.hardware.gnss@1.0_hal",
+    ],
+    out: [
+        "android/hardware/gnss/1.0/AGnss.vts.cpp",
+        "android/hardware/gnss/1.0/AGnssCallback.vts.cpp",
+        "android/hardware/gnss/1.0/AGnssRil.vts.cpp",
+        "android/hardware/gnss/1.0/AGnssRilCallback.vts.cpp",
+        "android/hardware/gnss/1.0/Gnss.vts.cpp",
+        "android/hardware/gnss/1.0/GnssBatching.vts.cpp",
+        "android/hardware/gnss/1.0/GnssBatchingCallback.vts.cpp",
+        "android/hardware/gnss/1.0/GnssCallback.vts.cpp",
+        "android/hardware/gnss/1.0/GnssConfiguration.vts.cpp",
+        "android/hardware/gnss/1.0/GnssDebug.vts.cpp",
+        "android/hardware/gnss/1.0/GnssGeofenceCallback.vts.cpp",
+        "android/hardware/gnss/1.0/GnssGeofencing.vts.cpp",
+        "android/hardware/gnss/1.0/GnssMeasurement.vts.cpp",
+        "android/hardware/gnss/1.0/GnssMeasurementCallback.vts.cpp",
+        "android/hardware/gnss/1.0/GnssNavigationMessage.vts.cpp",
+        "android/hardware/gnss/1.0/GnssNavigationMessageCallback.vts.cpp",
+        "android/hardware/gnss/1.0/GnssNi.vts.cpp",
+        "android/hardware/gnss/1.0/GnssNiCallback.vts.cpp",
+        "android/hardware/gnss/1.0/GnssXtra.vts.cpp",
+        "android/hardware/gnss/1.0/GnssXtraCallback.vts.cpp",
+        "android/hardware/gnss/1.0/types.vts.cpp",
+    ],
+}
+
+genrule {
+    name: "android.hardware.gnss@1.0-vts.driver_genc++_headers",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -r android.hardware:hardware/interfaces android.hardware.gnss@1.0 && $(location vtsc) -mDRIVER -tHEADER -b$(genDir) android/hardware/gnss/1.0/ $(genDir)/android/hardware/gnss/1.0/",
+    srcs: [
+        ":android.hardware.gnss@1.0_hal",
+    ],
+    out: [
+        "android/hardware/gnss/1.0/AGnss.vts.h",
+        "android/hardware/gnss/1.0/AGnssCallback.vts.h",
+        "android/hardware/gnss/1.0/AGnssRil.vts.h",
+        "android/hardware/gnss/1.0/AGnssRilCallback.vts.h",
+        "android/hardware/gnss/1.0/Gnss.vts.h",
+        "android/hardware/gnss/1.0/GnssBatching.vts.h",
+        "android/hardware/gnss/1.0/GnssBatchingCallback.vts.h",
+        "android/hardware/gnss/1.0/GnssCallback.vts.h",
+        "android/hardware/gnss/1.0/GnssConfiguration.vts.h",
+        "android/hardware/gnss/1.0/GnssDebug.vts.h",
+        "android/hardware/gnss/1.0/GnssGeofenceCallback.vts.h",
+        "android/hardware/gnss/1.0/GnssGeofencing.vts.h",
+        "android/hardware/gnss/1.0/GnssMeasurement.vts.h",
+        "android/hardware/gnss/1.0/GnssMeasurementCallback.vts.h",
+        "android/hardware/gnss/1.0/GnssNavigationMessage.vts.h",
+        "android/hardware/gnss/1.0/GnssNavigationMessageCallback.vts.h",
+        "android/hardware/gnss/1.0/GnssNi.vts.h",
+        "android/hardware/gnss/1.0/GnssNiCallback.vts.h",
+        "android/hardware/gnss/1.0/GnssXtra.vts.h",
+        "android/hardware/gnss/1.0/GnssXtraCallback.vts.h",
+        "android/hardware/gnss/1.0/types.vts.h",
+    ],
+}
+
+cc_library_shared {
+    name: "android.hardware.gnss@1.0-vts.driver",
+    generated_sources: ["android.hardware.gnss@1.0-vts.driver_genc++"],
+    generated_headers: ["android.hardware.gnss@1.0-vts.driver_genc++_headers"],
+    export_generated_headers: ["android.hardware.gnss@1.0-vts.driver_genc++_headers"],
+    defaults: ["VtsHalDriverDefaults"],
+    shared_libs: [],
+    static_libs: [
+        "android.hardware.gnss@1.0",
+    ],
+}
+
+// Build VTS profiler.
+genrule {
+    name: "android.hardware.gnss@1.0-vts.profiler_genc++",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -r android.hardware:hardware/interfaces android.hardware.gnss@1.0 && $(location vtsc) -mPROFILER -tSOURCE -b$(genDir) android/hardware/gnss/1.0/ $(genDir)/android/hardware/gnss/1.0/",
+    srcs: [
+        ":android.hardware.gnss@1.0_hal",
+    ],
+    out: [
+        "android/hardware/gnss/1.0/AGnss.vts.cpp",
+        "android/hardware/gnss/1.0/AGnssCallback.vts.cpp",
+        "android/hardware/gnss/1.0/AGnssRil.vts.cpp",
+        "android/hardware/gnss/1.0/AGnssRilCallback.vts.cpp",
+        "android/hardware/gnss/1.0/Gnss.vts.cpp",
+        "android/hardware/gnss/1.0/GnssBatching.vts.cpp",
+        "android/hardware/gnss/1.0/GnssBatchingCallback.vts.cpp",
+        "android/hardware/gnss/1.0/GnssCallback.vts.cpp",
+        "android/hardware/gnss/1.0/GnssConfiguration.vts.cpp",
+        "android/hardware/gnss/1.0/GnssDebug.vts.cpp",
+        "android/hardware/gnss/1.0/GnssGeofenceCallback.vts.cpp",
+        "android/hardware/gnss/1.0/GnssGeofencing.vts.cpp",
+        "android/hardware/gnss/1.0/GnssMeasurement.vts.cpp",
+        "android/hardware/gnss/1.0/GnssMeasurementCallback.vts.cpp",
+        "android/hardware/gnss/1.0/GnssNavigationMessage.vts.cpp",
+        "android/hardware/gnss/1.0/GnssNavigationMessageCallback.vts.cpp",
+        "android/hardware/gnss/1.0/GnssNi.vts.cpp",
+        "android/hardware/gnss/1.0/GnssNiCallback.vts.cpp",
+        "android/hardware/gnss/1.0/GnssXtra.vts.cpp",
+        "android/hardware/gnss/1.0/GnssXtraCallback.vts.cpp",
+        "android/hardware/gnss/1.0/types.vts.cpp",
+    ],
+}
+
+genrule {
+    name: "android.hardware.gnss@1.0-vts.profiler_genc++_headers",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -r android.hardware:hardware/interfaces android.hardware.gnss@1.0 && $(location vtsc) -mPROFILER -tHEADER -b$(genDir) android/hardware/gnss/1.0/ $(genDir)/android/hardware/gnss/1.0/",
+    srcs: [
+        ":android.hardware.gnss@1.0_hal",
+    ],
+    out: [
+        "android/hardware/gnss/1.0/AGnss.vts.h",
+        "android/hardware/gnss/1.0/AGnssCallback.vts.h",
+        "android/hardware/gnss/1.0/AGnssRil.vts.h",
+        "android/hardware/gnss/1.0/AGnssRilCallback.vts.h",
+        "android/hardware/gnss/1.0/Gnss.vts.h",
+        "android/hardware/gnss/1.0/GnssBatching.vts.h",
+        "android/hardware/gnss/1.0/GnssBatchingCallback.vts.h",
+        "android/hardware/gnss/1.0/GnssCallback.vts.h",
+        "android/hardware/gnss/1.0/GnssConfiguration.vts.h",
+        "android/hardware/gnss/1.0/GnssDebug.vts.h",
+        "android/hardware/gnss/1.0/GnssGeofenceCallback.vts.h",
+        "android/hardware/gnss/1.0/GnssGeofencing.vts.h",
+        "android/hardware/gnss/1.0/GnssMeasurement.vts.h",
+        "android/hardware/gnss/1.0/GnssMeasurementCallback.vts.h",
+        "android/hardware/gnss/1.0/GnssNavigationMessage.vts.h",
+        "android/hardware/gnss/1.0/GnssNavigationMessageCallback.vts.h",
+        "android/hardware/gnss/1.0/GnssNi.vts.h",
+        "android/hardware/gnss/1.0/GnssNiCallback.vts.h",
+        "android/hardware/gnss/1.0/GnssXtra.vts.h",
+        "android/hardware/gnss/1.0/GnssXtraCallback.vts.h",
+        "android/hardware/gnss/1.0/types.vts.h",
+    ],
+}
+
+cc_library_shared {
+    name: "android.hardware.gnss@1.0-vts.profiler",
+    generated_sources: ["android.hardware.gnss@1.0-vts.profiler_genc++"],
+    generated_headers: ["android.hardware.gnss@1.0-vts.profiler_genc++_headers"],
+    export_generated_headers: ["android.hardware.gnss@1.0-vts.profiler_genc++_headers"],
+    defaults: ["VtsHalProfilerDefaults"],
+    shared_libs: [],
+    static_libs: [
+        "android.hardware.gnss@1.0",
+    ],
+}
+

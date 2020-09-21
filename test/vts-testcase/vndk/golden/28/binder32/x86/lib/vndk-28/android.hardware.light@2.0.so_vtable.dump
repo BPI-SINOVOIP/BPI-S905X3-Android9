@@ -1,0 +1,65 @@
+vtable for android::hardware::light::V2_0::BpHwLight
+_ZTVN7android8hardware5light4V2_09BpHwLightE: 19 entries
+16    (int (*)(...)) _ZN7android8hardware5light4V2_09BpHwLight14interfaceChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_11hidl_stringEEEEEE
+20    (int (*)(...)) _ZN7android8hardware5light4V2_09BpHwLight5debugERKNS0_11hidl_handleERKNS0_8hidl_vecINS0_11hidl_stringEEE
+24    (int (*)(...)) _ZN7android8hardware5light4V2_09BpHwLight19interfaceDescriptorENSt3__18functionIFvRKNS0_11hidl_stringEEEE
+28    (int (*)(...)) _ZN7android8hardware5light4V2_09BpHwLight12getHashChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_10hidl_arrayIhLj32EJEEEEEEEE
+32    (int (*)(...)) _ZN7android8hardware5light4V2_09BpHwLight21setHALInstrumentationEv
+36    (int (*)(...)) _ZN7android8hardware5light4V2_09BpHwLight11linkToDeathERKNS_2spINS0_20hidl_death_recipientEEEy
+40    (int (*)(...)) _ZN7android8hardware5light4V2_09BpHwLight4pingEv
+44    (int (*)(...)) _ZN7android8hardware5light4V2_09BpHwLight12getDebugInfoENSt3__18functionIFvRKNS_4hidl4base4V1_09DebugInfoEEEE
+48    (int (*)(...)) _ZN7android8hardware5light4V2_09BpHwLight21notifySyspropsChangedEv
+52    (int (*)(...)) _ZN7android8hardware5light4V2_09BpHwLight13unlinkToDeathERKNS_2spINS0_20hidl_death_recipientEEE
+64    (int (*)(...)) _ZN7android8hardware5light4V2_09BpHwLight8setLightENS2_4TypeERKNS2_10LightStateE
+68    (int (*)(...)) _ZN7android8hardware5light4V2_09BpHwLight17getSupportedTypesENSt3__18functionIFvRKNS0_8hidl_vecINS2_4TypeEEEEEE
+120    (int (*)(...)) _ZN7android8hardware11BpHwRefBase10onFirstRefEv
+124    (int (*)(...)) _ZN7android8hardware11BpHwRefBase15onLastStrongRefEPKv
+128    (int (*)(...)) _ZN7android8hardware11BpHwRefBase20onIncStrongAttemptedEjPKv
+184    (int (*)(...)) _ZTv0_n16_N7android8hardware11BpHwRefBase10onFirstRefEv
+188    (int (*)(...)) _ZTv0_n20_N7android8hardware11BpHwRefBase15onLastStrongRefEPKv
+192    (int (*)(...)) _ZTv0_n24_N7android8hardware11BpHwRefBase20onIncStrongAttemptedEjPKv
+196    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+
+
+vtable for android::hardware::light::V2_0::BnHwLight
+_ZTVN7android8hardware5light4V2_09BnHwLightE: 21 entries
+12    (int (*)(...)) _ZN7android8hardware9BHwBinder8transactEjRKNS0_6ParcelEPS2_jNSt3__18functionIFvRS2_EEE
+16    (int (*)(...)) _ZN7android8hardware9BHwBinder11linkToDeathERKNS_2spINS0_7IBinder14DeathRecipientEEEPvj
+20    (int (*)(...)) _ZN7android8hardware9BHwBinder13unlinkToDeathERKNS_2wpINS0_7IBinder14DeathRecipientEEEPvjPS5_
+24    (int (*)(...)) _ZNK7android8hardware7IBinder13checkSubclassEPKv
+28    (int (*)(...)) _ZN7android8hardware9BHwBinder12attachObjectEPKvPvS4_PFvS3_S4_S4_E
+32    (int (*)(...)) _ZNK7android8hardware9BHwBinder10findObjectEPKv
+36    (int (*)(...)) _ZN7android8hardware9BHwBinder12detachObjectEPKv
+40    (int (*)(...)) _ZN7android8hardware9BHwBinder11localBinderEv
+44    (int (*)(...)) _ZN7android8hardware7IBinder12remoteBinderEv
+48    (int (*)(...)) _ZN7android8hardware5light4V2_09BnHwLightD1Ev
+52    (int (*)(...)) _ZN7android8hardware5light4V2_09BnHwLightD0Ev
+56    (int (*)(...)) _ZN7android8hardware5light4V2_09BnHwLight10onTransactEjRKNS0_6ParcelEPS4_jNSt3__18functionIFvRS4_EEE
+68    (int (*)(...)) _ZThn20_N7android8hardware5light4V2_09BnHwLightD1Ev
+72    (int (*)(...)) _ZThn20_N7android8hardware5light4V2_09BnHwLightD0Ev
+104    (int (*)(...)) _ZTv0_n12_N7android8hardware5light4V2_09BnHwLightD1Ev
+108    (int (*)(...)) _ZTv0_n12_N7android8hardware5light4V2_09BnHwLightD0Ev
+112    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+116    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+120    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+124    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+128    (int (*)(...)) _ZTVN7android8hardware5light4V2_09BnHwLightE
+
+
+vtable for android::hardware::light::V2_0::ILight
+_ZTVN7android8hardware5light4V2_06ILightE: 15 entries
+16    (int (*)(...)) _ZN7android8hardware5light4V2_06ILight14interfaceChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_11hidl_stringEEEEEE
+20    (int (*)(...)) _ZN7android8hardware5light4V2_06ILight5debugERKNS0_11hidl_handleERKNS0_8hidl_vecINS0_11hidl_stringEEE
+24    (int (*)(...)) _ZN7android8hardware5light4V2_06ILight19interfaceDescriptorENSt3__18functionIFvRKNS0_11hidl_stringEEEE
+28    (int (*)(...)) _ZN7android8hardware5light4V2_06ILight12getHashChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_10hidl_arrayIhLj32EJEEEEEEEE
+32    (int (*)(...)) _ZN7android8hardware5light4V2_06ILight21setHALInstrumentationEv
+36    (int (*)(...)) _ZN7android8hardware5light4V2_06ILight11linkToDeathERKNS_2spINS0_20hidl_death_recipientEEEy
+40    (int (*)(...)) _ZN7android8hardware5light4V2_06ILight4pingEv
+44    (int (*)(...)) _ZN7android8hardware5light4V2_06ILight12getDebugInfoENSt3__18functionIFvRKNS_4hidl4base4V1_09DebugInfoEEEE
+48    (int (*)(...)) _ZN7android8hardware5light4V2_06ILight21notifySyspropsChangedEv
+52    (int (*)(...)) _ZN7android8hardware5light4V2_06ILight13unlinkToDeathERKNS_2spINS0_20hidl_death_recipientEEE
+108    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+112    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+116    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+120    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+124    (int (*)(...)) _ZTVN7android8hardware5light4V2_06ILightE

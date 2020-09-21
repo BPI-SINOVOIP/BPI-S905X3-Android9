@@ -1,0 +1,77 @@
+// Build VTS driver.
+genrule {
+    name: "android.hidl.memory.block@1.0-vts.driver_genc++",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -randroid.hidl:system/libhidl/transport android.hidl.memory.block@1.0 && $(location vtsc) -mDRIVER -tSOURCE -b$(genDir) android/hidl/memory/block/1.0/ $(genDir)/android/hidl/memory/block/1.0/",
+    srcs: [
+        ":android.hidl.memory.block@1.0_hal",
+    ],
+    out: [
+        "android/hidl/memory/block/1.0/types.vts.cpp",
+    ],
+}
+
+genrule {
+    name: "android.hidl.memory.block@1.0-vts.driver_genc++_headers",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -randroid.hidl:system/libhidl/transport android.hidl.memory.block@1.0 && $(location vtsc) -mDRIVER -tHEADER -b$(genDir) android/hidl/memory/block/1.0/ $(genDir)/android/hidl/memory/block/1.0/",
+    srcs: [
+        ":android.hidl.memory.block@1.0_hal",
+    ],
+    out: [
+        "android/hidl/memory/block/1.0/types.vts.h",
+    ],
+}
+
+cc_library_shared {
+    name: "android.hidl.memory.block@1.0-vts.driver",
+    generated_sources: ["android.hidl.memory.block@1.0-vts.driver_genc++"],
+    generated_headers: ["android.hidl.memory.block@1.0-vts.driver_genc++_headers"],
+    export_generated_headers: ["android.hidl.memory.block@1.0-vts.driver_genc++_headers"],
+    defaults: ["VtsHalDriverDefaults"],
+    shared_libs: [
+        "android.hidl.memory.token@1.0-vts.driver",
+    ],
+    static_libs: [
+        "android.hidl.memory.block@1.0",
+    ],
+}
+
+// Build VTS profiler.
+genrule {
+    name: "android.hidl.memory.block@1.0-vts.profiler_genc++",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -randroid.hidl:system/libhidl/transport android.hidl.memory.block@1.0 && $(location vtsc) -mPROFILER -tSOURCE -b$(genDir) android/hidl/memory/block/1.0/ $(genDir)/android/hidl/memory/block/1.0/",
+    srcs: [
+        ":android.hidl.memory.block@1.0_hal",
+    ],
+    out: [
+        "android/hidl/memory/block/1.0/types.vts.cpp",
+    ],
+}
+
+genrule {
+    name: "android.hidl.memory.block@1.0-vts.profiler_genc++_headers",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -randroid.hidl:system/libhidl/transport android.hidl.memory.block@1.0 && $(location vtsc) -mPROFILER -tHEADER -b$(genDir) android/hidl/memory/block/1.0/ $(genDir)/android/hidl/memory/block/1.0/",
+    srcs: [
+        ":android.hidl.memory.block@1.0_hal",
+    ],
+    out: [
+        "android/hidl/memory/block/1.0/types.vts.h",
+    ],
+}
+
+cc_library_shared {
+    name: "android.hidl.memory.block@1.0-vts.profiler",
+    generated_sources: ["android.hidl.memory.block@1.0-vts.profiler_genc++"],
+    generated_headers: ["android.hidl.memory.block@1.0-vts.profiler_genc++_headers"],
+    export_generated_headers: ["android.hidl.memory.block@1.0-vts.profiler_genc++_headers"],
+    defaults: ["VtsHalProfilerDefaults"],
+    shared_libs: [
+        "android.hidl.memory.token@1.0-vts.profiler",
+    ],
+    static_libs: [
+        "android.hidl.memory.block@1.0",
+    ],
+}

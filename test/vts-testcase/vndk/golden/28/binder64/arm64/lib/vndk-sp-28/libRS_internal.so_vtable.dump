@@ -1,0 +1,271 @@
+vtable for android::renderscript::Allocation
+_ZTVN7android12renderscript10AllocationE: 7 entries
+8    (int (*)(...)) _ZN7android12renderscript10Allocation12freeChildrenEv
+12    (int (*)(...)) _ZNK7android12renderscript10Allocation8dumpLOGVEPKc
+16    (int (*)(...)) _ZNK7android12renderscript10Allocation9serializeEPNS0_7ContextEPNS0_7OStreamE
+24    (int (*)(...)) _ZNK7android12renderscript10Allocation21callUpdateCacheObjectEPKNS0_7ContextEPv
+28    (int (*)(...)) _ZNK7android12renderscript10ObjectBase10preDestroyEv
+32    (int (*)(...)) _ZN7android12renderscript10AllocationD2Ev
+36    (int (*)(...)) _ZN7android12renderscript10AllocationD0Ev
+
+
+vtable for android::renderscript::Closure
+_ZTVN7android12renderscript7ClosureE: 7 entries
+8    (int (*)(...)) _ZN7android12renderscript10ObjectBase12freeChildrenEv
+12    (int (*)(...)) _ZNK7android12renderscript10ObjectBase8dumpLOGVEPKc
+16    (int (*)(...)) _ZNK7android12renderscript10ObjectBase10preDestroyEv
+24    (int (*)(...)) _ZNK7android12renderscript10ObjectBase21callUpdateCacheObjectEPKNS0_7ContextEPv
+28    (int (*)(...)) _ZNK7android12renderscript10ObjectBase10preDestroyEv
+32    (int (*)(...)) _ZN7android12renderscript7ClosureD2Ev
+36    (int (*)(...)) _ZN7android12renderscript7ClosureD0Ev
+
+
+vtable for android::renderscript::Element
+_ZTVN7android12renderscript7ElementE: 7 entries
+8    (int (*)(...)) _ZN7android12renderscript10ObjectBase12freeChildrenEv
+12    (int (*)(...)) _ZNK7android12renderscript7Element8dumpLOGVEPKc
+16    (int (*)(...)) _ZNK7android12renderscript7Element9serializeEPNS0_7ContextEPNS0_7OStreamE
+24    (int (*)(...)) _ZNK7android12renderscript7Element21callUpdateCacheObjectEPKNS0_7ContextEPv
+28    (int (*)(...)) _ZNK7android12renderscript7Element10preDestroyEv
+32    (int (*)(...)) _ZN7android12renderscript7ElementD2Ev
+36    (int (*)(...)) _ZN7android12renderscript7ElementD0Ev
+
+
+vtable for android::renderscript::FifoSocket
+_ZTVN7android12renderscript10FifoSocketE: 2 entries
+8    (int (*)(...)) _ZN7android12renderscript10FifoSocketD2Ev
+12    (int (*)(...)) _ZN7android12renderscript10FifoSocketD0Ev
+
+
+vtable for android::renderscript::FileA3D
+_ZTVN7android12renderscript7FileA3DE: 8 entries
+8    (int (*)(...)) _ZN7android12renderscript10ObjectBase12freeChildrenEv
+12    (int (*)(...)) _ZNK7android12renderscript10ObjectBase8dumpLOGVEPKc
+16    (int (*)(...)) _ZNK7android12renderscript10ObjectBase10preDestroyEv
+20    (int (*)(...)) _ZN7android12renderscript7FileA3D4loadEPNS_5AssetE
+24    (int (*)(...)) _ZNK7android12renderscript10ObjectBase21callUpdateCacheObjectEPKNS0_7ContextEPv
+28    (int (*)(...)) _ZNK7android12renderscript10ObjectBase10preDestroyEv
+32    (int (*)(...)) _ZN7android12renderscript7FileA3DD2Ev
+36    (int (*)(...)) _ZN7android12renderscript7FileA3DD0Ev
+
+
+vtable for android::renderscript::Font
+_ZTVN7android12renderscript4FontE: 8 entries
+8    (int (*)(...)) _ZN7android12renderscript10ObjectBase12freeChildrenEv
+12    (int (*)(...)) _ZNK7android12renderscript10ObjectBase8dumpLOGVEPKc
+16    (int (*)(...)) _ZNK7android12SortedVectorINS_16key_value_pair_tIjPNS_12renderscript4Font15CachedGlyphInfoEEEE12do_constructEPvj
+20    (int (*)(...)) _ZN7android12renderscript10ObjectBase12freeChildrenEv
+24    (int (*)(...)) _ZNK7android12renderscript10ObjectBase21callUpdateCacheObjectEPKNS0_7ContextEPv
+28    (int (*)(...)) _ZNK7android12renderscript4Font10preDestroyEv
+32    (int (*)(...)) _ZN7android12renderscript4FontD2Ev
+36    (int (*)(...)) _ZN7android12renderscript4FontD0Ev
+
+
+vtable for android::renderscript::GrallocConsumer
+_ZTVN7android12renderscript15GrallocConsumerE: 2 entries
+8    (int (*)(...)) _ZN7android12renderscript15GrallocConsumerD2Ev
+12    (int (*)(...)) _ZN7android12renderscript15GrallocConsumerD0Ev
+
+
+vtable for android::renderscript::ObjectBase
+_ZTVN7android12renderscript10ObjectBaseE: 6 entries
+8    (int (*)(...)) _ZN7android12renderscript10ObjectBase12freeChildrenEv
+12    (int (*)(...)) _ZNK7android12renderscript10ObjectBase8dumpLOGVEPKc
+24    (int (*)(...)) _ZNK7android12renderscript10ObjectBase21callUpdateCacheObjectEPKNS0_7ContextEPv
+28    (int (*)(...)) _ZNK7android12renderscript10ObjectBase10preDestroyEv
+32    (int (*)(...)) _ZN7android12renderscript10ObjectBaseD2Ev
+36    (int (*)(...)) _ZN7android12renderscript10ObjectBaseD0Ev
+
+
+vtable for android::renderscript::Mesh
+_ZTVN7android12renderscript4MeshE: 7 entries
+8    (int (*)(...)) _ZN7android12renderscript10ObjectBase12freeChildrenEv
+12    (int (*)(...)) _ZNK7android12renderscript10ObjectBase8dumpLOGVEPKc
+16    (int (*)(...)) _ZNK7android12renderscript4Mesh9serializeEPNS0_7ContextEPNS0_7OStreamE
+24    (int (*)(...)) _ZNK7android12renderscript10ObjectBase21callUpdateCacheObjectEPKNS0_7ContextEPv
+28    (int (*)(...)) _ZNK7android12renderscript10ObjectBase10preDestroyEv
+32    (int (*)(...)) _ZN7android12renderscript4MeshD2Ev
+36    (int (*)(...)) _ZN7android12renderscript4MeshD0Ev
+
+
+vtable for android::renderscript::Program
+_ZTVN7android12renderscript7ProgramE: 6 entries
+8    (int (*)(...)) _ZN7android12renderscript7Program12freeChildrenEv
+12    (int (*)(...)) _ZNK7android12renderscript10ObjectBase8dumpLOGVEPKc
+24    (int (*)(...)) _ZNK7android12renderscript10ObjectBase21callUpdateCacheObjectEPKNS0_7ContextEPv
+28    (int (*)(...)) _ZNK7android12renderscript10ObjectBase10preDestroyEv
+32    (int (*)(...)) _ZN7android12renderscript7ProgramD2Ev
+36    (int (*)(...)) _ZN7android12renderscript7ProgramD0Ev
+
+
+vtable for android::renderscript::ProgramFragment
+_ZTVN7android12renderscript15ProgramFragmentE: 8 entries
+8    (int (*)(...)) _ZN7android12renderscript7Program12freeChildrenEv
+12    (int (*)(...)) _ZNK7android12renderscript10ObjectBase8dumpLOGVEPKc
+16    (int (*)(...)) _ZNK7android12renderscript15ProgramFragment9serializeEPNS0_7ContextEPNS0_7OStreamE
+24    (int (*)(...)) _ZNK7android12renderscript10ObjectBase21callUpdateCacheObjectEPKNS0_7ContextEPv
+28    (int (*)(...)) _ZNK7android12renderscript10ObjectBase10preDestroyEv
+32    (int (*)(...)) _ZN7android12renderscript15ProgramFragmentD2Ev
+36    (int (*)(...)) _ZN7android12renderscript15ProgramFragmentD0Ev
+40    (int (*)(...)) _ZN7android12renderscript15ProgramFragment5setupEPNS0_7ContextEPNS0_20ProgramFragmentStateE
+
+
+vtable for android::renderscript::ProgramStore
+_ZTVN7android12renderscript12ProgramStoreE: 8 entries
+8    (int (*)(...)) _ZN7android12renderscript10ObjectBase12freeChildrenEv
+12    (int (*)(...)) _ZNK7android12renderscript10ObjectBase8dumpLOGVEPKc
+16    (int (*)(...)) _ZNK7android12renderscript12ProgramStore9serializeEPNS0_7ContextEPNS0_7OStreamE
+24    (int (*)(...)) _ZNK7android12renderscript10ObjectBase21callUpdateCacheObjectEPKNS0_7ContextEPv
+28    (int (*)(...)) _ZNK7android12renderscript12ProgramStore10preDestroyEv
+32    (int (*)(...)) _ZN7android12renderscript12ProgramStoreD2Ev
+36    (int (*)(...)) _ZN7android12renderscript12ProgramStoreD0Ev
+40    (int (*)(...)) _ZN7android12renderscript12ProgramStore5setupEPKNS0_7ContextEPNS0_17ProgramStoreStateE
+
+
+vtable for android::renderscript::ProgramRaster
+_ZTVN7android12renderscript13ProgramRasterE: 8 entries
+8    (int (*)(...)) _ZN7android12renderscript10ObjectBase12freeChildrenEv
+12    (int (*)(...)) _ZNK7android12renderscript10ObjectBase8dumpLOGVEPKc
+16    (int (*)(...)) _ZNK7android12renderscript13ProgramRaster9serializeEPNS0_7ContextEPNS0_7OStreamE
+24    (int (*)(...)) _ZNK7android12renderscript10ObjectBase21callUpdateCacheObjectEPKNS0_7ContextEPv
+28    (int (*)(...)) _ZNK7android12renderscript13ProgramRaster10preDestroyEv
+32    (int (*)(...)) _ZN7android12renderscript13ProgramRasterD2Ev
+36    (int (*)(...)) _ZN7android12renderscript13ProgramRasterD0Ev
+40    (int (*)(...)) _ZN7android12renderscript13ProgramRaster5setupEPKNS0_7ContextEPNS0_18ProgramRasterStateE
+
+
+vtable for android::renderscript::ProgramVertex
+_ZTVN7android12renderscript13ProgramVertexE: 8 entries
+8    (int (*)(...)) _ZN7android12renderscript7Program12freeChildrenEv
+12    (int (*)(...)) _ZNK7android12renderscript10ObjectBase8dumpLOGVEPKc
+16    (int (*)(...)) _ZNK7android12renderscript13ProgramVertex9serializeEPNS0_7ContextEPNS0_7OStreamE
+24    (int (*)(...)) _ZNK7android12renderscript10ObjectBase21callUpdateCacheObjectEPKNS0_7ContextEPv
+28    (int (*)(...)) _ZNK7android12renderscript10ObjectBase10preDestroyEv
+32    (int (*)(...)) _ZN7android12renderscript13ProgramVertexD2Ev
+36    (int (*)(...)) _ZN7android12renderscript13ProgramVertexD0Ev
+40    (int (*)(...)) _ZN7android12renderscript13ProgramVertex5setupEPNS0_7ContextEPNS0_18ProgramVertexStateE
+
+
+vtable for android::renderscript::Sampler
+_ZTVN7android12renderscript7SamplerE: 7 entries
+8    (int (*)(...)) _ZN7android12renderscript10ObjectBase12freeChildrenEv
+12    (int (*)(...)) _ZNK7android12renderscript10ObjectBase8dumpLOGVEPKc
+16    (int (*)(...)) _ZNK7android12renderscript7Sampler9serializeEPNS0_7ContextEPNS0_7OStreamE
+24    (int (*)(...)) _ZNK7android12renderscript10ObjectBase21callUpdateCacheObjectEPKNS0_7ContextEPv
+28    (int (*)(...)) _ZNK7android12renderscript7Sampler10preDestroyEv
+32    (int (*)(...)) _ZN7android12renderscript7SamplerD2Ev
+36    (int (*)(...)) _ZN7android12renderscript7SamplerD0Ev
+
+
+vtable for android::renderscript::Script
+_ZTVN7android12renderscript6ScriptE: 7 entries
+8    (int (*)(...)) _ZN7android12renderscript6Script12freeChildrenEv
+12    (int (*)(...)) _ZNK7android12renderscript10ObjectBase8dumpLOGVEPKc
+24    (int (*)(...)) _ZNK7android12renderscript6Script21callUpdateCacheObjectEPKNS0_7ContextEPv
+28    (int (*)(...)) _ZNK7android12renderscript10ObjectBase10preDestroyEv
+32    (int (*)(...)) _ZN7android12renderscript6ScriptD2Ev
+36    (int (*)(...)) _ZN7android12renderscript6ScriptD0Ev
+60    (int (*)(...)) _ZN7android12renderscript15ScriptIntrinsic12freeChildrenEv
+
+
+vtable for android::renderscript::ScriptKernelID
+_ZTVN7android12renderscript14ScriptKernelIDE: 7 entries
+8    (int (*)(...)) _ZN7android12renderscript10ObjectBase12freeChildrenEv
+12    (int (*)(...)) _ZNK7android12renderscript10ObjectBase8dumpLOGVEPKc
+16    (int (*)(...)) _ZNK7android12renderscript10ObjectBase10preDestroyEv
+20    (int (*)(...)) _ZNK7android12renderscript14ScriptKernelID10getClassIdEv
+24    (int (*)(...)) _ZNK7android12renderscript10ObjectBase21callUpdateCacheObjectEPKNS0_7ContextEPv
+28    (int (*)(...)) _ZNK7android12renderscript10ObjectBase10preDestroyEv
+32    (int (*)(...)) _ZN7android12renderscript10ObjectBaseD2Ev
+
+
+vtable for android::renderscript::ScriptInvokeID
+_ZTVN7android12renderscript14ScriptInvokeIDE: 7 entries
+8    (int (*)(...)) _ZN7android12renderscript10ObjectBase12freeChildrenEv
+12    (int (*)(...)) _ZNK7android12renderscript10ObjectBase8dumpLOGVEPKc
+16    (int (*)(...)) _ZNK7android12renderscript10ObjectBase10preDestroyEv
+20    (int (*)(...)) _ZNK7android12renderscript14ScriptInvokeID10getClassIdEv
+24    (int (*)(...)) _ZNK7android12renderscript10ObjectBase21callUpdateCacheObjectEPKNS0_7ContextEPv
+28    (int (*)(...)) _ZNK7android12renderscript10ObjectBase10preDestroyEv
+32    (int (*)(...)) _ZN7android12renderscript10ObjectBaseD2Ev
+
+
+vtable for android::renderscript::ScriptFieldID
+_ZTVN7android12renderscript13ScriptFieldIDE: 7 entries
+8    (int (*)(...)) _ZN7android12renderscript10ObjectBase12freeChildrenEv
+12    (int (*)(...)) _ZNK7android12renderscript10ObjectBase8dumpLOGVEPKc
+16    (int (*)(...)) _ZNK7android12renderscript10ObjectBase10preDestroyEv
+20    (int (*)(...)) _ZNK7android12renderscript13ScriptFieldID10getClassIdEv
+24    (int (*)(...)) _ZNK7android12renderscript10ObjectBase21callUpdateCacheObjectEPKNS0_7ContextEPv
+28    (int (*)(...)) _ZNK7android12renderscript10ObjectBase10preDestroyEv
+32    (int (*)(...)) _ZN7android12renderscript10ObjectBaseD2Ev
+
+
+vtable for android::renderscript::ScriptC
+_ZTVN7android12renderscript7ScriptCE: 13 entries
+8    (int (*)(...)) _ZN7android12renderscript6Script12freeChildrenEv
+12    (int (*)(...)) _ZNK7android12renderscript10ObjectBase8dumpLOGVEPKc
+16    (int (*)(...)) _ZNK7android12renderscript10ObjectBase10preDestroyEv
+24    (int (*)(...)) _ZNK7android12renderscript6Script21callUpdateCacheObjectEPKNS0_7ContextEPv
+28    (int (*)(...)) _ZNK7android12renderscript10ObjectBase10preDestroyEv
+32    (int (*)(...)) _ZN7android12renderscript7ScriptCD2Ev
+36    (int (*)(...)) _ZN7android12renderscript7ScriptCD0Ev
+40    (int (*)(...)) _ZN7android12renderscript7ScriptC10runForEachEPNS0_7ContextEjPPKNS0_10AllocationEjPS4_PKvjPK12RsScriptCall
+44    (int (*)(...)) _ZN7android12renderscript7ScriptC9runReduceEPNS0_7ContextEjPPKNS0_10AllocationEjPS4_PK12RsScriptCall
+48    (int (*)(...)) _ZN7android12renderscript7ScriptC6InvokeEPNS0_7ContextEjPKvj
+52    (int (*)(...)) _ZN7android12renderscript7ScriptC11setupScriptEPNS0_7ContextE
+56    (int (*)(...)) _ZN7android12renderscript7ScriptC3runEPNS0_7ContextE
+60    (int (*)(...)) _ZN7android12renderscript10ObjectBase12freeChildrenEv
+
+
+vtable for android::renderscript::ScriptGroup
+_ZTVN7android12renderscript11ScriptGroupE: 8 entries
+8    (int (*)(...)) _ZN7android12renderscript10ObjectBase12freeChildrenEv
+12    (int (*)(...)) _ZNK7android12renderscript10ObjectBase8dumpLOGVEPKc
+16    (int (*)(...)) _ZNK7android12renderscript10ObjectBase10preDestroyEv
+24    (int (*)(...)) _ZNK7android12renderscript10ObjectBase21callUpdateCacheObjectEPKNS0_7ContextEPv
+28    (int (*)(...)) _ZNK7android12renderscript10ObjectBase10preDestroyEv
+32    (int (*)(...)) _ZN7android12renderscript11ScriptGroupD2Ev
+36    (int (*)(...)) _ZN7android12renderscript11ScriptGroupD0Ev
+40    (int (*)(...)) _ZN7android12renderscript11ScriptGroup7executeEPNS0_7ContextE
+
+
+vtable for android::renderscript::ScriptGroup2
+_ZTVN7android12renderscript12ScriptGroup2E: 9 entries
+8    (int (*)(...)) _ZN7android12renderscript10ObjectBase12freeChildrenEv
+12    (int (*)(...)) _ZNK7android12renderscript10ObjectBase8dumpLOGVEPKc
+16    (int (*)(...)) _ZNK7android12renderscript10ObjectBase10preDestroyEv
+24    (int (*)(...)) _ZNK7android12renderscript10ObjectBase21callUpdateCacheObjectEPKNS0_7ContextEPv
+28    (int (*)(...)) _ZNK7android12renderscript10ObjectBase10preDestroyEv
+32    (int (*)(...)) _ZN7android12renderscript12ScriptGroup2D2Ev
+36    (int (*)(...)) _ZN7android12renderscript12ScriptGroup2D0Ev
+40    (int (*)(...)) _ZN7android12renderscript12ScriptGroup27executeEPNS0_7ContextE
+44    (int (*)(...)) _ZNK7android12renderscript14ScriptInvokeID10getClassIdEv
+
+
+vtable for android::renderscript::ScriptIntrinsic
+_ZTVN7android12renderscript15ScriptIntrinsicE: 13 entries
+8    (int (*)(...)) _ZN7android12renderscript15ScriptIntrinsic12freeChildrenEv
+12    (int (*)(...)) _ZNK7android12renderscript10ObjectBase8dumpLOGVEPKc
+16    (int (*)(...)) _ZNK7android12renderscript15ScriptIntrinsic9serializeEPNS0_7ContextEPNS0_7OStreamE
+20    (int (*)(...)) _ZNK7android12renderscript15ScriptIntrinsic10getClassIdEv
+24    (int (*)(...)) _ZNK7android12renderscript6Script21callUpdateCacheObjectEPKNS0_7ContextEPv
+28    (int (*)(...)) _ZNK7android12renderscript10ObjectBase10preDestroyEv
+32    (int (*)(...)) _ZN7android12renderscript15ScriptIntrinsicD2Ev
+36    (int (*)(...)) _ZN7android12renderscript15ScriptIntrinsicD0Ev
+40    (int (*)(...)) _ZN7android12renderscript15ScriptIntrinsic10runForEachEPNS0_7ContextEjPPKNS0_10AllocationEjPS4_PKvjPK12RsScriptCall
+44    (int (*)(...)) _ZN7android12renderscript15ScriptIntrinsic9runReduceEPNS0_7ContextEjPPKNS0_10AllocationEjPS4_PK12RsScriptCall
+48    (int (*)(...)) _ZN7android12renderscript15ScriptIntrinsic6InvokeEPNS0_7ContextEjPKvj
+52    (int (*)(...)) _ZN7android12renderscript15ScriptIntrinsic11setupScriptEPNS0_7ContextE
+56    (int (*)(...)) _ZN7android12renderscript15ScriptIntrinsic3runEPNS0_7ContextE
+
+
+vtable for android::renderscript::Type
+_ZTVN7android12renderscript4TypeE: 7 entries
+8    (int (*)(...)) _ZN7android12renderscript10ObjectBase12freeChildrenEv
+12    (int (*)(...)) _ZNK7android12renderscript4Type8dumpLOGVEPKc
+16    (int (*)(...)) _ZNK7android12renderscript4Type9serializeEPNS0_7ContextEPNS0_7OStreamE
+24    (int (*)(...)) _ZNK7android12renderscript4Type21callUpdateCacheObjectEPKNS0_7ContextEPv
+28    (int (*)(...)) _ZNK7android12renderscript4Type10preDestroyEv
+32    (int (*)(...)) _ZN7android12renderscript4TypeD2Ev
+36    (int (*)(...)) _ZN7android12renderscript4TypeD0Ev

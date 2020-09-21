@@ -1,0 +1,202 @@
+vtable for google::protobuf::strings::CheckedArrayByteSink
+_ZTVN6google8protobuf7strings20CheckedArrayByteSinkE: 4 entries
+8    (int (*)(...)) _ZN6google8protobuf2io19ZeroCopyInputStreamD1Ev
+12    (int (*)(...)) _ZN6google8protobuf8internal16FunctionClosure0D0Ev
+16    (int (*)(...)) _ZN6google8protobuf7strings20CheckedArrayByteSink6AppendEPKcj
+20    (int (*)(...)) _ZN6google8protobuf7strings8ByteSink5FlushEv
+
+
+vtable for google::protobuf::strings::GrowingArrayByteSink
+_ZTVN6google8protobuf7strings20GrowingArrayByteSinkE: 4 entries
+8    (int (*)(...)) _ZN6google8protobuf7strings20GrowingArrayByteSinkD2Ev
+12    (int (*)(...)) _ZN6google8protobuf7strings20GrowingArrayByteSinkD0Ev
+16    (int (*)(...)) _ZN6google8protobuf7strings20GrowingArrayByteSink6AppendEPKcj
+20    (int (*)(...)) _ZN6google8protobuf7strings8ByteSink5FlushEv
+
+
+vtable for google::protobuf::strings::LimitByteSource
+_ZTVN6google8protobuf7strings15LimitByteSourceE: 6 entries
+8    (int (*)(...)) _ZN6google8protobuf2io19ZeroCopyInputStreamD1Ev
+12    (int (*)(...)) _ZN6google8protobuf8internal16FunctionClosure0D0Ev
+16    (int (*)(...)) _ZNK6google8protobuf7strings15LimitByteSource9AvailableEv
+20    (int (*)(...)) _ZN6google8protobuf7strings15LimitByteSource4PeekEv
+24    (int (*)(...)) _ZN6google8protobuf7strings15LimitByteSource4SkipEj
+28    (int (*)(...)) _ZN6google8protobuf7strings15LimitByteSource6CopyToEPNS1_8ByteSinkEj
+
+
+vtable for google::protobuf::strings::ByteSink
+_ZTVN6google8protobuf7strings8ByteSinkE: 3 entries
+8    (int (*)(...)) _ZN6google8protobuf7strings8ByteSink5FlushEv
+12    (int (*)(...)) _ZN6google8protobuf11MessageLiteD0Ev
+20    (int (*)(...)) _ZN6google8protobuf7strings8ByteSink5FlushEv
+
+
+vtable for google::protobuf::strings::ByteSource
+_ZTVN6google8protobuf7strings10ByteSourceE: 3 entries
+8    (int (*)(...)) _ZN6google8protobuf2io19ZeroCopyInputStreamD1Ev
+12    (int (*)(...)) _ZN6google8protobuf11MessageLiteD0Ev
+28    (int (*)(...)) _ZN6google8protobuf7strings10ByteSource6CopyToEPNS1_8ByteSinkEj
+
+
+vtable for google::protobuf::strings::UncheckedArrayByteSink
+_ZTVN6google8protobuf7strings22UncheckedArrayByteSinkE: 4 entries
+8    (int (*)(...)) _ZN6google8protobuf2io19ZeroCopyInputStreamD1Ev
+12    (int (*)(...)) _ZN6google8protobuf8internal16FunctionClosure0D0Ev
+16    (int (*)(...)) _ZN6google8protobuf7strings22UncheckedArrayByteSink6AppendEPKcj
+20    (int (*)(...)) _ZN6google8protobuf7strings8ByteSink5FlushEv
+
+
+vtable for google::protobuf::strings::StringByteSink
+_ZTVN6google8protobuf7strings14StringByteSinkE: 4 entries
+8    (int (*)(...)) _ZN6google8protobuf2io19ZeroCopyInputStreamD1Ev
+12    (int (*)(...)) _ZN6google8protobuf8internal16FunctionClosure0D0Ev
+16    (int (*)(...)) _ZN6google8protobuf7strings14StringByteSink6AppendEPKcj
+20    (int (*)(...)) _ZN6google8protobuf7strings8ByteSink5FlushEv
+
+
+vtable for google::protobuf::strings::ArrayByteSource
+_ZTVN6google8protobuf7strings15ArrayByteSourceE: 6 entries
+8    (int (*)(...)) _ZN6google8protobuf2io19ZeroCopyInputStreamD1Ev
+12    (int (*)(...)) _ZN6google8protobuf8internal16FunctionClosure0D0Ev
+16    (int (*)(...)) _ZNK6google8protobuf7strings15ArrayByteSource9AvailableEv
+20    (int (*)(...)) _ZN6google8protobuf7strings15ArrayByteSource4PeekEv
+24    (int (*)(...)) _ZN6google8protobuf7strings15ArrayByteSource4SkipEj
+28    (int (*)(...)) _ZN6google8protobuf7strings10ByteSource6CopyToEPNS1_8ByteSinkEj
+
+
+vtable for google::protobuf::Closure
+_ZTVN6google8protobuf7ClosureE: 2 entries
+8    (int (*)(...)) _ZN6google8protobuf7ClosureD2Ev
+12    (int (*)(...)) _ZN6google8protobuf7ClosureD0Ev
+
+
+vtable for google::protobuf::internal::FunctionClosure0
+_ZTVN6google8protobuf8internal16FunctionClosure0E: 2 entries
+8    (int (*)(...)) _ZN6google8protobuf7ClosureD2Ev
+12    (int (*)(...)) _ZN6google8protobuf8internal16FunctionClosure0D0Ev
+
+
+vtable for google::protobuf::internal::ExtensionFinder
+_ZTVN6google8protobuf8internal15ExtensionFinderE: 2 entries
+8    (int (*)(...)) _ZN6google8protobuf8internal15ExtensionFinderD2Ev
+12    (int (*)(...)) _ZN6google8protobuf8internal15ExtensionFinderD0Ev
+
+
+vtable for google::protobuf::internal::GeneratedExtensionFinder
+_ZTVN6google8protobuf8internal24GeneratedExtensionFinderE: 3 entries
+8    (int (*)(...)) _ZN6google8protobuf8internal15ExtensionFinderD2Ev
+12    (int (*)(...)) _ZN6google8protobuf8internal16FunctionClosure0D0Ev
+16    (int (*)(...)) _ZN6google8protobuf8internal24GeneratedExtensionFinder4FindEiPNS1_13ExtensionInfoE
+
+
+vtable for google::protobuf::MessageLite
+_ZTVN6google8protobuf11MessageLiteE: 5 entries
+8    (int (*)(...)) _ZN6google8protobuf11MessageLiteD2Ev
+12    (int (*)(...)) _ZN6google8protobuf11MessageLiteD0Ev
+24    (int (*)(...)) _ZNK6google8protobuf11MessageLite3NewEPNS0_5ArenaE
+44    (int (*)(...)) _ZNK6google8protobuf11MessageLite25InitializationErrorStringEv
+64    (int (*)(...)) _ZNK6google8protobuf11MessageLite31SerializeWithCachedSizesToArrayEPh
+
+
+vtable for google::protobuf::internal::FieldSkipper
+_ZTVN6google8protobuf8internal12FieldSkipperE: 5 entries
+8    (int (*)(...)) _ZN6google8protobuf8internal12FieldSkipper15SkipUnknownEnumEii
+12    (int (*)(...)) _ZN6google8protobuf8internal16FunctionClosure0D0Ev
+16    (int (*)(...)) _ZN6google8protobuf8internal12FieldSkipper9SkipFieldEPNS0_2io16CodedInputStreamEj
+20    (int (*)(...)) _ZN6google8protobuf8internal12FieldSkipper11SkipMessageEPNS0_2io16CodedInputStreamE
+24    (int (*)(...)) _ZN6google8protobuf8internal12FieldSkipper15SkipUnknownEnumEii
+
+
+vtable for google::protobuf::internal::CodedOutputStreamFieldSkipper
+_ZTVN6google8protobuf8internal29CodedOutputStreamFieldSkipperE: 5 entries
+8    (int (*)(...)) _ZN6google8protobuf2io19ZeroCopyInputStreamD1Ev
+12    (int (*)(...)) _ZN6google8protobuf8internal16FunctionClosure0D0Ev
+16    (int (*)(...)) _ZN6google8protobuf8internal29CodedOutputStreamFieldSkipper9SkipFieldEPNS0_2io16CodedInputStreamEj
+20    (int (*)(...)) _ZN6google8protobuf8internal29CodedOutputStreamFieldSkipper11SkipMessageEPNS0_2io16CodedInputStreamE
+24    (int (*)(...)) _ZN6google8protobuf8internal29CodedOutputStreamFieldSkipper15SkipUnknownEnumEii
+
+
+vtable for google::protobuf::io::ZeroCopyInputStream
+_ZTVN6google8protobuf2io19ZeroCopyInputStreamE: 2 entries
+8    (int (*)(...)) _ZN6google8protobuf2io19ZeroCopyInputStreamD2Ev
+12    (int (*)(...)) _ZN6google8protobuf2io19ZeroCopyInputStreamD0Ev
+
+
+vtable for google::protobuf::io::ZeroCopyOutputStream
+_ZTVN6google8protobuf2io20ZeroCopyOutputStreamE: 3 entries
+8    (int (*)(...)) _ZN6google8protobuf2io20ZeroCopyOutputStreamD2Ev
+12    (int (*)(...)) _ZN6google8protobuf2io20ZeroCopyOutputStreamD0Ev
+28    (int (*)(...)) _ZN6google8protobuf2io20ZeroCopyOutputStream15WriteAliasedRawEPKvi
+
+
+vtable for google::protobuf::io::ArrayInputStream
+_ZTVN6google8protobuf2io16ArrayInputStreamE: 6 entries
+8    (int (*)(...)) _ZN6google8protobuf2io16ArrayInputStreamD2Ev
+12    (int (*)(...)) _ZN6google8protobuf2io16ArrayInputStreamD0Ev
+16    (int (*)(...)) _ZN6google8protobuf2io16ArrayInputStream4NextEPPKvPi
+20    (int (*)(...)) _ZN6google8protobuf2io16ArrayInputStream6BackUpEi
+24    (int (*)(...)) _ZN6google8protobuf2io16ArrayInputStream4SkipEi
+28    (int (*)(...)) _ZNK6google8protobuf2io16ArrayInputStream9ByteCountEv
+
+
+vtable for google::protobuf::io::ArrayOutputStream
+_ZTVN6google8protobuf2io17ArrayOutputStreamE: 6 entries
+8    (int (*)(...)) _ZN6google8protobuf2io17ArrayOutputStreamD2Ev
+12    (int (*)(...)) _ZN6google8protobuf2io17ArrayOutputStreamD0Ev
+16    (int (*)(...)) _ZN6google8protobuf2io17ArrayOutputStream4NextEPPvPi
+20    (int (*)(...)) _ZN6google8protobuf2io17ArrayOutputStream6BackUpEi
+24    (int (*)(...)) _ZNK6google8protobuf2io17ArrayOutputStream9ByteCountEv
+28    (int (*)(...)) _ZN6google8protobuf2io20ZeroCopyOutputStream15WriteAliasedRawEPKvi
+
+
+vtable for google::protobuf::io::StringOutputStream
+_ZTVN6google8protobuf2io18StringOutputStreamE: 6 entries
+8    (int (*)(...)) _ZN6google8protobuf2io18StringOutputStreamD2Ev
+12    (int (*)(...)) _ZN6google8protobuf2io18StringOutputStreamD0Ev
+16    (int (*)(...)) _ZN6google8protobuf2io18StringOutputStream4NextEPPvPi
+20    (int (*)(...)) _ZN6google8protobuf2io18StringOutputStream6BackUpEi
+24    (int (*)(...)) _ZNK6google8protobuf2io18StringOutputStream9ByteCountEv
+28    (int (*)(...)) _ZN6google8protobuf2io20ZeroCopyOutputStream15WriteAliasedRawEPKvi
+
+
+vtable for google::protobuf::io::LazyStringOutputStream
+_ZTVN6google8protobuf2io22LazyStringOutputStreamE: 6 entries
+8    (int (*)(...)) _ZN6google8protobuf2io22LazyStringOutputStreamD2Ev
+12    (int (*)(...)) _ZN6google8protobuf2io22LazyStringOutputStreamD0Ev
+16    (int (*)(...)) _ZN6google8protobuf2io22LazyStringOutputStream4NextEPPvPi
+20    (int (*)(...)) _ZN6google8protobuf2io18StringOutputStream6BackUpEi
+24    (int (*)(...)) _ZNK6google8protobuf2io22LazyStringOutputStream9ByteCountEv
+28    (int (*)(...)) _ZN6google8protobuf2io20ZeroCopyOutputStream15WriteAliasedRawEPKvi
+
+
+vtable for google::protobuf::io::CopyingInputStreamAdaptor
+_ZTVN6google8protobuf2io25CopyingInputStreamAdaptorE: 6 entries
+8    (int (*)(...)) _ZN6google8protobuf2io25CopyingInputStreamAdaptorD2Ev
+12    (int (*)(...)) _ZN6google8protobuf2io25CopyingInputStreamAdaptorD0Ev
+16    (int (*)(...)) _ZN6google8protobuf2io25CopyingInputStreamAdaptor4NextEPPKvPi
+20    (int (*)(...)) _ZN6google8protobuf2io25CopyingInputStreamAdaptor6BackUpEi
+24    (int (*)(...)) _ZN6google8protobuf2io25CopyingInputStreamAdaptor4SkipEi
+28    (int (*)(...)) _ZNK6google8protobuf2io25CopyingInputStreamAdaptor9ByteCountEv
+
+
+vtable for google::protobuf::io::CopyingOutputStreamAdaptor
+_ZTVN6google8protobuf2io26CopyingOutputStreamAdaptorE: 6 entries
+8    (int (*)(...)) _ZN6google8protobuf2io26CopyingOutputStreamAdaptorD2Ev
+12    (int (*)(...)) _ZN6google8protobuf2io26CopyingOutputStreamAdaptorD0Ev
+16    (int (*)(...)) _ZN6google8protobuf2io26CopyingOutputStreamAdaptor4NextEPPvPi
+20    (int (*)(...)) _ZN6google8protobuf2io26CopyingOutputStreamAdaptor6BackUpEi
+24    (int (*)(...)) _ZNK6google8protobuf2io26CopyingOutputStreamAdaptor9ByteCountEv
+28    (int (*)(...)) _ZN6google8protobuf2io20ZeroCopyOutputStream15WriteAliasedRawEPKvi
+
+
+vtable for google::protobuf::io::CopyingInputStream
+_ZTVN6google8protobuf2io18CopyingInputStreamE: 3 entries
+8    (int (*)(...)) _ZN6google8protobuf2io18CopyingInputStreamD2Ev
+12    (int (*)(...)) _ZN6google8protobuf2io18CopyingInputStreamD0Ev
+20    (int (*)(...)) _ZN6google8protobuf2io18CopyingInputStream4SkipEi
+
+
+vtable for google::protobuf::io::CopyingOutputStream
+_ZTVN6google8protobuf2io19CopyingOutputStreamE: 2 entries
+8    (int (*)(...)) _ZN6google8protobuf2io19CopyingOutputStreamD2Ev
+12    (int (*)(...)) _ZN6google8protobuf2io19CopyingOutputStreamD0Ev

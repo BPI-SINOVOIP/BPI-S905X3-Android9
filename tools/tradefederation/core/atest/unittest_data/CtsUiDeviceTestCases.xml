@@ -1,0 +1,3 @@
+<target_preparer class="com.android.tradefed.targetprep.suite.SuiteApkInstaller">
+  <option name="test-file-name" value="CtsUiDeviceTestCases.apk" />
+</target_preparer>

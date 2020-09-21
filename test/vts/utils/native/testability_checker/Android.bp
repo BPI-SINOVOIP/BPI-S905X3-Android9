@@ -1,0 +1,75 @@
+//
+// Copyright (C) 2017 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+cc_defaults {
+    name: "VtsTestabilityCheckerDefaults",
+    shared_libs: [
+        "libbase",
+        "libcutils",
+        "libhidlbase",
+        "libhidltransport",
+        "liblog",
+        "libselinux",
+        "libtinyxml2",
+        "libutils",
+        "libz",
+    ],
+    static_libs: [
+        "libvintf",
+        "libhidl-gen-utils",
+    ],
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+}
+
+cc_library {
+    name: "libvts_testability_checker",
+    defaults : ["VtsTestabilityCheckerDefaults"],
+    srcs: ["VtsTestabilityChecker.cpp"],
+}
+
+cc_test {
+    name: "libvts_testability_checker_test",
+    defaults : ["VtsTestabilityCheckerDefaults"],
+    srcs: ["VtsTestabilityCheckerTest.cpp"],
+
+    static_libs: [
+        "libgmock",
+        "libvts_testability_checker",
+    ],
+}
+
+cc_binary {
+    name: "vts_testability_checker",
+    defaults : ["VtsTestabilityCheckerDefaults"],
+    srcs: ["VtsTestabilityCheckerMain.cpp"],
+    multilib: {
+        lib64: {
+            suffix: "64",
+        },
+        lib32: {
+            suffix: "32",
+        },
+    },
+    compile_multilib: "both",
+    static_libs: [
+        "libhidl-gen-utils",
+        "libjsoncpp",
+        "libvts_testability_checker",
+    ],
+}

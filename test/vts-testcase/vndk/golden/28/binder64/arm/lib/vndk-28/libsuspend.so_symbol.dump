@@ -1,0 +1,6 @@
+autosuspend_disable
+autosuspend_enable
+autosuspend_force_suspend
+autosuspend_set_wakeup_callback
+autosuspend_wakeup_count_init
+autosuspend_wakeup_count_ops

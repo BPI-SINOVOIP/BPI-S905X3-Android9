@@ -1,0 +1,5 @@
+HostDrivenTest.push
+
+DATA/lib/libclang_rt.asan-arm-android.so->/data/local/tmp/32/libclang_rt.asan-arm-android.so
+DATA/lib64/libclang_rt.asan-aarch64-android.so->/data/local/tmp/64/libclang_rt.asan-aarch64-android.so
+

@@ -1,0 +1,75 @@
+CTS Instant Trade Federation
+---------------------
+
+CTS Instant Trade Federation, cts-instant-tradefed for short, is built
+on top of the Android Trade Federation test harness.
+
+It works in a similar manner to the normal CTS harness, but is targeted
+to test Instant App compatiblity.
+
+Configuring cts-instant-tradefed
+------------------------
+
+1. Ensure 'adb' is in your current PATH. adb can be found in the
+Android SDK available from http://developer.android.com
+
+Example:
+  PATH=$PATH:/home/myuser/android-sdk-linux_x86/platform-tools
+
+2. Follow the 'Setting up your device' steps documented in the
+CTS User Manual. The CTS User Manual can be downloaded at
+http://source.android.com/compatibility/downloads.html
+
+3. Connect the device to the host machine.
+
+4. Ensure device is visible via 'adb devices'
+
+Using cts-instant-tradefed
+-------------------
+
+To run a test plan on a single device:
+
+1. Make sure you have at least one device connected
+2. Launch the cts-instant-tradefed console by running the 'cts-instant-tradefed'. If you've
+downloaded and extracted the CTS zip, the script can be found at
+  android-cts_instant/tools/cts-instant-tradefed
+Or else if you are working from the Android source tree and have run make cts,
+the script can be found at
+  out/host/linux-x86/cts/android-cts_instant/tools/cts-instant-tradefed
+3. Type:
+'run cts-instant' to run the default CTS plan
+
+Some other useful commands are
+
+To run a test module:
+'run cts-instant --module <module_name>'
+
+To run a specific test:
+'run cts-instant --module <module_name> --test <test_name>'
+
+To shard a plan test run on multiple devices
+'run cts-instant --shard-count <number of shards>
+note: all connected devices must be running the same build
+
+For more options:
+'run cts-instant --help'
+
+CTS Tradefed Development
+------------------------
+See http://source.android.com for instructions on obtaining the Android
+platform source code and setting up a build environment.
+
+The source for the CTS extensions for tradefed can be found at
+<android source root>/cts/tools/tradefed-host
+
+The source for the tradefed framework can be found on the 'tradefed' branch.
+
+Perform these steps to build and run cts-instant-tradefed from the development
+environment:
+cd <path to android source root>
+make cts_instant
+cts-instant-tradefed
+
+More documentation and details on using and extending trade federation will
+be forthcoming in the near future.
+

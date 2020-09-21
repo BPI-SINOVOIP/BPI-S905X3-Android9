@@ -1,0 +1,398 @@
+vtable for android::renderscript::RsdCpuReferenceImpl
+_ZTVN7android12renderscript19RsdCpuReferenceImplE: 7 entries
+8    (int (*)(...)) _ZN7android12renderscript19RsdCpuReferenceImplD2Ev
+12    (int (*)(...)) _ZN7android12renderscript19RsdCpuReferenceImplD0Ev
+16    (int (*)(...)) _ZN7android12renderscript19RsdCpuReferenceImpl11setPriorityEi
+20    (int (*)(...)) _ZN7android12renderscript19RsdCpuReferenceImpl12createScriptEPKNS0_7ScriptCEPKcS6_PKhjj
+24    (int (*)(...)) _ZN7android12renderscript19RsdCpuReferenceImpl15createIntrinsicEPKNS0_6ScriptE19RsScriptIntrinsicIDPNS0_7ElementE
+28    (int (*)(...)) _ZN7android12renderscript19RsdCpuReferenceImpl17createScriptGroupEPKNS0_15ScriptGroupBaseE
+52    (int (*)(...)) _ZN7android12renderscript19RsdCpuReferenceImpl13launchThreadsEPFvPvjES2_
+
+
+vtable for android::renderscript::RsdCpuReference
+_ZTVN7android12renderscript15RsdCpuReferenceE: 2 entries
+8    (int (*)(...)) _ZN7android12renderscript15RsdCpuReferenceD2Ev
+12    (int (*)(...)) _ZN7android12renderscript15RsdCpuReferenceD0Ev
+
+
+vtable for android::renderscript::RsdCpuScriptImpl
+_ZTVN7android12renderscript16RsdCpuScriptImplE: 24 entries
+8    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl14populateScriptEPNS0_6ScriptE
+12    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl14invokeFunctionEjPKvj
+16    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl10invokeRootEv
+20    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl13invokeForEachEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+24    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl12invokeReduceEjPPKNS0_10AllocationEjPS2_PK12RsScriptCall
+28    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl10invokeInitEv
+32    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl18invokeFreeChildrenEv
+36    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl12setGlobalVarEjPKvj
+40    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl12getGlobalVarEjPvj
+44    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl24setGlobalVarWithElemDimsEjPKvjPKNS0_7ElementEPKjj
+48    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl13setGlobalBindEjPNS0_10AllocationE
+52    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl12setGlobalObjEjPNS0_10ObjectBaseE
+56    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl23getAllocationForPointerEPKv
+60    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl16getGlobalEntriesEv
+64    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl13getGlobalNameEi
+68    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl16getGlobalAddressEi
+72    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl13getGlobalSizeEi
+76    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl19getGlobalPropertiesEi
+80    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImplD2Ev
+84    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImplD0Ev
+88    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl9preLaunchEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+92    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl10postLaunchEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+96    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl18forEachKernelSetupEjPNS0_21MTLaunchStructForEachE
+100    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl17reduceKernelSetupEjPNS0_20MTLaunchStructReduceE
+
+
+vtable for android::renderscript::CpuScriptGroupImpl
+_ZTVN7android12renderscript18CpuScriptGroupImplE: 5 entries
+8    (int (*)(...)) _ZN7android12renderscript18CpuScriptGroupImpl7executeEv
+12    (int (*)(...)) _ZN7android12renderscript18CpuScriptGroupImplD2Ev
+16    (int (*)(...)) _ZN7android12renderscript18CpuScriptGroupImplD0Ev
+20    (int (*)(...)) _ZN7android12renderscript18CpuScriptGroupImpl8setInputEPKNS0_14ScriptKernelIDEPNS0_10AllocationE
+24    (int (*)(...)) _ZN7android12renderscript18CpuScriptGroupImpl9setOutputEPKNS0_14ScriptKernelIDEPNS0_10AllocationE
+
+
+vtable for android::renderscript::CpuScriptGroup2Impl
+_ZTVN7android12renderscript19CpuScriptGroup2ImplE: 3 entries
+8    (int (*)(...)) _ZN7android12renderscript19CpuScriptGroup2Impl7executeEv
+12    (int (*)(...)) _ZN7android12renderscript19CpuScriptGroup2ImplD2Ev
+16    (int (*)(...)) _ZN7android12renderscript19CpuScriptGroup2ImplD0Ev
+
+
+vtable for android::renderscript::RsdCpuScriptIntrinsic
+_ZTVN7android12renderscript21RsdCpuScriptIntrinsicE: 23 entries
+12    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic14invokeFunctionEjPKvj
+16    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10invokeRootEv
+20    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic13invokeForEachEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+24    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl12invokeReduceEjPPKNS0_10AllocationEjPS2_PK12RsScriptCall
+28    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10invokeInitEv
+32    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic18invokeFreeChildrenEv
+36    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic12setGlobalVarEjPKvj
+40    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl12getGlobalVarEjPvj
+44    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic24setGlobalVarWithElemDimsEjPKvjPKNS0_7ElementEPKjj
+48    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic13setGlobalBindEjPNS0_10AllocationE
+52    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic12setGlobalObjEjPNS0_10ObjectBaseE
+56    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl23getAllocationForPointerEPKv
+60    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl16getGlobalEntriesEv
+64    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl13getGlobalNameEi
+68    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl16getGlobalAddressEi
+72    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl13getGlobalSizeEi
+76    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl19getGlobalPropertiesEi
+80    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsicD2Ev
+84    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsicD0Ev
+88    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic9preLaunchEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+92    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10postLaunchEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+96    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic18forEachKernelSetupEjPNS0_21MTLaunchStructForEachE
+100    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl17reduceKernelSetupEjPNS0_20MTLaunchStructReduceE
+
+
+vtable for android::renderscript::RsdCpuScriptIntrinsic3DLUT
+_ZTVN7android12renderscript26RsdCpuScriptIntrinsic3DLUTE: 24 entries
+8    (int (*)(...)) _ZN7android12renderscript26RsdCpuScriptIntrinsic3DLUT14populateScriptEPNS0_6ScriptE
+12    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic14invokeFunctionEjPKvj
+16    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10invokeRootEv
+20    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic13invokeForEachEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+24    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl12invokeReduceEjPPKNS0_10AllocationEjPS2_PK12RsScriptCall
+28    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10invokeInitEv
+32    (int (*)(...)) _ZN7android12renderscript26RsdCpuScriptIntrinsic3DLUT18invokeFreeChildrenEv
+36    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic12setGlobalVarEjPKvj
+40    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl12getGlobalVarEjPvj
+44    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic24setGlobalVarWithElemDimsEjPKvjPKNS0_7ElementEPKjj
+48    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic13setGlobalBindEjPNS0_10AllocationE
+52    (int (*)(...)) _ZN7android12renderscript26RsdCpuScriptIntrinsic3DLUT12setGlobalObjEjPNS0_10ObjectBaseE
+56    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl23getAllocationForPointerEPKv
+60    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl16getGlobalEntriesEv
+64    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl13getGlobalNameEi
+68    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl16getGlobalAddressEi
+72    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl13getGlobalSizeEi
+76    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl19getGlobalPropertiesEi
+80    (int (*)(...)) _ZN7android12renderscript26RsdCpuScriptIntrinsic3DLUTD2Ev
+84    (int (*)(...)) _ZN7android12renderscript26RsdCpuScriptIntrinsic3DLUTD0Ev
+88    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic9preLaunchEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+92    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10postLaunchEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+96    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic18forEachKernelSetupEjPNS0_21MTLaunchStructForEachE
+100    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl17reduceKernelSetupEjPNS0_20MTLaunchStructReduceE
+
+
+vtable for android::renderscript::RsdCpuScriptIntrinsicBLAS
+_ZTVN7android12renderscript25RsdCpuScriptIntrinsicBLASE: 24 entries
+8    (int (*)(...)) _ZN7android12renderscript25RsdCpuScriptIntrinsicBLAS14populateScriptEPNS0_6ScriptE
+12    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic14invokeFunctionEjPKvj
+16    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10invokeRootEv
+20    (int (*)(...)) _ZN7android12renderscript25RsdCpuScriptIntrinsicBLAS13invokeForEachEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+24    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl12invokeReduceEjPPKNS0_10AllocationEjPS2_PK12RsScriptCall
+28    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10invokeInitEv
+32    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic18invokeFreeChildrenEv
+36    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic12setGlobalVarEjPKvj
+40    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl12getGlobalVarEjPvj
+44    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic24setGlobalVarWithElemDimsEjPKvjPKNS0_7ElementEPKjj
+48    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic13setGlobalBindEjPNS0_10AllocationE
+52    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic12setGlobalObjEjPNS0_10ObjectBaseE
+56    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl23getAllocationForPointerEPKv
+60    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl16getGlobalEntriesEv
+64    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl13getGlobalNameEi
+68    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl16getGlobalAddressEi
+72    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl13getGlobalSizeEi
+76    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl19getGlobalPropertiesEi
+80    (int (*)(...)) _ZN7android12renderscript25RsdCpuScriptIntrinsicBLASD2Ev
+84    (int (*)(...)) _ZN7android12renderscript25RsdCpuScriptIntrinsicBLASD0Ev
+88    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic9preLaunchEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+92    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10postLaunchEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+96    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic18forEachKernelSetupEjPNS0_21MTLaunchStructForEachE
+100    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl17reduceKernelSetupEjPNS0_20MTLaunchStructReduceE
+
+
+vtable for android::renderscript::RsdCpuScriptIntrinsicBlend
+_ZTVN7android12renderscript26RsdCpuScriptIntrinsicBlendE: 24 entries
+8    (int (*)(...)) _ZN7android12renderscript26RsdCpuScriptIntrinsicBlend14populateScriptEPNS0_6ScriptE
+12    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic14invokeFunctionEjPKvj
+16    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10invokeRootEv
+20    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic13invokeForEachEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+24    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl12invokeReduceEjPPKNS0_10AllocationEjPS2_PK12RsScriptCall
+28    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10invokeInitEv
+32    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic18invokeFreeChildrenEv
+36    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic12setGlobalVarEjPKvj
+40    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl12getGlobalVarEjPvj
+44    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic24setGlobalVarWithElemDimsEjPKvjPKNS0_7ElementEPKjj
+48    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic13setGlobalBindEjPNS0_10AllocationE
+52    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic12setGlobalObjEjPNS0_10ObjectBaseE
+56    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl23getAllocationForPointerEPKv
+60    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl16getGlobalEntriesEv
+64    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl13getGlobalNameEi
+68    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl16getGlobalAddressEi
+72    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl13getGlobalSizeEi
+76    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl19getGlobalPropertiesEi
+80    (int (*)(...)) _ZN7android12renderscript26RsdCpuScriptIntrinsicBlendD2Ev
+84    (int (*)(...)) _ZN7android12renderscript26RsdCpuScriptIntrinsicBlendD0Ev
+88    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic9preLaunchEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+92    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10postLaunchEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+96    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic18forEachKernelSetupEjPNS0_21MTLaunchStructForEachE
+100    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl17reduceKernelSetupEjPNS0_20MTLaunchStructReduceE
+
+
+vtable for android::renderscript::RsdCpuScriptIntrinsicBlur
+_ZTVN7android12renderscript25RsdCpuScriptIntrinsicBlurE: 24 entries
+8    (int (*)(...)) _ZN7android12renderscript25RsdCpuScriptIntrinsicBlur14populateScriptEPNS0_6ScriptE
+12    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic14invokeFunctionEjPKvj
+16    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10invokeRootEv
+20    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic13invokeForEachEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+24    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl12invokeReduceEjPPKNS0_10AllocationEjPS2_PK12RsScriptCall
+28    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10invokeInitEv
+32    (int (*)(...)) _ZN7android12renderscript25RsdCpuScriptIntrinsicBlur18invokeFreeChildrenEv
+36    (int (*)(...)) _ZN7android12renderscript25RsdCpuScriptIntrinsicBlur12setGlobalVarEjPKvj
+40    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl12getGlobalVarEjPvj
+44    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic24setGlobalVarWithElemDimsEjPKvjPKNS0_7ElementEPKjj
+48    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic13setGlobalBindEjPNS0_10AllocationE
+52    (int (*)(...)) _ZN7android12renderscript25RsdCpuScriptIntrinsicBlur12setGlobalObjEjPNS0_10ObjectBaseE
+56    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl23getAllocationForPointerEPKv
+60    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl16getGlobalEntriesEv
+64    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl13getGlobalNameEi
+68    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl16getGlobalAddressEi
+72    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl13getGlobalSizeEi
+76    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl19getGlobalPropertiesEi
+80    (int (*)(...)) _ZN7android12renderscript25RsdCpuScriptIntrinsicBlurD2Ev
+84    (int (*)(...)) _ZN7android12renderscript25RsdCpuScriptIntrinsicBlurD0Ev
+88    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic9preLaunchEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+92    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10postLaunchEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+96    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic18forEachKernelSetupEjPNS0_21MTLaunchStructForEachE
+100    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl17reduceKernelSetupEjPNS0_20MTLaunchStructReduceE
+
+
+vtable for android::renderscript::RsdCpuScriptIntrinsicColorMatrix
+_ZTVN7android12renderscript32RsdCpuScriptIntrinsicColorMatrixE: 24 entries
+8    (int (*)(...)) _ZN7android12renderscript32RsdCpuScriptIntrinsicColorMatrix14populateScriptEPNS0_6ScriptE
+12    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic14invokeFunctionEjPKvj
+16    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10invokeRootEv
+20    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic13invokeForEachEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+24    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl12invokeReduceEjPPKNS0_10AllocationEjPS2_PK12RsScriptCall
+28    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10invokeInitEv
+32    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic18invokeFreeChildrenEv
+36    (int (*)(...)) _ZN7android12renderscript32RsdCpuScriptIntrinsicColorMatrix12setGlobalVarEjPKvj
+40    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl12getGlobalVarEjPvj
+44    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic24setGlobalVarWithElemDimsEjPKvjPKNS0_7ElementEPKjj
+48    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic13setGlobalBindEjPNS0_10AllocationE
+52    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic12setGlobalObjEjPNS0_10ObjectBaseE
+56    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl23getAllocationForPointerEPKv
+60    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl16getGlobalEntriesEv
+64    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl13getGlobalNameEi
+68    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl16getGlobalAddressEi
+72    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl13getGlobalSizeEi
+76    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl19getGlobalPropertiesEi
+80    (int (*)(...)) _ZN7android12renderscript32RsdCpuScriptIntrinsicColorMatrixD2Ev
+84    (int (*)(...)) _ZN7android12renderscript32RsdCpuScriptIntrinsicColorMatrixD0Ev
+88    (int (*)(...)) _ZN7android12renderscript32RsdCpuScriptIntrinsicColorMatrix9preLaunchEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+92    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10postLaunchEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+96    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic18forEachKernelSetupEjPNS0_21MTLaunchStructForEachE
+100    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl17reduceKernelSetupEjPNS0_20MTLaunchStructReduceE
+
+
+vtable for android::renderscript::RsdCpuScriptIntrinsicConvolve3x3
+_ZTVN7android12renderscript32RsdCpuScriptIntrinsicConvolve3x3E: 25 entries
+8    (int (*)(...)) _ZN7android12renderscript32RsdCpuScriptIntrinsicConvolve3x314populateScriptEPNS0_6ScriptE
+12    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic14invokeFunctionEjPKvj
+16    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10invokeRootEv
+20    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic13invokeForEachEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+24    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl12invokeReduceEjPPKNS0_10AllocationEjPS2_PK12RsScriptCall
+28    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10invokeInitEv
+32    (int (*)(...)) _ZN7android12renderscript32RsdCpuScriptIntrinsicConvolve3x318invokeFreeChildrenEv
+36    (int (*)(...)) _ZN7android12renderscript32RsdCpuScriptIntrinsicConvolve3x312setGlobalVarEjPKvj
+40    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl12getGlobalVarEjPvj
+44    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic24setGlobalVarWithElemDimsEjPKvjPKNS0_7ElementEPKjj
+48    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic13setGlobalBindEjPNS0_10AllocationE
+52    (int (*)(...)) _ZN7android12renderscript32RsdCpuScriptIntrinsicConvolve3x312setGlobalObjEjPNS0_10ObjectBaseE
+56    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl23getAllocationForPointerEPKv
+60    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl16getGlobalEntriesEv
+64    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl13getGlobalNameEi
+68    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl16getGlobalAddressEi
+72    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl13getGlobalSizeEi
+76    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl19getGlobalPropertiesEi
+80    (int (*)(...)) _ZN7android12renderscript32RsdCpuScriptIntrinsicConvolve3x3D2Ev
+84    (int (*)(...)) _ZN7android12renderscript32RsdCpuScriptIntrinsicConvolve3x3D0Ev
+88    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic9preLaunchEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+92    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10postLaunchEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+96    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic18forEachKernelSetupEjPNS0_21MTLaunchStructForEachE
+100    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl17reduceKernelSetupEjPNS0_20MTLaunchStructReduceE
+104    (int (*)(...)) _ZN7android12renderscript32RsdCpuScriptIntrinsicConvolve3x38kernelF1EPK24RsExpandKernelDriverInfojjj
+
+
+vtable for android::renderscript::RsdCpuScriptIntrinsicConvolve5x5
+_ZTVN7android12renderscript32RsdCpuScriptIntrinsicConvolve5x5E: 25 entries
+8    (int (*)(...)) _ZN7android12renderscript32RsdCpuScriptIntrinsicConvolve5x514populateScriptEPNS0_6ScriptE
+12    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic14invokeFunctionEjPKvj
+16    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10invokeRootEv
+20    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic13invokeForEachEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+24    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl12invokeReduceEjPPKNS0_10AllocationEjPS2_PK12RsScriptCall
+28    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10invokeInitEv
+32    (int (*)(...)) _ZN7android12renderscript32RsdCpuScriptIntrinsicConvolve5x518invokeFreeChildrenEv
+36    (int (*)(...)) _ZN7android12renderscript32RsdCpuScriptIntrinsicConvolve5x512setGlobalVarEjPKvj
+40    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl12getGlobalVarEjPvj
+44    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic24setGlobalVarWithElemDimsEjPKvjPKNS0_7ElementEPKjj
+48    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic13setGlobalBindEjPNS0_10AllocationE
+52    (int (*)(...)) _ZN7android12renderscript32RsdCpuScriptIntrinsicConvolve5x512setGlobalObjEjPNS0_10ObjectBaseE
+56    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl23getAllocationForPointerEPKv
+60    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl16getGlobalEntriesEv
+64    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl13getGlobalNameEi
+68    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl16getGlobalAddressEi
+72    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl13getGlobalSizeEi
+76    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl19getGlobalPropertiesEi
+80    (int (*)(...)) _ZN7android12renderscript32RsdCpuScriptIntrinsicConvolve5x5D2Ev
+84    (int (*)(...)) _ZN7android12renderscript32RsdCpuScriptIntrinsicConvolve5x5D0Ev
+88    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic9preLaunchEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+92    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10postLaunchEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+96    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic18forEachKernelSetupEjPNS0_21MTLaunchStructForEachE
+100    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl17reduceKernelSetupEjPNS0_20MTLaunchStructReduceE
+104    (int (*)(...)) _ZN7android12renderscript32RsdCpuScriptIntrinsicConvolve5x58kernelF1EPK24RsExpandKernelDriverInfojjj
+
+
+vtable for android::renderscript::RsdCpuScriptIntrinsicHistogram
+_ZTVN7android12renderscript30RsdCpuScriptIntrinsicHistogramE: 25 entries
+8    (int (*)(...)) _ZN7android12renderscript30RsdCpuScriptIntrinsicHistogram14populateScriptEPNS0_6ScriptE
+12    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic14invokeFunctionEjPKvj
+16    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10invokeRootEv
+20    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic13invokeForEachEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+24    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl12invokeReduceEjPPKNS0_10AllocationEjPS2_PK12RsScriptCall
+28    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10invokeInitEv
+32    (int (*)(...)) _ZN7android12renderscript30RsdCpuScriptIntrinsicHistogram18invokeFreeChildrenEv
+36    (int (*)(...)) _ZN7android12renderscript30RsdCpuScriptIntrinsicHistogram12setGlobalVarEjPKvj
+40    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl12getGlobalVarEjPvj
+44    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic24setGlobalVarWithElemDimsEjPKvjPKNS0_7ElementEPKjj
+48    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic13setGlobalBindEjPNS0_10AllocationE
+52    (int (*)(...)) _ZN7android12renderscript30RsdCpuScriptIntrinsicHistogram12setGlobalObjEjPNS0_10ObjectBaseE
+56    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl23getAllocationForPointerEPKv
+60    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl16getGlobalEntriesEv
+64    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl13getGlobalNameEi
+68    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl16getGlobalAddressEi
+72    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl13getGlobalSizeEi
+76    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl19getGlobalPropertiesEi
+80    (int (*)(...)) _ZN7android12renderscript30RsdCpuScriptIntrinsicHistogramD2Ev
+84    (int (*)(...)) _ZN7android12renderscript30RsdCpuScriptIntrinsicHistogramD0Ev
+88    (int (*)(...)) _ZN7android12renderscript30RsdCpuScriptIntrinsicHistogram9preLaunchEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+92    (int (*)(...)) _ZN7android12renderscript30RsdCpuScriptIntrinsicHistogram10postLaunchEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+96    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic18forEachKernelSetupEjPNS0_21MTLaunchStructForEachE
+100    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl17reduceKernelSetupEjPNS0_20MTLaunchStructReduceE
+104    (int (*)(...)) _ZN7android12renderscript30RsdCpuScriptIntrinsicHistogram10kernelP1L1EPK24RsExpandKernelDriverInfojjj
+
+
+vtable for android::renderscript::RsdCpuScriptIntrinsicResize
+_ZTVN7android12renderscript27RsdCpuScriptIntrinsicResizeE: 25 entries
+8    (int (*)(...)) _ZN7android12renderscript27RsdCpuScriptIntrinsicResize14populateScriptEPNS0_6ScriptE
+12    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic14invokeFunctionEjPKvj
+16    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10invokeRootEv
+20    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic13invokeForEachEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+24    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl12invokeReduceEjPPKNS0_10AllocationEjPS2_PK12RsScriptCall
+28    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10invokeInitEv
+32    (int (*)(...)) _ZN7android12renderscript27RsdCpuScriptIntrinsicResize18invokeFreeChildrenEv
+36    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic12setGlobalVarEjPKvj
+40    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl12getGlobalVarEjPvj
+44    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic24setGlobalVarWithElemDimsEjPKvjPKNS0_7ElementEPKjj
+48    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic13setGlobalBindEjPNS0_10AllocationE
+52    (int (*)(...)) _ZN7android12renderscript27RsdCpuScriptIntrinsicResize12setGlobalObjEjPNS0_10ObjectBaseE
+56    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl23getAllocationForPointerEPKv
+60    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl16getGlobalEntriesEv
+64    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl13getGlobalNameEi
+68    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl16getGlobalAddressEi
+72    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl13getGlobalSizeEi
+76    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl19getGlobalPropertiesEi
+80    (int (*)(...)) _ZN7android12renderscript27RsdCpuScriptIntrinsicResizeD2Ev
+84    (int (*)(...)) _ZN7android12renderscript27RsdCpuScriptIntrinsicResizeD0Ev
+88    (int (*)(...)) _ZN7android12renderscript27RsdCpuScriptIntrinsicResize9preLaunchEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+92    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10postLaunchEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+96    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic18forEachKernelSetupEjPNS0_21MTLaunchStructForEachE
+100    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl17reduceKernelSetupEjPNS0_20MTLaunchStructReduceE
+104    (int (*)(...)) _ZN7android12renderscript27RsdCpuScriptIntrinsicResize8kernelU1EPK24RsExpandKernelDriverInfojjj
+
+
+vtable for android::renderscript::RsdCpuScriptIntrinsicLUT
+_ZTVN7android12renderscript24RsdCpuScriptIntrinsicLUTE: 24 entries
+8    (int (*)(...)) _ZN7android12renderscript24RsdCpuScriptIntrinsicLUT14populateScriptEPNS0_6ScriptE
+12    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic14invokeFunctionEjPKvj
+16    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10invokeRootEv
+20    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic13invokeForEachEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+24    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl12invokeReduceEjPPKNS0_10AllocationEjPS2_PK12RsScriptCall
+28    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10invokeInitEv
+32    (int (*)(...)) _ZN7android12renderscript24RsdCpuScriptIntrinsicLUT18invokeFreeChildrenEv
+36    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic12setGlobalVarEjPKvj
+40    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl12getGlobalVarEjPvj
+44    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic24setGlobalVarWithElemDimsEjPKvjPKNS0_7ElementEPKjj
+48    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic13setGlobalBindEjPNS0_10AllocationE
+52    (int (*)(...)) _ZN7android12renderscript24RsdCpuScriptIntrinsicLUT12setGlobalObjEjPNS0_10ObjectBaseE
+56    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl23getAllocationForPointerEPKv
+60    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl16getGlobalEntriesEv
+64    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl13getGlobalNameEi
+68    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl16getGlobalAddressEi
+72    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl13getGlobalSizeEi
+76    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl19getGlobalPropertiesEi
+80    (int (*)(...)) _ZN7android12renderscript24RsdCpuScriptIntrinsicLUTD2Ev
+84    (int (*)(...)) _ZN7android12renderscript24RsdCpuScriptIntrinsicLUTD0Ev
+88    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic9preLaunchEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+92    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10postLaunchEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+96    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic18forEachKernelSetupEjPNS0_21MTLaunchStructForEachE
+100    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl17reduceKernelSetupEjPNS0_20MTLaunchStructReduceE
+
+
+vtable for android::renderscript::RsdCpuScriptIntrinsicYuvToRGB
+_ZTVN7android12renderscript29RsdCpuScriptIntrinsicYuvToRGBE: 24 entries
+8    (int (*)(...)) _ZN7android12renderscript29RsdCpuScriptIntrinsicYuvToRGB14populateScriptEPNS0_6ScriptE
+12    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic14invokeFunctionEjPKvj
+16    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10invokeRootEv
+20    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic13invokeForEachEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+24    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl12invokeReduceEjPPKNS0_10AllocationEjPS2_PK12RsScriptCall
+28    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10invokeInitEv
+32    (int (*)(...)) _ZN7android12renderscript29RsdCpuScriptIntrinsicYuvToRGB18invokeFreeChildrenEv
+36    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic12setGlobalVarEjPKvj
+40    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl12getGlobalVarEjPvj
+44    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic24setGlobalVarWithElemDimsEjPKvjPKNS0_7ElementEPKjj
+48    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic13setGlobalBindEjPNS0_10AllocationE
+52    (int (*)(...)) _ZN7android12renderscript29RsdCpuScriptIntrinsicYuvToRGB12setGlobalObjEjPNS0_10ObjectBaseE
+56    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl23getAllocationForPointerEPKv
+60    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl16getGlobalEntriesEv
+64    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl13getGlobalNameEi
+68    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl16getGlobalAddressEi
+72    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl13getGlobalSizeEi
+76    (int (*)(...)) _ZNK7android12renderscript16RsdCpuScriptImpl19getGlobalPropertiesEi
+80    (int (*)(...)) _ZN7android12renderscript29RsdCpuScriptIntrinsicYuvToRGBD2Ev
+84    (int (*)(...)) _ZN7android12renderscript29RsdCpuScriptIntrinsicYuvToRGBD0Ev
+88    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic9preLaunchEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+92    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic10postLaunchEjPPKNS0_10AllocationEjPS2_PKvjPK12RsScriptCall
+96    (int (*)(...)) _ZN7android12renderscript21RsdCpuScriptIntrinsic18forEachKernelSetupEjPNS0_21MTLaunchStructForEachE
+100    (int (*)(...)) _ZN7android12renderscript16RsdCpuScriptImpl17reduceKernelSetupEjPNS0_20MTLaunchStructReduceE

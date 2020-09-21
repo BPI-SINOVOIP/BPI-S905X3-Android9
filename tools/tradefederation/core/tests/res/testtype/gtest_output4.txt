@@ -1,0 +1,724 @@
+Running main() from gtest_main.cc
+[==========] Running 268 tests from 55 test cases.
+[----------] Global test environment set-up.
+[----------] 1 test from CommandLineFlagsTest
+[ RUN      ] CommandLineFlagsTest.CanBeAccessedInCodeOnceGTestHIsIncluded
+[       OK ] CommandLineFlagsTest.CanBeAccessedInCodeOnceGTestHIsIncluded (0 ms)
+[----------] 1 test from CommandLineFlagsTest (0 ms total)
+
+[----------] 2 tests from GetTypeIdTest
+[ RUN      ] GetTypeIdTest.ReturnsSameValueForSameType
+[       OK ] GetTypeIdTest.ReturnsSameValueForSameType (0 ms)
+[ RUN      ] GetTypeIdTest.ReturnsDifferentValuesForDifferentTypes
+[       OK ] GetTypeIdTest.ReturnsDifferentValuesForDifferentTypes (0 ms)
+[----------] 2 tests from GetTypeIdTest (0 ms total)
+
+[----------] 1 test from GetTestTypeIdTest
+[ RUN      ] GetTestTypeIdTest.ReturnsTheSameValueInsideOrOutsideOfGoogleTest
+[       OK ] GetTestTypeIdTest.ReturnsTheSameValueInsideOrOutsideOfGoogleTest (0 ms)
+[----------] 1 test from GetTestTypeIdTest (0 ms total)
+
+[----------] 2 tests from NullLiteralTest
+[ RUN      ] NullLiteralTest.IsTrueForNullLiterals
+[       OK ] NullLiteralTest.IsTrueForNullLiterals (0 ms)
+[ RUN      ] NullLiteralTest.IsFalseForNonNullLiterals
+[       OK ] NullLiteralTest.IsFalseForNonNullLiterals (1 ms)
+[----------] 2 tests from NullLiteralTest (1 ms total)
+
+[----------] 6 tests from CodePointToUtf8Test
+[ RUN      ] CodePointToUtf8Test.CanEncodeNul
+[       OK ] CodePointToUtf8Test.CanEncodeNul (0 ms)
+[ RUN      ] CodePointToUtf8Test.CanEncodeAscii
+[       OK ] CodePointToUtf8Test.CanEncodeAscii (0 ms)
+[ RUN      ] CodePointToUtf8Test.CanEncode8To11Bits
+[       OK ] CodePointToUtf8Test.CanEncode8To11Bits (0 ms)
+[ RUN      ] CodePointToUtf8Test.CanEncode12To16Bits
+[       OK ] CodePointToUtf8Test.CanEncode12To16Bits (0 ms)
+[ RUN      ] CodePointToUtf8Test.CanEncode17To21Bits
+[       OK ] CodePointToUtf8Test.CanEncode17To21Bits (0 ms)
+[ RUN      ] CodePointToUtf8Test.CanEncodeInvalidCodePoint
+[       OK ] CodePointToUtf8Test.CanEncodeInvalidCodePoint (0 ms)
+[----------] 6 tests from CodePointToUtf8Test (2 ms total)
+
+[----------] 7 tests from WideStringToUtf8Test
+[ RUN      ] WideStringToUtf8Test.CanEncodeNul
+[       OK ] WideStringToUtf8Test.CanEncodeNul (0 ms)
+[ RUN      ] WideStringToUtf8Test.CanEncode8To11Bits
+[       OK ] WideStringToUtf8Test.CanEncode8To11Bits (0 ms)
+[ RUN      ] WideStringToUtf8Test.CanEncode12To16Bits
+[       OK ] WideStringToUtf8Test.CanEncode12To16Bits (0 ms)
+[ RUN      ] WideStringToUtf8Test.StopsOnNulCharacter
+[       OK ] WideStringToUtf8Test.StopsOnNulCharacter (0 ms)
+[ RUN      ] WideStringToUtf8Test.StopsWhenLengthLimitReached
+[       OK ] WideStringToUtf8Test.StopsWhenLengthLimitReached (1 ms)
+[ RUN      ] WideStringToUtf8Test.CanEncode17To21Bits
+[       OK ] WideStringToUtf8Test.CanEncode17To21Bits (0 ms)
+[ RUN      ] WideStringToUtf8Test.CanEncodeInvalidCodePoint
+[       OK ] WideStringToUtf8Test.CanEncodeInvalidCodePoint (0 ms)
+[----------] 7 tests from WideStringToUtf8Test (2 ms total)
+
+[----------] 4 tests from ListTest
+[ RUN      ] ListTest.PushFront
+[       OK ] ListTest.PushFront (0 ms)
+[ RUN      ] ListTest.PopFront
+[       OK ] ListTest.PopFront (0 ms)
+[ RUN      ] ListTest.InsertAfterAtBeginning
+[       OK ] ListTest.InsertAfterAtBeginning (0 ms)
+[ RUN      ] ListTest.InsertAfterNotAtBeginning
+[       OK ] ListTest.InsertAfterNotAtBeginning (1 ms)
+[----------] 4 tests from ListTest (2 ms total)
+
+[----------] 14 tests from StringTest
+[ RUN      ] StringTest.Constructors
+[       OK ] StringTest.Constructors (1 ms)
+[ RUN      ] StringTest.ConvertsFromStdString
+[       OK ] StringTest.ConvertsFromStdString (0 ms)
+[ RUN      ] StringTest.ConvertsToStdString
+[       OK ] StringTest.ConvertsToStdString (0 ms)
+[ RUN      ] StringTest.ShowCString
+[       OK ] StringTest.ShowCString (3 ms)
+[ RUN      ] StringTest.ShowCStringQuoted
+[       OK ] StringTest.ShowCStringQuoted (1 ms)
+[ RUN      ] StringTest.Equals
+[       OK ] StringTest.Equals (0 ms)
+[ RUN      ] StringTest.NotEquals
+[       OK ] StringTest.NotEquals (0 ms)
+[ RUN      ] StringTest.EndsWith
+[       OK ] StringTest.EndsWith (0 ms)
+[ RUN      ] StringTest.EndsWithCaseInsensitive
+[       OK ] StringTest.EndsWithCaseInsensitive (0 ms)
+[ RUN      ] StringTest.CaseInsensitiveWideCStringEquals
+[       OK ] StringTest.CaseInsensitiveWideCStringEquals (0 ms)
+[ RUN      ] StringTest.CanBeAssignedNULL
+[       OK ] StringTest.CanBeAssignedNULL (0 ms)
+[ RUN      ] StringTest.CanBeAssignedEmpty
+[       OK ] StringTest.CanBeAssignedEmpty (1 ms)
+[ RUN      ] StringTest.CanBeAssignedNonEmpty
+[       OK ] StringTest.CanBeAssignedNonEmpty (0 ms)
+[ RUN      ] StringTest.CanBeAssignedSelf
+[       OK ] StringTest.CanBeAssignedSelf (0 ms)
+[----------] 14 tests from StringTest (10 ms total)
+
+[----------] 2 tests from TestPropertyTest
+[ RUN      ] TestPropertyTest.StringValue
+[       OK ] TestPropertyTest.StringValue (0 ms)
+[ RUN      ] TestPropertyTest.ReplaceStringValue
+[       OK ] TestPropertyTest.ReplaceStringValue (0 ms)
+[----------] 2 tests from TestPropertyTest (1 ms total)
+
+[----------] 2 tests from ScopedFakeTestPartResultReporterTest
+[ RUN      ] ScopedFakeTestPartResultReporterTest.InterceptsTestFailures
+[       OK ] ScopedFakeTestPartResultReporterTest.InterceptsTestFailures (2 ms)
+[ RUN      ] ScopedFakeTestPartResultReporterTest.DeprecatedConstructor
+[       OK ] ScopedFakeTestPartResultReporterTest.DeprecatedConstructor (2 ms)
+[----------] 2 tests from ScopedFakeTestPartResultReporterTest (4 ms total)
+
+[----------] 5 tests from ExpectFatalFailureTest
+[ RUN      ] ExpectFatalFailureTest.CatchesFatalFaliure
+[       OK ] ExpectFatalFailureTest.CatchesFatalFaliure (1 ms)
+[ RUN      ] ExpectFatalFailureTest.CatchesFatalFailureOnAllThreads
+[       OK ] ExpectFatalFailureTest.CatchesFatalFailureOnAllThreads (0 ms)
+[ RUN      ] ExpectFatalFailureTest.CanBeUsedInNonVoidFunction
+[       OK ] ExpectFatalFailureTest.CanBeUsedInNonVoidFunction (0 ms)
+[ RUN      ] ExpectFatalFailureTest.DoesNotAbort
+[       OK ] ExpectFatalFailureTest.DoesNotAbort (2 ms)
+[ RUN      ] ExpectFatalFailureTest.AcceptsMacroThatExpandsToUnprotectedComma
+[       OK ] ExpectFatalFailureTest.AcceptsMacroThatExpandsToUnprotectedComma (1 ms)
+[----------] 5 tests from ExpectFatalFailureTest (9 ms total)
+
+[----------] 3 tests from ExpectNonfatalFailureTest
+[ RUN      ] ExpectNonfatalFailureTest.CatchesNonfatalFailure
+[       OK ] ExpectNonfatalFailureTest.CatchesNonfatalFailure (0 ms)
+[ RUN      ] ExpectNonfatalFailureTest.CatchesNonfatalFailureOnAllThreads
+[       OK ] ExpectNonfatalFailureTest.CatchesNonfatalFailureOnAllThreads (1 ms)
+[ RUN      ] ExpectNonfatalFailureTest.AcceptsMacroThatExpandsToUnprotectedComma
+[       OK ] ExpectNonfatalFailureTest.AcceptsMacroThatExpandsToUnprotectedComma (2 ms)
+[----------] 3 tests from ExpectNonfatalFailureTest (4 ms total)
+
+[----------] 7 tests from TestResultTest
+[ RUN      ] TestResultTest.test_part_results
+[       OK ] TestResultTest.test_part_results (0 ms)
+[ RUN      ] TestResultTest.successful_part_count
+[       OK ] TestResultTest.successful_part_count (0 ms)
+[ RUN      ] TestResultTest.failed_part_count
+[       OK ] TestResultTest.failed_part_count (0 ms)
+[ RUN      ] TestResultTest.GetFailedPartCount
+[       OK ] TestResultTest.GetFailedPartCount (0 ms)
+[ RUN      ] TestResultTest.total_part_count
+[       OK ] TestResultTest.total_part_count (0 ms)
+[ RUN      ] TestResultTest.Passed
+[       OK ] TestResultTest.Passed (1 ms)
+[ RUN      ] TestResultTest.Failed
+[       OK ] TestResultTest.Failed (1 ms)
+[----------] 7 tests from TestResultTest (4 ms total)
+
+[----------] 8 tests from TestResultPropertyTest
+[ RUN      ] TestResultPropertyTest.NoPropertiesFoundWhenNoneAreAdded
+[       OK ] TestResultPropertyTest.NoPropertiesFoundWhenNoneAreAdded (0 ms)
+[ RUN      ] TestResultPropertyTest.OnePropertyFoundWhenAdded
+[       OK ] TestResultPropertyTest.OnePropertyFoundWhenAdded (1 ms)
+[ RUN      ] TestResultPropertyTest.MultiplePropertiesFoundWhenAdded
+[       OK ] TestResultPropertyTest.MultiplePropertiesFoundWhenAdded (1 ms)
+[ RUN      ] TestResultPropertyTest.OverridesValuesForDuplicateKeys
+[       OK ] TestResultPropertyTest.OverridesValuesForDuplicateKeys (0 ms)
+[ RUN      ] TestResultPropertyTest.AddFailureWhenUsingReservedKeyCalledName
+[       OK ] TestResultPropertyTest.AddFailureWhenUsingReservedKeyCalledName (5 ms)
+[ RUN      ] TestResultPropertyTest.AddFailureWhenUsingReservedKeyCalledStatus
+[       OK ] TestResultPropertyTest.AddFailureWhenUsingReservedKeyCalledStatus (1 ms)
+[ RUN      ] TestResultPropertyTest.AddFailureWhenUsingReservedKeyCalledTime
+[       OK ] TestResultPropertyTest.AddFailureWhenUsingReservedKeyCalledTime (0 ms)
+[ RUN      ] TestResultPropertyTest.AddFailureWhenUsingReservedKeyCalledClassname
+[       OK ] TestResultPropertyTest.AddFailureWhenUsingReservedKeyCalledClassname (0 ms)
+[----------] 8 tests from TestResultPropertyTest (10 ms total)
+
+[----------] 2 tests from GTestFlagSaverTest
+[ RUN      ] GTestFlagSaverTest.ModifyGTestFlags
+[       OK ] GTestFlagSaverTest.ModifyGTestFlags
+[ RUN      ] GTestFlagSaverTest.VerifyGTestFlags
+[       OK ] GTestFlagSaverTest.VerifyGTestFlags
+[----------] 2 tests from GTestFlagSaverTest (0 ms total)
+
+[----------] 4 tests from Int32FromGTestEnvTest
+[ RUN      ] Int32FromGTestEnvTest.ReturnsDefaultWhenVariableIsNotSet
+[       OK ] Int32FromGTestEnvTest.ReturnsDefaultWhenVariableIsNotSet (1 ms)
+[ RUN      ] Int32FromGTestEnvTest.ReturnsDefaultWhenValueOverflows
+(expecting 2 warnings)
+WARNING: Environment variable GTEST_TEMP is expected to be a 32-bit integer, but actually has value 12345678987654321, which overflows.
+The default value 20 is used.
+WARNING: Environment variable GTEST_TEMP is expected to be a 32-bit integer, but actually has value -12345678987654321, which overflows.
+The default value 30 is used.
+[       OK ] Int32FromGTestEnvTest.ReturnsDefaultWhenValueOverflows (3 ms)
+[ RUN      ] Int32FromGTestEnvTest.ReturnsDefaultWhenValueIsInvalid
+(expecting 2 warnings)
+WARNING: Environment variable GTEST_TEMP is expected to be a 32-bit integer, but actually has value "A1".
+The default value 40 is used.
+WARNING: Environment variable GTEST_TEMP is expected to be a 32-bit integer, but actually has value "12X".
+The default value 50 is used.
+[       OK ] Int32FromGTestEnvTest.ReturnsDefaultWhenValueIsInvalid (2 ms)
+[ RUN      ] Int32FromGTestEnvTest.ParsesAndReturnsValidValue
+[       OK ] Int32FromGTestEnvTest.ParsesAndReturnsValidValue (1 ms)
+[----------] 4 tests from Int32FromGTestEnvTest (9 ms total)
+
+[----------] 4 tests from ParseInt32FlagTest
+[ RUN      ] ParseInt32FlagTest.ReturnsFalseForInvalidFlag
+[       OK ] ParseInt32FlagTest.ReturnsFalseForInvalidFlag (0 ms)
+[ RUN      ] ParseInt32FlagTest.ReturnsDefaultWhenValueOverflows
+(expecting 2 warnings)
+[       OK ] ParseInt32FlagTest.ReturnsDefaultWhenValueOverflows (1 ms)
+[ RUN      ] ParseInt32FlagTest.ReturnsDefaultWhenValueIsInvalid
+(expecting 2 warnings)
+[       OK ] ParseInt32FlagTest.ReturnsDefaultWhenValueIsInvalid (0 ms)
+[ RUN      ] ParseInt32FlagTest.ParsesAndReturnsValidValue
+[       OK ] ParseInt32FlagTest.ParsesAndReturnsValidValue (0 ms)
+[----------] 4 tests from ParseInt32FlagTest (2 ms total)
+
+[----------] 1 test from Int32FromEnvOrDieTest
+[ RUN      ] Int32FromEnvOrDieTest.ParsesAndReturnsValidValue
+[       OK ] Int32FromEnvOrDieTest.ParsesAndReturnsValidValue (0 ms)
+[----------] 1 test from Int32FromEnvOrDieTest (0 ms total)
+
+[----------] 2 tests from ShouldRunTestOnShardTest
+[ RUN      ] ShouldRunTestOnShardTest.IsPartitionWhenThereIsOneShard
+[       OK ] ShouldRunTestOnShardTest.IsPartitionWhenThereIsOneShard (1 ms)
+[ RUN      ] ShouldRunTestOnShardTest.IsPartitionWhenThereAreFiveShards
+[       OK ] ShouldRunTestOnShardTest.IsPartitionWhenThereAreFiveShards (0 ms)
+[----------] 2 tests from ShouldRunTestOnShardTest (1 ms total)
+
+[----------] 3 tests from ShouldShardTest
+[ RUN      ] ShouldShardTest.ReturnsFalseWhenNeitherEnvVarIsSet
+[       OK ] ShouldShardTest.ReturnsFalseWhenNeitherEnvVarIsSet (1 ms)
+[ RUN      ] ShouldShardTest.ReturnsFalseWhenTotalShardIsOne
+[       OK ] ShouldShardTest.ReturnsFalseWhenTotalShardIsOne (0 ms)
+[ RUN      ] ShouldShardTest.WorksWhenShardEnvVarsAreValid
+[       OK ] ShouldShardTest.WorksWhenShardEnvVarsAreValid (1 ms)
+[----------] 3 tests from ShouldShardTest (3 ms total)
+
+[----------] 1 test from UnitTestTest
+[ RUN      ] UnitTestTest.CanGetOriginalWorkingDir
+[       OK ] UnitTestTest.CanGetOriginalWorkingDir (0 ms)
+[----------] 1 test from UnitTestTest (0 ms total)
+
+[----------] 3 tests from Pred1Test
+[ RUN      ] Pred1Test.WithoutFormat
+[       OK ] Pred1Test.WithoutFormat (2 ms)
+[ RUN      ] Pred1Test.WithFormat
+[       OK ] Pred1Test.WithFormat (2 ms)
+[ RUN      ] Pred1Test.SingleEvaluationOnFailure
+[       OK ] Pred1Test.SingleEvaluationOnFailure (2 ms)
+[----------] 3 tests from Pred1Test (7 ms total)
+
+[----------] 3 tests from PredTest
+[ RUN      ] PredTest.WithoutFormat
+[       OK ] PredTest.WithoutFormat (2 ms)
+[ RUN      ] PredTest.WithFormat
+[       OK ] PredTest.WithFormat (2 ms)
+[ RUN      ] PredTest.SingleEvaluationOnFailure
+[       OK ] PredTest.SingleEvaluationOnFailure (3 ms)
+[----------] 3 tests from PredTest (8 ms total)
+
+[----------] 2 tests from PredicateAssertionTest
+[ RUN      ] PredicateAssertionTest.AcceptsOverloadedFunction
+[       OK ] PredicateAssertionTest.AcceptsOverloadedFunction (0 ms)
+[ RUN      ] PredicateAssertionTest.AcceptsTemplateFunction
+[       OK ] PredicateAssertionTest.AcceptsTemplateFunction (0 ms)
+[----------] 2 tests from PredicateAssertionTest (2 ms total)
+
+[----------] 2 tests from PredicateFormatAssertionTest
+[ RUN      ] PredicateFormatAssertionTest.AcceptsOverloadedFunction
+[       OK ] PredicateFormatAssertionTest.AcceptsOverloadedFunction (0 ms)
+[ RUN      ] PredicateFormatAssertionTest.AcceptsTemplateFunction
+[       OK ] PredicateFormatAssertionTest.AcceptsTemplateFunction (1 ms)
+[----------] 2 tests from PredicateFormatAssertionTest (1 ms total)
+
+[----------] 7 tests from StringAssertionTest
+[ RUN      ] StringAssertionTest.ASSERT_STREQ
+[       OK ] StringAssertionTest.ASSERT_STREQ (0 ms)
+[ RUN      ] StringAssertionTest.ASSERT_STREQ_Null
+[       OK ] StringAssertionTest.ASSERT_STREQ_Null (1 ms)
+[ RUN      ] StringAssertionTest.ASSERT_STREQ_Null2
+[       OK ] StringAssertionTest.ASSERT_STREQ_Null2 (2 ms)
+[ RUN      ] StringAssertionTest.ASSERT_STRNE
+[       OK ] StringAssertionTest.ASSERT_STRNE (1 ms)
+[ RUN      ] StringAssertionTest.ASSERT_STRCASEEQ
+[       OK ] StringAssertionTest.ASSERT_STRCASEEQ (0 ms)
+[ RUN      ] StringAssertionTest.ASSERT_STRCASENE
+[       OK ] StringAssertionTest.ASSERT_STRCASENE (2 ms)
+[ RUN      ] StringAssertionTest.STRNE_Wide
+[       OK ] StringAssertionTest.STRNE_Wide (4 ms)
+[----------] 7 tests from StringAssertionTest (12 ms total)
+
+[----------] 3 tests from IsSubstringTest
+[ RUN      ] IsSubstringTest.ReturnsCorrectResultForCString
+[       OK ] IsSubstringTest.ReturnsCorrectResultForCString (1 ms)
+[ RUN      ] IsSubstringTest.GeneratesCorrectMessageForCString
+[       OK ] IsSubstringTest.GeneratesCorrectMessageForCString (0 ms)
+[ RUN      ] IsSubstringTest.ReturnsCorrectResultsForStdString
+[       OK ] IsSubstringTest.ReturnsCorrectResultsForStdString (1 ms)
+[----------] 3 tests from IsSubstringTest (4 ms total)
+
+[----------] 3 tests from IsNotSubstringTest
+[ RUN      ] IsNotSubstringTest.ReturnsCorrectResultForCString
+[       OK ] IsNotSubstringTest.ReturnsCorrectResultForCString (0 ms)
+[ RUN      ] IsNotSubstringTest.ReturnsCorrectResultsForStdString
+[       OK ] IsNotSubstringTest.ReturnsCorrectResultsForStdString (1 ms)
+[ RUN      ] IsNotSubstringTest.GeneratesCorrectMessageForStdString
+[       OK ] IsNotSubstringTest.GeneratesCorrectMessageForStdString (0 ms)
+[----------] 3 tests from IsNotSubstringTest (8 ms total)
+
+[----------] 11 tests from FloatTest
+[ RUN      ] FloatTest.Size
+[       OK ] FloatTest.Size (0 ms)
+[ RUN      ] FloatTest.Zeros
+[       OK ] FloatTest.Zeros (1 ms)
+[ RUN      ] FloatTest.AlmostZeros
+[       OK ] FloatTest.AlmostZeros (1 ms)
+[ RUN      ] FloatTest.SmallDiff
+[       OK ] FloatTest.SmallDiff (1 ms)
+[ RUN      ] FloatTest.LargeDiff
+[       OK ] FloatTest.LargeDiff (1 ms)
+[ RUN      ] FloatTest.Infinity
+[       OK ] FloatTest.Infinity (1 ms)
+[ RUN      ] FloatTest.NaN
+[       OK ] FloatTest.NaN (3 ms)
+[ RUN      ] FloatTest.Reflexive
+[       OK ] FloatTest.Reflexive (0 ms)
+[ RUN      ] FloatTest.Commutative
+[       OK ] FloatTest.Commutative (2 ms)
+[ RUN      ] FloatTest.FloatLESucceeds
+[       OK ] FloatTest.FloatLESucceeds (0 ms)
+[ RUN      ] FloatTest.FloatLEFails
+[       OK ] FloatTest.FloatLEFails (4 ms)
+[----------] 11 tests from FloatTest (17 ms total)
+
+[----------] 11 tests from DoubleTest
+[ RUN      ] DoubleTest.Size
+[       OK ] DoubleTest.Size (0 ms)
+[ RUN      ] DoubleTest.Zeros
+[       OK ] DoubleTest.Zeros (1 ms)
+[ RUN      ] DoubleTest.AlmostZeros
+[       OK ] DoubleTest.AlmostZeros (2 ms)
+[ RUN      ] DoubleTest.SmallDiff
+[       OK ] DoubleTest.SmallDiff (1 ms)
+[ RUN      ] DoubleTest.LargeDiff
+[       OK ] DoubleTest.LargeDiff (1 ms)
+[ RUN      ] DoubleTest.Infinity
+[       OK ] DoubleTest.Infinity (1 ms)
+[ RUN      ] DoubleTest.NaN
+[       OK ] DoubleTest.NaN (2 ms)
+[ RUN      ] DoubleTest.Reflexive
+[       OK ] DoubleTest.Reflexive (0 ms)
+[ RUN      ] DoubleTest.Commutative
+[       OK ] DoubleTest.Commutative (1 ms)
+[ RUN      ] DoubleTest.DoubleLESucceeds
+[       OK ] DoubleTest.DoubleLESucceeds (0 ms)
+[ RUN      ] DoubleTest.DoubleLEFails
+[       OK ] DoubleTest.DoubleLEFails (5 ms)
+[----------] 11 tests from DoubleTest (16 ms total)
+
+[----------] 1 test from DisabledTest
+[ RUN      ] DisabledTest.NotDISABLED_TestShouldRun
+[       OK ] DisabledTest.NotDISABLED_TestShouldRun (0 ms)
+[----------] 1 test from DisabledTest (0 ms total)
+
+[----------] 4 tests from SingleEvaluationTest
+[ RUN      ] SingleEvaluationTest.FailedASSERT_STREQ
+[       OK ] SingleEvaluationTest.FailedASSERT_STREQ (0 ms)
+[ RUN      ] SingleEvaluationTest.ASSERT_STR
+[       OK ] SingleEvaluationTest.ASSERT_STR (1 ms)
+[ RUN      ] SingleEvaluationTest.FailedASSERT_NE
+[       OK ] SingleEvaluationTest.FailedASSERT_NE (1 ms)
+[ RUN      ] SingleEvaluationTest.OtherCases
+[       OK ] SingleEvaluationTest.OtherCases (1 ms)
+[----------] 4 tests from SingleEvaluationTest (3 ms total)
+
+[----------] 5 tests from NoFatalFailureTest
+[ RUN      ] NoFatalFailureTest.NoFailure
+[       OK ] NoFatalFailureTest.NoFailure (0 ms)
+[ RUN      ] NoFatalFailureTest.NonFatalIsNoFailure
+[       OK ] NoFatalFailureTest.NonFatalIsNoFailure (0 ms)
+[ RUN      ] NoFatalFailureTest.AssertNoFatalFailureOnFatalFailure
+[       OK ] NoFatalFailureTest.AssertNoFatalFailureOnFatalFailure (2 ms)
+[ RUN      ] NoFatalFailureTest.ExpectNoFatalFailureOnFatalFailure
+[       OK ] NoFatalFailureTest.ExpectNoFatalFailureOnFatalFailure (2 ms)
+[ RUN      ] NoFatalFailureTest.MessageIsStreamable
+[       OK ] NoFatalFailureTest.MessageIsStreamable (2 ms)
+[----------] 5 tests from NoFatalFailureTest (7 ms total)
+
+[----------] 15 tests from AssertionTest
+[ RUN      ] AssertionTest.EqFailure
+[       OK ] AssertionTest.EqFailure (2 ms)
+[ RUN      ] AssertionTest.AppendUserMessage
+[       OK ] AssertionTest.AppendUserMessage (0 ms)
+[ RUN      ] AssertionTest.ASSERT_TRUE
+[       OK ] AssertionTest.ASSERT_TRUE (1 ms)
+[ RUN      ] AssertionTest.ASSERT_FALSE
+[       OK ] AssertionTest.ASSERT_FALSE (0 ms)
+[ RUN      ] AssertionTest.ASSERT_EQ
+[       OK ] AssertionTest.ASSERT_EQ (0 ms)
+[ RUN      ] AssertionTest.ASSERT_EQ_NULL
+[       OK ] AssertionTest.ASSERT_EQ_NULL (1 ms)
+[ RUN      ] AssertionTest.ASSERT_NE
+[       OK ] AssertionTest.ASSERT_NE (2 ms)
+[ RUN      ] AssertionTest.ASSERT_LE
+[       OK ] AssertionTest.ASSERT_LE (2 ms)
+[ RUN      ] AssertionTest.ASSERT_LT
+[       OK ] AssertionTest.ASSERT_LT (1 ms)
+[ RUN      ] AssertionTest.ASSERT_GE
+[       OK ] AssertionTest.ASSERT_GE (0 ms)
+[ RUN      ] AssertionTest.ASSERT_GT
+[       OK ] AssertionTest.ASSERT_GT (1 ms)
+[ RUN      ] AssertionTest.AssertPrecedence
+[       OK ] AssertionTest.AssertPrecedence (0 ms)
+[ RUN      ] AssertionTest.NonFixtureSubroutine
+[       OK ] AssertionTest.NonFixtureSubroutine (0 ms)
+[ RUN      ] AssertionTest.AssertWorksWithUncopyableObject
+[       OK ] AssertionTest.AssertWorksWithUncopyableObject (2 ms)
+[ RUN      ] AssertionTest.ExpectWorksWithUncopyableObject
+[       OK ] AssertionTest.ExpectWorksWithUncopyableObject (1 ms)
+[----------] 15 tests from AssertionTest (24 ms total)
+
+[----------] 14 tests from ExpectTest
+[ RUN      ] ExpectTest.ASSERT_EQ_Double
+[       OK ] ExpectTest.ASSERT_EQ_Double (2 ms)
+[ RUN      ] ExpectTest.ASSERT_EQ_0
+[       OK ] ExpectTest.ASSERT_EQ_0 (2 ms)
+[ RUN      ] ExpectTest.EXPECT_TRUE
+[       OK ] ExpectTest.EXPECT_TRUE (1 ms)
+[ RUN      ] ExpectTest.EXPECT_FALSE
+[       OK ] ExpectTest.EXPECT_FALSE (0 ms)
+[ RUN      ] ExpectTest.EXPECT_EQ
+[       OK ] ExpectTest.EXPECT_EQ (1 ms)
+[ RUN      ] ExpectTest.EXPECT_EQ_Double
+[       OK ] ExpectTest.EXPECT_EQ_Double (0 ms)
+[ RUN      ] ExpectTest.EXPECT_EQ_NULL
+[       OK ] ExpectTest.EXPECT_EQ_NULL (1 ms)
+[ RUN      ] ExpectTest.EXPECT_EQ_0
+[       OK ] ExpectTest.EXPECT_EQ_0 (2 ms)
+[ RUN      ] ExpectTest.EXPECT_NE
+[       OK ] ExpectTest.EXPECT_NE (4 ms)
+[ RUN      ] ExpectTest.EXPECT_LE
+[       OK ] ExpectTest.EXPECT_LE (1 ms)
+[ RUN      ] ExpectTest.EXPECT_LT
+[       OK ] ExpectTest.EXPECT_LT (2 ms)
+[ RUN      ] ExpectTest.EXPECT_GE
+[       OK ] ExpectTest.EXPECT_GE (2 ms)
+[ RUN      ] ExpectTest.EXPECT_GT
+[       OK ] ExpectTest.EXPECT_GT (1 ms)
+[ RUN      ] ExpectTest.ExpectPrecedence
+[       OK ] ExpectTest.ExpectPrecedence (0 ms)
+[----------] 14 tests from ExpectTest (26 ms total)
+
+[----------] 3 tests from AssertionSyntaxTest
+[ RUN      ] AssertionSyntaxTest.BasicAssertionsBehavesLikeSingleStatement
+[       OK ] AssertionSyntaxTest.BasicAssertionsBehavesLikeSingleStatement (0 ms)
+[ RUN      ] AssertionSyntaxTest.NoFatalFailureAssertionsBehavesLikeSingleStatement
+[       OK ] AssertionSyntaxTest.NoFatalFailureAssertionsBehavesLikeSingleStatement (0 ms)
+[ RUN      ] AssertionSyntaxTest.WorksWithSwitch
+[       OK ] AssertionSyntaxTest.WorksWithSwitch (0 ms)
+[----------] 3 tests from AssertionSyntaxTest (1 ms total)
+
+[----------] 5 tests from SuccessfulAssertionTest
+[ RUN      ] SuccessfulAssertionTest.SUCCEED
+[       OK ] SuccessfulAssertionTest.SUCCEED (1 ms)
+[ RUN      ] SuccessfulAssertionTest.EXPECT
+[       OK ] SuccessfulAssertionTest.EXPECT (0 ms)
+[ RUN      ] SuccessfulAssertionTest.EXPECT_STR
+[       OK ] SuccessfulAssertionTest.EXPECT_STR (0 ms)
+[ RUN      ] SuccessfulAssertionTest.ASSERT
+[       OK ] SuccessfulAssertionTest.ASSERT (0 ms)
+[ RUN      ] SuccessfulAssertionTest.ASSERT_STR
+[       OK ] SuccessfulAssertionTest.ASSERT_STR (0 ms)
+[----------] 5 tests from SuccessfulAssertionTest (2 ms total)
+
+[----------] 5 tests from StreamableToStringTest
+[ RUN      ] StreamableToStringTest.Scalar
+[       OK ] StreamableToStringTest.Scalar (0 ms)
+[ RUN      ] StreamableToStringTest.Pointer
+[       OK ] StreamableToStringTest.Pointer (0 ms)
+[ RUN      ] StreamableToStringTest.NullPointer
+[       OK ] StreamableToStringTest.NullPointer (1 ms)
+[ RUN      ] StreamableToStringTest.CString
+[       OK ] StreamableToStringTest.CString (0 ms)
+[ RUN      ] StreamableToStringTest.NullCString
+[       OK ] StreamableToStringTest.NullCString (0 ms)
+[----------] 5 tests from StreamableToStringTest (5 ms total)
+
+[----------] 6 tests from StreamableTest
+[ RUN      ] StreamableTest.string
+[       OK ] StreamableTest.string (0 ms)
+[ RUN      ] StreamableTest.stringWithEmbeddedNUL
+[       OK ] StreamableTest.stringWithEmbeddedNUL (0 ms)
+[ RUN      ] StreamableTest.NULChar
+[       OK ] StreamableTest.NULChar (0 ms)
+[ RUN      ] StreamableTest.int
+[       OK ] StreamableTest.int (1 ms)
+[ RUN      ] StreamableTest.NullCharPtr
+[       OK ] StreamableTest.NullCharPtr (0 ms)
+[ RUN      ] StreamableTest.BasicIoManip
+[       OK ] StreamableTest.BasicIoManip (1 ms)
+[----------] 6 tests from StreamableTest (4 ms total)
+
+[----------] 3 tests from MacroTest
+[ RUN      ] MacroTest.ADD_FAILURE
+[       OK ] MacroTest.ADD_FAILURE (1 ms)
+[ RUN      ] MacroTest.FAIL
+[       OK ] MacroTest.FAIL (0 ms)
+[ RUN      ] MacroTest.SUCCEED
+[       OK ] MacroTest.SUCCEED (1 ms)
+[----------] 3 tests from MacroTest (3 ms total)
+
+[----------] 8 tests from EqAssertionTest
+[ RUN      ] EqAssertionTest.Bool
+[       OK ] EqAssertionTest.Bool (1 ms)
+[ RUN      ] EqAssertionTest.Int
+[       OK ] EqAssertionTest.Int (2 ms)
+[ RUN      ] EqAssertionTest.Time_T
+[       OK ] EqAssertionTest.Time_T (2 ms)
+[ RUN      ] EqAssertionTest.Char
+[       OK ] EqAssertionTest.Char (2 ms)
+[ RUN      ] EqAssertionTest.StdString
+[       OK ] EqAssertionTest.StdString (4 ms)
+[ RUN      ] EqAssertionTest.CharPointer
+[       OK ] EqAssertionTest.CharPointer (2 ms)
+[ RUN      ] EqAssertionTest.WideCharPointer
+[       OK ] EqAssertionTest.WideCharPointer (2 ms)
+[ RUN      ] EqAssertionTest.OtherPointer
+[       OK ] EqAssertionTest.OtherPointer (0 ms)
+[----------] 8 tests from EqAssertionTest (16 ms total)
+
+[----------] 1 test from FRIEND_TEST_Test
+[ RUN      ] FRIEND_TEST_Test.TEST
+[       OK ] FRIEND_TEST_Test.TEST (0 ms)
+[----------] 1 test from FRIEND_TEST_Test (0 ms total)
+
+[----------] 1 test from FRIEND_TEST_Test2
+[ RUN      ] FRIEND_TEST_Test2.TEST_F
+[       OK ] FRIEND_TEST_Test2.TEST_F (0 ms)
+[----------] 1 test from FRIEND_TEST_Test2 (1 ms total)
+
+[----------] 2 tests from TestLifeCycleTest
+[ RUN      ] TestLifeCycleTest.Test1
+[       OK ] TestLifeCycleTest.Test1 (0 ms)
+[ RUN      ] TestLifeCycleTest.Test2
+[       OK ] TestLifeCycleTest.Test2 (0 ms)
+[----------] 2 tests from TestLifeCycleTest (0 ms total)
+
+[----------] 5 tests from MessageTest
+[ RUN      ] MessageTest.CanStreamUserTypeInGlobalNameSpace
+[       OK ] MessageTest.CanStreamUserTypeInGlobalNameSpace (0 ms)
+[ RUN      ] MessageTest.CanStreamUserTypeInUnnamedNameSpace
+[       OK ] MessageTest.CanStreamUserTypeInUnnamedNameSpace (0 ms)
+[ RUN      ] MessageTest.CanStreamUserTypeInUserNameSpace
+[       OK ] MessageTest.CanStreamUserTypeInUserNameSpace (2 ms)
+[ RUN      ] MessageTest.CanStreamUserTypeInUserNameSpaceWithStreamOperatorInGlobal
+[       OK ] MessageTest.CanStreamUserTypeInUserNameSpaceWithStreamOperatorInGlobal (0 ms)
+[ RUN      ] MessageTest.NullPointers
+[       OK ] MessageTest.NullPointers (0 ms)
+[----------] 5 tests from MessageTest (5 ms total)
+
+[----------] 2 tests from TestInfoTest
+[ RUN      ] TestInfoTest.Names
+[       OK ] TestInfoTest.Names (1 ms)
+[ RUN      ] TestInfoTest.result
+[       OK ] TestInfoTest.result (0 ms)
+[----------] 2 tests from TestInfoTest (2 ms total)
+
+[----------] 2 tests from SetUpTestCaseTest
+Setting up the test case . . .
+[ RUN      ] SetUpTestCaseTest.Test1
+[       OK ] SetUpTestCaseTest.Test1 (0 ms)
+[ RUN      ] SetUpTestCaseTest.Test2
+[       OK ] SetUpTestCaseTest.Test2 (0 ms)
+Tearing down the test case . . .
+[----------] 2 tests from SetUpTestCaseTest (2 ms total)
+
+[----------] 35 tests from InitGoogleTestTest
+[ RUN      ] InitGoogleTestTest.Empty
+[       OK ] InitGoogleTestTest.Empty (0 ms)
+[ RUN      ] InitGoogleTestTest.NoFlag
+[       OK ] InitGoogleTestTest.NoFlag (0 ms)
+[ RUN      ] InitGoogleTestTest.FilterBad
+[       OK ] InitGoogleTestTest.FilterBad (0 ms)
+[ RUN      ] InitGoogleTestTest.FilterEmpty
+[       OK ] InitGoogleTestTest.FilterEmpty (1 ms)
+[ RUN      ] InitGoogleTestTest.FilterNonEmpty
+[       OK ] InitGoogleTestTest.FilterNonEmpty (0 ms)
+[ RUN      ] InitGoogleTestTest.BreakOnFailureNoDef
+[       OK ] InitGoogleTestTest.BreakOnFailureNoDef (1 ms)
+[ RUN      ] InitGoogleTestTest.BreakOnFailureFalse_0
+[       OK ] InitGoogleTestTest.BreakOnFailureFalse_0 (0 ms)
+[ RUN      ] InitGoogleTestTest.BreakOnFailureFalse_f
+[       OK ] InitGoogleTestTest.BreakOnFailureFalse_f (1 ms)
+[ RUN      ] InitGoogleTestTest.BreakOnFailureFalse_F
+[       OK ] InitGoogleTestTest.BreakOnFailureFalse_F (0 ms)
+[ RUN      ] InitGoogleTestTest.BreakOnFailureTrue
+[       OK ] InitGoogleTestTest.BreakOnFailureTrue (1 ms)
+[ RUN      ] InitGoogleTestTest.CatchExceptions
+[       OK ] InitGoogleTestTest.CatchExceptions (1 ms)
+[ RUN      ] InitGoogleTestTest.DeathTestUseFork
+[       OK ] InitGoogleTestTest.DeathTestUseFork (0 ms)
+[ RUN      ] InitGoogleTestTest.DuplicatedFlags
+[       OK ] InitGoogleTestTest.DuplicatedFlags (2 ms)
+[ RUN      ] InitGoogleTestTest.UnrecognizedFlag
+[       OK ] InitGoogleTestTest.UnrecognizedFlag (0 ms)
+[ RUN      ] InitGoogleTestTest.ListTestsFlag
+[       OK ] InitGoogleTestTest.ListTestsFlag (0 ms)
+[ RUN      ] InitGoogleTestTest.ListTestsTrue
+[       OK ] InitGoogleTestTest.ListTestsTrue (0 ms)
+[ RUN      ] InitGoogleTestTest.ListTestsFalse
+[       OK ] InitGoogleTestTest.ListTestsFalse (0 ms)
+[ RUN      ] InitGoogleTestTest.ListTestsFalse_f
+[       OK ] InitGoogleTestTest.ListTestsFalse_f (0 ms)
+[ RUN      ] InitGoogleTestTest.ListTestsFalse_F
+[       OK ] InitGoogleTestTest.ListTestsFalse_F (0 ms)
+[ RUN      ] InitGoogleTestTest.OutputEmpty
+[       OK ] InitGoogleTestTest.OutputEmpty (0 ms)
+[ RUN      ] InitGoogleTestTest.OutputXml
+[       OK ] InitGoogleTestTest.OutputXml (1 ms)
+[ RUN      ] InitGoogleTestTest.OutputXmlFile
+[       OK ] InitGoogleTestTest.OutputXmlFile (0 ms)
+[ RUN      ] InitGoogleTestTest.OutputXmlDirectory
+[       OK ] InitGoogleTestTest.OutputXmlDirectory (1 ms)
+[ RUN      ] InitGoogleTestTest.PrintTimeFlag
+[       OK ] InitGoogleTestTest.PrintTimeFlag (0 ms)
+[ RUN      ] InitGoogleTestTest.PrintTimeTrue
+[       OK ] InitGoogleTestTest.PrintTimeTrue (1 ms)
+[ RUN      ] InitGoogleTestTest.PrintTimeFalse
+[       OK ] InitGoogleTestTest.PrintTimeFalse (0 ms)
+[ RUN      ] InitGoogleTestTest.PrintTimeFalse_f
+[       OK ] InitGoogleTestTest.PrintTimeFalse_f (1 ms)
+[ RUN      ] InitGoogleTestTest.PrintTimeFalse_F
+[       OK ] InitGoogleTestTest.PrintTimeFalse_F (0 ms)
+[ RUN      ] InitGoogleTestTest.Repeat
+[       OK ] InitGoogleTestTest.Repeat (2 ms)
+[ RUN      ] InitGoogleTestTest.AlsoRunDisabledTestsFlag
+[       OK ] InitGoogleTestTest.AlsoRunDisabledTestsFlag (0 ms)
+[ RUN      ] InitGoogleTestTest.AlsoRunDisabledTestsTrue
+[       OK ] InitGoogleTestTest.AlsoRunDisabledTestsTrue (2 ms)
+[ RUN      ] InitGoogleTestTest.AlsoRunDisabledTestsFalse
+[       OK ] InitGoogleTestTest.AlsoRunDisabledTestsFalse (0 ms)
+[ RUN      ] InitGoogleTestTest.ThrowOnFailureNoDef
+[       OK ] InitGoogleTestTest.ThrowOnFailureNoDef (2 ms)
+[ RUN      ] InitGoogleTestTest.ThrowOnFailureFalse_0
+[       OK ] InitGoogleTestTest.ThrowOnFailureFalse_0 (0 ms)
+[ RUN      ] InitGoogleTestTest.ThrowOnFailureTrue
+[       OK ] InitGoogleTestTest.ThrowOnFailureTrue (2 ms)
+[----------] 35 tests from InitGoogleTestTest (30 ms total)
+
+[----------] 2 tests from CurrentTestInfoTest
+[ RUN      ] CurrentTestInfoTest.WorksForFirstTestInATestCase
+[       OK ] CurrentTestInfoTest.WorksForFirstTestInATestCase (0 ms)
+[ RUN      ] CurrentTestInfoTest.WorksForSecondTestInATestCase
+[       OK ] CurrentTestInfoTest.WorksForSecondTestInATestCase (0 ms)
+[----------] 2 tests from CurrentTestInfoTest (2 ms total)
+
+[----------] 2 tests from NestedTestingNamespaceTest
+[ RUN      ] NestedTestingNamespaceTest.Success
+[       OK ] NestedTestingNamespaceTest.Success (0 ms)
+[ RUN      ] NestedTestingNamespaceTest.Failure
+[       OK ] NestedTestingNamespaceTest.Failure (0 ms)
+[----------] 2 tests from NestedTestingNamespaceTest (2 ms total)
+
+[----------] 10 tests from StreamingAssertionsTest
+[ RUN      ] StreamingAssertionsTest.Unconditional
+[       OK ] StreamingAssertionsTest.Unconditional (1 ms)
+[ RUN      ] StreamingAssertionsTest.Truth
+[       OK ] StreamingAssertionsTest.Truth (1 ms)
+[ RUN      ] StreamingAssertionsTest.Truth2
+[       OK ] StreamingAssertionsTest.Truth2 (0 ms)
+[ RUN      ] StreamingAssertionsTest.IntegerEquals
+[       OK ] StreamingAssertionsTest.IntegerEquals (2 ms)
+[ RUN      ] StreamingAssertionsTest.IntegerLessThan
+[       OK ] StreamingAssertionsTest.IntegerLessThan (2 ms)
+[ RUN      ] StreamingAssertionsTest.StringsEqual
+[       OK ] StreamingAssertionsTest.StringsEqual (1 ms)
+[ RUN      ] StreamingAssertionsTest.StringsNotEqual
+[       OK ] StreamingAssertionsTest.StringsNotEqual (1 ms)
+[ RUN      ] StreamingAssertionsTest.StringsEqualIgnoringCase
+[       OK ] StreamingAssertionsTest.StringsEqualIgnoringCase (1 ms)
+[ RUN      ] StreamingAssertionsTest.StringNotEqualIgnoringCase
+[       OK ] StreamingAssertionsTest.StringNotEqualIgnoringCase (2 ms)
+[ RUN      ] StreamingAssertionsTest.FloatingPointEquals
+[       OK ] StreamingAssertionsTest.FloatingPointEquals (3 ms)
+[----------] 10 tests from StreamingAssertionsTest (23 ms total)
+
+[----------] 6 tests from ColoredOutputTest
+[ RUN      ] ColoredOutputTest.UsesColorsWhenGTestColorFlagIsYes
+[       OK ] ColoredOutputTest.UsesColorsWhenGTestColorFlagIsYes (0 ms)
+[ RUN      ] ColoredOutputTest.UsesColorsWhenGTestColorFlagIsAliasOfYes
+[       OK ] ColoredOutputTest.UsesColorsWhenGTestColorFlagIsAliasOfYes (0 ms)
+[ RUN      ] ColoredOutputTest.UsesNoColorWhenGTestColorFlagIsNo
+[       OK ] ColoredOutputTest.UsesNoColorWhenGTestColorFlagIsNo (0 ms)
+[ RUN      ] ColoredOutputTest.UsesNoColorWhenGTestColorFlagIsInvalid
+[       OK ] ColoredOutputTest.UsesNoColorWhenGTestColorFlagIsInvalid (0 ms)
+[ RUN      ] ColoredOutputTest.UsesColorsWhenStdoutIsTty
+[       OK ] ColoredOutputTest.UsesColorsWhenStdoutIsTty (0 ms)
+[ RUN      ] ColoredOutputTest.UsesColorsWhenTermSupportsColors
+[       OK ] ColoredOutputTest.UsesColorsWhenTermSupportsColors (0 ms)
+[----------] 6 tests from ColoredOutputTest (2 ms total)
+
+[----------] 2 tests from StaticAssertTypeEqTest
+[ RUN      ] StaticAssertTypeEqTest.WorksInClass
+[       OK ] StaticAssertTypeEqTest.WorksInClass (0 ms)
+[ RUN      ] StaticAssertTypeEqTest.CompilesForEqualTypes
+[       OK ] StaticAssertTypeEqTest.CompilesForEqualTypes (0 ms)
+[----------] 2 tests from StaticAssertTypeEqTest (0 ms total)
+
+[----------] 2 tests from ThreadLocalTest
+[ RUN      ] ThreadLocalTest.DefaultConstructor
+[       OK ] ThreadLocalTest.DefaultConstructor (0 ms)
+[ RUN      ] ThreadLocalTest.Init
+[       OK ] ThreadLocalTest.Init (4 ms)
+[----------] 2 tests from ThreadLocalTest (5 ms total)
+
+[----------] 1 test from GetCurrentOsStackTraceExceptTopTest
+[ RUN      ] GetCurrentOsStackTraceExceptTopTest.ReturnsTheStackTrace
+[       OK ] GetCurrentOsStackTraceExceptTopTest.ReturnsTheStackTrace (1 ms)
+[----------] 1 test from GetCurrentOsStackTraceExceptTopTest (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 268 tests from 55 test cases ran. (325 ms total)
+[  PASSED  ] 268 tests.
+
+  YOU HAVE 12 DISABLED TESTS
+

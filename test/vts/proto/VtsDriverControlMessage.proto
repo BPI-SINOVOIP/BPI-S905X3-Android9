@@ -1,0 +1,124 @@
+// Copyright 2016 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto2";
+
+package android.vts;
+
+
+// Type of a command.
+enum VtsDriverCommandType {
+  UNKNOWN_VTS_DRIVER_COMMAND_TYPE = 0;
+
+  // To request to exit a driver.
+  EXIT = 1;
+  // To get the status of a driver.
+  GET_STATUS = 2;
+
+  // for a HAL driver
+  // To request to load a HAL.
+  LOAD_HAL = 101;
+  // To get a list of available functions.
+  LIST_FUNCTIONS = 102;
+  // To call a function.
+  CALL_FUNCTION = 103;
+  // To get the value of an attribute.
+  GET_ATTRIBUTE = 104;
+  // To read the specification message of a component.
+  VTS_DRIVER_COMMAND_READ_SPECIFICATION = 105;
+
+  // for a shell driver
+  // To execute a shell command.
+  EXECUTE_COMMAND = 201;
+
+  // To invoke a system call.
+  INVOKE_SYSCALL = 202;
+}
+
+
+// Type of a response.
+enum VtsDriverResponseCode {
+  UNKNOWN_VTS_DRIVER_RESPONSE_CODE = 0;
+  // successful
+  VTS_DRIVER_RESPONSE_SUCCESS = 1;
+  // failed
+  VTS_DRIVER_RESPONSE_FAIL = 2;
+}
+
+
+// To specify a command.
+message VtsDriverControlCommandMessage {
+  // Command type.
+  optional VtsDriverCommandType command_type = 1;
+
+  // for EXIT
+  // none
+
+  // for GET_STATUS
+  optional int32 status_type = 1101;
+
+  // for LOAD_HAL
+  // The name of a target.
+  optional bytes file_path = 1201;
+  // target class
+  optional int32 target_class = 1202;
+  // target type
+  optional int32 target_type = 1203;
+  // target version (should be divided by 100) - float has a compatibility issue
+  // between C/C++ and python protoc.
+  optional float target_version = 1204;
+  // the name of a HAL module to open.
+  optional bytes module_name = 1205;
+  // the package of a HIDL HAL to open.
+  optional bytes target_package = 1206;
+  // the name of a target component (currently used for HIDL HALs only).
+  optional bytes target_component_name = 1207;
+
+  // the name of a HW Binder service to use (only needed for HIDL HAL).
+  optional bytes hw_binder_service_name = 1221;
+
+  // for LIST_FUNCTIONS
+  // none
+
+  // for CALL_FUNCTION
+  optional bytes arg = 1401;
+
+  // UID of a caller on the driver-side.
+  optional bytes driver_caller_uid = 1501;
+
+  // for EXECUTE_COMMAND
+  repeated bytes shell_command = 2001;
+}
+
+
+// To specify a response.
+message VtsDriverControlResponseMessage {
+  // Response type.
+  optional VtsDriverResponseCode response_code = 1;
+
+  // Return value.
+  optional int32 return_value = 11;
+  // Return message.
+  optional bytes return_message = 12;
+
+  // The stdout message for each command
+  repeated bytes stdout = 1001;
+  // The stderr message for each command
+  repeated bytes stderr = 1002;
+  // The exit code for each command
+  repeated int32 exit_code = 1003;
+
+  // The retrieved specifications.
+  repeated bytes spec = 2001;
+}

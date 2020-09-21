@@ -1,0 +1,45 @@
+component_class: KERNEL
+component_type: SYSCALL
+component_type_version: 3.10
+
+target_arch: TARGET_ARCH_ARM64
+
+header: "<syscalls.h>"
+
+api: {
+  name: "mkdir"
+  syscall_number: 1030
+  return_type: {
+    type: TYPE_SCALAR
+    scalar_type: "uint64_t"
+  }
+  arg: {
+    type: TYPE_SCALAR
+    scalar_type: "char_pointer"
+    is_const: true
+  }
+  arg: {
+    type: TYPE_PREDEFINED
+    predefined_type: "umode_t"
+  }
+}
+
+api: {
+  name: "rmdir"
+  syscall_number: 1031
+  return_type: {
+    type: TYPE_SCALAR
+    scalar_type: "uint64_t"
+  }
+  arg: {
+    type: TYPE_SCALAR
+    predefined_type: "char_pointer"
+    is_const: true
+  }
+}
+
+attribute {
+  name: "umode_t"
+  type: TYPE_SCALAR
+  scalar_type: "uint8_t"
+}

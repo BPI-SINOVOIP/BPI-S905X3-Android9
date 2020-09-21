@@ -1,0 +1,40 @@
+/* Copyright (C) 2017 The Android Open Source Project
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+*/
+
+.row .col.card.option {
+    padding: 10px 15px 10px 25px;
+    margin: 5px 0;
+    border-radius: 25px;
+}
+.entry {
+    font-size: 20px;
+    font-weight: 300;
+    position: relative;
+}
+#show-button-arrow {
+    margin-left: 3px;
+}
+#section-header {
+    cursor: default;
+    user-select: none;
+    color: #ee6e73;
+}
+#section-header:after {
+    border: 1px solid #ee6e73;
+    margin-top: 10px;
+    margin-bottom: 0;
+    display: block;
+    content: " ";
+}

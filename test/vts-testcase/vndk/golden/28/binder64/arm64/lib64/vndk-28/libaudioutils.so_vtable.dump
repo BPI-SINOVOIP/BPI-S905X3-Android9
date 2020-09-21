@@ -1,0 +1,22 @@
+vtable for audio_utils_fifo_provider
+_ZTV25audio_utils_fifo_provider: 2 entries
+16    (int (*)(...)) _ZN25audio_utils_fifo_providerD2Ev
+24    (int (*)(...)) _ZN25audio_utils_fifo_providerD0Ev
+
+
+vtable for audio_utils_fifo_writer
+_ZTV23audio_utils_fifo_writer: 5 entries
+16    (int (*)(...)) _ZN25audio_utils_fifo_providerD2Ev
+24    (int (*)(...)) _ZN23audio_utils_fifo_writerD0Ev
+32    (int (*)(...)) _ZN23audio_utils_fifo_writer6obtainEP17audio_utils_iovecmPK8timespec
+40    (int (*)(...)) _ZN23audio_utils_fifo_writer7releaseEm
+48    (int (*)(...)) _ZN23audio_utils_fifo_writer9availableEv
+
+
+vtable for audio_utils_fifo_reader
+_ZTV23audio_utils_fifo_reader: 5 entries
+16    (int (*)(...)) _ZN25audio_utils_fifo_providerD2Ev
+24    (int (*)(...)) _ZN23audio_utils_fifo_readerD0Ev
+32    (int (*)(...)) _ZN23audio_utils_fifo_reader6obtainEP17audio_utils_iovecmPK8timespec
+40    (int (*)(...)) _ZN23audio_utils_fifo_reader7releaseEm
+48    (int (*)(...)) _ZN23audio_utils_fifo_reader9availableEv

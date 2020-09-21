@@ -1,0 +1,118 @@
+{
+  "basePath": "/_ah/api",
+  "consumes": [
+    "application/json"
+  ],
+  "definitions": {
+    "WebappSrcProtoModelDefaultResponse": {
+      "properties": {
+        "return_code": {
+          "enum": [
+            "SUCCESS",
+            "FAIL"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "WebappSrcProtoModelLabHostInfoMessage": {
+      "properties": {
+        "hostname": {
+          "type": "string"
+        },
+        "ip": {
+          "type": "string"
+        },
+        "script": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "WebappSrcProtoModelLabInfoMessage": {
+      "properties": {
+        "host": {
+          "items": {
+            "$ref": "#/definitions/WebappSrcProtoModelLabHostInfoMessage"
+          },
+          "type": "array"
+        },
+        "name": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "host": "vtslab-schedule-prod.appspot.com",
+  "info": {
+    "title": "lab_info",
+    "version": "v1"
+  },
+  "paths": {
+    "/lab_info/v1/clear": {
+      "post": {
+        "operationId": "LabInfoApi_clear",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/WebappSrcProtoModelLabInfoMessage"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response",
+            "schema": {
+              "$ref": "#/definitions/WebappSrcProtoModelDefaultResponse"
+            }
+          }
+        }
+      }
+    },
+    "/lab_info/v1/set": {
+      "post": {
+        "operationId": "LabInfoApi_set",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/WebappSrcProtoModelLabInfoMessage"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response",
+            "schema": {
+              "$ref": "#/definitions/WebappSrcProtoModelDefaultResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "https"
+  ],
+  "securityDefinitions": {
+    "google_id_token": {
+      "authorizationUrl": "",
+      "flow": "implicit",
+      "type": "oauth2",
+      "x-google-issuer": "https://accounts.google.com",
+      "x-google-jwks_uri": "https://www.googleapis.com/oauth2/v3/certs"
+    }
+  },
+  "swagger": "2.0"
+}

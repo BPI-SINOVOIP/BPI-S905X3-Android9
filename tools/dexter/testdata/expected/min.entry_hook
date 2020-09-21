@@ -1,0 +1,13 @@
+
+method Minimal.<init>():void
+{
+	.src "min.java"
+	.line 2
+	.prologue_end
+	.line 2
+	    0| invoke-static/range {v2..v2}, Tracer.OnEntry(Minimal):void
+	    3| move-object v0, v2
+	    4| move-object v1, v0
+	    5| invoke-direct {v1}, java.lang.Object.<init>():void
+	    8| return-void
+}

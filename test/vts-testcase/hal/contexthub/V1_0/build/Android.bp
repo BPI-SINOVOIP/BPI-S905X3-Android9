@@ -1,0 +1,99 @@
+// This file was auto-generated. Do not edit manually.
+// Use launch_hal_test.py or update_makefiles.py in test/vts-testcase/hal/script/ to generate this file.
+
+// Generate .vts spec files.
+hal2vts {
+    name: "android.hardware.contexthub@1.0-vts.spec",
+    hidl_gen_args: "-r android.hardware:hardware/interfaces",
+    srcs: [
+        ":android.hardware.contexthub@1.0_hal",
+    ],
+    out: [
+        "android/hardware/contexthub/1.0/Contexthub.vts",
+        "android/hardware/contexthub/1.0/ContexthubCallback.vts",
+        "android/hardware/contexthub/1.0/types.vts",
+    ],
+}
+
+// Build VTS driver.
+genrule {
+    name: "android.hardware.contexthub@1.0-vts.driver_genc++",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -r android.hardware:hardware/interfaces android.hardware.contexthub@1.0 && $(location vtsc) -mDRIVER -tSOURCE -b$(genDir) android/hardware/contexthub/1.0/ $(genDir)/android/hardware/contexthub/1.0/",
+    srcs: [
+        ":android.hardware.contexthub@1.0_hal",
+    ],
+    out: [
+        "android/hardware/contexthub/1.0/Contexthub.vts.cpp",
+        "android/hardware/contexthub/1.0/ContexthubCallback.vts.cpp",
+        "android/hardware/contexthub/1.0/types.vts.cpp",
+    ],
+}
+
+genrule {
+    name: "android.hardware.contexthub@1.0-vts.driver_genc++_headers",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -r android.hardware:hardware/interfaces android.hardware.contexthub@1.0 && $(location vtsc) -mDRIVER -tHEADER -b$(genDir) android/hardware/contexthub/1.0/ $(genDir)/android/hardware/contexthub/1.0/",
+    srcs: [
+        ":android.hardware.contexthub@1.0_hal",
+    ],
+    out: [
+        "android/hardware/contexthub/1.0/Contexthub.vts.h",
+        "android/hardware/contexthub/1.0/ContexthubCallback.vts.h",
+        "android/hardware/contexthub/1.0/types.vts.h",
+    ],
+}
+
+cc_library_shared {
+    name: "android.hardware.contexthub@1.0-vts.driver",
+    generated_sources: ["android.hardware.contexthub@1.0-vts.driver_genc++"],
+    generated_headers: ["android.hardware.contexthub@1.0-vts.driver_genc++_headers"],
+    export_generated_headers: ["android.hardware.contexthub@1.0-vts.driver_genc++_headers"],
+    defaults: ["VtsHalDriverDefaults"],
+    shared_libs: [],
+    static_libs: [
+        "android.hardware.contexthub@1.0",
+    ],
+}
+
+// Build VTS profiler.
+genrule {
+    name: "android.hardware.contexthub@1.0-vts.profiler_genc++",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -r android.hardware:hardware/interfaces android.hardware.contexthub@1.0 && $(location vtsc) -mPROFILER -tSOURCE -b$(genDir) android/hardware/contexthub/1.0/ $(genDir)/android/hardware/contexthub/1.0/",
+    srcs: [
+        ":android.hardware.contexthub@1.0_hal",
+    ],
+    out: [
+        "android/hardware/contexthub/1.0/Contexthub.vts.cpp",
+        "android/hardware/contexthub/1.0/ContexthubCallback.vts.cpp",
+        "android/hardware/contexthub/1.0/types.vts.cpp",
+    ],
+}
+
+genrule {
+    name: "android.hardware.contexthub@1.0-vts.profiler_genc++_headers",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -r android.hardware:hardware/interfaces android.hardware.contexthub@1.0 && $(location vtsc) -mPROFILER -tHEADER -b$(genDir) android/hardware/contexthub/1.0/ $(genDir)/android/hardware/contexthub/1.0/",
+    srcs: [
+        ":android.hardware.contexthub@1.0_hal",
+    ],
+    out: [
+        "android/hardware/contexthub/1.0/Contexthub.vts.h",
+        "android/hardware/contexthub/1.0/ContexthubCallback.vts.h",
+        "android/hardware/contexthub/1.0/types.vts.h",
+    ],
+}
+
+cc_library_shared {
+    name: "android.hardware.contexthub@1.0-vts.profiler",
+    generated_sources: ["android.hardware.contexthub@1.0-vts.profiler_genc++"],
+    generated_headers: ["android.hardware.contexthub@1.0-vts.profiler_genc++_headers"],
+    export_generated_headers: ["android.hardware.contexthub@1.0-vts.profiler_genc++_headers"],
+    defaults: ["VtsHalProfilerDefaults"],
+    shared_libs: [],
+    static_libs: [
+        "android.hardware.contexthub@1.0",
+    ],
+}
+

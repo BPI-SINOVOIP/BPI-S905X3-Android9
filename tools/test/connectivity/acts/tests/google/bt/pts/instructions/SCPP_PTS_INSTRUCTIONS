@@ -1,0 +1,56 @@
+# Copyright (C) 2016 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may not
+# use this file except in compliance with the License. You may obtain a copy of
+# the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations under
+# the License.
+
+ScPP
+=================================================================
+
+TC_SCPP_CL_SPDS_BV_01_I
+  gattc_connect_over_le
+  gattc_disconnect
+  [PTS Interaction] Verify values
+
+TC_SCPP_CL_SPDC_BV_01_I
+  gattc_connect_over_le
+  gattc_disconnect
+  [PTS Interaction] Verify values
+
+TC_SCPP_CL_SPDC_BV_02_I
+  gattc_connect_over_le
+  gattc_disconnect
+  [PTS Interaction] Verify values
+
+TC_SCPP_CL_SPDC_BV_03_I
+  gattc_connect_over_le
+  gattc_disconnect
+  [PTS Interaction] Verify values
+
+TC_SCPP_CL_SPWF_BV_01_I
+  Have NRF (nordic app installed and running)
+  gattc_connect_over_le
+  gattc_enable_notification_desc_by_instance_id 0075
+  From nordic send a write command to the Scan Refresh Characteristic of any text value.
+  gattc_disconnect
+
+TC_SCPP_CL_SPCF_BV_01_I
+  gattc_connect_over_le
+  gattc_enable_notification_desc_by_instance_id 0075
+  gattc_disconnect
+
+TC_SCPP_CL_SPNF_BV_01_I
+  Have NRF (nordic app installed and running)
+  gattc_connect_over_le
+  gattc_enable_notification_desc_by_instance_id 0075
+  From nordic send a write command to the Scan Refresh Characteristic of any text value.
+  gattc_disconnect
+

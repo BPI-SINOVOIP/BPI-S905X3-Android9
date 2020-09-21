@@ -1,0 +1,76 @@
+vtable for tinyxml2::XMLNode
+_ZTVN8tinyxml27XMLNodeE: 3 entries
+68    (int (*)(...)) _ZN8tinyxml27XMLNodeD2Ev
+72    (int (*)(...)) _ZN8tinyxml27XMLNodeD0Ev
+76    (int (*)(...)) _ZN8tinyxml27XMLNode9ParseDeepEPcPNS_7StrPairEPi
+
+
+vtable for tinyxml2::XMLComment
+_ZTVN8tinyxml210XMLCommentE: 6 entries
+56    (int (*)(...)) _ZNK8tinyxml210XMLComment12ShallowCloneEPNS_11XMLDocumentE
+60    (int (*)(...)) _ZNK8tinyxml210XMLComment12ShallowEqualEPKNS_7XMLNodeE
+64    (int (*)(...)) _ZNK8tinyxml210XMLComment6AcceptEPNS_10XMLVisitorE
+68    (int (*)(...)) _ZN8tinyxml27XMLNodeD2Ev
+72    (int (*)(...)) _ZN8tinyxml210XMLCommentD0Ev
+76    (int (*)(...)) _ZN8tinyxml210XMLComment9ParseDeepEPcPNS_7StrPairEPi
+
+
+vtable for tinyxml2::XMLDeclaration
+_ZTVN8tinyxml214XMLDeclarationE: 6 entries
+56    (int (*)(...)) _ZNK8tinyxml214XMLDeclaration12ShallowCloneEPNS_11XMLDocumentE
+60    (int (*)(...)) _ZNK8tinyxml214XMLDeclaration12ShallowEqualEPKNS_7XMLNodeE
+64    (int (*)(...)) _ZNK8tinyxml214XMLDeclaration6AcceptEPNS_10XMLVisitorE
+68    (int (*)(...)) _ZN8tinyxml27XMLNodeD2Ev
+72    (int (*)(...)) _ZN8tinyxml214XMLDeclarationD0Ev
+76    (int (*)(...)) _ZN8tinyxml214XMLDeclaration9ParseDeepEPcPNS_7StrPairEPi
+
+
+vtable for tinyxml2::XMLUnknown
+_ZTVN8tinyxml210XMLUnknownE: 6 entries
+56    (int (*)(...)) _ZNK8tinyxml210XMLUnknown12ShallowCloneEPNS_11XMLDocumentE
+60    (int (*)(...)) _ZNK8tinyxml210XMLUnknown12ShallowEqualEPKNS_7XMLNodeE
+64    (int (*)(...)) _ZNK8tinyxml210XMLUnknown6AcceptEPNS_10XMLVisitorE
+68    (int (*)(...)) _ZN8tinyxml27XMLNodeD2Ev
+72    (int (*)(...)) _ZN8tinyxml210XMLUnknownD0Ev
+76    (int (*)(...)) _ZN8tinyxml210XMLUnknown9ParseDeepEPcPNS_7StrPairEPi
+
+
+vtable for tinyxml2::XMLElement
+_ZTVN8tinyxml210XMLElementE: 6 entries
+56    (int (*)(...)) _ZNK8tinyxml210XMLElement12ShallowCloneEPNS_11XMLDocumentE
+60    (int (*)(...)) _ZNK8tinyxml210XMLElement12ShallowEqualEPKNS_7XMLNodeE
+64    (int (*)(...)) _ZNK8tinyxml210XMLElement6AcceptEPNS_10XMLVisitorE
+68    (int (*)(...)) _ZN8tinyxml210XMLElementD2Ev
+72    (int (*)(...)) _ZN8tinyxml210XMLElementD0Ev
+76    (int (*)(...)) _ZN8tinyxml210XMLElement9ParseDeepEPcPNS_7StrPairEPi
+
+
+vtable for tinyxml2::XMLDocument
+_ZTVN8tinyxml211XMLDocumentE: 4 entries
+64    (int (*)(...)) _ZNK8tinyxml211XMLDocument6AcceptEPNS_10XMLVisitorE
+68    (int (*)(...)) _ZN8tinyxml211XMLDocumentD2Ev
+72    (int (*)(...)) _ZN8tinyxml211XMLDocumentD0Ev
+76    (int (*)(...)) _ZN8tinyxml27XMLNode9ParseDeepEPcPNS_7StrPairEPi
+
+
+vtable for tinyxml2::XMLPrinter
+_ZTVN8tinyxml210XMLPrinterE: 9 entries
+16    (int (*)(...)) _ZN8tinyxml210XMLPrinter10VisitEnterERKNS_11XMLDocumentE
+24    (int (*)(...)) _ZN8tinyxml210XMLPrinter10VisitEnterERKNS_10XMLElementEPKNS_12XMLAttributeE
+28    (int (*)(...)) _ZN8tinyxml210XMLPrinter9VisitExitERKNS_10XMLElementE
+32    (int (*)(...)) _ZN8tinyxml210XMLPrinter5VisitERKNS_14XMLDeclarationE
+36    (int (*)(...)) _ZN8tinyxml210XMLPrinter5VisitERKNS_7XMLTextE
+40    (int (*)(...)) _ZN8tinyxml210XMLPrinter5VisitERKNS_10XMLCommentE
+44    (int (*)(...)) _ZN8tinyxml210XMLPrinter5VisitERKNS_10XMLUnknownE
+48    (int (*)(...)) _ZN8tinyxml210XMLPrinter12CloseElementEb
+56    (int (*)(...)) _ZN8tinyxml210XMLPrinter10PrintSpaceEi
+
+
+vtable for tinyxml2::XMLText
+_ZTVN8tinyxml27XMLTextE: 6 entries
+56    (int (*)(...)) _ZNK8tinyxml27XMLText12ShallowCloneEPNS_11XMLDocumentE
+60    (int (*)(...)) _ZNK8tinyxml27XMLText12ShallowEqualEPKNS_7XMLNodeE
+64    (int (*)(...)) _ZNK8tinyxml27XMLText6AcceptEPNS_10XMLVisitorE
+68    (int (*)(...)) _ZN8tinyxml27XMLNodeD2Ev
+72    (int (*)(...)) _ZN8tinyxml214XMLDeclarationD0Ev
+76    (int (*)(...)) _ZN8tinyxml27XMLText9ParseDeepEPcPNS_7StrPairEPi

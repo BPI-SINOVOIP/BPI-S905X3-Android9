@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<configuration description="Runs a Camera app latency test on device">
+  <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup" />
+  <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup" />
+  <target_preparer class="com.android.tradefed.targetprep.DeviceCleaner" />
+  <target_preparer class="com.android.tradefed.targetprep.TimeWaster" />
+  <target_preparer class="com.android.tradefed.targetprep.TemperatureThrottlingWaiter" />
+
+  <!--Push executable binaries -->
+  <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer">
+    <option name="push" value="/google/data/ro/teams/tradefed/testdata/camera/hup/cpu_heavyuser->/data/local/tmp/cpu_heavyuser" />
+  </target_preparer>
+
+  <!--Push pre run shell script -->
+  <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer">
+    <option name="push" value="/google/data/ro/teams/tradefed/testdata/camera/hup/prerun.sh->/data/local/tmp/prerun.sh" />
+    <option name="post-push" value="chmod 555 /data/local/tmp/prerun.sh" />
+  </target_preparer>
+
+  <!--Start eating agents-->
+  <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+    <option name="run-command" value="sh /data/local/tmp/prerun.sh" />
+  </target_preparer>
+  <test class="com.android.media.tests.CameraShotLatencyTest"/>
+</configuration>

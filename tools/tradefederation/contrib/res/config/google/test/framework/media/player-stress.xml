@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 Google Inc. All Rights Reserved -->
+<configuration description="Runs media player stress tests">
+    <option name="test-tag" value="media_player_stress" />
+
+    <!-- com.google.android.tradefed.targetprep.GoogleDeviceSetup -->
+    <option name="google-device-setup:screen-saver" value="off" />
+
+    <!-- Left blank so some commands can push their own files to device -->
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer" />
+
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="mediaframeworktest.apk" />
+    </target_preparer>
+
+    <test class="com.android.media.tests.MediaPlayerStressTest" />
+</configuration>

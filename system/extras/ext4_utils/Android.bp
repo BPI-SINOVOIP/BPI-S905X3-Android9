@@ -1,0 +1,60 @@
+// Copyright 2010 The Android Open Source Project
+
+cc_library {
+    name: "libext4_utils",
+    defaults: ["system-extras-cflags-defaults"],
+    host_supported: true,
+    srcs: [
+        "ext4_utils.c",
+        "wipe.c",
+        "ext4_sb.c",
+    ],
+    // Various instances of dereferencing a type-punned pointer in extent.c
+    cflags: ["-fno-strict-aliasing"],
+    export_include_dirs: ["include"],
+    shared_libs: [
+        "libsparse",
+        "libz",
+    ],
+
+    target: {
+        host: {
+            static_libs: ["libsparse"],
+        },
+        not_windows: {
+            static_libs: ["libselinux"],
+        },
+        windows: {
+            host_ldlibs: ["-lws2_32"],
+            enabled: true,
+        },
+
+        android: {
+            srcs: [
+                "ext4_crypt.cpp",
+            ],
+            shared_libs: [
+                "libbase",
+                "libkeyutils",
+                "liblogwrap",
+                "libselinux",
+            ],
+
+            static: {
+                srcs: [
+                    "ext4_crypt_init_extensions.cpp",
+                ],
+                static_libs: [
+                    "liblogwrap",
+                ]
+            },
+            shared: {
+                cflags: ["-DREAL_UUID"],
+                shared_libs: [
+                    "libcutils",
+                    "libext2_uuid",
+                ]
+            },
+        },
+    },
+}

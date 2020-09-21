@@ -1,0 +1,53 @@
+runtime: python27
+api_version: 1
+threadsafe: true
+
+# [START env_vars]
+env_variables:
+  ENDPOINTS_SERVICE_NAME: vtslab-schedule-prod.appspot.com
+  ENDPOINTS_SERVICE_VERSION: 2018-02-01r2
+  SESSION_SECRET_KEY: ''
+# [END env_vars]
+
+# [START builtins]
+builtins:
+# [END builtins]
+
+# [START handlers]
+handlers:
+# The endpoints handler must be mapped to /_ah/api.
+- url: /_ah/spi/.*
+  script: webapp.src.endpoint_main.api
+
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+
+- url: /bootstrap
+  static_dir: webapp/static/bootstrap
+
+- url: /.*
+  script: webapp.src.webapp_main.app
+# [END handlers]
+
+# [START libraries]
+libraries:
+- name: webapp2
+  version: latest
+- name: jinja2
+  version: latest
+- name: pycrypto
+  version: 2.6
+- name: endpoints
+  version: 1.0
+# [END libraries]
+
+# [START exclude]
+skip_files:
+- ^(.*/)?#.*#$
+- ^(.*/)?.*~$
+- ^(.*/)?.*\.py[co]$
+- ^(.*/)?.*/RCS/.*$
+- ^(.*/)?\..*$
+- ^script/*$
+# [END exclude]

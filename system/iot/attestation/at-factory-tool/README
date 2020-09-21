@@ -1,0 +1,24 @@
+============
+This package contains the following open source software:
+
+Android Things Factory Tool 1.0 -
+https://android.googlesource.com/platform/system/iot/attestation/+/master/NOTICE
+Python 2.7.13 - https://www.python.org/download/releases/2.7/license/
+Python Packages:
+  wxPython 4.0.0a2 - https://www.wxpython.org/pages/license/
+  PyInstaller 3.2.1 - http://www.pyinstaller.org/license.html
+  sh 1.12.14 - https://github.com/amoffat/sh/blob/master/LICENSE.txt
+  six 1.10.0 - https://github.com/benjaminp/six/blob/master/LICENSE
+  future 0.16.0 - http://python-future.org/credits.html#licence
+  pypiwin32 219 - https://github.com/mhammond/pywin32/blob/master/win32/License.txt
+  passlib 1.7.1 - https://pythonhosted.org/passlib/copyright.html
+
+This package contains the following Microsoft Visual C++ redistributable files:
+  msvcr90.dll
+  msvcp90.dll
+  msvcm90.dll
+
+For more information on Microsoft Visual C++ redistributable files, see:
+  https://msdn.microsoft.com/en-us/library/ms235299(v=vs.90).aspx
+  https://msdn.microsoft.com/en-us/library/8kche8ah(v=vs.90).aspx
+============

@@ -1,0 +1,215 @@
+# Copyright (C) 2016 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may not
+# use this file except in compliance with the License. You may obtain a copy of
+# the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations under
+# the License.
+
+SM
+=================================================================
+TC_MAS_PROT_BV_01_C
+  bta_bond
+  [Wait 30 seconds]
+
+TC_MAS_JW_BV_05_C
+  gattc_connect_over_le
+  bta_bond
+  gattc_disconnect
+  gattc_connect_over_le
+  bta_bond
+  gattc_disconnect
+  gattc_connect_over_le
+  bta_bond
+  gattc_disconnect
+  gattc_connect_over_le
+  bta_bond
+  gattc_disconnect
+
+TC_MAS_JW_BI_01_C
+  gattc_connect_over_le
+  bta_bond
+
+TC_MAS_JW_BI_04_C
+  gattc_connect_over_le
+  bta_bond
+
+TC_MAS_PKE_BV_01_C
+  bta_start_pairing_helper
+  gattc_connect_over_le
+  bta_bond
+  bta_get_pairing_pin
+  [Enter Pin from console to PTS]
+
+TC_MAS_PKE_BV_04_C
+  gattc_connect_over_le
+  bta_bond
+
+TC_MAS_PKE_BI_01_C
+  bta_start_pairing_helper
+  gattc_connect_over_le
+  bta_bond
+  bta_get_pairing_pin
+  [Enter Pin from console to PTS]
+
+TC_MAS_PKE_BI_02_C
+  bta_start_pairing_helper
+  gattc_connect_over_le
+  bta_bond
+  bta_get_pairing_pin
+  [Enter Pin from console to PTS]
+
+TC_MAS_OOB_BV_05_C
+  bta_start_pairing_helper
+  gattc_connect_over_le
+  bta_bond
+  bta_get_pairing_pin
+  [Enter Pin from console to PTS]
+
+TC_MAS_OOB_BV_07_C
+  gattc_connect_over_le
+  bta_bond
+
+TC_MAS_EKS_BV_01_C
+  gattc_connect_over_le
+  bta_bond
+
+TC_MAS_EKS_BI_01_C
+  bta_bond
+
+TC_MAS_KDU_BV_04_C
+  bta_start_pairing_helper
+  gattc_connect_over_le
+  bta_bond
+  bta_get_pairing_pin
+  [Enter Pin from console to PTS]
+
+TC_MAS_KDU_BV_05_C
+  bta_start_pairing_helper
+  gattc_connect_over_le
+  bta_bond
+  bta_get_pairing_pin
+  [Enter Pin from console to PTS]
+
+TC_MAS_KDU_BV_06_C
+  bta_start_pairing_helper
+  gattc_connect_over_le
+  bta_bond
+  bta_get_pairing_pin
+  [Enter Pin from console to PTS]
+
+TC_MAS_SIP_BV_02_C
+  bta_start_pairing_helper
+  gattc_connect_over_le
+  bta_get_pairing_pin
+  bta_get_pairing_pin
+  [Enter Pin from console to PTS]
+
+TC_SLA_PROT_BV_02_C
+  Need to be able to send security request via cmd line
+
+TC_SLA_JW_BV_02_C
+  Note: Do not use a static random address
+  Note: Start advertiment and enter in random address to PTS
+  ble_start_generic_connectable_advertisement
+  [Accept Pairing Prompt On Phone]
+
+TC_SLA_JW_BI_03_C
+  Note: Do not use a static random address
+  Note: Start advertiment and enter in random address to PTS
+  ble_start_generic_connectable_advertisement
+  [Accept Pairing Prompt On Phone]
+
+TC_SLA_PKE_BV_02_C
+  Note: Do not use a static random address
+  Note: Start advertiment and enter in random address to PTS
+  ble_start_generic_connectable_advertisement
+  [Enter PTS Pin Into Phone]
+
+TC_SLA_PKE_BV_05_C
+  Note: Do not use a static random address
+  Note: Start advertiment and enter in random address to PTS
+  ble_start_generic_connectable_advertisement
+
+TC_SLA_PKE_BI_03_C
+  Note: Do not use a static random address
+  Note: Start advertiment and enter in random address to PTS before starting test
+  ble_start_generic_connectable_advertisement
+  [Enter Invalid Pin to PTS]
+
+TC_SLA_OOB_BV_06_C
+  Note: Do not use a static random address
+  Note: Start advertiment and enter in random address to PTS before starting test
+  ble_start_generic_connectable_advertisement
+  [Enter PTS Pin Into Phone]
+
+TC_SLA_OOB_BV_08_C
+  Note: Do not use a static random address
+  Note: Start advertiment and enter in random address to PTS before starting test
+  ble_start_generic_connectable_advertisement
+
+TC_SLA_EKS_BV_02_C
+  Note: Do not use a static random address
+  Note: Start advertiment and enter in random address to PTS before starting test
+  ble_start_generic_connectable_advertisement
+  [Enter PTS Pin Into Phone]
+
+TC_SLA_EKS_BI_02_C
+  Note: Do not use a static random address
+  Note: Start advertiment and enter in random address to PTS before starting test
+  ble_start_generic_connectable_advertisement
+
+TC_SLA_KDU_BV_01_C
+  Note: Do not use a static random address
+  Note: Start advertiment and enter in random address to PTS before starting test
+  ble_start_generic_connectable_advertisement
+  [Enter PTS Pin Into Phone]
+
+TC_SLA_KDU_BV_02_C
+  Note: Do not use a static random address
+  Note: Start advertiment and enter in random address to PTS before starting test
+  ble_start_generic_connectable_advertisement
+  [Enter PTS Pin Into Phone]
+
+TC_SLA_KDU_BV_03_C
+  Note: Do not use a static random address
+  Note: Start advertiment and enter in random address to PTS before starting test
+  ble_start_generic_connectable_advertisement
+  [Enter PTS Pin Into Phone]
+
+TC_SLA_KDU_BV_07_C
+  Note: Do not use a static random address
+  Note: Start advertiment and enter in random address to PTS before starting test
+  ble_start_generic_connectable_advertisement
+  [Enter PTS Pin Into Phone]
+
+TC_SLA_SIP_BV_01_C
+  n_a
+
+TC_SLA_SIE_BV_01_C
+  n_a
+
+
+TIPS
+=================================================================
+If testcases are failing when you are the initiator for pairing use these steps:
+  Using Example testcase TC_SLA_KDU_BV_02_C.
+1. Don't use a static random address.
+2. Increase bt logging to 5 on all profile.
+3. Add this patch to the stack which adds even more logging:
+  https://android-review.googlesource.com/#/c/330431/
+4. Run the example testcase.
+5. After it fails grab the logcat.
+6. Look for this line:
+  D bt_smp  : p2 = ra || ia || padding(LSB ~ MSB):
+  D bt_smp  :   [000]: 2a 06 06 dc 1b 00 60 b4 a7 16 f8 44 00 00 00 00
+  Notice that the private address of your device is the initiator values but reversed: 60 b4 a7 16 f8 44
+  Take the reverse value and replace the IXIT value TSPX_bd_addr_iut with the reversed value. In this example: 44 f8 16 a7 b4 60
+7. Rerun testcase.
+8. More testcases will pass until the next mac address rotation.

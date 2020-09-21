@@ -1,0 +1,6 @@
+vtable for android::wifi_system::InterfaceTool
+_ZTVN7android11wifi_system13InterfaceToolE: 4 entries
+32    (int (*)(...)) _ZN7android11wifi_system13InterfaceTool10GetUpStateEPKc
+40    (int (*)(...)) _ZN7android11wifi_system13InterfaceTool10SetUpStateEPKcb
+48    (int (*)(...)) _ZN7android11wifi_system13InterfaceTool14SetWifiUpStateEb
+56    (int (*)(...)) _ZN7android11wifi_system13InterfaceTool13SetMacAddressEPKcRKNSt3__15arrayIhLm6EEE

@@ -1,0 +1,71 @@
+vtable for android::hardware::graphics::mapper::V2_1::BpHwMapper
+_ZTVN7android8hardware8graphics6mapper4V2_110BpHwMapperE: 26 entries
+16    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_110BpHwMapper14interfaceChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_11hidl_stringEEEEEE
+20    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_110BpHwMapper5debugERKNS0_11hidl_handleERKNS0_8hidl_vecINS0_11hidl_stringEEE
+24    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_110BpHwMapper19interfaceDescriptorENSt3__18functionIFvRKNS0_11hidl_stringEEEE
+28    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_110BpHwMapper12getHashChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_10hidl_arrayIhLj32EJEEEEEEEE
+32    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_110BpHwMapper21setHALInstrumentationEv
+36    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_110BpHwMapper11linkToDeathERKNS_2spINS0_20hidl_death_recipientEEEy
+40    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_110BpHwMapper4pingEv
+44    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_110BpHwMapper12getDebugInfoENSt3__18functionIFvRKNS_4hidl4base4V1_09DebugInfoEEEE
+48    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_110BpHwMapper21notifySyspropsChangedEv
+52    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_110BpHwMapper13unlinkToDeathERKNS_2spINS0_20hidl_death_recipientEEE
+64    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_110BpHwMapper16createDescriptorERKNS2_4V2_07IMapper20BufferDescriptorInfoENSt3__18functionIFvNS5_5ErrorERKNS0_8hidl_vecIjEEEEE
+68    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_110BpHwMapper12importBufferERKNS0_11hidl_handleENSt3__18functionIFvNS2_4V2_05ErrorEPvEEE
+72    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_110BpHwMapper10freeBufferEPv
+76    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_110BpHwMapper4lockEPvyRKNS2_4V2_07IMapper4RectERKNS0_11hidl_handleENSt3__18functionIFvNS6_5ErrorES5_EEE
+80    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_110BpHwMapper9lockYCbCrEPvyRKNS2_4V2_07IMapper4RectERKNS0_11hidl_handleENSt3__18functionIFvNS6_5ErrorERKNS6_11YCbCrLayoutEEEE
+84    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_110BpHwMapper6unlockEPvNSt3__18functionIFvNS2_4V2_05ErrorERKNS0_11hidl_handleEEEE
+88    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_110BpHwMapper18validateBufferSizeEPvRKNS3_7IMapper20BufferDescriptorInfoEj
+92    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_110BpHwMapper16getTransportSizeEPvNSt3__18functionIFvNS2_4V2_05ErrorEjjEEE
+96    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_110BpHwMapper20createDescriptor_2_1ERKNS3_7IMapper20BufferDescriptorInfoENSt3__18functionIFvNS2_4V2_05ErrorERKNS0_8hidl_vecIjEEEEE
+148    (int (*)(...)) _ZN7android8hardware11BpHwRefBase10onFirstRefEv
+152    (int (*)(...)) _ZN7android8hardware11BpHwRefBase15onLastStrongRefEPKv
+156    (int (*)(...)) _ZN7android8hardware11BpHwRefBase20onIncStrongAttemptedEjPKv
+212    (int (*)(...)) _ZTv0_n16_N7android8hardware11BpHwRefBase10onFirstRefEv
+216    (int (*)(...)) _ZTv0_n20_N7android8hardware11BpHwRefBase15onLastStrongRefEPKv
+220    (int (*)(...)) _ZTv0_n24_N7android8hardware11BpHwRefBase20onIncStrongAttemptedEjPKv
+224    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+
+
+vtable for android::hardware::graphics::mapper::V2_1::BnHwMapper
+_ZTVN7android8hardware8graphics6mapper4V2_110BnHwMapperE: 20 entries
+12    (int (*)(...)) _ZN7android8hardware9BHwBinder8transactEjRKNS0_6ParcelEPS2_jNSt3__18functionIFvRS2_EEE
+16    (int (*)(...)) _ZN7android8hardware9BHwBinder11linkToDeathERKNS_2spINS0_7IBinder14DeathRecipientEEEPvj
+20    (int (*)(...)) _ZN7android8hardware9BHwBinder13unlinkToDeathERKNS_2wpINS0_7IBinder14DeathRecipientEEEPvjPS5_
+24    (int (*)(...)) _ZNK7android8hardware7IBinder13checkSubclassEPKv
+28    (int (*)(...)) _ZN7android8hardware9BHwBinder12attachObjectEPKvPvS4_PFvS3_S4_S4_E
+32    (int (*)(...)) _ZNK7android8hardware9BHwBinder10findObjectEPKv
+36    (int (*)(...)) _ZN7android8hardware9BHwBinder12detachObjectEPKv
+40    (int (*)(...)) _ZN7android8hardware9BHwBinder11localBinderEv
+44    (int (*)(...)) _ZN7android8hardware7IBinder12remoteBinderEv
+48    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_110BnHwMapperD1Ev
+52    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_110BnHwMapperD0Ev
+56    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_110BnHwMapper10onTransactEjRKNS0_6ParcelEPS5_jNSt3__18functionIFvRS5_EEE
+68    (int (*)(...)) _ZThn20_N7android8hardware8graphics6mapper4V2_110BnHwMapperD1Ev
+72    (int (*)(...)) _ZThn20_N7android8hardware8graphics6mapper4V2_110BnHwMapperD0Ev
+104    (int (*)(...)) _ZTv0_n12_N7android8hardware8graphics6mapper4V2_110BnHwMapperD1Ev
+108    (int (*)(...)) _ZTv0_n12_N7android8hardware8graphics6mapper4V2_110BnHwMapperD0Ev
+112    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+116    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+120    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+124    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+
+
+vtable for android::hardware::graphics::mapper::V2_1::IMapper
+_ZTVN7android8hardware8graphics6mapper4V2_17IMapperE: 15 entries
+16    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_17IMapper14interfaceChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_11hidl_stringEEEEEE
+20    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_17IMapper5debugERKNS0_11hidl_handleERKNS0_8hidl_vecINS0_11hidl_stringEEE
+24    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_17IMapper19interfaceDescriptorENSt3__18functionIFvRKNS0_11hidl_stringEEEE
+28    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_17IMapper12getHashChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_10hidl_arrayIhLj32EJEEEEEEEE
+32    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_17IMapper21setHALInstrumentationEv
+36    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_17IMapper11linkToDeathERKNS_2spINS0_20hidl_death_recipientEEEy
+40    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_17IMapper4pingEv
+44    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_17IMapper12getDebugInfoENSt3__18functionIFvRKNS_4hidl4base4V1_09DebugInfoEEEE
+48    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_17IMapper21notifySyspropsChangedEv
+52    (int (*)(...)) _ZN7android8hardware8graphics6mapper4V2_17IMapper13unlinkToDeathERKNS_2spINS0_20hidl_death_recipientEEE
+136    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+140    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+144    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+148    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+152    (int (*)(...)) _ZTVN7android8hardware8graphics6mapper4V2_17IMapperE

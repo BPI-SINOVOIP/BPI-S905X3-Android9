@@ -1,0 +1,19 @@
+Instructions for Setup for writing data to Big table:
+
+1.  Make sure gcloud is installed and the project is set to the current project.
+    Follow the instructions here to install gcloud:
+    https://cloud.google.com/sdk/docs/quickstart-linux
+
+    If command gcloud is not recognizable, extract the google-cloud-sdk-116.0.0-linux-x86_64.tar.gz
+    from the above link and execute the commands in terminal:
+    source google-cloud-sdk/completion.bash.inc
+    source google-cloud-sdk/path.bash.inc
+
+2.  Upgrade grpcio:
+    sudo pip install --upgrade six
+    sudo pip install --upgrade grpcio
+    sudo pip install gcloud
+
+3.  From top level directory:
+    cd test/vts
+    PYTHONPATH=$PYTHONPATH:.. python -m vts.utils.app_engine.bigtable_client_test

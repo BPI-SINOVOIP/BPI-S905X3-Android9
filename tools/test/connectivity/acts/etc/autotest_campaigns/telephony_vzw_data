@@ -1,0 +1,17 @@
+TelLiveDataTest:
+test_airplane_mode,
+test_4g,
+test_lte_wifi_switching,
+test_tethering_entitlement_check,
+test_tethering_4g_to_2gwifi,
+test_tethering_4g_to_5gwifi,
+test_toggle_data_during_active_wifi_tethering,
+test_disable_wifi_tethering_resume_connected_wifi
+
+TelLiveSmsTest:
+test_sms_mo_4g,
+test_sms_mt_4g
+
+TelLivePreflightTest:
+test_check_crash
+

@@ -1,0 +1,123 @@
+-----BEGIN CERTIFICATE-----
+MIIFazCCA1OgAwIBAgISESBVg+QtPlRWhS2DN7cs3EYRMA0GCSqGSIb3DQEBDQUA
+MD4xCzAJBgNVBAYTAkZSMREwDwYDVQQKDAhDZXJ0cGx1czEcMBoGA1UEAwwTQ2Vy
+dHBsdXMgUm9vdCBDQSBHMTAeFw0xNDA1MjYwMDAwMDBaFw0zODAxMTUwMDAwMDBa
+MD4xCzAJBgNVBAYTAkZSMREwDwYDVQQKDAhDZXJ0cGx1czEcMBoGA1UEAwwTQ2Vy
+dHBsdXMgUm9vdCBDQSBHMTCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIB
+ANpQh7bauKk+nWT6VjOaVj0W5QOVsjQcmm1iBdTYj+eJZJ+622SLZOZ5KmHNr49a
+iZFluVj8tANfkT8tEBXgfs+8/H9DZ6itXjYj2JizTfNDnjl8KvzsiNWI7nC9hRYt
+6kuJPKNxQv4c/dMcLRC4hlTqQ7jbxofaqK6AJc96Jh2qkbBIb6613p7Y1/oA/caP
+0FG7Yn2ksYyy/yARujVjBYZHYEMzkPZHogNPlk2dT8Hq6pyi/jQu3rfKG3akt62f
+6ajUeD94/vI4CTYd0hYCyOwqaK/1jpTvLRN6HkJKHRUxrgwEV/xhc/MxVoYxgKDE
+EW4wduOU8F8ExKyHcomYxZ3MVwia9Az8fXoFOvpHgDm2z4QTd28n6v+WZxcIbekN
+1iNQMLAVdBM+5S//Ds3EC0pd8NgAM0lm66EYfFkuPSi5YXHLtaW6uOrc4nBvCGrc
+h2c0798wct3zyT8j/zXhviEpIDCB5BmlIOklynMxdCm+4kLV87ImZsdo/Rmz5yCT
+mehd4F6H50boJZwKKSTUzViGUkAksnsPmBIgJPaQbEfIDbsYIC7Z/fyL8inqh3SV
+4EJQeIQEQWGw9CEjjy3LKCHyamz0GqbFFLQ3ZU+V/YDI+HLlJWvEYLF7bY5KinPO
+WftwenMGE9nTdDckQQoRb5fc5+R+ob0V8rqHDz1oihYHAgMBAAGjYzBhMA4GA1Ud
+DwEB/wQEAwIBBjAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBSowcCbkahDFXxd
+Bie0KlHYlwuBsTAfBgNVHSMEGDAWgBSowcCbkahDFXxdBie0KlHYlwuBsTANBgkq
+hkiG9w0BAQ0FAAOCAgEAnFZvAX7RvUz1isbwJh/k4DgYzDLDKTudQSk0YcbX8ACh
+66Ryj5QXvBMsdbRX7gp8CXrc1cqh0DQT+Hern+X+2B50ioUHj3/MeXrKls3N/U/7
+/SMNkPX0XtPGYX2eEeAC7gkE2Qfdpoq3DIMku4NQkv5gdRE+2J2winq14J2by5BS
+S7CTKtQ+FjPlnsZlFT5kOwQ/2wyPX1wdaR+v8+khjPPvl/aatxm2hHSco1S1cE5j
+2FddUyGbQJJD+tZ3VTNPZNX70Cxqjm0lpu+F6ALEUz65noe8zDUa3qHpimOHZR4R
+Kttjd5cUvpoUmRGywO6wT/gUITJDT5+rosuoD6o7BlXGEilXCNQ314cnrUlZp5Gr
+RHpejXDbl85IULFzk/bwg2D5zfHhMf1bfHEhYxQUqq/F3pN+aLHsIqKqkHWetUNy
+6mSjhEv9DKgma3GX7lZjZuhCVPnHHd/Qj1vfyDBviP4NxDMcU6ij/UgQ8uQKTuEV
+V/xuZDDCVRHc6qnNSlSsKWNEz0pAoNZoWRsz+e86i9sgktxChL8Bq4fA1SCC28a5
+g4VCXA9DO2pJNdWY9BW/+mGBDAkgGNLQFwzLSABQ6XaCjGTXOqAHVcweMcDvOrRl
+++O/QmueD6i9a5jc2NvLi6Td11n0bt3+qsOR0C5CB8AMTVPNJLFMWx5R9N/pkvo=
+-----END CERTIFICATE-----
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            11:20:55:83:e4:2d:3e:54:56:85:2d:83:37:b7:2c:dc:46:11
+    Signature Algorithm: sha512WithRSAEncryption
+        Issuer: C=FR, O=Certplus, CN=Certplus Root CA G1
+        Validity
+            Not Before: May 26 00:00:00 2014 GMT
+            Not After : Jan 15 00:00:00 2038 GMT
+        Subject: C=FR, O=Certplus, CN=Certplus Root CA G1
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (4096 bit)
+                Modulus:
+                    00:da:50:87:b6:da:b8:a9:3e:9d:64:fa:56:33:9a:
+                    56:3d:16:e5:03:95:b2:34:1c:9a:6d:62:05:d4:d8:
+                    8f:e7:89:64:9f:ba:db:64:8b:64:e6:79:2a:61:cd:
+                    af:8f:5a:89:91:65:b9:58:fc:b4:03:5f:91:3f:2d:
+                    10:15:e0:7e:cf:bc:fc:7f:43:67:a8:ad:5e:36:23:
+                    d8:98:b3:4d:f3:43:9e:39:7c:2a:fc:ec:88:d5:88:
+                    ee:70:bd:85:16:2d:ea:4b:89:3c:a3:71:42:fe:1c:
+                    fd:d3:1c:2d:10:b8:86:54:ea:43:b8:db:c6:87:da:
+                    a8:ae:80:25:cf:7a:26:1d:aa:91:b0:48:6f:ae:b5:
+                    de:9e:d8:d7:fa:00:fd:c6:8f:d0:51:bb:62:7d:a4:
+                    b1:8c:b2:ff:20:11:ba:35:63:05:86:47:60:43:33:
+                    90:f6:47:a2:03:4f:96:4d:9d:4f:c1:ea:ea:9c:a2:
+                    fe:34:2e:de:b7:ca:1b:76:a4:b7:ad:9f:e9:a8:d4:
+                    78:3f:78:fe:f2:38:09:36:1d:d2:16:02:c8:ec:2a:
+                    68:af:f5:8e:94:ef:2d:13:7a:1e:42:4a:1d:15:31:
+                    ae:0c:04:57:fc:61:73:f3:31:56:86:31:80:a0:c4:
+                    11:6e:30:76:e3:94:f0:5f:04:c4:ac:87:72:89:98:
+                    c5:9d:cc:57:08:9a:f4:0c:fc:7d:7a:05:3a:fa:47:
+                    80:39:b6:cf:84:13:77:6f:27:ea:ff:96:67:17:08:
+                    6d:e9:0d:d6:23:50:30:b0:15:74:13:3e:e5:2f:ff:
+                    0e:cd:c4:0b:4a:5d:f0:d8:00:33:49:66:eb:a1:18:
+                    7c:59:2e:3d:28:b9:61:71:cb:b5:a5:ba:b8:ea:dc:
+                    e2:70:6f:08:6a:dc:87:67:34:ef:df:30:72:dd:f3:
+                    c9:3f:23:ff:35:e1:be:21:29:20:30:81:e4:19:a5:
+                    20:e9:25:ca:73:31:74:29:be:e2:42:d5:f3:b2:26:
+                    66:c7:68:fd:19:b3:e7:20:93:99:e8:5d:e0:5e:87:
+                    e7:46:e8:25:9c:0a:29:24:d4:cd:58:86:52:40:24:
+                    b2:7b:0f:98:12:20:24:f6:90:6c:47:c8:0d:bb:18:
+                    20:2e:d9:fd:fc:8b:f2:29:ea:87:74:95:e0:42:50:
+                    78:84:04:41:61:b0:f4:21:23:8f:2d:cb:28:21:f2:
+                    6a:6c:f4:1a:a6:c5:14:b4:37:65:4f:95:fd:80:c8:
+                    f8:72:e5:25:6b:c4:60:b1:7b:6d:8e:4a:8a:73:ce:
+                    59:fb:70:7a:73:06:13:d9:d3:74:37:24:41:0a:11:
+                    6f:97:dc:e7:e4:7e:a1:bd:15:f2:ba:87:0f:3d:68:
+                    8a:16:07
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Key Usage: critical
+                Certificate Sign, CRL Sign
+            X509v3 Basic Constraints: critical
+                CA:TRUE
+            X509v3 Subject Key Identifier: 
+                A8:C1:C0:9B:91:A8:43:15:7C:5D:06:27:B4:2A:51:D8:97:0B:81:B1
+            X509v3 Authority Key Identifier: 
+                keyid:A8:C1:C0:9B:91:A8:43:15:7C:5D:06:27:B4:2A:51:D8:97:0B:81:B1
+
+    Signature Algorithm: sha512WithRSAEncryption
+         9c:56:6f:01:7e:d1:bd:4c:f5:8a:c6:f0:26:1f:e4:e0:38:18:
+         cc:32:c3:29:3b:9d:41:29:34:61:c6:d7:f0:00:a1:eb:a4:72:
+         8f:94:17:bc:13:2c:75:b4:57:ee:0a:7c:09:7a:dc:d5:ca:a1:
+         d0:34:13:f8:77:ab:9f:e5:fe:d8:1e:74:8a:85:07:8f:7f:cc:
+         79:7a:ca:96:cd:cd:fd:4f:fb:fd:23:0d:90:f5:f4:5e:d3:c6:
+         61:7d:9e:11:e0:02:ee:09:04:d9:07:dd:a6:8a:b7:0c:83:24:
+         bb:83:50:92:fe:60:75:11:3e:d8:9d:b0:8a:7a:b5:e0:9d:9b:
+         cb:90:52:4b:b0:93:2a:d4:3e:16:33:e5:9e:c6:65:15:3e:64:
+         3b:04:3f:db:0c:8f:5f:5c:1d:69:1f:af:f3:e9:21:8c:f3:ef:
+         97:f6:9a:b7:19:b6:84:74:9c:a3:54:b5:70:4e:63:d8:57:5d:
+         53:21:9b:40:92:43:fa:d6:77:55:33:4f:64:d5:fb:d0:2c:6a:
+         8e:6d:25:a6:ef:85:e8:02:c4:53:3e:b9:9e:87:bc:cc:35:1a:
+         de:a1:e9:8a:63:87:65:1e:11:2a:db:63:77:97:14:be:9a:14:
+         99:11:b2:c0:ee:b0:4f:f8:14:21:32:43:4f:9f:ab:a2:cb:a8:
+         0f:aa:3b:06:55:c6:12:29:57:08:d4:37:d7:87:27:ad:49:59:
+         a7:91:ab:44:7a:5e:8d:70:db:97:ce:48:50:b1:73:93:f6:f0:
+         83:60:f9:cd:f1:e1:31:fd:5b:7c:71:21:63:14:14:aa:af:c5:
+         de:93:7e:68:b1:ec:22:a2:aa:90:75:9e:b5:43:72:ea:64:a3:
+         84:4b:fd:0c:a8:26:6b:71:97:ee:56:63:66:e8:42:54:f9:c7:
+         1d:df:d0:8f:5b:df:c8:30:6f:88:fe:0d:c4:33:1c:53:a8:a3:
+         fd:48:10:f2:e4:0a:4e:e1:15:57:fc:6e:64:30:c2:55:11:dc:
+         ea:a9:cd:4a:54:ac:29:63:44:cf:4a:40:a0:d6:68:59:1b:33:
+         f9:ef:3a:8b:db:20:92:dc:42:84:bf:01:ab:87:c0:d5:20:82:
+         db:c6:b9:83:85:42:5c:0f:43:3b:6a:49:35:d5:98:f4:15:bf:
+         fa:61:81:0c:09:20:18:d2:d0:17:0c:cb:48:00:50:e9:76:82:
+         8c:64:d7:3a:a0:07:55:cc:1e:31:c0:ef:3a:b4:65:fb:e3:bf:
+         42:6b:9e:0f:a8:bd:6b:98:dc:d8:db:cb:8b:a4:dd:d7:59:f4:
+         6e:dd:fe:aa:c3:91:d0:2e:42:07:c0:0c:4d:53:cd:24:b1:4c:
+         5b:1e:51:f4:df:e9:92:fa
+SHA1 Fingerprint=22:FD:D0:B7:FD:A2:4E:0D:AC:49:2C:A0:AC:A6:7B:6A:1F:E3:F7:66

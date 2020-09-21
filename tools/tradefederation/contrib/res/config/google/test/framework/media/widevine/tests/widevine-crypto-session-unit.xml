@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 Google Inc. All Rights Reserved -->
+<!-- Required options: branch build-flavor -->
+<configuration description="Downloads build, flashes on device, and runs Widevine Modular DRM tests">
+    <option name="test-tag" value="widevineCryptoSessionUnit" />
+    <target_preparer class="com.android.tradefed.targetprep.TestFilePushSetup">
+        <option name="test-file-name" value="bin/crypto_session_unittest" />
+    </target_preparer>
+    <test class="com.android.tradefed.testtype.GTest">
+        <option name="native-test-device-path" value="/data/bin" />
+        <option name="module-name" value="crypto_session_unittest" />
+        <option name="before-test-cmd" value="pm disable com.google.android.gms/com.google.android.gms.droidguard.DroidGuardService" />
+        <option name="after-test-cmd" value="pm enable com.google.android.gms/com.google.android.gms.droidguard.DroidGuardService" />
+    </test>
+</configuration>

@@ -1,0 +1,70 @@
+vtable for android::hardware::vibrator::V1_2::BpHwVibrator
+_ZTVN7android8hardware8vibrator4V1_212BpHwVibratorE: 24 entries
+16    (int (*)(...)) _ZN7android8hardware8vibrator4V1_212BpHwVibrator14interfaceChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_11hidl_stringEEEEEE
+20    (int (*)(...)) _ZN7android8hardware8vibrator4V1_212BpHwVibrator5debugERKNS0_11hidl_handleERKNS0_8hidl_vecINS0_11hidl_stringEEE
+24    (int (*)(...)) _ZN7android8hardware8vibrator4V1_212BpHwVibrator19interfaceDescriptorENSt3__18functionIFvRKNS0_11hidl_stringEEEE
+28    (int (*)(...)) _ZN7android8hardware8vibrator4V1_212BpHwVibrator12getHashChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_10hidl_arrayIhLj32EJEEEEEEEE
+32    (int (*)(...)) _ZN7android8hardware8vibrator4V1_212BpHwVibrator21setHALInstrumentationEv
+36    (int (*)(...)) _ZN7android8hardware8vibrator4V1_212BpHwVibrator11linkToDeathERKNS_2spINS0_20hidl_death_recipientEEEy
+40    (int (*)(...)) _ZN7android8hardware8vibrator4V1_212BpHwVibrator4pingEv
+44    (int (*)(...)) _ZN7android8hardware8vibrator4V1_212BpHwVibrator12getDebugInfoENSt3__18functionIFvRKNS_4hidl4base4V1_09DebugInfoEEEE
+48    (int (*)(...)) _ZN7android8hardware8vibrator4V1_212BpHwVibrator21notifySyspropsChangedEv
+52    (int (*)(...)) _ZN7android8hardware8vibrator4V1_212BpHwVibrator13unlinkToDeathERKNS_2spINS0_20hidl_death_recipientEEE
+64    (int (*)(...)) _ZN7android8hardware8vibrator4V1_212BpHwVibrator2onEj
+68    (int (*)(...)) _ZN7android8hardware8vibrator4V1_212BpHwVibrator3offEv
+72    (int (*)(...)) _ZN7android8hardware8vibrator4V1_212BpHwVibrator24supportsAmplitudeControlEv
+76    (int (*)(...)) _ZN7android8hardware8vibrator4V1_212BpHwVibrator12setAmplitudeEh
+80    (int (*)(...)) _ZN7android8hardware8vibrator4V1_212BpHwVibrator7performENS1_4V1_06EffectENS4_14EffectStrengthENSt3__18functionIFvNS4_6StatusEjEEE
+84    (int (*)(...)) _ZN7android8hardware8vibrator4V1_212BpHwVibrator11perform_1_1ENS1_4V1_110Effect_1_1ENS1_4V1_014EffectStrengthENSt3__18functionIFvNS6_6StatusEjEEE
+88    (int (*)(...)) _ZN7android8hardware8vibrator4V1_212BpHwVibrator11perform_1_2ENS2_6EffectENS1_4V1_014EffectStrengthENSt3__18functionIFvNS5_6StatusEjEEE
+140    (int (*)(...)) _ZN7android8hardware11BpHwRefBase10onFirstRefEv
+144    (int (*)(...)) _ZN7android8hardware11BpHwRefBase15onLastStrongRefEPKv
+148    (int (*)(...)) _ZN7android8hardware11BpHwRefBase20onIncStrongAttemptedEjPKv
+204    (int (*)(...)) _ZTv0_n16_N7android8hardware11BpHwRefBase10onFirstRefEv
+208    (int (*)(...)) _ZTv0_n20_N7android8hardware11BpHwRefBase15onLastStrongRefEPKv
+212    (int (*)(...)) _ZTv0_n24_N7android8hardware11BpHwRefBase20onIncStrongAttemptedEjPKv
+216    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+
+
+vtable for android::hardware::vibrator::V1_2::BnHwVibrator
+_ZTVN7android8hardware8vibrator4V1_212BnHwVibratorE: 21 entries
+12    (int (*)(...)) _ZN7android8hardware9BHwBinder8transactEjRKNS0_6ParcelEPS2_jNSt3__18functionIFvRS2_EEE
+16    (int (*)(...)) _ZN7android8hardware9BHwBinder11linkToDeathERKNS_2spINS0_7IBinder14DeathRecipientEEEPvj
+20    (int (*)(...)) _ZN7android8hardware9BHwBinder13unlinkToDeathERKNS_2wpINS0_7IBinder14DeathRecipientEEEPvjPS5_
+24    (int (*)(...)) _ZNK7android8hardware7IBinder13checkSubclassEPKv
+28    (int (*)(...)) _ZN7android8hardware9BHwBinder12attachObjectEPKvPvS4_PFvS3_S4_S4_E
+32    (int (*)(...)) _ZNK7android8hardware9BHwBinder10findObjectEPKv
+36    (int (*)(...)) _ZN7android8hardware9BHwBinder12detachObjectEPKv
+40    (int (*)(...)) _ZN7android8hardware9BHwBinder11localBinderEv
+44    (int (*)(...)) _ZN7android8hardware7IBinder12remoteBinderEv
+48    (int (*)(...)) _ZN7android8hardware8vibrator4V1_212BnHwVibratorD1Ev
+52    (int (*)(...)) _ZN7android8hardware8vibrator4V1_212BnHwVibratorD0Ev
+56    (int (*)(...)) _ZN7android8hardware8vibrator4V1_212BnHwVibrator10onTransactEjRKNS0_6ParcelEPS4_jNSt3__18functionIFvRS4_EEE
+68    (int (*)(...)) _ZThn20_N7android8hardware8vibrator4V1_212BnHwVibratorD1Ev
+72    (int (*)(...)) _ZThn20_N7android8hardware8vibrator4V1_212BnHwVibratorD0Ev
+104    (int (*)(...)) _ZTv0_n12_N7android8hardware8vibrator4V1_212BnHwVibratorD1Ev
+108    (int (*)(...)) _ZTv0_n12_N7android8hardware8vibrator4V1_212BnHwVibratorD0Ev
+112    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+116    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+120    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+124    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+128    (int (*)(...)) _ZTVN7android8hardware8vibrator4V1_212BnHwVibratorE
+
+
+vtable for android::hardware::vibrator::V1_2::IVibrator
+_ZTVN7android8hardware8vibrator4V1_29IVibratorE: 15 entries
+16    (int (*)(...)) _ZN7android8hardware8vibrator4V1_29IVibrator14interfaceChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_11hidl_stringEEEEEE
+20    (int (*)(...)) _ZN7android8hardware8vibrator4V1_29IVibrator5debugERKNS0_11hidl_handleERKNS0_8hidl_vecINS0_11hidl_stringEEE
+24    (int (*)(...)) _ZN7android8hardware8vibrator4V1_29IVibrator19interfaceDescriptorENSt3__18functionIFvRKNS0_11hidl_stringEEEE
+28    (int (*)(...)) _ZN7android8hardware8vibrator4V1_29IVibrator12getHashChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_10hidl_arrayIhLj32EJEEEEEEEE
+32    (int (*)(...)) _ZN7android8hardware8vibrator4V1_29IVibrator21setHALInstrumentationEv
+36    (int (*)(...)) _ZN7android8hardware8vibrator4V1_29IVibrator11linkToDeathERKNS_2spINS0_20hidl_death_recipientEEEy
+40    (int (*)(...)) _ZN7android8hardware8vibrator4V1_29IVibrator4pingEv
+44    (int (*)(...)) _ZN7android8hardware8vibrator4V1_29IVibrator12getDebugInfoENSt3__18functionIFvRKNS_4hidl4base4V1_09DebugInfoEEEE
+48    (int (*)(...)) _ZN7android8hardware8vibrator4V1_29IVibrator21notifySyspropsChangedEv
+52    (int (*)(...)) _ZN7android8hardware8vibrator4V1_29IVibrator13unlinkToDeathERKNS_2spINS0_20hidl_death_recipientEEE
+128    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+132    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+136    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+140    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+144    (int (*)(...)) _ZTVN7android8hardware8vibrator4V1_29IVibratorE

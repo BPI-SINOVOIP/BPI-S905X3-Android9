@@ -1,0 +1,104 @@
+/* Copyright (C) 2016 The Android Open Source Project
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+*/
+
+.collapsible.popout {
+    margin-bottom: 50px;
+}
+
+.table {
+    font-size: 12px;
+    border: none;
+    width: 100%;
+    word-spacing: 4px;
+    font-family: monospace;
+    white-space: PRE;
+    border-collapse: collapse;
+}
+
+.section-title {
+    margin-left: 24px;
+}
+
+.html-container {
+    padding:  25px 25px;
+}
+
+.login-button {
+    border: 1px solid gray;
+    color: gray;
+    border-radius: 15px;
+    padding: 4px 15px;
+    cursor: pointer;
+}
+
+td {
+    padding: 0;
+}
+
+.count {
+    white-space: nowrap;
+    text-align: right;
+    border-right: 1px solid black;
+    padding-right: 5px;
+}
+
+.line_no {
+    padding-left: 35px;
+    white-space: nowrap;
+    padding-right: 5px;
+    border-right: 1px dotted gray;
+}
+
+.code {
+    padding-left: 10px;
+    width: 99%;
+}
+
+.indicator {
+    display: inline-block;
+    width: 50px;
+    margin-top: 12px;
+    line-height: 18px;
+    border-radius: 10px;
+    padding: 2px 5px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+}
+
+.total-count {
+    margin-top: 12px;
+    margin-right: 8px;
+    padding-right: 5px;
+    line-height: 22px;
+    border-right: 1px solid gray;
+    font-size: 12px;
+    font-weight: bold;
+    color: gray;
+}
+
+.uncovered {
+    background-color: LightPink;
+}
+
+.covered {
+    background-color: LightGreen;
+}
+
+.source-name {
+    margin-top: -25px;
+    padding-left: 45px;
+}

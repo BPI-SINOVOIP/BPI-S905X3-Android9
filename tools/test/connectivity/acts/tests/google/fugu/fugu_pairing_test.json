@@ -1,0 +1,39 @@
+{
+    "_description": "Test configuration for Fugu pairing the remote controller",
+    "logpath": "/tmp/logs",
+    "testpaths": ["."],
+    "no_bug_report_on_fail": "True",
+
+    "testbed": [
+        {
+            "_description": "A testbed for RelayDevices",
+            "name": "7A18F48B",
+            "AndroidDevice": ["7A18F48B"],
+            "RelayDevice": "tests/google/fugu/relay.json"
+        },
+        {
+            "_description": "A testbed for RelayDevices",
+            "name": "164FE498",
+            "AndroidDevice": ["164FE498"],
+            "RelayDevice": "tests/google/fugu/relay.json"
+        },
+        {
+            "_description": "A testbed for RelayDevices",
+            "name": "B8B20856",
+            "AndroidDevice": ["B8B20856"],
+            "RelayDevice": "tests/google/fugu/relay.json"
+        },
+        {
+            "_description": "A testbed for RelayDevices",
+            "name": "121A69F0",
+            "AndroidDevice": ["121A69F0"],
+            "RelayDevice": "tests/google/fugu/relay.json"
+        },
+        {
+            "_description": "A testbed for RelayDevices",
+            "name": "BBDAC5ED",
+            "AndroidDevice": ["BBDAC5ED"],
+            "RelayDevice": "tests/google/fugu/relay.json"
+        }
+    ]
+}

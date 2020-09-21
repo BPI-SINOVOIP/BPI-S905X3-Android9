@@ -1,0 +1,133 @@
+vtable for android::hardware::confirmationui::V1_0::BpHwConfirmationResultCallback
+_ZTVN7android8hardware14confirmationui4V1_030BpHwConfirmationResultCallbackE: 18 entries
+16    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_030BpHwConfirmationResultCallback14interfaceChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_11hidl_stringEEEEEE
+20    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_030BpHwConfirmationResultCallback5debugERKNS0_11hidl_handleERKNS0_8hidl_vecINS0_11hidl_stringEEE
+24    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_030BpHwConfirmationResultCallback19interfaceDescriptorENSt3__18functionIFvRKNS0_11hidl_stringEEEE
+28    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_030BpHwConfirmationResultCallback12getHashChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_10hidl_arrayIhLj32EJEEEEEEEE
+32    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_030BpHwConfirmationResultCallback21setHALInstrumentationEv
+36    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_030BpHwConfirmationResultCallback11linkToDeathERKNS_2spINS0_20hidl_death_recipientEEEy
+40    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_030BpHwConfirmationResultCallback4pingEv
+44    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_030BpHwConfirmationResultCallback12getDebugInfoENSt3__18functionIFvRKNS_4hidl4base4V1_09DebugInfoEEEE
+48    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_030BpHwConfirmationResultCallback21notifySyspropsChangedEv
+52    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_030BpHwConfirmationResultCallback13unlinkToDeathERKNS_2spINS0_20hidl_death_recipientEEE
+64    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_030BpHwConfirmationResultCallback6resultENS2_12ResponseCodeERKNS0_8hidl_vecIhEES8_
+116    (int (*)(...)) _ZN7android8hardware11BpHwRefBase10onFirstRefEv
+120    (int (*)(...)) _ZN7android8hardware11BpHwRefBase15onLastStrongRefEPKv
+124    (int (*)(...)) _ZN7android8hardware11BpHwRefBase20onIncStrongAttemptedEjPKv
+180    (int (*)(...)) _ZTv0_n16_N7android8hardware11BpHwRefBase10onFirstRefEv
+184    (int (*)(...)) _ZTv0_n20_N7android8hardware11BpHwRefBase15onLastStrongRefEPKv
+188    (int (*)(...)) _ZTv0_n24_N7android8hardware11BpHwRefBase20onIncStrongAttemptedEjPKv
+192    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+
+
+vtable for android::hardware::confirmationui::V1_0::BnHwConfirmationResultCallback
+_ZTVN7android8hardware14confirmationui4V1_030BnHwConfirmationResultCallbackE: 21 entries
+12    (int (*)(...)) _ZN7android8hardware9BHwBinder8transactEjRKNS0_6ParcelEPS2_jNSt3__18functionIFvRS2_EEE
+16    (int (*)(...)) _ZN7android8hardware9BHwBinder11linkToDeathERKNS_2spINS0_7IBinder14DeathRecipientEEEPvj
+20    (int (*)(...)) _ZN7android8hardware9BHwBinder13unlinkToDeathERKNS_2wpINS0_7IBinder14DeathRecipientEEEPvjPS5_
+24    (int (*)(...)) _ZNK7android8hardware7IBinder13checkSubclassEPKv
+28    (int (*)(...)) _ZN7android8hardware9BHwBinder12attachObjectEPKvPvS4_PFvS3_S4_S4_E
+32    (int (*)(...)) _ZNK7android8hardware9BHwBinder10findObjectEPKv
+36    (int (*)(...)) _ZN7android8hardware9BHwBinder12detachObjectEPKv
+40    (int (*)(...)) _ZN7android8hardware9BHwBinder11localBinderEv
+44    (int (*)(...)) _ZN7android8hardware7IBinder12remoteBinderEv
+48    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_030BnHwConfirmationResultCallbackD1Ev
+52    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_030BnHwConfirmationResultCallbackD0Ev
+56    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_030BnHwConfirmationResultCallback10onTransactEjRKNS0_6ParcelEPS4_jNSt3__18functionIFvRS4_EEE
+68    (int (*)(...)) _ZThn20_N7android8hardware14confirmationui4V1_030BnHwConfirmationResultCallbackD1Ev
+72    (int (*)(...)) _ZThn20_N7android8hardware14confirmationui4V1_030BnHwConfirmationResultCallbackD0Ev
+104    (int (*)(...)) _ZTv0_n12_N7android8hardware14confirmationui4V1_030BnHwConfirmationResultCallbackD1Ev
+108    (int (*)(...)) _ZTv0_n12_N7android8hardware14confirmationui4V1_030BnHwConfirmationResultCallbackD0Ev
+112    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+116    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+120    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+124    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+128    (int (*)(...)) _ZTVN7android8hardware14confirmationui4V1_030BnHwConfirmationResultCallbackE
+
+
+vtable for android::hardware::confirmationui::V1_0::IConfirmationResultCallback
+_ZTVN7android8hardware14confirmationui4V1_027IConfirmationResultCallbackE: 15 entries
+16    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_027IConfirmationResultCallback14interfaceChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_11hidl_stringEEEEEE
+20    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_027IConfirmationResultCallback5debugERKNS0_11hidl_handleERKNS0_8hidl_vecINS0_11hidl_stringEEE
+24    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_027IConfirmationResultCallback19interfaceDescriptorENSt3__18functionIFvRKNS0_11hidl_stringEEEE
+28    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_027IConfirmationResultCallback12getHashChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_10hidl_arrayIhLj32EJEEEEEEEE
+32    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_027IConfirmationResultCallback21setHALInstrumentationEv
+36    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_027IConfirmationResultCallback11linkToDeathERKNS_2spINS0_20hidl_death_recipientEEEy
+40    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_027IConfirmationResultCallback4pingEv
+44    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_027IConfirmationResultCallback12getDebugInfoENSt3__18functionIFvRKNS_4hidl4base4V1_09DebugInfoEEEE
+48    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_027IConfirmationResultCallback21notifySyspropsChangedEv
+52    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_027IConfirmationResultCallback13unlinkToDeathERKNS_2spINS0_20hidl_death_recipientEEE
+104    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+108    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+112    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+116    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+120    (int (*)(...)) _ZTVN7android8hardware14confirmationui4V1_027IConfirmationResultCallbackE
+
+
+vtable for android::hardware::confirmationui::V1_0::BpHwConfirmationUI
+_ZTVN7android8hardware14confirmationui4V1_018BpHwConfirmationUIE: 21 entries
+16    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_018BpHwConfirmationUI14interfaceChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_11hidl_stringEEEEEE
+20    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_018BpHwConfirmationUI5debugERKNS0_11hidl_handleERKNS0_8hidl_vecINS0_11hidl_stringEEE
+24    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_018BpHwConfirmationUI19interfaceDescriptorENSt3__18functionIFvRKNS0_11hidl_stringEEEE
+28    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_018BpHwConfirmationUI12getHashChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_10hidl_arrayIhLj32EJEEEEEEEE
+32    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_018BpHwConfirmationUI21setHALInstrumentationEv
+36    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_018BpHwConfirmationUI11linkToDeathERKNS_2spINS0_20hidl_death_recipientEEEy
+40    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_018BpHwConfirmationUI4pingEv
+44    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_018BpHwConfirmationUI12getDebugInfoENSt3__18functionIFvRKNS_4hidl4base4V1_09DebugInfoEEEE
+48    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_018BpHwConfirmationUI21notifySyspropsChangedEv
+52    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_018BpHwConfirmationUI13unlinkToDeathERKNS_2spINS0_20hidl_death_recipientEEE
+64    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_018BpHwConfirmationUI22promptUserConfirmationERKNS_2spINS2_27IConfirmationResultCallbackEEERKNS0_11hidl_stringERKNS0_8hidl_vecIhEESB_RKNSC_INS2_8UIOptionEEE
+68    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_018BpHwConfirmationUI23deliverSecureInputEventERKNS0_9keymaster4V4_017HardwareAuthTokenE
+72    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_018BpHwConfirmationUI5abortEv
+124    (int (*)(...)) _ZN7android8hardware11BpHwRefBase10onFirstRefEv
+128    (int (*)(...)) _ZN7android8hardware11BpHwRefBase15onLastStrongRefEPKv
+132    (int (*)(...)) _ZN7android8hardware11BpHwRefBase20onIncStrongAttemptedEjPKv
+188    (int (*)(...)) _ZTv0_n16_N7android8hardware11BpHwRefBase10onFirstRefEv
+192    (int (*)(...)) _ZTv0_n20_N7android8hardware11BpHwRefBase15onLastStrongRefEPKv
+196    (int (*)(...)) _ZTv0_n24_N7android8hardware11BpHwRefBase20onIncStrongAttemptedEjPKv
+200    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+204    (int (*)(...)) _ZTVN7android8hardware14confirmationui4V1_018BpHwConfirmationUIE
+
+
+vtable for android::hardware::confirmationui::V1_0::BnHwConfirmationUI
+_ZTVN7android8hardware14confirmationui4V1_018BnHwConfirmationUIE: 21 entries
+12    (int (*)(...)) _ZN7android8hardware9BHwBinder8transactEjRKNS0_6ParcelEPS2_jNSt3__18functionIFvRS2_EEE
+16    (int (*)(...)) _ZN7android8hardware9BHwBinder11linkToDeathERKNS_2spINS0_7IBinder14DeathRecipientEEEPvj
+20    (int (*)(...)) _ZN7android8hardware9BHwBinder13unlinkToDeathERKNS_2wpINS0_7IBinder14DeathRecipientEEEPvjPS5_
+24    (int (*)(...)) _ZNK7android8hardware7IBinder13checkSubclassEPKv
+28    (int (*)(...)) _ZN7android8hardware9BHwBinder12attachObjectEPKvPvS4_PFvS3_S4_S4_E
+32    (int (*)(...)) _ZNK7android8hardware9BHwBinder10findObjectEPKv
+36    (int (*)(...)) _ZN7android8hardware9BHwBinder12detachObjectEPKv
+40    (int (*)(...)) _ZN7android8hardware9BHwBinder11localBinderEv
+44    (int (*)(...)) _ZN7android8hardware7IBinder12remoteBinderEv
+48    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_018BnHwConfirmationUID1Ev
+52    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_018BnHwConfirmationUID0Ev
+56    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_018BnHwConfirmationUI10onTransactEjRKNS0_6ParcelEPS4_jNSt3__18functionIFvRS4_EEE
+68    (int (*)(...)) _ZThn20_N7android8hardware14confirmationui4V1_018BnHwConfirmationUID1Ev
+72    (int (*)(...)) _ZThn20_N7android8hardware14confirmationui4V1_018BnHwConfirmationUID0Ev
+104    (int (*)(...)) _ZTv0_n12_N7android8hardware14confirmationui4V1_018BnHwConfirmationUID1Ev
+108    (int (*)(...)) _ZTv0_n12_N7android8hardware14confirmationui4V1_018BnHwConfirmationUID0Ev
+112    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+116    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+120    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+124    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+128    (int (*)(...)) _ZTVN7android8hardware14confirmationui4V1_018BnHwConfirmationUIE
+
+
+vtable for android::hardware::confirmationui::V1_0::IConfirmationUI
+_ZTVN7android8hardware14confirmationui4V1_015IConfirmationUIE: 15 entries
+16    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_015IConfirmationUI14interfaceChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_11hidl_stringEEEEEE
+20    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_015IConfirmationUI5debugERKNS0_11hidl_handleERKNS0_8hidl_vecINS0_11hidl_stringEEE
+24    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_015IConfirmationUI19interfaceDescriptorENSt3__18functionIFvRKNS0_11hidl_stringEEEE
+28    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_015IConfirmationUI12getHashChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_10hidl_arrayIhLj32EJEEEEEEEE
+32    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_015IConfirmationUI21setHALInstrumentationEv
+36    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_015IConfirmationUI11linkToDeathERKNS_2spINS0_20hidl_death_recipientEEEy
+40    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_015IConfirmationUI4pingEv
+44    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_015IConfirmationUI12getDebugInfoENSt3__18functionIFvRKNS_4hidl4base4V1_09DebugInfoEEEE
+48    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_015IConfirmationUI21notifySyspropsChangedEv
+52    (int (*)(...)) _ZN7android8hardware14confirmationui4V1_015IConfirmationUI13unlinkToDeathERKNS_2spINS0_20hidl_death_recipientEEE
+112    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+116    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+120    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+124    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+128    (int (*)(...)) _ZTVN7android8hardware14confirmationui4V1_015IConfirmationUIE

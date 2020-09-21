@@ -1,0 +1,4 @@
+Note that this directory contains additional files to be packaged specifically
+with the wts-acts distribution, for use when running the Wear Test Suite.
+
+See ../Android.mk for details.

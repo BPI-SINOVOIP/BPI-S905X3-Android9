@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2018 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<!-- Metric collectors for longevity runs. -->
+<configuration description="Metric collectors for longevity runs.">
+  <metrics_collector class="com.android.tradefed.device.metric.ScheduleMultipleDeviceMetricCollector">
+    <!-- Collect fragmentation info every 2 minutes. -->
+    <option name="metric-collection-intervals" key="fragmentation" value="120000" />
+    <option name="metric-collector-command-classes" value="com.android.tradefed.device.metric.BuddyInfoMetricCollector" />
+
+    <!-- Collect compact memory dump every 3 minutes. -->
+    <option name="metric-collection-intervals" key="compact-meminfo" value="180000" />
+    <option name="metric-collector-command-classes" value="com.android.tradefed.device.metric.MemInfoMetricCollector" />
+
+    <!-- Collect graphicsstats dump every 4 minutes. -->
+    <option name="metric-collection-intervals" key="jank" value="240000" />
+    <option name="metric-collector-command-classes" value="com.android.tradefed.device.metric.GraphicsStatsMetricCollector" />
+
+    <!-- Collect bugreport every 1 hour. -->
+    <option name="metric-collection-intervals" key="bugreportz" value="3600000" />
+    <option name="metric-collector-command-classes" value="com.android.tradefed.device.metric.BugreportzMetricCollector" />
+
+    <!-- Collect ion audio and system heap info every 15 minutes. -->
+    <option name="metric-collection-intervals" key="ion" value="900000" />
+    <option name="metric-collector-command-classes" value="com.android.tradefed.device.metric.IonHeapInfoMetricCollector" />
+
+    <!-- Collect pagetype info every 10 minutes. -->
+    <option name="metric-collection-intervals" key="pagetypeinfo" value="600000" />
+    <option name="metric-collector-command-classes" value="com.android.tradefed.device.metric.PagetypeInfoMetricCollector" />
+
+    <!-- Collect trace every 20 minutes. -->
+    <option name="metric-collection-intervals" key="trace" value="1200000" />
+    <option name="metric-collector-command-classes" value="com.android.tradefed.device.metric.TraceMetricCollector" />
+    <!-- Add more if there are requests. -->
+  </metrics_collector>
+</configuration>

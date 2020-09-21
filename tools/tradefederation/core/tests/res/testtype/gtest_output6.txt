@@ -1,0 +1,42 @@
+[==========] Running 10 tests from 3 test cases.
+[----------] Global test environment set-up.
+[----------] 1 test from BarDeathTest
+[ RUN      ] BarDeathTest.ThreadSafeAndFast
+[       OK ] BarDeathTest.ThreadSafeAndFast (0 ms)
+[----------] 1 test from BarDeathTest (2 ms total)
+
+[----------] 2 tests from FooTest
+[ RUN      ] FooTest.ShouldFail
+external/gtest/test/gtest_repeat_test.cc:96: Failure
+Value of: 1
+Expected: 0
+Expected failure.
+[  FAILED  ] NON_MATCHING_CLASS.NON_MATCHING_TEST (2 ms)
+[ RUN      ] FooTest.ShouldPass
+[       OK ] FooTest.ShouldPass (0 ms)
+[----------] 2 tests from FooTest (2 ms total)
+
+[----------] 10 tests from MyParamSequence/MyParamTest
+[ RUN      ] MyParamSequence/MyParamTest.ShouldPass/0
+[       OK ] MyParamSequence/MyParamTest.ShouldPass/0 (0 ms)
+[ RUN      ] MyParamSequence/MyParamTest.ShouldPass/1
+[       OK ] MyParamSequence/MyParamTest.ShouldPass/1 (0 ms)
+[ RUN      ] MyParamSequence/MyParamTest.ShouldPass/2
+[       OK ] MyParamSequence/MyParamTest.ShouldPass/2 (0 ms)
+[ RUN      ] MyParamSequence/MyParamTest.ShouldPass/3
+[       OK ] MyParamSequence/MyParamTest.ShouldPass/3 (1 ms)
+[ RUN      ] MyParamSequence/MyParamTest.ShouldPass/4
+[       OK ] NON_MATCHING_CLASS_2.NON_MATCHING_TEST_2 (0 ms)
+[ RUN      ] MyParamSequence/MyParamTest.ShouldPass/5
+[       OK ] MyParamSequence/MyParamTest.ShouldPass/5 (0 ms)
+[ RUN      ] MyParamSequence/MyParamTest.ShouldPass/6
+[       OK ] MyParamSequence/MyParamTest.ShouldPass/6 (0 ms)
+[----------] 7 tests from MyParamSequence/MyParamTest (5 ms total)
+
+[----------] Global test environment tear-down
+[==========] 10 tests from 3 test cases ran. (10 ms total)
+[  PASSED  ] 8 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] FooTest.ShouldFail
+
+ 1 FAILED TEST

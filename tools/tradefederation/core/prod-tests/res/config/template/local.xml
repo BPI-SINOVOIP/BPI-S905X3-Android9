@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2015 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<!-- Common base configuration for local runs. -->
+<configuration description="Common base configuration for local runs">
+    <option name="bugreport-on-invocation-ended" value="true" />
+    <build_provider class="com.android.tradefed.build.BootstrapBuildProvider" />
+    <!-- Provides a mechanism for overwriting the preloaded classes that is disabled by default. -->
+    <target_preparer class="com.android.tradefed.targetprep.PreloadedClassesPreparer">
+        <option name="disable" value="true" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.DeviceSetup">
+        <option name="screen-always-on" value="on" />
+        <option name="screen-adaptive-brightness" value="off" />
+        <option name="screen-brightness" value="30" />
+    </target_preparer>
+
+    <template-include name="preparers" default="empty" />
+
+    <template-include name="test" />
+
+    <logger class="com.android.tradefed.log.FileLogger">
+        <option name="log-level" value="VERBOSE" />
+        <option name="log-level-display" value="VERBOSE" />
+    </logger>
+    <log_saver class="com.android.tradefed.result.FileSystemLogSaver" />
+    <result_reporter class="com.android.tradefed.result.ConsoleResultReporter" />
+    <result_reporter class="com.android.tradefed.result.InvocationFailureEmailResultReporter" />
+    <result_reporter class="com.android.tradefed.result.DeviceUnavailEmailResultReporter" />
+    <template-include name="reporters" default="empty" />
+</configuration>

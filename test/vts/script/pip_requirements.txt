@@ -1,0 +1,23 @@
+# Required packages for VTS Runner
+enum
+future
+futures
+google-api-python-client
+google-cloud-pubsub
+httplib2
+protobuf
+requests
+setuptools
+
+# Required packages for Camera ITS tests
+# matplotlib # TODO(jaeshin): b/38371975, downloaded separately in download-pypi-packages.sh
+numpy
+Pillow
+scipy
+
+# Required packages for Kernel tests
+parse
+ply
+
+# Required packages for USB gadget tests
+libusb1

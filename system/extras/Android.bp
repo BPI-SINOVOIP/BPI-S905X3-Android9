@@ -1,0 +1,16 @@
+cc_defaults {
+    name: "system-extras-cflags-defaults",
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wno-unused-parameter",
+        "-Wno-unused-result",
+        "-Wno-unused-variable",
+    ],
+    clang_cflags: [
+        "-Wno-incompatible-pointer-types-discards-qualifiers",
+        "-Wno-unused-const-variable",
+    ],
+}
+
+subdirs = ["*"]

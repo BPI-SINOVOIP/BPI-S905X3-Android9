@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 Google Inc. All Rights Reserved -->
+<configuration description="Runs media memory tests">
+    <option name="test-tag" value="media_memory_test" />
+
+    <!-- com.google.android.tradefed.targetprep.GoogleDeviceSetup -->
+    <option name="google-device-setup:local-data-path" value="/google/data/ro/teams/tradefed/testdata/media/media_api/" />
+
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="mediaframeworktest.apk" />
+    </target_preparer>
+
+    <test class="com.android.media.tests.MediaMemoryTest" />
+</configuration>

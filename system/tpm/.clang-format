@@ -1,0 +1,5 @@
+#
+# This repo is exists both in Android and Chrome OS. The two share most patches
+# so it makes sense for them to use the same coding style.
+#
+BasedOnStyle: Chromium

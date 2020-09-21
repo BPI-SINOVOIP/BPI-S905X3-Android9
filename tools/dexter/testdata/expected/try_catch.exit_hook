@@ -1,0 +1,183 @@
+
+method A.<init>():void
+{
+	.src "tryCatch.java"
+	.line 2
+	.prologue_end
+	.line 2
+	    0| move-object v0, v2
+	.local v0, "this", A
+	    1| move-object v1, v0
+	    2| invoke-direct {v1}, java.lang.Throwable.<init>():void
+	    5| invoke-static/range {}, Tracer.OnExit():void
+	    8| return-void
+}
+
+method B.<init>():void
+{
+	.src "tryCatch.java"
+	.line 6
+	.prologue_end
+	.line 6
+	    0| move-object v0, v2
+	.local v0, "this", B
+	    1| move-object v1, v0
+	    2| invoke-direct {v1}, java.lang.Throwable.<init>():void
+	    5| invoke-static/range {}, Tracer.OnExit():void
+	    8| return-void
+}
+
+method TryCatch.<init>():void
+{
+	.src "tryCatch.java"
+	.line 10
+	.prologue_end
+	.line 10
+	    0| move-object v0, v2
+	.local v0, "this", TryCatch
+	    1| move-object v1, v0
+	    2| invoke-direct {v1}, java.lang.Object.<init>():void
+	    5| invoke-static/range {}, Tracer.OnExit():void
+	    8| return-void
+}
+
+method TryCatch.foo(int):int
+{
+	.params "?"
+	.src "tryCatch.java"
+	.line 27
+	.prologue_end
+	.line 27
+	    0| move v0, v4
+	.local v0, "x", int
+	    1| move v1, v0
+	    2| if-lez v1, Label_4
+	.line 28
+	    4| move v1, v0
+	    5| packed-switch v1, Label_5
+	.line 31
+	    8| const/4 v1, #+1 (0x00000001 | 1.40130e-45)
+	    9| move v0, v1
+Label_1:
+	.line 34
+	.end_local v0
+	   10| invoke-static/range {v0..v0}, Tracer.OnExit(int):int
+	   13| move-result v0
+	   14| return v0
+Label_2:
+	.line 29
+	.restart_local v0
+	   15| new-instance v1, A
+	   17| move-object v3, v1
+	   18| move-object v1, v3
+	   19| move-object v2, v3
+	   20| invoke-direct {v2}, A.<init>():void
+	   23| throw v1
+Label_3:
+	.line 30
+	   24| new-instance v1, B
+	   26| move-object v3, v1
+	   27| move-object v1, v3
+	   28| move-object v2, v3
+	   29| invoke-direct {v2}, B.<init>():void
+	   32| throw v1
+Label_4:
+	.line 34
+	   33| const/4 v1, #+0 (0x00000000 | 0.00000)
+	   34| move v0, v1
+	   35| goto/16 Label_1
+	   37| nop
+Label_5: <aligned>
+	.line 28
+	   38| packed-switch-payload
+		    1: Label_2
+		    2: Label_3
+}
+
+method TryCatch.main(java.lang.String[]):void
+{
+	.params "?"
+	.src "tryCatch.java"
+	.line 15
+	.prologue_end
+	.line 15
+	    0| move-object v0, v6
+	.local v0, "args", java.lang.String[]
+	    1| const/4 v3, #+0 (0x00000000 | 0.00000)
+	.try_begin_1
+	    2| invoke-static {v3}, TryCatch.foo(int):int
+	.try_end_1
+	  catch(B) : Label_3
+	  catch(A) : Label_4
+	  catch(...) : Label_5
+	    5| move-result v3
+Label_1:
+	.line 18
+	.line 22
+	    6| sget-object v3, java.lang.System.out
+	    8| const-string v4, "finally\n"
+	   10| const/4 v5, #+0 (0x00000000 | 0.00000)
+	   11| new-array v5, v5, java.lang.Object[]
+	   13| invoke-virtual {v3,v4,v5}, java.io.PrintStream.printf(java.lang.String, java.lang.Object[]):java.io.PrintStream
+	   16| move-result-object v3
+Label_2:
+	.line 23
+	.line 24
+	   17| invoke-static/range {}, Tracer.OnExit():void
+	   20| return-void
+Label_3:
+	.line 16
+	   21| move-exception v3
+	   22| move-object v1, v3
+	.try_begin_2
+	.line 17
+	.local v1, "ex", B
+	   23| sget-object v3, java.lang.System.out
+	   25| const-string v4, "catch: B\n"
+	   27| const/4 v5, #+0 (0x00000000 | 0.00000)
+	   28| new-array v5, v5, java.lang.Object[]
+	   30| invoke-virtual {v3,v4,v5}, java.io.PrintStream.printf(java.lang.String, java.lang.Object[]):java.io.PrintStream
+	.try_end_2
+	  catch(A) : Label_4
+	  catch(...) : Label_5
+	   33| move-result-object v3
+	   34| goto/16 Label_1
+Label_4:
+	.line 19
+	.end_local v1
+	   36| move-exception v3
+	   37| move-object v1, v3
+	.try_begin_3
+	.line 20
+	.local v1, "ex", A
+	   38| sget-object v3, java.lang.System.out
+	   40| const-string v4, "catch: A\n"
+	   42| const/4 v5, #+0 (0x00000000 | 0.00000)
+	   43| new-array v5, v5, java.lang.Object[]
+	   45| invoke-virtual {v3,v4,v5}, java.io.PrintStream.printf(java.lang.String, java.lang.Object[]):java.io.PrintStream
+	.try_end_3
+	  catch(...) : Label_5
+	   48| move-result-object v3
+	.line 22
+	   49| sget-object v3, java.lang.System.out
+	   51| const-string v4, "finally\n"
+	   53| const/4 v5, #+0 (0x00000000 | 0.00000)
+	   54| new-array v5, v5, java.lang.Object[]
+	   56| invoke-virtual {v3,v4,v5}, java.io.PrintStream.printf(java.lang.String, java.lang.Object[]):java.io.PrintStream
+	   59| move-result-object v3
+	.line 23
+	   60| goto/16 Label_2
+Label_5:
+	.line 22
+	.end_local v1
+	   62| move-exception v3
+	   63| move-object v2, v3
+	   64| sget-object v3, java.lang.System.out
+	   66| const-string v4, "finally\n"
+	   68| const/4 v5, #+0 (0x00000000 | 0.00000)
+	   69| new-array v5, v5, java.lang.Object[]
+	   71| invoke-virtual {v3,v4,v5}, java.io.PrintStream.printf(java.lang.String, java.lang.Object[]):java.io.PrintStream
+	   74| move-result-object v3
+	   75| move-object v3, v2
+	   76| throw v3
+}

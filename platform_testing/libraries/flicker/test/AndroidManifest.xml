@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ * Copyright 2018 Google Inc. All Rights Reserved.
+ -->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          android:sharedUserId="android.uid.system"
+          package="com.android.server.wm.flicker">
+
+    <uses-sdk android:minSdkVersion="27" android:targetSdkVersion="27"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.HARDWARE_TEST" tools:ignore="ProtectedPermissions" />
+    <application android:label="FlickerLibTest">
+        <uses-library android:name="android.test.runner"/>
+    </application>
+
+    <instrumentation android:name="android.support.test.runner.AndroidJUnitRunner"
+                     android:targetPackage="com.android.server.wm.flicker"
+                     android:label="WindowManager Flicker Lib Test">
+    </instrumentation>
+
+</manifest>

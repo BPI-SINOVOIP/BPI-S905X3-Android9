@@ -1,0 +1,72 @@
+// Generate .vts spec files.
+hal2vts {
+    name: "{PACKAGE_ROOT}.{HAL_NAME}@{HAL_VERSION}-vts.spec",
+    hidl_gen_args: "{HIDL_GEN_ARGS}",
+    srcs: [
+        ":{PACKAGE_ROOT}.{HAL_NAME}@{HAL_VERSION}_hal",
+    ],
+    out: [{GENERATED_VTS_SPECS}],
+}
+
+// Build VTS driver.
+genrule {
+    name: "{PACKAGE_ROOT}.{HAL_NAME}@{HAL_VERSION}-vts.driver_genc++",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts {HIDL_GEN_ARGS} {PACKAGE_ROOT}.{HAL_NAME}@{HAL_VERSION} && $(location vtsc) -mDRIVER -tSOURCE -b$(genDir) {PACKAGE_ROOT_DIR}/{HAL_NAME_DIR}/{HAL_VERSION}/ $(genDir)/{PACKAGE_ROOT_DIR}/{HAL_NAME_DIR}/{HAL_VERSION}/",
+    srcs: [
+        ":{PACKAGE_ROOT}.{HAL_NAME}@{HAL_VERSION}_hal",
+    ],
+    out: [{GENERATED_SOURCES}],
+}
+
+genrule {
+    name: "{PACKAGE_ROOT}.{HAL_NAME}@{HAL_VERSION}-vts.driver_genc++_headers",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts {HIDL_GEN_ARGS} {PACKAGE_ROOT}.{HAL_NAME}@{HAL_VERSION} && $(location vtsc) -mDRIVER -tHEADER -b$(genDir) {PACKAGE_ROOT_DIR}/{HAL_NAME_DIR}/{HAL_VERSION}/ $(genDir)/{PACKAGE_ROOT_DIR}/{HAL_NAME_DIR}/{HAL_VERSION}/",
+    srcs: [
+        ":{PACKAGE_ROOT}.{HAL_NAME}@{HAL_VERSION}_hal",
+    ],
+    out: [{GENERATED_HEADERS}],
+}
+
+cc_library_shared {
+    name: "{PACKAGE_ROOT}.{HAL_NAME}@{HAL_VERSION}-vts.driver",
+    generated_sources: ["{PACKAGE_ROOT}.{HAL_NAME}@{HAL_VERSION}-vts.driver_genc++"],
+    generated_headers: ["{PACKAGE_ROOT}.{HAL_NAME}@{HAL_VERSION}-vts.driver_genc++_headers"],
+    export_generated_headers: ["{PACKAGE_ROOT}.{HAL_NAME}@{HAL_VERSION}-vts.driver_genc++_headers"],
+    defaults: ["VtsHalDriverDefaults"],
+    shared_libs: [{IMPORTED_DRIVER_PACKAGES}],
+    static_libs: [{HAL_LIBS}],
+}
+
+// Build VTS profiler.
+genrule {
+    name: "{PACKAGE_ROOT}.{HAL_NAME}@{HAL_VERSION}-vts.profiler_genc++",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts {HIDL_GEN_ARGS} {PACKAGE_ROOT}.{HAL_NAME}@{HAL_VERSION} && $(location vtsc) -mPROFILER -tSOURCE -b$(genDir) {PACKAGE_ROOT_DIR}/{HAL_NAME_DIR}/{HAL_VERSION}/ $(genDir)/{PACKAGE_ROOT_DIR}/{HAL_NAME_DIR}/{HAL_VERSION}/",
+    srcs: [
+        ":{PACKAGE_ROOT}.{HAL_NAME}@{HAL_VERSION}_hal",
+    ],
+    out: [{GENERATED_SOURCES}],
+}
+
+genrule {
+    name: "{PACKAGE_ROOT}.{HAL_NAME}@{HAL_VERSION}-vts.profiler_genc++_headers",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts {HIDL_GEN_ARGS} {PACKAGE_ROOT}.{HAL_NAME}@{HAL_VERSION} && $(location vtsc) -mPROFILER -tHEADER -b$(genDir) {PACKAGE_ROOT_DIR}/{HAL_NAME_DIR}/{HAL_VERSION}/ $(genDir)/{PACKAGE_ROOT_DIR}/{HAL_NAME_DIR}/{HAL_VERSION}/",
+    srcs: [
+        ":{PACKAGE_ROOT}.{HAL_NAME}@{HAL_VERSION}_hal",
+    ],
+    out: [{GENERATED_HEADERS}],
+}
+
+cc_library_shared {
+    name: "{PACKAGE_ROOT}.{HAL_NAME}@{HAL_VERSION}-vts.profiler",
+    generated_sources: ["{PACKAGE_ROOT}.{HAL_NAME}@{HAL_VERSION}-vts.profiler_genc++"],
+    generated_headers: ["{PACKAGE_ROOT}.{HAL_NAME}@{HAL_VERSION}-vts.profiler_genc++_headers"],
+    export_generated_headers: ["{PACKAGE_ROOT}.{HAL_NAME}@{HAL_VERSION}-vts.profiler_genc++_headers"],
+    defaults: ["VtsHalProfilerDefaults"],
+    shared_libs: [{IMPORTED_PROFILER_PACKAGES}],
+    static_libs: [{HAL_LIBS}],
+}
+

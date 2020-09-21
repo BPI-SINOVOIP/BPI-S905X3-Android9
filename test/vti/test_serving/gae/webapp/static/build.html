@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+{% autoescape true %}
+<html>
+  <head>
+    <!-- [START css] -->
+    <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.css">
+    <!-- [END css] -->
+    <style type="text/css">
+      body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #f5f5f5;
+      }
+      blockquote {
+        margin-bottom: 10px;
+        border-left-color: #bbb;
+      }
+      form {
+        margin-top: 10px;
+      }
+      .form-signin input[type="text"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+      }
+      .row {
+        margin-left: 0px;
+        margin-top: 10px;
+        overflow: scroll;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse"
+               data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">VTS Test Scheduler</a>
+           <a class="brand" href="/result">Result</a>
+           <a class="brand" href="/build">Build</a>
+           <a class="brand" href="/schedule">Schedule</a>
+           <a class="brand" href="/device">Device &amp; Lab</a>
+           <a class="brand" href="/job">Job Queue</a>
+          <div class="nav-collapse collapse pull-right">
+            <a href="{{ url|safe }}" class="btn">{{ url_linktext }}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <h1>Build List</h1>
+      <p>Shortcuts:
+      <a href=/build>All</a>,
+      <a href=/build?branch=O>8.0 (O)</a>,
+      <a href=/build?branch=O-MR1>8.1 (O-MR1)</a>,
+      <a href=/build?branch=P>9.0 (P)</a>,
+      <a href=/build?branch=GCS>GCS</a></p>
+      <table>
+      {% for manifest_branch, builds in all_builds.items() %}
+      <tr valign="top">
+        <td><h2>Branch: {{manifest_branch}}</h2></td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>
+          <b>Test Build</b>
+        <td>
+          <b>Device Build</b>
+        <td>
+          <b>GSI Build</b>
+      </tr>
+      <tr valign="top">
+        <td>
+          <table border=1>
+          <tr>
+            <td>#
+            <td>Branch
+            <td>ID
+            <td>Target
+          </tr>
+          {% set index = 1 %}
+          {% for build in builds["test"] %}
+          <tr>
+            <td>
+              {{ index }}
+              {% set index = index + 1 %}
+            <td>
+              {{ build.manifest_branch }}
+            <td>
+              <span title="Retrieved at {{ build.timestamp }}">
+              {{ build.build_id }}</span>
+            <td>
+              <span title="build_type: {{ build.build_type }}">
+              {{ build.build_target }}</span>
+          </tr>
+          {% endfor %}
+          </table>
+        <td>
+          <table border=1>
+          <tr>
+            <td>#
+            <td>Branch
+            <td>ID
+            <td>Target
+            <td>Build Type
+            <td>Signed
+          </tr>
+          {% set index = 1 %}
+          {% for build in builds["device"] %}
+          <tr>
+            <td>
+              {{ index }}
+              {% set index = index + 1 %}
+            <td>
+              {{ build.manifest_branch }}
+            <td>
+              <span title="Retrieved at {{ build.timestamp }}">
+              {{ build.build_id }}</span>
+            <td>
+              {{ build.build_target }}
+            <td>
+              {{ build.build_type }}
+            <td>
+              {{ build.signed }}
+          </tr>
+          {% endfor %}
+          </table>
+        <td>
+          <table border=1>
+          <tr>
+            <td>#
+            <td>Branch
+            <td>ID
+            <td>Target
+          </tr>
+          {% set index = 1 %}
+          {% for build in builds["gsi"] %}
+          <tr>
+            <td>
+              {{ index }}
+              {% set index = index + 1 %}
+            <td>
+              {{ build.manifest_branch }}
+            <td>
+              <span title="Retrieved at {{ build.timestamp }}">
+              {{ build.build_id }}</span>
+            <td>
+              <span title="build_type: {{ build.build_type }}">
+              {{ build.build_target }}</span>
+          </tr>
+          {% endfor %}
+          </table>
+      </tr>
+      {% endfor %}
+      </table>
+      <hr>
+    </div>
+  </body>
+</html>
+{% endautoescape %}

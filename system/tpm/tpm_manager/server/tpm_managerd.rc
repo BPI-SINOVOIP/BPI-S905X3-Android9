@@ -1,0 +1,8 @@
+on post-fs-data
+    mkdir /data/misc/tpm_managerd 0700 root root
+
+service tpm_managerd /system/bin/tpm_managerd
+    class late_start
+    user root
+    group root
+    oneshot

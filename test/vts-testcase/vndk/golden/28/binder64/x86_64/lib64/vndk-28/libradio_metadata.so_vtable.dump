@@ -1,0 +1,4 @@
+vtable for android::RadioMetadataWrapper
+_ZTVN7android20RadioMetadataWrapperE: 2 entries
+16    (int (*)(...)) _ZN7android20RadioMetadataWrapperD2Ev
+24    (int (*)(...)) _ZN7android20RadioMetadataWrapperD0Ev

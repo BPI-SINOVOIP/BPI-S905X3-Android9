@@ -1,0 +1,70 @@
+/* Copyright (C) 2016 The Android Open Source Project
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+*/
+.ui-datepicker table {
+    font-family: Roboto !important;
+    font-size: 13px !important;
+    white-space: nowrap !important;
+}
+
+#ui-datepicker-div {
+    font-family: "Roboto", sans-serif;
+    padding: 0;
+}
+
+.ui-corner-all {
+    border-bottom-right-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    border-top-left-radius: 0 !important;
+}
+
+.ui-datepicker td span.ui-state-default, .ui-datepicker td a.ui-state-default {
+    text-align: center;
+    padding: 0.7em 0.4em;
+    border: none;
+    border-radius: 10em;
+    background: none;
+}
+
+.ui-datepicker td span.ui-state-hover, .ui-datepicker td a.ui-state-hover {
+    background: #e0f2f1;
+}
+
+.ui-datepicker td span.ui-state-active, .ui-datepicker td a.ui-state-active {
+    color: white;
+    font-weight: 600;
+    background: #009688;
+}
+
+.ui-datepicker-header.ui-widget-header.ui-helper-clearfix.ui-corner-all {
+    background: #009688;
+    border: none;
+    color: white;
+}
+
+.ui-datepicker-next.ui-state-hover.ui-datepicker-next-hover {
+    right: 2px;
+    top: 2px;
+}
+
+.ui-datepicker-prev.ui-state-hover.ui-datepicker-prev-hover {
+    left: 2px;
+    top: 2px;
+}
+
+.ui-datepicker-next.ui-corner-all.ui-state-hover, .ui-datepicker-prev.ui-corner-all.ui-state-hover {
+    background: none;
+    border: none;
+}

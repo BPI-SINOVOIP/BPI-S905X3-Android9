@@ -1,0 +1,57 @@
+//
+// Copyright (C) 2018 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+//
+// bpfLoad binary
+//
+cc_binary {
+
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wthread-safety",
+    ],
+    sanitize: {
+        integer_overflow: true,
+    },
+    clang: true,
+    name: "bpfloader",
+    shared_libs: [
+        "libcutils",
+        "libbpf",
+        "libbase",
+        "liblog",
+        "libnetdutils",
+    ],
+    srcs: [
+        "BpfLoader.cpp",
+    ],
+
+    required: [
+        "bpf_kern.o",
+    ],
+
+}
+
+bpf {
+    name: "bpf_kern.o",
+    srcs: ["bpf_kern.c"],
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+    include_dirs: ["system/netd/libbpf/include"],
+}

@@ -1,0 +1,114 @@
+// This file was auto-generated. Do not edit manually.
+// Use launch_hal_test.py or update_makefiles.py in test/vts-testcase/hal/script/ to generate this file.
+
+// Generate .vts spec files.
+hal2vts {
+    name: "android.hardware.camera.device@3.2-vts.spec",
+    hidl_gen_args: "-r android.hardware:hardware/interfaces",
+    srcs: [
+        ":android.hardware.camera.device@3.2_hal",
+    ],
+    out: [
+        "android/hardware/camera/device/3.2/CameraDevice.vts",
+        "android/hardware/camera/device/3.2/CameraDeviceCallback.vts",
+        "android/hardware/camera/device/3.2/CameraDeviceSession.vts",
+        "android/hardware/camera/device/3.2/types.vts",
+    ],
+}
+
+// Build VTS driver.
+genrule {
+    name: "android.hardware.camera.device@3.2-vts.driver_genc++",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -r android.hardware:hardware/interfaces android.hardware.camera.device@3.2 && $(location vtsc) -mDRIVER -tSOURCE -b$(genDir) android/hardware/camera/device/3.2/ $(genDir)/android/hardware/camera/device/3.2/",
+    srcs: [
+        ":android.hardware.camera.device@3.2_hal",
+    ],
+    out: [
+        "android/hardware/camera/device/3.2/CameraDevice.vts.cpp",
+        "android/hardware/camera/device/3.2/CameraDeviceCallback.vts.cpp",
+        "android/hardware/camera/device/3.2/CameraDeviceSession.vts.cpp",
+        "android/hardware/camera/device/3.2/types.vts.cpp",
+    ],
+}
+
+genrule {
+    name: "android.hardware.camera.device@3.2-vts.driver_genc++_headers",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -r android.hardware:hardware/interfaces android.hardware.camera.device@3.2 && $(location vtsc) -mDRIVER -tHEADER -b$(genDir) android/hardware/camera/device/3.2/ $(genDir)/android/hardware/camera/device/3.2/",
+    srcs: [
+        ":android.hardware.camera.device@3.2_hal",
+    ],
+    out: [
+        "android/hardware/camera/device/3.2/CameraDevice.vts.h",
+        "android/hardware/camera/device/3.2/CameraDeviceCallback.vts.h",
+        "android/hardware/camera/device/3.2/CameraDeviceSession.vts.h",
+        "android/hardware/camera/device/3.2/types.vts.h",
+    ],
+}
+
+cc_library_shared {
+    name: "android.hardware.camera.device@3.2-vts.driver",
+    generated_sources: ["android.hardware.camera.device@3.2-vts.driver_genc++"],
+    generated_headers: ["android.hardware.camera.device@3.2-vts.driver_genc++_headers"],
+    export_generated_headers: ["android.hardware.camera.device@3.2-vts.driver_genc++_headers"],
+    defaults: ["VtsHalDriverDefaults"],
+    shared_libs: [
+        "android.hardware.camera.common@1.0-vts.driver",
+        "android.hardware.graphics.common@1.0-vts.driver",
+    ],
+    static_libs: [
+        "android.hardware.camera.common@1.0",
+        "android.hardware.camera.device@3.2",
+        "android.hardware.graphics.common@1.0",
+    ],
+}
+
+// Build VTS profiler.
+genrule {
+    name: "android.hardware.camera.device@3.2-vts.profiler_genc++",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -r android.hardware:hardware/interfaces android.hardware.camera.device@3.2 && $(location vtsc) -mPROFILER -tSOURCE -b$(genDir) android/hardware/camera/device/3.2/ $(genDir)/android/hardware/camera/device/3.2/",
+    srcs: [
+        ":android.hardware.camera.device@3.2_hal",
+    ],
+    out: [
+        "android/hardware/camera/device/3.2/CameraDevice.vts.cpp",
+        "android/hardware/camera/device/3.2/CameraDeviceCallback.vts.cpp",
+        "android/hardware/camera/device/3.2/CameraDeviceSession.vts.cpp",
+        "android/hardware/camera/device/3.2/types.vts.cpp",
+    ],
+}
+
+genrule {
+    name: "android.hardware.camera.device@3.2-vts.profiler_genc++_headers",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -r android.hardware:hardware/interfaces android.hardware.camera.device@3.2 && $(location vtsc) -mPROFILER -tHEADER -b$(genDir) android/hardware/camera/device/3.2/ $(genDir)/android/hardware/camera/device/3.2/",
+    srcs: [
+        ":android.hardware.camera.device@3.2_hal",
+    ],
+    out: [
+        "android/hardware/camera/device/3.2/CameraDevice.vts.h",
+        "android/hardware/camera/device/3.2/CameraDeviceCallback.vts.h",
+        "android/hardware/camera/device/3.2/CameraDeviceSession.vts.h",
+        "android/hardware/camera/device/3.2/types.vts.h",
+    ],
+}
+
+cc_library_shared {
+    name: "android.hardware.camera.device@3.2-vts.profiler",
+    generated_sources: ["android.hardware.camera.device@3.2-vts.profiler_genc++"],
+    generated_headers: ["android.hardware.camera.device@3.2-vts.profiler_genc++_headers"],
+    export_generated_headers: ["android.hardware.camera.device@3.2-vts.profiler_genc++_headers"],
+    defaults: ["VtsHalProfilerDefaults"],
+    shared_libs: [
+        "android.hardware.camera.common@1.0-vts.profiler",
+        "android.hardware.graphics.common@1.0-vts.profiler",
+    ],
+    static_libs: [
+        "android.hardware.camera.common@1.0",
+        "android.hardware.camera.device@3.2",
+        "android.hardware.graphics.common@1.0",
+    ],
+}
+

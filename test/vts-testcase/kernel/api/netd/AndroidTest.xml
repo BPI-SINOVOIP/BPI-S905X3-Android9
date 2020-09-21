@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2017 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<configuration description="Config for CTS-on-GSI CtsOnGsiKernelNetdTest.">
+    <option name="test-suite-tag" value="cts" />
+    <option name="config-descriptor:metadata" key="component" value="kernel" />
+    <target_preparer class="com.android.compatibility.common.tradefed.targetprep.VtsFilePusher">
+        <option name="abort-on-push-failure" value="false"/>
+        <option name="push" value="DATA/nativetest/netd_integration_test/netd_integration_test->/data/nativetest/CtsOnGsiKernelNetdTest"/>
+        <option name="push" value="DATA/nativetest64/netd_integration_test/netd_integration_test->/data/nativetest/CtsOnGsiKernelNetdTest"/>
+        <option name="append-bitness" value="true" />
+    </target_preparer>
+    <test class="com.android.tradefed.testtype.GTest" >
+        <option name="module-name" value="CtsOnGsiKernelNetdTest" />
+        <option name="runtime-hint" value="1m" />
+        <option name="exclude-filter" value="ResolverTest.*:TransportTest.*" />
+        <option name="native-test-timeout" value="1m" />
+    </test>
+</configuration>

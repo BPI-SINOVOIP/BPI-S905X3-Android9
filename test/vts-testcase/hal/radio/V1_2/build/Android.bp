@@ -1,0 +1,119 @@
+// This file was auto-generated. Do not edit manually.
+// Use launch_hal_test.py or update_makefiles.py in test/vts-testcase/hal/script/ to generate this file.
+
+// Generate .vts spec files.
+hal2vts {
+    name: "android.hardware.radio@1.2-vts.spec",
+    hidl_gen_args: "-r android.hardware:hardware/interfaces",
+    srcs: [
+        ":android.hardware.radio@1.2_hal",
+    ],
+    out: [
+        "android/hardware/radio/1.2/Radio.vts",
+        "android/hardware/radio/1.2/RadioIndication.vts",
+        "android/hardware/radio/1.2/RadioResponse.vts",
+        "android/hardware/radio/1.2/Sap.vts",
+        "android/hardware/radio/1.2/types.vts",
+    ],
+}
+
+// Build VTS driver.
+genrule {
+    name: "android.hardware.radio@1.2-vts.driver_genc++",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -r android.hardware:hardware/interfaces android.hardware.radio@1.2 && $(location vtsc) -mDRIVER -tSOURCE -b$(genDir) android/hardware/radio/1.2/ $(genDir)/android/hardware/radio/1.2/",
+    srcs: [
+        ":android.hardware.radio@1.2_hal",
+    ],
+    out: [
+        "android/hardware/radio/1.2/Radio.vts.cpp",
+        "android/hardware/radio/1.2/RadioIndication.vts.cpp",
+        "android/hardware/radio/1.2/RadioResponse.vts.cpp",
+        "android/hardware/radio/1.2/Sap.vts.cpp",
+        "android/hardware/radio/1.2/types.vts.cpp",
+    ],
+}
+
+genrule {
+    name: "android.hardware.radio@1.2-vts.driver_genc++_headers",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -r android.hardware:hardware/interfaces android.hardware.radio@1.2 && $(location vtsc) -mDRIVER -tHEADER -b$(genDir) android/hardware/radio/1.2/ $(genDir)/android/hardware/radio/1.2/",
+    srcs: [
+        ":android.hardware.radio@1.2_hal",
+    ],
+    out: [
+        "android/hardware/radio/1.2/Radio.vts.h",
+        "android/hardware/radio/1.2/RadioIndication.vts.h",
+        "android/hardware/radio/1.2/RadioResponse.vts.h",
+        "android/hardware/radio/1.2/Sap.vts.h",
+        "android/hardware/radio/1.2/types.vts.h",
+    ],
+}
+
+cc_library_shared {
+    name: "android.hardware.radio@1.2-vts.driver",
+    generated_sources: ["android.hardware.radio@1.2-vts.driver_genc++"],
+    generated_headers: ["android.hardware.radio@1.2-vts.driver_genc++_headers"],
+    export_generated_headers: ["android.hardware.radio@1.2-vts.driver_genc++_headers"],
+    defaults: ["VtsHalDriverDefaults"],
+    shared_libs: [
+        "android.hardware.radio@1.0-vts.driver",
+        "android.hardware.radio@1.1-vts.driver",
+    ],
+    static_libs: [
+        "android.hardware.radio@1.0",
+        "android.hardware.radio@1.1",
+        "android.hardware.radio@1.2",
+    ],
+}
+
+// Build VTS profiler.
+genrule {
+    name: "android.hardware.radio@1.2-vts.profiler_genc++",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -r android.hardware:hardware/interfaces android.hardware.radio@1.2 && $(location vtsc) -mPROFILER -tSOURCE -b$(genDir) android/hardware/radio/1.2/ $(genDir)/android/hardware/radio/1.2/",
+    srcs: [
+        ":android.hardware.radio@1.2_hal",
+    ],
+    out: [
+        "android/hardware/radio/1.2/Radio.vts.cpp",
+        "android/hardware/radio/1.2/RadioIndication.vts.cpp",
+        "android/hardware/radio/1.2/RadioResponse.vts.cpp",
+        "android/hardware/radio/1.2/Sap.vts.cpp",
+        "android/hardware/radio/1.2/types.vts.cpp",
+    ],
+}
+
+genrule {
+    name: "android.hardware.radio@1.2-vts.profiler_genc++_headers",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -r android.hardware:hardware/interfaces android.hardware.radio@1.2 && $(location vtsc) -mPROFILER -tHEADER -b$(genDir) android/hardware/radio/1.2/ $(genDir)/android/hardware/radio/1.2/",
+    srcs: [
+        ":android.hardware.radio@1.2_hal",
+    ],
+    out: [
+        "android/hardware/radio/1.2/Radio.vts.h",
+        "android/hardware/radio/1.2/RadioIndication.vts.h",
+        "android/hardware/radio/1.2/RadioResponse.vts.h",
+        "android/hardware/radio/1.2/Sap.vts.h",
+        "android/hardware/radio/1.2/types.vts.h",
+    ],
+}
+
+cc_library_shared {
+    name: "android.hardware.radio@1.2-vts.profiler",
+    generated_sources: ["android.hardware.radio@1.2-vts.profiler_genc++"],
+    generated_headers: ["android.hardware.radio@1.2-vts.profiler_genc++_headers"],
+    export_generated_headers: ["android.hardware.radio@1.2-vts.profiler_genc++_headers"],
+    defaults: ["VtsHalProfilerDefaults"],
+    shared_libs: [
+        "android.hardware.radio@1.0-vts.profiler",
+        "android.hardware.radio@1.1-vts.profiler",
+    ],
+    static_libs: [
+        "android.hardware.radio@1.0",
+        "android.hardware.radio@1.1",
+        "android.hardware.radio@1.2",
+    ],
+}
+

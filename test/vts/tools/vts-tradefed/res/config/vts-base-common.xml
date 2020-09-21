@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2017 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<configuration description="VTS Main Test Plan">
+  <device_recovery class="com.android.tradefed.device.WaitDeviceRecovery" />
+
+  <option name="compatibility:test-arg" value="com.android.tradefed.testtype.AndroidJUnitTest:rerun-from-file:true" />
+  <option name="compatibility:test-arg" value="com.android.tradefed.testtype.AndroidJUnitTest:fallback-to-serial-rerun:false" />
+  <logger class="com.android.tradefed.log.FileLogger">
+    <option name="log-level-display" value="WARN" />
+  </logger>
+  <option name="compatibility:skip-all-system-status-check" value="true" />
+  <option name="enable-root" value="true" />
+  <option name="max-log-size" value="200" />
+  <object type="vts-vendor-config" class="com.android.tradefed.util.VtsVendorConfigFileUtil" />
+  <result_reporter class="com.android.compatibility.common.tradefed.result.ConsoleReporter" />
+  <result_reporter class="com.android.compatibility.common.tradefed.result.VtsResultReporter" />
+  <template-include name="reporters" default="basic-reporters" />
+  <multi_target_preparer class="com.android.tradefed.targetprep.VtsTestPlanResultReporter" />
+  <multi_target_preparer class="com.android.tradefed.targetprep.VtsPythonVirtualenvPreparer">
+        <option name="dep-module" value="enum" />
+        <option name="dep-module" value="future" />
+        <option name="dep-module" value="futures" />
+        <option name="dep-module" value="google-api-python-client" />
+        <option name="dep-module" value="httplib2" />
+        <option name="dep-module" value="oauth2client" />
+        <option name="dep-module" value="protobuf" />
+        <option name="dep-module" value="requests" />
+  </multi_target_preparer>
+  <test class="com.android.compatibility.common.tradefed.testtype.CompatibilityTestMultiDevice" />
+</configuration>

@@ -1,0 +1,104 @@
+// This file was auto-generated. Do not edit manually.
+// Use launch_hal_test.py or update_makefiles.py in test/vts-testcase/hal/script/ to generate this file.
+
+// Generate .vts spec files.
+hal2vts {
+    name: "android.hardware.vibrator@1.2-vts.spec",
+    hidl_gen_args: "-r android.hardware:hardware/interfaces",
+    srcs: [
+        ":android.hardware.vibrator@1.2_hal",
+    ],
+    out: [
+        "android/hardware/vibrator/1.2/Vibrator.vts",
+        "android/hardware/vibrator/1.2/types.vts",
+    ],
+}
+
+// Build VTS driver.
+genrule {
+    name: "android.hardware.vibrator@1.2-vts.driver_genc++",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -r android.hardware:hardware/interfaces android.hardware.vibrator@1.2 && $(location vtsc) -mDRIVER -tSOURCE -b$(genDir) android/hardware/vibrator/1.2/ $(genDir)/android/hardware/vibrator/1.2/",
+    srcs: [
+        ":android.hardware.vibrator@1.2_hal",
+    ],
+    out: [
+        "android/hardware/vibrator/1.2/Vibrator.vts.cpp",
+        "android/hardware/vibrator/1.2/types.vts.cpp",
+    ],
+}
+
+genrule {
+    name: "android.hardware.vibrator@1.2-vts.driver_genc++_headers",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -r android.hardware:hardware/interfaces android.hardware.vibrator@1.2 && $(location vtsc) -mDRIVER -tHEADER -b$(genDir) android/hardware/vibrator/1.2/ $(genDir)/android/hardware/vibrator/1.2/",
+    srcs: [
+        ":android.hardware.vibrator@1.2_hal",
+    ],
+    out: [
+        "android/hardware/vibrator/1.2/Vibrator.vts.h",
+        "android/hardware/vibrator/1.2/types.vts.h",
+    ],
+}
+
+cc_library_shared {
+    name: "android.hardware.vibrator@1.2-vts.driver",
+    generated_sources: ["android.hardware.vibrator@1.2-vts.driver_genc++"],
+    generated_headers: ["android.hardware.vibrator@1.2-vts.driver_genc++_headers"],
+    export_generated_headers: ["android.hardware.vibrator@1.2-vts.driver_genc++_headers"],
+    defaults: ["VtsHalDriverDefaults"],
+    shared_libs: [
+        "android.hardware.vibrator@1.0-vts.driver",
+        "android.hardware.vibrator@1.1-vts.driver",
+    ],
+    static_libs: [
+        "android.hardware.vibrator@1.0",
+        "android.hardware.vibrator@1.1",
+        "android.hardware.vibrator@1.2",
+    ],
+}
+
+// Build VTS profiler.
+genrule {
+    name: "android.hardware.vibrator@1.2-vts.profiler_genc++",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -r android.hardware:hardware/interfaces android.hardware.vibrator@1.2 && $(location vtsc) -mPROFILER -tSOURCE -b$(genDir) android/hardware/vibrator/1.2/ $(genDir)/android/hardware/vibrator/1.2/",
+    srcs: [
+        ":android.hardware.vibrator@1.2_hal",
+    ],
+    out: [
+        "android/hardware/vibrator/1.2/Vibrator.vts.cpp",
+        "android/hardware/vibrator/1.2/types.vts.cpp",
+    ],
+}
+
+genrule {
+    name: "android.hardware.vibrator@1.2-vts.profiler_genc++_headers",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -r android.hardware:hardware/interfaces android.hardware.vibrator@1.2 && $(location vtsc) -mPROFILER -tHEADER -b$(genDir) android/hardware/vibrator/1.2/ $(genDir)/android/hardware/vibrator/1.2/",
+    srcs: [
+        ":android.hardware.vibrator@1.2_hal",
+    ],
+    out: [
+        "android/hardware/vibrator/1.2/Vibrator.vts.h",
+        "android/hardware/vibrator/1.2/types.vts.h",
+    ],
+}
+
+cc_library_shared {
+    name: "android.hardware.vibrator@1.2-vts.profiler",
+    generated_sources: ["android.hardware.vibrator@1.2-vts.profiler_genc++"],
+    generated_headers: ["android.hardware.vibrator@1.2-vts.profiler_genc++_headers"],
+    export_generated_headers: ["android.hardware.vibrator@1.2-vts.profiler_genc++_headers"],
+    defaults: ["VtsHalProfilerDefaults"],
+    shared_libs: [
+        "android.hardware.vibrator@1.0-vts.profiler",
+        "android.hardware.vibrator@1.1-vts.profiler",
+    ],
+    static_libs: [
+        "android.hardware.vibrator@1.0",
+        "android.hardware.vibrator@1.1",
+        "android.hardware.vibrator@1.2",
+    ],
+}
+

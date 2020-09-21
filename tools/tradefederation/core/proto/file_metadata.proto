@@ -1,0 +1,43 @@
+// Should be kept in sync with internal version.
+syntax = "proto2";
+
+package posting_service_rpc;
+
+option java_package = "com.android.test.metrics.proto";
+option java_outer_classname = "FileMetadataProto";
+
+// Represents a type of log
+enum LogType {
+  UNKNOWN=0;
+  BUGREPORT=1;
+  BUGREPORTZ=2;
+  COMPACT_MEMINFO=3;
+  CPUINFO=4;
+  DUMPSYS=5;
+  GFXINFO=6;
+  KERNEL=7;
+  LOGCAT=8;
+  MEMINFO=9;
+  PROCRANK=10;
+  SERVICES=11;
+  TOP=12;
+  // skip item 13 ERRORSTATS
+  MUGSHOT=14;
+}
+
+// Represents a single log file
+message LogFile {
+  // The name of the log file
+  required string name = 2;
+  // The type of the log file
+  required LogType log_type = 3;
+}
+
+// Represents a collection of log metadata
+message FileMetadata {
+  // The directory containing all of the LogFiles
+  optional string directory = 2;
+
+  // The included, parseable log files
+  repeated LogFile log_files = 1;
+}

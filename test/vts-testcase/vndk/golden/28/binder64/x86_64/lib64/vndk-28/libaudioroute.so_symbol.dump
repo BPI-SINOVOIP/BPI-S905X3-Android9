@@ -1,0 +1,8 @@
+audio_route_apply_and_update_path
+audio_route_apply_path
+audio_route_free
+audio_route_init
+audio_route_reset
+audio_route_reset_and_update_path
+audio_route_reset_path
+audio_route_update_mixer

@@ -1,0 +1,139 @@
+// Copyright 2017 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto2";
+
+package android.vts;
+option java_package = "com.android.vts.proto";
+option java_outer_classname = "VtsFuzzTaskMessageClass";
+
+import "test/vts/proto/ComponentSpecificationMessage.proto";
+import "test/vts/proto/VtsReportMessage.proto";
+
+
+// To specify status of a FuzzTaskUnitMessage
+enum Status {
+  // task not processed yet
+  READY = 0;
+
+  // task in process
+  LOCKED = 1;
+
+  // task fully processed
+  PROCESSED = 2;
+}
+
+
+// To specify result of fuzz task
+enum Result {
+  // task not processed yet
+  NOT_PROCESSED = 0;
+
+  // duplicate crash
+  CRASH_DUPLICATE = 1;
+
+  // new crash
+  CRASH_NEW = 2;
+
+  // fuzz test passed with no crash
+  PASS = 3;
+}
+
+
+// To specify details of the test suite target
+message TestSuiteSpecificationMessage {
+  // target product (e.g., VTS)
+  optional bytes test_suite = 1;
+
+  // branch name (e.g., master, oc-dev)
+  optional bytes branch = 11;
+
+  // target product (e.g., aosp_arm64)
+  optional bytes target_product = 12;
+
+  // build variant (e.g., userdebug)
+  optional bytes build_variant = 13;
+
+  // build ID
+  optional bytes build_id = 21;
+}
+
+
+// To specify details of a corpus
+message CorpusSpecificationMessage {
+  // Component class (e.g., HIDL HAL or Conventional HAL)
+  optional ComponentClass component_class = 1;
+
+  // Corpus file names
+  repeated bytes corpus_file_name = 2;
+
+  // HAL package name (e.g., android.hardware.audio)
+  optional bytes hal_package_name = 11;
+
+  // HAL transport type (e.g., hwbinder, passthrough)
+  optional bytes hal_transport_type = 12;
+
+  // HAL major version (e.g., 2 of 2.0)
+  optional int32 hal_major_version = 13;
+
+  // HAL minor version (e.g., 0 of 2.0)
+  optional int32 hal_minor_version = 14;
+
+  // HAL interface name (e.g., IDevicesFactory)
+  optional bytes hal_interface_name = 15;
+}
+
+
+// To specify details of a fuzz task per target
+message FuzzTaskUnitMessage {
+  // status of fuzz task
+  optional Status status = 1;
+
+  // result of fuzz task
+  optional Result result_type = 2;
+
+  // log files (host or device)
+  repeated UrlResourceMessage log = 3;
+
+  // tracks when the fuzz task unit was created
+  optional int64 creation_timestamp = 11;
+
+  // tracks when most recent status change occurred
+  optional int64 status_change_timestamp = 12;
+
+  // specification of fuzz task device target
+  optional AndroidDeviceInfoMessage device_info = 21;
+
+  // specification of fuzz task device build info
+  optional AndroidBuildInfo build_info = 22;
+
+  // specification of test suite (e.g., VTS) build target
+  optional TestSuiteSpecificationMessage test_suite_target = 23;
+}
+
+
+// To specify a fuzz task
+message VtsFuzzTaskMessage {
+  // numeric Task ID
+  optional int32 task_id = 1;
+
+  // specification of fuzz task per target
+  repeated FuzzTaskUnitMessage task_unit = 2;
+
+  // VTS test module name
+  optional bytes test_module_name = 11;
+
+  // specification of corpus
+  optional CorpusSpecificationMessage corpus = 21;
+}

@@ -1,0 +1,54 @@
+[==========] Running 13 tests from 3 test cases.
+[----------] Global test environment set-up.
+[----------] 1 test from BarDeathTest
+[ RUN      ] BarDeathTest.ThreadSafeAndFast
+[       OK ] BarDeathTest.ThreadSafeAndFast (0 ms)
+[----------] 1 test from BarDeathTest (0 ms total)
+
+[----------] 2 tests from FooTest
+[ RUN      ] FooTest.ShouldFail
+external/gtest/test/gtest_repeat_test.cc:96: Failure
+Value of: 1
+Expected: 0
+Expected failure.
+[  FAILED  ] FooTest.ShouldFail (0 ms)
+[ RUN      ] FooTest.ShouldPass
+[       OK ] FooTest.ShouldPass (0 ms)
+[----------] 2 tests from FooTest (1 ms total)
+
+[----------] 10 tests from MyParamSequence/MyParamTest
+[ RUN      ] MyParamSequence/MyParamTest.ShouldPass/0
+[       OK ] MyParamSequence/MyParamTest.ShouldPass/0 (0 ms)
+[ RUN      ] MyParamSequence/MyParamTest.ShouldPass/1
+[       OK ] MyParamSequence/MyParamTest.ShouldPass/1 (0 ms)
+[ RUN      ] MyParamSequence/MyParamTest.ShouldPass/2
+[       OK ] MyParamSequence/MyParamTest.ShouldPass/2 (1 ms)
+[ RUN      ] MyParamSequence/MyParamTest.ShouldPass/3
+(expecting 2 warnings)
+WARNING: Environment variable GTEST_TEMP is expected to be a 32-bit integer, but actually has value 12345678987654321, which overflows.
+The default value 20 is used.
+WARNING: Environment variable GTEST_TEMP is expected to be a 32-bit integer, but actually has value -12345678987654321, which overflows.
+The default value 30 is used.
+[  FAILED  ] MyParamSequence/MyParamTest.ShouldPass/3 (0 ms)
+[ RUN      ] MyParamSequence/MyParamTest.ShouldPass/4
+This is some random text that should get captured by the parser.
+[  FAILED  ] MyParamSequence/MyParamTest.ShouldPass/4 (0 ms)
+[ RUN      ] MyParamSequence/MyParamTest.ShouldPass/5
+[       OK ] MyParamSequence/MyParamTest.ShouldPass/5 (0 ms)
+[ RUN      ] MyParamSequence/MyParamTest.ShouldPass/6
+[       OK ] MyParamSequence/MyParamTest.ShouldPass/6 (0 ms)
+[ RUN      ] MyParamSequence/MyParamTest.ShouldPass/7
+[       OK ] MyParamSequence/MyParamTest.ShouldPass/7 (0 ms)
+[ RUN      ] MyParamSequence/MyParamTest.ShouldPass/8
+[       OK ] MyParamSequence/MyParamTest.ShouldPass/8 (0 ms)
+[ RUN      ] MyParamSequence/MyParamTest.ShouldPass/9
+[       OK ] MyParamSequence/MyParamTest.ShouldPass/9 (0 ms)
+[----------] 10 tests from MyParamSequence/MyParamTest (4 ms total)
+
+[----------] Global test environment tear-down
+[==========] 13 tests from 3 test cases ran. (8 ms total)
+[  PASSED  ] 12 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] FooTest.ShouldFail
+
+ 1 FAILED TEST

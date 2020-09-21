@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2011 Google Inc. All Rights Reserved -->
+<configuration description="Runs audio functional tests">
+    <option name="test-tag" value="media_audio" />
+
+    <!-- com.google.android.tradefed.targetprep.GoogleDeviceSetup -->
+    <option name="google-device-setup:screen-saver" value="off" />
+    <option name="google-device-setup:local-data-path" value="/google/data/ro/teams/tradefed/testdata/media/media_api/" />
+
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+        <option name="test-file-name" value="mediaframeworktest.apk" />
+    </target_preparer>
+
+    <test class="com.android.tradefed.testtype.InstrumentationTest">
+        <option name="package" value="com.android.mediaframeworktest" />
+        <option name="runner"  value=".MediaFrameworkTestRunner" />
+        <option name="test-package" value="com.android.mediaframeworktest.functional.audio" />
+        <option name="run-name" value="media_audio" />
+    </test>
+</configuration>

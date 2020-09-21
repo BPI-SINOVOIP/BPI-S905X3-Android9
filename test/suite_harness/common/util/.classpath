@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="tests/src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="var" path="TRADEFED_ROOT/out/host/common/obj/JAVA_LIBRARIES/json-prebuilt_intermediates/javalib.jar"/>
+	<classpathentry kind="var" path="TRADEFED_ROOT/out/host/common/obj/JAVA_LIBRARIES/guavalib_intermediates/classes.jar"/>
+	<classpathentry kind="var" path="TRADEFED_ROOT/out/host/common/obj/JAVA_LIBRARIES/kxml2-2.3.0_intermediates/javalib.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/tradefederation"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

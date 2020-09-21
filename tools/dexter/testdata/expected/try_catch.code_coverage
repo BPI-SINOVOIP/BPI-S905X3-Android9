@@ -1,0 +1,318 @@
+       1: mi=0 s=0 e=2
+       2: mi=0 s=5 e=5
+       3: mi=1 s=0 e=2
+       4: mi=1 s=5 e=5
+       5: mi=2 s=0 e=2
+       6: mi=2 s=5 e=5
+       7: mi=3 s=0 e=2
+       8: mi=3 s=4 e=5
+       9: mi=3 s=8 e=9
+      10: mi=3 s=10 e=10
+      11: mi=3 s=11 e=11
+      12: mi=3 s=13 e=16
+      13: mi=3 s=19 e=19
+      14: mi=3 s=20 e=20
+      15: mi=3 s=22 e=25
+      16: mi=3 s=28 e=28
+      17: mi=3 s=29 e=31
+      18: mi=4 s=0 e=1
+      19: mi=4 s=2 e=2
+      20: mi=4 s=5 e=5
+      21: mi=4 s=6 e=6
+      22: mi=4 s=8 e=8
+      23: mi=4 s=10 e=11
+      24: mi=4 s=13 e=13
+      25: mi=4 s=16 e=16
+      26: mi=4 s=17 e=17
+      27: mi=4 s=18 e=19
+      28: mi=4 s=20 e=20
+      29: mi=4 s=22 e=22
+      30: mi=4 s=24 e=25
+      31: mi=4 s=27 e=27
+      32: mi=4 s=30 e=31
+      33: mi=4 s=32 e=33
+      34: mi=4 s=34 e=34
+      35: mi=4 s=36 e=36
+      36: mi=4 s=38 e=39
+      37: mi=4 s=41 e=41
+      38: mi=4 s=44 e=45
+      39: mi=4 s=47 e=47
+      40: mi=4 s=49 e=50
+      41: mi=4 s=52 e=52
+      42: mi=4 s=55 e=56
+      43: mi=4 s=57 e=59
+      44: mi=4 s=61 e=61
+      45: mi=4 s=63 e=64
+      46: mi=4 s=66 e=66
+      47: mi=4 s=69 e=71
+
+method A.<init>():void
+{
+	.src "tryCatch.java"
+	.line 2
+	.prologue_end
+	.line 2
+	    0| const v0, #+1 (0x00000001 | 1.40130e-45)
+	    3| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	    6| move-object v1, v3
+	.local v1, "this", A
+	    7| move-object v2, v1
+	    8| invoke-direct {v2}, java.lang.Throwable.<init>():void
+	   11| const v0, #+2 (0x00000002 | 2.80260e-45)
+	   14| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   17| return-void
+}
+
+method B.<init>():void
+{
+	.src "tryCatch.java"
+	.line 6
+	.prologue_end
+	.line 6
+	    0| const v0, #+3 (0x00000003 | 4.20390e-45)
+	    3| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	    6| move-object v1, v3
+	.local v1, "this", B
+	    7| move-object v2, v1
+	    8| invoke-direct {v2}, java.lang.Throwable.<init>():void
+	   11| const v0, #+4 (0x00000004 | 5.60519e-45)
+	   14| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   17| return-void
+}
+
+method TryCatch.<init>():void
+{
+	.src "tryCatch.java"
+	.line 10
+	.prologue_end
+	.line 10
+	    0| const v0, #+5 (0x00000005 | 7.00649e-45)
+	    3| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	    6| move-object v1, v3
+	.local v1, "this", TryCatch
+	    7| move-object v2, v1
+	    8| invoke-direct {v2}, java.lang.Object.<init>():void
+	   11| const v0, #+6 (0x00000006 | 8.40779e-45)
+	   14| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   17| return-void
+}
+
+method TryCatch.foo(int):int
+{
+	.params "?"
+	.src "tryCatch.java"
+	.line 27
+	.prologue_end
+	.line 27
+	    0| const v0, #+7 (0x00000007 | 9.80909e-45)
+	    3| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	    6| move v1, v5
+	.local v1, "x", int
+	    7| move v2, v1
+	    8| if-lez v2, Label_4
+	.line 28
+	   10| const v0, #+8 (0x00000008 | 1.12104e-44)
+	   13| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   16| move v2, v1
+	   17| packed-switch v2, Label_5
+	.line 31
+	   20| const v0, #+9 (0x00000009 | 1.26117e-44)
+	   23| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   26| const/4 v2, #+1 (0x00000001 | 1.40130e-45)
+	   27| move v1, v2
+Label_1:
+	.line 34
+	.end_local v1
+	   28| const v0, #+10 (0x0000000a | 1.40130e-44)
+	   31| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   34| return v1
+Label_2:
+	.line 29
+	.restart_local v1
+	   35| const v0, #+11 (0x0000000b | 1.54143e-44)
+	   38| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   41| new-instance v2, A
+	   43| const v0, #+12 (0x0000000c | 1.68156e-44)
+	   46| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   49| move-object v4, v2
+	   50| move-object v2, v4
+	   51| move-object v3, v4
+	   52| invoke-direct {v3}, A.<init>():void
+	   55| const v0, #+13 (0x0000000d | 1.82169e-44)
+	   58| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   61| throw v2
+Label_3:
+	.line 30
+	   62| const v0, #+14 (0x0000000e | 1.96182e-44)
+	   65| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   68| new-instance v2, B
+	   70| const v0, #+15 (0x0000000f | 2.10195e-44)
+	   73| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   76| move-object v4, v2
+	   77| move-object v2, v4
+	   78| move-object v3, v4
+	   79| invoke-direct {v3}, B.<init>():void
+	   82| const v0, #+16 (0x00000010 | 2.24208e-44)
+	   85| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   88| throw v2
+Label_4:
+	.line 34
+	   89| const v0, #+17 (0x00000011 | 2.38221e-44)
+	   92| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   95| const/4 v2, #+0 (0x00000000 | 0.00000)
+	   96| move v1, v2
+	   97| goto/16 Label_1
+	   99| nop
+Label_5: <aligned>
+	.line 28
+	  100| packed-switch-payload
+		    1: Label_2
+		    2: Label_3
+}
+
+method TryCatch.main(java.lang.String[]):void
+{
+	.params "?"
+	.src "tryCatch.java"
+	.line 15
+	.prologue_end
+	.line 15
+	    0| const v0, #+18 (0x00000012 | 2.52234e-44)
+	    3| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	    6| move-object v1, v7
+	.local v1, "args", java.lang.String[]
+	    7| const/4 v4, #+0 (0x00000000 | 0.00000)
+	.try_begin_1
+	    8| const v0, #+19 (0x00000013 | 2.66247e-44)
+	   11| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   14| invoke-static {v4}, TryCatch.foo(int):int
+	.try_end_1
+	  catch(B) : Label_3
+	  catch(A) : Label_4
+	  catch(...) : Label_5
+	   17| move-result v4
+	   18| const v0, #+20 (0x00000014 | 2.80260e-44)
+	   21| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+Label_1:
+	.line 18
+	.line 22
+	   24| const v0, #+21 (0x00000015 | 2.94273e-44)
+	   27| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   30| sget-object v4, java.lang.System.out
+	   32| const v0, #+22 (0x00000016 | 3.08286e-44)
+	   35| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   38| const-string v5, "finally\n"
+	   40| const v0, #+23 (0x00000017 | 3.22299e-44)
+	   43| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   46| const/4 v6, #+0 (0x00000000 | 0.00000)
+	   47| new-array v6, v6, java.lang.Object[]
+	   49| const v0, #+24 (0x00000018 | 3.36312e-44)
+	   52| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   55| invoke-virtual {v4,v5,v6}, java.io.PrintStream.printf(java.lang.String, java.lang.Object[]):java.io.PrintStream
+	   58| move-result-object v4
+	   59| const v0, #+25 (0x00000019 | 3.50325e-44)
+	   62| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+Label_2:
+	.line 23
+	.line 24
+	   65| const v0, #+26 (0x0000001a | 3.64338e-44)
+	   68| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   71| return-void
+Label_3:
+	.line 16
+	   72| const v0, #+27 (0x0000001b | 3.78351e-44)
+	   75| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   78| move-exception v4
+	   79| move-object v2, v4
+	.try_begin_2
+	.line 17
+	.local v2, "ex", B
+	   80| const v0, #+28 (0x0000001c | 3.92364e-44)
+	   83| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   86| sget-object v4, java.lang.System.out
+	   88| const v0, #+29 (0x0000001d | 4.06377e-44)
+	   91| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   94| const-string v5, "catch: B\n"
+	   96| const v0, #+30 (0x0000001e | 4.20390e-44)
+	   99| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	  102| const/4 v6, #+0 (0x00000000 | 0.00000)
+	  103| new-array v6, v6, java.lang.Object[]
+	  105| const v0, #+31 (0x0000001f | 4.34403e-44)
+	  108| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	  111| invoke-virtual {v4,v5,v6}, java.io.PrintStream.printf(java.lang.String, java.lang.Object[]):java.io.PrintStream
+	.try_end_2
+	  catch(A) : Label_4
+	  catch(...) : Label_5
+	  114| move-result-object v4
+	  115| const v0, #+32 (0x00000020 | 4.48416e-44)
+	  118| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	  121| goto/16 Label_1
+Label_4:
+	.line 19
+	.end_local v2
+	  123| const v0, #+33 (0x00000021 | 4.62428e-44)
+	  126| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	  129| move-exception v4
+	  130| move-object v2, v4
+	.try_begin_3
+	.line 20
+	.local v2, "ex", A
+	  131| const v0, #+34 (0x00000022 | 4.76441e-44)
+	  134| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	  137| sget-object v4, java.lang.System.out
+	  139| const v0, #+35 (0x00000023 | 4.90454e-44)
+	  142| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	  145| const-string v5, "catch: A\n"
+	  147| const v0, #+36 (0x00000024 | 5.04467e-44)
+	  150| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	  153| const/4 v6, #+0 (0x00000000 | 0.00000)
+	  154| new-array v6, v6, java.lang.Object[]
+	  156| const v0, #+37 (0x00000025 | 5.18480e-44)
+	  159| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	  162| invoke-virtual {v4,v5,v6}, java.io.PrintStream.printf(java.lang.String, java.lang.Object[]):java.io.PrintStream
+	.try_end_3
+	  catch(...) : Label_5
+	  165| move-result-object v4
+	  166| const v0, #+38 (0x00000026 | 5.32493e-44)
+	  169| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	.line 22
+	  172| sget-object v4, java.lang.System.out
+	  174| const v0, #+39 (0x00000027 | 5.46506e-44)
+	  177| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	  180| const-string v5, "finally\n"
+	  182| const v0, #+40 (0x00000028 | 5.60519e-44)
+	  185| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	  188| const/4 v6, #+0 (0x00000000 | 0.00000)
+	  189| new-array v6, v6, java.lang.Object[]
+	  191| const v0, #+41 (0x00000029 | 5.74532e-44)
+	  194| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	  197| invoke-virtual {v4,v5,v6}, java.io.PrintStream.printf(java.lang.String, java.lang.Object[]):java.io.PrintStream
+	  200| move-result-object v4
+	  201| const v0, #+42 (0x0000002a | 5.88545e-44)
+	  204| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	.line 23
+	  207| goto/16 Label_2
+Label_5:
+	.line 22
+	.end_local v2
+	  209| const v0, #+43 (0x0000002b | 6.02558e-44)
+	  212| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	  215| move-exception v4
+	  216| move-object v3, v4
+	  217| sget-object v4, java.lang.System.out
+	  219| const v0, #+44 (0x0000002c | 6.16571e-44)
+	  222| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	  225| const-string v5, "finally\n"
+	  227| const v0, #+45 (0x0000002d | 6.30584e-44)
+	  230| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	  233| const/4 v6, #+0 (0x00000000 | 0.00000)
+	  234| new-array v6, v6, java.lang.Object[]
+	  236| const v0, #+46 (0x0000002e | 6.44597e-44)
+	  239| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	  242| invoke-virtual {v4,v5,v6}, java.io.PrintStream.printf(java.lang.String, java.lang.Object[]):java.io.PrintStream
+	  245| move-result-object v4
+	  246| const v0, #+47 (0x0000002f | 6.58610e-44)
+	  249| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	  252| move-object v4, v3
+	  253| throw v4
+}

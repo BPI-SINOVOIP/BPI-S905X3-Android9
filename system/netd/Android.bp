@@ -1,0 +1,6 @@
+cc_library_headers {
+    name: "libnetd_client_headers",
+    export_include_dirs: ["include"],
+}
+
+subdirs = ["*"]

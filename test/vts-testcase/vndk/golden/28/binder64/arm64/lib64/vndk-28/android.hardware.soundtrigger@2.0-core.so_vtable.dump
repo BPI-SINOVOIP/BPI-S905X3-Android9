@@ -1,0 +1,18 @@
+vtable for android::hardware::soundtrigger::V2_0::implementation::SoundTriggerHalImpl
+_ZTVN7android8hardware12soundtrigger4V2_014implementation19SoundTriggerHalImplE: 6 entries
+16    (int (*)(...)) _ZN7android8hardware12soundtrigger4V2_014implementation19SoundTriggerHalImplD2Ev
+24    (int (*)(...)) _ZN7android8hardware12soundtrigger4V2_014implementation19SoundTriggerHalImplD0Ev
+32    (int (*)(...)) _ZN7android8hardware12soundtrigger4V2_014implementation19SoundTriggerHalImpl10onFirstRefEv
+40    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+48    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+56    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+
+
+vtable for android::hardware::soundtrigger::V2_0::implementation::SoundTriggerHalImpl::SoundModelClient_2_0
+_ZTVN7android8hardware12soundtrigger4V2_014implementation19SoundTriggerHalImpl20SoundModelClient_2_0E: 6 entries
+32    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+40    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+48    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+56    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+64    (int (*)(...)) _ZN7android8hardware12soundtrigger4V2_014implementation19SoundTriggerHalImpl20SoundModelClient_2_019recognitionCallbackEP31sound_trigger_recognition_event
+72    (int (*)(...)) _ZN7android8hardware12soundtrigger4V2_014implementation19SoundTriggerHalImpl20SoundModelClient_2_018soundModelCallbackEP25sound_trigger_model_event

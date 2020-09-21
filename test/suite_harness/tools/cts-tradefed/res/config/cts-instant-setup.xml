@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2018 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<configuration description="The instant cts specific setups.">
+
+    <!-- Exclude tests applicable only to full mode -->
+    <option name="compatibility:test-arg" value="com.android.tradefed.testtype.AndroidJUnitTest:exclude-annotation:android.platform.test.annotations.AppModeFull" />
+    <option name="compatibility:test-arg" value="com.android.compatibility.common.tradefed.testtype.JarHostTest:exclude-annotation:android.platform.test.annotations.AppModeFull" />
+    <option name="compatibility:test-arg" value="com.android.tradefed.testtype.HostTest:exclude-annotation:android.platform.test.annotations.AppModeFull" />
+
+    <!-- CtsSystemUiTestCases -->
+    <option name="compatibility:module-arg" value="CtsSystemUiTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsSystemUiTestCases" />
+
+    <!-- CtsSampleHostTestCases -->
+    <option name="compatibility:include-filter" value="CtsSampleHostTestCases" />
+
+    <!-- CtsDeviceIdleHostTestCases -->
+    <!-- These are tests for the shell command to manage device idle whitelist. -->
+
+    <!-- CtsAppWidgetTestCases -->
+    <option name="compatibility:module-arg" value="CtsAppWidgetTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsAppWidgetTestCases" />
+
+    <!-- CtsAccessibilityTestCases -->
+    <option name="compatibility:module-arg" value="CtsAccessibilityTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsAccessibilityTestCases" />
+
+    <!-- CtsAccessibilityServiceTestCases -->
+    <option name="compatibility:module-arg" value="CtsAccessibilityServiceTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsAccessibilityServiceTestCases" />
+
+    <!-- CtsAnimationTestCases -->
+    <option name="compatibility:module-arg" value="CtsAnimationTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsAnimationTestCases" />
+
+    <!-- CtsAutoFillServiceTestCases  -->
+    <option name="compatibility:module-arg" value="CtsAutoFillServiceTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsAutoFillServiceTestCases" />
+
+    <!-- CtsBackgroundRestrictionsTestCases -->
+    <option name="compatibility:module-arg" value="CtsBackgroundRestrictionsTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsBackgroundRestrictionsTestCases" />
+
+    <!-- CtsContactsProviderWipe -->
+    <!-- This is a test for apps with READ/WRITE_CONTACTS, which instant apps don't have -->
+
+    <!-- CtsInputMethodTestCases -->
+    <option name="compatibility:module-arg" value="CtsInputMethodTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsInputMethodTestCases" />
+
+    <!-- CtsPdfTestCases -->
+    <option name="compatibility:module-arg" value="CtsPdfTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsPdfTestCases" />
+
+    <!-- CtsViewTestCases -->
+    <option name="compatibility:module-arg" value="CtsViewTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsViewTestCases" />
+
+    <!-- CtsFragmentTestCases, CtsFragmentTestCasesSdk26 -->
+    <option name="compatibility:module-arg" value="CtsFragmentTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsFragmentTestCases" />
+    <option name="compatibility:module-arg" value="CtsFragmentTestCasesSdk26:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsFragmentTestCasesSdk26" />
+
+    <!-- CtsInputMethodServiceHostTestCases -->
+    <option name="compatibility:include-filter" value="CtsInputMethodServiceHostTestCases" />
+
+    <!-- CtsPermissionTestCases -->
+    <option name="compatibility:module-arg" value="CtsPermissionTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsPermissionTestCases" />
+
+    <!-- CtsColorModeTestCases -->
+    <option name="compatibility:module-arg" value="CtsColorModeTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsColorModeTestCases" />
+
+    <!-- CtsBluetoothTestCases -->
+    <!-- Instant apps cannot hold android.permission.BLUETOOTH which makes BT tests irrelevant-->
+
+    <!-- CtsDatabaseTestCases -->
+    <option name="compatibility:module-arg" value="CtsDatabaseTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsDatabaseTestCases" />
+
+    <!-- CtsDisplayTestCases -->
+    <option name="compatibility:module-arg" value="CtsDisplayTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsDisplayTestCases" />
+
+    <!-- CtsDreamsTestCases -->
+    <option name="compatibility:module-arg" value="CtsDreamsTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsDreamsTestCases" />
+
+    <!-- CtsDumpsysHostTestCases -->
+    <!-- This module tests system service dumps, which is irrelevant for Instant Apps. -->
+
+    <!-- CtsGestureTestCases -->
+    <option name="compatibility:module-arg" value="CtsGestureTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsGestureTestCases" />
+
+    <!-- CtsMultiUserTestCases -->
+    <option name="compatibility:module-arg" value="CtsMultiUserTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsMultiUserTestCases" />
+
+    <!-- CtsPreference2TestCases -->
+    <option name="compatibility:module-arg" value="CtsPreference2TestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsPreference2TestCases" />
+
+    <!-- CtsPreferenceTestCases -->
+    <option name="compatibility:module-arg" value="CtsPreferenceTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsPreferenceTestCases" />
+
+    <!-- CtsSampleDeviceTestCases -->
+    <option name="compatibility:module-arg" value="CtsSampleDeviceTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsSampleDeviceTestCases" />
+
+    <!-- CtsShortcutManagerTestCases, CtsShortcutHostTestCases -->
+    <!-- Instant apps can't access ShortcutManager -->
+
+    <!-- CtsToastTestCases -->
+    <option name="compatibility:module-arg" value="CtsToastTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsToastTestCases" />
+
+    <!-- CtsPrintTestCases -->
+    <option name="compatibility:module-arg" value="CtsPrintTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsPrintTestCases" />
+
+    <!-- CtsUiDeviceTestCases -->
+    <option name="compatibility:module-arg" value="CtsUiDeviceTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsUiDeviceTestCases" />
+
+    <option name="compatibility:module-arg" value="CtsDpiTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsDpiTestCases" />
+
+    <!-- CtsUidIsolationTestCases -->
+    <option name="compatibility:module-arg" value="CtsUidIsolationTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsUidIsolationTestCases" />
+
+    <!-- CtsAppSecurityHostTestCases -->
+    <option name="compatibility:include-filter" value="CtsAppSecurityHostTestCases" />
+
+    <!-- CtsBackupHostTestCases, CtsBackupTestCases -->
+    <!-- Backup of instant apps is not supported. -->
+
+    <!-- CtsMediaHostTestCases -->
+    <option name="compatibility:include-filter" value="CtsMediaHostTestCases" />
+
+    <!-- CtsMediaTestCases -->
+    <option name="compatibility:module-arg" value="CtsMediaTestCases:instant-mode:true" />
+    <option name="compatibility:module-arg" value="CtsMediaTestCases:skip-media-download:true" />
+    <option name="compatibility:include-filter" value="CtsMediaTestCases" />
+
+    <!-- CtsDpiTestCases2 -->
+    <!-- These target Cupcake not applicable to instant apps which target Oreo+ -->
+
+    <!-- CtsFileSystemTestCases -->
+    <option name="compatibility:module-arg" value="CtsFileSystemTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsFileSystemTestCases" />
+
+    <!-- CtsExternalSourcesTestCases -->
+    <option name="compatibility:module-arg" value="CtsExternalSourcesTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsExternalSourcesTestCases" />
+
+    <!-- CtsTextTestCases -->
+    <option name="compatibility:module-arg" value="CtsTextTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsTextTestCases" />
+
+    <!-- CtsWidgetTestCases -->
+    <option name="compatibility:module-arg" value="CtsWidgetTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsWidgetTestCases" />
+
+    <!-- CtsPermission2TestCases -->
+    <option name="compatibility:module-arg" value="CtsPermission2TestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsPermission2TestCases" />
+
+    <!-- CtsUsbTests -->
+    <option name="compatibility:include-filter" value="CtsUsbTests" />
+
+    <!-- CtsWindowManagerDeviceTestCases -->
+    <option name="compatibility:module-arg" value="CtsWindowManagerDeviceTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsWindowManagerDeviceTestCases" />
+
+    <!-- CtsLocation2TestCases -->
+    <option name="compatibility:module-arg" value="CtsLocation2TestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsLocation2TestCases" />
+
+    <!-- CtsUiAutomationTestCases -->
+    <option name="compatibility:module-arg" value="CtsUiAutomationTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsUiAutomationTestCases" />
+
+    <!-- CtsActivityManagerDeviceSdk25TestCases -->
+    <!-- These tests require targeting API 25 which does not support instant apps -->
+
+    <!-- CtsHostsideWebViewTests -->
+    <option name="compatibility:module-arg" value="CtsHostsideWebViewTests:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsHostsideWebViewTests" />
+
+    <!-- CtsCameraTestCases -->
+    <option name="compatibility:module-arg" value="CtsCameraTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsCameraTestCases" />
+
+    <!-- CtsAdminPackageInstallerTestCases -->
+    <!-- Device Owner-specific tests are not applicable to instant apps. -->
+
+    <!-- CtsExternalServiceTestCases -->
+    <!-- This module tries to bind to services in another package, which is not valid for Instant-->
+
+    <!-- CtsUsageStatsTestCases -->
+    <option name="compatibility:module-arg" value="CtsUsageStatsTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsUsageStatsTestCases" />
+
+    <!-- CtsActivityManagerDeviceTestCases -->
+    <!-- This module needs a permission not available to instant apps -->
+
+    <!-- CtsLocationTestCases -->
+    <option name="compatibility:module-arg" value="CtsLocationTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsLocationTestCases" />
+
+    <!-- CtsSyncContentHostTestCases -->
+    <!-- This is a test for account data sync and READ_SYNC_SETTINGS/WRITE_SYNC_SETTINGS are required, which instant apps don't have -->
+
+    <!-- CtsAccountManagerTestCases -->
+    <option name="compatibility:module-arg" value="CtsAccountManagerTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsAccountManagerTestCases" />
+
+    <!-- CtsDevicePolicyManagerTestCases -->
+    <!-- Instant apps can never be device admin / profile owner / device owner so positive tests
+         here are not applicable -->
+
+    <!-- CtsProviderTestCases -->
+    <!-- Instant apps cannot expose content providers and don't have access to most system ones used in the test -->
+
+    <!-- CtsOsHostTestCases -->
+    <option name="compatibility:module-arg" value="CtsOsHostTestCases:instant-mode:true" />
+    <option name="compatibility:include-filter" value="CtsOsHostTestCases" />
+
+</configuration>

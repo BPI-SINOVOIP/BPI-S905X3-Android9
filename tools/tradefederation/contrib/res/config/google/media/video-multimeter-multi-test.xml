@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<!-- Required options: branch build-flavor -->
+<configuration description="Run Video Multimeter test with plotter setup">
+    <option name="test-tag" value="VideoMultimeter" />
+
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceSetup">
+        <option name="screen-always-on" value="on" />
+        <option name="screen-adaptive-brightness" value="off" />
+        <option name="disable-audio" value="false"/>
+        <option name="screen-saver" value="off"/>
+        <option name="set-system-setting" key="screen_brightness" value="230" />
+        <option name="set-system-setting" key="volume_music_speaker" value="12" />
+        <option name="set-system-setting" key="volume_music_headset" value="12" />
+        <option name="set-system-setting" key="volume_music_headphone" value="12" />
+        <option name="set-property" key="audio.safemedia.bypass" value="1"/>
+    </target_preparer>
+
+    <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
+    </target_preparer>
+
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/media/multimeter/mediaplayer.apk" />
+    </target_preparer>
+
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer">
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/media/multimeter/video_calibration.mp4->/sdcard/media_api/samples/video_cali.mp4" />
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/media/multimeter/video_1080p_30fps_10min_bbb.mp4->/sdcard/media_api/samples/video.mp4" />
+        <option name="push" value="/google/data/ro/teams/tradefed/testdata/media/multimeter/video_720p_60fps_4min_mountham.mp4->/sdcard/media_api/samples/video2.mp4" />
+    </target_preparer>
+
+    <test class="com.android.media.tests.VideoMultimeterRunner">
+        <option name="multimeter-util-path" value="/google/data/ro/teams/tradefed/testdata/media/multimeter/optofi.sh" />
+        <option name="robot-util-path" value="/google/data/ro/teams/tradefed/testdata/media/multimeter/mbplotter.sh" />
+        <option name="start-video-cmd" value="am instrument -w -r -e media-file %s -e class com.android.mediaframeworktest.stress.MediaPlayerStressTest com.android.mediaframeworktest/.MediaPlayerStressTestRunner" />
+        <option name="stop-video-cmd" value="am force-stop com.android.mediaframeworktest" />
+    </test>
+</configuration>

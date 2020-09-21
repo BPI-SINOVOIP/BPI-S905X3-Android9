@@ -1,0 +1,66 @@
+vtable for android::hidl::token::V1_0::BpHwTokenManager
+_ZTVN7android4hidl5token4V1_016BpHwTokenManagerE: 20 entries
+16    (int (*)(...)) _ZN7android4hidl5token4V1_016BpHwTokenManager14interfaceChainENSt3__18functionIFvRKNS_8hardware8hidl_vecINS6_11hidl_stringEEEEEE
+20    (int (*)(...)) _ZN7android4hidl5token4V1_016BpHwTokenManager5debugERKNS_8hardware11hidl_handleERKNS4_8hidl_vecINS4_11hidl_stringEEE
+24    (int (*)(...)) _ZN7android4hidl5token4V1_016BpHwTokenManager19interfaceDescriptorENSt3__18functionIFvRKNS_8hardware11hidl_stringEEEE
+28    (int (*)(...)) _ZN7android4hidl5token4V1_016BpHwTokenManager12getHashChainENSt3__18functionIFvRKNS_8hardware8hidl_vecINS6_10hidl_arrayIhLj32EJEEEEEEEE
+32    (int (*)(...)) _ZN7android4hidl5token4V1_016BpHwTokenManager21setHALInstrumentationEv
+36    (int (*)(...)) _ZN7android4hidl5token4V1_016BpHwTokenManager11linkToDeathERKNS_2spINS_8hardware20hidl_death_recipientEEEy
+40    (int (*)(...)) _ZN7android4hidl5token4V1_016BpHwTokenManager4pingEv
+44    (int (*)(...)) _ZN7android4hidl5token4V1_016BpHwTokenManager12getDebugInfoENSt3__18functionIFvRKNS0_4base4V1_09DebugInfoEEEE
+48    (int (*)(...)) _ZN7android4hidl5token4V1_016BpHwTokenManager21notifySyspropsChangedEv
+52    (int (*)(...)) _ZN7android4hidl5token4V1_016BpHwTokenManager13unlinkToDeathERKNS_2spINS_8hardware20hidl_death_recipientEEE
+64    (int (*)(...)) _ZN7android4hidl5token4V1_016BpHwTokenManager11createTokenERKNS_2spINS0_4base4V1_05IBaseEEENSt3__18functionIFvRKNS_8hardware8hidl_vecIhEEEEE
+68    (int (*)(...)) _ZN7android4hidl5token4V1_016BpHwTokenManager10unregisterERKNS_8hardware8hidl_vecIhEE
+72    (int (*)(...)) _ZN7android4hidl5token4V1_016BpHwTokenManager3getERKNS_8hardware8hidl_vecIhEE
+124    (int (*)(...)) _ZN7android8hardware11BpHwRefBase10onFirstRefEv
+128    (int (*)(...)) _ZN7android8hardware11BpHwRefBase15onLastStrongRefEPKv
+132    (int (*)(...)) _ZN7android8hardware11BpHwRefBase20onIncStrongAttemptedEjPKv
+188    (int (*)(...)) _ZTv0_n16_N7android8hardware11BpHwRefBase10onFirstRefEv
+192    (int (*)(...)) _ZTv0_n20_N7android8hardware11BpHwRefBase15onLastStrongRefEPKv
+196    (int (*)(...)) _ZTv0_n24_N7android8hardware11BpHwRefBase20onIncStrongAttemptedEjPKv
+200    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+
+
+vtable for android::hidl::token::V1_0::BnHwTokenManager
+_ZTVN7android4hidl5token4V1_016BnHwTokenManagerE: 21 entries
+12    (int (*)(...)) _ZN7android8hardware9BHwBinder8transactEjRKNS0_6ParcelEPS2_jNSt3__18functionIFvRS2_EEE
+16    (int (*)(...)) _ZN7android8hardware9BHwBinder11linkToDeathERKNS_2spINS0_7IBinder14DeathRecipientEEEPvj
+20    (int (*)(...)) _ZN7android8hardware9BHwBinder13unlinkToDeathERKNS_2wpINS0_7IBinder14DeathRecipientEEEPvjPS5_
+24    (int (*)(...)) _ZNK7android8hardware7IBinder13checkSubclassEPKv
+28    (int (*)(...)) _ZN7android8hardware9BHwBinder12attachObjectEPKvPvS4_PFvS3_S4_S4_E
+32    (int (*)(...)) _ZNK7android8hardware9BHwBinder10findObjectEPKv
+36    (int (*)(...)) _ZN7android8hardware9BHwBinder12detachObjectEPKv
+40    (int (*)(...)) _ZN7android8hardware9BHwBinder11localBinderEv
+44    (int (*)(...)) _ZN7android8hardware7IBinder12remoteBinderEv
+48    (int (*)(...)) _ZN7android4hidl5token4V1_016BnHwTokenManagerD1Ev
+52    (int (*)(...)) _ZN7android4hidl5token4V1_016BnHwTokenManagerD0Ev
+56    (int (*)(...)) _ZN7android4hidl5token4V1_016BnHwTokenManager10onTransactEjRKNS_8hardware6ParcelEPS5_jNSt3__18functionIFvRS5_EEE
+68    (int (*)(...)) _ZThn20_N7android4hidl5token4V1_016BnHwTokenManagerD1Ev
+72    (int (*)(...)) _ZThn20_N7android4hidl5token4V1_016BnHwTokenManagerD0Ev
+104    (int (*)(...)) _ZTv0_n12_N7android4hidl5token4V1_016BnHwTokenManagerD1Ev
+108    (int (*)(...)) _ZTv0_n12_N7android4hidl5token4V1_016BnHwTokenManagerD0Ev
+112    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+116    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+120    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+124    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+128    (int (*)(...)) _ZTVN7android4hidl5token4V1_016BnHwTokenManagerE
+
+
+vtable for android::hidl::token::V1_0::ITokenManager
+_ZTVN7android4hidl5token4V1_013ITokenManagerE: 15 entries
+16    (int (*)(...)) _ZN7android4hidl5token4V1_013ITokenManager14interfaceChainENSt3__18functionIFvRKNS_8hardware8hidl_vecINS6_11hidl_stringEEEEEE
+20    (int (*)(...)) _ZN7android4hidl5token4V1_013ITokenManager5debugERKNS_8hardware11hidl_handleERKNS4_8hidl_vecINS4_11hidl_stringEEE
+24    (int (*)(...)) _ZN7android4hidl5token4V1_013ITokenManager19interfaceDescriptorENSt3__18functionIFvRKNS_8hardware11hidl_stringEEEE
+28    (int (*)(...)) _ZN7android4hidl5token4V1_013ITokenManager12getHashChainENSt3__18functionIFvRKNS_8hardware8hidl_vecINS6_10hidl_arrayIhLj32EJEEEEEEEE
+32    (int (*)(...)) _ZN7android4hidl5token4V1_013ITokenManager21setHALInstrumentationEv
+36    (int (*)(...)) _ZN7android4hidl5token4V1_013ITokenManager11linkToDeathERKNS_2spINS_8hardware20hidl_death_recipientEEEy
+40    (int (*)(...)) _ZN7android4hidl5token4V1_013ITokenManager4pingEv
+44    (int (*)(...)) _ZN7android4hidl5token4V1_013ITokenManager12getDebugInfoENSt3__18functionIFvRKNS0_4base4V1_09DebugInfoEEEE
+48    (int (*)(...)) _ZN7android4hidl5token4V1_013ITokenManager21notifySyspropsChangedEv
+52    (int (*)(...)) _ZN7android4hidl5token4V1_013ITokenManager13unlinkToDeathERKNS_2spINS_8hardware20hidl_death_recipientEEE
+112    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+116    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+120    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+124    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+128    (int (*)(...)) _ZTVN7android4hidl5token4V1_013ITokenManagerE

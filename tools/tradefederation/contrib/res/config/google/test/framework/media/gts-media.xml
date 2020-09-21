@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration description="Runs xts media tests">
+    <option name="test-tag" value="xts_media_test" />
+
+    <target_preparer class="com.android.tradefed.targetprep.DeviceSetup">
+        <option name="screen-saver" value="off" />
+        <option name="screen-always-on" value="on" />
+        <option name="screen-adaptive-brightness" value="off" />
+        <option name="screen-brightness" value="30" />
+        <option name="disable-doze" value="true" />
+        <option name="restore-settings" value="true" />
+    </target_preparer>
+
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <option name="run-command" value="svc power stayon true" />
+    </target_preparer>
+
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+        <option name="apk-path" value="/google/data/ro/teams/widevine-tradefed/gts-apks/GtsMediaTestCases.apk" />
+    </target_preparer>
+
+    <target_preparer class="com.android.tradefed.targetprep.PushFilePreparer">
+        <option name="push" value="/google/data/ro/teams/widevine-tradefed/gts-apks/GtsMediaTestCases.dynamic->/sdcard/dynamic-config-files/GtsMediaTestCases.dynamic" />
+        <option name="cleanup" value="true" />
+    </target_preparer>
+
+    <test class="com.android.tradefed.testtype.AndroidJUnitTest" >
+        <option name="package" value="com.google.android.media.gts" />
+        <option name="runtime-hint" value="2h" />
+        <option name="shell-timeout" value="2000000" />
+        <option name="test-timeout" value="600000" />
+    </test>
+</configuration>

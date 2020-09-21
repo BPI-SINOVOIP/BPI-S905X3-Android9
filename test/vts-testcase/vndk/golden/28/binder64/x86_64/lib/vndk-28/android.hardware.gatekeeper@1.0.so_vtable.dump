@@ -1,0 +1,68 @@
+vtable for android::hardware::gatekeeper::V1_0::BpHwGatekeeper
+_ZTVN7android8hardware10gatekeeper4V1_014BpHwGatekeeperE: 22 entries
+16    (int (*)(...)) _ZN7android8hardware10gatekeeper4V1_014BpHwGatekeeper14interfaceChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_11hidl_stringEEEEEE
+20    (int (*)(...)) _ZN7android8hardware10gatekeeper4V1_014BpHwGatekeeper5debugERKNS0_11hidl_handleERKNS0_8hidl_vecINS0_11hidl_stringEEE
+24    (int (*)(...)) _ZN7android8hardware10gatekeeper4V1_014BpHwGatekeeper19interfaceDescriptorENSt3__18functionIFvRKNS0_11hidl_stringEEEE
+28    (int (*)(...)) _ZN7android8hardware10gatekeeper4V1_014BpHwGatekeeper12getHashChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_10hidl_arrayIhLj32EJEEEEEEEE
+32    (int (*)(...)) _ZN7android8hardware10gatekeeper4V1_014BpHwGatekeeper21setHALInstrumentationEv
+36    (int (*)(...)) _ZN7android8hardware10gatekeeper4V1_014BpHwGatekeeper11linkToDeathERKNS_2spINS0_20hidl_death_recipientEEEy
+40    (int (*)(...)) _ZN7android8hardware10gatekeeper4V1_014BpHwGatekeeper4pingEv
+44    (int (*)(...)) _ZN7android8hardware10gatekeeper4V1_014BpHwGatekeeper12getDebugInfoENSt3__18functionIFvRKNS_4hidl4base4V1_09DebugInfoEEEE
+48    (int (*)(...)) _ZN7android8hardware10gatekeeper4V1_014BpHwGatekeeper21notifySyspropsChangedEv
+52    (int (*)(...)) _ZN7android8hardware10gatekeeper4V1_014BpHwGatekeeper13unlinkToDeathERKNS_2spINS0_20hidl_death_recipientEEE
+64    (int (*)(...)) _ZN7android8hardware10gatekeeper4V1_014BpHwGatekeeper6enrollEjRKNS0_8hidl_vecIhEES7_S7_NSt3__18functionIFvRKNS2_18GatekeeperResponseEEEE
+68    (int (*)(...)) _ZN7android8hardware10gatekeeper4V1_014BpHwGatekeeper6verifyEjyRKNS0_8hidl_vecIhEES7_NSt3__18functionIFvRKNS2_18GatekeeperResponseEEEE
+72    (int (*)(...)) _ZN7android8hardware10gatekeeper4V1_014BpHwGatekeeper10deleteUserEjNSt3__18functionIFvRKNS2_18GatekeeperResponseEEEE
+76    (int (*)(...)) _ZN7android8hardware10gatekeeper4V1_014BpHwGatekeeper14deleteAllUsersENSt3__18functionIFvRKNS2_18GatekeeperResponseEEEE
+128    (int (*)(...)) _ZN7android8hardware11BpHwRefBase10onFirstRefEv
+132    (int (*)(...)) _ZN7android8hardware11BpHwRefBase15onLastStrongRefEPKv
+136    (int (*)(...)) _ZN7android8hardware11BpHwRefBase20onIncStrongAttemptedEjPKv
+192    (int (*)(...)) _ZTv0_n16_N7android8hardware11BpHwRefBase10onFirstRefEv
+196    (int (*)(...)) _ZTv0_n20_N7android8hardware11BpHwRefBase15onLastStrongRefEPKv
+200    (int (*)(...)) _ZTv0_n24_N7android8hardware11BpHwRefBase20onIncStrongAttemptedEjPKv
+204    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+208    (int (*)(...)) _ZTVN7android8hardware10gatekeeper4V1_014BpHwGatekeeperE
+
+
+vtable for android::hardware::gatekeeper::V1_0::BnHwGatekeeper
+_ZTVN7android8hardware10gatekeeper4V1_014BnHwGatekeeperE: 21 entries
+12    (int (*)(...)) _ZN7android8hardware9BHwBinder8transactEjRKNS0_6ParcelEPS2_jNSt3__18functionIFvRS2_EEE
+16    (int (*)(...)) _ZN7android8hardware9BHwBinder11linkToDeathERKNS_2spINS0_7IBinder14DeathRecipientEEEPvj
+20    (int (*)(...)) _ZN7android8hardware9BHwBinder13unlinkToDeathERKNS_2wpINS0_7IBinder14DeathRecipientEEEPvjPS5_
+24    (int (*)(...)) _ZNK7android8hardware7IBinder13checkSubclassEPKv
+28    (int (*)(...)) _ZN7android8hardware9BHwBinder12attachObjectEPKvPvS4_PFvS3_S4_S4_E
+32    (int (*)(...)) _ZNK7android8hardware9BHwBinder10findObjectEPKv
+36    (int (*)(...)) _ZN7android8hardware9BHwBinder12detachObjectEPKv
+40    (int (*)(...)) _ZN7android8hardware9BHwBinder11localBinderEv
+44    (int (*)(...)) _ZN7android8hardware7IBinder12remoteBinderEv
+48    (int (*)(...)) _ZN7android8hardware10gatekeeper4V1_014BnHwGatekeeperD1Ev
+52    (int (*)(...)) _ZN7android8hardware10gatekeeper4V1_014BnHwGatekeeperD0Ev
+56    (int (*)(...)) _ZN7android8hardware10gatekeeper4V1_014BnHwGatekeeper10onTransactEjRKNS0_6ParcelEPS4_jNSt3__18functionIFvRS4_EEE
+68    (int (*)(...)) _ZThn20_N7android8hardware10gatekeeper4V1_014BnHwGatekeeperD1Ev
+72    (int (*)(...)) _ZThn20_N7android8hardware10gatekeeper4V1_014BnHwGatekeeperD0Ev
+104    (int (*)(...)) _ZTv0_n12_N7android8hardware10gatekeeper4V1_014BnHwGatekeeperD1Ev
+108    (int (*)(...)) _ZTv0_n12_N7android8hardware10gatekeeper4V1_014BnHwGatekeeperD0Ev
+112    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+116    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+120    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+124    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+128    (int (*)(...)) _ZTVN7android8hardware10gatekeeper4V1_014BnHwGatekeeperE
+
+
+vtable for android::hardware::gatekeeper::V1_0::IGatekeeper
+_ZTVN7android8hardware10gatekeeper4V1_011IGatekeeperE: 15 entries
+16    (int (*)(...)) _ZN7android8hardware10gatekeeper4V1_011IGatekeeper14interfaceChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_11hidl_stringEEEEEE
+20    (int (*)(...)) _ZN7android8hardware10gatekeeper4V1_011IGatekeeper5debugERKNS0_11hidl_handleERKNS0_8hidl_vecINS0_11hidl_stringEEE
+24    (int (*)(...)) _ZN7android8hardware10gatekeeper4V1_011IGatekeeper19interfaceDescriptorENSt3__18functionIFvRKNS0_11hidl_stringEEEE
+28    (int (*)(...)) _ZN7android8hardware10gatekeeper4V1_011IGatekeeper12getHashChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_10hidl_arrayIhLj32EJEEEEEEEE
+32    (int (*)(...)) _ZN7android8hardware10gatekeeper4V1_011IGatekeeper21setHALInstrumentationEv
+36    (int (*)(...)) _ZN7android8hardware10gatekeeper4V1_011IGatekeeper11linkToDeathERKNS_2spINS0_20hidl_death_recipientEEEy
+40    (int (*)(...)) _ZN7android8hardware10gatekeeper4V1_011IGatekeeper4pingEv
+44    (int (*)(...)) _ZN7android8hardware10gatekeeper4V1_011IGatekeeper12getDebugInfoENSt3__18functionIFvRKNS_4hidl4base4V1_09DebugInfoEEEE
+48    (int (*)(...)) _ZN7android8hardware10gatekeeper4V1_011IGatekeeper21notifySyspropsChangedEv
+52    (int (*)(...)) _ZN7android8hardware10gatekeeper4V1_011IGatekeeper13unlinkToDeathERKNS_2spINS0_20hidl_death_recipientEEE
+116    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+120    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+124    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+128    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+132    (int (*)(...)) _ZTVN7android8hardware10gatekeeper4V1_011IGatekeeperE

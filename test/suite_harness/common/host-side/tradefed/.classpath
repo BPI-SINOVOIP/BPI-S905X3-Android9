@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="tests/res"/>
+	<classpathentry kind="src" path="res"/>
+	<classpathentry kind="src" path="tests/src"/>
+	<classpathentry kind="lib" path="tests/res/testtype/testJar1.jar"/>
+	<classpathentry kind="lib" path="tests/res/testtype/testJar2.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ddmlib"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/tradefederation"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/cts-common-util"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="var" path="TRADEFED_ROOT/out/host/common/obj/JAVA_LIBRARIES/jsonlib_intermediates/classes.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/cts-hostside-util"/>
+	<classpathentry kind="var" path="TRADEFED_ROOT/out/host/common/obj/JAVA_LIBRARIES/google-api-java-client-min-repackaged_intermediates/classes.jar"/>
+	<classpathentry kind="var" path="TRADEFED_ROOT/out/host/common/obj/JAVA_LIBRARIES/host-libprotobuf-java-full_intermediates/classes.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

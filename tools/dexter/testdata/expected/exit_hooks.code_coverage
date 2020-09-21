@@ -1,0 +1,709 @@
+       1: mi=0 s=0 e=2
+       2: mi=0 s=5 e=5
+       3: mi=1 s=0 e=1
+       4: mi=1 s=3 e=3
+       5: mi=1 s=5 e=5
+       6: mi=1 s=8 e=8
+       7: mi=1 s=11 e=11
+       8: mi=1 s=13 e=13
+       9: mi=1 s=15 e=15
+      10: mi=1 s=18 e=18
+      11: mi=2 s=0 e=0
+      12: mi=2 s=2 e=5
+      13: mi=2 s=8 e=9
+      14: mi=2 s=11 e=11
+      15: mi=2 s=13 e=14
+      16: mi=2 s=16 e=22
+      17: mi=2 s=25 e=26
+      18: mi=2 s=28 e=28
+      19: mi=2 s=31 e=32
+      20: mi=2 s=34 e=34
+      21: mi=2 s=36 e=37
+      22: mi=2 s=39 e=45
+      23: mi=2 s=48 e=49
+      24: mi=2 s=51 e=51
+      25: mi=2 s=54 e=55
+      26: mi=2 s=57 e=57
+      27: mi=2 s=59 e=60
+      28: mi=2 s=62 e=68
+      29: mi=2 s=71 e=72
+      30: mi=2 s=75 e=76
+      31: mi=2 s=78 e=78
+      32: mi=2 s=81 e=82
+      33: mi=2 s=84 e=84
+      34: mi=2 s=86 e=87
+      35: mi=2 s=89 e=96
+      36: mi=2 s=99 e=100
+      37: mi=2 s=103 e=104
+      38: mi=2 s=106 e=106
+      39: mi=2 s=109 e=112
+      40: mi=2 s=115 e=115
+      41: mi=3 s=0 e=3
+      42: mi=3 s=6 e=11
+      43: mi=3 s=12 e=12
+      44: mi=3 s=13 e=19
+      45: mi=3 s=20 e=26
+      46: mi=3 s=27 e=33
+      47: mi=4 s=0 e=3
+      48: mi=4 s=6 e=8
+      49: mi=4 s=9 e=9
+      50: mi=4 s=10 e=12
+      51: mi=4 s=13 e=15
+      52: mi=4 s=16 e=18
+      53: mi=4 s=19 e=19
+      54: mi=5 s=0 e=3
+      55: mi=5 s=5 e=5
+      56: mi=5 s=7 e=7
+      57: mi=5 s=9 e=10
+      58: mi=5 s=12 e=12
+      59: mi=5 s=15 e=16
+      60: mi=5 s=18 e=18
+      61: mi=5 s=19 e=19
+      62: mi=5 s=20 e=20
+      63: mi=5 s=22 e=23
+      64: mi=6 s=0 e=3
+      65: mi=6 s=5 e=5
+      66: mi=6 s=7 e=7
+      67: mi=6 s=9 e=10
+      68: mi=6 s=12 e=12
+      69: mi=6 s=15 e=15
+      70: mi=6 s=16 e=16
+      71: mi=6 s=17 e=17
+      72: mi=6 s=19 e=19
+      73: mi=6 s=21 e=22
+      74: mi=6 s=24 e=24
+      75: mi=6 s=27 e=28
+      76: mi=7 s=0 e=2
+      77: mi=7 s=5 e=5
+      78: mi=8 s=0 e=1
+      79: mi=8 s=3 e=3
+      80: mi=8 s=5 e=6
+      81: mi=8 s=8 e=13
+      82: mi=8 s=16 e=17
+      83: mi=8 s=19 e=19
+      84: mi=8 s=22 e=26
+      85: mi=9 s=0 e=1
+      86: mi=9 s=3 e=3
+      87: mi=9 s=5 e=6
+      88: mi=9 s=8 e=13
+      89: mi=9 s=16 e=17
+      90: mi=9 s=19 e=19
+      91: mi=9 s=22 e=29
+      92: mi=10 s=0 e=1
+      93: mi=10 s=3 e=3
+      94: mi=10 s=5 e=6
+      95: mi=10 s=8 e=13
+      96: mi=10 s=15 e=15
+      97: mi=10 s=18 e=21
+      98: mi=11 s=0 e=0
+      99: mi=11 s=2 e=2
+     100: mi=11 s=4 e=5
+     101: mi=11 s=7 e=7
+     102: mi=11 s=10 e=11
+
+method Target.<init>():void
+{
+	.src "exitHooks.java"
+	.line 28
+	.prologue_end
+	.line 28
+	    0| const v0, #+1 (0x00000001 | 1.40130e-45)
+	    3| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	    6| move-object v1, v3
+	.local v1, "this", Target
+	    7| move-object v2, v1
+	    8| invoke-direct {v2}, java.lang.Object.<init>():void
+	   11| const v0, #+2 (0x00000002 | 2.80260e-45)
+	   14| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   17| return-void
+}
+
+method Target.main(java.lang.String[]):void
+{
+	.params "?"
+	.src "exitHooks.java"
+	.line 32
+	.prologue_end
+	.line 32
+	    0| const v0, #+3 (0x00000003 | 4.20390e-45)
+	    3| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	    6| move-object v1, v4
+	.local v1, "args", java.lang.String[]
+	    7| sget-object v2, java.lang.System.out
+	    9| const v0, #+4 (0x00000004 | 5.60519e-45)
+	   12| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   15| const-string v3, "Hello, world!\n{"
+	   17| const v0, #+5 (0x00000005 | 7.00649e-45)
+	   20| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   23| invoke-virtual {v2,v3}, java.io.PrintStream.println(java.lang.String):void
+	.line 33
+	   26| const v0, #+6 (0x00000006 | 8.40779e-45)
+	   29| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   32| invoke-static {}, Target.test():void
+	.line 34
+	   35| const v0, #+7 (0x00000007 | 9.80909e-45)
+	   38| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   41| sget-object v2, java.lang.System.out
+	   43| const v0, #+8 (0x00000008 | 1.12104e-44)
+	   46| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   49| const-string v3, "}\nGood bye!"
+	   51| const v0, #+9 (0x00000009 | 1.26117e-44)
+	   54| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   57| invoke-virtual {v2,v3}, java.io.PrintStream.println(java.lang.String):void
+	.line 35
+	   60| const v0, #+10 (0x0000000a | 1.40130e-44)
+	   63| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   66| return-void
+}
+
+method Target.test():void
+{
+	.src "exitHooks.java"
+	.line 39
+	.prologue_end
+	.line 39
+	    0| const v9, #+11 (0x0000000b | 1.54143e-44)
+	    3| invoke-static/range {v9..v9}, CodeCoverage.TraceBasicBlock(int):void
+	    6| new-instance v1, Target
+	    8| const v9, #+12 (0x0000000c | 1.68156e-44)
+	   11| invoke-static/range {v9..v9}, CodeCoverage.TraceBasicBlock(int):void
+	   14| move-object v8, v1
+	   15| move-object v1, v8
+	   16| move-object v2, v8
+	   17| invoke-direct {v2}, Target.<init>():void
+	   20| const v9, #+13 (0x0000000d | 1.82169e-44)
+	   23| invoke-static/range {v9..v9}, CodeCoverage.TraceBasicBlock(int):void
+	   26| move-object v0, v1
+	.line 40
+	.local v0, "obj", Target
+	   27| sget-object v1, java.lang.System.out
+	   29| const v9, #+14 (0x0000000e | 1.96182e-44)
+	   32| invoke-static/range {v9..v9}, CodeCoverage.TraceBasicBlock(int):void
+	   35| const-string v2, "Object(true)   : %s\n"
+	   37| const v9, #+15 (0x0000000f | 2.10195e-44)
+	   40| invoke-static/range {v9..v9}, CodeCoverage.TraceBasicBlock(int):void
+	   43| const/4 v3, #+1 (0x00000001 | 1.40130e-45)
+	   44| new-array v3, v3, java.lang.Object[]
+	   46| const v9, #+16 (0x00000010 | 2.24208e-44)
+	   49| invoke-static/range {v9..v9}, CodeCoverage.TraceBasicBlock(int):void
+	   52| move-object v8, v3
+	   53| move-object v3, v8
+	   54| move-object v4, v8
+	   55| const/4 v5, #+0 (0x00000000 | 0.00000)
+	   56| move-object v6, v0
+	   57| const/4 v7, #+1 (0x00000001 | 1.40130e-45)
+	   58| invoke-virtual {v6,v7}, Target.testObject(boolean):java.lang.Object
+	   61| move-result-object v6
+	   62| const v9, #+17 (0x00000011 | 2.38221e-44)
+	   65| invoke-static/range {v9..v9}, CodeCoverage.TraceBasicBlock(int):void
+	   68| aput-object v6, v4, v5
+	   70| const v9, #+18 (0x00000012 | 2.52234e-44)
+	   73| invoke-static/range {v9..v9}, CodeCoverage.TraceBasicBlock(int):void
+	   76| invoke-virtual {v1,v2,v3}, java.io.PrintStream.printf(java.lang.String, java.lang.Object[]):java.io.PrintStream
+	   79| move-result-object v1
+	   80| const v9, #+19 (0x00000013 | 2.66247e-44)
+	   83| invoke-static/range {v9..v9}, CodeCoverage.TraceBasicBlock(int):void
+	.line 41
+	   86| sget-object v1, java.lang.System.out
+	   88| const v9, #+20 (0x00000014 | 2.80260e-44)
+	   91| invoke-static/range {v9..v9}, CodeCoverage.TraceBasicBlock(int):void
+	   94| const-string v2, "Object(false)  : %s\n"
+	   96| const v9, #+21 (0x00000015 | 2.94273e-44)
+	   99| invoke-static/range {v9..v9}, CodeCoverage.TraceBasicBlock(int):void
+	  102| const/4 v3, #+1 (0x00000001 | 1.40130e-45)
+	  103| new-array v3, v3, java.lang.Object[]
+	  105| const v9, #+22 (0x00000016 | 3.08286e-44)
+	  108| invoke-static/range {v9..v9}, CodeCoverage.TraceBasicBlock(int):void
+	  111| move-object v8, v3
+	  112| move-object v3, v8
+	  113| move-object v4, v8
+	  114| const/4 v5, #+0 (0x00000000 | 0.00000)
+	  115| move-object v6, v0
+	  116| const/4 v7, #+0 (0x00000000 | 0.00000)
+	  117| invoke-virtual {v6,v7}, Target.testObject(boolean):java.lang.Object
+	  120| move-result-object v6
+	  121| const v9, #+23 (0x00000017 | 3.22299e-44)
+	  124| invoke-static/range {v9..v9}, CodeCoverage.TraceBasicBlock(int):void
+	  127| aput-object v6, v4, v5
+	  129| const v9, #+24 (0x00000018 | 3.36312e-44)
+	  132| invoke-static/range {v9..v9}, CodeCoverage.TraceBasicBlock(int):void
+	  135| invoke-virtual {v1,v2,v3}, java.io.PrintStream.printf(java.lang.String, java.lang.Object[]):java.io.PrintStream
+	  138| move-result-object v1
+	  139| const v9, #+25 (0x00000019 | 3.50325e-44)
+	  142| invoke-static/range {v9..v9}, CodeCoverage.TraceBasicBlock(int):void
+	.line 42
+	  145| sget-object v1, java.lang.System.out
+	  147| const v9, #+26 (0x0000001a | 3.64338e-44)
+	  150| invoke-static/range {v9..v9}, CodeCoverage.TraceBasicBlock(int):void
+	  153| const-string v2, "double         : %s\n"
+	  155| const v9, #+27 (0x0000001b | 3.78351e-44)
+	  158| invoke-static/range {v9..v9}, CodeCoverage.TraceBasicBlock(int):void
+	  161| const/4 v3, #+1 (0x00000001 | 1.40130e-45)
+	  162| new-array v3, v3, java.lang.Object[]
+	  164| const v9, #+28 (0x0000001c | 3.92364e-44)
+	  167| invoke-static/range {v9..v9}, CodeCoverage.TraceBasicBlock(int):void
+	  170| move-object v8, v3
+	  171| move-object v3, v8
+	  172| move-object v4, v8
+	  173| const/4 v5, #+0 (0x00000000 | 0.00000)
+	  174| move-object v6, v0
+	  175| const/4 v7, #+3 (0x00000003 | 4.20390e-45)
+	  176| invoke-virtual {v6,v7}, Target.testDouble(int):double
+	  179| move-result-wide v6:v7
+	  180| const v9, #+29 (0x0000001d | 4.06377e-44)
+	  183| invoke-static/range {v9..v9}, CodeCoverage.TraceBasicBlock(int):void
+	  186| invoke-static {v6,v7}, java.lang.Double.valueOf(double):java.lang.Double
+	  189| move-result-object v6
+	  190| const v9, #+30 (0x0000001e | 4.20390e-44)
+	  193| invoke-static/range {v9..v9}, CodeCoverage.TraceBasicBlock(int):void
+	  196| aput-object v6, v4, v5
+	  198| const v9, #+31 (0x0000001f | 4.34403e-44)
+	  201| invoke-static/range {v9..v9}, CodeCoverage.TraceBasicBlock(int):void
+	  204| invoke-virtual {v1,v2,v3}, java.io.PrintStream.printf(java.lang.String, java.lang.Object[]):java.io.PrintStream
+	  207| move-result-object v1
+	  208| const v9, #+32 (0x00000020 | 4.48416e-44)
+	  211| invoke-static/range {v9..v9}, CodeCoverage.TraceBasicBlock(int):void
+	.line 43
+	  214| sget-object v1, java.lang.System.out
+	  216| const v9, #+33 (0x00000021 | 4.62428e-44)
+	  219| invoke-static/range {v9..v9}, CodeCoverage.TraceBasicBlock(int):void
+	  222| const-string v2, "int            : %s\n"
+	  224| const v9, #+34 (0x00000022 | 4.76441e-44)
+	  227| invoke-static/range {v9..v9}, CodeCoverage.TraceBasicBlock(int):void
+	  230| const/4 v3, #+1 (0x00000001 | 1.40130e-45)
+	  231| new-array v3, v3, java.lang.Object[]
+	  233| const v9, #+35 (0x00000023 | 4.90454e-44)
+	  236| invoke-static/range {v9..v9}, CodeCoverage.TraceBasicBlock(int):void
+	  239| move-object v8, v3
+	  240| move-object v3, v8
+	  241| move-object v4, v8
+	  242| const/4 v5, #+0 (0x00000000 | 0.00000)
+	  243| move-object v6, v0
+	  244| const/16 v7, #+100 (0x00000064 | 1.40130e-43)
+	  246| invoke-virtual {v6,v7}, Target.testInt(int):int
+	  249| move-result v6
+	  250| const v9, #+36 (0x00000024 | 5.04467e-44)
+	  253| invoke-static/range {v9..v9}, CodeCoverage.TraceBasicBlock(int):void
+	  256| invoke-static {v6}, java.lang.Integer.valueOf(int):java.lang.Integer
+	  259| move-result-object v6
+	  260| const v9, #+37 (0x00000025 | 5.18480e-44)
+	  263| invoke-static/range {v9..v9}, CodeCoverage.TraceBasicBlock(int):void
+	  266| aput-object v6, v4, v5
+	  268| const v9, #+38 (0x00000026 | 5.32493e-44)
+	  271| invoke-static/range {v9..v9}, CodeCoverage.TraceBasicBlock(int):void
+	  274| invoke-virtual {v1,v2,v3}, java.io.PrintStream.printf(java.lang.String, java.lang.Object[]):java.io.PrintStream
+	  277| move-result-object v1
+	  278| const v9, #+39 (0x00000027 | 5.46506e-44)
+	  281| invoke-static/range {v9..v9}, CodeCoverage.TraceBasicBlock(int):void
+	.line 44
+	  284| move-object v1, v0
+	  285| const/4 v2, #+1 (0x00000001 | 1.40130e-45)
+	  286| invoke-virtual {v1,v2}, Target.testVoid(boolean):void
+	.line 45
+	  289| const v9, #+40 (0x00000028 | 5.60519e-44)
+	  292| invoke-static/range {v9..v9}, CodeCoverage.TraceBasicBlock(int):void
+	  295| return-void
+}
+
+method Target.testDouble(int):double
+{
+	.params "?"
+	.src "exitHooks.java"
+	.line 60
+	.prologue_end
+	.line 60
+	    0| const v0, #+41 (0x00000029 | 5.74532e-44)
+	    3| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	    6| move-object v1, v5
+	.local v1, "this", Target
+	    7| move v2, v6
+	.local v2, "n", int
+	    8| move v3, v2
+	    9| packed-switch v3, Label_5
+	.line 65
+	   12| const v0, #+42 (0x0000002a | 5.88545e-44)
+	   15| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   18| const-wide v3:v4, #+4621762822593629389 (0x4023cccccccccccd | 9.90000)
+	   23| move-wide v1:v2, v3:v4
+Label_1:
+	.end_local v1
+	   24| const v0, #+43 (0x0000002b | 6.02558e-44)
+	   27| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   30| return-wide v1:v2
+Label_2:
+	.line 62
+	.restart_local v1
+	   31| const v0, #+44 (0x0000002c | 6.16571e-44)
+	   34| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   37| const-wide v3:v4, #+4607632778762754458 (0x3ff199999999999a | 1.10000)
+	   42| move-wide v1:v2, v3:v4
+	   43| goto/16 Label_1
+Label_3:
+	.line 63
+	   45| const v0, #+45 (0x0000002d | 6.30584e-44)
+	   48| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   51| const-wide v3:v4, #+4612136378390124954 (0x400199999999999a | 2.20000)
+	   56| move-wide v1:v2, v3:v4
+	   57| goto/16 Label_1
+Label_4:
+	.line 64
+	   59| const v0, #+46 (0x0000002e | 6.44597e-44)
+	   62| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   65| const-wide v3:v4, #+4614613358185178726 (0x400a666666666666 | 3.30000)
+	   70| move-wide v1:v2, v3:v4
+	   71| goto/16 Label_1
+	   73| nop
+Label_5: <aligned>
+	.line 60
+	   74| packed-switch-payload
+		    1: Label_2
+		    2: Label_3
+		    3: Label_4
+}
+
+method Target.testInt(int):int
+{
+	.params "?"
+	.src "exitHooks.java"
+	.line 71
+	.prologue_end
+	.line 71
+	    0| const v0, #+47 (0x0000002f | 6.58610e-44)
+	    3| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	    6| move-object v1, v4
+	.local v1, "this", Target
+	    7| move v2, v5
+	.local v2, "n", int
+	    8| move v3, v2
+	    9| sparse-switch v3, Label_5
+	.line 76
+	   12| const v0, #+48 (0x00000030 | 6.72623e-44)
+	   15| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   18| const/16 v3, #+123 (0x0000007b | 1.72360e-43)
+	   20| move v1, v3
+Label_1:
+	.end_local v1
+	   21| const v0, #+49 (0x00000031 | 6.86636e-44)
+	   24| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   27| return v1
+Label_2:
+	.line 73
+	.restart_local v1
+	   28| const v0, #+50 (0x00000032 | 7.00649e-44)
+	   31| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   34| const/4 v3, #+1 (0x00000001 | 1.40130e-45)
+	   35| move v1, v3
+	   36| goto/16 Label_1
+Label_3:
+	.line 74
+	   38| const v0, #+51 (0x00000033 | 7.14662e-44)
+	   41| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   44| const/4 v3, #+2 (0x00000002 | 2.80260e-45)
+	   45| move v1, v3
+	   46| goto/16 Label_1
+Label_4:
+	.line 75
+	   48| const v0, #+52 (0x00000034 | 7.28675e-44)
+	   51| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   54| const/4 v3, #+3 (0x00000003 | 4.20390e-45)
+	   55| move v1, v3
+	   56| goto/16 Label_1
+	.line 71
+	   58| const v0, #+53 (0x00000035 | 7.42688e-44)
+	   61| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   64| nop
+	   65| nop
+Label_5: <aligned>
+	   66| sparse-switch-payload
+		   10: Label_2
+		   20: Label_3
+		   30: Label_4
+}
+
+method Target.testObject(boolean):java.lang.Object
+{
+	.params "?"
+	.src "exitHooks.java"
+	.line 49
+	.prologue_end
+	.line 49
+	    0| const v0, #+54 (0x00000036 | 7.56701e-44)
+	    3| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	    6| move-object v1, v6
+	.local v1, "this", Target
+	    7| move v2, v7
+	.local v2, "flag", boolean
+	    8| move v3, v2
+	    9| if-eqz v3, Label_2
+	.line 51
+	   11| const v0, #+55 (0x00000037 | 7.70714e-44)
+	   14| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   17| sget-object v3, java.lang.System.out
+	   19| const v0, #+56 (0x00000038 | 7.84727e-44)
+	   22| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   25| const-string v4, "Flag!\n"
+	   27| const v0, #+57 (0x00000039 | 7.98740e-44)
+	   30| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   33| const/4 v5, #+0 (0x00000000 | 0.00000)
+	   34| new-array v5, v5, java.lang.Object[]
+	   36| const v0, #+58 (0x0000003a | 8.12753e-44)
+	   39| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   42| invoke-virtual {v3,v4,v5}, java.io.PrintStream.printf(java.lang.String, java.lang.Object[]):java.io.PrintStream
+	   45| move-result-object v3
+	   46| const v0, #+59 (0x0000003b | 8.26766e-44)
+	   49| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	.line 52
+	   52| const-string v3, "Sigh"
+	   54| const v0, #+60 (0x0000003c | 8.40779e-44)
+	   57| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   60| move-object v1, v3
+Label_1:
+	.line 55
+	.end_local v1
+	   61| const v0, #+61 (0x0000003d | 8.54792e-44)
+	   64| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   67| return-object v1
+Label_2:
+	.restart_local v1
+	   68| const v0, #+62 (0x0000003e | 8.68805e-44)
+	   71| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   74| const-string v3, "Blah"
+	   76| const v0, #+63 (0x0000003f | 8.82818e-44)
+	   79| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   82| move-object v1, v3
+	   83| goto/16 Label_1
+}
+
+method Target.testVoid(boolean):void
+{
+	.params "?"
+	.src "exitHooks.java"
+	.line 82
+	.prologue_end
+	.line 82
+	    0| const v0, #+64 (0x00000040 | 8.96831e-44)
+	    3| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	    6| move-object v1, v6
+	.local v1, "this", Target
+	    7| move v2, v7
+	.local v2, "flag", boolean
+	    8| move v3, v2
+	    9| if-eqz v3, Label_2
+	.line 84
+	   11| const v0, #+65 (0x00000041 | 9.10844e-44)
+	   14| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   17| sget-object v3, java.lang.System.out
+	   19| const v0, #+66 (0x00000042 | 9.24857e-44)
+	   22| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   25| const-string v4, "True!\n"
+	   27| const v0, #+67 (0x00000043 | 9.38870e-44)
+	   30| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   33| const/4 v5, #+0 (0x00000000 | 0.00000)
+	   34| new-array v5, v5, java.lang.Object[]
+	   36| const v0, #+68 (0x00000044 | 9.52883e-44)
+	   39| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   42| invoke-virtual {v3,v4,v5}, java.io.PrintStream.printf(java.lang.String, java.lang.Object[]):java.io.PrintStream
+	   45| move-result-object v3
+	   46| const v0, #+69 (0x00000045 | 9.66896e-44)
+	   49| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+Label_1:
+	.line 85
+	.line 90
+	   52| const v0, #+70 (0x00000046 | 9.80909e-44)
+	   55| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   58| return-void
+Label_2:
+	.line 89
+	   59| const v0, #+71 (0x00000047 | 9.94922e-44)
+	   62| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   65| sget-object v3, java.lang.System.out
+	   67| const v0, #+72 (0x00000048 | 1.00893e-43)
+	   70| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   73| const-string v4, "False!\n"
+	   75| const v0, #+73 (0x00000049 | 1.02295e-43)
+	   78| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   81| const/4 v5, #+0 (0x00000000 | 0.00000)
+	   82| new-array v5, v5, java.lang.Object[]
+	   84| const v0, #+74 (0x0000004a | 1.03696e-43)
+	   87| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   90| invoke-virtual {v3,v4,v5}, java.io.PrintStream.printf(java.lang.String, java.lang.Object[]):java.io.PrintStream
+	   93| move-result-object v3
+	   94| const v0, #+75 (0x0000004b | 1.05097e-43)
+	   97| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	.line 90
+	  100| goto/16 Label_1
+}
+
+method Tracer.<init>():void
+{
+	.src "exitHooks.java"
+	.line 2
+	.prologue_end
+	.line 2
+	    0| const v0, #+76 (0x0000004c | 1.06499e-43)
+	    3| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	    6| move-object v1, v3
+	.local v1, "this", Tracer
+	    7| move-object v2, v1
+	    8| invoke-direct {v2}, java.lang.Object.<init>():void
+	   11| const v0, #+77 (0x0000004d | 1.07900e-43)
+	   14| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   17| return-void
+}
+
+method Tracer.onExit(double):double
+{
+	.params "?"
+	.src "exitHooks.java"
+	.line 12
+	.prologue_end
+	.line 12
+	    0| const v0, #+78 (0x0000004e | 1.09301e-43)
+	    3| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	    6| move-wide v1:v2, v11:v12
+	.local v1, "value", double
+	    7| sget-object v3, java.lang.System.out
+	    9| const v0, #+79 (0x0000004f | 1.10703e-43)
+	   12| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   15| const-string v4, ">>> onExit(double: %f)\n"
+	   17| const v0, #+80 (0x00000050 | 1.12104e-43)
+	   20| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   23| const/4 v5, #+1 (0x00000001 | 1.40130e-45)
+	   24| new-array v5, v5, java.lang.Object[]
+	   26| const v0, #+81 (0x00000051 | 1.13505e-43)
+	   29| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   32| move-object v10, v5
+	   33| move-object v5, v10
+	   34| move-object v6, v10
+	   35| const/4 v7, #+0 (0x00000000 | 0.00000)
+	   36| move-wide v8:v9, v1:v2
+	   37| invoke-static {v8,v9}, java.lang.Double.valueOf(double):java.lang.Double
+	   40| move-result-object v8
+	   41| const v0, #+82 (0x00000052 | 1.14906e-43)
+	   44| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   47| aput-object v8, v6, v7
+	   49| const v0, #+83 (0x00000053 | 1.16308e-43)
+	   52| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   55| invoke-virtual {v3,v4,v5}, java.io.PrintStream.printf(java.lang.String, java.lang.Object[]):java.io.PrintStream
+	   58| move-result-object v3
+	   59| const v0, #+84 (0x00000054 | 1.17709e-43)
+	   62| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	.line 13
+	   65| move-wide v3:v4, v1:v2
+	   66| neg-double v3:v4, v3:v4
+	   67| move-wide v1:v2, v3:v4
+	.end_local v1
+	   68| return-wide v1:v2
+}
+
+method Tracer.onExit(int):int
+{
+	.params "?"
+	.src "exitHooks.java"
+	.line 18
+	.prologue_end
+	.line 18
+	    0| const v0, #+85 (0x00000055 | 1.19110e-43)
+	    3| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	    6| move v1, v9
+	.local v1, "value", int
+	    7| sget-object v2, java.lang.System.out
+	    9| const v0, #+86 (0x00000056 | 1.20512e-43)
+	   12| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   15| const-string v3, ">>> onExit(int: %d)\n"
+	   17| const v0, #+87 (0x00000057 | 1.21913e-43)
+	   20| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   23| const/4 v4, #+1 (0x00000001 | 1.40130e-45)
+	   24| new-array v4, v4, java.lang.Object[]
+	   26| const v0, #+88 (0x00000058 | 1.23314e-43)
+	   29| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   32| move-object v8, v4
+	   33| move-object v4, v8
+	   34| move-object v5, v8
+	   35| const/4 v6, #+0 (0x00000000 | 0.00000)
+	   36| move v7, v1
+	   37| invoke-static {v7}, java.lang.Integer.valueOf(int):java.lang.Integer
+	   40| move-result-object v7
+	   41| const v0, #+89 (0x00000059 | 1.24716e-43)
+	   44| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   47| aput-object v7, v5, v6
+	   49| const v0, #+90 (0x0000005a | 1.26117e-43)
+	   52| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   55| invoke-virtual {v2,v3,v4}, java.io.PrintStream.printf(java.lang.String, java.lang.Object[]):java.io.PrintStream
+	   58| move-result-object v2
+	   59| const v0, #+91 (0x0000005b | 1.27518e-43)
+	   62| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	.line 19
+	   65| move v2, v1
+	   66| const/16 v3, #+10 (0x0000000a | 1.40130e-44)
+	   68| mul-int/lit8 v2, v2, #+10 (0x0000000a | 1.40130e-44)
+	   70| move v1, v2
+	.end_local v1
+	   71| return v1
+}
+
+method Tracer.onExit(java.lang.Object):java.lang.Object
+{
+	.params "?"
+	.src "exitHooks.java"
+	.line 6
+	.prologue_end
+	.line 6
+	    0| const v0, #+92 (0x0000005c | 1.28919e-43)
+	    3| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	    6| move-object v1, v9
+	.local v1, "value", java.lang.Object
+	    7| sget-object v2, java.lang.System.out
+	    9| const v0, #+93 (0x0000005d | 1.30321e-43)
+	   12| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   15| const-string v3, ">>> onExit(Object: %s)\n"
+	   17| const v0, #+94 (0x0000005e | 1.31722e-43)
+	   20| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   23| const/4 v4, #+1 (0x00000001 | 1.40130e-45)
+	   24| new-array v4, v4, java.lang.Object[]
+	   26| const v0, #+95 (0x0000005f | 1.33123e-43)
+	   29| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   32| move-object v8, v4
+	   33| move-object v4, v8
+	   34| move-object v5, v8
+	   35| const/4 v6, #+0 (0x00000000 | 0.00000)
+	   36| move-object v7, v1
+	   37| aput-object v7, v5, v6
+	   39| const v0, #+96 (0x00000060 | 1.34525e-43)
+	   42| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	   45| invoke-virtual {v2,v3,v4}, java.io.PrintStream.printf(java.lang.String, java.lang.Object[]):java.io.PrintStream
+	   48| move-result-object v2
+	   49| const v0, #+97 (0x00000061 | 1.35926e-43)
+	   52| invoke-static/range {v0..v0}, CodeCoverage.TraceBasicBlock(int):void
+	.line 7
+	   55| move-object v2, v1
+	   56| move-object v1, v2
+	.end_local v1
+	   57| return-object v1
+}
+
+method Tracer.onExit():void
+{
+	.src "exitHooks.java"
+	.line 24
+	.prologue_end
+	.line 24
+	    0| const v3, #+98 (0x00000062 | 1.37327e-43)
+	    3| invoke-static/range {v3..v3}, CodeCoverage.TraceBasicBlock(int):void
+	    6| sget-object v0, java.lang.System.out
+	    8| const v3, #+99 (0x00000063 | 1.38729e-43)
+	   11| invoke-static/range {v3..v3}, CodeCoverage.TraceBasicBlock(int):void
+	   14| const-string v1, ">>> onExit(void)\n"
+	   16| const v3, #+100 (0x00000064 | 1.40130e-43)
+	   19| invoke-static/range {v3..v3}, CodeCoverage.TraceBasicBlock(int):void
+	   22| const/4 v2, #+0 (0x00000000 | 0.00000)
+	   23| new-array v2, v2, java.lang.Object[]
+	   25| const v3, #+101 (0x00000065 | 1.41531e-43)
+	   28| invoke-static/range {v3..v3}, CodeCoverage.TraceBasicBlock(int):void
+	   31| invoke-virtual {v0,v1,v2}, java.io.PrintStream.printf(java.lang.String, java.lang.Object[]):java.io.PrintStream
+	   34| move-result-object v0
+	   35| const v3, #+102 (0x00000066 | 1.42932e-43)
+	   38| invoke-static/range {v3..v3}, CodeCoverage.TraceBasicBlock(int):void
+	.line 25
+	   41| return-void
+}

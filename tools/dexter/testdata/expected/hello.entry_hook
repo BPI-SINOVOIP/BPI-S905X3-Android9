@@ -1,0 +1,302 @@
+
+method Base$Inner.<init>(Base):void
+{
+	.params "?"
+	.src "hello.java"
+	.line 8
+	.prologue_end
+	.line 8
+	    0| invoke-static/range {v4..v5}, Tracer.OnEntry(Base$Inner, Base):void
+	    3| move-object v0, v4
+	.local v0, "this", Base$Inner
+	    4| move-object v1, v5
+	.local v1, "this$0", Base
+	    5| move-object v2, v0
+	    6| move-object v3, v1
+	    7| iput-object v3, v2, Base$Inner.this$0
+	    9| move-object v2, v0
+	   10| invoke-direct {v2}, java.lang.Object.<init>():void
+	   13| return-void
+}
+
+method Base$Nested.<init>():void
+{
+	.src "hello.java"
+	.line 4
+	.prologue_end
+	.line 4
+	    0| invoke-static/range {v2..v2}, Tracer.OnEntry(Base$Nested):void
+	    3| move-object v0, v2
+	.local v0, "this", Base$Nested
+	    4| move-object v1, v0
+	    5| invoke-direct {v1}, java.lang.Object.<init>():void
+	    8| return-void
+}
+
+method Base.<init>():void
+{
+	.src "hello.java"
+	.line 2
+	.prologue_end
+	.line 2
+	    0| invoke-static/range {v2..v2}, Tracer.OnEntry(Base):void
+	    3| move-object v0, v2
+	.local v0, "this", Base
+	    4| move-object v1, v0
+	    5| invoke-direct {v1}, java.lang.Object.<init>():void
+	    8| return-void
+}
+
+method Base.test(int):void
+{
+	.params "?"
+	.src "hello.java"
+	.line 14
+	.prologue_end
+	.line 14
+	    0| invoke-static/range {v6..v7}, Tracer.OnEntry(Base, int):void
+	    3| move-object v0, v6
+	.local v0, "this", Base
+	    4| move v1, v7
+	.local v1, "n", int
+	    5| invoke-static {}, Hello.printStackTrace():void
+	.line 15
+	    8| sget-object v2, java.lang.System.out
+	   10| new-instance v3, java.lang.StringBuilder
+	   12| move-object v5, v3
+	   13| move-object v3, v5
+	   14| move-object v4, v5
+	   15| invoke-direct {v4}, java.lang.StringBuilder.<init>():void
+	   18| const-string v4, "Base.test "
+	   20| invoke-virtual {v3,v4}, java.lang.StringBuilder.append(java.lang.String):java.lang.StringBuilder
+	   23| move-result-object v3
+	   24| move v4, v1
+	   25| invoke-virtual {v3,v4}, java.lang.StringBuilder.append(int):java.lang.StringBuilder
+	   28| move-result-object v3
+	   29| invoke-virtual {v3}, java.lang.StringBuilder.toString():java.lang.String
+	   32| move-result-object v3
+	   33| invoke-virtual {v2,v3}, java.io.PrintStream.println(java.lang.String):void
+	.line 16
+	   36| return-void
+}
+
+method Derived.<init>():void
+{
+	.src "hello.java"
+	.line 19
+	.prologue_end
+	.line 19
+	    0| invoke-static/range {v2..v2}, Tracer.OnEntry(Derived):void
+	    3| move-object v0, v2
+	.local v0, "this", Derived
+	    4| move-object v1, v0
+	    5| invoke-direct {v1}, Base.<init>():void
+	    8| return-void
+}
+
+method Derived.test(int):void
+{
+	.params "?"
+	.src "hello.java"
+	.line 23
+	.prologue_end
+	.line 23
+	    0| invoke-static/range {v6..v7}, Tracer.OnEntry(Derived, int):void
+	    3| move-object v0, v6
+	.local v0, "this", Derived
+	    4| move v1, v7
+	.local v1, "n", int
+	    5| sget-object v2, java.lang.System.out
+	    7| new-instance v3, java.lang.StringBuilder
+	    9| move-object v5, v3
+	   10| move-object v3, v5
+	   11| move-object v4, v5
+	   12| invoke-direct {v4}, java.lang.StringBuilder.<init>():void
+	   15| const-string v4, "Derived.test "
+	   17| invoke-virtual {v3,v4}, java.lang.StringBuilder.append(java.lang.String):java.lang.StringBuilder
+	   20| move-result-object v3
+	   21| move v4, v1
+	   22| invoke-virtual {v3,v4}, java.lang.StringBuilder.append(int):java.lang.StringBuilder
+	   25| move-result-object v3
+	   26| invoke-virtual {v3}, java.lang.StringBuilder.toString():java.lang.String
+	   29| move-result-object v3
+	   30| invoke-virtual {v2,v3}, java.io.PrintStream.println(java.lang.String):void
+	.line 24
+	   33| return-void
+}
+
+method Hello.<init>():void
+{
+	.src "hello.java"
+	.line 27
+	.prologue_end
+	.line 27
+	    0| invoke-static/range {v2..v2}, Tracer.OnEntry(Hello):void
+	    3| move-object v0, v2
+	.local v0, "this", Hello
+	    4| move-object v1, v0
+	    5| invoke-direct {v1}, java.lang.Object.<init>():void
+	    8| return-void
+}
+
+method Hello.main(java.lang.String[]):void
+{
+	.params "?"
+	.src "hello.java"
+	.line 31
+	.prologue_end
+	.line 31
+	    0| invoke-static/range {v6..v6}, Tracer.OnEntry(java.lang.String[]):void
+	    3| move-object v0, v6
+	.local v0, "args", java.lang.String[]
+	    4| sget-object v2, java.lang.System.out
+	    6| const-string v3, "-------------------------------------------------------\n"
+	    8| const/4 v4, #+0 (0x00000000 | 0.00000)
+	    9| new-array v4, v4, java.lang.Object[]
+	   11| invoke-virtual {v2,v3,v4}, java.io.PrintStream.printf(java.lang.String, java.lang.Object[]):java.io.PrintStream
+	   14| move-result-object v2
+	.line 32
+	   15| sget-object v2, java.lang.System.out
+	   17| const-string v3, "Hello, world (original)"
+	   19| invoke-virtual {v2,v3}, java.io.PrintStream.println(java.lang.String):void
+	.line 36
+	   22| sget-object v2, java.lang.System.out
+	   24| const-string v3, "-------------------------------------------------------\n"
+	   26| const/4 v4, #+0 (0x00000000 | 0.00000)
+	   27| new-array v4, v4, java.lang.Object[]
+	   29| invoke-virtual {v2,v3,v4}, java.io.PrintStream.printf(java.lang.String, java.lang.Object[]):java.io.PrintStream
+	   32| move-result-object v2
+	.line 37
+	   33| new-instance v2, Base
+	   35| move-object v5, v2
+	   36| move-object v2, v5
+	   37| move-object v3, v5
+	   38| invoke-direct {v3}, Base.<init>():void
+	   41| move-object v1, v2
+	.line 38
+	.local v1, "x", Base
+	   42| move-object v2, v1
+	   43| const/4 v3, #+1 (0x00000001 | 1.40130e-45)
+	   44| invoke-virtual {v2,v3}, Base.test(int):void
+	.line 40
+	   47| sget-object v2, java.lang.System.out
+	   49| const-string v3, "-------------------------------------------------------\n"
+	   51| const/4 v4, #+0 (0x00000000 | 0.00000)
+	   52| new-array v4, v4, java.lang.Object[]
+	   54| invoke-virtual {v2,v3,v4}, java.io.PrintStream.printf(java.lang.String, java.lang.Object[]):java.io.PrintStream
+	   57| move-result-object v2
+	.line 41
+	   58| new-instance v2, Derived
+	   60| move-object v5, v2
+	   61| move-object v2, v5
+	   62| move-object v3, v5
+	   63| invoke-direct {v3}, Derived.<init>():void
+	   66| move-object v1, v2
+	.line 42
+	   67| move-object v2, v1
+	   68| const/4 v3, #+2 (0x00000002 | 2.80260e-45)
+	   69| invoke-virtual {v2,v3}, Base.test(int):void
+	.line 43
+	   72| return-void
+}
+
+method Hello.printStackTrace():void
+{
+	.src "hello.java"
+	.line 47
+	.prologue_end
+	.line 47
+	    0| invoke-static/range {}, Tracer.OnEntry():void
+	    3| new-instance v5, java.lang.Throwable
+	    5| move-object v11, v5
+	    6| move-object v5, v11
+	    7| move-object v6, v11
+	    8| invoke-direct {v6}, java.lang.Throwable.<init>():void
+	   11| invoke-virtual {v5}, java.lang.Throwable.getStackTrace():java.lang.StackTraceElement[]
+	   14| move-result-object v5
+	   15| move-object v0, v5
+	.line 48
+	.local v0, "callstack", java.lang.StackTraceElement[]
+	   16| move-object v5, v0
+	   17| move-object v1, v5
+	   18| move-object v5, v1
+	   19| array-length v5, v5
+	   20| move v2, v5
+	   21| const/4 v5, #+0 (0x00000000 | 0.00000)
+	   22| move v3, v5
+Label_1:
+	   23| move v5, v3
+	   24| move v6, v2
+	   25| if-ge v5, v6, Label_2
+	   27| move-object v5, v1
+	   28| move v6, v3
+	   29| aget-object v5, v5, v6
+	   31| move-object v4, v5
+	.line 50
+	.local v4, "e", java.lang.StackTraceElement
+	   32| sget-object v5, java.lang.System.out
+	   34| const-string v6, "   %s\n"
+	   36| const/4 v7, #+1 (0x00000001 | 1.40130e-45)
+	   37| new-array v7, v7, java.lang.Object[]
+	   39| move-object v11, v7
+	   40| move-object v7, v11
+	   41| move-object v8, v11
+	   42| const/4 v9, #+0 (0x00000000 | 0.00000)
+	   43| move-object v10, v4
+	   44| invoke-virtual {v10}, java.lang.StackTraceElement.toString():java.lang.String
+	   47| move-result-object v10
+	   48| aput-object v10, v8, v9
+	   50| invoke-virtual {v5,v6,v7}, java.io.PrintStream.printf(java.lang.String, java.lang.Object[]):java.io.PrintStream
+	   53| move-result-object v5
+	.line 48
+	   54| add-int/lit8 v3, v3, #+1 (0x00000001 | 1.40130e-45)
+	   56| goto/16 Label_1
+Label_2:
+	.line 52
+	.end_local v4
+	   58| return-void
+}
+
+method Hello.wrapTest(Base, int):void
+{
+	.params "?", "?"
+	.src "hello.java"
+	.line 56
+	.prologue_end
+	.line 56
+	    0| invoke-static/range {v9..v10}, Tracer.OnEntry(Base, int):void
+	    3| move-object v0, v9
+	.local v0, "_this", Base
+	    4| move v1, v10
+	.local v1, "n", int
+	    5| sget-object v2, java.lang.System.out
+	    7| const-string v3, ">>> %s.test(int n = %d)\n"
+	    9| const/4 v4, #+2 (0x00000002 | 2.80260e-45)
+	   10| new-array v4, v4, java.lang.Object[]
+	   12| move-object v8, v4
+	   13| move-object v4, v8
+	   14| move-object v5, v8
+	   15| const/4 v6, #+0 (0x00000000 | 0.00000)
+	   16| move-object v7, v0
+	   17| invoke-virtual {v7}, java.lang.Object.getClass():java.lang.Class
+	   20| move-result-object v7
+	   21| invoke-virtual {v7}, java.lang.Class.getName():java.lang.String
+	   24| move-result-object v7
+	   25| aput-object v7, v5, v6
+	   27| move-object v8, v4
+	   28| move-object v4, v8
+	   29| move-object v5, v8
+	   30| const/4 v6, #+1 (0x00000001 | 1.40130e-45)
+	   31| move v7, v1
+	   32| invoke-static {v7}, java.lang.Integer.valueOf(int):java.lang.Integer
+	   35| move-result-object v7
+	   36| aput-object v7, v5, v6
+	   38| invoke-virtual {v2,v3,v4}, java.io.PrintStream.printf(java.lang.String, java.lang.Object[]):java.io.PrintStream
+	   41| move-result-object v2
+	.line 57
+	   42| move-object v2, v0
+	   43| move v3, v1
+	   44| invoke-virtual {v2,v3}, Base.test(int):void
+	.line 58
+	   47| return-void
+}

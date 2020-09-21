@@ -1,0 +1,263 @@
+# Copyright (C) 2016 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may not
+# use this file except in compliance with the License. You may obtain a copy of
+# the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations under
+# the License.
+
+HOGP
+=================================================================
+
+TC_RH_HGDS_BV_01_I
+  bta_start_pairing_helper
+  bta_bond
+  bta_get_pairing_pin
+  [PTS Interaction] Enter PIN from phone to PTS
+  bta_disconnect
+  [PTS Interaction] Verify values
+
+TC_RH_HGDS_BV_02_C
+  bta_start_pairing_helper
+  bta_bond
+  bta_get_pairing_pin
+  [PTS Interaction] Enter PIN from phone to PTS
+  bta_disconnect
+  [PTS Interaction] Verify values
+
+TC_RH_HGDS_BV_03_C
+  bta_start_pairing_helper
+  bta_bond
+  bta_get_pairing_pin
+  [PTS Interaction] Enter PIN from phone to PTS
+  bta_disconnect
+  [PTS Interaction] Verify values
+
+TC_RH_HGCD_BV_01_I
+  bta_start_pairing_helper
+  bta_bond
+  bta_get_pairing_pin
+  [PTS Interaction] Enter PIN from phone to PTS
+  bta_disconnect
+  [PTS Interaction] Verify values
+  [PTS Interaction] Verify values
+
+TC_RH_HGCD_BV_02_I
+  bta_start_pairing_helper
+  bta_bond
+  bta_get_pairing_pin
+  [PTS Interaction] Enter PIN from phone to PTS
+  bta_disconnect
+  [PTS Interaction] Verify values
+  [PTS Interaction] Verify values
+
+TC_RH_HGCD_BV_03_I
+  bta_start_pairing_helper
+  bta_bond
+  bta_get_pairing_pin
+  [PTS Interaction] Enter PIN from phone to PTS
+  bta_disconnect
+  [PTS Interaction] Verify values
+  [PTS Interaction] Verify values
+  [PTS Interaction] Verify values
+  [PTS Interaction] Verify values
+  [PTS Interaction] Verify values
+  [PTS Interaction] Verify values
+
+TC_RH_HGCD_BV_04_I
+  bta_start_pairing_helper
+  bta_bond
+  bta_get_pairing_pin
+  [PTS Interaction] Enter PIN from phone to PTS
+  bta_disconnect
+  [PTS Interaction] Verify values
+  [PTS Interaction] Verify values
+
+TC_RH_HGCD_BV_05_I
+  bta_start_pairing_helper
+  bta_bond
+  bta_get_pairing_pin
+  [PTS Interaction] Enter PIN from phone to PTS
+  bta_disconnect
+  [PTS Interaction] Verify values
+  [PTS Interaction] Verify values
+  [PTS Interaction] Verify values
+  [PTS Interaction] Verify values
+  [PTS Interaction] Verify values
+  [PTS Interaction] Verify values
+
+TC_RH_HGCD_BV_06_I
+  bta_start_pairing_helper
+  bta_bond
+  bta_get_pairing_pin
+  [PTS Interaction] Enter PIN from phone to PTS
+  bta_disconnect
+  [PTS Interaction] Verify values
+  [PTS Interaction] Verify values
+
+TC_RH_HGCD_BV_07_I
+  bta_start_pairing_helper
+  bta_bond
+  bta_get_pairing_pin
+  [PTS Interaction] Enter PIN from phone to PTS
+  bta_disconnect
+  [PTS Interaction] Verify values
+  [PTS Interaction] Verify values
+
+TC_RH_HGCD_BV_14_I
+  bta_start_pairing_helper
+  bta_bond
+  bta_get_pairing_pin
+  [PTS Interaction] Enter PIN from phone to PTS
+  bta_disconnect
+  [PTS Interaction] Verify values
+  [PTS Interaction] Verify values
+
+TC_RH_HGCD_BV_15_I
+  bta_start_pairing_helper
+  bta_bond
+  bta_get_pairing_pin
+  [PTS Interaction] Enter PIN from phone to PTS
+  bta_disconnect
+  [PTS Interaction] Verify values
+  [PTS Interaction] Verify values
+
+TC_RH_HGCD_BV_16_I
+  bta_start_pairing_helper
+  bta_bond
+  bta_get_pairing_pin
+  [PTS Interaction] Enter PIN from phone to PTS
+  bta_disconnect
+  [PTS Interaction] Verify values
+
+TC_RH_HGRF_BV_01_I
+  bta_start_pairing_helper
+  bta_bond
+  [PTS Interaction] Enter PIN from phone to PTS
+  hid_get_report
+  gattc_list_all_uuids
+  gattc_read_all_char
+  [PTS Interaction] Press OK
+  bta_disable
+
+TC_RH_HGRF_BV_02_I
+  bta_start_pairing_helper
+  bta_bond
+  [PTS Interaction] Enter PIN from phone to PTS
+  gattc_connect_over_le
+  gattc_read_all_desc
+  [PTS Interaction] Press OK
+  bta_disable
+  bta_unbond
+
+TC_RH_HGRF_BV_04_I
+  bta_start_pairing_helper
+  bta_bond
+  [PTS Interaction] Enter PIN from phone to PTS
+  gattc_connect_over_le
+  gattc_read_all_desc
+  [PTS Interaction] Press OK
+  bta_disable
+  bta_unbond
+
+TC_RH_HGRF_BV_05_I
+  bta_start_pairing_helper
+  bta_bond
+  [PTS Interaction] Enter PIN from phone to PTS
+  gattc_connect_over_le
+  gattc_read_all_desc
+  [PTS Interaction] Press OK
+  [PTS Interaction] Press OK
+  bta_disable
+  bta_unbond
+
+TC_RH_HGRF_BV_06_I
+  bta_start_pairing_helper
+  bta_bond
+  [PTS Interaction] Enter PIN from phone to PTS
+  gattc_connect_over_le
+  gattc_read_all_desc
+  [PTS Interaction] Press OK
+  bta_disable
+  bta_unbond
+
+TC_RH_HGRF_BV_08_I
+  bta_start_pairing_helper
+  bta_bond
+  [PTS Interaction] Enter PIN from phone to PTS
+  gattc_connect_over_le
+  gattc_read_all_desc
+  [PTS Interaction] Press OK
+  bta_disable
+  bta_unbond
+
+TC_RH_HGRF_BV_10_I
+  bta_start_pairing_helper
+  bta_bond
+  [PTS Interaction] Enter PIN from phone to PTS
+  gattc_connect_over_le
+  gattc_read_all_char
+  [PTS Interaction] Press OK
+  bta_disable
+  bta_unbond
+
+TC_RH_HGRF_BV_12_I
+  bta_start_pairing_helper
+  bta_bond
+  [PTS Interaction] Enter PIN from phone to PTS
+  gattc_connect_over_le
+  gattc_read_all_char
+  [PTS Interaction] Press OK
+  bta_disable
+  bta_unbond
+
+TC_RH_HGCF_BV_01_I
+  bta_start_pairing_helper
+  gattc_connect_over_le
+  [PTS Interaction] Enter PIN from phone to PTS
+  gattc_list_all_uuids
+  Note: Find all isntance ID of descriptor with 2902 uuid
+  gattc_enable_notification_desc_by_instance_id 00cb
+  gattc_enable_notification_desc_by_instance_id 00c5
+  gattc_enable_notification_desc_by_instance_id 00a3
+  gattc_enable_notification_desc_by_instance_id 007e
+  gattc_disconnect
+
+TC_RF_HGNF_BV_01_I
+  bta_start_pairing_helper
+  gattc_connect_over_le
+  [PTS Interaction] Enter PIN from phone to PTS
+  gattc_list_all_uuids
+  Note: Find all isntance ID of descriptor with 2902 uuid
+  gattc_enable_notification_desc_by_instance_id 00cb
+  gattc_enable_notification_desc_by_instance_id 00c5
+  gattc_enable_notification_desc_by_instance_id 00a3
+  gattc_enable_notification_desc_by_instance_id 007e
+  gattc_enable_notification_desc_by_instance_id 0023
+  gattc_enable_notification_desc_by_instance_id 0057
+  [PTS Interaction] Verify values
+  gattc_disconnect
+
+TC_RH_HGNF_BI_01_I
+  bta_start_pairing_helper
+  bta_bond
+  [PTS Interaction] Enter PIN from phone to PTS
+  gattc_connect_over_le
+  [PTS Interaction] Press OK
+  gattc_disconnect
+  bta_unbond
+
+TC_RH_HGNF_BI_02_I
+  bta_start_pairing_helper
+  bta_bond
+  [PTS Interaction] Enter PIN from phone to PTS
+  gattc_connect_over_le
+  [PTS Interaction] Press OK
+  gattc_disconnect
+  bta_unbond

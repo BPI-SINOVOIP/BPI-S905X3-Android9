@@ -1,0 +1,92 @@
+{
+  "basePath": "/_ah/api",
+  "consumes": [
+    "application/json"
+  ],
+  "definitions": {
+    "WebappSrcProtoModelBuildInfoMessage": {
+      "properties": {
+        "artifact_type": {
+          "type": "string"
+        },
+        "artifacts": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "build_id": {
+          "type": "string"
+        },
+        "build_target": {
+          "type": "string"
+        },
+        "build_type": {
+          "type": "string"
+        },
+        "manifest_branch": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "WebappSrcProtoModelDefaultResponse": {
+      "properties": {
+        "return_code": {
+          "enum": [
+            "SUCCESS",
+            "FAIL"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "host": "vtslab-schedule-prod.appspot.com",
+  "info": {
+    "description": "Endpoint API for build_info.",
+    "title": "build_info",
+    "version": "v1"
+  },
+  "paths": {
+    "/build_info/v1/set": {
+      "post": {
+        "operationId": "BuildInfoApi_set",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/WebappSrcProtoModelBuildInfoMessage"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response",
+            "schema": {
+              "$ref": "#/definitions/WebappSrcProtoModelDefaultResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "https"
+  ],
+  "securityDefinitions": {
+    "google_id_token": {
+      "authorizationUrl": "",
+      "flow": "implicit",
+      "type": "oauth2",
+      "x-google-issuer": "https://accounts.google.com",
+      "x-google-jwks_uri": "https://www.googleapis.com/oauth2/v3/certs"
+    }
+  },
+  "swagger": "2.0"
+}

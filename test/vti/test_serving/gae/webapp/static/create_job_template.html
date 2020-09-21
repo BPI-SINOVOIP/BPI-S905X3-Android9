@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+{% autoescape true %}
+<html>
+  <head>
+    <!-- [START css] -->
+    <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.css">
+    <!-- [END css] -->
+    <style type="text/css">
+      body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #f5f5f5;
+      }
+      blockquote {
+        margin-bottom: 10px;
+        border-left-color: #bbb;
+      }
+      form {
+        margin-top: 10px;
+      }
+      .form-signin input[type="text"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+      }
+      .row {
+        margin-left: 0px;
+        margin-top: 10px;
+        overflow: scroll;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse"
+               data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">VTS Test Scheduler</a>
+           <a class="brand" href="/result">Result</a>
+           <a class="brand" href="/build">Build</a>
+           <a class="brand" href="/schedule">Schedule</a>
+           <a class="brand" href="/device">Device &amp; Lab</a>
+           <a class="brand" href="/job">Job Queue</a>
+          <div class="nav-collapse collapse pull-right">
+            <a href="{{ url|safe }}" class="btn">{{ url_linktext }}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <h1>Create a Job</h1>
+      <form action="/create_job">
+      <table border=0>
+      <tr>
+          <td>
+              <table border=1>
+              <tr>
+                  <td colspan=2><b>Device Package</b>
+              <tr>
+                  <td>
+                      Manifest Branch
+                  <td>
+                      <input type="text" name="manifest_branch" value="git_oc-mr1-release">
+              <tr>
+                  <td>
+                      Build Target
+                  <td>
+                      <input type="text" name="build_target" value="walleye-user">
+              <tr>
+                  <td>
+                      Build ID
+                  <td>
+                      <input type="text" name="build_id" value="4609799">
+              <tr>
+                  <td>
+                      PAB account ID
+                  <td>
+                      <input type="text" name="pab_account_id" value="541462473">
+              </table>
+          <td>
+              <table border=1>
+              <tr>
+                  <td colspan=2><b>GSI Package</b>
+              <tr>
+                  <td>
+                      GSI Branch
+                  <td>
+                      <input type="text" name="gsi_branch" value="git_oc-mr1-treble-dev">
+              <tr>
+                  <td>
+                      GSI Build ID
+                  <td>
+                      <input type="text" name="gsi_build_id" value="4498750">
+              <tr>
+                  <td>
+                      GSI Build Target
+                  <td>
+                      <input type="text" name="gsi_build_target" value="aosp_arm64_ab-userdebug">
+              <tr>
+                  <td>
+                      GSI PAB account ID
+                  <td>
+                      <input type="text" name="gsi_pab_account_id" value="543365459">
+              </table>
+          <td>
+              <table border=1>
+              <tr>
+                  <td colspan=2><b>Test Package</b>
+              <tr>
+                  <td>
+                      Test Branch<br>
+                  <td>
+                      <input type="text" name="test_branch" value="git_oc-mr1-dev"><br>
+              <tr>
+                  <td>
+                      Test Build ID<br>
+                  <td>
+                      <input type="text" name="test_build_id" value="4499397"><br>
+              <tr>
+                  <td>
+                      Test Build Target<br>
+                  <td>
+                      <input type="text" name="test_build_target" value="test_suites_arm64_fastbuild3l_linux"><br>
+              <tr>
+                  <td>
+                      Test PAB Account ID<br>
+                  <td>
+                      <input type="text" name="test_pab_account_id" value="541462473"><br>
+              </table>
+      <tr>
+          <td>
+                <table border=1>
+                <tr>
+                    <td colspan=2><b>Test Info</b>
+                <tr>
+                    <td>
+                        Test Name:<br>
+                    <td>
+                        <input type="text" name="test_name" value="vts/vts"><br>
+                <tr>
+                    <td>
+                        Priority:<br>
+                    <td>
+                        <input type="text" name="priority" value="high"><br>
+                <tr>
+                    <td>
+                        Period:<br>
+                    <td>
+                        <input type="text" name="period" value="0"><br>
+                <tr>
+                    <td>
+                        Param:<br>
+                    <td>
+                        <input type="text" name="param" value=""><br>
+                </table>
+          <td>
+                <table border=1>
+                <tr>
+                    <td colspan=2><b>Device Info</b>
+                <tr>
+                    <td>
+                        Device:<br>
+                    <td>
+                        <input type="text" name="device" value="vtslab-mtv43-main/walleye"><br>
+                <tr>
+                    <td>
+                        Hostname:<br>
+                    <td>
+                        <input type="text" name="hostname" value="vtslab-mtv43-3"><br>
+                <tr>
+                    <td>
+                        Serial:<br>
+                    <td> <!--  TODO: derive serials automatically from the ready devices of the specified host (based on shards count) -->
+                        <input type="text" name="serial" value="HT7BF1A02527,HT7BH1A02453,HT7BF1A02451,HT7BF1A01637,HT7BF1A02547,HT7BF1A01996,HT7BF1A01632,HT7BF1A01612,HT7BF1A01723"><br>
+                <tr>
+                    <td> <!--  TODO: when serial changes, shards count is updated automatically -->
+                        Shards:<br>
+                    <td>
+                        <input type="text" name="shards" value="9"><br>
+                </table>
+          <td>
+          <input type="submit" value="Create">
+      </table>
+      </form>
+      <hr>
+    </div>
+  </body>
+</html>
+{% endautoescape %}

@@ -1,0 +1,177 @@
+// Copyright 2016 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto2";
+
+package android.vts;
+
+import "test/vts/proto/ComponentSpecificationMessage.proto";
+
+
+// Type of a command.
+enum CommandType {
+  UNKNOWN_COMMAND_TYPE = 0;
+  // To get a list of available HAL modules.
+  LIST_HALS = 1;
+  // To set the host information (e.g., callback server port).
+  SET_HOST_INFO = 2;
+  // To check the health of an agent.
+  PING = 3;
+
+  // To check whether fuzzer's binder service is available.
+  CHECK_DRIVER_SERVICE = 101;
+  // To start a fuzzer binary service and select a HAL module.
+  LAUNCH_DRIVER_SERVICE = 102;
+  // To read the VTS spec of a target component.
+  VTS_AGENT_COMMAND_READ_SPECIFICATION = 103;
+
+  // To get a list of available functions.
+  LIST_APIS = 201;
+  // To call a function.
+  CALL_API = 202;
+  // To get the value of an attribute.
+  VTS_AGENT_COMMAND_GET_ATTRIBUTE = 203;
+
+  // To execute a shell command;
+  VTS_AGENT_COMMAND_EXECUTE_SHELL_COMMAND = 301;
+}
+
+
+// Type of a response.
+enum ResponseCode {
+  UNKNOWN_RESPONSE_CODE = 0;
+  // successful
+  SUCCESS = 1;
+  // failed
+  FAIL = 2;
+}
+
+
+// VTS driver type.
+enum VtsDriverType {
+  UKNOWN_VTS_DRIVER_TYPE = 0;
+  // for various HALs.
+  VTS_DRIVER_TYPE_HAL_CONVENTIONAL = 1;
+  VTS_DRIVER_TYPE_HAL_LEGACY = 2;
+  VTS_DRIVER_TYPE_HAL_HIDL = 3;
+  VTS_DRIVER_TYPE_HAL_HIDL_WRAPPED_CONVENTIONAL = 4;
+
+  // for shared libraries.
+  VTS_DRIVER_TYPE_LIB_SHARED = 11;
+
+  // for shell.
+  VTS_DRIVER_TYPE_SHELL = 21;
+}
+
+
+// To specify a command.
+message AndroidSystemControlCommandMessage {
+  // Command type.
+  optional CommandType command_type = 1;
+
+  // for LIST_HALS
+  repeated bytes paths = 1001;
+
+  // for SET_HOST_INFO
+  optional int32 callback_port = 1101;
+
+  // for CHECK_DRIVER_SERVICE
+  // the binder service name
+  optional bytes service_name = 2001;
+
+  // for LAUNCH_DRIVER_SERVICE
+  optional VtsDriverType driver_type = 3001;
+
+  // The name of a target.
+  optional bytes file_path = 3002;
+
+  // Whether a target driver binary is 64-bits or 32-bits.
+  optional int32 bits = 3003;
+
+  // target class
+  optional int32 target_class = 3004;
+  // target type
+  optional int32 target_type = 3005;
+  // target version (should be divided by 100) - float has a compatibility issue
+  // between C/C++ and python protoc.
+  optional int32 target_version = 3006;
+
+  // the name of a HAL module to open.
+  optional bytes module_name = 3007;
+
+  // the package name of a HIDL HAL.
+  optional bytes target_package = 3008;
+
+  // the name of a target component (currently used for HIDL HALs only).
+  optional bytes target_component_name = 3009;
+
+  // the name of a HW Binder service to use (only needed for HIDL HAL).
+  optional bytes hw_binder_service_name = 3021;
+
+  // for LIST_APIS
+  // none
+
+  // for CALL_API and VTS_AGENT_COMMAND_INVOKE_SYSCALL
+  optional bytes arg = 4001;
+
+  // UID of a caller on the driver-side.
+  optional bytes driver_caller_uid = 4101;
+
+  // for VTS_AGENT_COMMAND_EXECUTE_SHELL_COMMAND
+  repeated bytes shell_command = 5001;
+}
+
+
+// To specify a response.
+message AndroidSystemControlResponseMessage {
+  // Response type.
+  optional ResponseCode response_code = 1;
+
+  // The reason.
+  optional bytes reason = 1001;
+
+  // for the found component files.
+  repeated bytes file_names = 1002;
+
+  // for the found API specification.
+  optional bytes spec = 1003;
+
+  // for the API call result including result value, profiling data, and
+  // coverage measurement data.
+  optional bytes result = 1004;
+
+  repeated bytes stdout = 2001;
+  repeated bytes stderr = 2002;
+  repeated int32 exit_code = 2003;
+}
+
+
+// To specify a callback request message for the TCP server.
+message AndroidSystemCallbackRequestMessage {
+  // callback id for the message sent to the TCP Server.
+  optional bytes id = 1;
+
+  // the name of a callback (e.g., <class name>::<method name>).
+  optional bytes name = 2;
+
+  // args
+  repeated VariableSpecificationMessage arg = 11;
+}
+
+
+// To specify a callback response message from the TCP server.
+message AndroidSystemCallbackResponseMessage {
+  // Response code in a Callback response from TCP server.
+  optional ResponseCode response_code = 1;
+}

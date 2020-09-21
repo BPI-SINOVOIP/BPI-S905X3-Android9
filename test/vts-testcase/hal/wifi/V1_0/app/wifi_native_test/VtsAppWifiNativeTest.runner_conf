@@ -1,0 +1,16 @@
+{
+    "test_bed":
+    [
+        {
+            "name": "VtsAppWifiNativeTest",
+            "AndroidDevice":
+            [
+                {
+                    "enable_sl4a": true,
+                    "enable_vts_agent": false
+                }
+            ]
+        }
+    ],
+    "aware_default_power_mode": "INTERACTIVE"
+}

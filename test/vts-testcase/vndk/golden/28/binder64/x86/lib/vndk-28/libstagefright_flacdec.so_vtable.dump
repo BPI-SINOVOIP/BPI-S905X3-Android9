@@ -1,0 +1,4 @@
+vtable for android::FLACDecoder
+_ZTVN7android11FLACDecoderE: 2 entries
+8    (int (*)(...)) _ZN7android11FLACDecoderD2Ev
+12    (int (*)(...)) _ZN7android11FLACDecoderD0Ev

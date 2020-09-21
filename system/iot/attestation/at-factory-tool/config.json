@@ -1,0 +1,13 @@
+{
+    "ATFA_REBOOT_TIMEOUT": "30.0", 
+    "ATFT_VERSION": "v1.0", 
+    "COMPATIBLE_ATFA_VERSION": "v6", 
+    "DEFAULT_KEY_THRESHOLD": "100", 
+    "DEVICE_REFRESH_INTERVAL": "1", 
+    "LANGUAGE": "eng", 
+    "LOG_DIR": "/tmp/atft_log", 
+    "LOG_FILE_NUMBER": "10", 
+    "LOG_SIZE": "10000000", 
+    "PRODUCT_ATTRIBUTE_FILE_EXTENSION": "*.atpa", 
+    "REBOOT_TIMEOUT": "60.0"
+}

@@ -1,0 +1,53 @@
+cc_defaults {
+    name: "VtsHalLibDefaults",
+    shared_libs: [
+        "libbase",
+        "libcutils",
+        "liblog",
+        "libhidlbase",
+        "libhidltransport",
+        "libhwbinder",
+        "libutils",
+    ],
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+    group_static_libs: true,
+}
+
+cc_defaults {
+    name: "VtsHalDriverDefaults",
+    defaults: ["VtsHalLibDefaults"],
+    shared_libs: [
+        "libcamera_metadata",
+        "libfmq",
+        "libprotobuf-cpp-full",
+        "libvts_common",
+        "libvts_datatype",
+        "libvts_drivercomm",
+        "libvts_measurement",
+        "libvts_multidevice_proto",
+        "android.hidl.allocator@1.0",
+    ],
+}
+
+cc_defaults {
+    name: "VtsHalProfilerDefaults",
+    defaults: ["VtsHalLibDefaults"],
+    shared_libs: [
+        "libfmq",
+        "libvts_profiling",
+        "libvts_multidevice_proto",
+        "libprotobuf-cpp-full",
+    ],
+    // Userdebug only, should not be used to build modules contained in a user build device image.
+    multilib: {
+        lib32: {
+            ldflags: ["-Wl,--rpath,/data/local/tmp/32"]
+        },
+        lib64: {
+            ldflags: ["-Wl,--rpath,/data/local/tmp/64"]
+        },
+    },
+}

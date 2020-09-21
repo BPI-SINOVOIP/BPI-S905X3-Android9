@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2016 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<configuration description="Config for VTS cpu profiling test cases">
+    <option name="config-descriptor:metadata" key="plan" value="vts-library" />
+    <target_preparer class="com.android.compatibility.common.tradefed.targetprep.VtsFilePusher">
+        <option name="push-group" value="HostDrivenTest.push" />
+        <option name="cleanup" value="true" />
+    </target_preparer>
+    <multi_target_preparer class="com.android.tradefed.targetprep.VtsPythonVirtualenvPreparer"></multi_target_preparer>
+    <test class="com.android.tradefed.testtype.VtsMultiDeviceTest">
+        <option name="test-module-name" value="CpuProfilingTest" />
+        <option name="test-case-path" value="vts/testcases/kernel/cpu_profiling/CpuProfilingTest" />
+        <option name="binary-test-source" value="_32bit::DATA/nativetest/simpleperf_cpu_hotplug_test/simpleperf_cpu_hotplug_test" />
+        <option name="binary-test-source" value="_64bit::DATA/nativetest64/simpleperf_cpu_hotplug_test/simpleperf_cpu_hotplug_test" />
+        <option name="binary-test-type" value="gtest" />
+        <option name="exclude-filter" value="cpu_offline.offline_while_ioctl_enable" />
+    </test>
+</configuration>

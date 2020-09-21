@@ -1,0 +1,183 @@
+#!/bin/bash
+
+# Copyright (C) 2016 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# launcher script for vts-tradefed harness
+# can be used from an Android build environment, or a standalone vts zip
+#
+# Usage:
+#   # to test a device with system.img = v9.0 and vendor.img = v9.0
+#       $ vts-tradefed
+#
+#   # to test a device with system.img = v9.0 and vendor.img = v8.1
+#       $ vts-tradefed -v=8.1
+#
+#   # all other cases are unsupported
+#
+
+checkFile() {
+    if [ ! -f "$1" ]; then
+        echo "Unable to locate $1"
+        exit
+    fi;
+}
+
+checkPath() {
+    if ! type -P $1 &> /dev/null; then
+        echo "Unable to find $1 in path."
+        exit
+    fi;
+}
+
+checkPath adb
+checkPath java
+
+# check java version
+JAVA_VERSION=$(java -version 2>&1 | head -n 1 | grep 'version [ "]\(1\.8\|9\).*[ "]')
+if [ "${JAVA_VERSION}" == "" ]; then
+    echo "Wrong java version. 1.8 or 9 is required."
+    exit
+fi
+
+# check debug flag and set up remote debugging
+if [ -n "${TF_DEBUG}" ]; then
+  if [ -z "${TF_DEBUG_PORT}" ]; then
+    TF_DEBUG_PORT=10088
+  fi
+  RDBG_FLAG=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=${TF_DEBUG_PORT}
+fi
+
+# get OS
+HOST=`uname`
+if [ "$HOST" == "Linux" ]; then
+    OS="linux-x86"
+elif [ "$HOST" == "Darwin" ]; then
+    OS="darwin-x86"
+else
+    echo "Unrecognized OS"
+    exit
+fi
+
+# check if in Android build env
+if [ ! -z "${ANDROID_BUILD_TOP}" ]; then
+    if [ ! -z "${ANDROID_HOST_OUT}" ]; then
+      VTS_ROOT=${ANDROID_HOST_OUT}/vts
+    else
+      VTS_ROOT=${ANDROID_BUILD_TOP}/${OUT_DIR:-out}/host/${OS}/vts
+    fi
+    if [ ! -d ${VTS_ROOT} ]; then
+        echo "Could not find $VTS_ROOT in Android build environment. Try 'make vts'"
+        exit
+    fi;
+fi;
+
+if [ -z ${VTS_ROOT} ]; then
+    # assume we're in an extracted vts install
+    VTS_ROOT="$(dirname $(readlink -e $0))/../.."
+fi;
+
+VTS_JAR_DIR=${VTS_ROOT}/android-vts/tools
+STANDALONE_JAR_DIR=${ANDROID_HOST_OUT}/framework
+JAR_DIRS="$VTS_JAR_DIR
+  $STANDALONE_JAR_DIR"
+
+JAR_DIR=""
+# Wherever we find the tradefed jar is where we expect the other jars to be.
+TRADEFED_JAR="tradefed"
+for CHECK_JAR_DIR in $JAR_DIRS; do
+  if [ -f ${CHECK_JAR_DIR}/${TRADEFED_JAR}.jar ]; then
+    JAR_DIR=$CHECK_JAR_DIR
+    break
+  fi;
+done
+
+# If we didn't find the TF jar, resort to tf prebuilt in VTS_JAR_DIR.
+if [ -z $JAR_DIR ]; then
+  JAR_DIR=$VTS_JAR_DIR
+  TRADEFED_JAR="tradefed-prebuilt"
+fi
+
+JARS="${TRADEFED_JAR}
+  loganalysis
+  hosttestlib
+  vts-tradefed
+  vts-tradefed-tests
+  compatibility-host-util"
+
+for JAR in $JARS; do
+    checkFile ${JAR_DIR}/${JAR}.jar
+    JAR_PATH=${JAR_PATH}:${JAR_DIR}/${JAR}.jar
+done
+
+# to run in the lab.
+OPTIONAL_JARS="
+  android-vts/tools/google-tradefed-vts-prebuilt
+  google-tradefed-prebuilt
+  google-tradefed-tests
+  google-tf-prod-tests
+  google-tradefed"
+
+for JAR in $OPTIONAL_JARS; do
+    for OPT_JAR_DIR in $VTS_ROOT $JAR_DIR; do
+        if [ -f "${OPT_JAR_DIR}/${JAR}.jar" ]; then
+            echo "Including optional JAR: ${OPT_JAR_DIR}/${JAR}.jar"
+            JAR_PATH=${JAR_PATH}:${OPT_JAR_DIR}/${JAR}.jar
+            break
+        fi;
+    done
+done
+
+# load any shared libraries for host-side executables
+LIB_DIR=${VTS_ROOT}/android-vts/lib
+if [ "$HOST" == "Linux" ]; then
+    LD_LIBRARY_PATH=${LIB_DIR}:${LIB_DIR}64:${LD_LIBRARY_PATH}
+    export LD_LIBRARY_PATH
+elif [ "$HOST" == "Darwin" ]; then
+    DYLD_LIBRARY_PATH=${LIB_DIR}:${LIB_DIR}64:${DYLD_LIBRARY_PATH}
+    export DYLD_LIBRARY_PATH
+fi
+
+# include any host-side test jars
+for j in ${VTS_ROOT}/android-vts/testcases/*.jar; do
+    JAR_PATH=${JAR_PATH}:$j
+done
+
+ARGS=()
+for var in "$@"
+do
+case $var in
+    -v=*|--vendor-image=*)
+    VENDOR="${var#*=}"
+    if [ "${VENDOR}" == "9.0" ]; then
+        VENDOR=""
+    elif [ "${VENDOR}" != "8.1" ]; then
+        echo "Supports only --vendor-image=8.1."
+        echo "By default, 9.0 is the supported vendor.img version."
+        exit 1
+    fi
+    ;;
+    *)
+    ARGS+=("$var")
+    ;;
+esac
+done
+
+if [ -z "${VENDOR}" ]; then
+    VTS_TESTCASES=${VTS_ROOT}/android-vts/testcases/
+else
+    VTS_TESTCASES=${VTS_ROOT}/android-vts/${VENDOR}/testcases/
+fi
+
+cd ${VTS_TESTCASES}; VTS_TESTCASES=${VTS_TESTCASES} java $RDBG_FLAG -cp ${JAR_PATH} -DVTS_ROOT=${VTS_ROOT} com.android.compatibility.common.tradefed.command.CompatibilityConsole "${ARGS[@]}"

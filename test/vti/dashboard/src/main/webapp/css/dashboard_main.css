@@ -1,0 +1,112 @@
+/* Copyright (C) 2016 The Android Open Source Project
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+*/
+.row.home-tabs-row {
+    margin-bottom: 50px;
+}
+
+.row.home-tabs-row li.col.tab {
+    cursor: pointer;
+    user-select: none;
+}
+
+#add-button-wrapper {
+    margin-top: 10px;
+    height: 61px;
+}
+
+.btn-container > .btn-flat {
+    margin-top: 8px;
+    user-select: none;
+    color: grey;
+}
+
+.btn-container > .btn-flat.inactive {
+    color: lightgray;
+}
+
+.row .col.card.option {
+    padding: 6px 15px 6px 15px;
+    margin: 5px 0;
+    border-radius: 25px;
+}
+
+#error-container {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.entry {
+    font-size: 20px;
+    font-weight: 300;
+    position: relative;
+}
+
+.indicator {
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 1px 6px;
+    position: absolute;
+    right: 0;
+    min-width: 40px;
+    border-radius: 10px;
+    margin-top: 5px;
+}
+
+#show-button {
+    border-radius: 100px;
+}
+
+#show-button-arrow {
+    margin-left: 3px;
+}
+
+#section-header {
+    cursor: default;
+    user-select: none;
+    color: #ee6e73;
+}
+
+#section-header:after {
+    border: 1px solid #ee6e73;
+    margin-top: 10px;
+    margin-bottom: 0;
+    display: block;
+    content: " ";
+}
+
+.ui-menu {
+    overflow-y: auto;
+    z-index: 100;
+    max-height: 50%;
+}
+
+.ui-menu-item {
+    font-size: 16px;
+    padding: 4px 10px;
+    transition: background-color .25s;
+}
+
+.ui-menu-item:hover {
+    background-color: #e0f2f1;
+}
+
+.ui-menu-item:active {
+    background-color: #b2dfdb;
+}
+
+.ui-helper-hidden-accessible {
+    display: none;
+}

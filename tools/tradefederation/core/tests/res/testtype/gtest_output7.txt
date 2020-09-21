@@ -1,0 +1,35 @@
+Running main() from gtest_main.cc
+[==========] Running 11 tests from 2 test cases.
+[----------] Global test environment set-up.
+[----------] 8 tests from TestPartResultTest
+[ RUN      ] TestPartResultTest.type
+[       OK ] TestPartResultTest.type (0 ms)
+[ RUN      ] TestPartResultTest.file_name
+[       OK ] TestPartResultTest.file_name (1 ms)
+[ RUN      ] TestPartResultTest.line_number
+[       OK ] TestPartResultTest.line_number (0 ms)
+[ RUN      ] TestPartResultTest.message
+[       OK ] TestPartResultTest.message (0 ms)
+[ RUN      ] TestPartResultTest.Passed
+LOGS 
+LOGS [       OK ] TestPartResultTest.Passed (0 ms)
+[ RUN      ] TestPartResultTest.Failed
+[       OK ] TestPartResultTest.Failed (1 ms)
+[ RUN      ] TestPartResultTest.FatallyFailed
+[       OK ] TestPartResultTest.FatallyFailed (0 ms)
+[ RUN      ] TestPartResultTest.NonfatallyFailed
+[       OK ] TestPartResultTest.NonfatallyFailed (0 ms)
+[----------] 8 tests from TestPartResultTest (2 ms total)
+
+[----------] 3 tests from TestPartResultArrayTest
+[ RUN      ] TestPartResultArrayTest.InitialSizeIsZero
+[       OK ] TestPartResultArrayTest.InitialSizeIsZero (0 ms)
+[ RUN      ] TestPartResultArrayTest.ContainsGivenResultAfterAppend
+[       OK ] TestPartResultArrayTest.ContainsGivenResultAfterAppend (0 ms)
+[ RUN      ] TestPartResultArrayTest.ContainsGivenResultsAfterTwoAppends
+[       OK ] TestPartResultArrayTest.ContainsGivenResultsAfterTwoAppends (0 ms)
+[----------] 3 tests from TestPartResultArrayTest (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 11 tests from 2 test cases ran. (3 ms total)
+[  PASSED  ] 11 tests.

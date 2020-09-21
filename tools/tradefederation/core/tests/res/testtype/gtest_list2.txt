@@ -1,0 +1,157 @@
+CanvasState.
+  gettersAndSetters
+  simpleClipping
+  complexClipping
+  saveAndRestore
+  saveAndRestoreButNotTooMuch
+TransformedRectangle.
+  basics
+RectangleList.
+  basics
+ClipArea.
+  basics
+  paths
+  replaceNegative
+  serializeClip
+  serializeIntersectedClip
+  serializeIntersectedClip_snap
+DamageAccumulator.
+  identity
+  translate
+  union
+  basicRenderNode
+  perspectiveTransform
+DeviceInfo.
+  basic
+FatVector.
+  baseline
+  simpleAllocate
+  preSizeConstructor
+  shrink
+  destructorInternal
+  destructorExternal
+GpuMemoryTracker.
+  sizeCheck
+LayerUpdateQueue.
+  construct
+  enqueueSimple
+  enqueueUnion
+  clear
+LinearAllocator.
+  create
+  dtor
+  rewind
+LinearStdAllocator.
+  simpleAllocate
+LsaVector.
+  dtorCheck
+Matrix.
+  mapRect_emptyScaleSkew
+  mapRect_emptyRotate
+OffscreenBuffer.
+  computeIdealDimension
+  construct
+  getTextureCoordinates
+  dirty
+OffscreenBufferPool.
+  construct
+  getPutClear
+  resize
+  putAndDestroy
+SkiaBehavior.
+  CreateBitmapShader1x1
+StringUtils.
+  simpleBuildSet
+  advancedBuildSet
+  sizePrinter
+TextDropShadowCache.
+  addRemove
+PathParser.
+  parseStringForData
+  parseStringForSkPath
+VectorDrawableUtils.
+  createSkPathFromPathData
+  morphPathData
+  interpolatePathData
+VectorDrawable.
+  matrixScale
+GradientCache.
+  addRemove
+BakedOpDispatcher.
+  onArc_position
+  onLayerOp_bufferless
+ResolvedRenderState.
+  construct
+  computeLocalSpaceClip
+  construct_expandForStroke
+BakedOpState.
+  tryConstruct
+  tryShadowOpConstruct
+  tryStrokeableOpConstruct
+FrameBuilder.
+  simple
+  simpleStroke
+  simpleRejection
+  simpleBatching
+  clippedMerging
+  textMerging
+  textStrikethrough
+  textureLayer
+  functor_reject
+  renderNode
+  clipped
+  saveLayer_simple
+  saveLayer_nested
+  saveLayer_contentRejection
+  saveLayerUnclipped_simple
+  saveLayerUnclipped_mergedClears
+  saveLayerUnclipped_clearClip
+  saveLayerUnclipped_reject
+  saveLayerUnclipped_complex
+  hwLayer_simple
+  hwLayer_complex
+  zReorder
+  projectionReorder
+  projectionHwLayer
+  projectionChildScroll
+  shadow
+  shadowSaveLayer
+  shadowHwLayer
+  shadowLayering
+  renderPropOverlappingRenderingAlpha
+  renderPropClipping
+  renderPropRevealClip
+  renderPropOutlineClip
+  renderPropTransform
+  renderPropSaveLayerAlphaClipBig
+  renderPropSaveLayerAlphaRotate
+  renderPropSaveLayerAlphaScale
+LeakCheck.
+  saveLayerUnclipped_simple
+OpDumper.
+  dump
+RecordingCanvas.
+  emptyPlayback
+  clipRect
+  emptyClipRect
+  drawArc
+  drawLines
+  drawRect
+  drawText
+  drawText_strikeThruAndUnderline
+  drawText_forceAlignLeft
+  drawColor
+  backgroundAndImage
+  saveLayer_simple
+  saveLayer_missingRestore
+  saveLayer_simpleUnclipped
+  saveLayer_addClipFlag
+  saveLayer_viewportCrop
+  saveLayer_rotateUnclipped
+  saveLayer_rotateClipped
+  drawRenderNode_rejection
+  drawRenderNode_projection
+  firstClipWillReplace
+  insertReorderBarrier
+  refPaint
+Leak check took 79ms

@@ -1,0 +1,38 @@
+vtable for zip_archive::Writer
+_ZTVN11zip_archive6WriterE: 2 entries
+24    (int (*)(...)) _ZN11zip_archive6WriterD2Ev
+32    (int (*)(...)) _ZN11zip_archive6WriterD0Ev
+
+
+vtable for zip_archive::Reader
+_ZTVN11zip_archive6ReaderE: 2 entries
+24    (int (*)(...)) _ZN11zip_archive6ReaderD2Ev
+32    (int (*)(...)) _ZN11zip_archive6ReaderD0Ev
+
+
+vtable for ZipArchiveStreamEntryCompressed
+_ZTV31ZipArchiveStreamEntryCompressed: 5 entries
+16    (int (*)(...)) _ZN31ZipArchiveStreamEntryCompressedD2Ev
+24    (int (*)(...)) _ZN31ZipArchiveStreamEntryCompressedD0Ev
+32    (int (*)(...)) _ZN31ZipArchiveStreamEntryCompressed4ReadEv
+40    (int (*)(...)) _ZN31ZipArchiveStreamEntryCompressed6VerifyEv
+48    (int (*)(...)) _ZN31ZipArchiveStreamEntryCompressed4InitERK8ZipEntry
+
+
+vtable for ZipArchiveStreamEntry
+_ZTV21ZipArchiveStreamEntry: 1 entries
+48    (int (*)(...)) _ZN21ZipArchiveStreamEntry4InitERK8ZipEntry
+
+
+vtable for ZipArchiveStreamEntryUncompressed
+_ZTV33ZipArchiveStreamEntryUncompressed: 3 entries
+32    (int (*)(...)) _ZN33ZipArchiveStreamEntryUncompressed4ReadEv
+40    (int (*)(...)) _ZN33ZipArchiveStreamEntryUncompressed6VerifyEv
+48    (int (*)(...)) _ZN33ZipArchiveStreamEntryUncompressed4InitERK8ZipEntry
+
+
+vtable for ZipArchiveStreamEntryRawCompressed
+_ZTV34ZipArchiveStreamEntryRawCompressed: 3 entries
+32    (int (*)(...)) _ZN33ZipArchiveStreamEntryUncompressed4ReadEv
+40    (int (*)(...)) _ZN34ZipArchiveStreamEntryRawCompressed6VerifyEv
+48    (int (*)(...)) _ZN34ZipArchiveStreamEntryRawCompressed4InitERK8ZipEntry

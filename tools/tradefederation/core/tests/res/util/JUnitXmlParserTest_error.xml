@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite skipped="1" errors="1" failures="0" hostname="foo" name="suiteName" tests="3" time="918.686">
+    <testcase classname="PassTest" name="testPass" time="0.021"/>
+    <testcase classname="SkippedTest" name="testSkip" time="0.021">
+        <skipped/>
+    </testcase>
+    <testcase classname="ErrorTest" name="testFail" time="0.025">
+        <error message="error message" type="java.lang.NullPointerException">java.lang.NullPointerException
+    at FailTest.testFail:65
+        </error>
+    </testcase>
+</testsuite>

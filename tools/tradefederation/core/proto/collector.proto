@@ -1,0 +1,117 @@
+// Should be kept in sync with internal version.
+syntax = "proto2";
+
+package log_collector;
+
+import public "tools/tradefederation/core/proto/file_metadata.proto";
+
+option java_package = "com.android.test.metrics.proto";
+option java_outer_classname = "LogCollectorProto";
+
+// Conditions that can trigger log collection.
+enum Trigger {
+  // Never run this collector.
+  NEVER = 0;
+
+  // Run this collector at the start of a test.
+  TEST_START = 1;
+
+  // Run this collector when the test finishes.
+  TEST_FINISH = 2;
+
+  // Run this collector when the test fails.
+  FAILURE = 3;
+
+  // Run this collector when the test crashes.
+  CRASH = 4;
+
+  // Run this collector when the test has a tool failure.
+  TOOL_FAILURE = 5;
+
+  // Run this collector at the given interval.
+  INTERVAL = 6;
+}
+
+message TestPattern {
+  // Run this collector for the given build targets. If no build targets are
+  // specified, we will run the collector on all build targets.
+  repeated string build_target = 1;
+
+  // Run this collector for tests with the given prefix. If no prefices are
+  // specified, we will run the collector for all tests.
+  repeated string atp_test_prefix = 2;
+
+  // Run this collector for tests on the given test bench. If no test bench is
+  // specified, we will run the collector for all test benches.
+  repeated string atp_test_bench = 3;
+}
+
+message FormattedFileName {
+  enum FormatParam {
+    EMPTY = 0;
+    TIMESTAMP_EPOCH_MILLIS = 1;
+    TEST_NAME = 2;
+    TEST_CLASS = 3;
+  }
+
+  // A java-style format string, e.g. "logcat-%s.log" or "bugreport-%d.log".
+  // TIMESTAMP_MILLIS must correspond to %d and the rest must be %s.
+  required string name_format_string = 1;
+
+  // A FormatParam for each format field.
+  repeated FormatParam format_params = 2;
+
+  // If true, the results directory will be prepended to this file name.
+  required bool relative_to_results = 3;
+}
+
+message ShellCommand {
+  // The base executable (e.g. "dumpsys").
+  required string executable = 1;
+
+  // Command-line options (e.g. "graphicsstats").
+  repeated string options = 2;
+}
+
+message ExistingFile {
+  required string path = 1;
+
+  // If true, the results directory will be prepended to this file name.
+  optional bool relative_to_results = 2;
+}
+
+message Collector {
+  // The name of this collector (used only for logging).
+  required string name = 1;
+
+  // The Trade Federation LogFileType for the resulting log.
+  required posting_service_rpc.LogType type = 2;
+
+  // The preconditions for this Collector. If none are specified, we'll never
+  // run it.
+  repeated Trigger triggers = 3;
+
+  // The test patterns for which we should run this Collector.
+  // If none are specified, we'll never run it.
+  repeated TestPattern tests = 4;
+
+  // The interval at which to collect this log, if one of our triggers is
+  // INTERVAL.
+  optional uint64 interval_millis = 5;
+
+  // If true, and our test runner can interpret LogCollectors, we will
+  // forward this collector to the test runner to reduce latency.
+  optional bool forward_to_test_runner = 6;
+
+  // The way we'll get the log.
+  oneof source {
+    ShellCommand command = 7;
+    ExistingFile file = 8;
+  }
+
+  // The place we should put the log.
+  oneof result {
+    string result_file_name = 9;
+    FormattedFileName result_file_formatted = 10;
+  }
+}

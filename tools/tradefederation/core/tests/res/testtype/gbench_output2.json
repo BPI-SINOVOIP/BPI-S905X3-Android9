@@ -1,0 +1,22 @@
+{
+  "context": {
+    "date": "2016-03-07 10:59:01",
+    "num_cpus": 48,
+    "mhz_per_cpu": 2601,
+    "cpu_scaling_enabled": true,
+    "library_build_type": "debug"
+  },
+  "benchmarks": [
+    {
+      "name": "BM_one",
+      "iterations": 109451958,
+      "real_time": 5,
+      "cpu_time": 5
+    },
+    {
+      "name": "BM_two",
+      "real_time": 1,
+      "cpu_time": 11
+    }
+  ]
+}

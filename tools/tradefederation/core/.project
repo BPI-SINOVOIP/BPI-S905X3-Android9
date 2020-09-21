@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>tradefederation</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>hamcrest</name>
+			<type>2</type>
+			<locationURI>TRADEFED_ROOT/external/hamcrest/hamcrest-core/src/main/java</locationURI>
+		</link>
+		<link>
+			<name>jline</name>
+			<type>2</type>
+			<locationURI>TRADEFED_ROOT/external/jline/src/src/main/java</locationURI>
+		</link>
+		<link>
+			<name>junit</name>
+			<type>2</type>
+			<locationURI>TRADEFED_ROOT/external/junit/src/main/java</locationURI>
+		</link>
+		<link>
+			<name>proto_gen</name>
+			<type>2</type>
+			<locationURI>TRADEFED_ROOT/out/host/common/obj/JAVA_LIBRARIES/tradefed-protos_intermediates/proto/src</locationURI>
+		</link>
+		<link>
+			<name>protobuf</name>
+			<type>2</type>
+			<locationURI>TRADEFED_ROOT/out/host/common/obj/JAVA_LIBRARIES/host-libprotobuf-java-full_intermediates/proto/src</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>

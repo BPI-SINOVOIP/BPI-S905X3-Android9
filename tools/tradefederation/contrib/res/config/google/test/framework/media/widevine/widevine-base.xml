@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Google Inc. All Rights Reserved -->
+<!-- Common base configuration for Widevine Media Tests. -->
+<configuration description="Common base Widevine configuration">
+    <build_provider class="com.google.android.tradefed.build.DeviceLaunchControlProvider" >
+        <option name="build-blacklist" value="/usr/local/google/home/widevine-tf-test/wvtradefed/test_configs/build_blacklist.txt" />
+    </build_provider>
+
+    <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceFlashPreparer" >
+        <option name="userdata-flash" value="WIPE" />
+    </target_preparer>
+
+    <!-- ASIT preparer template uses the same options we require -->
+    <include name="google/template/preparers/asit" />
+
+    <option name="google-device-setup:wifi-network" value="GoogleGuest" />
+    <!-- <option name="google-device-setup:wifi-psk" value="password" /> -->
+
+    <template-include name="test" />
+
+    <include name="google/test/framework/media/widevine/reporters/widevine-reporter" />
+
+    <template-include name="reporters" default="empty" />
+</configuration>

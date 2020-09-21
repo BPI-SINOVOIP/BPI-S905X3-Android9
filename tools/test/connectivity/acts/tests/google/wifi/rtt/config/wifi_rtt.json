@@ -1,0 +1,20 @@
+{
+    "_description": "This is a test configuration file for Wi-Fi RTT tests.",
+    "testbed":
+    [
+        {
+            "_description": "Wi-Fi RTT testbed: auto-detect all attached devices",
+            "name": "WifiRttAllAttached",
+            "AndroidDevice": "*"
+        }
+    ],
+    "logpath": "~/logs",
+    "testpaths": ["./tools/test/connectivity/acts/tests/google/wifi"],
+    "adb_logcat_param": "-b all",
+    "aware_default_power_mode": "INTERACTIVE",
+    "lci_reference": [],
+    "lcr_reference": [],
+    "rtt_reference_distance_mm": 100,
+    "stress_test_min_iteration_count": 100,
+    "stress_test_target_run_time_sec" : 30
+}

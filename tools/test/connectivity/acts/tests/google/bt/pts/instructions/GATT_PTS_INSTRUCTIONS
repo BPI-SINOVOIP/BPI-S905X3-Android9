@@ -1,0 +1,1471 @@
+# Copyright (C) 2016 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may not
+# use this file except in compliance with the License. You may obtain a copy of
+# the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations under
+# the License.
+
+GATT
+=================================================================
+Note: Bug in PTS forces GATT operations to be over BR/EDR. To run tests over
+LE disable BR/EDR in ICS when running tests.
+
+Note: As of PTS version 7.2.1 GATT server tests now performs scans appropriately. Change IXIT value for TSPX_iut_device_name_in_adv_packet_for_random_address to "CMD LINE Test" and make sure you have a connectable advertisement with that local name:
+  ble_adv_data_include_local_name true
+  ble_start_generic_connectable_advertisement
+
+
+TC_CL_GAC_BV_01_C
+  gattc_connect_over_le
+  gattc_request_mtu 23
+  [Read PTS Handle and Size]
+  gattc_write_char_by_instance_id [handle] [size]
+  gattc_disconnect
+
+#Potential new instructions for SIG testcase rewrite
+TC_CL_GAC_BV_01_C
+  gattc_connect_over_le
+  gattc_request_mtu 23
+  [Read PTS Handle and Size]
+  gattc_write_invalid_char_by_instance_id [handle] [size]
+  gattc_disconnect
+
+TC_CL_GAD_BV_01_C
+  gattc_connect_over_le
+  gattc_refresh
+  [PTS Interation]
+  gattc_disconnect
+  gattc_connect_over_le
+  [PTS Interation]
+  gattc_disconnect
+  gattc_connect_over_le
+  [PTS Interation]
+  gattc_disconnect
+  gattc_connect_over_le
+  [PTS Interation]
+  gattc_disconnect
+
+TC_CL_GAD_BV_02_C
+  Note: Values of UUIDS sometimes changes.
+  gattc_connect_over_le
+  gattc_discover_service_by_uuid 1800
+  [PTS Interaction] Verify Values
+  gattc_disconnect
+  gattc_connect_over_le
+  gattc_discover_service_by_uuid 1801
+  [PTS Interaction] Verify Values
+  gattc_disconnect
+  gattc_connect_over_le
+  gattc_discover_service_by_uuid 33a7
+  [PTS Interaction] Verify Values
+  gattc_disconnect
+  gattc_connect_over_le
+  gattc_discover_service_by_uuid 0000a00c-0000-0000-0123-456789abcdef
+  [PTS Interaction] Verify Values
+  gattc_disconnect
+  gattc_connect_over_le
+  gattc_discover_service_by_uuid 00006634-0000-0000-0123-456789abcdef
+  [PTS Interaction] Verify Values
+  gattc_disconnect
+  gattc_connect_over_le
+  gattc_discover_service_by_uuid 00000549-0000-0000-0123-456789abcdef
+  [PTS Interaction] Verify Values
+  gattc_disconnect
+  gattc_connect_over_le
+  gattc_discover_service_by_uuid 00001137-0000-0000-0123-456789abcdef
+  [PTS Interaction] Verify Values
+  gattc_disconnect
+
+TC_CL_GAD_BV_03_C
+  gattc_connect_over_le
+  gattc_refresh
+  [PTS Interation]
+  gattc_disconnect
+  gattc_connect_over_le
+  gattc_refresh
+  [PTS Interation]
+  gattc_disconnect
+  gattc_connect_over_le
+  gattc_refresh
+  [PTS Interation]
+  gattc_disconnect
+  gattc_connect_over_le
+  gattc_refresh
+  [PTS Interation]
+  gattc_disconnect
+
+TC_CL_GAD_BV_04_C
+  gattc_connect_over_le
+  gattc_refresh
+  [PTS Interation]
+  gattc_disconnect
+  gattc_connect_over_le
+  gattc_refresh
+  [PTS Interation]
+  gattc_disconnect
+  gattc_connect_over_le
+  gattc_refresh
+  [PTS Interation]
+  gattc_disconnect
+  gattc_connect_over_le
+  gattc_refresh
+  [PTS Interation]
+  gattc_disconnect
+
+TC_CL_GAD_BV_05_C
+  gattc_connect_over_le
+  gattc_refesh
+  gattc_list_all_uuids
+  [PTS Interation]
+  gattc_disconnect
+  gattc_connect_over_le
+  gttc_refesh
+  gattc_list_all_uuids
+  [PTS Interation]
+  gattc_disconnect
+  gattc_connect_over_le
+  gattc_refesh
+  gattc_list_all_uuids
+  [PTS Interation]
+  gattc_disconnect
+  gattc_connect_over_le
+  gattc_refesh
+  gattc_list_all_uuids
+  gattc_refesh
+  [PTS Interation]
+  gattc_disconnect
+  gattc_connect_over_le
+  gattc_refesh
+  gattc_list_all_uuids
+  [PTS Interation]
+  gattc_disconnect
+  gattc_connect_over_le
+  gattc_refesh
+  gattc_list_all_uuids
+  [PTS Interation]
+  gattc_disconnect
+  gattc_connect_over_le
+  gattc_refesh
+  gattc_list_all_uuids
+  [PTS Interation]
+  gattc_disconnect
+  gattc_connect_over_le
+  gattc_refesh
+  gattc_list_all_uuids
+  [PTS Interation]
+  gattc_disconnect
+
+TC_CL_GAD_BV_06_C
+  gattc_connect_over_le
+  gattc_refresh
+  gattc_list_all_uuids
+  [PTS Interation]
+  gattc_disconnect
+  gattc_connect_over_le
+  gattc_refresh
+  gattc_list_all_uuids
+  [PTS Interation]
+  gattc_disconnect
+  gattc_connect_over_le
+  gattc_refresh
+  gattc_list_all_uuids
+  [PTS Interation]
+  gattc_disconnect
+  gattc_connect_over_le
+  gattc_refresh
+  gattc_list_all_uuids
+  [PTS Interation]
+  gattc_disconnect
+
+TC_CL_GAD_BV_07_C
+  [PTS Interation]
+  [PTS Interation]
+  [PTS Interation]
+  [PTS Interation]
+  [PTS Interation]
+
+TC_CL_GAD_BV_08_C
+  [PTS Interation]
+  [PTS Interation]
+  [PTS Interation]
+  [PTS Interation]
+
+TC_CL_GAR_BV_01_C
+  gattc_connect_over_le
+  [Read PTS Handle]
+  gattc_read_char_by_instance_id [handle]
+  gattc_disconnect
+
+TC_CL_GAR_BI_01_C
+  gattc_connect_over_le
+  gattc_read_invalid_char_by_instance_id [handle]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAR_BI_02_C
+  gattc_connect_over_le
+  gattc_mod_read_char_by_instance_id [handle]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAR_BI_03_C
+  gattc_connect_over_le
+  gattc_mod_read_char_by_instance_id [handle]
+  gattc_disconnect
+  [PTS Interaction]
+
+TC_CL_GAR_BI_04_C
+  bta_start_pairing_helper
+  gattc_connect_over_le
+  gattc_mod_read_char_by_instance_id [handle]
+  bta_get_pairing_pin
+  bta_get_pairing_pin
+  [PTS Interaction] Enter Pin from console into PTS
+  gattc_disconnect
+  [PTS Interaction]
+  bta_unbond
+
+TC_CL_GAR_BI_05_C
+  bta_start_pairing_helper
+  gattc_connect_over_le
+  bta_get_pairing_pin
+  bta_get_pairing_pin
+  [PTS Interaction] Enter Pin from console into PTS
+  gattc_mod_read_char_by_instance_id [handle]
+  gattc_disconnect
+  [PTS Interaction]
+  bta_unbond
+
+TC_CL_GAR_BV_03_C
+  gattc_connect_over_le
+  gattc_read_char_by_uuid [Input UUID]
+  [PTS Interaction] Verify values
+  gattc_read_char_by_uuid 000055f2-0000-0000-0123-456789abcdef
+
+TC_CL_GAR_BI_06_C
+  gattc_connect_over_le
+  gattc_read_char_by_uuid [Input UUID]
+  gattc_disconnect
+  [PTS Interaction] Verify values
+
+TC_CL_GAR_BI_07_C
+  gattc_connect_over_le
+  gattc_read_char_by_uuid [Input UUID]
+  gattc_disconnect
+  [PTS Interaction] Verify values
+
+TC_CL_GAR_BI_10_C
+  gattc_connect_over_le
+  gattc_read_char_by_uuid [Input UUID]
+  gattc_disconnect
+  [PTS Interaction] Verify values
+
+TC_CL_GAR_BI_11_C
+  gattc_connect_over_le
+  gattc_read_char_by_uuid [Input UUID]
+  gattc_disconnect
+  [PTS Interaction] Verify values
+
+TC_CL_GAR_BV_04_C
+  gattc_connect_over_le
+  gattc_mod_read_char_by_instance_id [handle]
+  [PTS Interaction] Confirm Read Value
+  gattc_mod_read_char_by_instance_id [handle]
+  [PTS Interaction] Confirm Read Value
+  gattc_mod_read_char_by_instance_id [handle]
+  [PTS Interaction] Confirm Read Value
+  gattc_mod_read_char_by_instance_id [handle]
+  [PTS Interaction] Confirm Read Value
+
+TC_CL_GAR_BI_12_C
+  gattc_connect_over_le
+  gattc_mod_read_char_by_instance_id [handle]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAR_BI_13_C
+  gattc_connect_over_le
+  gattc_mod_read_char_by_instance_id [handle]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAR_BI_14_C
+  gattc_connect_over_le
+  gattc_read_invalid_char_by_instance_id [handle]
+  gattc_disconnect
+  [PTS Interaction]
+
+TC_CL_GAR_BI_15_C
+  gattc_connect_over_le
+  gattc_mod_read_char_by_instance_id [handle]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAR_BI_17_C
+  bta_start_pairing_helper
+  gattc_connect_over_le
+  bta_get_pairing_pin
+  bta_get_pairing_pin
+  [PTS Interaction] Enter PIN from prompt to PTS
+  gattc_mod_read_char_by_instance_id [handle]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAR_BV_06_C
+  gattc_connect_over_le
+  gattc_mod_read_desc_by_instance_id [handle]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAR_BI_23_C
+  gattc_connect_over_le
+  gattc_read_invalid_desc_by_instance_id [handle]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAR_BI_24_C
+  gattc_connect_over_le
+  gattc_read_invalid_desc_by_instance_id [handle]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAR_BI_25_C
+  gattc_connect_over_le
+  gattc_read_invalid_desc_by_instance_id [handle]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAR_BI_26_C
+  bta_start_pairing_helper
+  gattc_connect_over_le
+  gattc_read_invalid_desc_by_instance_id [handle]
+  bta_get_pairing_pin
+  bta_get_pairing_pin
+  [PTS Interaction] Enter Pin from prompt
+  gattc_disconnect
+  [PTS Interaction]
+  bta_unbond
+
+TC_CL_GAR_BI_27_C
+  bta_start_pairing_helper
+  gattc_connect_over_le
+  bta_get_pairing_pin
+  bta_get_pairing_pin
+  [PTS Interaction] Enter Pin from prompt
+  gattc_read_invalid_desc_by_instance_id [handle]
+  [PTS Interaction]
+  gattc_disconnect
+  bta_unbond
+
+TC_CL_GAR_BV_07_C
+  gattc_connect_over_le
+  gattc_mod_read_desc_by_instance_id [handle]
+  [PTS Interaction]
+  gattc_mod_read_desc_by_instance_id [handle]
+  [PTS Interaction]
+  gattc_mod_read_desc_by_instance_id [handle]
+  [PTS Interaction]
+  gattc_mod_read_desc_by_instance_id [handle]
+  [PTS Interaction]
+  gattc_disconnect
+  bta_unbond
+
+TC_CL_GAR_BI_28_C
+  gattc_connect_over_le
+  gattc_mod_read_desc_by_instance_id [handle]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAR_BI_29_C
+  gattc_connect_over_le
+  gattc_mod_read_desc_by_instance_id [handle]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAR_BI_30_C
+  gattc_connect_over_le
+  gattc_read_invalid_desc_by_instance_id [handle]
+  gattc_disconnect
+  [PTS Interaction]
+
+TC_CL_GAR_BI_31_C
+  gattc_connect_over_le
+  gattc_read_invalid_desc_by_instance_id [handle]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAR_BI_32_C
+  bta_start_pairing_helper
+  gattc_connect_over_le
+  gattc_mod_read_desc_by_instance_id [handle]
+  bta_get_pairing_pin
+  [PTS Interaction] Enter Pin from prompt
+  gattc_disconnect
+  [PTS Interaction]
+  bta_unbond
+
+TC_CL_GAR_BI_33_C
+  bta_start_pairing_helper
+  gattc_connect_over_le
+  bta_get_pairing_pin
+  bta_get_pairing_pin
+  [PTS Interaction] Enter Pin from prompt
+  gattc_mod_read_desc_by_instance_id [handle]
+  [PTS Interaction]
+  gattc_disconnect
+  bta_unbond
+
+TC_CL_GAR_BV_34_C
+  gattc_connect_over_bredr
+  gattc_read_invalid_char_by_instance_id [handle]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAR_BV_35_C
+  gattc_connect_over_le
+  gattc_read_invalid_char_by_instance_id [handle]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAW_BV_01_C
+  gattc_connect_over_le
+  gattc_write_char_by_instance_id [handle] [size]
+  gattc_disconnect
+
+TC_CL_GAW_BV_03_C
+  gattc_connect_over_le
+  gattc_write_char_by_instance_id [handle] [size]
+  gattc_disconnect
+
+TC_CL_GAW_BI_02_C
+  gattc_connect_over_le
+  gattc_write_invalid_char_by_instance_id [handle] [size]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAW_BI_03_C
+  gattc_connect_over_le
+  gattc_mod_write_char_by_instance_id [handle] [size]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAW_BI_04_C
+  gattc_connect_over_le
+  gattc_mod_write_char_by_instance_id [handle] [size]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAW_BI_05_C
+  gattc_connect_over_le
+  gattc_write_char_by_instance_id [handle] 1
+  [PTS Interation]
+  gattc_disconnect
+  [PTS Interation]
+
+TC_CL_GAW_BI_06_C
+  bta_start_pairing_helper
+  gattc_connect_over_le
+  bta_get_pairing_pin
+  [PTS Interation] Enter Pin from prompt
+  gattc_write_char_by_instance_id [handle] 1
+  gattc_disconnect
+
+TC_CL_GAW_BV_05_C
+  gattc_connect_over_le
+  gattc_write_char_by_instance_id [handle] 23
+  gattc_disconnect
+
+TC_CL_GAW_BI_07_C
+  gattc_connect_over_le
+  gattc_write_invalid_char_by_instance_id [handle] [size]
+  gattc_disconnect
+  [PTS Interaction]
+
+TC_CL_GAW_BI_08_C
+  gattc_connect_over_le
+  gattc_mod_write_char_by_instance_id [handle] 43
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAW_BI_09_C
+  gattc_connect_over_le
+  gattc_write_char_by_instance_id [handle] 89
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAW_BI_11_C
+  gattc_connect_over_le
+  gattc_mod_write_char_by_instance_id [handle] [size]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAW_BI_12_C
+  gattc_connect_over_le
+  gattc_write_char_by_instance_id [handle] 43
+  [Enter Pin from DUT into PTS]
+  gattc_disconnect
+  [PTS Interaction]
+
+TC_CL_GAW_BI_13_C
+  bta_start_pairing_helper
+  gattc_connect_over_le
+  gattc_mod_write_char_by_instance_id [handle] [size]
+  bta_get_pairing_pin
+  bta_get_pairing_pin
+  [Enter Pin from DUT into PTS]
+  gattc_disconnect
+  [PTS Interaction]
+
+TC_CL_GAW_BV_06_C
+  gattc_connect_over_le
+  [PTS Interaction] Enter pin from phone into PTS
+  gattc_begin_reliable_write
+  gattc_write_char_by_instance_id [handle] [size]
+  gattc_execute_reliable_write
+  gattc_disconnect
+
+TC_CL_GAW_BI_14_C
+  gattc_connect_over_le
+  gattc_begin_reliable_write
+  gattc_write_invalid_char_by_instance_id [handle] [size]
+  gattc_execute_reliable_write
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAW_BI_15_C
+  gattc_connect_over_le
+  gattc_begin_reliable_write
+  gattc_mod_write_char_by_instance_id [handle] [size]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAW_BI_17_C
+  gattc_connect_over_le
+  gattc_begin_reliable_write
+  gattc_write_char_by_instance_id [handle] 1
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAW_BI_18_C
+  bta_start_pairing_helper
+  gattc_connect_over_le
+  gattc_begin_reliable_write
+  gattc_write_char_by_instance_id [handle] 1
+  bta_get_pairing_pin
+  bta_get_pairing_pin
+  [PTS Interaction] Enter Pin from prompt
+  gattc_disconnect
+  [PTS Interaction]
+  bta_unbond
+
+TC_CL_GAW_BI_19_C
+  bta_start_pairing_helper
+  gattc_connect_over_le
+  bta_get_pairing_pin
+  bta_get_pairing_pin
+  [PTS Interaction] Enter Pin from prompt
+  gattc_begin_reliable_write
+  gattc_mod_write_char_by_instance_id [handle] [size]
+  gattc_execute_reliable_write
+  [PTS Interaction]
+  gattc_disconnect
+  bta_unbond
+
+TC_CL_GAW_BV_08_C
+  gattc_connect_over_le
+  gattc_mod_write_desc_by_instance_id [handle] [size]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAW_BI_20_C
+  gattc_connect_over_le
+  gattc_write_invalid_desc_by_instance_id [handle] [size]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAW_BI_21_C
+  gattc_connect_over_le
+  gattc_write_invalid_desc_by_instance_id [handle] [size]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAW_BI_22_C
+  gattc_connect_over_le
+  gattc_write_invalid_desc_by_instance_id [handle] [size]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAW_BI_23_C
+  Note: Collect evidence
+  bta_start_pairing_helper
+  gattc_connect_over_le
+  gattc_write_desc_by_instance_id [handle] 1
+  Wait for PTS prompt regarding insufficient authentication
+  gattc_disconnect
+
+TC_CL_GAW_BI_24_C
+  bta_start_pairing_helper
+  gattc_connect_over_le
+  bta_get_pairing_pin
+  bta_get_pairing_pin
+  [PTS Interaction] Enter Pin from prompt
+  gattc_mod_write_desc_by_instance_id [handle] [size]
+  [PTS Interaction]
+  gattc_disconnect
+  bta_unbond
+
+TC_CL_GAW_BV_09_C
+  gattc_connect_over_le
+  gattc_write_invalid_desc_by_instance_id [handle] [size]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAW_BI_25_C
+  gattc_connect_over_le
+  gattc_write_invalid_desc_by_instance_id [handle] [size]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAW_BI_26_C
+  gattc_connect_over_le
+  gattc_write_desc_by_instance_id [handle] [size]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAW_BI_27_C
+  gattc_connect_over_le
+  gattc_write_desc_by_instance_id 00cb 46
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAW_BI_29_C
+  gattc_connect_over_le
+  gattc_write_desc_by_instance_id 00da 44
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAW_BI_30_C
+  gattc_connect_over_le
+  gattc_write_desc_by_instance_id [handle] [size]
+  [Enter Pin from DUT into PTS]
+  gattc_disconnect
+  [PTS Interaction]
+
+TC_CL_GAW_BI_31_C
+  bta_start_pairing_helper
+  gattc_connect_over_le
+  bta_get_pairing_pin
+  bta_get_pairing_pin
+  [Enter Pin from DUT into PTS]
+  gattc_write_desc_by_instance_id [handle] [size]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAW_BI_32_C
+  gattc_connect_over_le
+  gattc_begin_reliable_write
+  gattc_write_char_by_instance_id [handle] [size]
+  gattc_execute_reliable_write
+  gattc_disconnect
+
+TC_CL_GAW_BI_32_C - Alternate method
+  gattc_connect_over_le
+  gattc_write_invalid_char_by_instance_id 0029 1
+  gattc_write_invalid_char_by_instance_id 0029 21
+  gattc_write_invalid_char_by_instance_id 0029 21
+  gattc_write_invalid_char_by_instance_id 0029 21
+  gattc_disconnect
+
+
+TC_CL_GAW_BI_33_C
+  gattc_connect_over_le
+  gattc_write_char_by_instance_id [handle] [size]
+  gattc_disconnect
+  [PTS Interaction]
+
+TC_CL_GAW_BI_34_C
+  gattc_connect_over_le
+  gattc_write_char_by_instance_id [handle] [size]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAW_BI_35_C
+  gattc_connect_over_le
+  gattc_write_desc_by_instance_id [handle] [size]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAW_BI_36_C
+  gattc_connect_over_le
+  gattc_write_desc_by_instance_id [handle] [size]
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAN_BV_01_C
+  gattc_connect_over_le
+  gattc_enable_notification_desc_by_instance_id f4
+  [PTS Interaction]
+  gattc_disconnect
+
+TC_CL_GAI_BV_01_C
+  gattc_connect_over_le
+  gattc_enable_indication_desc_by_instance_id 0113
+  [PTS Interaction]
+  gattc_disconnect
+
+
+TC_CL_GAS_BV_01_C
+  gattc_connect_over_le
+  gattc_disconnect
+
+TC_CL_GAT_BV_01_C
+  gattc_connect_over_le
+  gattc_read_char_by_instance_id [handle]
+
+TC_CL_GAT_BV_02_C
+  gattc_connect_over_le
+  gattc_write_char_by_instance_id [handle] 1
+
+TC_SR_GAC_BV_01_C
+  gatts_setup_database LARGE_DB_1
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_SUCCESS (Repeat until passed)
+
+TC_SR_GAD_BV_01_C
+  gatts_open
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction]
+
+TC_SR_GAD_BV_02_C
+  gatts_open
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction]
+
+TC_SR_GAD_BV_03_C
+  ble_start_generic_connectable_advertisement
+
+TC_SR_GAD_BV_04_C
+  gatts_open
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction]
+  [PTS Interaction]
+
+TC_SR_GAD_BV_05_C
+  gatts_open
+  ble_start_generic_connectable_advertisement
+
+TC_SR_GAD_BV_06_C
+  gatts_setup_database SIMPLE_READ_DESCRIPTOR
+  ble_start_generic_connectable_advertisement
+
+TC_SR_GAD_BV_07_C
+  Note: Use Public Address
+  bta_set_scan_mode connectable_discoverable
+  gatts_open
+  [PTS Interaction]
+
+TC_SR_GAD_BV_08_C
+  Note: Use Public Address
+  bta_set_scan_mode connectable_discoverable
+  gatts_open
+  [PTS Interaction]
+
+TC_SR_GAR_BV_01_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+
+TC_SR_GAR_BI_01_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_READ_NOT_PERMITTED
+
+TC_SR_GAR_BI_02_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction] Enter handle of uuid 2a30 after running the command gatts_list_all_uuids
+  gatts_send_response GATT_FAILURE
+
+TC_SR_GAR_BI_03_C
+  gatts_setup_database TEST_DB_1
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_INSUFFICIENT_AUTHORIZATION
+
+TC_SR_GAR_BI_05_C
+  Note: Do not used a fixed LE address for SMP Encryption Calculations.
+  gatts_setup_database TEST_DB_2
+  bta_start_pairing_helper
+  ble_start_generic_connectable_advertisement
+  [Enter Pin from PTS to Phone]
+  [PTS Interaction]
+
+TC_SR_GAR_BI_06_C
+  Note: Static Address OK.
+  Note: PTS gets into weird states often and disconnect randomly at this TC.
+  gatts_setup_database TEST_DB_1
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction] Enter 2a29
+  [PTS Interaction] Enter 002a
+  gatts_send_response GATT_READ_NOT_PERMITTED
+
+TC_SR_GAR_BI_07_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_1
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_FAILURE
+  [PTS Interaction] Enter 9999
+  [PTS Interaction] Enter 9999
+
+TC_SR_GAR_BI_08_C
+  Note: Static Address OK
+  bta_start_pairing_helper
+  gatts_setup_database TEST_DB_1
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction] Enter pin from PTS to phone
+  gatts_send_response GATT_FAILURE
+
+TC_SR_GAR_BI_09_C
+  gatts_setup_database TEST_DB_1
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction] Enter 2a29
+  [PTS Interaction] Enter 002a
+  gatts_send_response GATT_INSUFFICIENT_AUTHORIZATION
+
+TC_SR_GAR_BI_11_C
+  Note: Use non-static address
+  gatts_setup_database TEST_DB_1
+  bta_start_pairing_helper
+  ble_start_generic_connectable_advertisement
+  Enter Pin from PTS to phone
+  [PTS Interaction] Enter 2a29
+  [PTS Interaction] Enter 002a
+  gatts_send_response GATT_0C_ERR
+
+TC_SR_GAR_BV_04_C
+  Note: Static Address OK
+  ble_start_generic_connectable_advertisement
+  gatts_setup_database LARGE_DB_1
+  gatts_send_continuous_response GATT_SUCCESS
+  [PTS Interaction] Verify values and press OK
+
+TC_SR_GAR_BI_12_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction] Enter 002a
+  gatts_send_response GATT_READ_NOT_PERMITTED
+
+TC_SR_GAR_BI_13_C
+  Note: Static Address OK
+  Mote: Execute the first gatts_send_response as soon as the connection is made.
+  gatts_setup_database PTS_TEST
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_SUCCESS 24
+  gatts_send_response GATT_SUCCESS 24
+  gatts_send_response GATT_INVALID_OFFSET
+
+TC_SR_GAR_BI_13_C (on PTS 7.2.1)
+  gatts_setup_database LARGE_1
+  # Have a logcat going as such: adb logcat | grep GattServer11onCharacteristicReadRequest
+  # Every time the offset is > 23:
+    gatts_send_response GATT_INVALID_OFFSET
+  # Every time the offset is < 23:
+    gatts_send_response GATT_SUCCESS 24
+
+TC_SR_GAR_BI_14_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction] Enter 002a
+  gatts_send_response GATT_FAILURE
+
+TC_SR_GAR_BI_16_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_INSUFFICIENT_AUTHENTICATION
+
+TC_SR_GAR_BI_17_C
+  Note: Use non-static address
+  gatts_setup_database TEST_DB_1
+  bta_start_pairing_helper
+  ble_start_generic_connectable_advertisement
+  Enter Pin from PTS to phone (Don't need this if already paired)
+  gatts_send_response GATT_0C_ERR
+  gatts_send_response GATT_0C_ERR
+
+TC_SR_GAR_BV_05_C - Deprecated
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction] Enter 002a
+  gatts_send_response GATT_READ_NOT_PERMITTED
+
+TC_SR_GAR_BV_05_C - PTS 7.2.1
+  gatts_setup_database TEST_DB_3
+  bta_start_pairing_helper
+  ble_adv_data_include_local_name true
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction] Enter PIN fro PTS to phone
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+  [PTS Interaction] Verify values
+
+TC_SR_GAR_BI_18_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction] Enter 002a
+  gatts_send_response GATT_READ_NOT_PERMITTED
+  gatts_send_response GATT_READ_NOT_PERMITTED
+
+TC_SR_GAR_BI_19_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction] Enter 002a
+  gatts_send_response GATT_FAILURE
+
+TC_SR_GAR_BI_20_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_INSUFFICIENT_AUTHORIZATION
+  gatts_send_response GATT_INSUFFICIENT_AUTHORIZATION
+
+TC_SR_GAR_BI_21_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_INSUFFICIENT_AUTHENTICATION
+  gatts_send_response GATT_INSUFFICIENT_AUTHENTICATION
+  gatts_send_response GATT_INSUFFICIENT_AUTHENTICATION
+
+TC_SR_GAR_BI_22_C
+  Note: Use non-static address
+  gatts_setup_database TEST_DB_1
+  bta_start_pairing_helper
+  ble_start_generic_connectable_advertisement
+  Enter Pin from PTS to phone
+  gatts_send_response GATT_0C_ERR
+  gatts_send_response GATT_0C_ERR
+
+TC_SR_GAR_BV_06_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_SUCCESS
+  [PTS Interaction]
+
+TC_SR_GAR_BI_23_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_READ_NOT_PERMITTED
+  [PTS Interaction] Enter 002a
+
+TC_SR_GAR_BI_24_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction] Enter 002a
+  gatts_send_response GATT_FAILURE
+
+TC_SR_GAR_BI_25_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_INSUFFICIENT_AUTHORIZATION
+  gatts_send_response GATT_INSUFFICIENT_AUTHORIZATION
+
+TC_SR_GAR_BI_27_C
+  Note: Use non-static address
+  gatts_setup_database TEST_DB_1
+  bta_start_pairing_helper
+  ble_start_generic_connectable_advertisement
+  Enter Pin from PTS to phone
+  gatts_send_response GATT_0C_ERR
+  gatts_send_response GATT_0C_ERR
+
+TC_SR_GAR_BV_07_C
+  Note: Static Address OK
+  ble_start_generic_connectable_advertisement
+  gatts_setup_database LARGE_DB_1
+  gatts_send_continuous_response GATT_SUCCESS
+  [PTS Interaction] Verify values and press OK
+
+TC_SR_GAR_BV_08_C
+  Note: Static Address OK
+  gatts_setup_database LARGE_DB_3
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_SUCCESS 24
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS 24
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+  [PTS Interaction] Verify values and press OK
+
+TC_SR_GAR_BI_28_C
+  Note: Static Address OK
+  gatts_setup_database LARGE_DB_3
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction] Enter 002e
+    Note: If the above value doesn't work run
+    gatts_list_all_uuids and find the handle uuid
+    that matches 0000b00c-0000-1000-8000-00805f9b34fb.
+  gatts_send_response GATT_READ_NOT_PERMITTED
+  Wait 10 seconds for PTS to process
+
+TC_SR_GAR_BI_29_C
+  Note: Static Address OK
+  gatts_setup_database LARGE_DB_3
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_SUCCESS 24
+  Respond with this cmd until offset > 470
+    gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_INVALID_OFFSET
+  gatts_send_response GATT_INVALID_OFFSET
+
+TC_SR_GAR_BI_30_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction] Enter 9999
+
+TC_SR_GAR_BI_31_C
+  Note: Static Address OK
+  gatts_setup_database LARGE_DB_1
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_INSUFFICIENT_AUTHORIZATION
+  gatts_send_response GATT_INSUFFICIENT_AUTHORIZATION
+  gatts_send_response GATT_INSUFFICIENT_AUTHORIZATION
+
+TC_SR_GAR_BI_33_C
+  Note: Use Random Address
+  Note: Both responses need to be sent in quick successtion of each other since PTS disconnects the link quickly if there is no response.
+  bta_start_pairing_helper
+  gatts_setup_database TEST_DB_6
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction] Enter PIN from PTS to phone
+  gatts_send_response GATT_INSUFFICIENT_ENCRYPTION
+  gatts_send_response GATT_0C_ERR
+  bta_unbond
+
+TC_SR_GAR_BI_34_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_1
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_CONNECTION_CONGESTED
+
+TC_SR_GAR_BI_35_C
+  Note: Use Public Address
+  gatts_setup_database LARGE_DB_1
+  bta_set_scan_mode connectable_discoverable
+  [PTS Interaction]
+  gatts_send_response GATT_CONNECTION_CONGESTED
+
+TC_SR_GAW_BV_01_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_4
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_SUCCESS
+  [PTS Interaction]
+
+TC_SR_GAW_BV_03_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+  atts_send_response GATT_SUCCESS
+  atts_send_response GATT_SUCCESS
+
+TC_SR_GAW_BI_02_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction] Enter 9999
+
+TC_SR_GAW_BI_03_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+
+TC_SR_GAW_BI_04_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_INSUFFICIENT_AUTHORIZATION
+
+TC_SR_GAW_BI_06_C
+  Note: Static Address OK
+  gatts_setup_database LARGE_DB_3
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_INSUFFICIENT_ENCRYPTION
+
+TC_SR_GAW_BV_05_C
+  Note: Static Address OK
+  gatts_setup_database PTS_TEST
+  gatts_send_response GATT_SUCCESS 24
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_INSUFFICIENT_AUTHENTICATION
+  gatts_send_response GATT_INSUFFICIENT_AUTHENTICATION
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_INSUFFICIENT_AUTHENTICATION
+
+TC_SR_GAW_BI_07_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction] Enter 002a
+  gatts_send_response GATT_FAILURE
+
+TC_SR_GAW_BI_08_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction] Enter 002a
+  gatts_send_response GATT_WRITE_NOT_PERMITTED
+
+TC_SR_GAW_BI_09_C - Deprecated
+  Note: Static Address OK
+  gatts_setup_database PTS_TEST
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_SUCCESS 24
+  gatts_send_response GATT_SUCCESS 24
+  Note: Repeat this cmd until there is a "Prepared Write Value Complete" message
+    gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_INVALID_OFFSET
+
+TC_SR_GAW_BI_09_C - NEW INSTRUCTIONS
+  Note: This test is a little tricky. Need to monitor logcat as such: adb logcat | grep offset.
+  gatts_setup_database LARGE_DB_3
+  ble_adv_data_include_local_name true
+  ble_start_generic_connectable_advertisement
+  # Whenever offset is <=23
+    gatts_send_response GATT_SUCCESS 24
+  # Whenever offset is > 23
+    # If preparedWrite value is True
+      gatts_send_response GATT_SUCCESS 24
+      gatts_send_response GATT_INVALID_OFFSET
+    # If preparedWrite value is False
+      gatts_send_response GATT_INVALID_OFFSET
+
+TC_SR_GAW_BI_11_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_INSUFFICIENT_AUTHORIZATION
+  gatts_send_response GATT_INSUFFICIENT_AUTHORIZATION
+  gatts_send_response GATT_INSUFFICIENT_AUTHORIZATION
+
+TC_SR_GAW_BI_13_C
+  Note: Dynamic address needed
+  Note: All responses need to be sent in quick successtion of each other since PTS disconnects the link quickly if there is no response.
+  gatts_setup_database DB_TEST
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction] Enter PIN from PTS to phone
+  gatts_send_response GATT_INSUFFICIENT_ENCRYPTION
+  gatts_send_response GATT_0C_ERR
+  gatts_send_response GATT_0C_ERR
+
+TC_SR_GAW_BV_06_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+
+TC_SR_GAW_BV_10_C
+  Note: Static Address OK
+  Note: Make sure MTU is set to 23 on PTS
+  gatts_setup_database LARGE_DB_3
+  ble_start_generic_connectable_advertisement
+  Whenever PTS prompts: "Discover All Characteristics of Service Request completed successfully" in the Output Tool Window run this cmd:
+    gatts_send_response GATT_SUCCESS 24
+  Otherwise always respond with:
+    gatts_send_response GATT_SUCCESS
+
+TC_SR_GAW_BI_14_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction] Enter 002a
+  gatts_send_response GATT_FAILURE
+
+TC_SR_GAW_BI_15_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction] Enter 002a
+  gatts_send_response GATT_WRITE_NOT_PERMITTED
+
+TC_SR_GAW_BI_17_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_INSUFFICIENT_AUTHORIZATION
+  gatts_send_response GATT_INSUFFICIENT_AUTHORIZATION
+  gatts_send_response GATT_INSUFFICIENT_AUTHORIZATION
+
+TC_SR_GAW_BI_19_C
+  Note: Static Address OK
+  gatts_setup_database LARGE_DB_3
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_0C_ERR
+  gatts_send_response GATT_0C_ERR
+  gatts_send_response GATT_0C_ERR
+
+TC_SR_GAW_BV_11_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+
+TC_SR_GAW_BV_07_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+
+TC_SR_GAW_BV_08_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+
+TC_SR_GAW_BI_20_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction] Enter 0021
+  gatts_send_response GATT_FAILURE
+
+TC_SR_GAW_BI_21_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction] Enter 002c
+  gatts_send_response GATT_SUCCESS
+
+TC_SR_GAW_BI_22_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_INSUFFICIENT_AUTHORIZATION
+  gatts_send_response GATT_INSUFFICIENT_AUTHORIZATION
+  gatts_send_response GATT_INSUFFICIENT_AUTHORIZATION
+
+TC_SR_GAW_BV_24_C
+  Note: Dynamic address needed
+  Note: All responses need to be sent in quick successtion of each other since PTS disconnects the link quickly if there is no response.
+  gatts_setup_database DB_TEST
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction] Enter PIN from PTS to phone
+  gatts_send_response GATT_INSUFFICIENT_ENCRYPTION
+  gatts_send_response GATT_0C_ERR
+  gatts_send_response GATT_0C_ERR
+
+TC_SR_GAW_BV_09_C - DEPRECATED
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_SUCCESS 50
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS 50
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+
+TC_SR_GAW_BV_09_C - New Instructions
+  Note: Static Address OK
+  gatts_setup_database LARGE_DB_1
+  ble_start_generic_connectable_advertisement
+  # Repeat below cmd until success
+  gatts_send_response GATT_SUCCESS
+
+TC_SR_GAW_BI_25_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction] Enter 002c
+  gatts_send_response GATT_FAILURE
+
+TC_SR_GAW_BI_26_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction] Enter 002c
+  gatts_send_response GATT_WRITE_NOT_PERMITTED
+
+TC_SR_GAW_BI_27_C
+  Note: Static Address OK
+  gatts_setup_database DB_TEST
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_SUCCESS 24
+  Repeat next cmd until an Execute Write Request with execute set to true before continueing
+    gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_INVALID_OFFSET
+  Wait for 20 seconds for PTS to process and disconnect
+
+TC_SR_GAW_BI_29_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_3
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_INSUFFICIENT_AUTHORIZATION
+  gatts_send_response GATT_INSUFFICIENT_AUTHORIZATION
+  gatts_send_response GATT_INSUFFICIENT_AUTHORIZATION
+
+TC_SR_GAW_BI_30_C
+  Note: Static Address OK
+  gatts_setup_database DB_TEST
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_SUCCESS 24
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_INSUFFICIENT_AUTHENTICATION
+  gatts_send_response GATT_INSUFFICIENT_AUTHENTICATION
+
+TC_SR_GAW_BV_31_C
+  Note: Dynamic address needed
+  Note: All responses need to be sent in quick successtion of each other since PTS disconnects the link quickly if there is no response.
+  gatts_setup_database DB_TEST
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction] Enter PIN from PTS to phone
+  gatts_send_response GATT_INSUFFICIENT_ENCRYPTION
+  gatts_send_response GATT_0C_ERR
+  gatts_send_response GATT_0C_ERR
+
+TC_SR_GAW_BI_32_C
+  Note: Static Address OK
+  gatts_setup_database DB_TEST
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_SUCCESS 24
+  Run this cmd until you see "Read Request Completed Successfully"
+    gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_INVALID_ATTRIBUTE_LENGTH
+  Run this cmd until you see "Found Characteristic handle 0x... Successfully"
+    gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_INVALID_ATTRIBUTE_LENGTH
+
+TC_SR_GAW_BI_33_C
+  Note: Static Address OK
+  Note: This testcase is tricky as the order randomises a bit each time...
+  gatts_setup_database LARGE_DB_3
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_SUCCESS 24
+  Run this cmd until you see "Execute Write"
+    gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_INVALID_ATTRIBUTE_LENGTH
+  Run this cmd until you see "Execute Write"
+    gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_INVALID_ATTRIBUTE_LENGTH
+  Wait 10 seconds for PTS to process
+
+TC_SR_GAW_BI_34_C
+  Note: Static Address OK
+  gatts_setup_database DB_TEST
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_SUCCESS 24
+  gatts_send_response GATT_SUCCESS
+  Run the below cmd when PTS says "Found descriptor with handle=..."
+  gatts_send_response GATT_INVALID_ATTRIBUTE_LENGTH
+
+TC_SR_GAW_BI_35_C
+  Note: Static Address OK
+  Note: Run the responses slowly
+  gatts_setup_database LARGE_DB_3
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_SUCCESS 24
+  Repeat next cmd until an Execute Write happens
+    gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_INVALID_ATTRIBUTE_LENGTH
+  Repeat next cmd until an Execute Write happens
+    gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_INVALID_ATTRIBUTE_LENGTH
+  Wait 10 seconds for PTS to process
+
+TC_SR_GAN_BV_01_C
+  Note: Static Address OK
+  gatts_setup_database TEST_DB_5
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_SUCCESS
+  gatts_notify_characteristic_changed [Handle from PTS] false 10
+  gatts_send_response GATT_SUCCESS
+  gatts_notify_characteristic_changed [Handle from PTS] false 10
+
+TC_SR_GAI_BV_01_C
+  gatts_setup_database DB_TEST
+  ble_adv_data_include_local_name true
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction] Verify value and click yes
+  gatts_notify_characteristic_changed 002a false 10
+  gatts_notify_characteristic_changed 002a true 10
+
+
+TC_SR_GAS_BV_01_C
+  gatts_setup_database DB_TEST
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction] Click ok
+  gatts_notify_characteristic_changed 002a false 10
+  gatts_setup_database TEST_DB_3
+
+TC_SR_GAT_BV_01_C - Deprecated
+  gatts_setup_database LARGE_DB_3
+  ble_start_generic_connectable_advertisement
+  gatts_send_response GATT_SUCCESS
+  gatts_notify_characteristic_changed 0003 true
+  gatts_send_response GATT_SUCCESS
+  gatts_setup_database TEST_DB_3
+  Wait 30 seconds for PTS to process
+
+TC_SR_GAT_BV_01_C - Deprecated
+  gatts_setup_database Test_DB_5
+  ble_adv_data_include_local_name true
+  ble_start_generic_connectable_advertisement
+  gatts_notify_characteristic_changed 0013 true
+  gatts_notify_characteristic_changed 002a true
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+  gatts_send_response GATT_SUCCESS
+  gatts_notify_characteristic_changed 0003 true
+  gatts_setup_database TEST_DB_1
+  [PTS WAIT] 30 seconds to timeout to occur
+
+TC_SR_UNS_BI_02_C
+  bta_start_pairing_helper
+  ble_adv_data_include_local_name true
+  ble_start_generic_connectable_advertisement
+  [PTS Interaction] Enter pin from PTS to phone

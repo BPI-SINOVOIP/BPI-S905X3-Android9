@@ -1,0 +1,11 @@
+// AIDL interface between netd and framework.jar
+filegroup {
+    name: "netd_aidl",
+    srcs: ["binder/android/net/INetd.aidl"],
+}
+
+// AIDL interface between netd and services.core
+filegroup {
+    name: "netd_metrics_aidl",
+    srcs: ["binder/android/net/metrics/INetdEventListener.aidl"],
+}

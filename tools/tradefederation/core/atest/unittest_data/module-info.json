@@ -1,0 +1,13 @@
+{
+  "AmSlam": { "class": ["APPS"],  "path": ["foo/bar/AmSlam"],  "tags": ["tests"],  "installed": ["out/target/product/generic/data/app/AmSlam/AmSlam.apk"] },
+  "CtsJankDeviceTestCases": { "class": ["APPS"],  "path": ["foo/bar/jank"],  "tags": ["optional"],  "installed": ["out/target/product/generic/data/app/CtsJankDeviceTestCases/CtsJankDeviceTestCases.apk"] },
+  "CtsUiDeviceTestCases": { "class": ["APPS"],  "path": ["tf/core/CtsUiDeviceTestCases"],  "tags": ["optional"],  "installed": ["out/target/product/generic/data/app/CtsUiDeviceTestCases/CtsUiDeviceTestCases.apk"] },
+  "VtsTarget": { "class": ["FAKE"],  "path": ["foo/bar/jank"],  "tags": ["optional"],  "installed": ["out/target/product/generic/VtsTarget"] },
+  "google-tradefed": { "class": ["JAVA_LIBRARIES"],  "path": ["gtf/core"],  "tags": ["optional"],  "installed": ["out/host/linux-x86/framework/google-tradefed.jar"] },
+  "google-tradefed-contrib": { "class": ["JAVA_LIBRARIES"],  "path": ["gtf/contrib"],  "tags": ["optional"],  "installed": ["out/host/linux-x86/framework/google-tradefed-contrib.jar"] },
+  "tradefed": { "class": ["EXECUTABLES",  "JAVA_LIBRARIES"],  "path": ["tf/core"],  "tags": ["optional"],  "installed": ["out/host/linux-x86/bin/tradefed.sh",  "out/host/linux-x86/framework/tradefed.jar"] },
+  "tradefed-contrib": { "class": ["JAVA_LIBRARIES"],  "path": ["tf/contrib"],  "tags": ["optional"],  "installed": ["out/host/linux-x86/framework/tradefed-contrib.jar"] },
+  "module-no-path": { "class": ["JAVA_LIBRARIES"],  "tags": ["optional"],  "installed": ["out/host/linux-x86/framework/tradefed-contrib.jar"] },
+  "module1": { "class": ["JAVA_LIBRARIES"],  "path": ["shared/path/to/be/used"], "tags": ["optional"],  "installed": ["out/host/linux-x86/framework/tradefed-contrib.jar"] },
+  "module2": { "class": ["JAVA_LIBRARIES"],  "path": ["shared/path/to/be/used"], "tags": ["optional"],  "installed": ["out/host/linux-x86/framework/tradefed-contrib.jar"] }
+}

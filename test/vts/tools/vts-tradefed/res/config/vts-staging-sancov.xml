@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2017 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<configuration description="VTS Staging Plan for Sancov on HALs">
+  <include name="vts-base" />
+  <target_preparer class="com.android.tradefed.targetprep.VtsCoveragePreparer" />
+  <option name="plan" value="vts" />
+  <option name="test-tag" value="vts-star" />
+  <option name="vts-plan-result:default-type" value="staging" />
+  <option name="vts-plan-result:plan-name" value="vts-staging-sancov" />
+
+  <option name="compatibility:include-filter" value="VtsHalBluetoothV1_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalBootV1_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalIrV1_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalNeuralnetworksV1_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalNfcV1_0HostBinderize" />
+  <option name="compatibility:include-filter" value="VtsHalNfcV1_0HostPassthrough" />
+  <option name="compatibility:include-filter" value="VtsHalNfcV1_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalRadioV1_0Host" />
+  <option name="compatibility:include-filter" value="VtsHalRadioV1_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalRadioV1_1Target" />
+  <option name="compatibility:include-filter" value="VtsHalRenderscriptV1_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalSapV1_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalWifiV1_0Host" />
+  <option name="compatibility:include-filter" value="VtsHalWifiV1_1Target" />
+  <option name="compatibility:include-filter" value="VtsHalWifiNanV1_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalWifiOffloadV1_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalWifiSupplicantV1_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalWifiSupplicantV1_1Target" />
+
+  <option name="compatibility:include-filter" value="VtsHalAudioV2_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalAudioV4_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalAudioEffectV2_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalAudioEffectV4_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalBiometricsFingerprintV2_1Target" />
+  <option name="compatibility:include-filter" value="VtsHalBroadcastradioV1_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalCameraProviderV2_4Target" />
+  <option name="compatibility:include-filter" value="VtsHalConfigstoreV1_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalContexthubV1_0Host" />
+  <option name="compatibility:include-filter" value="VtsHalContexthubV1_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalGatekeeperV1_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalGnssV1_0HostBinderize" />
+  <option name="compatibility:include-filter" value="VtsHalGnssV1_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalGraphicsComposerV2_1Target" />
+  <option name="compatibility:include-filter" value="VtsHalGraphicsMapperV2_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalGraphicsMapperV2_1Target" />
+  <option name="compatibility:include-filter" value="VtsHalHealthV1_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalKeymasterV3_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalLightV2_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalMemtrackV1_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalMediaOmxV1_0Host" />
+  <option name="compatibility:include-filter" value="VtsHalPowerV1_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalPowerV1_1Target" />
+  <option name="compatibility:include-filter" value="VtsHalSensorsV1_0Host" />
+  <option name="compatibility:include-filter" value="VtsHalSensorsV1_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalSoundtriggerV2_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalSoundtriggerV2_1Target" />
+  <option name="compatibility:include-filter" value="VtsHalTetherOffloadConfigV1_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalTetherOffloadControlV1_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalThermalV1_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalUsbV1_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalUsbV1_1Target" />
+  <option name="compatibility:include-filter" value="VtsHalVibratorV1_0Host" />
+  <option name="compatibility:include-filter" value="VtsHalVibratorV1_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalVibratorV1_1Target" />
+  <option name="compatibility:include-filter" value="VtsHalVrV1_0Host" />
+  <option name="compatibility:include-filter" value="VtsHalVrV1_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalWeaverV1_0Target" />
+
+</configuration>

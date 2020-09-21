@@ -1,0 +1,73 @@
+vtable for android::hardware::sensors::V1_0::BpHwSensors
+_ZTVN7android8hardware7sensors4V1_011BpHwSensorsE: 27 entries
+16    (int (*)(...)) _ZN7android8hardware7sensors4V1_011BpHwSensors14interfaceChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_11hidl_stringEEEEEE
+20    (int (*)(...)) _ZN7android8hardware7sensors4V1_011BpHwSensors5debugERKNS0_11hidl_handleERKNS0_8hidl_vecINS0_11hidl_stringEEE
+24    (int (*)(...)) _ZN7android8hardware7sensors4V1_011BpHwSensors19interfaceDescriptorENSt3__18functionIFvRKNS0_11hidl_stringEEEE
+28    (int (*)(...)) _ZN7android8hardware7sensors4V1_011BpHwSensors12getHashChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_10hidl_arrayIhLj32EJEEEEEEEE
+32    (int (*)(...)) _ZN7android8hardware7sensors4V1_011BpHwSensors21setHALInstrumentationEv
+36    (int (*)(...)) _ZN7android8hardware7sensors4V1_011BpHwSensors11linkToDeathERKNS_2spINS0_20hidl_death_recipientEEEy
+40    (int (*)(...)) _ZN7android8hardware7sensors4V1_011BpHwSensors4pingEv
+44    (int (*)(...)) _ZN7android8hardware7sensors4V1_011BpHwSensors12getDebugInfoENSt3__18functionIFvRKNS_4hidl4base4V1_09DebugInfoEEEE
+48    (int (*)(...)) _ZN7android8hardware7sensors4V1_011BpHwSensors21notifySyspropsChangedEv
+52    (int (*)(...)) _ZN7android8hardware7sensors4V1_011BpHwSensors13unlinkToDeathERKNS_2spINS0_20hidl_death_recipientEEE
+64    (int (*)(...)) _ZN7android8hardware7sensors4V1_011BpHwSensors14getSensorsListENSt3__18functionIFvRKNS0_8hidl_vecINS2_10SensorInfoEEEEEE
+68    (int (*)(...)) _ZN7android8hardware7sensors4V1_011BpHwSensors16setOperationModeENS2_13OperationModeE
+72    (int (*)(...)) _ZN7android8hardware7sensors4V1_011BpHwSensors8activateEib
+76    (int (*)(...)) _ZN7android8hardware7sensors4V1_011BpHwSensors4pollEiNSt3__18functionIFvNS2_6ResultERKNS0_8hidl_vecINS2_5EventEEERKNS7_INS2_10SensorInfoEEEEEE
+80    (int (*)(...)) _ZN7android8hardware7sensors4V1_011BpHwSensors5batchEixx
+84    (int (*)(...)) _ZN7android8hardware7sensors4V1_011BpHwSensors5flushEi
+88    (int (*)(...)) _ZN7android8hardware7sensors4V1_011BpHwSensors16injectSensorDataERKNS2_5EventE
+92    (int (*)(...)) _ZN7android8hardware7sensors4V1_011BpHwSensors21registerDirectChannelERKNS2_13SharedMemInfoENSt3__18functionIFvNS2_6ResultEiEEE
+96    (int (*)(...)) _ZN7android8hardware7sensors4V1_011BpHwSensors23unregisterDirectChannelEi
+100    (int (*)(...)) _ZN7android8hardware7sensors4V1_011BpHwSensors18configDirectReportEiiNS2_9RateLevelENSt3__18functionIFvNS2_6ResultEiEEE
+152    (int (*)(...)) _ZN7android8hardware11BpHwRefBase10onFirstRefEv
+156    (int (*)(...)) _ZN7android8hardware11BpHwRefBase15onLastStrongRefEPKv
+160    (int (*)(...)) _ZN7android8hardware11BpHwRefBase20onIncStrongAttemptedEjPKv
+216    (int (*)(...)) _ZTv0_n16_N7android8hardware11BpHwRefBase10onFirstRefEv
+220    (int (*)(...)) _ZTv0_n20_N7android8hardware11BpHwRefBase15onLastStrongRefEPKv
+224    (int (*)(...)) _ZTv0_n24_N7android8hardware11BpHwRefBase20onIncStrongAttemptedEjPKv
+228    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+
+
+vtable for android::hardware::sensors::V1_0::BnHwSensors
+_ZTVN7android8hardware7sensors4V1_011BnHwSensorsE: 21 entries
+12    (int (*)(...)) _ZN7android8hardware9BHwBinder8transactEjRKNS0_6ParcelEPS2_jNSt3__18functionIFvRS2_EEE
+16    (int (*)(...)) _ZN7android8hardware9BHwBinder11linkToDeathERKNS_2spINS0_7IBinder14DeathRecipientEEEPvj
+20    (int (*)(...)) _ZN7android8hardware9BHwBinder13unlinkToDeathERKNS_2wpINS0_7IBinder14DeathRecipientEEEPvjPS5_
+24    (int (*)(...)) _ZNK7android8hardware7IBinder13checkSubclassEPKv
+28    (int (*)(...)) _ZN7android8hardware9BHwBinder12attachObjectEPKvPvS4_PFvS3_S4_S4_E
+32    (int (*)(...)) _ZNK7android8hardware9BHwBinder10findObjectEPKv
+36    (int (*)(...)) _ZN7android8hardware9BHwBinder12detachObjectEPKv
+40    (int (*)(...)) _ZN7android8hardware9BHwBinder11localBinderEv
+44    (int (*)(...)) _ZN7android8hardware7IBinder12remoteBinderEv
+48    (int (*)(...)) _ZN7android8hardware7sensors4V1_011BnHwSensorsD1Ev
+52    (int (*)(...)) _ZN7android8hardware7sensors4V1_011BnHwSensorsD0Ev
+56    (int (*)(...)) _ZN7android8hardware7sensors4V1_011BnHwSensors10onTransactEjRKNS0_6ParcelEPS4_jNSt3__18functionIFvRS4_EEE
+68    (int (*)(...)) _ZThn20_N7android8hardware7sensors4V1_011BnHwSensorsD1Ev
+72    (int (*)(...)) _ZThn20_N7android8hardware7sensors4V1_011BnHwSensorsD0Ev
+104    (int (*)(...)) _ZTv0_n12_N7android8hardware7sensors4V1_011BnHwSensorsD1Ev
+108    (int (*)(...)) _ZTv0_n12_N7android8hardware7sensors4V1_011BnHwSensorsD0Ev
+112    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+116    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+120    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+124    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+128    (int (*)(...)) _ZTVN7android8hardware7sensors4V1_011BnHwSensorsE
+
+
+vtable for android::hardware::sensors::V1_0::ISensors
+_ZTVN7android8hardware7sensors4V1_08ISensorsE: 15 entries
+16    (int (*)(...)) _ZN7android8hardware7sensors4V1_08ISensors14interfaceChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_11hidl_stringEEEEEE
+20    (int (*)(...)) _ZN7android8hardware7sensors4V1_08ISensors5debugERKNS0_11hidl_handleERKNS0_8hidl_vecINS0_11hidl_stringEEE
+24    (int (*)(...)) _ZN7android8hardware7sensors4V1_08ISensors19interfaceDescriptorENSt3__18functionIFvRKNS0_11hidl_stringEEEE
+28    (int (*)(...)) _ZN7android8hardware7sensors4V1_08ISensors12getHashChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_10hidl_arrayIhLj32EJEEEEEEEE
+32    (int (*)(...)) _ZN7android8hardware7sensors4V1_08ISensors21setHALInstrumentationEv
+36    (int (*)(...)) _ZN7android8hardware7sensors4V1_08ISensors11linkToDeathERKNS_2spINS0_20hidl_death_recipientEEEy
+40    (int (*)(...)) _ZN7android8hardware7sensors4V1_08ISensors4pingEv
+44    (int (*)(...)) _ZN7android8hardware7sensors4V1_08ISensors12getDebugInfoENSt3__18functionIFvRKNS_4hidl4base4V1_09DebugInfoEEEE
+48    (int (*)(...)) _ZN7android8hardware7sensors4V1_08ISensors21notifySyspropsChangedEv
+52    (int (*)(...)) _ZN7android8hardware7sensors4V1_08ISensors13unlinkToDeathERKNS_2spINS0_20hidl_death_recipientEEE
+140    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+144    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+148    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+152    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+156    (int (*)(...)) _ZTVN7android8hardware7sensors4V1_08ISensorsE

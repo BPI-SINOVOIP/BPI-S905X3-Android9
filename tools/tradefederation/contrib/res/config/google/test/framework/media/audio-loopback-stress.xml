@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Runs audio jitter tests">
+
+  <option name="test-tag" value="AudioLoopbackStress" />
+
+  <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceSetup">
+    <option name="screen-always-on" value="on" />
+    <option name="screen-adaptive-brightness" value="off" />
+    <option name="disable-audio" value="false"/>
+    <option name="screen-saver" value="off"/>
+    <option name="set-property" key="audio.safemedia.bypass" value="1"/>
+  </target_preparer>
+
+  <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+    <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/media/apps/Loopback.apk" />
+  </target_preparer>
+
+  <test class="com.android.media.tests.AudioLoopbackTest">
+    <option name="iterations" value="1000" />
+  </test>
+
+</configuration>

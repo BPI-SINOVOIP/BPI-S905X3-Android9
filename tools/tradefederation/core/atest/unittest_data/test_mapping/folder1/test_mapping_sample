@@ -1,0 +1,12 @@
+{
+  "presubmit": [
+    {
+      "name": "test2"
+    }
+  ],
+  "postsubmit": [
+    {
+      "name": "test3"
+    }
+  ]
+}

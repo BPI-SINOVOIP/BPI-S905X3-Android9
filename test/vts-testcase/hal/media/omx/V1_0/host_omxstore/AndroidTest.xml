@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2017 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<configuration description="Config for VTS VtsHalMediaOmxStoreV1_0Host test cases">
+    <option name="config-descriptor:metadata" key="plan" value="vts-hal" />
+    <target_preparer class="com.android.compatibility.common.tradefed.targetprep.VtsFilePusher">
+        <option name="abort-on-push-failure" value="true"/>
+        <option name="push-group" value="HalHidlHostTest.push"/>
+        <option name="cleanup" value="true"/>
+        <option name="push" value="spec/hardware/interfaces/media/omx/1.0/vts/GraphicBufferSource.vts->/data/local/tmp/spec/android/hardware/media/omx/1.0/GraphicBufferSource.vts"/>
+        <option name="push" value="spec/hardware/interfaces/media/omx/1.0/vts/Omx.vts->/data/local/tmp/spec/android/hardware/media/omx/1.0/Omx.vts"/>
+        <option name="push" value="spec/hardware/interfaces/media/omx/1.0/vts/OmxBufferSource.vts->/data/local/tmp/spec/android/hardware/media/omx/1.0/OmxBufferSource.vts"/>
+        <option name="push" value="spec/hardware/interfaces/media/omx/1.0/vts/OmxNode.vts->/data/local/tmp/spec/android/hardware/media/omx/1.0/OmxNode.vts"/>
+        <option name="push" value="spec/hardware/interfaces/media/omx/1.0/vts/OmxObserver.vts->/data/local/tmp/spec/android/hardware/media/omx/1.0/OmxObserver.vts"/>
+        <option name="push" value="spec/hardware/interfaces/media/omx/1.0/vts/OmxStore.vts->/data/local/tmp/spec/android/hardware/media/omx/1.0/OmxStore.vts"/>
+        <option name="push" value="spec/hardware/interfaces/media/omx/1.0/vts/types.vts->/data/local/tmp/spec/android/hardware/media/omx/1.0/types.vts"/>
+        <option name="push" value="spec/hardware/interfaces/graphics/common/1.0/vts/types.vts->/data/local/tmp/spec/android/hardware/graphics/common/1.0/types.vts"/>
+        <option name="push" value="spec/hardware/interfaces/media/1.0/vts/types.vts->/data/local/tmp/spec/android/hardware/media/1.0/types.vts"/>
+        <option name="push" value="DATA/lib/android.hardware.graphics.bufferqueue@1.0-vts.driver.so->/data/local/tmp/32/android.hardware.graphics.bufferqueue@1.0-vts.driver.so"/>
+        <option name="push" value="DATA/lib64/android.hardware.graphics.bufferqueue@1.0-vts.driver.so->/data/local/tmp/64/android.hardware.graphics.bufferqueue@1.0-vts.driver.so"/>
+        <option name="push" value="DATA/lib/android.hardware.graphics.common@1.0-vts.driver.so->/data/local/tmp/32/android.hardware.graphics.common@1.0-vts.driver.so"/>
+        <option name="push" value="DATA/lib64/android.hardware.graphics.common@1.0-vts.driver.so->/data/local/tmp/64/android.hardware.graphics.common@1.0-vts.driver.so"/>
+        <option name="push" value="DATA/lib/android.hardware.media@1.0-vts.driver.so->/data/local/tmp/32/android.hardware.media@1.0-vts.driver.so"/>
+        <option name="push" value="DATA/lib64/android.hardware.media@1.0-vts.driver.so->/data/local/tmp/64/android.hardware.media@1.0-vts.driver.so"/>
+        <option name="push" value="DATA/lib/android.hardware.media.omx@1.0-vts.driver.so->/data/local/tmp/32/android.hardware.media.omx@1.0-vts.driver.so"/>
+        <option name="push" value="DATA/lib64/android.hardware.media.omx@1.0-vts.driver.so->/data/local/tmp/64/android.hardware.media.omx@1.0-vts.driver.so"/>
+    </target_preparer>
+    <test class="com.android.tradefed.testtype.VtsMultiDeviceTest">
+        <option name="test-module-name" value="VtsHalMediaOmxStoreV1_0Host"/>
+        <option name="test-case-path" value="vts/testcases/hal/media/omx/V1_0/host_omxstore/VtsHalMediaOmxStoreV1_0HostTest"/>
+        <option name="test-timeout" value="1m"/>
+    </test>
+</configuration>

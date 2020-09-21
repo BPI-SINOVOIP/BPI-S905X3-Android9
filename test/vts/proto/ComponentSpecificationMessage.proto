@@ -1,0 +1,528 @@
+// Copyright 2016 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto2";
+
+package android.vts;
+option java_package = "com.android.vts.proto";
+option java_outer_classname = "VtsComponentSpecificationMessage";
+
+// Class of a target component.
+enum ComponentClass {
+  UNKNOWN_CLASS = 0;
+  // For a HAL shared library. Deprecated.
+  HAL_CONVENTIONAL = 1;
+  // For a submodule of a shared library HAL. Deprecated.
+  HAL_CONVENTIONAL_SUBMODULE = 2;
+  // For a legacy HAL. Deprecated.
+  HAL_LEGACY = 3;
+  // For a HAL which uses HIDL (HAL Interface Definition Language).
+  HAL_HIDL = 4;
+  // For a HAL which uses HIDL (HAL Interface Definition Language).
+  HAL_HIDL_WRAPPED_CONVENTIONAL = 5;
+
+  // For a shared library which is not a HAL (e.g., standard library).
+  LIB_SHARED = 11;
+
+  // For an OS kernel.
+  KERNEL = 21;
+  // For an OS kernel module.
+  KERNEL_MODULE = 22;
+}
+
+
+// Type of a target component.
+enum ComponentType {
+  UNKNOWN_TYPE = 0;
+  // For an audio submodule.
+  AUDIO = 1;
+  // For a camera submodule.
+  CAMERA = 2;
+  // For a GPS submodule.
+  GPS = 3;
+  // For a Lights sensor submodule.
+  LIGHT = 4;
+  // For a WiFi submodule.
+  WIFI = 5;
+  // For a mobile networking submodule.
+  MOBILE = 6;
+  // For a WiFi submodule.
+  BLUETOOTH = 7;
+  // For a NFC submodule.
+  NFC = 8;
+  // For a power HAL.
+  POWER = 9;
+  // For a mem track HAL.
+  MEMTRACK = 10;
+  // For a biometrics fingerprint HAL.
+  BFP = 11;
+  // For a vibrator submodule.
+  VIBRATOR = 12;
+  // For a thermal submodule.
+  THERMAL = 13;
+  // For a tv_input HAL.
+  TV_INPUT = 14;
+  // For a tv hdmi_cec submodule
+  TV_CEC = 15;
+  // For sensors submodule
+  SENSORS = 16;
+  // For a vehicle submodule
+  VEHICLE = 17;
+  // For a VR submodule.
+  VR = 18;
+  // For a graphics allocator submodule.
+  GRAPHICS_ALLOCATOR = 19;
+  // For a graphics mapper submodule.
+  GRAPHICS_MAPPER = 20;
+  // For a radio submodule
+  RADIO = 21;
+  // For the context hub HAL.
+  CONTEXTHUB = 22;
+  // For a graphics composer submodule.
+  GRAPHICS_COMPOSER = 23;
+  // For a media omx submodule.
+  MEDIA_OMX = 24;
+
+  // for bionic's libm
+  BIONIC_LIBM = 1001;
+
+  // for bionic's libc
+  BIONIC_LIBC = 1002;
+
+  // for VNDK's libcutils
+  VNDK_LIBCUTILS = 1101;
+
+  // for OS kernel's system call.
+  SYSCALL = 2001;
+}
+
+
+// Type of a variable.
+enum VariableType {
+  UNKNOWN_VARIABLE_TYPE = 0;
+  TYPE_PREDEFINED = 1;
+  TYPE_SCALAR = 2;
+  TYPE_STRING = 3;
+  TYPE_ENUM = 4;
+  TYPE_ARRAY = 5;
+  TYPE_VECTOR = 6;
+  TYPE_STRUCT = 7;
+  // for conventional HALs, to keep a data structure with one or multiple
+  // callback functions.
+  TYPE_FUNCTION_POINTER = 8;
+  TYPE_VOID = 9;
+  TYPE_HIDL_CALLBACK = 10;
+  TYPE_SUBMODULE = 11;
+  TYPE_UNION = 12;
+  TYPE_HIDL_INTERFACE = 13;
+  TYPE_HANDLE = 14;
+  // for an enum whose every enumerator value is a number which is power of 2.
+  TYPE_MASK = 15;
+  // for hidl_memory type
+  TYPE_HIDL_MEMORY = 16;
+  // for pointer type
+  TYPE_POINTER = 17;
+  // for FMQ types
+  TYPE_FMQ_SYNC = 18;
+  TYPE_FMQ_UNSYNC = 19;
+  // for HIDL ref<>, a restricted native pointer type.
+  TYPE_REF = 20;
+}
+
+
+// Type of a target processor architecture.
+enum TargetArch {
+  UNKNOWN_TARGET_ARCH = 0;
+  TARGET_ARCH_ARM = 1;
+  TARGET_ARCH_ARM64 = 2;
+}
+
+
+// To specify a call flow event.
+message CallFlowSpecificationMessage {
+  // true if for a function call event.
+  optional bool entry = 1 [default = false];
+  // true if for an exit event from a function.
+  optional bool exit = 2 [default = false];
+  // a list of functions that can be called right after this event.
+  repeated bytes next = 11;
+  // a list of functions that can be called right before this event.
+  repeated bytes prev = 12;
+}
+
+
+// To specify the measured native code coverage raw data.
+message NativeCodeCoverageRawDataMessage {
+  // gcno file path.
+  optional bytes file_path = 1;
+
+  // content of a gcda file.
+  optional bytes gcda = 11;
+}
+
+
+// To specify an API call to an interface.
+message FunctionCallMessage {
+  // Name of the interface. Not required if hal_driver_id is set.
+  // Currently only used by fuzzer.
+  optional bytes hidl_interface_name = 1;
+
+  // HAL driver ID, if set (e.g., >0), use the given driver_id to get the
+  // corresponding driver instance; otherwise, create a new driver based
+  // on the component info (package, version etc.)
+  optional int32 hal_driver_id = 11 [default = -1];
+
+  // Component class, e.g., HIDL HAL or Conventional HAL.
+  optional ComponentClass component_class = 21;
+  // Component type, e.g., BLUETOOTH, used for Conventional HAL only.
+  optional ComponentType component_type = 22;
+  // Component version (e.g., 1.0).
+  optional bytes component_type_version = 23 [deprecated = true];
+  // Component name (e.g., INfc), used for HIDL HALs only.
+  optional bytes component_name = 24;
+  // Component package name (e.g., android.hardware.nfc).
+  optional bytes package_name = 25;
+  // Component major and minor versions stored separately.
+  optional uint32 component_type_version_major = 26;
+  optional uint32 component_type_version_minor = 27;
+
+  // Specifies API function and inputs.
+  optional FunctionSpecificationMessage api = 100;
+}
+
+// To specify a function.
+message FunctionSpecificationMessage {
+  // the function name.
+  optional bytes name = 1;
+
+  // the submodule name.
+  optional bytes submodule_name = 2;
+
+  // the HIDL interface ID used to call an API of another nested interface
+  // using a VTS HAL driver (for HIDL HAL). 0 for the main interface.
+  optional int32 hidl_interface_id = 3;
+
+  // data type of the return value (for legacy HALs and shared libraries).
+  optional VariableSpecificationMessage return_type = 11;
+
+  // data type of the return value (for HIDL HALs).
+  repeated VariableSpecificationMessage return_type_hidl = 12;
+
+  // used to pass the spec of a found HAL_CONVENTIONAL_SUBMODULE to the host.
+  optional ComponentSpecificationMessage return_type_submodule_spec = 13;
+
+  // a list of arguments.
+  repeated VariableSpecificationMessage arg = 21;
+
+  // hidl annotation fields {
+
+  // a specification of the call flows of the function.
+  repeated CallFlowSpecificationMessage callflow = 31;
+  // if true, will not be fuzz tested.
+  optional bool do_not_fuzz = 32 [default = false];
+
+  // } hidl annotation fields
+
+  // whether it is a callback.
+  optional bool is_callback = 41 [deprecated = true];
+
+  // when it is a callback.
+  optional FunctionPointerSpecificationMessage function_pointer = 42;
+
+  // profiling data.
+  repeated float profiling_data = 101;
+
+  // measured processed coverage data.
+  repeated uint32 processed_coverage_data = 201;
+
+  // measured raw coverage data.
+  repeated NativeCodeCoverageRawDataMessage raw_coverage_data = 202;
+
+  // not a user-provided variable. used by the frameworks to tell the sub
+  // struct hierarchy.
+  optional bytes parent_path = 301;
+
+  // to specify a syscall number.
+  optional uint32 syscall_number = 401;
+}
+
+
+// To keep the value of a scalar variable.
+message ScalarDataValueMessage {
+  optional bool bool_t = 1;
+
+  optional int32 int8_t = 11;
+  optional uint32 uint8_t = 12;
+
+  optional int32 char = 13;
+  optional uint32 uchar = 14;
+
+  optional int32 int16_t = 21;
+  optional uint32 uint16_t = 22;
+
+  optional int32 int32_t = 31;
+  optional uint32 uint32_t = 32;
+
+  optional int64 int64_t = 41;
+  optional uint64 uint64_t = 42;
+
+  optional float float_t = 101;
+  optional double double_t = 102;
+
+  optional uint32 pointer = 201;
+  optional uint32 opaque = 202;
+  optional uint32 void_pointer = 211;
+  optional uint32 char_pointer = 212;
+  optional uint32 uchar_pointer = 213;
+  optional uint32 pointer_pointer = 251;
+}
+
+
+// To keep the specification and value of a function pointer.
+message FunctionPointerSpecificationMessage {
+  // used for a function pointer to keep its function name.
+  optional bytes function_name = 1;
+
+  // actual pointer value.
+  optional uint32 address = 11;
+  // ID used for VTS RMI (remote method invocation).
+  optional bytes id = 21;
+
+  // argument(s)
+  repeated VariableSpecificationMessage arg = 101;
+
+  // data type of the return value (for legacy HALs and shared libraries).
+  optional VariableSpecificationMessage return_type = 111;
+}
+
+
+// To keep the value of a string variable.
+message StringDataValueMessage {
+  // for actual contents.
+  optional bytes message = 1;
+
+  // for length in bytes, and usually not required.
+  optional uint32 length = 11;
+}
+
+
+// To keep the value of an enum type variable.
+message EnumDataValueMessage {
+  // for the enumerator names.
+  repeated bytes enumerator = 1;
+
+  // for the corresponding values.
+  repeated ScalarDataValueMessage scalar_value = 2;
+  optional bytes scalar_type = 3;
+}
+
+// To keep the value of a memory variable.
+message MemoryDataValueMessage {
+  optional int64 size = 1;
+  optional bytes contents = 2;
+}
+
+// Type of a file descriptor.
+enum FdType {
+  FILE_TYPE = 1;
+  DIR_TYPE = 2;
+  DEV_TYPE = 3;
+  PIPE_TYPE = 4;
+  SOCKET_TYPE = 5;
+  LINK_TYPE = 6;
+}
+
+// To keep the value of a file-descriptor.
+message FdMessage {
+  optional FdType type = 1;
+  optional uint32 mode = 2;
+  optional int32 flags = 3;
+  optional bytes file_name = 4;
+  // For shared memory.
+  optional MemoryDataValueMessage memory = 6;
+}
+
+// To keep the value of a handle variable.
+message HandleDataValueMessage {
+  // sizeof(native_handle_t)
+  optional int32 version = 1;
+  // number of file-descriptors.
+  optional int32 num_fds = 2;
+  // number of ints.
+  optional int32 num_ints = 3;
+  // file-descriptor values.
+  repeated FdMessage fd_val = 4;
+  // ints values
+  repeated int32 int_val = 5;
+}
+
+// To specify a function argument or an attribute in general.
+message VariableSpecificationMessage {
+  // the variable name. empty if for a type definition.
+  optional bytes name = 1;
+
+  // the variable type which is one of:
+  //     TYPE_SCALAR, TYPE_STRING, TYPE_ENUM, TYPE_ARRAY,
+  //     TYPE_VECTOR, TYPE_STRUCT, TYPE_UNION, TYPE_HIDL_CALLBACK,
+  //     TYPE_HIDL_INTERFACE, TYPE_HANDLE
+  //
+  // not yet supported:
+  //     "template", "typedef", "binder", "parcelable".
+  optional VariableType type = 2;
+
+  // the actual value(s) for an scalar data type.
+  // repeated values for a vector.
+  optional ScalarDataValueMessage scalar_value = 101;
+  optional bytes scalar_type = 102;
+
+  optional StringDataValueMessage string_value = 111;
+
+  // for the definition of enum type only.
+  // The value of an eunm variable is stored in scalar_value message.
+  optional EnumDataValueMessage enum_value = 121;
+
+  // for both TYPE_ARRAY (using size field) and TYPE_VECTOR.
+  repeated VariableSpecificationMessage vector_value = 131;
+  // Length of an array. Also used for TYPE_VECTOR at runtime.
+  optional int32 vector_size = 132;
+
+  // for sub variables when this's a struct type.
+  repeated VariableSpecificationMessage struct_value = 141;
+  // the type name of this struct.
+  optional bytes struct_type = 142;
+
+  // for nested struct type declarations (without actual definitions).
+  repeated VariableSpecificationMessage sub_struct = 143;
+
+  // for sub variables when this's a union type.
+  repeated VariableSpecificationMessage union_value = 151;
+  // the type name of this union.
+  optional bytes union_type = 152;
+
+  // for nested union type declarations (without actual definitions).
+  repeated VariableSpecificationMessage sub_union = 153;
+
+  // for the definition/value of TYPE_FMQ_SYNC and TYPE_FMQ_UNSYNC.
+  repeated VariableSpecificationMessage fmq_value = 161;
+
+  // for TYPE_REF.
+  optional VariableSpecificationMessage ref_value = 171;
+
+  // for TYPE_HIDL_MEMROY.
+  optional MemoryDataValueMessage hidl_memory_value =172;
+
+  // for TYPE_HANDLE.
+  optional HandleDataValueMessage handle_value =181;
+
+  // for non HIDL HAL, to use a custom type defined in C/C++.
+  optional bytes predefined_type = 201;
+
+  // for non HIDL HAL, to set function pointer(s).
+  repeated FunctionPointerSpecificationMessage function_pointer = 221;
+
+  // for HIDL HAL, to use a HIDL callback instance.
+  optional bytes hidl_callback_type = 231;
+
+  // for HIDL HAL, to specify the HIDL_INTERFACE ID. ID is used between
+  // a VTS driver and other modules (e.g., agent and host-side module).
+  optional int32 hidl_interface_id = 241;
+
+  // for HIDL HAL, to specify an HIDL interface's client proxy object's
+  // pointer value. Passed from a DriverBase instance to the VTS HAL driver
+  // framework as a return value of its CallFunction() method. Another use
+  // case is when this variable is passed to a DriverBase instance from the
+  // VTS HAL driver framework which can get this value from another
+  // (potentially nested or main) DriverBase instance.
+  optional uint64 hidl_interface_pointer = 242;
+
+  // true if the argument is an input (valid only for the top-level message).
+  optional bool is_input = 301 [default = true];
+  // true if the argument is an output.
+  optional bool is_output = 302 [default = false];
+  // true if the argument is a constant variable.
+  optional bool is_const = 303 [default = false];
+  // true if the argument is a struct with one or multiple function pointers.
+  optional bool is_callback = 304 [default = false];
+}
+
+
+// To specify a sub-structure.
+message StructSpecificationMessage {
+  // the sub-structure's variable name in its parent data structure.
+  optional bytes name = 1;
+
+  // whether itself a pointer varaible in its parent data structure.
+  optional bool is_pointer = 2 [default = false];
+
+  // a list of functions contained in the struct.
+  repeated FunctionSpecificationMessage api = 1001;
+
+  // a list of structures contained in the component.
+  repeated StructSpecificationMessage sub_struct = 2001;
+
+  // The definitions of custom-defined aggregate types.
+  repeated VariableSpecificationMessage attribute = 3001;
+}
+
+
+// To specify an interface of a component
+message InterfaceSpecificationMessage {
+  // whether this interface is a HIDL callback.
+  optional bool is_hidl_callback = 101 [default = false];
+
+  // a list of functions exposed by the component.
+  repeated FunctionSpecificationMessage api = 2001;
+
+  // The definitions of custom-defined aggregate types.
+  repeated VariableSpecificationMessage attribute = 3001;
+
+  // a list of structures contained in the component.
+  repeated StructSpecificationMessage sub_struct = 4001;
+}
+
+
+// To specify a module (which is logically equivalent to a .hal file in case
+// of a HIDL HAL).
+message ComponentSpecificationMessage {
+  // Class, type, and version of a target component.
+  optional ComponentClass component_class = 1;
+  optional ComponentType component_type = 2;
+  optional float component_type_version = 3 [default = 1.0];
+
+  // The name of a target component (used for HIDL HALs).
+  optional bytes component_name = 4;
+
+  // for the target processor architecture.
+  optional TargetArch target_arch = 5;
+
+  // The package path of a target component (e.g., android.hardware.name).
+  // name implies the component_type field.
+  optional bytes package = 11;
+
+  // The modules to import (e.g., package_path.component_name).
+  repeated bytes import = 12;
+
+  // The name of original C/C++ data structure
+  // (used for conventional and legacy HALs).
+  optional bytes original_data_structure_name = 1001;
+
+  // a list of headers that need to be imported in order to use the component.
+  repeated bytes header = 1002;
+
+  // For a .hal file which actually defines an interface.
+  optional InterfaceSpecificationMessage interface = 2001;
+
+  // For a .hal file which does not defines an interface (e.g., types.hal).
+  repeated VariableSpecificationMessage attribute = 2101;
+}

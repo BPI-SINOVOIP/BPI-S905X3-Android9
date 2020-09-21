@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2012 Google Inc. All Rights Reserved -->
+<configuration description="Runs xts stress tests">
+    <option name="test-tag" value="xts_stress_test" />
+
+    <!-- com.google.android.tradefed.targetprep.GoogleDeviceSetup -->
+    <option name="google-device-setup:screen-saver" value="off" />
+
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup">
+        <option name="apk-path" value="/google/data/ro/teams/tradefed/testdata/media/DrmMediaTests.apk" />
+    </target_preparer>
+
+    <test class="com.android.tradefed.testtype.InstrumentationTest">
+        <option name="class" value="com.google.android.wvdrm.media.test.MediaPlayerStressTest" />
+        <option name="method" value="testM2PS_H264_AAC_720P_WV_MULTI_720p_stress" />
+        <option name="package" value="com.google.android.wvdrm.media.test" />
+        <option name="runner" value="android.test.InstrumentationTestRunner" />
+        <option name="run-name" value="xts_stress_test" />
+        <option name="timeout" value="2000000" />
+        <option name="bugreport-on-failure" value="EACH" />
+    </test>
+</configuration>

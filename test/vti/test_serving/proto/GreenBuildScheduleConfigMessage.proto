@@ -1,0 +1,81 @@
+// Copyright 2018 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto2";
+
+package android.test.lab;
+
+// To specify a green build scheduling policy.
+message GreenBuildScheduleConfigMessage {
+  // Schedule name.
+  optional bytes name = 1;
+
+  // Schedule description (e.g., daily/HH:MM)
+  optional bytes schedule = 2;
+
+  // Scheduling priority (e.g., top, high, medium, low)
+  optional bytes priority = 3;
+
+  // if GSI (General System Image) is used, GSI manifest branch name.
+  optional bytes gsi_branch = 11;
+
+  // if GSI (General System Image) is used, GSI PAB account ID.
+  optional bytes gsi_pab_account_id = 12;
+
+  // Test package's manifest branch name.
+  optional bytes test_branch = 21;
+
+  // PAB account ID for test package.
+  optional bytes test_pab_account_id = 22;
+
+  repeated GreenBuildTestScheduleConfigMessage test = 31;
+}
+
+// To specify a test plan scheduling policy.
+message GreenBuildTestScheduleConfigMessage {
+  // Test name (e.g., test_group/test_plan)
+  optional bytes test_name = 1;
+
+  // Test package's build target name.
+  optional bytes test_build_target = 11;
+
+  // Device manifest branch name.
+  optional bytes device_branch = 21;
+
+  // Device PAB account ID.
+  optional bytes device_pab_account_id = 22;
+
+  repeated GreenBuildDeviceScheduleConfigMessage device = 31;
+}
+
+// To specify a device scheduling policy.
+message GreenBuildDeviceScheduleConfigMessage {
+  // Device type (format: <lab>/<device type>)
+  optional bytes device = 1;
+
+  // Number of shards (0 for auto selection)
+  optional int32 shards = 11;
+
+  // Device manifest branch name if different.
+  optional bytes device_branch = 21;
+
+  // Device build target if different.
+  optional bytes device_build_target = 22;
+
+  // Device PAB account ID if different.
+  optional bytes device_pab_account_id = 23;
+
+  // GSI's build target name.
+  optional bytes gsi_build_target = 31;
+}

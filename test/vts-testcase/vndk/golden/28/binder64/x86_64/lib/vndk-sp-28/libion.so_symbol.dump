@@ -1,0 +1,12 @@
+ion_alloc
+ion_alloc_fd
+ion_close
+ion_free
+ion_import
+ion_is_legacy
+ion_map
+ion_open
+ion_query_get_heaps
+ion_query_heap_cnt
+ion_share
+ion_sync_fd

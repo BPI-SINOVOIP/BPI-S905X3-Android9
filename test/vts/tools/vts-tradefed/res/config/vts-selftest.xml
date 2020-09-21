@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2017 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<configuration description="VTS Self Test Plan">
+  <include name="vts-base" />
+  <option name="plan" value="vts" />
+  <option name="test-tag" value="vts-star" />
+  <option name="vts-plan-result:plan-name" value="vts-selftest" />
+  <option name="compatibility:primary-abi-only" value="true" />
+
+  <!-- VTS self test modules -->
+  <!-- option name="compatibility:include-filter" value="VtsSelfTestBaseTest" />
+  <option name="compatibility:include-filter" value="VtsSelfTestPythonVirtualenvPreparerTestPart1" />
+  <option name="compatibility:include-filter" value="VtsSelfTestPythonVirtualenvPreparerTestPart2" /-->
+
+  <!-- option name="compatibility:test-arg" value="com.android.tradefed.testtype.VtsMultiDeviceTest:run-as-vts-self-test:true" /-->
+
+  <!-- Regular test modules running in vts self test mode -->
+  <option name="compatibility:include-filter" value="ShellBinaryCrashTest" />
+
+  <!-- For Treble-specific validations -->
+  <!-- option name="compatibility:include-filter" value="VtsTreblePlatformVersionTest" />
+  <option name="compatibility:include-filter" value="VtsTrebleVintfTest" /-->
+
+  <!-- From vts-hal-hidl.xml -->
+  <!-- option name="compatibility:include-filter" value="VtsHalBluetoothV1_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalBootV1_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalIrV1_0Target" />
+  <option name="compatibility:include-filter" value="VtsHalNfcV1_0Target" /-->
+
+  <!-- From vts-kernel.xml -->
+  <!-- option name="compatibility:include-filter" value="VtsKernelLtp" />
+  <option name="compatibility:include-filter" value="VtsKernelProcFileApi" />
+  <option name="compatibility:include-filter" value="VtsKernelLinuxKselftest" />
+  <option name="compatibility:include-filter" value="VtsKernelLinuxKselftestPresubmit" />
+  <option name="compatibility:include-filter" value="VtsKernelSyscallExistence" />
+  <option name="compatibility:include-filter" value="VtsKernelApiSysfsTest" />
+  <option name="compatibility:include-filter" value="VtsKernelBinderTest" />
+  <option name="compatibility:include-filter" value="VtsKernelConfig" />
+  <option name="compatibility:include-filter" value="VtsKernelHwBinder" />
+  <option name="compatibility:include-filter" value="VtsKernelLibcutilsTest" />
+  <option name="compatibility:include-filter" value="VtsKernelNetdTest" />
+  <option name="compatibility:include-filter" value="VtsKernelSelinuxFileApi" />
+  <option name="compatibility:include-filter" value="VtsKernelTunTest" />
+  <option name="compatibility:include-filter" value="VtsKernelQtaguidTest" /-->
+
+  <!--  From vts-vndk.xml -->
+  <!-- option name="compatibility:include-filter" value="VtsVndkDependency" /-->
+
+  <!-- For Hidl Hal replay tests -->
+  <!-- option name="compatibility:include-filter" value="VtsHalNfcV1_0TargetReplay" /-->
+
+</configuration>

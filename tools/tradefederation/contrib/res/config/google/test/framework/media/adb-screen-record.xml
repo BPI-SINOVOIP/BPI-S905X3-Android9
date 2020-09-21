@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved -->
+<configuration description="Test adb 'screenrecord' command">
+
+  <option name="test-tag" value="AdbScreenRecord" />
+
+  <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceSetup">
+    <option name="screen-always-on" value="on" />
+    <option name="screen-adaptive-brightness" value="off" />
+    <option name="disable-audio" value="false"/>
+    <option name="screen-saver" value="off"/>
+  </target_preparer>
+
+  <test class="com.android.media.tests.AdbScreenrecordTest" />
+
+</configuration>

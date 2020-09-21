@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no' ?><?xml-stylesheet type="text/xsl" href="vts_result.xsl"?>
+<Result start="1504258200493" end="1504258240603" start_display="Fri Sep 01 17:30:00 CST 2017" end_display="Fri Sep 01 17:30:40 CST 2017" suite_name="VTS" suite_version="8.0" suite_plan="vts" suite_build_number="test123456" report_version="5.0" command_line_args="vts -m SampleShellTest -a arm64-v8a" devices="TEST123456" host_name="unit.test.google.com" os_name="Linux" os_version="4.4.0-92-generic" os_arch="amd64" java_vendor="JetBrains s.r.o" java_version="1.8.0_152-android">
+  <Build build_abis_64="arm64-v8a" build_manufacturer="unknown" build_abis_32="armeabi-v7a,armeabi" build_product="aosp_arm64_ab" build_brand="Android" build_board="sailfish" build_serial="TEST123456" build_version_security_patch="2017-10-05" build_system_fingerprint="Android/aosp_arm64_ab/generic_arm64_ab:8.0.0/OC/4311089:userdebug/test-keys" build_reference_fingerprint="null" build_fingerprint="Android/aosp_sailfish/sailfish:8.0.0/OC/4311111:userdebug/test-keys" build_version_sdk="26" build_abis="arm64-v8a,armeabi-v7a,armeabi" build_device="generic_arm64_ab" build_abi="arm64-v8a" build_model="AOSP on ARM64" build_id="OC" build_abi2="null" build_vendor_fingerprint="Android/aosp_sailfish/sailfish:8.0.0/OC/4311111:userdebug/test-keys" build_version_release="8.0.0" build_version_base_os="" build_type="userdebug" build_tags="test-keys" />
+  <Summary pass="7" failed="0" modules_done="1" modules_total="1" />
+  <Module name="SampleShellTest" abi="arm64-v8a" runtime="21450" done="true" pass="7">
+    <TestCase name="SampleShellTest">
+      <Test result="pass" name="testCommandList" />
+      <Test result="pass" name="testCommandSequenceCd" />
+      <Test result="pass" name="testCommandSequenceExport" />
+      <Test result="pass" name="testCommandSequenceMktemp" />
+      <Test result="pass" name="testMultipleCommands" />
+      <Test result="pass" name="testMultipleShells" />
+      <Test result="pass" name="testOneCommand" />
+    </TestCase>
+  </Module>
+</Result>

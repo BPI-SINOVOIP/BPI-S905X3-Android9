@@ -1,0 +1,16 @@
+vtable for RsdShader
+_ZTV9RsdShader: 2 entries
+16    (int (*)(...)) _ZN9RsdShaderD2Ev
+24    (int (*)(...)) _ZN9RsdShaderD0Ev
+
+
+vtable for RsdShaderCache
+_ZTV14RsdShaderCache: 2 entries
+16    (int (*)(...)) _ZN14RsdShaderCacheD2Ev
+24    (int (*)(...)) _ZN14RsdShaderCacheD0Ev
+
+
+vtable for RsdVertexArray
+_ZTV14RsdVertexArray: 2 entries
+16    (int (*)(...)) _ZN14RsdVertexArrayD2Ev
+24    (int (*)(...)) _ZN14RsdVertexArrayD0Ev

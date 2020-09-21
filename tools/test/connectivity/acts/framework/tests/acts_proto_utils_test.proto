@@ -1,0 +1,22 @@
+syntax = "proto2";
+
+package bt_metrics_utils_test;
+
+message TestProtoEntry {
+  message NestedType {
+    enum EnumType {
+      AAA = 0;
+      BBB = 1;
+    }
+    optional string name = 1;
+    optional EnumType type = 2;
+  }
+
+  optional string name = 1;
+  optional int32 id = 2;
+  repeated NestedType nested = 3;
+}
+
+message TestProto {
+  repeated TestProtoEntry entries = 1;
+}

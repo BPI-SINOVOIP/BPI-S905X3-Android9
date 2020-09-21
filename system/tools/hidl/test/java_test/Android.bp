@@ -1,0 +1,24 @@
+cc_test {
+    name: "hidl_test_java_native",
+    srcs: ["hidl_test_java_native.cpp"],
+
+    cflags: ["-Wall", "-Werror"],
+
+    shared_libs: [
+        "libbase",
+        "libhidlbase",
+        "libhidltransport",
+        "libhwbinder",
+        "liblog",
+        "libutils",
+        "android.hardware.tests.baz@1.0",
+        "android.hardware.tests.expression@1.0",
+        "android.hardware.tests.inheritance@1.0",
+    ],
+
+    required: [
+        "android.hardware.tests.baz@1.0-impl",
+    ],
+
+    compile_multilib: "both",
+}

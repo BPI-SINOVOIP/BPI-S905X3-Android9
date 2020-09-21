@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+{% autoescape true %}
+<html>
+  <head>
+    <!-- [START css] -->
+    <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.css">
+    <!-- [END css] -->
+    <style type="text/css">
+      body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #f5f5f5;
+      }
+      blockquote {
+        margin-bottom: 10px;
+        border-left-color: #bbb;
+      }
+      form {
+        margin-top: 10px;
+      }
+      .form-signin input[type="text"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+      }
+      .row {
+        margin-left: 0px;
+        margin-top: 10px;
+        overflow: scroll;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse"
+               data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">VTS Test Scheduler</a>
+           <a class="brand" href="/result">Result</a>
+           <a class="brand" href="/build">Build</a>
+           <a class="brand" href="/schedule">Schedule</a>
+           <a class="brand" href="/device">Device &amp; Lab</a>
+           <a class="brand" href="/job">Job Queue</a>
+          <div class="nav-collapse collapse pull-right">
+            <a href="{{ url|safe }}" class="btn">{{ url_linktext }}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <h1>Device List</h1>
+      <!-- [START greetings] -->
+      Now: {{ now }}
+      <table border=1>
+      <tr>
+        <td>#
+        <td>Host
+        <td>Product
+        <td>Serial
+        <td>Status
+        <td>Scheduling Status
+        <td>Timestamp
+      </tr>
+      {% set index = 1 %}
+      {% for device in devices %}
+      <tr>
+        <td>
+          {{ index }}
+          {% set index = index + 1 %}
+        <td>
+          {{ device.hostname }}
+        <td>
+          {{ device.product }}
+        <td>
+          {{ device.serial }}
+        <td>
+          {{ {0: "unknown",
+              1: "fastboot",
+              2: "online",
+              3: "ready",
+              4: "use",
+              5: "error",
+              6: "no-response"}[device.status] | default("status key error") }}
+        <td>
+          {{ {0: "free",
+              1: "reserved",
+              2: "use"}[device.scheduling_status] | default("status key error") }}
+        <td>
+          {{ device.timestamp }}
+      </tr>
+      {% endfor %}
+      </table>
+      <!-- [END greetings] -->
+      <h1>Lab List</h1>
+      <!-- [START greetings] -->
+      <table border=1>
+      <tr>
+        <td>#
+        <td>Name
+        <td>Owner
+        <td>Hostname
+        <td>IP
+        <td>Script
+      </tr>
+      {% set index = 1 %}
+      {% for lab in labs %}
+      <tr>
+        <td>
+          {{ index }}
+          {% set index = index + 1 %}
+        <td>
+          {{ lab.name }}
+        <td>
+          {{ lab.owner }}
+        <td>
+          {{ lab.hostname }}
+        <td>
+          {{ lab.ip }}
+        <td>
+          {{ lab.script }}
+      </tr>
+      {% endfor %}
+      </table>
+      <hr>
+    </div>
+  </body>
+</html>
+{% endautoescape %}

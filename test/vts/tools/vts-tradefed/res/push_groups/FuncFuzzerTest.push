@@ -1,0 +1,5 @@
+DATA/lib/libclang_rt.asan-arm-android.so->/data/local/tmp/32/libclang_rt.asan-arm-android.so
+DATA/lib64/libclang_rt.asan-aarch64-android.so->/data/local/tmp/64/libclang_rt.asan-aarch64-android.so
+
+DATA/asan/system/lib/libvts_func_fuzzer_utils.so->/data/local/tmp/32/libvts_func_fuzzer_utils.so
+DATA/asan/system/lib64/libvts_func_fuzzer_utils.so->/data/local/tmp/64/libvts_func_fuzzer_utils.so

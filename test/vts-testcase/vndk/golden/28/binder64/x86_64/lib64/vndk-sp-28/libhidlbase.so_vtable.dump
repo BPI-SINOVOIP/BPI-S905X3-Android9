@@ -1,0 +1,17 @@
+vtable for android::hardware::details::HidlInstrumentor
+_ZTVN7android8hardware7details16HidlInstrumentorE: 2 entries
+16    (int (*)(...)) _ZN7android8hardware7details16HidlInstrumentorD2Ev
+24    (int (*)(...)) _ZN7android8hardware7details16HidlInstrumentorD0Ev
+
+
+vtable for android::hardware::HidlMemory
+_ZTVN7android8hardware10HidlMemoryE: 9 entries
+32    (int (*)(...)) _ZN7android8hardware10HidlMemoryD1Ev
+40    (int (*)(...)) _ZN7android8hardware10HidlMemoryD0Ev
+104    (int (*)(...)) _ZTv0_n24_N7android8hardware10HidlMemoryD1Ev
+112    (int (*)(...)) _ZTv0_n24_N7android8hardware10HidlMemoryD0Ev
+120    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+128    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+136    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+144    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+152    (int (*)(...)) _ZTVN7android8hardware10HidlMemoryE

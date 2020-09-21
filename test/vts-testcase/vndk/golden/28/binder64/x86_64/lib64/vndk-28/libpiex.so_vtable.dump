@@ -1,0 +1,4 @@
+vtable for piex::binary_parse::PagedByteArray
+_ZTVN4piex12binary_parse14PagedByteArrayE: 2 entries
+16    (int (*)(...)) _ZN4piex12binary_parse14PagedByteArrayD2Ev
+24    (int (*)(...)) _ZN4piex12binary_parse14PagedByteArrayD0Ev

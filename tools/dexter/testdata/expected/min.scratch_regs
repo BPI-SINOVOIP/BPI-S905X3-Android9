@@ -1,0 +1,15 @@
+
+method Minimal.<init>():void
+{
+	.src "min.java"
+	.line 2
+	    0| move-object/16 v15, v25
+	    3| move-object/16 v14, v15
+	    6| move-object/16 v13, v14
+	.prologue_end
+	.line 2
+	    9| move-object v11, v13
+	   10| move-object v12, v11
+	   11| invoke-direct {v12}, java.lang.Object.<init>():void
+	   14| return-void
+}

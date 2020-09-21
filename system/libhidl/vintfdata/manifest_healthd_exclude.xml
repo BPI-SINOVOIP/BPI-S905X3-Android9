@@ -1,0 +1,15 @@
+<!--
+    Include this file to DEVICE_FRAMEWORK_MANIFEST_FILE to disable
+    having an healthd on the device which is not needed if you have
+    an alternative implementation like the following:
+    (1) Device has android.hardware.health@2.0-service.override
+    (2) Device has android.hardware.health@2.0-service.<device>, which
+        contains the following:
+        overrides: ["healthd"]
+-->
+<manifest version="1.0" type="framework">
+    <hal format="hidl" override="true">
+        <name>android.hardware.health</name>
+        <transport>hwbinder</transport>
+    </hal>
+</manifest>

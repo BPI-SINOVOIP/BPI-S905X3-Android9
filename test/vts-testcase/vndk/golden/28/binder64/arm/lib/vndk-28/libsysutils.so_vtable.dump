@@ -1,0 +1,29 @@
+vtable for SocketListener
+_ZTV14SocketListener: 2 entries
+8    (int (*)(...)) _ZN14SocketListenerD2Ev
+12    (int (*)(...)) _ZN14SocketListenerD0Ev
+
+
+vtable for FrameworkListener
+_ZTV17FrameworkListener: 2 entries
+8    (int (*)(...)) _ZN14SocketListenerD2Ev
+16    (int (*)(...)) _ZN17FrameworkListener15onDataAvailableEP12SocketClient
+
+
+vtable for NetlinkListener
+_ZTV15NetlinkListener: 3 entries
+8    (int (*)(...)) _ZN14SocketListenerD2Ev
+12    (int (*)(...)) _ZN14SocketListenerD0Ev
+16    (int (*)(...)) _ZN15NetlinkListener15onDataAvailableEP12SocketClient
+
+
+vtable for NetlinkEvent
+_ZTV12NetlinkEvent: 2 entries
+8    (int (*)(...)) _ZN12NetlinkEventD2Ev
+12    (int (*)(...)) _ZN12NetlinkEventD0Ev
+
+
+vtable for SocketClient
+_ZTV12SocketClient: 2 entries
+8    (int (*)(...)) _ZN12SocketClientD2Ev
+12    (int (*)(...)) _ZN12SocketClientD0Ev

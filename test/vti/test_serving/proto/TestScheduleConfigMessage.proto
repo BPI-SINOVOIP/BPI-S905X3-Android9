@@ -1,0 +1,94 @@
+// Copyright 2017 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto2";
+
+package android.test.lab;
+
+// Type of a command.
+enum BuildStorageType {
+  UNKNOWN_BUILD_STORAGE_TYPE = 0;
+  // For Partner Android Build (PAB)
+  BUILD_STORAGE_TYPE_PAB = 1;
+  // For a Google Cloud Storage (GCS) bucket
+  BUILD_STORAGE_TYPE_GCS = 2;
+}
+
+// To specify the whole test execution schedule of a manifest branch.
+message ScheduleConfigMessage {
+  // Manifest branch name.
+  optional bytes manifest_branch = 1;
+
+  // PAB account ID.
+  optional bytes pab_account_id = 2;
+
+  // Device image storage type (e.g., PAB or GCS)
+  optional BuildStorageType build_storage_type = 3 [default = BUILD_STORAGE_TYPE_PAB];
+
+  // For the IP address.
+  repeated BuildScheduleConfigMessage build_target = 11;
+}
+
+message BuildScheduleConfigMessage {
+  // build target name (e.g., aosp_taimen-userdebug)
+  optional bytes name = 1;
+
+  repeated TestScheduleConfigMessage test_schedule = 11;
+}
+
+message TestScheduleConfigMessage {
+  // Test name (e.g., test_group/test_plan)
+  optional bytes test_name = 1;
+
+  // Scheduling period in minutes
+  optional int32 period = 2;
+
+  // Priority such as high, low, or medium
+  optional bytes priority = 3;
+
+  // such as <lab>/<device type>
+  repeated bytes device = 4;
+
+  // number of shards (-1 for auto selection?)
+  optional int32 shards = 5;
+
+  optional bytes param = 11;
+
+  // GSI storage type (e.g., PAB or GCS)
+  optional BuildStorageType gsi_storage_type = 24 [default = BUILD_STORAGE_TYPE_PAB];
+
+  // if GSI (General System Image) is used, GSI manifest branch name.
+  optional bytes gsi_branch = 21;
+
+  // if GSI (General System Image) is used, GSI build target name.
+  optional bytes gsi_build_target = 22;
+
+  // if GSI (General System Image) is used, GSI PAB account ID.
+  optional bytes gsi_pab_account_id = 23;
+
+  // Test package's storage type (e.g., PAB or GCS)
+  optional BuildStorageType test_storage_type = 34 [default = BUILD_STORAGE_TYPE_PAB];
+
+  // Test package's manifest branch name.
+  optional bytes test_branch = 31;
+
+  // Test package's build target name.
+  optional bytes test_build_target = 32;
+
+  // PAB account ID for test package.
+  optional bytes test_pab_account_id = 33;
+
+  // number of retry count
+  optional int32 retry_count = 41;
+}

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2016 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<configuration description="Config for VTS BionicUnitTestsStatic test cases">
+    <option name="config-descriptor:metadata" key="plan" value="vts-library" />
+    <target_preparer class="com.android.compatibility.common.tradefed.targetprep.VtsFilePusher">
+        <option name="push-group" value="HostDrivenTest.push" />
+        <option name="push" value="DATA/nativetest/bionic-loader-test-libs->/data/nativetest/bionic-loader-test-libs" />
+        <option name="push" value="DATA/nativetest64/bionic-loader-test-libs->/data/nativetest64/bionic-loader-test-libs" />
+    </target_preparer>
+    <test class="com.android.tradefed.testtype.VtsMultiDeviceTest">
+        <option name="test-module-name" value="BionicUnitTestsStatic" />
+        <option name="binary-test-source" value="_32bit::DATA/nativetest/bionic-unit-tests-static/bionic-unit-tests-static->/data/nativetest/bionic-unit-tests-static/bionic-unit-tests-static" />
+        <option name="binary-test-source" value="_64bit::DATA/nativetest64/bionic-unit-tests-static/bionic-unit-tests-static->/data/nativetest64/bionic-unit-tests-static/bionic-unit-tests-static" />
+        <option name="binary-test-type" value="gtest" />
+        <option name="exclude-filter" value="pthread.big_enough_signal_stack" />
+        <option name="exclude-filter" value="pthread.big_enough_signal_stack_for_64bit_arch" />
+        <option name="exclude-filter" value="semaphore.sem_wait_no_EINTR_in_sdk_less_equal_than_23" />
+        <option name="exclude-filter" value="semaphore.sem_wait_EINTR_in_sdk_greater_than_23" />
+        <option name="exclude-filter" value="stack_unwinding.easy" />
+        <option name="exclude-filter" value="stack_unwinding.unwind_through_signal_frame" />
+        <option name="exclude-filter" value="stack_unwinding.unwind_through_signal_frame_SA_SIGINFO" />
+        <option name="exclude-filter" value="wctype.iswalnum" />
+        <option name="exclude-filter" value="wctype.iswalpha" />
+        <option name="exclude-filter" value="wctype.iswblank" />
+        <option name="exclude-filter" value="wctype.iswcntrl" />
+        <option name="exclude-filter" value="wctype.iswdigit" />
+        <option name="exclude-filter" value="wctype.iswgraph" />
+        <option name="exclude-filter" value="wctype.iswlower" />
+        <option name="exclude-filter" value="wctype.iswprint" />
+        <option name="exclude-filter" value="wctype.iswpunct" />
+        <option name="exclude-filter" value="wctype.iswspace" />
+        <option name="exclude-filter" value="wctype.iswupper" />
+        <option name="exclude-filter" value="wctype.iswxdigit" />
+        <option name="exclude-filter" value="wctype.towlower" />
+        <option name="exclude-filter" value="wctype.towlower_l" />
+        <option name="exclude-filter" value="wctype.towupper" />
+        <option name="exclude-filter" value="wctype.towupper_l" />
+    </test>
+</configuration>

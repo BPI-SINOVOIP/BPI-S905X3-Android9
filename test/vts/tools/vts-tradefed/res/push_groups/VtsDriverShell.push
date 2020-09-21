@@ -1,0 +1,4 @@
+VtsAgent.push
+
+DATA/bin/vts_shell_driver32->/data/local/tmp/32/vts_shell_driver32
+DATA/bin/vts_shell_driver64->/data/local/tmp/64/vts_shell_driver64

@@ -1,0 +1,38 @@
+{
+    "_description": "This and example IOT WiFi testbed.",
+    "testbed": [
+        {
+            "_description": "WiFi testbed with 1 devices",
+            "name": "<test station name>",
+            "AndroidDevice": [
+                "<device serial>"
+            ],
+            "IPerfServer": [
+                5005
+            ]
+        }
+    ],
+    "logpath": "/tmp/ACTS_logs",
+    "testpaths": [
+        "<path to acts root>/tools/test/connectivity/acts/tests/google/wifi"
+    ],
+    "iot_networks": [
+        {
+            "SSID": "<your SSID 2G>",
+            "password": "<your password>"
+        },
+        {
+            "SSID": "<your SSID 5G>",
+            "password": "<your password>"
+        },
+        {
+            "SSID": "<your SSID 2G 2>",
+            "password": "<your password>"
+        },
+        {
+            "SSID": "<your SSID 5G 2>",
+            "password": "<your password>"
+        }
+    ],
+    "iperf_server_address": "<your IP address>"
+}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="hamcrest"/>
+	<classpathentry kind="src" path="protobuf"/>
+	<classpathentry kind="src" path="jline"/>
+	<classpathentry kind="src" path="junit"/>
+	<classpathentry kind="src" path="proto_gen"/>
+	<classpathentry kind="src" path="res"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="var" path="TRADEFED_ROOT/prebuilts/misc/common/kxml2/kxml2-2.3.0.jar"/>
+	<classpathentry exported="true" kind="var" path="TRADEFED_ROOT/prebuilts/misc/common/sdklib/sdklib-prebuilt.jar"/>
+	<classpathentry exported="true" kind="var" path="TRADEFED_ROOT/prebuilts/sdk/tools/jack-jacoco-reporter.jar"/>
+	<classpathentry exported="true" kind="var" path="TRADEFED_ROOT/prebuilts/misc/common/commons-compress/commons-compress-prebuilt.jar"/>
+	<classpathentry exported="true" kind="var" path="TRADEFED_ROOT/prebuilts/misc/common/devtools-annotations/devtools-annotations-prebuilt.jar"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/tf-remote-client"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/loganalysis"/>
+	<classpathentry kind="var" path="TRADEFED_ROOT/out/host/common/obj/JAVA_LIBRARIES/host-libprotobuf-java-full_intermediates/classes.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ddmlib"/>
+	<classpathentry kind="var" path="TRADEFED_ROOT/external/error_prone/error_prone/error_prone_annotations-2.2.0.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/LongevityRunner"/>
+	<classpathentry kind="var" path="TRADEFED_ROOT/out/host/common/obj/JAVA_LIBRARIES/junit-params-host_intermediates/classes.jar"/>
+	<classpathentry kind="var" path="TRADEFED_ROOT/out/host/common/obj/JAVA_LIBRARIES/guice_intermediates/classes.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

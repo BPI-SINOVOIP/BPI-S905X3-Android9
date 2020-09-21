@@ -1,0 +1,40 @@
+vtable for gatekeeper::VerifyRequest
+_ZTVN10gatekeeper13VerifyRequestE: 5 entries
+16    (int (*)(...)) _ZN10gatekeeper13VerifyRequestD2Ev
+24    (int (*)(...)) _ZN10gatekeeper13VerifyRequestD0Ev
+32    (int (*)(...)) _ZNK10gatekeeper13VerifyRequest22nonErrorSerializedSizeEv
+40    (int (*)(...)) _ZNK10gatekeeper13VerifyRequest17nonErrorSerializeEPh
+48    (int (*)(...)) _ZN10gatekeeper13VerifyRequest19nonErrorDeserializeEPKhS2_
+
+
+vtable for gatekeeper::VerifyResponse
+_ZTVN10gatekeeper14VerifyResponseE: 5 entries
+16    (int (*)(...)) _ZN10gatekeeper14VerifyResponseD2Ev
+24    (int (*)(...)) _ZN10gatekeeper14VerifyResponseD0Ev
+32    (int (*)(...)) _ZNK10gatekeeper14VerifyResponse22nonErrorSerializedSizeEv
+40    (int (*)(...)) _ZNK10gatekeeper14VerifyResponse17nonErrorSerializeEPh
+48    (int (*)(...)) _ZN10gatekeeper14VerifyResponse19nonErrorDeserializeEPKhS2_
+
+
+vtable for gatekeeper::EnrollRequest
+_ZTVN10gatekeeper13EnrollRequestE: 5 entries
+16    (int (*)(...)) _ZN10gatekeeper13EnrollRequestD2Ev
+24    (int (*)(...)) _ZN10gatekeeper13EnrollRequestD0Ev
+32    (int (*)(...)) _ZNK10gatekeeper13EnrollRequest22nonErrorSerializedSizeEv
+40    (int (*)(...)) _ZNK10gatekeeper13EnrollRequest17nonErrorSerializeEPh
+48    (int (*)(...)) _ZN10gatekeeper13EnrollRequest19nonErrorDeserializeEPKhS2_
+
+
+vtable for gatekeeper::EnrollResponse
+_ZTVN10gatekeeper14EnrollResponseE: 5 entries
+16    (int (*)(...)) _ZN10gatekeeper14EnrollResponseD2Ev
+24    (int (*)(...)) _ZN10gatekeeper14EnrollResponseD0Ev
+32    (int (*)(...)) _ZNK10gatekeeper14EnrollResponse22nonErrorSerializedSizeEv
+40    (int (*)(...)) _ZNK10gatekeeper14EnrollResponse17nonErrorSerializeEPh
+48    (int (*)(...)) _ZN10gatekeeper14EnrollResponse19nonErrorDeserializeEPKhS2_
+
+
+vtable for gatekeeper::GateKeeper
+_ZTVN10gatekeeper10GateKeeperE: 2 entries
+104    (int (*)(...)) _ZN10gatekeeper10GateKeeper19ComputeRetryTimeoutEPKNS_16failure_record_tE
+120    (int (*)(...)) _ZN10gatekeeper10GateKeeper8DoVerifyEPKNS_17password_handle_tERKNS_11SizedBufferE

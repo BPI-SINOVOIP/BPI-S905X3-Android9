@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2017 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<configuration description="Config for VTS Framework Integration Test Case">
+    <option name="config-descriptor:metadata" key="plan" value="vts-misc" />
+    <target_preparer class="com.android.compatibility.common.tradefed.targetprep.VtsFilePusher">
+        <option name="push-group" value="HostDrivenTest.push" />
+    </target_preparer>
+    <test class="com.android.tradefed.testtype.VtsMultiDeviceTest">
+        <option name="test-module-name" value="VtsSelfTestBaseTest"/>
+        <option name="test-case-path" value="vts/testcases/vts_selftest/test_framework/base_test/VtsSelfTestBaseTest" />
+    </test>
+    <test class="com.android.tradefed.testtype.VtsMultiDeviceTest">
+        <option name="test-module-name" value="VtsSelfTestBaseTestFilterInclude"/>
+        <option name="test-case-path" value="vts/testcases/vts_selftest/test_framework/base_test/VtsSelfTestBaseTestFilterInclude" />
+        <option name="include-filter" value="suite1.test1"/>
+        <option name="include-filter" value="suite1.test2_32bit"/>
+        <option name="include-filter" value="r(suite2\..*)"/>
+        <option name="include-filter" value="VtsSelfTestBaseTestFilterInclude.suite3.test1"/>
+    </test>
+    <test class="com.android.tradefed.testtype.VtsMultiDeviceTest">
+        <option name="test-module-name" value="VtsSelfTestBaseTestFilterExclude"/>
+        <option name="test-case-path" value="vts/testcases/vts_selftest/test_framework/base_test/VtsSelfTestBaseTestFilterExclude" />
+        <option name="exclude-filter" value="suite1.test1"/>
+        <option name="exclude-filter" value="suite1.test2_32bit"/>
+        <option name="exclude-filter" value="r(suite2\..*2_.*)"/>
+        <option name="exclude-filter" value="r(*)"/>
+        <option name="include-filter" value="-suite3.test1"/>
+        <option name="include-filter" value="-r(suite3\..*_32bit)"/>
+    </test>
+    <test class="com.android.tradefed.testtype.VtsMultiDeviceTest">
+        <option name="test-module-name" value="VtsSelfTestBaseTestFilterIncludeExclude"/>
+        <option name="test-case-path" value="vts/testcases/vts_selftest/test_framework/base_test/VtsSelfTestBaseTestFilterIncludeExclude" />
+        <option name="include-filter" value="r(.*_32bit)"/>
+        <option name="include-filter" value="\r(fake.regex)"/>
+        <option name="exclude-filter" value="suite1.test1"/>
+    </test>
+    <test class="com.android.tradefed.testtype.VtsMultiDeviceTest">
+        <option name="test-module-name" value="VtsSelfTestBaseTestFilterExcludeInclude"/>
+        <option name="test-case-path" value="vts/testcases/vts_selftest/test_framework/base_test/VtsSelfTestBaseTestFilterExcludeInclude" />
+        <option name="include-filter" value="r(.*_32bit)"/>
+        <option name="include-filter" value="suite1.test1_64bit"/>
+        <option name="exclude-filter" value="suite1.test1"/>
+        <option name="exclude-over-include" value="true"/>
+    </test>
+</configuration>

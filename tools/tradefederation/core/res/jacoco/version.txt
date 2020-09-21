@@ -1,0 +1,2 @@
+This is the distribution of version 0.7.7.201606060606 created on 2016/06/06 based on commit
+https://github.com/jacoco/jacoco/tree/342ce88eed1bf1d892e31e6fe585531d16da5971

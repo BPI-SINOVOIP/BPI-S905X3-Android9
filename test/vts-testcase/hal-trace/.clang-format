@@ -1,0 +1,13 @@
+---
+Language: Cpp
+BasedOnStyle: Google
+ColumnLimit: 80
+IndentWidth: 2
+ContinuationIndentWidth: 4
+---
+Language: Java
+BasedOnStyle: Google
+ColumnLimit: 100
+IndentWidth: 4
+ContinuationIndentWidth: 8
+...

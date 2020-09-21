@@ -1,0 +1,30 @@
+[==========] Running 18 tests from 10 test cases.
+[    OK    ] error_DeathTest.error_exit_with_errno (24 ms)
+[    OK    ] error_DeathTest.error_exit (27 ms)
+[    OK    ] error_DeathTest.error_at_line_exit (26 ms)
+[    OK    ] pthread_DeathTest.pthread_mutex_lock_null_64 (15 ms)
+[  INFO ] bionic/tests/pthread_test.cpp:1765:: This test tests bionic implementation
+details on 64 bit devices.
+[    OK    ] error_DeathTest.error_at_line_exit_with_errno (25 ms)
+[    OK    ] pthread_DeathTest.pthread_mutex_unlock_null_64 (10 ms)
+[  INFO ]
+bionic/tests/pthread_test.cpp:1774:: This test tests bionic implementation
+details on 64 bit devices.
+[    OK    ] pthread_DeathTest.pthread_bug_37410 (30 ms)
+[    OK    ] semaphore_DeathTest.sem_timedwait_null_timeout (9 ms)
+[    OK    ] stack_protector_DeathTest.modify_stack_protector (19 ms)
+[    OK    ] stdlib_DeathTest.getenv_after_main_thread_exits (20 ms)
+[    OK    ] properties_DeathTest.read_only (18 ms)
+[    OK    ] unistd_nofortify_DeathTest.abort (19 ms)
+[    OK    ] unistd_DeathTest.abort (19 ms)
+[    OK    ] stack_protector.global_guard (7 ms)
+[  FAILED  ] stack_unwinding.easy (5 ms)
+stack_unwinding.easy terminated by signal: Segmentation fault.
+[  FAILED  ] stack_unwinding.unwind_through_signal_frame (5 ms)
+stack_unwinding.unwind_through_signal_frame terminated by signal: Segmentation
+fault.
+[ TIMEOUT  ] stack_unwinding.unwind_through_signal_frame_SA_SIGINFO (5 ms)
+stack_unwinding.unwind_through_signal_frame_SA_SIGINFO terminated by signal:
+Segmentation fault.
+[    OK    ] stdatomic.LOCK_FREE (7 ms)
+[==========] 18 tests from 10 test cases ran.

@@ -1,0 +1,298 @@
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
+<!--
+Copyright 2016 Google Inc. All Rights Reserved.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<servlet>
+  <servlet-name>dashboard_main</servlet-name>
+  <servlet-class>com.android.vts.servlet.DashboardMainServlet</servlet-class>
+</servlet>
+
+<servlet>
+  <servlet-name>show_release</servlet-name>
+  <servlet-class>com.android.vts.servlet.ShowReleaseServlet</servlet-class>
+</servlet>
+
+<servlet>
+  <servlet-name>show_green_release</servlet-name>
+  <servlet-class>com.android.vts.servlet.ShowGreenReleaseServlet</servlet-class>
+</servlet>
+
+<servlet>
+  <servlet-name>show_coverage_overview</servlet-name>
+  <servlet-class>com.android.vts.servlet.ShowCoverageOverviewServlet</servlet-class>
+</servlet>
+
+<servlet>
+  <servlet-name>show_tree</servlet-name>
+  <servlet-class>com.android.vts.servlet.ShowTreeServlet</servlet-class>
+</servlet>
+
+<servlet>
+  <servlet-name>show_table</servlet-name>
+  <servlet-class>com.android.vts.servlet.ShowTableServlet</servlet-class>
+</servlet>
+
+<servlet>
+  <servlet-name>show_graph</servlet-name>
+  <servlet-class>com.android.vts.servlet.ShowGraphServlet</servlet-class>
+</servlet>
+
+<servlet>
+  <servlet-name>show_profiling_list</servlet-name>
+  <servlet-class>com.android.vts.servlet.ShowProfilingListServlet</servlet-class>
+</servlet>
+
+<servlet>
+  <servlet-name>show_profiling_overview</servlet-name>
+  <servlet-class>com.android.vts.servlet.ShowProfilingOverviewServlet</servlet-class>
+</servlet>
+
+<servlet>
+  <servlet-name>show_plan_release</servlet-name>
+  <servlet-class>com.android.vts.servlet.ShowPlanReleaseServlet</servlet-class>
+</servlet>
+
+<servlet>
+  <servlet-name>show_plan_run</servlet-name>
+  <servlet-class>com.android.vts.servlet.ShowPlanRunServlet</servlet-class>
+</servlet>
+
+<servlet>
+  <servlet-name>show_performance_digest</servlet-name>
+  <servlet-class>com.android.vts.servlet.ShowPerformanceDigestServlet</servlet-class>
+</servlet>
+
+<servlet>
+  <servlet-name>show_coverage</servlet-name>
+  <servlet-class>com.android.vts.servlet.ShowCoverageServlet</servlet-class>
+</servlet>
+
+<servlet>
+  <servlet-name>show_test_acknowledgments</servlet-name>
+  <servlet-class>com.android.vts.servlet.ShowTestAcknowledgmentServlet</servlet-class>
+</servlet>
+
+<servlet>
+  <servlet-name>show_gcs_log</servlet-name>
+  <servlet-class>com.android.vts.servlet.ShowGcsLogServlet</servlet-class>
+</servlet>
+
+<servlet>
+  <servlet-name>test_data</servlet-name>
+  <servlet-class>com.android.vts.api.TestDataForDevServlet</servlet-class>
+</servlet>
+
+<servlet>
+  <servlet-name>datastore</servlet-name>
+  <servlet-class>com.android.vts.api.DatastoreRestServlet</servlet-class>
+</servlet>
+
+<servlet>
+  <servlet-name>test_run</servlet-name>
+  <servlet-class>com.android.vts.api.TestRunRestServlet</servlet-class>
+</servlet>
+
+<servlet>
+  <servlet-name>favorites</servlet-name>
+  <servlet-class>com.android.vts.api.UserFavoriteRestServlet</servlet-class>
+</servlet>
+
+<servlet>
+  <servlet-name>bigtable_legacy</servlet-name>
+  <servlet-class>com.android.vts.api.BigtableLegacyJsonServlet</servlet-class>
+</servlet>
+
+<servlet>
+  <servlet-name>test_acknowledgments</servlet-name>
+  <servlet-class>com.android.vts.api.TestAcknowledgmentRestServlet</servlet-class>
+</servlet>
+
+<servlet>
+  <servlet-name>vts_alert_job</servlet-name>
+  <servlet-class>com.android.vts.job.VtsAlertJobServlet</servlet-class>
+</servlet>
+
+<servlet>
+  <servlet-name>vts_performance_job</servlet-name>
+  <servlet-class>com.android.vts.job.VtsPerformanceJobServlet</servlet-class>
+</servlet>
+
+<servlet>
+  <servlet-name>vts_profiling_stats_job</servlet-name>
+  <servlet-class>com.android.vts.job.VtsProfilingStatsJobServlet</servlet-class>
+</servlet>
+
+<servlet>
+  <servlet-name>vts_coverage_job</servlet-name>
+  <servlet-class>com.android.vts.job.VtsCoverageAlertJobServlet</servlet-class>
+</servlet>
+
+<servlet>
+  <servlet-name>vts_inactivity_job</servlet-name>
+  <servlet-class>com.android.vts.job.VtsInactivityJobServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+  <servlet-name>dashboard_main</servlet-name>
+  <url-pattern>/</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>show_release</servlet-name>
+  <url-pattern>/show_release/*</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>show_green_release</servlet-name>
+  <url-pattern>/show_green_release/*</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>show_coverage_overview</servlet-name>
+  <url-pattern>/show_coverage_overview/*</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>show_tree</servlet-name>
+  <url-pattern>/show_tree/*</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>show_table</servlet-name>
+  <url-pattern>/show_table/*</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>show_graph</servlet-name>
+  <url-pattern>/show_graph/*</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>show_profiling_list</servlet-name>
+  <url-pattern>/show_profiling_list/*</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>show_profiling_overview</servlet-name>
+  <url-pattern>/show_profiling_overview/*</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>show_plan_release</servlet-name>
+  <url-pattern>/show_plan_release/*</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>show_plan_run</servlet-name>
+  <url-pattern>/show_plan_run/*</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>show_performance_digest</servlet-name>
+  <url-pattern>/show_performance_digest/*</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>show_coverage</servlet-name>
+  <url-pattern>/show_coverage/*</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>show_test_acknowledgments</servlet-name>
+  <url-pattern>/show_test_acknowledgments/*</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>show_gcs_log</servlet-name>
+  <url-pattern>/show_gcs_log/*</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>bigtable_legacy</servlet-name>
+  <url-pattern>/api/bigtable/*</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>test_data</servlet-name>
+  <url-pattern>/api/test_data/*</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>datastore</servlet-name>
+  <url-pattern>/api/datastore/*</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>test_run</servlet-name>
+  <url-pattern>/api/test_run/*</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>favorites</servlet-name>
+  <url-pattern>/api/favorites/*</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>test_acknowledgments</servlet-name>
+  <url-pattern>/api/test_acknowledgments/*</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>vts_alert_job</servlet-name>
+  <url-pattern>/task/vts_alert_job/*</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>vts_coverage_job</servlet-name>
+  <url-pattern>/task/vts_coverage_job/*</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>vts_profiling_stats_job</servlet-name>
+  <url-pattern>/task/vts_profiling_stats_job/*</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>vts_performance_job</servlet-name>
+  <url-pattern>/cron/vts_performance_job/*</url-pattern>
+</servlet-mapping>
+
+<servlet-mapping>
+  <servlet-name>vts_inactivity_job</servlet-name>
+  <url-pattern>/cron/vts_inactivity_job/*</url-pattern>
+</servlet-mapping>
+
+<security-constraint>
+  <web-resource-collection>
+    <web-resource-name>tasks</web-resource-name>
+    <url-pattern>/cron/*</url-pattern>
+    <url-pattern>/task/*</url-pattern>
+  </web-resource-collection>
+  <auth-constraint>
+    <role-name>admin</role-name>
+  </auth-constraint>
+</security-constraint>
+
+<security-constraint>
+  <web-resource-collection>
+    <web-resource-name>all</web-resource-name>
+    <url-pattern>/show_*</url-pattern>
+  </web-resource-collection>
+  <auth-constraint>
+    <role-name>*</role-name>
+  </auth-constraint>
+</security-constraint>
+</web-app>

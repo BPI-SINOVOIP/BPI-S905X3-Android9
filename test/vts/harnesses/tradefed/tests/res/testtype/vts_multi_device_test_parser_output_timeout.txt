@@ -1,0 +1,289 @@
+[VTS-Example] 07-01 08:54:59.495 INFO ==========> SampleLightFuzzTest <==========
+[VTS-Example] 07-01 08:55:01.215 INFO Exception occurred in command: killall vts_hal_agent > /dev/null 2&>1
+[VTS-Example] 07-01 08:55:01.258 INFO Exception occurred in command: killall vts_hal_driver32 > /dev/null 2&>1
+[VTS-Example] 07-01 08:55:01.296 INFO Exception occurred in command: killall vts_hal_driver64 > /dev/null 2&>1
+[VTS-Example] 07-01 08:55:02.299 INFO sending a command (type SET_HOST_INFO)
+[VTS-Example] 07-01 08:55:02.312 INFO resp 2 bytes
+[VTS-Example] 07-01 08:55:02.313 INFO TcpServer Thread-2 started (127.0.0.1:5365)
+[VTS-Example] 07-01 08:55:02.313 INFO sending a command (type SET_HOST_INFO)
+[VTS-Example] 07-01 08:55:02.323 INFO resp 2 bytes
+[VTS-Example] 07-01 08:55:02.324 INFO sending a command (type LIST_HALS)
+[VTS-Example] 07-01 08:55:02.329 INFO resp 910 bytes
+[VTS-Example] 07-01 08:55:02.367 INFO Init the stub service for light
+[VTS-Example] 07-01 08:55:02.368 INFO service_name: vts_binder_light
+[VTS-Example] 07-01 08:55:02.368 INFO file_path: /system/lib64/hw/lights.angler.so
+[VTS-Example] 07-01 08:55:02.368 INFO bits: 64
+[VTS-Example] 07-01 08:55:02.368 INFO sending a command (type LAUNCH_STUB_SERVICE)
+[VTS-Example] 07-01 08:55:03.395 INFO resp 29 bytes
+[VTS-Example] 07-01 08:55:03.434 INFO sending a command (type LIST_APIS)
+[VTS-Example] 07-01 08:55:03.439 INFO resp 2616 bytes
+[VTS-Example] 07-01 08:55:03.484 INFO sending a command (type CALL_API)
+[VTS-Example] 07-01 08:55:03.485 INFO target API: name: "#Open"
+return_type {
+  scalar_type: "int32_t"
+}
+arg {
+  type: TYPE_STRING
+  string_value {
+    message: "backlight"
+  }
+}
+
+[VTS-Example] 07-01 08:55:03.506 INFO resp 135 bytes
+[VTS-Example] 07-01 08:55:03.554 INFO [Test Case] testTurnOnLightBlackBoxFuzzing
+[VTS-Example] 07-01 08:55:03.554 INFO blackbox fuzzing
+[VTS-Example] 07-01 08:55:03.560 INFO MessageGenerator light_state_t name: "light_state_t"
+type: TYPE_STRUCT
+struct_value {
+  name: "color"
+  type: TYPE_SCALAR
+  scalar_value {
+    uint32_t: 4294967040
+  }
+  scalar_type: "uint32_t"
+}
+struct_value {
+  name: "flashMode"
+  type: TYPE_SCALAR
+  scalar_value {
+    int32_t: 0
+  }
+  scalar_type: "int32_t"
+}
+struct_value {
+  name: "flashOnMs"
+  type: TYPE_SCALAR
+  scalar_value {
+    int32_t: 0
+  }
+  scalar_type: "int32_t"
+}
+struct_value {
+  name: "flashOffMs"
+  type: TYPE_SCALAR
+  scalar_value {
+    int32_t: 0
+  }
+  scalar_type: "int32_t"
+}
+struct_value {
+  name: "brightnessMode"
+  type: TYPE_SCALAR
+  scalar_value {
+    int32_t: 0
+  }
+  scalar_type: "int32_t"
+}
+
+[VTS-Example] 07-01 08:55:09.171 INFO resp 982 bytes
+[VTS-Example] 07-01 08:55:09.217 INFO remote call set_light(None, <vts.proto.InterfaceSpecificationMessage_pb2.VariableSpecificationMessage object at 0x7ffb43779ad0>)
+[VTS-Example] 07-01 08:55:09.219 INFO sending a command (type CALL_API)
+[VTS-Example] 07-01 08:55:09.219 INFO target API: name: "set_light"
+return_type {
+  type: TYPE_SCALAR
+  scalar_type: "int32_t"
+}
+arg {
+  type: TYPE_PREDEFINED
+  scalar_type: "pointer"
+  predefined_type: "struct light_device_t*"
+}
+arg {
+  name: "light_state_t"
+  type: TYPE_STRUCT
+  struct_value {
+    name: "color"
+    type: TYPE_SCALAR
+    scalar_value {
+      uint32_t: 4286537472
+    }
+    scalar_type: "uint32_t"
+  }
+  struct_value {
+    name: "flashMode"
+    type: TYPE_SCALAR
+    scalar_value {
+      int32_t: 8388614
+    }
+    scalar_type: "int32_t"
+  }
+  struct_value {
+    name: "flashOnMs"
+    type: TYPE_SCALAR
+    scalar_value {
+      int32_t: 139364
+    }
+    scalar_type: "int32_t"
+  }
+  struct_value {
+    name: "flashOffMs"
+    type: TYPE_SCALAR
+    scalar_value {
+      int32_t: 2097352
+    }
+    scalar_type: "int32_t"
+  }
+  struct_value {
+    name: "brightnessMode"
+    type: TYPE_SCALAR
+    scalar_value {
+      int32_t: 134217728
+    }
+    scalar_type: "int32_t"
+  }
+}
+
+[VTS-Example] 07-01 08:55:09.229 INFO resp 982 bytes
+[VTS-Example] 07-01 08:55:09.282 INFO [Test Case] testTurnOnLightBlackBoxFuzzing PASS
+[VTS-Example] 07-01 08:55:09.282 INFO [Test Case] testTurnOnLightWhiteBoxFuzzing
+[VTS-Example] 07-01 08:55:09.282 INFO whitebox fuzzing
+[VTS-Example] 07-01 08:55:09.286 INFO MessageGenerator light_state_t name: "light_state_t"
+type: TYPE_STRUCT
+struct_value {
+  name: "color"
+  type: TYPE_SCALAR
+  scalar_value {
+    uint32_t: 4294967040
+  }
+  scalar_type: "uint32_t"
+}
+struct_value {
+  name: "flashMode"
+  type: TYPE_SCALAR
+  scalar_value {
+    int32_t: 0
+  }
+  scalar_type: "int32_t"
+}
+struct_value {
+  name: "flashOnMs"
+  type: TYPE_SCALAR
+  scalar_value {
+    int32_t: 0
+  }
+  scalar_type: "int32_t"
+}
+struct_value {
+  name: "flashOffMs"
+  type: TYPE_SCALAR
+  scalar_value {
+    int32_t: 0
+  }
+  scalar_type: "int32_t"
+}
+struct_value {
+  name: "brightnessMode"
+  type: TYPE_SCALAR
+  scalar_value {
+    int32_t: 0
+  }
+  scalar_type: "int32_t"
+}
+
+[VTS-Example] 07-01 08:55:09.289 INFO MessageGenerator light_state_t name: "light_state_t"
+type: TYPE_STRUCT
+struct_value {
+  name: "color"
+  type: TYPE_SCALAR
+  scalar_value {
+    uint32_t: 4294967040
+  }
+  scalar_type: "uint32_t"
+}
+struct_value {
+  name: "flashMode"
+  type: TYPE_SCALAR
+  scalar_value {
+    int32_t: 0
+  }
+  scalar_type: "int32_t"
+}
+struct_value {
+  name: "flashOnMs"
+  type: TYPE_SCALAR
+  scalar_value {
+    int32_t: 0
+  }
+  scalar_type: "int32_t"
+}
+struct_value {
+  name: "flashOffMs"
+  type: TYPE_SCALAR
+  scalar_value {
+    int32_t: 0
+  }
+  scalar_type: "int32_t"
+}
+struct_value {
+  name: "brightnessMode"
+  type: TYPE_SCALAR
+  scalar_value {
+    int32_t: 0
+  }
+  scalar_type: "int32_t"
+}
+
+
+[VTS-Example] 07-01 08:55:14.438 INFO resp 977 bytes
+[VTS-Example] 07-01 08:55:14.485 INFO remote call set_light(None, <vts.proto.InterfaceSpecificationMessage_pb2.VariableSpecificationMessage object at 0x7ffb449f43d0>)
+[VTS-Example] 07-01 08:55:14.487 INFO sending a command (type CALL_API)
+[VTS-Example] 07-01 08:55:14.487 INFO target API: name: "set_light"
+return_type {
+  type: TYPE_SCALAR
+  scalar_type: "int32_t"
+}
+arg {
+  type: TYPE_PREDEFINED
+  scalar_type: "pointer"
+  predefined_type: "struct light_device_t*"
+}
+arg {
+  name: "light_state_t"
+  type: TYPE_STRUCT
+  struct_value {
+    name: "color"
+    type: TYPE_SCALAR
+    scalar_value {
+      uint32_t: 4294705024
+    }
+    scalar_type: "uint32_t"
+  }
+  struct_value {
+    name: "flashMode"
+    type: TYPE_SCALAR
+    scalar_value {
+      int32_t: 515
+    }
+    scalar_type: "int32_t"
+  }
+  struct_value {
+    name: "flashOnMs"
+    type: TYPE_SCALAR
+    scalar_value {
+      int32_t: 33556068
+    }
+    scalar_type: "int32_t"
+  }
+  struct_value {
+    name: "flashOffMs"
+    type: TYPE_SCALAR
+    scalar_value {
+      int32_t: 268435656
+    }
+    scalar_type: "int32_t"
+  }
+  struct_value {
+    name: "brightnessMode"
+    type: TYPE_SCALAR
+    scalar_value {
+      int32_t: 32768
+    }
+    scalar_type: "int32_t"
+  }
+}
+
+[VTS-Example] 07-01 08:58:54.724 INFO resp 975 bytes
+more than one product dir found.
+undefined symbol: __gcov_flushGcovFlush: Can't find __gcov_flush
+FunctionCallEnd: no gcov basepath set
+[VTS-Example] 07-01 08:58:54.777 INFO Summary for test class SampleLightFuzzTest: Error 0, Executed 2, Failed 0, Passed 2, Requested 2, Skipped 0

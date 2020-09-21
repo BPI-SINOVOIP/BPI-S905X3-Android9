@@ -1,0 +1,33 @@
+entries {
+  name: 'TestName1'
+  id: 42
+  nested {
+    name: "NestedA"
+    type: AAA
+  }
+  nested {
+    name: "NestedB"
+    type: BBB
+  }
+  nested {
+    name: "NestedA"
+    type: AAA
+  }
+}
+
+entries {
+  name: 'TestName2'
+  id: 43
+  nested: {
+    name: "NestedB"
+    type: BBB
+  }
+  nested: {
+    name: "NestedA"
+    type: AAA
+  }
+  nested {
+    name: "NestedB"
+    type: BBB
+  }
+}

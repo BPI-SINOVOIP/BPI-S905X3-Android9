@@ -1,0 +1,72 @@
+vtable for android::hardware::boot::V1_0::BpHwBootControl
+_ZTVN7android8hardware4boot4V1_015BpHwBootControlE: 26 entries
+16    (int (*)(...)) _ZN7android8hardware4boot4V1_015BpHwBootControl14interfaceChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_11hidl_stringEEEEEE
+20    (int (*)(...)) _ZN7android8hardware4boot4V1_015BpHwBootControl5debugERKNS0_11hidl_handleERKNS0_8hidl_vecINS0_11hidl_stringEEE
+24    (int (*)(...)) _ZN7android8hardware4boot4V1_015BpHwBootControl19interfaceDescriptorENSt3__18functionIFvRKNS0_11hidl_stringEEEE
+28    (int (*)(...)) _ZN7android8hardware4boot4V1_015BpHwBootControl12getHashChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_10hidl_arrayIhLj32EJEEEEEEEE
+32    (int (*)(...)) _ZN7android8hardware4boot4V1_015BpHwBootControl21setHALInstrumentationEv
+36    (int (*)(...)) _ZN7android8hardware4boot4V1_015BpHwBootControl11linkToDeathERKNS_2spINS0_20hidl_death_recipientEEEy
+40    (int (*)(...)) _ZN7android8hardware4boot4V1_015BpHwBootControl4pingEv
+44    (int (*)(...)) _ZN7android8hardware4boot4V1_015BpHwBootControl12getDebugInfoENSt3__18functionIFvRKNS_4hidl4base4V1_09DebugInfoEEEE
+48    (int (*)(...)) _ZN7android8hardware4boot4V1_015BpHwBootControl21notifySyspropsChangedEv
+52    (int (*)(...)) _ZN7android8hardware4boot4V1_015BpHwBootControl13unlinkToDeathERKNS_2spINS0_20hidl_death_recipientEEE
+64    (int (*)(...)) _ZN7android8hardware4boot4V1_015BpHwBootControl14getNumberSlotsEv
+68    (int (*)(...)) _ZN7android8hardware4boot4V1_015BpHwBootControl14getCurrentSlotEv
+72    (int (*)(...)) _ZN7android8hardware4boot4V1_015BpHwBootControl18markBootSuccessfulENSt3__18functionIFvRKNS2_13CommandResultEEEE
+76    (int (*)(...)) _ZN7android8hardware4boot4V1_015BpHwBootControl17setActiveBootSlotEjNSt3__18functionIFvRKNS2_13CommandResultEEEE
+80    (int (*)(...)) _ZN7android8hardware4boot4V1_015BpHwBootControl19setSlotAsUnbootableEjNSt3__18functionIFvRKNS2_13CommandResultEEEE
+84    (int (*)(...)) _ZN7android8hardware4boot4V1_015BpHwBootControl14isSlotBootableEj
+88    (int (*)(...)) _ZN7android8hardware4boot4V1_015BpHwBootControl22isSlotMarkedSuccessfulEj
+92    (int (*)(...)) _ZN7android8hardware4boot4V1_015BpHwBootControl9getSuffixEjNSt3__18functionIFvRKNS0_11hidl_stringEEEE
+144    (int (*)(...)) _ZN7android8hardware11BpHwRefBase10onFirstRefEv
+148    (int (*)(...)) _ZN7android8hardware11BpHwRefBase15onLastStrongRefEPKv
+152    (int (*)(...)) _ZN7android8hardware11BpHwRefBase20onIncStrongAttemptedEjPKv
+208    (int (*)(...)) _ZTv0_n16_N7android8hardware11BpHwRefBase10onFirstRefEv
+212    (int (*)(...)) _ZTv0_n20_N7android8hardware11BpHwRefBase15onLastStrongRefEPKv
+216    (int (*)(...)) _ZTv0_n24_N7android8hardware11BpHwRefBase20onIncStrongAttemptedEjPKv
+220    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+224    (int (*)(...)) _ZTVN7android8hardware4boot4V1_015BpHwBootControlE
+
+
+vtable for android::hardware::boot::V1_0::BnHwBootControl
+_ZTVN7android8hardware4boot4V1_015BnHwBootControlE: 21 entries
+12    (int (*)(...)) _ZN7android8hardware9BHwBinder8transactEjRKNS0_6ParcelEPS2_jNSt3__18functionIFvRS2_EEE
+16    (int (*)(...)) _ZN7android8hardware9BHwBinder11linkToDeathERKNS_2spINS0_7IBinder14DeathRecipientEEEPvj
+20    (int (*)(...)) _ZN7android8hardware9BHwBinder13unlinkToDeathERKNS_2wpINS0_7IBinder14DeathRecipientEEEPvjPS5_
+24    (int (*)(...)) _ZNK7android8hardware7IBinder13checkSubclassEPKv
+28    (int (*)(...)) _ZN7android8hardware9BHwBinder12attachObjectEPKvPvS4_PFvS3_S4_S4_E
+32    (int (*)(...)) _ZNK7android8hardware9BHwBinder10findObjectEPKv
+36    (int (*)(...)) _ZN7android8hardware9BHwBinder12detachObjectEPKv
+40    (int (*)(...)) _ZN7android8hardware9BHwBinder11localBinderEv
+44    (int (*)(...)) _ZN7android8hardware7IBinder12remoteBinderEv
+48    (int (*)(...)) _ZN7android8hardware4boot4V1_015BnHwBootControlD1Ev
+52    (int (*)(...)) _ZN7android8hardware4boot4V1_015BnHwBootControlD0Ev
+56    (int (*)(...)) _ZN7android8hardware4boot4V1_015BnHwBootControl10onTransactEjRKNS0_6ParcelEPS4_jNSt3__18functionIFvRS4_EEE
+68    (int (*)(...)) _ZThn20_N7android8hardware4boot4V1_015BnHwBootControlD1Ev
+72    (int (*)(...)) _ZThn20_N7android8hardware4boot4V1_015BnHwBootControlD0Ev
+104    (int (*)(...)) _ZTv0_n12_N7android8hardware4boot4V1_015BnHwBootControlD1Ev
+108    (int (*)(...)) _ZTv0_n12_N7android8hardware4boot4V1_015BnHwBootControlD0Ev
+112    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+116    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+120    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+124    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+128    (int (*)(...)) _ZTVN7android8hardware4boot4V1_015BnHwBootControlE
+
+
+vtable for android::hardware::boot::V1_0::IBootControl
+_ZTVN7android8hardware4boot4V1_012IBootControlE: 15 entries
+16    (int (*)(...)) _ZN7android8hardware4boot4V1_012IBootControl14interfaceChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_11hidl_stringEEEEEE
+20    (int (*)(...)) _ZN7android8hardware4boot4V1_012IBootControl5debugERKNS0_11hidl_handleERKNS0_8hidl_vecINS0_11hidl_stringEEE
+24    (int (*)(...)) _ZN7android8hardware4boot4V1_012IBootControl19interfaceDescriptorENSt3__18functionIFvRKNS0_11hidl_stringEEEE
+28    (int (*)(...)) _ZN7android8hardware4boot4V1_012IBootControl12getHashChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_10hidl_arrayIhLj32EJEEEEEEEE
+32    (int (*)(...)) _ZN7android8hardware4boot4V1_012IBootControl21setHALInstrumentationEv
+36    (int (*)(...)) _ZN7android8hardware4boot4V1_012IBootControl11linkToDeathERKNS_2spINS0_20hidl_death_recipientEEEy
+40    (int (*)(...)) _ZN7android8hardware4boot4V1_012IBootControl4pingEv
+44    (int (*)(...)) _ZN7android8hardware4boot4V1_012IBootControl12getDebugInfoENSt3__18functionIFvRKNS_4hidl4base4V1_09DebugInfoEEEE
+48    (int (*)(...)) _ZN7android8hardware4boot4V1_012IBootControl21notifySyspropsChangedEv
+52    (int (*)(...)) _ZN7android8hardware4boot4V1_012IBootControl13unlinkToDeathERKNS_2spINS0_20hidl_death_recipientEEE
+132    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+136    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+140    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+144    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+148    (int (*)(...)) _ZTVN7android8hardware4boot4V1_012IBootControlE

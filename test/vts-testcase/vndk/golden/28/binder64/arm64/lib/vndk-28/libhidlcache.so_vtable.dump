@@ -1,0 +1,40 @@
+vtable for android::hardware::HidlMemoryCache
+_ZTVN7android8hardware15HidlMemoryCacheE: 12 entries
+16    (int (*)(...)) _ZN7android8hardware15HidlMemoryCache3mapERKNS_4hidl6memory5block4V1_011MemoryBlockE
+20    (int (*)(...)) _ZN7android8hardware15HidlMemoryCache10fillLockedERKNS_2spINS_4hidl6memory5token4V1_012IMemoryTokenEEE
+76    (int (*)(...)) _ZN7android8hardware9HidlCacheINS_2spINS_4hidl6memory5token4V1_012IMemoryTokenEEENS4_4V1_07IMemoryENS0_19IMemoryTokenCompareEE4lockERKS8_
+80    (int (*)(...)) _ZN7android8hardware9HidlCacheINS_2spINS_4hidl6memory5token4V1_012IMemoryTokenEEENS4_4V1_07IMemoryENS0_19IMemoryTokenCompareEE6unlockERKS8_
+84    (int (*)(...)) _ZN7android8hardware9HidlCacheINS_2spINS_4hidl6memory5token4V1_012IMemoryTokenEEENS4_4V1_07IMemoryENS0_19IMemoryTokenCompareEE5flushERKS8_
+88    (int (*)(...)) _ZN7android8hardware9HidlCacheINS_2spINS_4hidl6memory5token4V1_012IMemoryTokenEEENS4_4V1_07IMemoryENS0_19IMemoryTokenCompareEE5fetchERKS8_
+104    (int (*)(...)) _ZTv0_n40_N7android8hardware15HidlMemoryCache10fillLockedERKNS_2spINS_4hidl6memory5token4V1_012IMemoryTokenEEE
+108    (int (*)(...)) _ZN7android8hardware9HidlCacheINS_2spINS_4hidl6memory5token4V1_012IMemoryTokenEEENS4_4V1_07IMemoryENS0_19IMemoryTokenCompareEE15getCachedLockedERKS8_
+148    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+152    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+156    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+160    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+
+
+vtable for android::hardware::MemoryDealer
+_ZTVN7android8hardware12MemoryDealerE: 9 entries
+8    (int (*)(...)) _ZN7android8hardware12MemoryDealerD2Ev
+12    (int (*)(...)) _ZN7android8hardware12MemoryDealerD0Ev
+16    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+20    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+24    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+28    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+32    (int (*)(...)) _ZN7android8hardware12MemoryDealer14allocateOffsetEj
+36    (int (*)(...)) _ZN7android8hardware12MemoryDealer10deallocateEj
+40    (int (*)(...)) _ZNK7android8hardware12MemoryDealer4dumpEPKc
+
+
+vtable for android::hardware::HidlMemoryDealer
+_ZTVN7android8hardware16HidlMemoryDealerE: 9 entries
+16    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+20    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+24    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+28    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+32    (int (*)(...)) _ZN7android8hardware12MemoryDealer14allocateOffsetEj
+36    (int (*)(...)) _ZN7android8hardware12MemoryDealer10deallocateEj
+40    (int (*)(...)) _ZNK7android8hardware12MemoryDealer4dumpEPKc
+44    (int (*)(...)) _ZN7android8hardware16HidlMemoryDealer8allocateEj
+48    (int (*)(...)) _ZN7android8hardware16HidlMemoryDealer4heapEv

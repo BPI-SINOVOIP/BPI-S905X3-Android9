@@ -1,0 +1,65 @@
+// Copyright 2016 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto2";
+
+package android.vts;
+option java_package = "com.android.vts.proto";
+option java_outer_classname = "VtsProfilingMessageClass";
+
+import "test/vts/proto/ComponentSpecificationMessage.proto";
+
+// Type of an instrumentation event.
+enum InstrumentationEventType {
+  // Entry event on the server side of a binderized HAL.
+  SERVER_API_ENTRY = 0;
+  // Exit event on the server side of a binderized HAL.
+  SERVER_API_EXIT = 1;
+  // Entry event on the client side of a binderized HAL.
+  CLIENT_API_ENTRY = 2;
+  // Exit event on the client side of a binderized HAL.
+  CLIENT_API_EXIT = 3;
+  // Entry event of a synchronize callback.
+  SYNC_CALLBACK_ENTRY = 4;
+  // Exit event of a synchronize callback.
+  SYNC_CALLBACK_EXIT = 5;
+  // Entry event of a asynchronize callback.
+  ASYNC_CALLBACK_ENTRY = 6;
+  // Exit event of a asynchronize callback.
+  ASYNC_CALLBACK_EXIT = 7;
+  // Entry event of a passthrough HAL.
+  PASSTHROUGH_ENTRY = 8;
+  // Exit event of a passthrough HAL.
+  PASSTHROUGH_EXIT = 9;
+}
+
+// To specify a VTS profiling record.
+message VtsProfilingRecord {
+  // The timestamp of the profiling record.
+  optional int64 timestamp = 1;
+  // Type of the profiling event.
+  optional InstrumentationEventType event = 2;
+  // Package name of the profiling HAL.
+  optional bytes package = 3;
+  // Version of the profiling HAL.
+  optional float version = 4;
+  // Interface name of the profiling HAL.
+  optional bytes interface = 5;
+  // Message of the called function.
+  optional FunctionSpecificationMessage func_msg = 6;
+}
+
+message VtsProfilingMessage {
+  repeated VtsProfilingRecord records = 1;
+}

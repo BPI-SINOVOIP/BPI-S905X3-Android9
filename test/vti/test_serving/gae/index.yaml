@@ -1,0 +1,75 @@
+indexes:
+- kind: DeviceModel
+  ancestor: no
+  properties:
+  - name: hostname
+    direction: asc
+  - name: product
+  - name: serial
+  - name: status
+  - name: scheduling_status
+
+- kind: BuildModel
+  ancestor: no
+  properties:
+  - name: manifest_branch
+  - name: build_id
+    direction: desc
+  - name: build_target
+  - name: build_type
+  - name: artifact_type
+  - name: artifacts
+
+- kind: ScheduleModel
+  ancestor: no
+  properties:
+  - name: manifest_branch
+  - name: build_target
+  - name: test_name
+  - name: require_signed_device_build
+  - name: period
+  - name: priority
+  - name: device
+  - name: shards
+  - name: param
+  - name: retry_count
+  - name: gsi_branch
+  - name: gsi_build_target
+  - name: gsi_pab_account_id
+  - name: test_branch
+  - name: test_build_target
+  - name: test_pab_account_id
+
+- kind: LabModel
+  ancestor: no
+  properties:
+  - name: name
+  - name: owner
+  - name: hostname
+  - name: ip
+  - name: script
+  - name: devices
+
+- kind: JobModel
+  ancestor: no
+  properties:
+  - name: hostname
+  - name: priority
+  - name: period
+  - name: retry_count
+  - name: test_name
+  - name: device
+  - name: serial
+  - name: manifest_branch
+  - name: build_target
+  - name: shards
+  - name: param
+  - name: build_id
+  - name: status
+  - name: gsi_branch
+  - name: gsi_build_target
+  - name: gsi_pab_account_id
+  - name: test_branch
+  - name: test_build_target
+  - name: test_pab_account_id
+  - name: infra_log_url

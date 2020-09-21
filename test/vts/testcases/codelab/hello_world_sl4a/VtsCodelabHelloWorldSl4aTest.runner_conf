@@ -1,0 +1,15 @@
+{
+    "test_bed":
+    [
+        {
+            "name": "VtsCodelabHelloWorldSl4aTest",
+            "AndroidDevice":
+            [
+                {
+                    "enable_sl4a": true,
+                    "enable_vts_agent": false
+                }
+            ]
+        }
+    ]
+}

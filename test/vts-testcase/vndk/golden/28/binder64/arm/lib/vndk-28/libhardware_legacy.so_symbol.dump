@@ -1,0 +1,11 @@
+NEW_PATHS
+OLD_PATHS
+acquire_wake_lock
+release_wake_lock
+uevent_add_native_handler
+uevent_get_fd
+uevent_handler_list
+uevent_handler_list_lock
+uevent_init
+uevent_next_event
+uevent_remove_native_handler

@@ -1,0 +1,13 @@
+
+Sections summary: name, offset, size [count]
+  HeaderItem                :        0,       70  [1]
+  StringIdItem              :       70,       14  [5]
+  TypeIdItem                :       84,        c  [3]
+  ProtoIdItem               :       90,        c  [1]
+  MethodIdItem              :       9c,       10  [2]
+  ClassDefItem              :       ac,       20  [1]
+  CodeItem                  :       cc,       1c  [1]
+  StringDataItem            :       e8,       34  [5]
+  DebugInfoItem             :      11c,        5  [1]
+  ClassDataItem             :      121,        b  [1]
+  MapList                   :      12c,       88  [1]

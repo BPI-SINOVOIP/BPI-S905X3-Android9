@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<node name="/org/chromium/LibCrosService"
+      xmlns:tp="http://telepathy.freedesktop.org/wiki/DbusSpec#extensions-v0">
+  <interface name="org.chromium.LibCrosServiceInterface">
+    <method name="GetKioskAppRequiredPlatformVersion">
+      <arg name="required_platform_version" type="s" direction="out" />
+    </method>
+  </interface>
+</node>

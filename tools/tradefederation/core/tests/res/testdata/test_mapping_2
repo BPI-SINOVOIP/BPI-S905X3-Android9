@@ -1,0 +1,17 @@
+{
+  "presubmit": [
+    {
+      "name": "suite/stub1"
+    }
+  ],
+  "postsubmit": [
+    {
+      "name": "suite/stub2",
+      "options": [
+        {
+          "test-suite-tag": "just_a_name"
+        }
+      ]
+    }
+  ]
+}

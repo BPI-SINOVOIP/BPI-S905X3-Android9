@@ -1,0 +1,11 @@
+*.iml
+.gradle
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/runConfigurations
+/.idea/usage.statistics.xml
+/out
+build/
+stub-annotations/out
+.DS_Store

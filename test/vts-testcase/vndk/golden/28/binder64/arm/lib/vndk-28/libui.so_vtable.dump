@@ -1,0 +1,15 @@
+vtable for android::GraphicBuffer
+_ZTVN7android13GraphicBufferE: 6 entries
+8    (int (*)(...)) _ZN7android13GraphicBufferD2Ev
+12    (int (*)(...)) _ZN7android13GraphicBufferD0Ev
+16    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+20    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+24    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+28    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+
+
+vtable for android::Region::rasterizer
+_ZTVN7android6Region10rasterizerE: 3 entries
+8    (int (*)(...)) _ZN7android6Region10rasterizerclERKNS_4RectE
+12    (int (*)(...)) _ZN7android6Region10rasterizerD2Ev
+16    (int (*)(...)) _ZN7android6Region10rasterizerD0Ev

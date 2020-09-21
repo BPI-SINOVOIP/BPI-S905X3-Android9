@@ -1,0 +1,16 @@
+{
+    "test_bed":
+    [
+        {
+            "name": "VtsHalUsbGadgetV1_0HostTest",
+            "AndroidDevice":
+            [
+                {
+                    "enable_sl4a": false,
+                    "enable_sl4a_ed": false,
+                    "enable_vts_agent": true
+                }
+            ]
+        }
+    ]
+}

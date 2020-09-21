@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2018 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<configuration description="Config for VTS Audio V4_0 HIDL HAL's basic target-side test cases">
+    <option name="config-descriptor:metadata" key="plan" value="vts-hal" />
+    <target_preparer class="com.android.compatibility.common.tradefed.targetprep.VtsFilePusher">
+        <option name="abort-on-push-failure" value="false"/>
+        <option name="push-group" value="HalHidlTargetTest.push"/>
+        <option name="push" value="DATA/hardware/interfaces/audio/4.0/config/audio_policy_configuration.xsd->/data/local/tmp/audio_policy_configuration_V4_0.xsd"/>
+    </target_preparer>
+    <multi_target_preparer class="com.android.tradefed.targetprep.VtsPythonVirtualenvPreparer" />
+    <test class="com.android.tradefed.testtype.VtsMultiDeviceTest">
+        <option name="test-module-name" value="VtsHalAudioV4_0Target"/>
+        <option name="binary-test-source" value="_32bit::DATA/nativetest/VtsHalAudioV4_0TargetTest/VtsHalAudioV4_0TargetTest" />
+        <option name="binary-test-source" value="_64bit::DATA/nativetest64/VtsHalAudioV4_0TargetTest/VtsHalAudioV4_0TargetTest" />
+        <option name="binary-test-type" value="hal_hidl_gtest"/>
+        <option name="binary-test-disable-framework" value="true"/>
+        <option name="binary-test-stop-native-servers" value="true"/>
+        <option name="exclude-coverage-path" value="hardware/interfaces/audio/effect" />
+        <option name="exclude-coverage-path" value="hardware/qcom/audio/post_proc" />
+        <option name="exclude-coverage-path" value="hardware/qcom/audio/visualizer" />
+        <option name="exclude-coverage-path" value="hardware/qcom/audio/voice_processing/" />
+        <option name="test-timeout" value="30m"/>
+        <option name="gtest-batch-mode" value="true"/>
+    </test>
+</configuration>

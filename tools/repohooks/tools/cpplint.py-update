@@ -1,0 +1,54 @@
+#!/bin/bash
+# Copyright 2016 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+set -eu
+
+GITHUB_URL="https://github.com/google/styleguide/raw/gh-pages"
+SCRIPT_DIR="$(dirname "$(readlink -f -- "$0")")"
+
+usage() {
+  cat <<EOF
+Usage: $0
+
+Helper script to quickly update the bundled cpplint.py script.
+
+EOF
+
+  if [[ $# -ne 0 ]]; then
+    echo "ERROR: $*" 2>&1
+    exit 1
+  else
+    exit 0
+  fi
+}
+
+main() {
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    -h|--help) usage;;
+    -x) set -x;;
+    *) usage "Unknown option: $1";;
+    esac
+    shift
+  done
+
+  # Download cpplint.py from upstream.
+  local cpplint_py="${SCRIPT_DIR}/cpplint.py"
+  wget "${GITHUB_URL}/cpplint/cpplint.py" -O "${cpplint_py}"
+  sed -i '2i# pylint: skip-file' "${cpplint_py}"
+  chmod +x "${cpplint_py}"
+}
+
+main "$@"

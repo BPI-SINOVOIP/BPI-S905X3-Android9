@@ -1,0 +1,14 @@
+alloc_wl
+apply_disk_config
+config_mbr
+dump_disk_config
+find_mbr_part
+find_part
+find_part_device
+free_wl
+load_diskconfig
+process_disk_config
+wlist_add
+wlist_commit
+wlist_free
+write_raw_image

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2016 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<configuration description="VTS Serving Plan for Presubmit (Staging)">
+  <include name="vts-base" />
+  <option name="compatibility:primary-abi-only" value="true" />
+  <option name="plan" value="vts" />
+  <option name="test-tag" value="vts-star" />
+  <option name="vts-plan-result:plan-name" value="vts-staging-presubmit" />
+  <option name="vts-plan-result:default-type" value="staging" />
+
+  <!-- For vts-hal-hidl -->
+  <option name="compatibility:test-arg" value="com.android.tradefed.testtype.VtsMultiDeviceTest:gtest-batch-mode:true" />
+  <!-- option name="compatibility:include-filter" value="BinderThroughputBenchmark" / -->
+  <!-- option name="compatibility:include-filter" value="BinderPerformanceTest" / -->
+
+  <!-- For vts-library -->
+  <!-- option name="compatibility:include-filter" value="CpuProfilingTest" / -->
+
+  <!-- For vts-security -->
+
+  <!-- For vts-system -->
+  <option name="compatibility:include-filter" value="VtsCodelabHelloWorldTest" />
+  <!-- option name="compatibility:include-filter" value="SampleShellTest" / -->
+  <!-- option name="compatibility:include-filter" value="VtsHalLightV2_0Target" / -->
+  <!-- option name="compatibility:include-filter" value="VtsHalNfcV1_0HostBinderize" / -->
+
+  <!-- For vts-kernel -->
+  <!-- option name="compatibility:include-filter" value="KernelLtpTest" / -->
+  <!-- option name="compatibility:include-filter" value="LinuxKselftestTestPresubmit" / -->
+  <!-- option name="compatibility:include-filter" value="ShellBinaryCrashTest" / -->
+  <!-- option name="compatibility:include-filter" value="LibcTest" / -->
+  <!-- option name="compatibility:include-filter" value="SyscallExistenceTest" / -->
+
+</configuration>

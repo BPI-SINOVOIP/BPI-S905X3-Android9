@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2017 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<configuration description="Config for VTS VtsHalCameraProviderV2_4Target test cases">
+    <option name="config-descriptor:metadata" key="plan" value="vts-hal" />
+    <target_preparer class="com.android.compatibility.common.tradefed.targetprep.VtsFilePusher">
+        <option name="abort-on-push-failure" value="false"/>
+        <option name="push-group" value="HalHidlTargetTest.push"/>
+    </target_preparer>
+    <test class="com.android.tradefed.testtype.VtsMultiDeviceTest">
+        <option name="test-module-name" value="VtsHalCameraProviderV2_4Target"/>
+        <option name="binary-test-source" value="_32bit::DATA/nativetest/VtsHalCameraProviderV2_4TargetTest/VtsHalCameraProviderV2_4TargetTest"/>
+        <option name="binary-test-source" value="_64bit::DATA/nativetest64/VtsHalCameraProviderV2_4TargetTest/VtsHalCameraProviderV2_4TargetTest"/>
+        <option name="binary-test-type" value="hal_hidl_gtest"/>
+        <option name="exclude-coverage-path" value="hardware/qcom/camera/msm8998/QCamera2/HAL" />
+        <option name="exclude-coverage-path" value="hardware/interfaces/graphics/mapper/2.0" />
+        <option name="exclude-coverage-path" value="hardware/interfaces/configstore/utils" />
+        <option name="exclude-coverage-path" value="hardware/interfaces/sensors" />
+        <option name="exclude-coverage-path" value="hardware/qcom/display/msm8998" />
+        <option name="exclude-coverage-path" value="vendor/qcom/msm8998/proprietary/proprietary/qmi-framework" />
+        <option name="test-timeout" value="15m"/>
+    </test>
+</configuration>

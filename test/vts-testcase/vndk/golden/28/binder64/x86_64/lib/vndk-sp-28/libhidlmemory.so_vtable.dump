@@ -1,0 +1,18 @@
+vtable for android::hardware::HidlMemoryToken
+_ZTVN7android8hardware15HidlMemoryTokenE: 16 entries
+72    (int (*)(...)) _ZN7android4hidl6memory5token4V1_012IMemoryToken14interfaceChainENSt3__18functionIFvRKNS_8hardware8hidl_vecINS7_11hidl_stringEEEEEE
+76    (int (*)(...)) _ZN7android4hidl6memory5token4V1_012IMemoryToken5debugERKNS_8hardware11hidl_handleERKNS5_8hidl_vecINS5_11hidl_stringEEE
+80    (int (*)(...)) _ZN7android4hidl6memory5token4V1_012IMemoryToken19interfaceDescriptorENSt3__18functionIFvRKNS_8hardware11hidl_stringEEEE
+84    (int (*)(...)) _ZN7android4hidl6memory5token4V1_012IMemoryToken12getHashChainENSt3__18functionIFvRKNS_8hardware8hidl_vecINS7_10hidl_arrayIhLj32EJEEEEEEEE
+88    (int (*)(...)) _ZN7android4hidl6memory5token4V1_012IMemoryToken21setHALInstrumentationEv
+92    (int (*)(...)) _ZN7android4hidl6memory5token4V1_012IMemoryToken11linkToDeathERKNS_2spINS_8hardware20hidl_death_recipientEEEy
+96    (int (*)(...)) _ZN7android4hidl6memory5token4V1_012IMemoryToken4pingEv
+100    (int (*)(...)) _ZN7android4hidl6memory5token4V1_012IMemoryToken12getDebugInfoENSt3__18functionIFvRKNS0_4base4V1_09DebugInfoEEEE
+104    (int (*)(...)) _ZN7android4hidl6memory5token4V1_012IMemoryToken21notifySyspropsChangedEv
+108    (int (*)(...)) _ZN7android4hidl6memory5token4V1_012IMemoryToken13unlinkToDeathERKNS_2spINS_8hardware20hidl_death_recipientEEE
+120    (int (*)(...)) _ZN7android8hardware15HidlMemoryToken3getENSt3__18functionIFvRKNS0_11hidl_memoryEEEE
+160    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+164    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+168    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+172    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+176    (int (*)(...)) _ZTVN7android8hardware15HidlMemoryTokenE

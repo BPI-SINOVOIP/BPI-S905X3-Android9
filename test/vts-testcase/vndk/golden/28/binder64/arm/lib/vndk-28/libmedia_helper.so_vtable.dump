@@ -1,0 +1,20 @@
+vtable for android::AudioParameter
+_ZTVN7android14AudioParameterE: 2 entries
+8    (int (*)(...)) _ZN7android14AudioParameterD2Ev
+12    (int (*)(...)) _ZN7android14AudioParameterD0Ev
+
+
+vtable for android::TimeCheck::TimeCheckThread
+_ZTVN7android9TimeCheck15TimeCheckThreadE: 12 entries
+12    (int (*)(...)) _ZN7android9TimeCheck15TimeCheckThreadD1Ev
+16    (int (*)(...)) _ZN7android9TimeCheck15TimeCheckThreadD0Ev
+20    (int (*)(...)) _ZN7android6Thread3runEPKcij
+24    (int (*)(...)) _ZN7android6Thread11requestExitEv
+28    (int (*)(...)) _ZN7android6Thread10readyToRunEv
+32    (int (*)(...)) _ZN7android9TimeCheck15TimeCheckThread10threadLoopEv
+68    (int (*)(...)) _ZTv0_n12_N7android9TimeCheck15TimeCheckThreadD1Ev
+72    (int (*)(...)) _ZTv0_n12_N7android9TimeCheck15TimeCheckThreadD0Ev
+80    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+84    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+88    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+92    (int (*)(...)) _ZTVN7android9TimeCheck15TimeCheckThreadE

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2016 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<configuration description="Config for VtsCodelabHostDrivenMultiHalTest test case">
+    <option name="config-descriptor:metadata" key="plan" value="vts-misc" />
+    <target_preparer class="com.android.compatibility.common.tradefed.targetprep.VtsFilePusher">
+        <option name="push-group" value="HostDrivenTest.push" />
+        <option name="push" value="spec/hardware/interfaces/thermal/1.0/vts/Thermal.vts->/data/local/tmp/spec/android/hardware/thermal/1.0/Theraml.vts"/>
+        <option name="push" value="spec/hardware/interfaces/thermal/1.0/vts/types.vts->/data/local/tmp/spec/android/hardware/thermal/1.0/types.vts"/>
+        <option name="push" value="spec/hardware/interfaces/light/2.0/vts/Light.vts->/data/local/tmp/spec/android/hardware/light/2.0/Light.vts"/>
+        <option name="push" value="spec/hardware/interfaces/light/2.0/vts/types.vts->/data/local/tmp/spec/android/hardware/light/2.0/types.vts"/>
+        <option name="push" value="DATA/lib/android.hardware.thermal@1.0-vts.driver.so->/data/local/tmp/32/android.hardware.thermal@1.0-vts.driver.so"/>
+        <option name="push" value="DATA/lib64/android.hardware.thermal@1.0-vts.driver.so->/data/local/tmp/64/android.hardware.thermal@1.0-vts.driver.so"/>
+        <option name="push" value="DATA/lib/android.hardware.light@2.0-vts.driver.so->/data/local/tmp/32/android.hardware.light@2.0-vts.driver.so"/>
+        <option name="push" value="DATA/lib64/android.hardware.light@2.0-vts.driver.so->/data/local/tmp/64/android.hardware.light@2.0-vts.driver.so"/>
+    </target_preparer>
+    <test class="com.android.tradefed.testtype.VtsMultiDeviceTest">
+        <option name="test-module-name" value="VtsCodelabHostDrivenMultiHalTest" />
+        <option name="test-case-path" value="vts/testcases/codelab/host_multi_hal/VtsCodelabHostMultiHalTest" />
+        <option name="test-timeout" value="2m"/>
+    </test>
+</configuration>

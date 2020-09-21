@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:jacoco="antlib:org.jacoco.ant"
+        name="Report generation using jacocoant" default="generatereport">
+
+    <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+        <classpath>
+            <pathelement path="${jacocoant}" />
+        </classpath>
+    </taskdef>
+
+    <target name="generatereport">
+
+        <jacoco:report>
+
+            <executiondata>
+                ${execfileset}
+            </executiondata>
+
+            <structure name="Jacoco ant">
+                <classfiles>
+                    ${classfileset}
+                </classfiles>
+            </structure>
+
+            ${reportdestdirs}
+
+        </jacoco:report>
+
+    </target>
+
+</project>

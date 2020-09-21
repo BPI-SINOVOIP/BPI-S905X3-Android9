@@ -1,0 +1,63 @@
+bootstrap_go_package {
+    name: "soong-fluoride",
+    pkgPath: "android/soong/fluoride",
+    deps: [
+        "blueprint",
+        "blueprint-pathtools",
+        "soong",
+        "soong-android",
+        "soong-cc",
+    ],
+    srcs: [
+        "fluoride.go",
+    ],
+    pluginFor: ["soong_build"],
+}
+
+fluoride_defaults {
+    name: "libchrome_support_defaults",
+    shared_libs: ["libchrome"],
+    cflags: [
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+    ],
+    target: {
+        darwin: {
+            enabled: false,
+        },
+    },
+}
+
+fluoride_defaults {
+    name: "fluoride_types_defaults",
+    defaults: ["libchrome_support_defaults"],
+    cflags: [
+        "-DEXPORT_SYMBOL=__attribute__((visibility(\"default\")))",
+        "-fvisibility=hidden",
+        // struct BT_HDR is defined as a variable-size header in a struct.
+        "-Wno-gnu-variable-sized-type-not-at-end",
+        // there are too many unused parameters in all the code.
+        "-Wno-unused-parameter",
+        "-DLOG_NDEBUG=1",
+    ],
+    conlyflags: [
+        "-std=c99",
+    ],
+    product_variables: {
+        debuggable: {
+            cflags: [
+                "-DBLUEDROID_DEBUG",
+            ],
+        },
+    },
+}
+
+fluoride_defaults {
+    name: "fluoride_defaults",
+    defaults: ["fluoride_types_defaults"],
+    header_libs: ["libbluetooth_headers"],
+    static_libs: [
+        "libbluetooth-types",
+    ],
+}

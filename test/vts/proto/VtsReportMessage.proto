@@ -1,0 +1,322 @@
+// Copyright 2016 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto2";
+
+package android.vts;
+option java_package = "com.android.vts.proto";
+option java_outer_classname = "VtsReportMessage";
+option java_multiple_files = false;
+
+
+// To specify test case execution result.
+enum TestCaseResult {
+  UNKNOWN_RESULT = 0;
+  TEST_CASE_RESULT_PASS = 1;
+  TEST_CASE_RESULT_FAIL = 2;
+  TEST_CASE_RESULT_SKIP = 3;
+  TEST_CASE_RESULT_EXCEPTION = 4;
+  TEST_CASE_RESULT_TIMEOUT = 5;
+}
+
+
+// To specify the VTS test type.
+enum VtsTestType {
+  UNKNOWN_VTS_TESTTYPE = 0;
+  VTS_HOST_DRIVEN_STRUCTURAL = 1;
+  VTS_HOST_DRIVEN_FUZZING = 2;
+  VTS_TARGET_SIDE_GTEST = 3;
+  VTS_TARGET_SIDE_FUZZING = 4;
+}
+
+enum VtsProfilingRegressionMode {
+  UNKNOWN_REGRESSION_MODE = 0;
+  // disable analysis
+  VTS_REGRESSION_MODE_DISABLED = 1;
+  // interpret increases in values as regression
+  VTS_REGRESSION_MODE_INCREASING = 2;
+  // interpret decreases in values as regression
+  VTS_REGRESSION_MODE_DECREASING= 3;
+}
+
+enum VtsProfilingType {
+  UNKNOWN_VTS_PROFILING_TYPE = 0;
+  // for one sample which measures the time between two profiling points.
+  VTS_PROFILING_TYPE_TIMESTAMP = 1;
+  // for multiple single-type samples with labels.
+  VTS_PROFILING_TYPE_LABELED_VECTOR = 2;
+  // for multiple single-type samples without labels.
+  VTS_PROFILING_TYPE_UNLABELED_VECTOR = 3;
+}
+
+// To specify a call flow event.
+message AndroidDeviceInfoMessage {
+  // product type (e.g., bullhead).
+  optional bytes product_type = 1;
+
+  // product type variant (e.g., still bullhead or another name).
+  optional bytes product_variant = 2;
+
+  // build type (e.g., userdebug).
+  optional bytes build_flavor = 11;
+
+  // Android Build ID.
+  optional bytes build_id = 12;
+
+  // branch name (e.g., master or nyc-dev).
+  optional bytes branch = 21;
+
+  // build alias implies the branch name.
+  optional bytes build_alias = 22;
+
+  // API level
+  optional bytes api_level = 31;
+
+  // ABI name that is current in use for the test
+  optional bytes abi_name = 51;
+
+  // ABI bitness that is current in use for the test. Example: '32', '64',
+  optional bytes abi_bitness = 52;
+
+  // Device USB serial number
+  optional bytes serial = 101;
+}
+
+
+// To specify build info.
+message AndroidBuildInfo {
+  // build ID.
+  optional bytes id = 1;
+
+  // device name (e.g., bullhead).
+  optional bytes name = 11;
+
+  // build type (e.g., userdebug)
+  optional bytes build_type = 12;
+
+  // branch name (e.g., master or nyc-dev)
+  optional bytes branch = 13;
+
+  // indicates the latest commit information of each branch (e.g., xml format).
+  optional bytes build_summary = 21;
+}
+
+
+// To specify the information about a host node.
+message VtsHostInfo {
+  // the host name (i.e., full domain name).
+  optional bytes hostname = 1;
+}
+
+
+// To specify a test case execution report.
+message TestCaseReportMessage {
+  // the test case name.
+  optional bytes name = 1;
+
+  // the test result.
+  optional TestCaseResult test_result = 11;
+
+  // execution start and end time stamp.
+  optional int64 start_timestamp = 21;
+  optional int64 end_timestamp = 22;
+
+  // coverage report per file
+  repeated CoverageReportMessage coverage = 31;
+
+  // profiling reports
+  repeated ProfilingReportMessage profiling = 41;
+
+  // systrace report message per file
+  repeated SystraceReportMessage systrace = 42 [deprecated=true];
+
+  // log for each test case. May contain multiple logs such as logcat, host log,
+  // etc.
+  repeated LogMessage log = 101;
+}
+
+
+// To specify a profiling report.
+message ProfilingReportMessage {
+  // the instrumentation point name.
+  optional bytes name = 1;
+  optional VtsProfilingType type = 2;
+  optional VtsProfilingRegressionMode regression_mode = 3;
+
+  // profiling start and end time stamp (for performance).
+  optional int64 start_timestamp = 11;
+  optional int64 end_timestamp = 12;
+
+  repeated bytes label = 21;
+  repeated int64 value = 22;
+
+  // x-axis and y-axis title labels when displaying the data as a graph
+  optional bytes x_axis_label = 31;
+  optional bytes y_axis_label = 32;
+
+  // a list of strings where each string has the form of 'key=value'.
+  // used to tell certain properties of the data (e.g., passthrough vs.
+  // binderized).
+  repeated bytes options = 41;
+}
+
+// To specify a systrace report.
+message SystraceReportMessage {
+  // the target process name used by systrace
+  optional bytes process_name = 1;
+
+  // the produced html report
+  repeated bytes html = 11;
+
+  // URLs of the produced html reports
+  repeated bytes url = 21;
+}
+
+// To specify a coverage report.
+message CoverageReportMessage {
+  // the path to the source file from the project root.
+  optional bytes file_path = 11;
+
+  // the name of the project where the file can be found
+  optional bytes project_name = 12;
+
+  // the commit ID identifying the code revision
+  optional bytes revision = 13;
+
+  // i-th element gives the number of times i-th line is executed.
+  repeated int64 line_coverage_vector = 23;
+
+  // the number of source code lines that are instrumented for code coverage
+  // measurement.
+  optional int32 total_line_count = 101;
+
+  // the number of source code lines that are executed.
+  optional int32 covered_line_count = 102;
+
+  // TODO(ryanjcampbell@) delete deprecated field
+  // the directory path of a source file.
+  optional bytes dir_path = 1 [deprecated=true];
+
+  // TODO(ryanjcampbell@) delete deprecated field
+  // the name of the source file.
+  optional bytes file_name = 2 [deprecated=true];
+
+  // TODO(ryanjcampbell@) delete deprecated field
+  // produced html report.
+  optional bytes html = 3 [deprecated=true];
+}
+
+// To specify log report. This can be used either for per-test-module
+// log message or per-test-case log message.
+message LogMessage {
+  // URL of a produced log file (e.g., stdout, stderr).
+  optional bytes url = 1;
+
+  // Name of a log file.
+  optional bytes name = 2;
+
+  // Content of log. Caution: do not put too much log in protobuf message,
+  // as BigTable for example recommends < 10 MB for each record cell.
+  optional bytes content = 3;
+}
+
+// To specify a resource object (reachable via a URL or contained in the
+// message). This can be used to store a log file or an XML (or HTML) report
+// file kept in a Google Cloud Storage (GCS) bucket or partner's network file
+// system, or hosted by a HTTP server.
+message UrlResourceMessage {
+  // URL of a resource file.
+  optional bytes url = 1;
+
+  // Name of a resource file representing its type and does not have to be
+  // the same as the exact file name.
+  optional bytes name = 2;
+
+  // Raw content of a resource file. Used if the file is small.
+  optional bytes content = 3;
+}
+
+// To specify a test execution report.
+message TestReportMessage {
+  // The test suite name..
+  optional bytes test_suite = 1 [deprecated=true];
+
+  // The test name.
+  optional bytes test = 2;
+
+  // The test type
+  optional VtsTestType test_type = 3;
+
+  // Target device info
+  repeated AndroidDeviceInfoMessage device_info = 4;
+
+  // Build info
+  optional AndroidBuildInfo build_info = 5;
+
+  // Email addresses of subscribers to the test results
+  repeated bytes subscriber_email = 6;
+
+  // Info about the host computer
+  optional VtsHostInfo host_info = 7;
+
+  // Test case reports
+  repeated TestCaseReportMessage test_case = 11;
+
+  // Profiling reports
+  repeated ProfilingReportMessage profiling = 21;
+
+  // Systrace report per file
+  repeated SystraceReportMessage systrace = 22  [deprecated=true];
+
+  // Execution start and end time stamp.
+  optional int64 start_timestamp = 101;
+  optional int64 end_timestamp = 102;
+
+  // Coverage report per file
+  repeated CoverageReportMessage coverage = 103;
+
+  // Log for a test module. May contain multiple logs such as logcat, host log,
+  // etc.
+  repeated LogMessage log = 1001;
+
+  // URL links for the test run.
+  repeated UrlResourceMessage link_resource = 1011;
+}
+
+// To specify a test execution report.
+message TestPlanReportMessage {
+  // Keys used to find all TestReportMessage messages of test modules in
+  // this plan.
+  repeated string test_module_name = 11;
+  repeated int64 test_module_start_timestamp = 12;
+
+  // The test plan name.
+  optional string test_plan_name = 21;
+
+  // Report resource flies.
+  repeated UrlResourceMessage partner_report = 31;
+
+  // Detailed information about the execution environment (e.g., branch,
+  // build ID, and device) can be found in the associated TestReportMessage(s)
+  // which share the same test_plan_execution_id.
+}
+
+// Proto wrapper for posting data to the VTS Dashboard
+message DashboardPostMessage {
+  // oauth2.0 access token
+  optional string access_token = 1;
+
+  repeated TestReportMessage test_report = 2;
+  repeated TestPlanReportMessage test_plan_report = 3;
+}

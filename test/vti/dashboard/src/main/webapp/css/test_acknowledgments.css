@@ -1,0 +1,145 @@
+/* Copyright (C) 2017 The Android Open Source Project
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+*/
+div.col.s12.section-header-col:after {
+    border: 1px solid #ee6e73;
+    margin-top: 10px;
+    margin-bottom: 0;
+    display: block;
+    content: " ";
+}
+div.col.s12.section-header-col h4.section-header {
+    cursor: default;
+    user-select: none;
+    color: #ee6e73;
+}
+div.col.s12.section-header-col p.acknowledgment-info {
+    font-size: 18px;
+    color: rgba(0,0,0,0.6);
+    font-weight: 300;
+}
+.search-row .input-field.col.s8 > label {
+    pointer-events: none;
+}
+.search-row .col.s1 .btn.btn-floating {
+    margin-top: 22px;
+}
+.acknowledgments {
+    width: 100%;
+    margin-top: 25px;
+    display: inline-block;
+}
+.ack-entry .col.card {
+    margin: 5px 0;
+    border-radius: 5px;
+    word-break: break-word;
+    cursor: pointer;
+}
+.ack-entry span.info-icon.right {
+    padding: 5px 0 0 0;
+    height: auto;
+    margin-right: -15px;
+    pointer-events: none;
+}
+.ack-entry span.info-icon.right i {
+    font-size: 16px;
+    line-height: 16px;
+    user-select: none;
+    color: grey;
+}
+.ack-entry .btn-container > .btn-flat {
+    margin-top: 10px;
+    user-select: none;
+    color: grey;
+}
+.ack-entry .count-indicator {
+    font-size: 12px;
+    font-style: italic;
+    font-weight: 300;
+    vertical-align: text-top;
+}
+.acknowledgments-modal.modal {
+    width: 80%;
+}
+.acknowledgments-modal.modal h4, .acknowledgments-modal.modal h5 {
+    user-select: none;
+    cursor: default;
+}
+.acknowledgments-modal.modal .modal-content .row .modal-section > .col {
+    padding: 0;
+}
+.acknowledgments-modal.modal .modal-content h5 {
+    color: rgb(97, 97, 97);
+    font-weight: 300;
+}
+.acknowledgments-modal.modal .modal-content h5 b {
+    color: #ee6e73;
+}
+.acknowledgments-modal.modal .modal-content .chips {
+    max-height: 30%;
+    overflow-y: auto;
+}
+.acknowledgments-modal.modal .modal-content .chips .chip {
+    font-size: 13px;
+    height: auto;
+    line-height: 13px;
+    padding: 5px 10px;
+    margin-right: 5px;
+    margin-top: 5px;
+}
+.acknowledgments-modal.modal .modal-content .chips .chip i.material-icons {
+    line-height: 13px;
+}
+.acknowledgments-modal.modal .modal-content .input-container {
+    position: relative;
+}
+.acknowledgments-modal.modal .modal-content .input-container .material-icons.add-button {
+    position: absolute;
+    top: 13px;
+    right: 5px;
+    color: #9e9e9e;
+    cursor: pointer;
+}
+.acknowledgments-modal.modal .modal-content .input-container > input[type=text] {
+    font-size: 15px;
+    height: 30px;
+    border: 0;
+    color: rgba(0,0,0,0.6);
+    margin-top: 10px;
+}
+.acknowledgments-modal.modal .modal-content .input-field {
+    margin-top: -25px;
+}
+.acknowledgments-modal.modal .modal-content .input-field textarea.note-field:disabled {
+    color: rgba(0,0,0,0.6);
+}
+.ui-autocomplete.card.autocomplete-dropdown {
+    z-index: 10000000;
+    overflow: auto;
+    max-height: 250px;
+}
+.ui-autocomplete.card.autocomplete-dropdown .ui-menu-item {
+    font-size: 12px;
+    padding: 4px 10px;
+    transition: background-color .25s;
+}
+.ui-autocomplete.card.autocomplete-dropdown .ui-menu-item:hover {
+    background-color: #e0f2f1;
+}
+.ui-autocomplete.card.autocomplete-dropdown .ui-menu-item:active {
+    background-color: #b2dfdb;
+}
+.ui-helper-hidden-accessible {
+    display: none;
+}

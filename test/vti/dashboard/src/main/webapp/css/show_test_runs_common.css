@@ -1,0 +1,156 @@
+/* Copyright (C) 2017 The Android Open Source Project
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+*/
+.page-button-wrapper {
+    top: 50%;
+    bottom: auto;
+    padding: 0;
+}
+#newer-wrapper {
+    left: 23px;
+    right: auto;
+}
+#chart-holder {
+    padding: 30px 5px;
+}
+#pie-chart-div {
+    width: 100%;
+    height: 300px;
+}
+.row .col div.pie-chart-div {
+    width: 100%;
+    height: 255px;
+}
+#profiling-container {
+    padding: 0;
+}
+#summary-container {
+    padding: 0;
+    line-height: 18px;
+    font-weight: 300;
+    color: rgb(97, 97, 97);
+}
+#summary-container .summary-header {
+    font-size: 18px;
+    font-weight: normal;
+    color: rgba(0, 0, 0, 0.87);
+    border-bottom: 1px solid rgb(221, 221, 221);
+    margin: 0;
+    padding: 10px 15px;
+}
+#summary-container .summary-header i {
+    margin-right: 10px;
+}
+#summary-container div {
+    margin: 15px;
+}
+#error-div {
+    padding: 30px 25px;
+}
+#profiling-body {
+    border: none;
+}
+#profiling-list {
+    max-height: 200px;
+    overflow-y: scroll;
+}
+.collapsible-header {
+    user-select: none;
+}
+.collapsible-link {
+    color: inherit;
+}
+.collection a.collection-item.profiling-point-name {
+    color: #616161;
+    font-size: 13px;
+    padding: 2px 0 2px 25px;
+}
+#legend-wrapper {
+    display: inline-block;
+    padding: 10px 15px 12px;
+}
+.btn.inline-btn {
+    border-radius: 50px;
+    height: auto;
+    line-height: inherit;
+    padding: 1px;
+    margin-left: 2px;
+}
+i.material-icons.inline-icon {
+    font-size: inherit;
+}
+a.legend-circle {
+    width: 15px;
+    height: 15px;
+    padding: 0;
+    border-radius: 15px;
+}
+.legend-header-cell {
+    text-transform: capitalize;
+}
+.legend-entry {
+    display: inline-block;
+    margin: 0 5px;
+    min-width: 50px;
+}
+.legend-bubble {
+    border-radius: 20px;
+    height: 20px;
+    width: 20px;
+    margin: 0 auto;
+}
+#pie-chart-wrapper, .row .col.pie-chart-wrapper {
+    padding: 25px 0;
+}
+.pie-chart-title {
+    cursor: default;
+}
+div.status-icon {
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    display: inline-block;
+    margin-left: 5px;
+}
+.test-case-status {
+    border-radius: 50px;
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+}
+.test-case-status.width-1 {
+    width: calc(100% - 18px);
+}
+.TEST_CASE_RESULT_PASS {
+    background-color: #4CAF50;
+}
+.TEST_CASE_RESULT_FAIL {
+    background-color: #F44336;
+}
+.TEST_CASE_RESULT_SKIP {
+    background-color: #A8A8A8;
+}
+.TEST_CASE_RESULT_EXCEPTION {
+    background-color: black;
+}
+.TEST_CASE_RESULT_TIMEOUT {
+    background-color: #9900CC;
+}
+.UNKNOWN_RESULT {
+    background-color: white;
+    border: 1px #A8A8A8 solid;
+}
+.tabs > div.indicator {
+    height: 3px;
+}

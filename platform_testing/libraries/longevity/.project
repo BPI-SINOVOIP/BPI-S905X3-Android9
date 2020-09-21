@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>LongevityRunner</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>mockito</name>
+			<type>2</type>
+			<locationURI>TRADEFED_ROOT/external/mockito/src/main/java</locationURI>
+		</link>
+		<link>
+			<name>objenesis</name>
+			<type>2</type>
+			<locationURI>TRADEFED_ROOT/external/objenesis/main/src/main/java</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>

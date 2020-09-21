@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Google Inc. All Rights Reserved -->
+<configuration description="Testing system memory and app memory usage after launching app">
+    <!--apk-path option should point to the location of the test apk path-->
+    <target_preparer class="com.android.tradefed.targetprep.InstallApkSetup" >
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.TimeWaster" >
+          <option name="delay" value="60000" />
+    </target_preparer>
+    <test class="com.android.performance.tests.HermeticMemoryTest"/>
+</configuration>

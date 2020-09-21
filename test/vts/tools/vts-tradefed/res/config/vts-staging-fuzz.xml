@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2016 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<configuration description="VTS Serving Plan for Fuzzing (Staging)">
+  <include name="vts-base" />
+  <option name="plan" value="vts" />
+  <option name="test-tag" value="vts-star" />
+  <option name="vts-plan-result:plan-name" value="vts-staging-fuzz" />
+
+  <option name="compatibility:primary-abi-only" value="true" />
+  <option name="compatibility:include-filter" value="VtsHalBiometricsFingerprintV2_1IfaceFuzzer" />
+  <option name="compatibility:include-filter" value="VtsHalBluetoothV1_0IfaceFuzzer" />
+  <option name="compatibility:include-filter" value="VtsHalCasNativeV1_0IfaceFuzzer" />
+  <option name="compatibility:include-filter" value="VtsHalCasV1_0IfaceFuzzer" />
+  <option name="compatibility:include-filter" value="VtsHalContexthubV1_0IfaceFuzzer" />
+  <option name="compatibility:include-filter" value="VtsHalContexthubV1_1IfaceFuzzer" />
+  <option name="compatibility:include-filter" value="VtsHalGnssV1_0IfaceFuzzer" />
+  <option name="compatibility:include-filter" value="VtsHalGraphicsComposerV2_1IfaceFuzzer" />
+  <option name="compatibility:include-filter" value="VtsHalGraphicsMapperV2_0IfaceFuzzer" />
+  <option name="compatibility:include-filter" value="VtsHalGraphicsMapperV2_1IfaceFuzzer" />
+  <!--option name="compatibility:include-filter" value="VtsHalKeymasterV3_0IfaceFuzzer" /--><!-- can brick device -->
+  <option name="compatibility:include-filter" value="VtsHalMediaOmxV1_0IfaceFuzzer" />
+  <option name="compatibility:include-filter" value="VtsHalNeuralnetworksV1_0IfaceFuzzer" />
+  <option name="compatibility:include-filter" value="VtsHalNfcV1_0IfaceFuzzer" />
+  <option name="compatibility:include-filter" value="VtsHalOemlockV1_0IfaceFuzzer" />
+  <option name="compatibility:include-filter" value="VtsHalRadioV1_0IfaceFuzzer" />
+  <option name="compatibility:include-filter" value="VtsHalRadioV1_1IfaceFuzzer" />
+  <option name="compatibility:include-filter" value="VtsHalRenderscriptV1_0IfaceFuzzer" />
+  <option name="compatibility:include-filter" value="VtsHalSensorsV1_0IfaceFuzzer" />
+  <option name="compatibility:include-filter" value="VtsHalSoundtriggerV2_0IfaceFuzzer" />
+  <option name="compatibility:include-filter" value="VtsHalTetheroffloadConfigV1_0IfaceFuzzer" />
+  <option name="compatibility:include-filter" value="VtsHalTetheroffloadControlV1_0IfaceFuzzer" />
+  <option name="compatibility:include-filter" value="VtsHalUsbV1_0IfaceFuzzer" />
+  <option name="compatibility:include-filter" value="VtsHalUsbV1_1IfaceFuzzer" />
+  <option name="compatibility:include-filter" value="VtsHalWeaverV1_0IfaceFuzzer" />
+  <option name="compatibility:include-filter" value="VtsHalWifiOffloadV1_0IfaceFuzzer" />
+  <option name="compatibility:include-filter" value="VtsHalWifiSupplicantV1_0IfaceFuzzer" />
+</configuration>

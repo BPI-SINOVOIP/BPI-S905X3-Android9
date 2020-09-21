@@ -1,0 +1,8 @@
+*.class
+*.uml~
+bin
+
+# Intellij generated files
+.idea
+*.iml
+*.pyc

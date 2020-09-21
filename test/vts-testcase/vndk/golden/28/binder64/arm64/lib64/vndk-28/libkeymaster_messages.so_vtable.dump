@@ -1,0 +1,258 @@
+vtable for keymaster::GenerateKeyResponse
+_ZTVN9keymaster19GenerateKeyResponseE: 8 entries
+16    (int (*)(...)) _ZN9keymaster19GenerateKeyResponseD2Ev
+24    (int (*)(...)) _ZN9keymaster19GenerateKeyResponseD0Ev
+32    (int (*)(...)) _ZNK9keymaster17KeymasterResponse14SerializedSizeEv
+40    (int (*)(...)) _ZNK9keymaster17KeymasterResponse9SerializeEPhPKh
+48    (int (*)(...)) _ZN9keymaster17KeymasterResponse11DeserializeEPPKhS2_
+56    (int (*)(...)) _ZNK9keymaster19GenerateKeyResponse22NonErrorSerializedSizeEv
+64    (int (*)(...)) _ZNK9keymaster19GenerateKeyResponse17NonErrorSerializeEPhPKh
+72    (int (*)(...)) _ZN9keymaster19GenerateKeyResponse19NonErrorDeserializeEPPKhS2_
+
+
+vtable for keymaster::GetKeyCharacteristicsRequest
+_ZTVN9keymaster28GetKeyCharacteristicsRequestE: 5 entries
+16    (int (*)(...)) _ZN9keymaster28GetKeyCharacteristicsRequestD2Ev
+24    (int (*)(...)) _ZN9keymaster28GetKeyCharacteristicsRequestD0Ev
+32    (int (*)(...)) _ZNK9keymaster28GetKeyCharacteristicsRequest14SerializedSizeEv
+40    (int (*)(...)) _ZNK9keymaster28GetKeyCharacteristicsRequest9SerializeEPhPKh
+48    (int (*)(...)) _ZN9keymaster28GetKeyCharacteristicsRequest11DeserializeEPPKhS2_
+
+
+vtable for keymaster::AttestKeyRequest
+_ZTVN9keymaster16AttestKeyRequestE: 5 entries
+16    (int (*)(...)) _ZN9keymaster16AttestKeyRequestD2Ev
+24    (int (*)(...)) _ZN9keymaster16AttestKeyRequestD0Ev
+32    (int (*)(...)) _ZNK9keymaster16AttestKeyRequest14SerializedSizeEv
+40    (int (*)(...)) _ZNK9keymaster16AttestKeyRequest9SerializeEPhPKh
+48    (int (*)(...)) _ZN9keymaster16AttestKeyRequest11DeserializeEPPKhS2_
+
+
+vtable for keymaster::AttestKeyResponse
+_ZTVN9keymaster17AttestKeyResponseE: 8 entries
+16    (int (*)(...)) _ZN9keymaster17AttestKeyResponseD2Ev
+24    (int (*)(...)) _ZN9keymaster17AttestKeyResponseD0Ev
+32    (int (*)(...)) _ZNK9keymaster17KeymasterResponse14SerializedSizeEv
+40    (int (*)(...)) _ZNK9keymaster17KeymasterResponse9SerializeEPhPKh
+48    (int (*)(...)) _ZN9keymaster17KeymasterResponse11DeserializeEPPKhS2_
+56    (int (*)(...)) _ZNK9keymaster17AttestKeyResponse22NonErrorSerializedSizeEv
+64    (int (*)(...)) _ZNK9keymaster17AttestKeyResponse17NonErrorSerializeEPhPKh
+72    (int (*)(...)) _ZN9keymaster17AttestKeyResponse19NonErrorDeserializeEPPKhS2_
+
+
+vtable for keymaster::UpgradeKeyRequest
+_ZTVN9keymaster17UpgradeKeyRequestE: 5 entries
+16    (int (*)(...)) _ZN9keymaster17UpgradeKeyRequestD2Ev
+24    (int (*)(...)) _ZN9keymaster17UpgradeKeyRequestD0Ev
+32    (int (*)(...)) _ZNK9keymaster17UpgradeKeyRequest14SerializedSizeEv
+40    (int (*)(...)) _ZNK9keymaster17UpgradeKeyRequest9SerializeEPhPKh
+48    (int (*)(...)) _ZN9keymaster17UpgradeKeyRequest11DeserializeEPPKhS2_
+
+
+vtable for keymaster::UpgradeKeyResponse
+_ZTVN9keymaster18UpgradeKeyResponseE: 8 entries
+16    (int (*)(...)) _ZN9keymaster18UpgradeKeyResponseD2Ev
+24    (int (*)(...)) _ZN9keymaster18UpgradeKeyResponseD0Ev
+32    (int (*)(...)) _ZNK9keymaster17KeymasterResponse14SerializedSizeEv
+40    (int (*)(...)) _ZNK9keymaster17KeymasterResponse9SerializeEPhPKh
+48    (int (*)(...)) _ZN9keymaster17KeymasterResponse11DeserializeEPPKhS2_
+56    (int (*)(...)) _ZNK9keymaster18UpgradeKeyResponse22NonErrorSerializedSizeEv
+64    (int (*)(...)) _ZNK9keymaster18UpgradeKeyResponse17NonErrorSerializeEPhPKh
+72    (int (*)(...)) _ZN9keymaster18UpgradeKeyResponse19NonErrorDeserializeEPPKhS2_
+
+
+vtable for keymaster::KeymasterResponse
+_ZTVN9keymaster17KeymasterResponseE: 3 entries
+32    (int (*)(...)) _ZNK9keymaster17KeymasterResponse14SerializedSizeEv
+40    (int (*)(...)) _ZNK9keymaster17KeymasterResponse9SerializeEPhPKh
+48    (int (*)(...)) _ZN9keymaster17KeymasterResponse11DeserializeEPPKhS2_
+
+
+vtable for keymaster::GetKeyCharacteristicsResponse
+_ZTVN9keymaster29GetKeyCharacteristicsResponseE: 6 entries
+32    (int (*)(...)) _ZNK9keymaster17KeymasterResponse14SerializedSizeEv
+40    (int (*)(...)) _ZNK9keymaster17KeymasterResponse9SerializeEPhPKh
+48    (int (*)(...)) _ZN9keymaster17KeymasterResponse11DeserializeEPPKhS2_
+56    (int (*)(...)) _ZNK9keymaster29GetKeyCharacteristicsResponse22NonErrorSerializedSizeEv
+64    (int (*)(...)) _ZNK9keymaster29GetKeyCharacteristicsResponse17NonErrorSerializeEPhPKh
+72    (int (*)(...)) _ZN9keymaster29GetKeyCharacteristicsResponse19NonErrorDeserializeEPPKhS2_
+
+
+vtable for keymaster::BeginOperationRequest
+_ZTVN9keymaster21BeginOperationRequestE: 3 entries
+32    (int (*)(...)) _ZNK9keymaster21BeginOperationRequest14SerializedSizeEv
+40    (int (*)(...)) _ZNK9keymaster21BeginOperationRequest9SerializeEPhPKh
+48    (int (*)(...)) _ZN9keymaster21BeginOperationRequest11DeserializeEPPKhS2_
+
+
+vtable for keymaster::BeginOperationResponse
+_ZTVN9keymaster22BeginOperationResponseE: 6 entries
+32    (int (*)(...)) _ZNK9keymaster17KeymasterResponse14SerializedSizeEv
+40    (int (*)(...)) _ZNK9keymaster17KeymasterResponse9SerializeEPhPKh
+48    (int (*)(...)) _ZN9keymaster17KeymasterResponse11DeserializeEPPKhS2_
+56    (int (*)(...)) _ZNK9keymaster22BeginOperationResponse22NonErrorSerializedSizeEv
+64    (int (*)(...)) _ZNK9keymaster22BeginOperationResponse17NonErrorSerializeEPhPKh
+72    (int (*)(...)) _ZN9keymaster22BeginOperationResponse19NonErrorDeserializeEPPKhS2_
+
+
+vtable for keymaster::UpdateOperationRequest
+_ZTVN9keymaster22UpdateOperationRequestE: 3 entries
+32    (int (*)(...)) _ZNK9keymaster22UpdateOperationRequest14SerializedSizeEv
+40    (int (*)(...)) _ZNK9keymaster22UpdateOperationRequest9SerializeEPhPKh
+48    (int (*)(...)) _ZN9keymaster22UpdateOperationRequest11DeserializeEPPKhS2_
+
+
+vtable for keymaster::UpdateOperationResponse
+_ZTVN9keymaster23UpdateOperationResponseE: 6 entries
+32    (int (*)(...)) _ZNK9keymaster17KeymasterResponse14SerializedSizeEv
+40    (int (*)(...)) _ZNK9keymaster17KeymasterResponse9SerializeEPhPKh
+48    (int (*)(...)) _ZN9keymaster17KeymasterResponse11DeserializeEPPKhS2_
+56    (int (*)(...)) _ZNK9keymaster23UpdateOperationResponse22NonErrorSerializedSizeEv
+64    (int (*)(...)) _ZNK9keymaster23UpdateOperationResponse17NonErrorSerializeEPhPKh
+72    (int (*)(...)) _ZN9keymaster23UpdateOperationResponse19NonErrorDeserializeEPPKhS2_
+
+
+vtable for keymaster::FinishOperationRequest
+_ZTVN9keymaster22FinishOperationRequestE: 3 entries
+32    (int (*)(...)) _ZNK9keymaster22FinishOperationRequest14SerializedSizeEv
+40    (int (*)(...)) _ZNK9keymaster22FinishOperationRequest9SerializeEPhPKh
+48    (int (*)(...)) _ZN9keymaster22FinishOperationRequest11DeserializeEPPKhS2_
+
+
+vtable for keymaster::FinishOperationResponse
+_ZTVN9keymaster23FinishOperationResponseE: 6 entries
+32    (int (*)(...)) _ZNK9keymaster17KeymasterResponse14SerializedSizeEv
+40    (int (*)(...)) _ZNK9keymaster17KeymasterResponse9SerializeEPhPKh
+48    (int (*)(...)) _ZN9keymaster17KeymasterResponse11DeserializeEPPKhS2_
+56    (int (*)(...)) _ZNK9keymaster23FinishOperationResponse22NonErrorSerializedSizeEv
+64    (int (*)(...)) _ZNK9keymaster23FinishOperationResponse17NonErrorSerializeEPhPKh
+72    (int (*)(...)) _ZN9keymaster23FinishOperationResponse19NonErrorDeserializeEPPKhS2_
+
+
+vtable for keymaster::AddEntropyRequest
+_ZTVN9keymaster17AddEntropyRequestE: 3 entries
+32    (int (*)(...)) _ZNK9keymaster17AddEntropyRequest14SerializedSizeEv
+40    (int (*)(...)) _ZNK9keymaster17AddEntropyRequest9SerializeEPhPKh
+48    (int (*)(...)) _ZN9keymaster17AddEntropyRequest11DeserializeEPPKhS2_
+
+
+vtable for keymaster::ImportKeyRequest
+_ZTVN9keymaster16ImportKeyRequestE: 3 entries
+32    (int (*)(...)) _ZNK9keymaster16ImportKeyRequest14SerializedSizeEv
+40    (int (*)(...)) _ZNK9keymaster16ImportKeyRequest9SerializeEPhPKh
+48    (int (*)(...)) _ZN9keymaster16ImportKeyRequest11DeserializeEPPKhS2_
+
+
+vtable for keymaster::ImportKeyResponse
+_ZTVN9keymaster17ImportKeyResponseE: 6 entries
+32    (int (*)(...)) _ZNK9keymaster17KeymasterResponse14SerializedSizeEv
+40    (int (*)(...)) _ZNK9keymaster17KeymasterResponse9SerializeEPhPKh
+48    (int (*)(...)) _ZN9keymaster17KeymasterResponse11DeserializeEPPKhS2_
+56    (int (*)(...)) _ZNK9keymaster17ImportKeyResponse22NonErrorSerializedSizeEv
+64    (int (*)(...)) _ZNK9keymaster17ImportKeyResponse17NonErrorSerializeEPhPKh
+72    (int (*)(...)) _ZN9keymaster17ImportKeyResponse19NonErrorDeserializeEPPKhS2_
+
+
+vtable for keymaster::ExportKeyRequest
+_ZTVN9keymaster16ExportKeyRequestE: 3 entries
+32    (int (*)(...)) _ZNK9keymaster16ExportKeyRequest14SerializedSizeEv
+40    (int (*)(...)) _ZNK9keymaster16ExportKeyRequest9SerializeEPhPKh
+48    (int (*)(...)) _ZN9keymaster16ExportKeyRequest11DeserializeEPPKhS2_
+
+
+vtable for keymaster::ExportKeyResponse
+_ZTVN9keymaster17ExportKeyResponseE: 6 entries
+32    (int (*)(...)) _ZNK9keymaster17KeymasterResponse14SerializedSizeEv
+40    (int (*)(...)) _ZNK9keymaster17KeymasterResponse9SerializeEPhPKh
+48    (int (*)(...)) _ZN9keymaster17KeymasterResponse11DeserializeEPPKhS2_
+56    (int (*)(...)) _ZNK9keymaster17ExportKeyResponse22NonErrorSerializedSizeEv
+64    (int (*)(...)) _ZNK9keymaster17ExportKeyResponse17NonErrorSerializeEPhPKh
+72    (int (*)(...)) _ZN9keymaster17ExportKeyResponse19NonErrorDeserializeEPPKhS2_
+
+
+vtable for keymaster::DeleteKeyRequest
+_ZTVN9keymaster16DeleteKeyRequestE: 3 entries
+32    (int (*)(...)) _ZNK9keymaster16DeleteKeyRequest14SerializedSizeEv
+40    (int (*)(...)) _ZNK9keymaster16DeleteKeyRequest9SerializeEPhPKh
+48    (int (*)(...)) _ZN9keymaster16DeleteKeyRequest11DeserializeEPPKhS2_
+
+
+vtable for keymaster::GetVersionResponse
+_ZTVN9keymaster18GetVersionResponseE: 6 entries
+32    (int (*)(...)) _ZNK9keymaster17KeymasterResponse14SerializedSizeEv
+40    (int (*)(...)) _ZNK9keymaster17KeymasterResponse9SerializeEPhPKh
+48    (int (*)(...)) _ZN9keymaster17KeymasterResponse11DeserializeEPPKhS2_
+56    (int (*)(...)) _ZNK9keymaster18GetVersionResponse22NonErrorSerializedSizeEv
+64    (int (*)(...)) _ZNK9keymaster18GetVersionResponse17NonErrorSerializeEPhPKh
+72    (int (*)(...)) _ZN9keymaster18GetVersionResponse19NonErrorDeserializeEPPKhS2_
+
+
+vtable for keymaster::HmacSharingParameters
+_ZTVN9keymaster21HmacSharingParametersE: 3 entries
+32    (int (*)(...)) _ZNK9keymaster21HmacSharingParameters14SerializedSizeEv
+40    (int (*)(...)) _ZNK9keymaster21HmacSharingParameters9SerializeEPhPKh
+48    (int (*)(...)) _ZN9keymaster21HmacSharingParameters11DeserializeEPPKhS2_
+
+
+vtable for keymaster::HmacSharingParametersArray
+_ZTVN9keymaster26HmacSharingParametersArrayE: 3 entries
+32    (int (*)(...)) _ZNK9keymaster26HmacSharingParametersArray14SerializedSizeEv
+40    (int (*)(...)) _ZNK9keymaster26HmacSharingParametersArray9SerializeEPhPKh
+48    (int (*)(...)) _ZN9keymaster26HmacSharingParametersArray11DeserializeEPPKhS2_
+
+
+vtable for keymaster::ComputeSharedHmacResponse
+_ZTVN9keymaster25ComputeSharedHmacResponseE: 6 entries
+32    (int (*)(...)) _ZNK9keymaster17KeymasterResponse14SerializedSizeEv
+40    (int (*)(...)) _ZNK9keymaster17KeymasterResponse9SerializeEPhPKh
+48    (int (*)(...)) _ZN9keymaster17KeymasterResponse11DeserializeEPPKhS2_
+56    (int (*)(...)) _ZNK9keymaster25ComputeSharedHmacResponse22NonErrorSerializedSizeEv
+64    (int (*)(...)) _ZNK9keymaster25ComputeSharedHmacResponse17NonErrorSerializeEPhPKh
+72    (int (*)(...)) _ZN9keymaster25ComputeSharedHmacResponse19NonErrorDeserializeEPPKhS2_
+
+
+vtable for keymaster::ImportWrappedKeyRequest
+_ZTVN9keymaster23ImportWrappedKeyRequestE: 3 entries
+32    (int (*)(...)) _ZNK9keymaster23ImportWrappedKeyRequest14SerializedSizeEv
+40    (int (*)(...)) _ZNK9keymaster23ImportWrappedKeyRequest9SerializeEPhPKh
+48    (int (*)(...)) _ZN9keymaster23ImportWrappedKeyRequest11DeserializeEPPKhS2_
+
+
+vtable for keymaster::ImportWrappedKeyResponse
+_ZTVN9keymaster24ImportWrappedKeyResponseE: 6 entries
+32    (int (*)(...)) _ZNK9keymaster17KeymasterResponse14SerializedSizeEv
+40    (int (*)(...)) _ZNK9keymaster17KeymasterResponse9SerializeEPhPKh
+48    (int (*)(...)) _ZN9keymaster17KeymasterResponse11DeserializeEPPKhS2_
+56    (int (*)(...)) _ZNK9keymaster24ImportWrappedKeyResponse22NonErrorSerializedSizeEv
+64    (int (*)(...)) _ZNK9keymaster24ImportWrappedKeyResponse17NonErrorSerializeEPhPKh
+72    (int (*)(...)) _ZN9keymaster24ImportWrappedKeyResponse19NonErrorDeserializeEPPKhS2_
+
+
+vtable for keymaster::HardwareAuthToken
+_ZTVN9keymaster17HardwareAuthTokenE: 3 entries
+32    (int (*)(...)) _ZNK9keymaster17HardwareAuthToken14SerializedSizeEv
+40    (int (*)(...)) _ZNK9keymaster17HardwareAuthToken9SerializeEPhPKh
+48    (int (*)(...)) _ZN9keymaster17HardwareAuthToken11DeserializeEPPKhS2_
+
+
+vtable for keymaster::VerificationToken
+_ZTVN9keymaster17VerificationTokenE: 3 entries
+32    (int (*)(...)) _ZNK9keymaster17VerificationToken14SerializedSizeEv
+40    (int (*)(...)) _ZNK9keymaster17VerificationToken9SerializeEPhPKh
+48    (int (*)(...)) _ZN9keymaster17VerificationToken11DeserializeEPPKhS2_
+
+
+vtable for keymaster::AuthorizationSet
+_ZTVN9keymaster16AuthorizationSetE: 5 entries
+16    (int (*)(...)) _ZN9keymaster16AuthorizationSetD2Ev
+24    (int (*)(...)) _ZN9keymaster16AuthorizationSetD0Ev
+32    (int (*)(...)) _ZNK9keymaster16AuthorizationSet14SerializedSizeEv
+40    (int (*)(...)) _ZNK9keymaster16AuthorizationSet9SerializeEPhPKh
+48    (int (*)(...)) _ZN9keymaster16AuthorizationSet11DeserializeEPPKhS2_
+
+
+vtable for keymaster::Buffer
+_ZTVN9keymaster6BufferE: 3 entries
+32    (int (*)(...)) _ZNK9keymaster6Buffer14SerializedSizeEv
+40    (int (*)(...)) _ZNK9keymaster6Buffer9SerializeEPhPKh
+48    (int (*)(...)) _ZN9keymaster6Buffer11DeserializeEPPKhS2_

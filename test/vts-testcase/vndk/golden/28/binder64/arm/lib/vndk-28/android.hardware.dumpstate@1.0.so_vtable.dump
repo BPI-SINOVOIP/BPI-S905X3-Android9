@@ -1,0 +1,64 @@
+vtable for android::hardware::dumpstate::V1_0::BpHwDumpstateDevice
+_ZTVN7android8hardware9dumpstate4V1_019BpHwDumpstateDeviceE: 18 entries
+16    (int (*)(...)) _ZN7android8hardware9dumpstate4V1_019BpHwDumpstateDevice14interfaceChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_11hidl_stringEEEEEE
+20    (int (*)(...)) _ZN7android8hardware9dumpstate4V1_019BpHwDumpstateDevice5debugERKNS0_11hidl_handleERKNS0_8hidl_vecINS0_11hidl_stringEEE
+24    (int (*)(...)) _ZN7android8hardware9dumpstate4V1_019BpHwDumpstateDevice19interfaceDescriptorENSt3__18functionIFvRKNS0_11hidl_stringEEEE
+28    (int (*)(...)) _ZN7android8hardware9dumpstate4V1_019BpHwDumpstateDevice12getHashChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_10hidl_arrayIhLj32EJEEEEEEEE
+32    (int (*)(...)) _ZN7android8hardware9dumpstate4V1_019BpHwDumpstateDevice21setHALInstrumentationEv
+36    (int (*)(...)) _ZN7android8hardware9dumpstate4V1_019BpHwDumpstateDevice11linkToDeathERKNS_2spINS0_20hidl_death_recipientEEEy
+40    (int (*)(...)) _ZN7android8hardware9dumpstate4V1_019BpHwDumpstateDevice4pingEv
+44    (int (*)(...)) _ZN7android8hardware9dumpstate4V1_019BpHwDumpstateDevice12getDebugInfoENSt3__18functionIFvRKNS_4hidl4base4V1_09DebugInfoEEEE
+48    (int (*)(...)) _ZN7android8hardware9dumpstate4V1_019BpHwDumpstateDevice21notifySyspropsChangedEv
+52    (int (*)(...)) _ZN7android8hardware9dumpstate4V1_019BpHwDumpstateDevice13unlinkToDeathERKNS_2spINS0_20hidl_death_recipientEEE
+64    (int (*)(...)) _ZN7android8hardware9dumpstate4V1_019BpHwDumpstateDevice14dumpstateBoardERKNS0_11hidl_handleE
+116    (int (*)(...)) _ZN7android8hardware11BpHwRefBase10onFirstRefEv
+120    (int (*)(...)) _ZN7android8hardware11BpHwRefBase15onLastStrongRefEPKv
+124    (int (*)(...)) _ZN7android8hardware11BpHwRefBase20onIncStrongAttemptedEjPKv
+180    (int (*)(...)) _ZTv0_n16_N7android8hardware11BpHwRefBase10onFirstRefEv
+184    (int (*)(...)) _ZTv0_n20_N7android8hardware11BpHwRefBase15onLastStrongRefEPKv
+188    (int (*)(...)) _ZTv0_n24_N7android8hardware11BpHwRefBase20onIncStrongAttemptedEjPKv
+192    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+
+
+vtable for android::hardware::dumpstate::V1_0::BnHwDumpstateDevice
+_ZTVN7android8hardware9dumpstate4V1_019BnHwDumpstateDeviceE: 21 entries
+12    (int (*)(...)) _ZN7android8hardware9BHwBinder8transactEjRKNS0_6ParcelEPS2_jNSt3__18functionIFvRS2_EEE
+16    (int (*)(...)) _ZN7android8hardware9BHwBinder11linkToDeathERKNS_2spINS0_7IBinder14DeathRecipientEEEPvj
+20    (int (*)(...)) _ZN7android8hardware9BHwBinder13unlinkToDeathERKNS_2wpINS0_7IBinder14DeathRecipientEEEPvjPS5_
+24    (int (*)(...)) _ZNK7android8hardware7IBinder13checkSubclassEPKv
+28    (int (*)(...)) _ZN7android8hardware9BHwBinder12attachObjectEPKvPvS4_PFvS3_S4_S4_E
+32    (int (*)(...)) _ZNK7android8hardware9BHwBinder10findObjectEPKv
+36    (int (*)(...)) _ZN7android8hardware9BHwBinder12detachObjectEPKv
+40    (int (*)(...)) _ZN7android8hardware9BHwBinder11localBinderEv
+44    (int (*)(...)) _ZN7android8hardware7IBinder12remoteBinderEv
+48    (int (*)(...)) _ZN7android8hardware9dumpstate4V1_019BnHwDumpstateDeviceD1Ev
+52    (int (*)(...)) _ZN7android8hardware9dumpstate4V1_019BnHwDumpstateDeviceD0Ev
+56    (int (*)(...)) _ZN7android8hardware9dumpstate4V1_019BnHwDumpstateDevice10onTransactEjRKNS0_6ParcelEPS4_jNSt3__18functionIFvRS4_EEE
+68    (int (*)(...)) _ZThn20_N7android8hardware9dumpstate4V1_019BnHwDumpstateDeviceD1Ev
+72    (int (*)(...)) _ZThn20_N7android8hardware9dumpstate4V1_019BnHwDumpstateDeviceD0Ev
+104    (int (*)(...)) _ZTv0_n12_N7android8hardware9dumpstate4V1_019BnHwDumpstateDeviceD1Ev
+108    (int (*)(...)) _ZTv0_n12_N7android8hardware9dumpstate4V1_019BnHwDumpstateDeviceD0Ev
+112    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+116    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+120    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+124    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+128    (int (*)(...)) _ZTVN7android8hardware9dumpstate4V1_019BnHwDumpstateDeviceE
+
+
+vtable for android::hardware::dumpstate::V1_0::IDumpstateDevice
+_ZTVN7android8hardware9dumpstate4V1_016IDumpstateDeviceE: 15 entries
+16    (int (*)(...)) _ZN7android8hardware9dumpstate4V1_016IDumpstateDevice14interfaceChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_11hidl_stringEEEEEE
+20    (int (*)(...)) _ZN7android8hardware9dumpstate4V1_016IDumpstateDevice5debugERKNS0_11hidl_handleERKNS0_8hidl_vecINS0_11hidl_stringEEE
+24    (int (*)(...)) _ZN7android8hardware9dumpstate4V1_016IDumpstateDevice19interfaceDescriptorENSt3__18functionIFvRKNS0_11hidl_stringEEEE
+28    (int (*)(...)) _ZN7android8hardware9dumpstate4V1_016IDumpstateDevice12getHashChainENSt3__18functionIFvRKNS0_8hidl_vecINS0_10hidl_arrayIhLj32EJEEEEEEEE
+32    (int (*)(...)) _ZN7android8hardware9dumpstate4V1_016IDumpstateDevice21setHALInstrumentationEv
+36    (int (*)(...)) _ZN7android8hardware9dumpstate4V1_016IDumpstateDevice11linkToDeathERKNS_2spINS0_20hidl_death_recipientEEEy
+40    (int (*)(...)) _ZN7android8hardware9dumpstate4V1_016IDumpstateDevice4pingEv
+44    (int (*)(...)) _ZN7android8hardware9dumpstate4V1_016IDumpstateDevice12getDebugInfoENSt3__18functionIFvRKNS_4hidl4base4V1_09DebugInfoEEEE
+48    (int (*)(...)) _ZN7android8hardware9dumpstate4V1_016IDumpstateDevice21notifySyspropsChangedEv
+52    (int (*)(...)) _ZN7android8hardware9dumpstate4V1_016IDumpstateDevice13unlinkToDeathERKNS_2spINS0_20hidl_death_recipientEEE
+104    (int (*)(...)) _ZN7android7RefBase10onFirstRefEv
+108    (int (*)(...)) _ZN7android7RefBase15onLastStrongRefEPKv
+112    (int (*)(...)) _ZN7android7RefBase20onIncStrongAttemptedEjPKv
+116    (int (*)(...)) _ZN7android7RefBase13onLastWeakRefEPKv
+120    (int (*)(...)) _ZTVN7android8hardware9dumpstate4V1_016IDumpstateDeviceE

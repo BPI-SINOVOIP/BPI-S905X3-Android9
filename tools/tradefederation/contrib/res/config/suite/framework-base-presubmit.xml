@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Google Inc. All Rights Reserved. -->
+<configuration description="Android framework-base-presubmit test suite config.">
+    <test class="com.android.tradefed.testtype.suite.TfSuiteRunner">
+        <option name="run-suite-tag" value="framework-base-presubmit" />
+    </test>
+</configuration>

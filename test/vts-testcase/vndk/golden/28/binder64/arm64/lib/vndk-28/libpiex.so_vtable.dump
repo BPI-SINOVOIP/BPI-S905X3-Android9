@@ -1,0 +1,22 @@
+vtable for piex::binary_parse::PagedByteArray
+_ZTVN4piex12binary_parse14PagedByteArrayE: 20 entries
+8    (int (*)(...)) _ZN4piex12binary_parse14PagedByteArrayD2Ev
+12    (int (*)(...)) _ZN4piex12binary_parse14PagedByteArrayD0Ev
+18446744073709551120    (int (*)(...)) _ZN4piex12binary_parse14PagedByteArrayD1Ev
+18446744073709551148    (int (*)(...)) _ZN4piex12binary_parse14PagedByteArrayD1Ev
+18446744073709551176    (int (*)(...)) _ZN4piex12binary_parse14PagedByteArrayD1Ev
+18446744073709551204    (int (*)(...)) _ZN4piex12binary_parse14PagedByteArrayD1Ev
+18446744073709551232    (int (*)(...)) _ZN4piex12binary_parse14PagedByteArrayD1Ev
+18446744073709551260    (int (*)(...)) _ZN4piex12binary_parse14PagedByteArrayD1Ev
+18446744073709551288    (int (*)(...)) _ZN4piex12binary_parse14PagedByteArrayD1Ev
+18446744073709551316    (int (*)(...)) _ZN4piex12binary_parse14PagedByteArrayD1Ev
+18446744073709551344    (int (*)(...)) _ZN4piex12binary_parse14PagedByteArrayD1Ev
+18446744073709551372    (int (*)(...)) _ZN4piex12binary_parse14PagedByteArrayD1Ev
+18446744073709551400    (int (*)(...)) _ZN4piex12binary_parse14PagedByteArrayD1Ev
+18446744073709551428    (int (*)(...)) _ZN4piex12binary_parse14PagedByteArrayD1Ev
+18446744073709551456    (int (*)(...)) _ZN4piex12binary_parse14PagedByteArrayD1Ev
+18446744073709551484    (int (*)(...)) _ZN4piex12binary_parse14PagedByteArrayD1Ev
+18446744073709551512    (int (*)(...)) _ZN4piex12binary_parse14PagedByteArrayD1Ev
+18446744073709551540    (int (*)(...)) _ZN4piex12binary_parse14PagedByteArrayD1Ev
+18446744073709551568    (int (*)(...)) _ZN4piex12binary_parse14PagedByteArrayD1Ev
+18446744073709551596    (int (*)(...)) _ZN4piex12binary_parse14PagedByteArrayD1Ev

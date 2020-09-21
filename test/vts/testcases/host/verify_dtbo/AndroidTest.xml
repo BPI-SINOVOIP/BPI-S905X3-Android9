@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2018 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<configuration description="Config for VTS DTBO Verification Test">
+    <option name="config-descriptor:metadata" key="plan" value="vts-firmware" />
+    <target_preparer class="com.android.compatibility.common.tradefed.targetprep.VtsFilePusher">
+      <option name="push-group" value="HostDrivenTest.push" />
+      <option name="cleanup" value="true" />
+      <option name="push" value="DATA/nativetest64/ufdt_verify_overlay/ufdt_verify_overlay->/data/local/tmp/64/ufdt_verify_overlay" />
+      <option name="push" value="DATA/nativetest/ufdt_verify_overlay/ufdt_verify_overlay->/data/local/tmp/32/ufdt_verify_overlay" />
+    </target_preparer>
+    <test class="com.android.tradefed.testtype.VtsMultiDeviceTest">
+        <option name="test-module-name" value="VtsFirmwareDtboVerification"/>
+        <option name="test-case-path" value="vts/testcases/host/verify_dtbo/VtsFirmwareDtboVerification" />
+        <option name="precondition-first-api-level" value="28" />
+    </test>
+</configuration>

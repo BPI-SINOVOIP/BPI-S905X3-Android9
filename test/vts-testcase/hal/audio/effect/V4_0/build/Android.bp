@@ -1,0 +1,165 @@
+// This file was auto-generated. Do not edit manually.
+// Use launch_hal_test.py or update_makefiles.py in test/vts-testcase/hal/script/ to generate this file.
+
+// Generate .vts spec files.
+hal2vts {
+    name: "android.hardware.audio.effect@4.0-vts.spec",
+    hidl_gen_args: "-r android.hardware:hardware/interfaces",
+    srcs: [
+        ":android.hardware.audio.effect@4.0_hal",
+    ],
+    out: [
+        "android/hardware/audio/effect/4.0/AcousticEchoCancelerEffect.vts",
+        "android/hardware/audio/effect/4.0/AutomaticGainControlEffect.vts",
+        "android/hardware/audio/effect/4.0/BassBoostEffect.vts",
+        "android/hardware/audio/effect/4.0/DownmixEffect.vts",
+        "android/hardware/audio/effect/4.0/Effect.vts",
+        "android/hardware/audio/effect/4.0/EffectBufferProviderCallback.vts",
+        "android/hardware/audio/effect/4.0/EffectsFactory.vts",
+        "android/hardware/audio/effect/4.0/EnvironmentalReverbEffect.vts",
+        "android/hardware/audio/effect/4.0/EqualizerEffect.vts",
+        "android/hardware/audio/effect/4.0/LoudnessEnhancerEffect.vts",
+        "android/hardware/audio/effect/4.0/NoiseSuppressionEffect.vts",
+        "android/hardware/audio/effect/4.0/PresetReverbEffect.vts",
+        "android/hardware/audio/effect/4.0/VirtualizerEffect.vts",
+        "android/hardware/audio/effect/4.0/VisualizerEffect.vts",
+        "android/hardware/audio/effect/4.0/types.vts",
+    ],
+}
+
+// Build VTS driver.
+genrule {
+    name: "android.hardware.audio.effect@4.0-vts.driver_genc++",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -r android.hardware:hardware/interfaces android.hardware.audio.effect@4.0 && $(location vtsc) -mDRIVER -tSOURCE -b$(genDir) android/hardware/audio/effect/4.0/ $(genDir)/android/hardware/audio/effect/4.0/",
+    srcs: [
+        ":android.hardware.audio.effect@4.0_hal",
+    ],
+    out: [
+        "android/hardware/audio/effect/4.0/AcousticEchoCancelerEffect.vts.cpp",
+        "android/hardware/audio/effect/4.0/AutomaticGainControlEffect.vts.cpp",
+        "android/hardware/audio/effect/4.0/BassBoostEffect.vts.cpp",
+        "android/hardware/audio/effect/4.0/DownmixEffect.vts.cpp",
+        "android/hardware/audio/effect/4.0/Effect.vts.cpp",
+        "android/hardware/audio/effect/4.0/EffectBufferProviderCallback.vts.cpp",
+        "android/hardware/audio/effect/4.0/EffectsFactory.vts.cpp",
+        "android/hardware/audio/effect/4.0/EnvironmentalReverbEffect.vts.cpp",
+        "android/hardware/audio/effect/4.0/EqualizerEffect.vts.cpp",
+        "android/hardware/audio/effect/4.0/LoudnessEnhancerEffect.vts.cpp",
+        "android/hardware/audio/effect/4.0/NoiseSuppressionEffect.vts.cpp",
+        "android/hardware/audio/effect/4.0/PresetReverbEffect.vts.cpp",
+        "android/hardware/audio/effect/4.0/VirtualizerEffect.vts.cpp",
+        "android/hardware/audio/effect/4.0/VisualizerEffect.vts.cpp",
+        "android/hardware/audio/effect/4.0/types.vts.cpp",
+    ],
+}
+
+genrule {
+    name: "android.hardware.audio.effect@4.0-vts.driver_genc++_headers",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -r android.hardware:hardware/interfaces android.hardware.audio.effect@4.0 && $(location vtsc) -mDRIVER -tHEADER -b$(genDir) android/hardware/audio/effect/4.0/ $(genDir)/android/hardware/audio/effect/4.0/",
+    srcs: [
+        ":android.hardware.audio.effect@4.0_hal",
+    ],
+    out: [
+        "android/hardware/audio/effect/4.0/AcousticEchoCancelerEffect.vts.h",
+        "android/hardware/audio/effect/4.0/AutomaticGainControlEffect.vts.h",
+        "android/hardware/audio/effect/4.0/BassBoostEffect.vts.h",
+        "android/hardware/audio/effect/4.0/DownmixEffect.vts.h",
+        "android/hardware/audio/effect/4.0/Effect.vts.h",
+        "android/hardware/audio/effect/4.0/EffectBufferProviderCallback.vts.h",
+        "android/hardware/audio/effect/4.0/EffectsFactory.vts.h",
+        "android/hardware/audio/effect/4.0/EnvironmentalReverbEffect.vts.h",
+        "android/hardware/audio/effect/4.0/EqualizerEffect.vts.h",
+        "android/hardware/audio/effect/4.0/LoudnessEnhancerEffect.vts.h",
+        "android/hardware/audio/effect/4.0/NoiseSuppressionEffect.vts.h",
+        "android/hardware/audio/effect/4.0/PresetReverbEffect.vts.h",
+        "android/hardware/audio/effect/4.0/VirtualizerEffect.vts.h",
+        "android/hardware/audio/effect/4.0/VisualizerEffect.vts.h",
+        "android/hardware/audio/effect/4.0/types.vts.h",
+    ],
+}
+
+cc_library_shared {
+    name: "android.hardware.audio.effect@4.0-vts.driver",
+    generated_sources: ["android.hardware.audio.effect@4.0-vts.driver_genc++"],
+    generated_headers: ["android.hardware.audio.effect@4.0-vts.driver_genc++_headers"],
+    export_generated_headers: ["android.hardware.audio.effect@4.0-vts.driver_genc++_headers"],
+    defaults: ["VtsHalDriverDefaults"],
+    shared_libs: [
+        "android.hardware.audio.common@4.0-vts.driver",
+    ],
+    static_libs: [
+        "android.hardware.audio.common@4.0",
+        "android.hardware.audio.effect@4.0",
+    ],
+}
+
+// Build VTS profiler.
+genrule {
+    name: "android.hardware.audio.effect@4.0-vts.profiler_genc++",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -r android.hardware:hardware/interfaces android.hardware.audio.effect@4.0 && $(location vtsc) -mPROFILER -tSOURCE -b$(genDir) android/hardware/audio/effect/4.0/ $(genDir)/android/hardware/audio/effect/4.0/",
+    srcs: [
+        ":android.hardware.audio.effect@4.0_hal",
+    ],
+    out: [
+        "android/hardware/audio/effect/4.0/AcousticEchoCancelerEffect.vts.cpp",
+        "android/hardware/audio/effect/4.0/AutomaticGainControlEffect.vts.cpp",
+        "android/hardware/audio/effect/4.0/BassBoostEffect.vts.cpp",
+        "android/hardware/audio/effect/4.0/DownmixEffect.vts.cpp",
+        "android/hardware/audio/effect/4.0/Effect.vts.cpp",
+        "android/hardware/audio/effect/4.0/EffectBufferProviderCallback.vts.cpp",
+        "android/hardware/audio/effect/4.0/EffectsFactory.vts.cpp",
+        "android/hardware/audio/effect/4.0/EnvironmentalReverbEffect.vts.cpp",
+        "android/hardware/audio/effect/4.0/EqualizerEffect.vts.cpp",
+        "android/hardware/audio/effect/4.0/LoudnessEnhancerEffect.vts.cpp",
+        "android/hardware/audio/effect/4.0/NoiseSuppressionEffect.vts.cpp",
+        "android/hardware/audio/effect/4.0/PresetReverbEffect.vts.cpp",
+        "android/hardware/audio/effect/4.0/VirtualizerEffect.vts.cpp",
+        "android/hardware/audio/effect/4.0/VisualizerEffect.vts.cpp",
+        "android/hardware/audio/effect/4.0/types.vts.cpp",
+    ],
+}
+
+genrule {
+    name: "android.hardware.audio.effect@4.0-vts.profiler_genc++_headers",
+    tools: ["hidl-gen", "vtsc"],
+    cmd: "$(location hidl-gen) -o $(genDir) -Lvts -r android.hardware:hardware/interfaces android.hardware.audio.effect@4.0 && $(location vtsc) -mPROFILER -tHEADER -b$(genDir) android/hardware/audio/effect/4.0/ $(genDir)/android/hardware/audio/effect/4.0/",
+    srcs: [
+        ":android.hardware.audio.effect@4.0_hal",
+    ],
+    out: [
+        "android/hardware/audio/effect/4.0/AcousticEchoCancelerEffect.vts.h",
+        "android/hardware/audio/effect/4.0/AutomaticGainControlEffect.vts.h",
+        "android/hardware/audio/effect/4.0/BassBoostEffect.vts.h",
+        "android/hardware/audio/effect/4.0/DownmixEffect.vts.h",
+        "android/hardware/audio/effect/4.0/Effect.vts.h",
+        "android/hardware/audio/effect/4.0/EffectBufferProviderCallback.vts.h",
+        "android/hardware/audio/effect/4.0/EffectsFactory.vts.h",
+        "android/hardware/audio/effect/4.0/EnvironmentalReverbEffect.vts.h",
+        "android/hardware/audio/effect/4.0/EqualizerEffect.vts.h",
+        "android/hardware/audio/effect/4.0/LoudnessEnhancerEffect.vts.h",
+        "android/hardware/audio/effect/4.0/NoiseSuppressionEffect.vts.h",
+        "android/hardware/audio/effect/4.0/PresetReverbEffect.vts.h",
+        "android/hardware/audio/effect/4.0/VirtualizerEffect.vts.h",
+        "android/hardware/audio/effect/4.0/VisualizerEffect.vts.h",
+        "android/hardware/audio/effect/4.0/types.vts.h",
+    ],
+}
+
+cc_library_shared {
+    name: "android.hardware.audio.effect@4.0-vts.profiler",
+    generated_sources: ["android.hardware.audio.effect@4.0-vts.profiler_genc++"],
+    generated_headers: ["android.hardware.audio.effect@4.0-vts.profiler_genc++_headers"],
+    export_generated_headers: ["android.hardware.audio.effect@4.0-vts.profiler_genc++_headers"],
+    defaults: ["VtsHalProfilerDefaults"],
+    shared_libs: [
+        "android.hardware.audio.common@4.0-vts.profiler",
+    ],
+    static_libs: [
+        "android.hardware.audio.common@4.0",
+        "android.hardware.audio.effect@4.0",
+    ],
+}
+

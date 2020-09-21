@@ -1,0 +1,131 @@
+Running main() from gtest_main.cc
+[==========] Running 53 tests from 15 test cases.
+[----------] Global test environment set-up.
+[----------] 2 tests from GtestCheckSyntaxTest
+[ RUN      ] GtestCheckSyntaxTest.BehavesLikeASingleStatement
+[       OK ] GtestCheckSyntaxTest.BehavesLikeASingleStatement
+[ RUN      ] GtestCheckSyntaxTest.WorksWithSwitch
+[       OK ] GtestCheckSyntaxTest.WorksWithSwitch
+[----------] 2 tests from IsInSetTest
+[ RUN      ] IsInSetTest.NulCharIsNotInAnySet
+[       OK ] IsInSetTest.NulCharIsNotInAnySet
+[ RUN      ] IsInSetTest.WorksForNonNulChars
+[       OK ] IsInSetTest.WorksForNonNulChars
+[----------] 2 tests from IsDigitTest
+[ RUN      ] IsDigitTest.IsFalseForNonDigit
+[       OK ] IsDigitTest.IsFalseForNonDigit
+[ RUN      ] IsDigitTest.IsTrueForDigit
+[       OK ] IsDigitTest.IsTrueForDigit
+[----------] 2 tests from IsPunctTest
+[ RUN      ] IsPunctTest.IsFalseForNonPunct
+[       OK ] IsPunctTest.IsFalseForNonPunct
+[ RUN      ] IsPunctTest.IsTrueForPunct
+[       OK ] IsPunctTest.IsTrueForPunct
+[----------] 2 tests from IsRepeatTest
+[ RUN      ] IsRepeatTest.IsFalseForNonRepeatChar
+[       OK ] IsRepeatTest.IsFalseForNonRepeatChar
+[ RUN      ] IsRepeatTest.IsTrueForRepeatChar
+[       OK ] IsRepeatTest.IsTrueForRepeatChar
+[----------] 2 tests from IsWhiteSpaceTest
+[ RUN      ] IsWhiteSpaceTest.IsFalseForNonWhiteSpace
+[       OK ] IsWhiteSpaceTest.IsFalseForNonWhiteSpace
+[ RUN      ] IsWhiteSpaceTest.IsTrueForWhiteSpace
+[       OK ] IsWhiteSpaceTest.IsTrueForWhiteSpace
+[----------] 4 tests from IsWordCharTest
+[ RUN      ] IsWordCharTest.IsFalseForNonWordChar
+[       OK ] IsWordCharTest.IsFalseForNonWordChar
+[ RUN      ] IsWordCharTest.IsTrueForLetter
+[       OK ] IsWordCharTest.IsTrueForLetter
+[ RUN      ] IsWordCharTest.IsTrueForDigit
+[       OK ] IsWordCharTest.IsTrueForDigit
+[ RUN      ] IsWordCharTest.IsTrueForUnderscore
+[       OK ] IsWordCharTest.IsTrueForUnderscore
+[----------] 6 tests from IsValidEscapeTest
+[ RUN      ] IsValidEscapeTest.IsFalseForNonPrintable
+[       OK ] IsValidEscapeTest.IsFalseForNonPrintable
+[ RUN      ] IsValidEscapeTest.IsFalseForDigit
+[       OK ] IsValidEscapeTest.IsFalseForDigit
+[ RUN      ] IsValidEscapeTest.IsFalseForWhiteSpace
+[       OK ] IsValidEscapeTest.IsFalseForWhiteSpace
+[ RUN      ] IsValidEscapeTest.IsFalseForSomeLetter
+[       OK ] IsValidEscapeTest.IsFalseForSomeLetter
+[ RUN      ] IsValidEscapeTest.IsTrueForPunct
+[       OK ] IsValidEscapeTest.IsTrueForPunct
+[ RUN      ] IsValidEscapeTest.IsTrueForSomeLetter
+[       OK ] IsValidEscapeTest.IsTrueForSomeLetter
+[----------] 10 tests from AtomMatchesCharTest
+[ RUN      ] AtomMatchesCharTest.EscapedPunct
+[       OK ] AtomMatchesCharTest.EscapedPunct
+[ RUN      ] AtomMatchesCharTest.Escaped_d
+[       OK ] AtomMatchesCharTest.Escaped_d
+[ RUN      ] AtomMatchesCharTest.Escaped_D
+[       OK ] AtomMatchesCharTest.Escaped_D
+[ RUN      ] AtomMatchesCharTest.Escaped_s
+[       OK ] AtomMatchesCharTest.Escaped_s
+[ RUN      ] AtomMatchesCharTest.Escaped_S
+[       OK ] AtomMatchesCharTest.Escaped_S
+[ RUN      ] AtomMatchesCharTest.Escaped_w
+[       OK ] AtomMatchesCharTest.Escaped_w
+[ RUN      ] AtomMatchesCharTest.Escaped_W
+[       OK ] AtomMatchesCharTest.Escaped_W
+[ RUN      ] AtomMatchesCharTest.EscapedWhiteSpace
+[       OK ] AtomMatchesCharTest.EscapedWhiteSpace
+[ RUN      ] AtomMatchesCharTest.UnescapedDot
+[       OK ] AtomMatchesCharTest.UnescapedDot
+[ RUN      ] AtomMatchesCharTest.UnescapedChar
+[       OK ] AtomMatchesCharTest.UnescapedChar
+[----------] 2 tests from ValidateRegexTest
+[ RUN      ] ValidateRegexTest.GeneratesFailureAndReturnsFalseForInvalid
+[       OK ] ValidateRegexTest.GeneratesFailureAndReturnsFalseForInvalid
+[ RUN      ] ValidateRegexTest.ReturnsTrueForValid
+[       OK ] ValidateRegexTest.ReturnsTrueForValid
+[----------] 3 tests from MatchRepetitionAndRegexAtHeadTest
+[ RUN      ] MatchRepetitionAndRegexAtHeadTest.WorksForZeroOrOne
+[       OK ] MatchRepetitionAndRegexAtHeadTest.WorksForZeroOrOne
+[ RUN      ] MatchRepetitionAndRegexAtHeadTest.WorksForZeroOrMany
+[       OK ] MatchRepetitionAndRegexAtHeadTest.WorksForZeroOrMany
+[ RUN      ] MatchRepetitionAndRegexAtHeadTest.WorksForOneOrMany
+[       OK ] MatchRepetitionAndRegexAtHeadTest.WorksForOneOrMany
+[----------] 6 tests from MatchRegexAtHeadTest
+[ RUN      ] MatchRegexAtHeadTest.ReturnsTrueForEmptyRegex
+[       OK ] MatchRegexAtHeadTest.ReturnsTrueForEmptyRegex
+[ RUN      ] MatchRegexAtHeadTest.WorksWhenDollarIsInRegex
+[       OK ] MatchRegexAtHeadTest.WorksWhenDollarIsInRegex
+[ RUN      ] MatchRegexAtHeadTest.WorksWhenRegexStartsWithEscapeSequence
+[       OK ] MatchRegexAtHeadTest.WorksWhenRegexStartsWithEscapeSequence
+[ RUN      ] MatchRegexAtHeadTest.WorksWhenRegexStartsWithRepetition
+[       OK ] MatchRegexAtHeadTest.WorksWhenRegexStartsWithRepetition
+[ RUN      ] MatchRegexAtHeadTest.WorksWhenRegexStartsWithRepetionOfEscapeSequence
+[       OK ] MatchRegexAtHeadTest.WorksWhenRegexStartsWithRepetionOfEscapeSequence
+[ RUN      ] MatchRegexAtHeadTest.MatchesSequentially
+[       OK ] MatchRegexAtHeadTest.MatchesSequentially
+[----------] 5 tests from MatchRegexAnywhereTest
+[ RUN      ] MatchRegexAnywhereTest.ReturnsFalseWhenStringIsNull
+[       OK ] MatchRegexAnywhereTest.ReturnsFalseWhenStringIsNull
+[ RUN      ] MatchRegexAnywhereTest.WorksWhenRegexStartsWithCaret
+[       OK ] MatchRegexAnywhereTest.WorksWhenRegexStartsWithCaret
+[ RUN      ] MatchRegexAnywhereTest.ReturnsFalseWhenNoMatch
+[       OK ] MatchRegexAnywhereTest.ReturnsFalseWhenNoMatch
+[ RUN      ] MatchRegexAnywhereTest.ReturnsTrueWhenMatchingPrefix
+[       OK ] MatchRegexAnywhereTest.ReturnsTrueWhenMatchingPrefix
+[ RUN      ] MatchRegexAnywhereTest.ReturnsTrueWhenMatchingNonPrefix
+[       OK ] MatchRegexAnywhereTest.ReturnsTrueWhenMatchingNonPrefix
+[----------] 4 tests from RETest
+[ RUN      ] RETest.ImplicitConstructorWorks
+[       OK ] RETest.ImplicitConstructorWorks
+[ RUN      ] RETest.RejectsInvalidRegex
+[       OK ] RETest.RejectsInvalidRegex
+[ RUN      ] RETest.FullMatchWorks
+[       OK ] RETest.FullMatchWorks
+[ RUN      ] RETest.PartialMatchWorks
+[       OK ] RETest.PartialMatchWorks
+[----------] 1 test from CaptureStderrTest
+[ RUN      ] CaptureStderrTest.CapturesStdErr
+[       OK ] CaptureStderrTest.CapturesStdErr
+[----------] Global test environment tear-down
+[==========] 53 tests from 15 test cases ran.
+[  PASSED  ] 53 tests.
+gtest-death-test_test... failed
+
+
+

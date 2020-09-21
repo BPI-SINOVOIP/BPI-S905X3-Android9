@@ -1,0 +1,147 @@
+{
+  "basePath": "/_ah/api",
+  "consumes": [
+    "application/json"
+  ],
+  "definitions": {
+    "WebappSrcProtoModelDefaultResponse": {
+      "properties": {
+        "return_code": {
+          "enum": [
+            "SUCCESS",
+            "FAIL"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "WebappSrcProtoModelScheduleInfoMessage": {
+      "properties": {
+        "build_target": {
+          "type": "string"
+        },
+        "device": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "gsi_branch": {
+          "type": "string"
+        },
+        "gsi_build_target": {
+          "type": "string"
+        },
+        "gsi_pab_account_id": {
+          "type": "string"
+        },
+        "manifest_branch": {
+          "type": "string"
+        },
+        "param": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "period": {
+          "format": "int64",
+          "type": "string"
+        },
+        "priority": {
+          "type": "string"
+        },
+        "shards": {
+          "format": "int64",
+          "type": "string"
+        },
+        "retry_count": {
+          "format": "int64",
+          "type": "string"
+        },
+        "test_name": {
+          "type": "string"
+        },
+        "test_branch": {
+          "type": "string"
+        },
+        "test_build_target": {
+          "type": "string"
+        },
+        "test_pab_account_id": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "host": "vtslab-schedule-prod.appspot.com",
+  "info": {
+    "description": "Endpoint API for schedule_info.",
+    "title": "schedule_info",
+    "version": "v1"
+  },
+  "paths": {
+    "/schedule_info/v1/clear": {
+      "post": {
+        "operationId": "ScheduleInfoApi_clear",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/WebappSrcProtoModelScheduleInfoMessage"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response",
+            "schema": {
+              "$ref": "#/definitions/WebappSrcProtoModelDefaultResponse"
+            }
+          }
+        }
+      }
+    },
+    "/schedule_info/v1/set": {
+      "post": {
+        "operationId": "ScheduleInfoApi_set",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/WebappSrcProtoModelScheduleInfoMessage"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response",
+            "schema": {
+              "$ref": "#/definitions/WebappSrcProtoModelDefaultResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "https"
+  ],
+  "securityDefinitions": {
+    "google_id_token": {
+      "authorizationUrl": "",
+      "flow": "implicit",
+      "type": "oauth2",
+      "x-google-issuer": "https://accounts.google.com",
+      "x-google-jwks_uri": "https://www.googleapis.com/oauth2/v3/certs"
+    }
+  },
+  "swagger": "2.0"
+}
