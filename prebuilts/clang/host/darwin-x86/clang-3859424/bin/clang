@@ -1,0 +1,113 @@
+#!/usr/bin/python
+
+import os
+import shlex
+import sys
+
+BISECT_STAGE = os.environ.get('BISECT_STAGE')
+
+# We do not need bisect functionality with Goma and clang.
+# Goma server does not have bisect_driver, so we only import
+# bisect_driver when needed. See http://b/34862041
+# We should be careful when doing imports because of Goma.
+if BISECT_STAGE:
+  import bisect_driver
+
+DEFAULT_BISECT_DIR = os.path.expanduser('~/ANDROID_BISECT')
+BISECT_DIR = os.environ.get('BISECT_DIR') or DEFAULT_BISECT_DIR
+
+
+def ProcessArgFile(arg_file):
+  args = []
+  # Read in entire file at once and parse as if in shell
+  with open(arg_file, 'rb') as f:
+    args.extend(shlex.split(f.read()))
+  return args
+
+
+class CompilerWrapper():
+  def __init__(self, argv):
+    self.argv0_current = argv[0]
+    self.args = argv[1:]
+    self.execargs = []
+    self.real_compiler = None
+    self.argv0 = None
+    self.append_flags = []
+    self.prepend_flags = []
+    self.custom_flags = {
+      '--gomacc-path': None
+    }
+
+  def set_real_compiler(self):
+    """Find the real compiler with the absolute path."""
+    compiler_path = os.path.dirname(self.argv0_current)
+    if os.path.islink(__file__):
+      compiler = os.path.basename(os.readlink(__file__))
+    else:
+      compiler = os.path.basename(os.path.abspath(__file__))
+    self.real_compiler = os.path.join(
+        compiler_path,
+        compiler + '.real')
+    self.argv0 = self.real_compiler
+
+  def process_gomacc_command(self):
+    """Return the gomacc command if '--gomacc-path' is set."""
+    gomacc = self.custom_flags['--gomacc-path']
+    if gomacc and os.path.isfile(gomacc):
+      self.argv0 = gomacc
+      self.execargs += [gomacc]
+
+  def parse_custom_flags(self):
+    i = 0
+    args = []
+    while i < len(self.args):
+      if self.args[i] in self.custom_flags:
+        if i >= len(self.args) - 1:
+          sys.exit('The value of {} is not set.'.format(self.args[i]))
+        self.custom_flags[self.args[i]] = self.args[i + 1]
+        i = i + 2
+      else:
+        args.append(self.args[i])
+        i = i + 1
+    self.args = args
+
+  def add_flags(self):
+    self.args = self.prepend_flags + self.args + self.append_flags
+
+  def prepare_compiler_args(self):
+    self.set_real_compiler()
+    self.parse_custom_flags()
+    self.process_gomacc_command()
+    self.add_flags()
+    self.execargs += [self.real_compiler] + self.args
+
+  def invoke_compiler(self):
+    self.prepare_compiler_args()
+    os.execv(self.argv0, self.execargs)
+
+  def bisect(self):
+    self.prepare_compiler_args()
+    # Handle @file argument syntax with compiler
+    idx = 0
+    # The length of self.execargs can be changed during the @file argument
+    # expansion, so we need to use while loop instead of for loop.
+    while idx < len(self.execargs):
+      if self.execargs[idx][0] == '@':
+        args_in_file = ProcessArgFile(self.execargs[idx][1:])
+        self.execargs = self.execargs[0:idx] + args_in_file + self.execargs[idx + 1:]
+        # Skip update of idx, since we want to recursively expand response files.
+      else:
+        idx = idx + 1
+    bisect_driver.bisect_driver(BISECT_STAGE, BISECT_DIR, self.execargs)
+
+
+def main(argv):
+  cw = CompilerWrapper(argv)
+  if BISECT_STAGE and BISECT_STAGE in bisect_driver.VALID_MODES and '-o' in argv:
+    cw.bisect()
+  else:
+    cw.invoke_compiler()
+
+
+if __name__ == '__main__':
+  main(sys.argv)

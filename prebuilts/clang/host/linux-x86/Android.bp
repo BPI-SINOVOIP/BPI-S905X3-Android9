@@ -1,0 +1,388 @@
+//
+// Copyright (C) 2017 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+llvm_prebuilt_library_static {
+    name: "libFuzzer",
+    sanitize: {
+        never: true,
+    },
+}
+
+llvm_prebuilt_library_static {
+    name: "libomp",
+    vendor_available: true,
+    sanitize: {
+        never: true,
+    },
+}
+
+libclang_rt_prebuilt_library_shared {
+    name: "libclang_rt.asan-arm-android",
+    enabled: false,
+    arch: {
+        arm: {
+            enabled: true,
+        },
+    },
+}
+
+libclang_rt_prebuilt_library_shared {
+    name: "libclang_rt.asan-aarch64-android",
+    enabled: false,
+    arch: {
+        arm64: {
+            enabled: true,
+        },
+    },
+}
+
+libclang_rt_prebuilt_library_shared {
+    name: "libclang_rt.asan-mips-android",
+    enabled: false,
+    arch: {
+        mips: {
+            enabled: true,
+        },
+    },
+}
+
+libclang_rt_prebuilt_library_shared {
+    name: "libclang_rt.asan-mips64-android",
+    enabled: false,
+    arch: {
+        mips64: {
+            enabled: true,
+        },
+    },
+}
+
+libclang_rt_prebuilt_library_shared {
+    name: "libclang_rt.asan-i686-android",
+    enabled: false,
+    arch: {
+        x86: {
+            enabled: true,
+        },
+    },
+}
+
+libclang_rt_prebuilt_library_shared {
+    name: "libclang_rt.asan-x86_64-android",
+    enabled: false,
+    arch: {
+        x86_64: {
+            enabled: true,
+        },
+    },
+}
+
+libclang_rt_llndk_library {
+    name: "libclang_rt.asan-arm-android",
+    enabled: false,
+    arch: {
+        arm: {
+            enabled: true,
+        },
+    },
+}
+
+libclang_rt_llndk_library {
+    name: "libclang_rt.asan-aarch64-android",
+    enabled: false,
+    arch: {
+        arm64: {
+            enabled: true,
+        },
+    },
+}
+
+libclang_rt_llndk_library {
+    name: "libclang_rt.asan-mips-android",
+    enabled: false,
+    arch: {
+        mips: {
+            enabled: true,
+        },
+    },
+}
+
+libclang_rt_llndk_library {
+    name: "libclang_rt.asan-mips64-android",
+    enabled: false,
+    arch: {
+        mips64: {
+            enabled: true,
+        },
+    },
+}
+
+libclang_rt_llndk_library {
+    name: "libclang_rt.asan-i686-android",
+    enabled: false,
+    arch: {
+        x86: {
+            enabled: true,
+        },
+    },
+}
+
+libclang_rt_llndk_library {
+    name: "libclang_rt.asan-x86_64-android",
+    enabled: false,
+    arch: {
+        x86_64: {
+            enabled: true,
+        },
+    },
+}
+
+libclang_rt_prebuilt_library_shared {
+    name: "libclang_rt.ubsan_standalone-arm-android",
+    enabled: false,
+    vendor_available: true,
+    vndk: {
+        enabled: true,
+    },
+    arch: {
+        arm: {
+            enabled: true,
+        },
+    },
+}
+
+libclang_rt_prebuilt_library_shared {
+    name: "libclang_rt.ubsan_standalone-aarch64-android",
+    enabled: false,
+    vendor_available: true,
+    vndk: {
+        enabled: true,
+    },
+    arch: {
+        arm64: {
+            enabled: true,
+        },
+    },
+}
+
+libclang_rt_prebuilt_library_shared {
+    name: "libclang_rt.ubsan_standalone-mips-android",
+    enabled: false,
+    vendor_available: true,
+    vndk: {
+        enabled: true,
+    },
+    arch: {
+        mips: {
+            enabled: true,
+        },
+    },
+}
+
+libclang_rt_prebuilt_library_shared {
+    name: "libclang_rt.ubsan_standalone-mips64-android",
+    enabled: false,
+    vendor_available: true,
+    vndk: {
+        enabled: true,
+    },
+    arch: {
+        mips64: {
+            enabled: true,
+        },
+    },
+}
+
+libclang_rt_prebuilt_library_shared {
+    name: "libclang_rt.ubsan_standalone-i686-android",
+    enabled: false,
+    vendor_available: true,
+    vndk: {
+        enabled: true,
+    },
+    arch: {
+        x86: {
+            enabled: true,
+        },
+    },
+}
+
+libclang_rt_prebuilt_library_shared {
+    name: "libclang_rt.ubsan_standalone-x86_64-android",
+    enabled: false,
+    vendor_available: true,
+    vndk: {
+        enabled: true,
+    },
+    arch: {
+        x86_64: {
+            enabled: true,
+        },
+    },
+}
+
+libclang_rt_prebuilt_library_static {
+    name: "libclang_rt.ubsan_minimal-arm-android",
+    enabled: false,
+    vendor_available: true,
+    vndk: {
+        enabled: true,
+    },
+    arch: {
+        arm: {
+            enabled: true,
+        },
+    },
+}
+
+libclang_rt_prebuilt_library_static {
+    name: "libclang_rt.ubsan_minimal-aarch64-android",
+    enabled: false,
+    vendor_available: true,
+    vndk: {
+        enabled: true,
+    },
+    arch: {
+        arm64: {
+            enabled: true,
+        },
+    },
+}
+
+libclang_rt_prebuilt_library_static {
+    name: "libclang_rt.ubsan_minimal-mips64-android",
+    enabled: false,
+    vendor_available: true,
+    vndk: {
+        enabled: true,
+    },
+    arch: {
+        mips64: {
+            enabled: true,
+        },
+    },
+}
+
+libclang_rt_prebuilt_library_static {
+    name: "libclang_rt.ubsan_minimal-mips-android",
+    enabled: false,
+    vendor_available: true,
+    vndk: {
+        enabled: true,
+    },
+    arch: {
+        mips: {
+            enabled: true,
+        },
+    },
+}
+
+libclang_rt_prebuilt_library_static {
+    name: "libclang_rt.ubsan_minimal-i686-android",
+    enabled: false,
+    vendor_available: true,
+    vndk: {
+        enabled: true,
+    },
+    arch: {
+        x86: {
+            enabled: true,
+        },
+    },
+}
+
+libclang_rt_prebuilt_library_static {
+    name: "libclang_rt.ubsan_minimal-x86_64-android",
+    enabled: false,
+    vendor_available: true,
+    vndk: {
+        enabled: true,
+    },
+    arch: {
+        x86_64: {
+            enabled: true,
+        },
+    },
+}
+
+libclang_rt_prebuilt_library_static {
+    name: "libclang_rt.profile-arm-android",
+    enabled: false,
+    vendor_available: true,
+    arch: {
+        arm: {
+            enabled: true,
+        },
+    },
+}
+
+libclang_rt_prebuilt_library_static {
+    name: "libclang_rt.profile-aarch64-android",
+    enabled: false,
+    vendor_available: true,
+    arch: {
+        arm64: {
+            enabled: true,
+        },
+    },
+}
+
+libclang_rt_prebuilt_library_static {
+    name: "libclang_rt.profile-mips-android",
+    enabled: false,
+    vendor_available: true,
+    arch: {
+        mips: {
+            enabled: true,
+        },
+    },
+}
+
+libclang_rt_prebuilt_library_static {
+    name: "libclang_rt.profile-mips64-android",
+    enabled: false,
+    vendor_available: true,
+    arch: {
+        mips64: {
+            enabled: true,
+        },
+    },
+}
+
+libclang_rt_prebuilt_library_static {
+    name: "libclang_rt.profile-i686-android",
+    enabled: false,
+    vendor_available: true,
+    arch: {
+        x86: {
+            enabled: true,
+        },
+    },
+}
+
+libclang_rt_prebuilt_library_static {
+    name: "libclang_rt.profile-x86_64-android",
+    enabled: false,
+    vendor_available: true,
+    arch: {
+        x86_64: {
+            enabled: true,
+        },
+    },
+}
+
+subdirs = [
+    "soong",
+]
