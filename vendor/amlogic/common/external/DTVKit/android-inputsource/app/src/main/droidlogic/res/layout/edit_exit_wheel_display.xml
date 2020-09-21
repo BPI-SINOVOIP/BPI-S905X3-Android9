@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_icon"
+    android:layout_width="400dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical|center_horizontal"
+    android:gravity="center_vertical|center_horizontal"
+    android:orientation="horizontal">
+
+    <include
+        android:id="@+id/icon_edit_all"
+        layout="@layout/edit_display" />
+
+    <include
+        android:id="@+id/icon_exit_all"
+        layout="@layout/exit_display" />
+
+    <TextView
+        android:id="@+id/empty"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_weight="1" />
+
+    <include
+        android:id="@+id/icon_wheel_all"
+        layout="@layout/wheel_display" />
+</LinearLayout>

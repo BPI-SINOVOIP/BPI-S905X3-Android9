@@ -1,0 +1,3 @@
+1."build/xxxx/am_adp" and "build/xxxx/am_mw" contains API libraries "libam_adp" and "libam_mw". xxxx is the target name(android, 8226h, 8226m)
+2.directory "include" contains API header files
+3.directory "doc" contains API documents

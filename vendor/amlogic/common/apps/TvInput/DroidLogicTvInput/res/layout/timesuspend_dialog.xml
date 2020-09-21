@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="15dip" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dip"
+        android:textSize="25sp"
+        android:text="@string/suspend_dialog_title"
+        android:textAppearance="?android:attr/textAppearanceListItem"/>
+
+    <TextView
+        android:id="@+id/tv_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24px"
+        android:layout_marginLeft="20dip"
+        android:layout_marginTop="24px"
+        android:textColor="#FF0000"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:textAppearance="?android:attr/textAppearanceListItem"/>
+
+    <Button
+        android:id="@+id/btn_cancel_suspend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/cancel_suspend"
+        android:textAppearance="?android:attr/textAppearanceListItem" />
+
+</LinearLayout>

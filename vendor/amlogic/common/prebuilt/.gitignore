@@ -1,0 +1,6 @@
+# libmedia is a separate git project
+/libmedia/
+# libmediadrm is a separate git project
+/libmediadrm/
+#libstagefrighthw is a separate git project
+/libstagefrighthw/

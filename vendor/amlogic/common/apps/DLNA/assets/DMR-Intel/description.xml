@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <root xmlns="urn:schemas-upnp-org:device-1-0">
+    <specVersion>
+      <major>1</major>
+      <minor>0</minor>
+    </specVersion>
+    <device>
+      <deviceType>urn:schemas-upnp-org:device:MediaRenderer:1</deviceType>
+      <friendlyName>AML-Intel DMR</friendlyName>
+      <manufacturer>Amlogic Corporation</manufacturer>
+      <manufacturerURL>http://www.amlogic.com</manufacturerURL>
+      <modelDescription>Intel AV Media Renderer device</modelDescription>
+      <modelName>AV Renderer</modelName>
+      <modelURL>http://www.amlogic.com/technology/upnp</modelURL>
+      <UDN>uuid:bda4efc0-db0c-41f8-b7d5-</UDN>
+      <dlna:X_DLNADOC xmlns:dlna="urn:schemas-dlna-org:device-1-0">DMR-1.50</dlna:X_DLNADOC>
+      <iconList>
+        <icon>
+          <mimetype>image/jpeg</mimetype>
+          <width>120</width>
+          <height>120</height>
+          <depth>24</depth>
+          <url>dlna.jpg</url>
+        </icon>
+        <icon>
+          <mimetype>image/jpeg</mimetype>
+          <width>48</width>
+          <height>48</height>
+          <depth>24</depth>
+          <url>dlna.jpg</url>
+        </icon>
+        <icon>
+          <mimetype>image/png</mimetype>
+          <width>120</width>
+          <height>120</height>
+          <depth>24</depth>
+          <url>dlna.png</url>
+        </icon>
+        <icon>
+          <mimetype>image/png</mimetype>
+          <width>48</width>
+          <height>48</height>
+          <depth>24</depth>
+          <url>dlna.png</url>
+        </icon>
+      </iconList>
+      <serviceList>
+        <service>
+          <serviceType>urn:schemas-upnp-org:service:AVTransport:1</serviceType>
+          <serviceId>urn:upnp-org:serviceId:AVTransport</serviceId>
+          <SCPDURL>INTEL.AVTransport.scpd.xml</SCPDURL>
+          <controlURL>/service/AVTransport_control</controlURL>
+          <eventSubURL>/service/AVTransport_event</eventSubURL>
+        </service>
+        <service>
+          <serviceType>urn:schemas-upnp-org:service:ConnectionManager:1</serviceType>
+          <serviceId>urn:upnp-org:serviceId:ConnectionManager</serviceId>
+          <SCPDURL>INTEL.ConnectionManager.scpd.xml</SCPDURL>
+          <controlURL>/service/ConnectionManager_control</controlURL>
+          <eventSubURL>/service/ConnectionManager_event</eventSubURL>
+        </service>
+        <service>
+          <serviceType>urn:schemas-upnp-org:service:RenderingControl:1</serviceType>
+          <serviceId>urn:upnp-org:serviceId:RenderingControl</serviceId>
+          <SCPDURL>INTEL.RenderingControl.scpd.xml</SCPDURL>
+          <controlURL>/service/RenderingControl_control</controlURL>
+          <eventSubURL>/service/RenderingControl_event</eventSubURL>
+        </service>
+      </serviceList>
+      <presentationURL>INTEL.AVTransport.scpd.xml</presentationURL>
+    </device>
+  </root>

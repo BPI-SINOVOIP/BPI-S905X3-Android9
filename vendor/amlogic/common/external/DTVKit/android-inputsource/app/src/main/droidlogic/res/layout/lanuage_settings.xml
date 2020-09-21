@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:layout_margin="50dp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <!--<ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="67dp"
+        android:src="@drawable/dtvkit" />-->
+
+    <TextView
+        android:id="@+id/dvb_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_orange_dark"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/public_dvb_search"
+        android:textSize="@dimen/dvb_search_text_size"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/country_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/country_text"
+                android:layout_width="@dimen/dvb_language_text_width"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/strSettingsCountry" />
+
+            <Spinner
+                android:id="@+id/country_spinner"
+                android:layout_width="@dimen/dvb_language_item_width"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_audio_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:id="@+id/main_audio_text"
+                android:layout_width="@dimen/dvb_language_text_width"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/strSettingsMainAudioLang" />
+
+            <Spinner
+                android:id="@+id/main_audio_spinner"
+                android:layout_width="@dimen/dvb_language_item_width"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/assist_audio_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:id="@+id/assist_audio_text"
+                android:layout_width="@dimen/dvb_language_text_width"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/strSettingsAssistAudioLang" />
+
+            <Spinner
+                android:id="@+id/assist_audio_spinner"
+                android:layout_width="@dimen/dvb_language_item_width"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_subtitle_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/main_subtitle_text"
+                android:layout_width="@dimen/dvb_language_text_width"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/strSettingsMainSubtitleLang" />
+
+            <Spinner
+                android:id="@+id/main_subtitle_spinner"
+                android:layout_width="@dimen/dvb_language_item_width"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/assist_subtitle_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/assist_subtitle_text"
+                android:layout_width="@dimen/dvb_language_text_width"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/strSettingsAssistSubtitleLang" />
+
+            <Spinner
+                android:id="@+id/assist_subtitle_spinner"
+                android:layout_width="@dimen/dvb_language_item_width"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/hearing_impaired_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/hearing_impaired_text"
+                android:layout_width="@dimen/dvb_language_text_width"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/strSettingsHearingImpaired" />
+
+            <Spinner
+                android:id="@+id/hearing_impaired_spinner"
+                android:layout_width="@dimen/dvb_language_item_width"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/storage_select_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/storage_select_text"
+                android:layout_width="@dimen/dvb_language_text_width"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/strSettingsStorageSelect" />
+
+            <Spinner
+                android:id="@+id/storage_select_spinner"
+                android:layout_width="@dimen/dvb_language_item_width"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical" />
+
+            <Button
+                android:id="@+id/storage_refresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/strSettingsRefresh"/>
+
+            <CheckBox
+                android:id="@+id/record_full_frequency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/strSettingsPvrFullFrequency" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

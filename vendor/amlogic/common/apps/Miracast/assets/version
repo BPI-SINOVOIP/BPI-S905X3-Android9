@@ -1,0 +1,6 @@
+version: 2.0.20160324
+release note:
+	1. MiracastSink display Functions of Version1.0 release at 20160324;
+	2. Add New Menu of Search Device,and Rename Device;
+	3. More Personalized Interaction for Picture and Video;
+	4. Add Miracast cert;

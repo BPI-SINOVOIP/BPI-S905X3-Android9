@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="46dip" 
+    android:background="@drawable/normal_bg"
+    >
+<TextView android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:text="@string/app_name"
+          android:textColor="#ffffffff"
+          android:layout_alignParentLeft="true"
+          android:gravity="center"
+          android:layout_margin="6dip"
+          android:id="@+id/edit_opts_text"
+    />    
+    
+<Button android:layout_width="58dip"
+        android:layout_height="match_parent"
+        android:text="@string/delete_model"
+        android:textColor="#ffffffff"
+        android:background="@drawable/key_bg"
+        android:layout_alignParentRight="true"
+        android:layout_margin="6dip"
+        android:id="@+id/bt_del"
+    />
+<Button android:layout_width="58dip"
+        android:layout_height="match_parent"
+        android:text="@string/rename_model"
+        android:textColor="#ffffffff"
+        android:background="@drawable/key_bg"
+        android:layout_toLeftOf="@+id/bt_del"
+        android:layout_margin="6dip"
+        android:id="@+id/bt_rename"
+    />
+</RelativeLayout>

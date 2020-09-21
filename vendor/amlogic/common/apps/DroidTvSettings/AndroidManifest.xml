@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:androidprv="http://schemas.android.com/apk/prv/res/android"
+    package="com.droidlogic.tv.settings"
+    android:sharedUserId="android.uid.system"
+    android:versionCode="1"
+    coreApp="true"
+    android:versionName="1.0" >
+
+    <uses-sdk android:minSdkVersion="23" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.REBOOT" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+    <uses-permission android:name="com.android.setupwizard.permission.SETUP" />
+    <uses-permission android:name="droidlogic.permission.SYSTEM_CONTROL" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="com.netflix.ninja.permission.ESN" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS"/>
+
+    <application
+        android:banner="@drawable/ic_launcher_banner_settings"
+        android:defaultToDeviceProtectedStorage="true"
+        android:directBootAware="true"
+        android:icon="@drawable/logo_settings_color_48dp"
+        android:label="@string/settings_app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Settings"
+        android:usesCleartextTraffic="true" >
+
+        <uses-library android:name="droidlogic.software.core" />
+        <activity
+            android:name=".MainSettings"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:excludeFromRecents="true"
+            android:label="@string/settings_app_name"
+            android:theme="@style/Theme.Settings.Transparent" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!--
+                 Intent filter used to display this activity as a settings
+                 entry point in the LeanbackLauncher
+            -->
+            <intent-filter
+                android:icon="@drawable/ic_settings_launcher_icon"
+                android:label="@string/launcher_settings_app_name"
+                android:priority="3" >
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LEANBACK_SETTINGS" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".PlaybackActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:excludeFromRecents="true"
+            android:exported="true" />
+        <activity
+            android:name=".HdmiSelfAdaptionFragment"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:exported="true"
+            android:theme="@style/Theme.Settings.Transparent" />
+        <activity
+            android:name=".PowerKeyActionDefinitionActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:excludeFromRecents="true"
+            android:exported="false" />
+        <activity
+            android:name=".PowerOnModeActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:excludeFromRecents="true"
+            android:exported="false" />
+        <activity
+            android:name=".display.DisplayActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="com.android.settings.DISPLAY_SETTINGS" />
+                <action android:name="android.settings.DISPLAY_SETTINGS" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.VOICE_LAUNCH" />
+                <category android:name="com.android.settings.SHORTCUT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".display.outputmode.ScreenResolutionActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:exported="true"
+            android:theme="@style/Theme.Settings.Transparent" />
+        <activity
+            android:name=".display.outputmode.OutputmodeActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:exported="true"
+            android:theme="@style/Theme.Settings.Transparent" />
+        <activity
+            android:name=".display.position.DisplayPositionActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:exported="true"
+            android:theme="@style/Theme.Settings.Display" />
+        <activity
+            android:name=".display.outputmode.ColorAttributeActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:exported="true"
+            android:theme="@style/Theme.Settings.Transparent" />
+        <activity
+            android:name=".display.outputmode.ColorDepthActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:exported="true"
+            android:theme="@style/Theme.Settings.Transparent" />
+        <activity
+            android:name=".display.dolbyvision.DolbyVisionSettingActivity"
+            android:theme="@style/Theme.Settings.Transparent"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:exported="true" />
+        <activity
+            android:name=".display.dolbyvision.GraphicsPrioritySettingActivity"
+            android:theme="@style/Theme.Settings.Transparent"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:exported="true" />
+        <activity
+            android:name=".display.dolbyvision.HdrPriorityActivity"
+            android:theme="@style/Theme.Settings.Transparent"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:exported="true" />
+        <activity
+            android:name=".display.hdr.HdrSettingActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:exported="true"
+            android:theme="@style/Theme.Settings.Transparent" />
+        <activity
+            android:name=".display.sdr.SdrSettingActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:exported="true"
+            android:theme="@style/Theme.Settings.Transparent" />
+        <activity
+            android:name=".SoundActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:theme="@style/Theme.Settings.Transparent" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="com.android.settings.SOUND_SETTINGS" />
+                <action android:name="android.settings.SOUND_SETTINGS" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.VOICE_LAUNCH" />
+                <category android:name="com.android.settings.SHORTCUT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".DolbyAudioEffectActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:exported="true"
+            android:theme="@style/Theme.Settings.Transparent" />
+        <activity
+            android:name=".TvSourceActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:launchMode="singleInstance"
+            android:theme="@style/Theme.Settings.Transparent" />
+        <activity
+            android:name=".pqsettings.PictrueModeActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:excludeFromRecents="true"
+            android:exported="false" />
+        <activity
+            android:name=".tvoption.TvOptionActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:excludeFromRecents="true"
+            android:exported="false" />
+        <activity
+            android:name=".tvoption.SettingsModeActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:excludeFromRecents="true"
+            android:exported="false" />
+        <activity
+            android:name=".pqsettings.AdjustValueActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:excludeFromRecents="true"
+            android:exported="false" />
+        <activity
+            android:name=".pqsettings.AdjustBaclLightActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:excludeFromRecents="true"
+            android:exported="false" />
+        <activity
+            android:name=".tvoption.TvOptionSettingSeekBarActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:excludeFromRecents="true"
+            android:exported="false" />
+        <activity
+            android:name=".tvoption.Hdmi20SwitchActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:excludeFromRecents="true"
+            android:exported="false" />
+        <activity
+            android:name=".tvoption.HdmiCecActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:launchMode="singleInstance"
+            android:theme="@style/Theme.Settings.Transparent" />
+        <activity
+            android:name=".tvoption.AdjustHdmiAudioLatencyActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:excludeFromRecents="true"
+            android:exported="false" />
+        <receiver
+            android:exported="true"
+            android:name=".BluetoothAutoPairReceiver"
+            android:enabled="true" >
+            <intent-filter android:priority="1000" >
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <service
+            android:name = ".BluetoothAutoPairService" >
+        </service>
+        <activity
+            android:name = ".BtSetupActivity"
+            android:excludeFromRecents="true"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"     >
+            <intent-filter  >
+                <action android:name="com.android.setupwizard.action.HOOK_BEGIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <provider
+            android:name=".database.TvControlDataProvider"
+            android:authorities="com.droidlogic.tv.settings"
+            android:exported="true">
+        <grant-uri-permission android:pathPattern="/tv_control_scan" />
+        <grant-uri-permission android:pathPattern="/tv_control_sound" />
+        <grant-uri-permission android:pathPattern="/tv_control_pppoe" />
+        <grant-uri-permission android:pathPattern="/tv_control_others" />
+        </provider>
+    </application>
+
+</manifest>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World</string>
+    <string name="app_name">新媒體盒啟動器</string>
+    <string name="str_video">在線視頻</string>
+    <string name="str_tvapp">電視</string>
+    <string name="str_recommend">推薦</string>
+    <string name="str_setting">設置</string>
+    <string name="str_app">我的應用</string>
+    <string name="str_music">音樂</string>
+    <string name="str_local">本地播放</string>
+    <string name="str_nospace">快捷欄沒有空間了！</string>
+    <string name="str_add">添加</string>
+    <string name="str_no_signal">無信號</string>
+    <string name="str_scrambeled">頻道加密</string>
+    <string name="str_blocked">頻道加鎖</string>
+    <string name="str_audio_only">廣播</string>
+</resources>

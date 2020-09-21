@@ -1,0 +1,66 @@
+cc_library_static {
+    name: "libsystemcontrol_static",
+    vendor_available: true,
+    //vndk: {
+    //    enabled: true,
+    //},
+    srcs: [
+        "main_recovery.cpp",
+        "ubootenv/Ubootenv.cpp",
+        "SysWrite.cpp",
+        "DisplayMode.cpp",
+        "SysTokenizer.cpp",
+        "UEventObserver.cpp",
+        "HDCP/HdcpKeyDecrypt.cpp",
+        "HDCP/HDCPRxKey.cpp",
+        "HDCP/HDCPRxAuth.cpp",
+        "HDCP/HDCPTxAuth.cpp",
+        "FrameRateAutoAdaption.cpp",
+        "FormatColorDepth.cpp"
+    ],
+
+    static_libs: [
+        "libcutils",
+        "libz",
+    ],
+    include_dirs: [
+        "external/zlib",
+        "external/libcxx/include",
+        "system/core/libutils/include",
+        "system/core/liblog/include",
+    ],
+    cflags: [
+        "-DRECOVERY_MODE",
+        "-DPLATFORM_SDK_VERSION=%d"
+    ],
+}
+
+cc_library_shared {
+    name: "libsystemcontrolclient",
+    cflags: ["-DFB_BUFFER_NUM=3"] + ["-DANDROID_PLATFORM_SDK_VERSION=28"] + [
+        "-Werror",
+        "-Wformat",
+        "-Wimplicit-function-declaration",
+        "-Wno-unused-parameter",
+    ],
+    srcs: [
+        "SystemControlClient.cpp",
+    ],
+    local_include_dirs: [
+        "PQ/include",
+    ],
+    shared_libs: [
+        "libutils",
+        "libcutils",
+        "liblog",
+        "vendor.amlogic.hardware.systemcontrol@1.0",
+        "vendor.amlogic.hardware.systemcontrol@1.1",
+        "libbase",
+        "libhidlbase",
+        "libhidltransport",
+    ],
+
+    product_specific: true,
+    vendor_available: true,
+
+}

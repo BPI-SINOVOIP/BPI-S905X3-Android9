@@ -1,0 +1,10 @@
+this is Android GPU Library
+
+GPU_TARGET_PLATFORM  is the same as the Kernel.
+   cpu      kernel    android     GPU_TARGET_PLATFORM
+cortex-a9    32bit     32bit          default_7a
+cortex-a53   32bit     32bit          default_7a
+cortex-a53   64bit     32bit          default_8a
+cortex-a53   64bit     64bit          default_8a
+
+GPU_TARGET_PLATFORM?= default_7a

@@ -1,0 +1,8 @@
+on post-fs
+   restorecon_recursive /param    #for android O
+   restorecon_recursive /mnt/vendor/param   #for android P
+
+service tvd /vendor/bin/tvserver
+   class core
+   user root
+   group system root media audio mediadrm

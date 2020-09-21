@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_icon"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical|center_horizontal"
+    android:gravity="center_vertical|center_horizontal"
+    android:orientation="horizontal">
+
+    <include
+        android:id="@+id/icon_selimit_all"
+        layout="@layout/setlimit_display" />
+
+    <include
+        android:id="@+id/icon_location_all"
+        layout="@layout/setlocation_display" />
+</LinearLayout>

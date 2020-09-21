@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="6dip"
+    android:background="@drawable/normal_bg"
+    android:orientation="vertical" >
+ <com.droidlogic.smartremote.ui.RemoteImageButton
+            android:background="@drawable/power_bg"
+            android:scaleType="center"
+            android:src="@drawable/ic_cntl_power"
+            android:id="@+id/cntl_power"
+            android:layout_margin="2dip"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/cntl_button_hight"/>
+ <com.droidlogic.smartremote.ui.RemoteImageButton
+            android:background="@drawable/key_bg_9"
+            android:scaleType="center"
+            android:src="@drawable/cntl_search"
+            android:id="@+id/cntl_search"
+            android:layout_margin="2dip"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/cntl_button_hight"/>
+ <com.droidlogic.smartremote.ui.RemoteImageButton
+            android:background="@drawable/key_bg_9"
+            android:scaleType="center"
+            android:src="@drawable/cntl_voice_cntl"
+            android:id="@+id/cntl_voice"
+            android:layout_margin="2dip"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/cntl_button_hight"/>
+   
+<FrameLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="0.5"
+    android:background="@drawable/normal_bg">
+
+</FrameLayout>   
+
+<FrameLayout android:layout_width="match_parent"
+    android:layout_marginLeft="25dip"
+    android:layout_marginRight="25dip"
+    android:layout_height="wrap_content"
+    android:background="@drawable/normal_bg">
+<include layout="@layout/voice_ch_cntl" /> 
+</FrameLayout>
+
+<FrameLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="0.5"
+    android:background="@drawable/normal_bg">
+
+</FrameLayout>
+   
+ <LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/normal_bg"
+    android:layout_margin="6dip"
+    android:orientation="horizontal">
+    <ImageButton
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:background="@drawable/normal_bg"
+          android:visibility="invisible"
+          android:layout_weight="0.05" />
+   <com.droidlogic.smartremote.ui.RemoteImageButton
+           android:layout_width="wrap_content"
+           android:layout_height="@dimen/normal_button_hight"
+           android:scaleType="center"
+           android:layout_weight="0.4"
+           android:background="@drawable/key_bg"
+           android:src="@drawable/mute"
+           android:id="@+id/cntl_mute" />
+    <ImageButton
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:background="@drawable/normal_bg"
+          android:visibility="invisible"
+          android:layout_weight="0.1" />
+   <com.droidlogic.smartremote.ui.RemoteImageButton
+           android:layout_width="wrap_content"
+           android:layout_height="@dimen/normal_button_hight"
+           android:scaleType="center"
+           android:layout_weight="0.4"
+           android:background="@drawable/key_bg"
+           android:src="@drawable/ch_show"
+           android:id="@+id/cntl_show_ch" />
+    <ImageButton
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:background="@drawable/normal_bg"
+          android:visibility="invisible"
+          android:layout_weight="0.05" />
+   </LinearLayout>
+</LinearLayout>

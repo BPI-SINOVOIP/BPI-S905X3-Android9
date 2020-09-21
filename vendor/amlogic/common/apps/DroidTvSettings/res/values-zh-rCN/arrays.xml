@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  Copyright (C) 2014 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+ -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string-array name="surround_sound_entries">
+        <item msgid="5639265918353416799">"自动"</item>
+        <item msgid="5990497479384785807">"一律启用"</item>
+        <item msgid="6178602073308944697">"一律不启用"</item>
+    </string-array>
+
+    <string-array name="dolby_sounds_entries">
+        <item>关闭</item>
+        <item>LINE</item>
+        <item>RF</item>
+    </string-array>
+
+    <string-array name="dap_mode_entries">
+        <item>关闭</item>
+        <item>电影</item>
+        <item>音乐</item>
+        <item>夜晚</item>
+        <item>用户</item>
+    </string-array>
+
+    <string-array name="dap_geq_entries">
+        <item>关闭</item>
+        <item>默认</item>
+        <item>开阔</item>
+        <item>丰满</item>
+        <item>清晰</item>
+        <item>用户</item>
+    </string-array>
+
+    <string-array name="pq_pictrue_mode_entries">
+        <item>标准</item>
+        <item>生动</item>
+        <item>柔和</item>
+        <item>运动</item>
+        <item>电影</item>
+        <item>用户</item>
+    </string-array>
+
+    <string-array name="pq_color_temprature_entries">
+        <item>标准</item>
+        <item>暖色</item>
+        <item>冷色</item>
+    </string-array>
+
+    <string-array name="pq_aspect_ratio_entries">
+        <item>自动</item>
+        <item>4 : 3</item>
+        <item>全景</item>
+        <item>全屏</item>
+    </string-array>
+
+    <string-array name="pq_dnr_entries">
+        <item>关闭</item>
+        <item>低</item>
+        <item>中等</item>
+        <item>高</item>
+        <item>自动</item>
+    </string-array>
+
+    <string-array name="pq_hdmi_color_entries">
+        <item>自动</item>
+        <item>饱和</item>
+        <item>限制</item>
+    </string-array>
+
+    <string-array name="tv_dialogcharity_entries">
+        <item>关闭</item>
+        <item>低</item>
+        <item>高</item>
+    </string-array>
+
+    <string-array name="tv_sound_output_device_entries">
+        <item>"喇叭"</item>
+        <item>"外接音箱"</item>
+    </string-array>
+
+    <string-array name="tv_sound_channel_entries">
+        <item>立体声</item>
+        <item>左声道</item>
+        <item>右声道</item>
+    </string-array>
+
+    <string-array name="tv_switch_channel_entries">
+        <item>静帧</item>
+        <item>黑屏</item>
+    </string-array>
+
+    <string-array name="tv_daylight_saving_time_entries">
+        <item>自动</item>
+        <item>打开</item>
+        <item>关闭</item>
+    </string-array>
+
+    <string-array name="tv_offon_entries">
+        <item>"关闭"</item>
+        <item>"开启"</item>
+    </string-array>
+
+    <string-array name="tv_startup_entries">
+        <item>Android启动器</item>
+        <item>电视</item>
+    </string-array>
+
+</resources>

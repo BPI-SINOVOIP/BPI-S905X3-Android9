@@ -1,0 +1,23 @@
+<resources>
+
+    <string name="app_label">LeanbackCustomizer</string>
+
+    <string name="partner_row_title">Amlogic Apps</string>
+    <string name="apps_row_title">Apps</string>
+    <string name="games_row_title">Games</string>
+    <string name="inputs_row_title">Inputs</string>
+    <string name="settings_row_title">Settings</string>
+
+    <string name="dlna">DLNA</string>
+    <string name="video_player">LOCAL VIDEO</string>
+    <string name="update">UPDATE</string>
+    <!-- Content description for Netflix App -->
+    <!--<string name="ted">Ted</string>-->
+    <!-- Content description for banner to encourage users to download the Netflix App -->
+    <!--<string name="try_ted">Try Ted</string> -->
+    <!-- Content description for Google Play Movies App -->
+    <!-- <string name="play_movies">Play Movies</string> -->
+    <!-- Content description for banner to encourage users to download Google Play Movies App -->
+    <!--<string name="try_play_movies">Try Play Movies</string>-->
+
+</resources>

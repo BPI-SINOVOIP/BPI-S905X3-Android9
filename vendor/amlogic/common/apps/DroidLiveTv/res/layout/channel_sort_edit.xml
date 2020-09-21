@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@color/dark_gray"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/left_show"
+        android:layout_width="520dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/channellist_title"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="left|center_vertical"
+            android:text="@string/favlist_all_tv" />
+
+        <LinearLayout
+            android:id="@+id/channel_container"
+            android:layout_width="500dp"
+            android:layout_height="330dp"
+            android:layout_gravity="center"
+            android:background="@color/black"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.droidlogic.droidlivetv.favlistsettings.ChannelListListView
+                android:id="@+id/sort_key"
+                android:layout_width="190dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:cacheColorHint="@android:color/transparent"
+                android:divider="@null"
+                android:listSelector="@drawable/selector_channellistitem"
+                android:nextFocusLeft="@id/sort_key"
+                android:nextFocusRight="@id/sort_key"
+                android:nextFocusUp="@id/sort_key"
+                android:nextFocusDown="@id/sort_key"
+                android:scrollbarFadeDuration="0"
+                android:fadeScrollbars="true"
+                android:visibility="gone" />
+
+            <com.droidlogic.droidlivetv.favlistsettings.ChannelListListView
+                android:id="@+id/sort_channel"
+                android:layout_width="290dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:cacheColorHint="@android:color/transparent"
+                android:divider="@null"
+                android:listSelector="@drawable/selector_channellistitem"
+                android:nextFocusLeft="@id/sort_channel"
+                android:nextFocusRight="@id/sort_channel"
+                android:nextFocusUp="@id/sort_channel"
+                android:nextFocusDown="@id/sort_channel"
+                android:scrollbarFadeDuration="0"
+                android:fadeScrollbars="true"
+                android:visibility="gone" />
+
+            <com.droidlogic.droidlivetv.favlistsettings.ChannelListListView
+                android:id="@+id/sort_channel_all"
+                android:layout_width="490dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:cacheColorHint="@android:color/transparent"
+                android:divider="@null"
+                android:listSelector="@drawable/selector_channellistitem"
+                android:nextFocusLeft="@id/sort_channel_all"
+                android:nextFocusRight="@id/sort_channel_all"
+                android:nextFocusUp="@id/sort_channel_all"
+                android:nextFocusDown="@id/sort_channel_all"
+                android:scrollbarFadeDuration="0"
+                android:fadeScrollbars="true"
+                android:visibility="visible" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/sat_trans"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_gravity="center">
+                <TextView
+                    android:id="@+id/sat_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/favlist_satellite"
+                    android:textSize="@dimen/title_text_size" />
+
+                <com.droidlogic.droidlivetv.favlistsettings.MarqueeTextView
+                    android:id="@+id/sat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textSize="@dimen/content_text_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_gravity="center">
+                <TextView
+                    android:id="@+id/tp_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/favlist_transponder"
+                    android:textSize="@dimen/title_text_size" />
+
+                <com.droidlogic.droidlivetv.favlistsettings.MarqueeTextView
+                    android:id="@+id/trans"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textSize="@dimen/content_text_size" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/key_color"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <include
+                layout="@layout/key_color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/key_function"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <include
+                layout="@layout/key_function"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/right_show"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/favlist_title"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="left|center_vertical"
+            android:text="@string/f4_favourite_list" />
+
+        <LinearLayout
+            android:id="@+id/favlist_container"
+            android:layout_width="wrap_content"
+            android:layout_height="450dp"
+            android:layout_gravity="center"
+            android:background="@color/black"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.droidlogic.droidlivetv.favlistsettings.FavListListView
+                android:id="@+id/favourite"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:cacheColorHint="@android:color/transparent"
+                android:divider="@null"
+                android:listSelector="@drawable/selector_favlistitem"
+                android:nextFocusLeft="@id/favourite"
+                android:nextFocusRight="@id/favourite"
+                android:nextFocusUp="@id/favourite"
+                android:nextFocusDown="@id/favourite"
+                android:scrollbarFadeDuration="0"
+                android:fadeScrollbars="true"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

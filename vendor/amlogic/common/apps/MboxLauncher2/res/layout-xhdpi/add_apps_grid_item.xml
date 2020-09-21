@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright (c) 2014 Amlogic, Inc. All rights reserved.
+
+ This source code is subject to the terms and conditions defined in the
+ file 'LICENSE' which is part of this source code package.
+
+ Description: resource file
+-->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relative_layout"
+    android:layout_width="match_parent"
+    android:layout_height="101dp"
+    android:layout_centerHorizontal="true"
+>
+<FrameLayout
+    android:id="@+id/frameLayout"
+    android:orientation="vertical"
+    android:layout_width="75dp"
+    android:layout_height="75dp"
+    android:layout_marginTop="6dp"
+    android:layout_centerHorizontal="true">
+
+    <ImageView
+        android:id="@+id/item_type"
+        android:layout_width="fill_parent"
+        android:layout_centerInParent="true"
+        android:layout_height="fill_parent">
+    </ImageView>
+</FrameLayout>
+<ImageView
+    android:layout_height="wrap_content"
+    android:id="@+id/item_sel"
+    android:layout_width="wrap_content"
+    android:layout_alignParentRight="true">
+</ImageView>
+
+<TextView
+    android:id="@+id/item_name"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:layout_below="@+id/frameLayout"
+    android:layout_centerHorizontal="true"
+    android:gravity="center"
+    android:singleLine="true"
+    android:marqueeRepeatLimit="marquee_forever"
+    android:ellipsize="marquee"
+    android:textSize="15sp"
+    android:textColor="@color/item_text_color"
+/>
+</RelativeLayout>

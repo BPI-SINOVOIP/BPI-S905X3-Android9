@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  Copyright (C) 2014 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+ -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string-array name="surround_sound_entries">
+        <item msgid="5639265918353416799">"自動"</item>
+        <item msgid="5990497479384785807">"一律啟用"</item>
+        <item msgid="6178602073308944697">"一律不啟用"</item>
+    </string-array>
+
+    <string-array name="dap_mode_entries">
+        <item>關閉</item>
+        <item>電影</item>
+        <item>音樂</item>
+        <item>夜晚</item>
+        <item>用戶</item>
+    </string-array>
+
+    <string-array name="dap_geq_entries">
+        <item>關閉</item>
+        <item>默認</item>
+        <item>開闊</item>
+        <item>豐滿</item>
+        <item>清晰</item>
+        <item>用戶</item>
+    </string-array>
+
+    <string-array name="dolby_sounds_entries">
+        <item>關閉</item>
+        <item>LINE</item>
+        <item>RF</item>
+    </string-array>
+
+    <string-array name="tv_sound_output_device_entries">
+        <item>"喇叭"</item>
+        <item>"外接音箱"</item>
+    </string-array>
+
+    <string-array name="tv_offon_entries">
+        <item>"關閉"</item>
+        <item>"啟用"</item>
+    </string-array>
+</resources>

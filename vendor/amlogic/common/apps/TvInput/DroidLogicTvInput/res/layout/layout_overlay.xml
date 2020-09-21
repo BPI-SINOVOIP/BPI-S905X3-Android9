@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.droidlogic.tvinput.widget.OverlayView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.droidlogic.tvinput.widget.DTVSubtitleView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/subtitle"
+        android:visibility="gone"
+        />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/msg_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bg_no_signal"
+            android:scaleType="centerInside"
+            android:visibility="gone"
+            />
+        <TextView
+            android:id="@+id/msg_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/nosignal"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:visibility="gone"
+            />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/tuning_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black"
+        android:visibility="gone" />
+
+    <com.droidlogic.tvinput.widget.MarqueeTextView
+        android:id="@+id/msg_text_eas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:background="@android:color/black"
+        android:visibility="gone"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:focusable="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        />
+
+    <TextView
+        android:id="@+id/msg_teletext_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|right"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:background="@android:color/black"
+        android:visibility="gone"
+        />
+</com.droidlogic.tvinput.widget.OverlayView>
+

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="app_name">媒体中心</string>
+
+    <string name="media_server">媒体服务器</string>
+    <string name="media_player">媒体播放器</string>
+    <string name="settings">设置</string>
+
+    <string name="dmp_title">DLNA DMP</string>
+    <string name="dmp_summary">"DLNA 网络浏览播放器"</string>
+    <string name="dmr_summary">"DLNA 网络接收播放器"</string>
+    <string name="dmr_title">DLNA DMR</string>
+    <string name="dms_start">开启共享</string>
+    <string name="dms_stop">停止共享</string>
+    <string name="dms_add_mode">添加共享</string>
+    <string name="dms_add">正在添加共享</string>
+    <string name="dms_browse">本地共享</string>
+    <string name="dms_add_disk">将本机媒体存储设为共享</string>
+    <string name="dms_add_dir">添加共享目录</string>
+    <string name="dms_del">确定删除这个目录?</string>
+    <string name="browser_fail">"网络文件浏览出错"</string>
+    <string name="pic_largest">"图片已经放置到最大倍数了"</string>
+    <string name="pic_lest">"图片已经放置到最小倍数了"</string>
+    <string name="memory_device_str">内部存储</string>
+    <string name="sdcard_device_str">SD卡</string>
+    <string name="sata_device_str">硬盘</string>
+    <string name="usb_device_str">USB存储</string>
+<string name="change_mode">"音乐播放模式"</string>
+
+    <string name="volume">声音</string>
+    <string name="str_ok">确定</string>
+    <string name="str_cancel">取消</string>
+    <string name="str_loading">"请稍后..."</string>
+    <string name="str_unknown">未知</string>
+    <string name="str_prompt">提示</string>
+    <string name="unsupported_file_format">不支持的文件格式</string>
+    <string name="str_back">返回</string>
+    <string name="network_error">网络连接已断开</string>
+    <string name="no_device_error">没有找到设备！</string>
+    <string name="no_file_error">没有找到文件</string>
+    <string name="myphoto">我的图片</string>
+    <string name="mymusic">我的音乐</string>
+    <string name="myvideo">我的视频</string>
+
+    <string name="name_setting">设置</string>
+    <string name="set_device_name">设置本机的网络名称</string>
+    <string name="if_DMR_boot">将本机设为网络播放设备</string>
+    <string name="if_DMS_boot">共享本机媒体文件</string>
+    <string name="boot_title">"自动启动"</string>
+    <string name="not_boot_title">"启动服务器"</string>
+    <string name="boot_run">"开机后自动启动播放器"</string>
+    <string name="not_boot_run">"仅当本应用启动后启动播放器"</string>
+    <string name="title_setting">设置</string>
+    <string name="title_dialog_setting">请输入名称</string>
+    <string name="dms_device">所有设备</string>
+
+    <string name="str_up">上</string>
+    <string name="str_down">下</string>
+    <string name="str_left">左</string>
+    <string name="str_right">右</string>
+    <string name="str_return">返回</string>
+    <string name="str_ok_bottom">确定</string>
+    <string name="str_cursor">移动光标</string>
+    <string name="str_menu">按菜单功能</string>
+
+    <string name="refresh">刷新</string>
+    <string name="str_init">初始化...</string>
+    <string name="searching">搜索中...</string>
+    <string name="no_device">没有找到服务器</string>
+    <string name="no_files">没有找到文件</string>
+    <string name="no_files_error">网络错误</string>
+    <string name="out_of_size">错误的大小</string>
+
+    <string name="oper_click">"单击进入目录,长按可添加删除共享目录"</string>
+    <string name="video_err_title">"播放出错"</string>
+    <string name="video_err_summary">"对不起，不能播放此视频！"</string>
+    <string name="video_next_title">"提示"</string>
+    <string name="video_next_summary">"请等待,为您续播下一集"</string>
+
+    <string name="about">"设置"</string>
+    <string name="set_name_title">"我的网络播放器"</string>
+    <string name="loading">"加载中"</string>
+    <string name="exitstr">"即将退出...."</string>
+    <string name="toggle_airplay">"airplay网络接收播放器"</string>
+    <string name="toggle_setting">"设置"</string>
+    <string name="toggle_setting_airplay">"设置Airplay"</string>
+    <string name="toggle_setting_dmp">"设置DMP"</string>
+    <string name="disply_err">"没有发现网络服务设备"</string>
+    <string name="error_title">"出错了!"</string>
+    <string name="popup_menu_my_android">"我的设备"</string>
+    <string name="video_next_exit">"退出"</string>
+    <string name="dlg_ok">"好的"</string>
+    <string name="dlg_cancel">"取消"</string>    
+    <string name="setting_service_title">"启动 AirPlay 服务"</string>
+    <string name="setting_boot_title">"自动启动 AirPlay 服务"</string> 
+    <string name="setting_boot_summary">开机自动启动服务</string>
+    <string name="setting_apk_summary">"进入apk启动服务"</string>
+    <string name="setting_device_title">设备名称</string>
+    <string name="setting_version_title">版本信息</string>
+    <string name="lock_settings_picker_title">选择屏幕锁定方式</string>
+    <string name="help_label">帮助</string>
+    <string name="dialog_btn_cancel">取消</string>
+    <string name="dialog_btn_ok">确定</string>
+
+    <string name="airplay_summary">"IOS 网络播放器"</string>
+    <string name="settings_summary">"网络播放器设置"</string>
+    <string name="loading_video">"正在载入视频..."</string>
+    <string name="resume_playing_title">继续播放视频</string>
+    <string name="resume_playing_message">从 %s 开始继续播放？</string>
+    <string name="resume_playing_resume">"继续播放"</string>
+    <string name="resume_playing_restart">重新开始</string>
+
+    <string name="audio_play">音乐播放中</string>
+    <string name="audio_stop">音乐停止</string>
+    <string name="network_disconnected">网络中断</string>
+    <string name="play_fail">无法播放该视频</string>
+    <string name="pic_unspport">"此图不支持该操作"</string>
+    <string name="error_info">"获取网络文件失败，为您续播下一首"</string>
+    <string name="error_exit">"创建播放器失败，退出播放"</string>
+</resources>

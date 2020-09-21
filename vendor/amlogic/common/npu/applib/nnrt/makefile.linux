@@ -1,0 +1,86 @@
+include $(AQROOT)/makefile.linux.def
+
+ifeq ($(OVXLIB_DIR),)
+$(error Please set OVXLIB_DIR env first)
+endif
+
+INCLUDE += -I$(VIVANTE_SDK_INC) -I$(VIVANTE_SDK_INC)/HAL -I$(AQROOT)/sdk/inc
+INCLUDE += -I$(OVXLIB_DIR)/include/ops -I$(OVXLIB_DIR)/include/utils -I$(OVXLIB_DIR)/include/inference
+INCLUDE += -I$(OVXLIB_DIR)/include/client -I$(OVXLIB_DIR)/include -I$(OVXLIB_DIR)/include/libnnext
+INCLUDE += -I$(OVXLIB_DIR)/include/platform
+INCLUDE += -I$(NNRT_ROOT)/ -I./boost/libs/preprocessor/include/
+
+CFLAGS += $(INCLUDE) -std=c++11
+CFLAGS += -D'OVXLIB_API=__attribute__((visibility("default")))'
+CC      = $(CROSS_COMPILE)g++ -pthread
+################################################################################
+# Supply necessary libraries.
+
+LIBS += -L$(VIVANTE_SDK_LIB) -l ovxlib
+#LIBS += -lm
+
+#############################################################################
+# Macros.
+ifeq ($(gcdSTATIC_LINK), 1)
+STATIC=1
+TARGET_NAME  = libnnrt.a
+else
+CFLAGS += -fPIC
+DYNAMIC      := 1
+TARGET_NAME  = libnnrt.so
+endif
+
+#############################################################################
+# Objects.
+vpath %.cpp ./
+OBJECTS = $(OBJ_DIR)/file_map_memory.o \
+        $(OBJ_DIR)/memory_pool.o \
+        $(OBJ_DIR)/model.o \
+        $(OBJ_DIR)/compilation.o \
+        $(OBJ_DIR)/event.o \
+        $(OBJ_DIR)/utils.o \
+        $(OBJ_DIR)/logging.o \
+        $(OBJ_DIR)/execution.o \
+        $(OBJ_DIR)/execution_task.o \
+        $(OBJ_DIR)/prepared_model.o \
+        $(OBJ_DIR)/ovxlib_delegate.o
+
+vpath %.cpp ./model_transform
+OBJECTS += \
+        $(OBJ_DIR)/layout_inference.o \
+        $(OBJ_DIR)/align_broadcast_op.o \
+        $(OBJ_DIR)/transformations.o \
+        $(OBJ_DIR)/optimize_permute.o \
+        $(OBJ_DIR)/fp32tofp16.o \
+        $(OBJ_DIR)/validate_quantized_graph.o \
+        $(OBJ_DIR)/nnapi_interpreter.o
+
+vpath %.cpp ./api_requirement
+OBJECTS += \
+        $(OBJ_DIR)/nnapi_requirement.o \
+        $(OBJ_DIR)/spec.o
+
+vpath %.cpp ./op
+OBJECTS += \
+        $(OBJ_DIR)/convolution.o\
+        $(OBJ_DIR)/normalization.o\
+        $(OBJ_DIR)/elementwise.o\
+        $(OBJ_DIR)/operand.o\
+        $(OBJ_DIR)/operation.o\
+        $(OBJ_DIR)/pooling.o\
+
+ifeq ($(DUMP_JSON_MODEL), 1)
+vpath %.cpp ./dump_model
+OBJECTS += \
+        $(OBJ_DIR)/dump_json_model.o \
+        $(OBJ_DIR)/jsoncpp.o
+CXXFLAGS+=-D_DUMP_JSON_MODEL_
+endif
+
+# installation directory
+INSTALL_DIR := $(VIVANTE_SDK_LIB)
+
+################################################################################
+# Include the common makefile.
+
+include $(AQROOT)/common.target

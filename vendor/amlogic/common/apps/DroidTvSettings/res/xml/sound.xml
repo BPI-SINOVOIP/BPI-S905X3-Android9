@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (C) 2016 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License
+  -->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/device_sound">
+
+    <ListPreference
+        android:key="drc_mode"
+        android:persistent="false"
+        android:entries="@array/dolby_sounds_entries"
+        android:entryValues="@array/dolby_sounds_entry_values"
+        android:title="@string/device_sound_dolby"
+        android:summary="%s" />
+    <Preference
+        android:fragment="com.droidlogic.tv.settings.DolbyAudioEffectFragment"
+        android:key="dolby_audio_processing"
+        android:title="@string/dolby_audio_processing" />
+
+    <SwitchPreference
+        android:key="audio_mixing"
+        android:persistent="false"
+        android:title="@string/audio_mixing"
+        android:summaryOn="@string/audio_mixing_summary_on"
+        android:summaryOff="@string/audio_mixing_summary_off" />
+    <SeekBarPreference
+        android:key="arc_latency"
+        android:persistent="false"
+        android:title="@string/arc_latency" />
+    <SeekBarPreference
+        android:key="key_audio_output_latency"
+        android:persistent="false"
+        android:title="@string/audio_output_latency" />
+    <PreferenceCategory
+        android:key="surround_sound_category"
+        android:title="@string/device_sound_digital">
+        <!--android:layout="@layout/preference_category_compact_layout" -->
+        <ListPreference
+            android:key="digital_sound"
+            android:persistent="false"
+            android:title="@string/device_sound_digital"
+            android:summary="%s" />
+    </PreferenceCategory>
+    <ListPreference
+        android:key="dtsdrc_mode"
+        android:persistent="false"
+        android:entries="@array/dts_sounds_entries"
+        android:entryValues="@array/dts_sounds_entry_values"
+        android:title="@string/device_sound_dts_sound"
+        android:dialogTitle="@string/device_sound_dts_drcscale"
+        android:summary="%s" />
+
+    <ListPreference
+        android:key="dtsdrc_custom_mode"
+        android:persistent="false"
+        android:entries="@array/dts_custom_sounds_entries"
+        android:entryValues="@array/dts_custom_sounds_entry_values"
+        android:title="@string/device_sound_dts_sound"
+        android:dialogTitle="@string/device_sound_dts_drcscale"
+        android:summary="%s" />
+
+     <SwitchPreference
+        android:key="ad_surport"
+        android:persistent="false"
+        android:title="@string/device_sound_ad_surport" />
+
+</PreferenceScreen>

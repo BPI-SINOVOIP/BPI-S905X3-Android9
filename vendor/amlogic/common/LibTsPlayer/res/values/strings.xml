@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, MediaProcessorDemoActivity!</string>
+    <string name="app_name">MediaProcessorTestSuite</string>
+    <color name="gray">#FF0000</color> 
+    <string name="button_play">Play</string>
+    <string name="button_pause">Pause</string>
+    <string name="button_resume">Resume</string>
+    <string name="button_seek">Seek</string>
+    <string name="button_vshow">Videoshow</string>
+    <string name="button_vhide">Videohide</string>
+    <string name="button_fast">Fast</string>
+    <string name="button_stop_fast">Stopfast</string>
+    <string name="button_stop">Stop</string>
+    <string name="button_set_epg">SetEPGSize</string>
+    <string name="txt_func">       function:</string>
+    <string name="txt_return">       return:</string>
+    <string name="txt_result">       result:</string>    
+    <string name="button_g_vol">GetVolume</string>
+    <string name="button_s_vol">SetVolume</string>
+    <string name="button_s_ratio">SetRatio</string>
+    <string name="button_g_ab">GetAudioBalance</string>
+    <string name="button_s_ab">SetAudioBalance</string>
+    <string name="button_g_vp">GetVideoPixels</string>
+    <string name="button_is_soft_fit">IsSoftFit</string>
+    <string name="button_g_playmode">GetPlayMode</string>
+    <string name="button_s_audio">SwitchAudioTrack</string>
+    <string name="button_s_sub">SwitchSubtitle</string>
+    <string name="txt_1_space"> </string>
+
+</resources>

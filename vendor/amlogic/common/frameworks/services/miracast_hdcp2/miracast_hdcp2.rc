@@ -1,0 +1,6 @@
+on init
+    start miracast_hdcp2
+
+service miracast_hdcp2 /vendor/bin/miracast_hdcp2
+    user root
+    group media system root

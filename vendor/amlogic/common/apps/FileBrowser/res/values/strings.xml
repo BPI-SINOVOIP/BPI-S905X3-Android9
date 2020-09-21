@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2012 Amlogic, Inc.
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources>   
+    <string name="app_name">FileBrowser</string>
+    <string name="btn_home_str">Home</string>
+    <string name="btn_parent_str">Back</string>
+   
+    <string name="btn_edit_str">Edit</string>
+    <string name="btn_sort_str">Sort</string>
+    <string name="btn_help_str">Help</string>
+    <string name="btn_close_str">Close</string>
+    
+    <string name="sort_dialog_title_str">Sort File</string>
+    <string name="sort_dialog_name_str">Sort By Name</string>
+    <string name="sort_dialog_date_str">Sort By Date</string>
+    <string name="sort_dialog_size_str">Sort By Size</string>
+    <string name="dialog_close_str">Cancel</string>
+    
+    <string name="edit_dialog_title_str">Edit File</string>
+    <string name="edit_dialog_paste_file">Paste File:</string>
+    <string name="edit_dialog_copy_str">Copy</string>
+    <string name="edit_dialog_delete_str">Delete</string>
+    <string name="edit_dialog_paste_str">Paste</string>
+    <string name="edit_dialog_cut_str">Cut</string>
+    <string name="edit_dialog_rename_str">Rename</string>
+    <string name="edit_dialog_share_str">Share</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">Ok</string>
+    
+    <string name="load_dialog_msg_str">Please wait while loading...</string>
+    
+    <string name="click_dialog_title_str">Open File</string>
+    <string name="rootDevice">Device List</string>
+    <string name="openMode">Open as..</string>
+    
+    <string name="FileBrowerDatabase_onCreate">"
+CREATE TABLE file_mark_table (_id INTEGER PRIMARY KEY AUTOINCREMENT, file_path TEXT, is_sel INTEGER);
+CREATE TABLE file_thumbnails_table (_id INTEGER PRIMARY KEY AUTOINCREMENT, file_path TEXT, file_data BLOB, dir_path TEXT );
+"</string>      
+    <string name="FileBrowerDatabase_onUpgrade">"
+DROP TABLE IF EXISTS file_mark_table
+DROP TABLE IF EXISTS file_thumbnails_table
+"</string>    
+
+	<string name="Toast_msg_del_ok">Delete all selected files.</string>
+	<string name="Toast_msg_del_fail">Delete selected files fail.</string>
+	<string name="Toast_msg_del_nofile">No file to delete.</string>
+	<string name="Toast_msg_paste_ok">Paste all selected files to current path.</string>
+	<string name="Toast_msg_paste_nofile">No file to paste.</string>
+	<string name="Toast_msg_paste_writeable">Cannot paste here, read only.</string>
+	<string name="Toast_msg_paste_nospace">Paste exit, no enough space.</string>
+	<string name="Toast_msg_cpy_nofile">No file to copy.</string>
+	<string name="Toast_msg_cut_nofile">No file to cut.</string>
+	<string name="Toast_msg_cpy_todo">File copy, select path and paste.</string>
+	<string name="Toast_msg_cut_todo">File cut, select path and paste.</string>
+	<string name="Toast_msg_paste_wrongpath">Cannot paste here.</string>
+	<string name="Toast_msg_edit_noopen">Cannot edit here.</string>
+	<string name="Toast_msg_sort_noopen">Cannot sort here.</string>
+	<string name="Toast_msg_rename_morefile">Cannot rename more than one file:</string>
+	<string name="Toast_msg_rename_nofile">No file to rename.</string>
+	<string name="Toast_msg_share_nofile">Folder can\'t be shared, No file selected.</string>
+	<string name="Toast_msg_share_nodev">No shared devices.</string>
+	<string name="Toast_msg_rename_error">Rename failed.</string>
+	<string name="Toast_msg_rename_diffpath">Cannot rename in diffent path:</string>
+	<string name="Toast_msg_paste_sub_folder">Can\'t paste, destination directory is sub folder of source directory.</string>
+	<string name="Toast_msg_no_applicaton">No application fit for the file.</string>
+	<string name="Toast_msg_no_write">Can\'t write.</string>
+	
+	<string name="dialog_help_item_home_str">Show home page</string>
+	<string name="dialog_help_item_edit_str">Show edit dialog</string>
+	<string name="dialog_help_item_mode_str">Select/open mode</string>
+	<string name="dialog_help_item_sort_str">Show sort dialog</string>
+	<string name="dialog_help_item_parent_str">Back to parent dir</string>
+	<string name="dialog_help_item_thumb_str">View by thumbnail </string>
+	<string name="dialog_help_item_list_str">View by list</string>
+	<string name="dialog_help_item_close_str">Close FileBrowser</string>
+	<string name="memory_device_str">Internal Memory </string>
+	<string name="sdcard_device_str">Local Disk</string>
+	<string name="ext_sdcard_device_str">External Storage Card</string>
+	<string name="sata_device_str">SATA</string>
+	<string name="usb_device_str">USB</string>
+	<string name="cdrom_device_str">CD ROM</string>
+	<string name="Toast_copy_fail">Copy Failed</string>
+	<string name="Toast_no_sdcard">No TF Card!</string>
+	<string name="Thumbnail_unsupport">Thumbnail mode unsupported in attachment adding. </string>
+</resources>

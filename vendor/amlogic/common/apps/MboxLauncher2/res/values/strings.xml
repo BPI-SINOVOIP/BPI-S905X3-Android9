@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright (c) 2014 Amlogic, Inc. All rights reserved.
+
+ This source code is subject to the terms and conditions defined in the
+ file 'LICENSE' which is part of this source code package.
+
+ Description: resource file
+-->
+
+<resources>
+
+    <string name="hello">Hello World</string>
+    <string name="app_name">MediaBox launcher</string>
+    <string name="str_video">Online Video </string>
+    <string name="str_tvapp">LiveTv </string>
+    <string name="str_recommend">Recommend</string>
+    <string name="str_setting">Settings</string>
+    <string name="str_app">My Apps</string>
+    <string name="str_music">Music</string>
+    <string name="str_local">Local</string>
+    <string name="str_nospace">Shortcuts no space!</string>
+    <string name="str_day">日</string>
+    <string name="str_add">Add</string>
+    <string name="img_desc">image</string>
+    <string name="str_exit">Exit</string>
+    <string name="str_no_signal">No signal</string>
+    <string name="str_no_channel">No channel</string>
+    <string name="str_audio_only">Audio Only</string>
+    <string name="str_scrambeled">Scrambled</string>
+    <string name="str_blocked">Program is blocked</string>
+    <string name="toast_livetv_warn">LiveTv is releasing, please wait</string>
+</resources>

@@ -1,0 +1,79 @@
+/*
+ * Copyright (C) 2016 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package vendor.amlogic.hardware.systemcontrol@1.0;
+
+enum Result : uint32_t {
+    OK,                  // Success
+    FAIL,                // Failure, unknown reason
+};
+
+struct DroidDisplayInfo {
+    //1:tablet 2:MBOX 3:TV
+    int32_t type;
+    string socType;
+    string defaultUI;
+    int32_t fb0w;
+    int32_t fb0h;
+    int32_t fb0bits;
+    int32_t fb0trip;//Triple Buffer enable or not
+
+    int32_t fb1w;
+    int32_t fb1h;
+    int32_t fb1bits;
+    int32_t fb1trip;//Triple Buffer enable or not
+};
+
+struct SourceInputParam {
+    int32_t sourceInput;
+    int32_t sigFmt;
+    int32_t transFmt;
+};
+
+struct WhiteBalanceParam {
+    uint32_t en;
+    int32_t r_pre_offset;  // s11.0, range -1024~+1023, default is 0
+    int32_t g_pre_offset;  // s11.0, range -1024~+1023, default is 0
+    int32_t b_pre_offset;  // s11.0, range -1024~+1023, default is 0
+    uint32_t r_gain;        // u1.10, range 0~2047, default is 1024 (1.0x)
+    uint32_t g_gain;        // u1.10, range 0~2047, default is 1024 (1.0x)
+    uint32_t b_gain;        // u1.10, range 0~2047, default is 1024 (1.0x)
+    int32_t r_post_offset; // s11.0, range -1024~+1023, default is 0
+    int32_t g_post_offset; // s11.0, range -1024~+1023, default is 0
+    int32_t b_post_offset; // s11.0, range -1024~+1023, default is 0
+};
+
+struct NolineParam {
+    int32_t osd0;
+	int32_t osd25;
+    int32_t osd50;
+	int32_t osd75;
+	int32_t osd100;
+};
+
+struct OverScanParam {
+    int32_t he;
+	int32_t hs;
+    int32_t ve;
+	int32_t vs;
+};
+
+struct PQDatabaseInfo {
+    string ToolVersion;
+    string ProjectVersion;
+    string GenerateTime;
+};
+

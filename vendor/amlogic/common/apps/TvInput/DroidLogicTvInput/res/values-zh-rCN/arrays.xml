@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Label of TvInputServcie is defined here, the index of array here is immutable -->
+    <string-array name="tv_input_labels">
+        <item>null</item>    <!-- atv -->
+        <item>视频1</item>     <!-- av1 -->
+        <item>视频2</item>     <!-- av2 -->
+        <item>null</item>    <!-- YPBPR1 -->
+        <item>null</item>    <!-- YPBPR2 -->
+        <item>HDMI1</item>   <!-- HDMI1 -->
+        <item>HDMI2</item>   <!-- HDMI2 -->
+        <item>HDMI3</item>   <!-- HDMI3 -->
+    </string-array>
+</resources>

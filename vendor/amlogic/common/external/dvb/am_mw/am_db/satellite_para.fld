@@ -1,0 +1,34 @@
+/*sat_para_table 字段列表*/
+"db_id integer primary key autoincrement",	/**< 数据库保存的唯一索引*/ 
+"sat_name text",							/**< 卫星名称*/
+"lnb_num integer",							/**< LNB number*/
+"lof_hi integer",							/**< LNB 高本振频率, kHz*/
+"lof_lo integer",							/**< LNB 低本振频率, kHz*/
+"lof_threshold integer",					/**< LNB 转折频率*/
+"signal_22khz integer",						/**< 22kHz信号，0-ON, 1-OFF, 2-Hi/Lo*/
+"voltage integer",							/**< Voltage mode, 0-13V, 1-18V, 2-OFF, 3-H/V*/
+
+"motor_num integer",						/**< Motor设备号*/
+"pos_num integer",							/**< 保存的motor position number*/
+"lo_direction integer",						/**< 经度方向，0-EAST, 1-WEST*/
+"la_direction integer",						/**< 纬度方向，0-NORTH, 1-SOUTH*/
+"longitude real",							/**< 本地经度值*/
+"latitude real",							/**< 本地纬度值*/
+"sat_longitude real",						/**< 卫星经度值*/
+
+"diseqc_mode integer",						/**< DiSEqC mode, 0-None, 1-V1.0, 2-V1.1, 3-V1.2*/
+"tone_burst integer",						/**< Tone Burst, 0-None, 1-Burst A, 2-Burst B*/
+"committed_cmd integer",					/**< Committed DiSEqC command, 0-AA, 1-AB, 2-BA, 3-BB, 4-None*/
+"uncommitted_cmd integer",					/**< Uncommitted DiSEqC command*/
+"repeat_count integer",						/**< DiSEqC command repeat count*/
+"sequence_repeat integer",					/**< 0:not send sequence cmd twice, else: send twice*/
+"fast_diseqc integer",						/**< 0: not use fast diseqc, else: use fast diseqc*/
+"cmd_order integer",						/**<diseqc 1.0)
+													0) commited, toneburst
+													1) toneburst, committed
+												diseqc > 1.0)
+													2) committed, uncommitted, toneburst
+													3) toneburst, committed, uncommitted
+													4) uncommitted, committed, toneburst
+													5) toneburst, uncommitted, committed 
+													*/

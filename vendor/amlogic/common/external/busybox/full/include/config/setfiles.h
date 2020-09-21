@@ -1,0 +1,1 @@
+#define CONFIG_SETFILES 1

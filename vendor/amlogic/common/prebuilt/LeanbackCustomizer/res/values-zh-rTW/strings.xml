@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="partner_row_title">"Amlogic應用"</string>
+    <string name="apps_row_title">"應用"</string>
+    <string name="games_row_title">"遊戲"</string>
+    <string name="inputs_row_title">"輸入"</string>
+    <string name="settings_row_title">"設置"</string>
+
+    <string name="dlna">DLNA</string>
+    <string name="video_player">"本地播放器"</string>
+    <string name="update">"升級"</string>
+</resources>

@@ -1,0 +1,58 @@
+cc_binary {
+    name: "miracast_hdcp2",
+    init_rc: ["miracast_hdcp2.rc"],
+    vendor: true,
+    srcs: [
+        "hdcp2_service.cpp",
+        "HDCP.cpp",
+    ],
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+    shared_libs: [
+        "libhidlbase",
+        "libhidltransport",
+        "liblog",
+        "libutils",
+        "libcutils",
+        "vendor.amlogic.hardware.miracast_hdcp2@1.0",
+    ],
+    include_dirs: [
+        "frameworks/native/headers/media_plugin",
+    ],
+}
+
+cc_binary {
+    name: "hdcp2_rx_binder_test",
+    vendor: true,
+    srcs: ["test/hdcp2_rx_binder_test.cpp"],
+    shared_libs: [
+        "libhidlbase",
+        "libhidltransport",
+        "liblog",
+        "libutils",
+        "vendor.amlogic.hardware.miracast_hdcp2@1.0",
+    ],
+    include_dirs: [
+        "system/core/libcutils/include",
+        "frameworks/native/headers/media_plugin",
+    ],
+}
+
+cc_binary {
+    name: "hdcp2_tx_binder_test",
+    vendor: true,
+    srcs: ["test/hdcp2_tx_binder_test.cpp"],
+    shared_libs: [
+        "libhidlbase",
+        "libhidltransport",
+        "liblog",
+        "libutils",
+        "vendor.amlogic.hardware.miracast_hdcp2@1.0",
+    ],
+    include_dirs: [
+        "system/core/libcutils/include",
+        "frameworks/native/headers/media_plugin",
+    ],
+}

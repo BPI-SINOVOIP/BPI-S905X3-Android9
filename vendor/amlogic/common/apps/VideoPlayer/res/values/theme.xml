@@ -1,0 +1,20 @@
+<resources>
+    <style name="theme_trans" parent="android:Theme">
+        <item name="android:windowBackground">@drawable/trans</item>
+        <item name="android:windowTitleBackgroundStyle">@style/TitleBackgroundColor</item>
+        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+    </style>
+    <style name="TitleBackgroundColor">
+    	<item name="android:background">#00000000</item>
+    </style>
+    <style name="AnimationActivity" mce_bogus="1" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@null</item>
+        <item name="android:activityOpenExitAnimation">@null</item>
+        <item name="android:activityCloseEnterAnimation">@null</item>
+        <item name="android:activityCloseExitAnimation">@null</item>
+    </style>
+
+    <style name="player" parent="android:Theme.NoTitleBar.Fullscreen">
+        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+    </style>
+</resources>

@@ -1,0 +1,253 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center_vertical|center_horizontal"
+    android:background="@color/common_background"
+    android:gravity="center_vertical|center_horizontal"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/set_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/textView_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical|center_horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:text="@string/title_dish_setup"
+            android:textColor="#B3EEEEEE"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/satellite_related"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:weightSum="7.5" >
+
+        <LinearLayout
+            android:id="@+id/satellite_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3.5"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/listview_item_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:text="@string/list_type_satellite"
+                android:textColor="@color/common_text_color"
+                android:textSize="14sp" />
+
+            <com.droidlogic.fragment.ItemListView
+                android:id="@+id/listview_item"
+                android:layout_width="350dp"
+                android:layout_height="360dp"
+                android:layout_marginRight="5dp"
+                android:background="@color/common_item_background"
+                android:clickable="true"
+                android:divider="?android:attr/listDividerAlertDialog"
+                android:focusable="true"
+                android:footerDividersEnabled="false"
+                android:headerDividersEnabled="false" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/satellite_option"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/listview_option_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:text="@string/list_type_parameter"
+                android:textColor="@color/common_text_color"
+                android:textSize="14sp" />
+
+            <com.droidlogic.fragment.ItemListView
+                android:id="@+id/listview_option"
+                android:layout_width="400dp"
+                android:layout_height="360dp"
+                android:layout_marginLeft="5dp"
+                android:background="@color/common_item_background"
+                android:clickable="true"
+                android:divider="?android:attr/listDividerAlertDialog"
+                android:focusable="true"
+                android:footerDividersEnabled="false"
+                android:headerDividersEnabled="false" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/satellite_quickkey"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="horizontal"
+        android:weightSum="7.5" >
+
+        <LinearLayout
+            android:id="@+id/function_key1"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="3.5"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="horizontal" >
+
+            <include
+                android:id="@+id/circle_red_icon"
+                layout="@layout/add_display" />
+
+            <include
+                android:id="@+id/circle_blue_icon"
+                layout="@layout/scan_display" />
+
+            <include
+                android:id="@+id/circle_yellow_icon"
+                layout="@layout/delete_display" />
+
+            <include
+                android:id="@+id/circle_green_icon"
+                layout="@layout/edit_display" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/function_key2"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="4"
+            android:gravity="center_vertical|center_horizontal" >
+
+            <include
+                android:id="@+id/icon_goto_all"
+                layout="@layout/satellite_display" />
+
+            <include
+                android:id="@+id/icon_ok_all"
+                layout="@layout/ok_display" />
+
+            <include
+                android:id="@+id/icon_exit_all"
+                layout="@layout/exit_display" />
+
+            <include
+                android:id="@+id/icon_wheel_all"
+                layout="@layout/wheel_display" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/strength_quality_container"
+        android:layout_width="750dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="horizontal"
+        android:weightSum="2" >
+
+        <LinearLayout
+            android:id="@+id/strength_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:weightSum="5">
+
+            <TextView
+                android:id="@+id/strength_text"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:text="@string/dialog_diseqc_1_2_strength"
+                android:textColor="#B3EEEEEE"
+                android:textSize="14sp" />
+
+            <ProgressBar
+                android:id="@+id/strength_progressbar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3" />
+
+            <TextView
+                android:id="@+id/strength_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:text="0%"
+                android:textColor="#B3EEEEEE"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/quality_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:weightSum="5">
+
+            <TextView
+                android:id="@+id/quality_text"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:text="@string/dialog_diseqc_1_2_quality"
+                android:textColor="#B3EEEEEE"
+                android:textSize="14sp" />
+
+            <ProgressBar
+                android:id="@+id/quality_progressbar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3" />
+
+            <TextView
+                android:id="@+id/quality_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:text="0%"
+                android:textColor="#B3EEEEEE"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

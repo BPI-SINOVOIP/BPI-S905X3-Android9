@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/white" android:layout_height="match_parent" android:layout_width="match_parent">
+
+    <LinearLayout 
+        android:id="@+id/LinearLayout_tile" 
+        android:layout_width="fill_parent" 
+        android:background="@drawable/top_bar2"
+        android:orientation="horizontal" android:layout_height="52dp">
+        
+        <Button android:id="@+id/Button_home" 
+            android:background="@drawable/home_button" 
+            android:layout_marginLeft="12dp" 
+            android:layout_height="52dp" android:layout_width="50dp" android:layout_weight="0">
+        </Button>
+        
+        <TextView 
+            android:layout_height="52dp" 
+            android:id="@+id/TextView_path" 
+            android:textColor="@drawable/white"
+            android:gravity="center"
+            android:ellipsize="middle"
+            android:singleLine="true" 
+            android:focusableInTouchMode="true" 
+            android:scrollHorizontally="true" 
+            android:layout_gravity="center" 
+            android:layout_width="wrap_content" 
+            android:layout_weight="45" android:textSize="24px">
+        </TextView>
+        
+        <Button 
+            android:background="@drawable/exit_button" 
+            android:id="@+id/Button_exit" 
+            android:layout_width="wrap_content" 
+            android:layout_gravity="right" 
+            android:layout_height="52dp">
+        </Button>
+        
+    </LinearLayout>
+
+    <FrameLayout android:id="@+id/FrameLayout" 
+        android:layout_height="0dip" 
+        android:layout_weight="1" 
+        android:layout_width="match_parent">
+
+        <TextView 
+            android:id="@+id/TextView_nofile" 
+            android:layout_width="match_parent" 
+            android:layout_height="match_parent" 
+            android:textColor="@drawable/black"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/no_file">
+        </TextView>
+
+        <LinearLayout 
+            android:layout_width="match_parent" 
+            android:layout_height="match_parent" 
+            android:gravity="center"
+            android:orientation="horizontal">
+            
+            <ProgressBar 
+                android:id="@+id/spinner"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+                
+            <TextView 
+                android:id="@+id/TextView_searching" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:layout_alignTop="@+id/spinner"
+                android:textColor="@drawable/black"
+                android:visibility="invisible"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/searching">
+            </TextView>
+            
+        </LinearLayout>
+        
+        <ListView
+            android:id="@android:id/list"
+            android:cacheColorHint="#00000000" 
+            android:layout_height="match_parent" 
+            android:layout_width="match_parent" 
+            android:focusableInTouchMode="true" 
+            android:visibility="visible">
+        </ListView>
+        
+    </FrameLayout>
+</LinearLayout>

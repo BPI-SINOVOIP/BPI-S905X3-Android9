@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2012 Amlogic, Inc.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<com.droidlogic.otaupgrade.InstallPackage xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayout1"
+    android:layout_width="@dimen/dialog_size"
+    android:layout_height="@dimen/dialog_height"
+    android:paddingLeft="@dimen/padding_dialog"
+    android:paddingRight="@dimen/padding_dialog"
+    android:background="@drawable/bg"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/descriptor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:text="@string/install_ota_help"
+        android:textSize="@dimen/text_size" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <!--<ProgressBar
+            android:id="@+id/prepare_progress"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="400dp"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp" />-->
+
+        <ProgressBar
+            android:id="@+id/verify_progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="@dimen/dialog_size"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp" />
+
+        <LinearLayout
+            android:id="@+id/output_field"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dialog_height"
+            android:background="@color/blanchedalmond"
+            android:layout_alignLeft="@+id/verify_progress"
+            android:layout_alignRight="@+id/verify_progress"
+            android:layout_below="@+id/verify_progress"
+            android:layout_marginTop="4dp"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/confirm_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/output_field"
+            android:layout_below="@+id/output_field"
+            android:layout_marginTop="10dp"
+            android:text="@string/confirm_update" />
+
+        <Button
+            android:id="@+id/confirm_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/output_field"
+            android:layout_below="@+id/output_field"
+            android:layout_marginTop="10dp"
+            android:text="@string/confirm_cancel" />
+    </RelativeLayout>
+</com.droidlogic.otaupgrade.InstallPackage>

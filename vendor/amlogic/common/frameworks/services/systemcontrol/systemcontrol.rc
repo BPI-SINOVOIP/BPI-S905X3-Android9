@@ -1,0 +1,10 @@
+on early-boot
+    start system_control
+
+on post-fs-data
+    mkdir  /mnt/vendor/param/pq
+    chmod 771 /mnt/vendor/param/pq
+
+service system_control /vendor/bin/systemcontrol
+    user root
+    group system root media audio

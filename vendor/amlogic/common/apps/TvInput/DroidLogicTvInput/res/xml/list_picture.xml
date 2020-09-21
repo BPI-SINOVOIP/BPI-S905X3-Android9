@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <Preference
+        android:key="picture"
+        android:title="@string/picture" >
+    </Preference>
+
+    <Preference
+        android:key="picture_mode"
+        android:title="@string/picture_mode" >
+    </Preference>
+
+    <Preference
+        android:key="brightness"
+        android:title="@string/brightness" >
+    </Preference>
+
+    <Preference
+        android:key="contrast"
+        android:title="@string/contrast" >
+    </Preference>
+
+    <Preference
+        android:key="color"
+        android:title="@string/color" >
+    </Preference>
+
+    <Preference
+        android:key="sharpness"
+        android:title="@string/sharpness" >
+    </Preference>
+
+    <Preference
+        android:key="tint"
+        android:title="@string/tint" >
+    </Preference>
+
+    <Preference
+        android:key="backlight"
+        android:title="@string/backlight" >
+    </Preference>
+
+    <Preference
+        android:key="color_temperature"
+        android:title="@string/color_temperature" >
+    </Preference>
+
+    <Preference
+        android:key="aspect_ratio"
+        android:title="@string/aspect_ratio" >
+    </Preference>
+
+    <Preference
+        android:key="dnr"
+        android:title="@string/dnr" >
+    </Preference>
+</PreferenceScreen>
+

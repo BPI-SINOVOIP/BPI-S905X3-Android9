@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Label of TvInputServcie is defined here, the index of array here is immutable -->
+    <string-array name="tv_input_labels">
+        <item>null</item>    <!-- atv -->
+        <item>AV1</item>     <!-- av1 -->
+        <item>AV2</item>     <!-- av2 -->
+        <item>null</item>    <!-- YPBPR1 -->
+        <item>null</item>    <!-- YPBPR2 -->
+        <item>HDMI1</item>   <!-- HDMI1 -->
+        <item>HDMI2</item>   <!-- HDMI2 -->
+        <item>HDMI3</item>   <!-- HDMI3 -->
+    </string-array>
+
+    <string-array name="def_lan">
+        <item>eng</item>
+        <item>chi</item>
+        <item>zho</item>
+        <item>ita</item>
+        <item>spa</item>
+        <item>ara</item>
+    </string-array>
+
+    <string-array name="array_week">
+        <item>Mon</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thu</item>
+        <item>Fri</item>
+        <item>Sat</item>
+        <item>Sun</item>
+    </string-array>
+
+    <string-array name="captioning_typeface_selector_values">
+        <item></item>
+        <item>ans-serif</item>
+        <item>sans-serif-condensed</item>
+        <item>sans-serif-monospace</item>
+        <item>serif</item>
+        <item>serif-monospace</item>
+        <item>casual</item>
+        <item>cursive</item>
+        <item>sans-serif-smallcaps</item>
+    </string-array>
+</resources>

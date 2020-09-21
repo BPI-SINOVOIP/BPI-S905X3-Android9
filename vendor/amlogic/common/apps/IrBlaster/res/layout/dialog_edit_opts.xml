@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/normal_bg"
+    android:orientation="vertical" >
+ 
+<ListView 
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_marginLeft="5dip"
+        android:layout_marginRight="5dip"
+    	android:divider="#ffffffff"
+    	android:dividerHeight="1dip"
+    	android:footerDividersEnabled="true"
+    	android:headerDividersEnabled="true"
+    	android:id="@+id/ops_list"
+    	/> 
+  
+<EditText android:layout_width="match_parent"
+    	  android:layout_height="wrap_content"
+    	  android:layout_marginLeft="16dip"
+    	  android:layout_marginRight="16dip"
+    	  android:maxLength="12"
+    	  android:visibility="gone"
+    	  android:id="@+id/model_rename_et"
+    	  android:hint="@string/add_model_hint"
+     />
+<RelativeLayout android:layout_width="match_parent"
+    	        android:layout_height="wrap_content"
+    	        android:layout_marginTop="8dip"
+    	        android:layout_marginBottom="8dip"
+    	        android:layout_gravity="center_vertical"
+    >
+    <Button     android:layout_width="88dip"
+    	        android:layout_height="38dip"
+    	        android:id="@+id/model_opt_bt_cancel"
+    	        android:text="@string/add_model_cancel"
+    	        android:background="@drawable/key_bg"
+    	        android:layout_alignParentLeft="true"
+    	        android:layout_marginLeft="32dip"
+    	        android:textColor="#ffffffff"
+    	        />
+        <Button android:layout_width="88dip"
+    	        android:layout_height="38dip"
+    	        android:id="@+id/model_opt_bt_ok"
+    	        android:text="@string/ok"
+    	        android:background="@drawable/key_bg"
+    	        android:layout_alignParentRight="true"
+    	        android:layout_marginRight="32dip"
+    	        android:textColor="#ffffffff"
+    	        />
+</RelativeLayout>
+
+</LinearLayout>

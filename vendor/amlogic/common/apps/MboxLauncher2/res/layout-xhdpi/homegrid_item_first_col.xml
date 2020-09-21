@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright (c) 2014 Amlogic, Inc. All rights reserved.
+
+ This source code is subject to the terms and conditions defined in the
+ file 'LICENSE' which is part of this source code package.
+
+ Description: resource file
+-->
+
+<com.droidlogic.mboxlauncher.MyRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="88dp"
+    android:layout_height="88dp"
+    android:layout_centerHorizontal="true"
+    android:focusable="true"
+	android:descendantFocusability="beforeDescendants"
+    >
+    <ImageView
+        android:id="@+id/item_bg"
+        android:layout_height="73dp"
+        android:layout_width="73dp"
+        android:padding="14dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp">
+    </ImageView>
+
+</com.droidlogic.mboxlauncher.MyRelativeLayout>

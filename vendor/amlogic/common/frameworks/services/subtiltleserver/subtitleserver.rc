@@ -1,0 +1,6 @@
+on early-boot
+    start subtitleserver
+
+service subtitleserver /vendor/bin/subtitleserver
+    user root
+    group system

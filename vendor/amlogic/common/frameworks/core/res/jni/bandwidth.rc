@@ -1,0 +1,10 @@
+on property:vendor.sys.bandwidth.busy=1
+    write /sys/class/mpgpu/scale_mode 2
+    chmod 600 /sys/class/mpgpu/scale_mode
+    write /sys/class/mpgpu/cur_freq 0
+    write /sys/kernel/debug/mali/pp/num_cores_enabled 1
+
+on property:vendor.sys.bandwidth.busy=0
+    write /sys/kernel/debug/mali/pp/num_cores_enabled 3
+    write /sys/class/mpgpu/scale_mode 1
+    chmod 664 /sys/class/mpgpu/scale_mode

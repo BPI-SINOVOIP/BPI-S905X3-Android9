@@ -1,0 +1,3 @@
+#! /system/bin/sh
+pppd pty 'pppoe -p /var/run/pppoe.pid -I eth0 -T 80 -U -m 1412' debug logfd 1 noipdefault noauth default-asyncmap defaultroute nodetach mtu 1492 mru 1492 noaccomp nodeflate nopcomp novj novjccomp user pppoe password pppoe lcp-echo-interval 20 lcp-echo-failure 3 &
+

@@ -1,0 +1,11 @@
+1.tar zxvf AmlogicSetTopBox-xxxx.tgz
+2.cd AmlogicSetTopBox-xxxx
+3.edit config/env_xxxx.mk. xxxx is the target name(android, 8226h, 8226m). change the environment variables to your directories(absolute path name needed) the variables contains
+	1)linux system
+		KERNEL_INCDIR: kernel header files directory
+		ROOTFS_INCDIR: packages installed header files directory
+		ROOTFS_LIBDIR: packages installed library files directory
+	2)android system
+		ANDROID_TOPDIR: root directory of the android SDK
+4.make TARGET=xxxx config, xxxx is the target name(android, 8226h, 8226m)
+5.make

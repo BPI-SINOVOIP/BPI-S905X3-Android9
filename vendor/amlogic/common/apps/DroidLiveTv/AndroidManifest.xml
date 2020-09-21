@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.droidlogic.droidlivetv"
+    android:sharedUserId="android.uid.system"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="22"
+        />
+
+    <application
+        android:launchMode="singleInstance"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/shortcut_style" >
+
+        <uses-library android:name="droidlogic.software.core" />
+        <uses-library android:name="droidlogic.tv.software.core" />
+
+        <activity
+            android:name=".DroidLiveTvActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <!---<category android:name="android.intent.category.LAUNCHER" />-->
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".shortcut.ShortCutActivity"
+            android:label="@string/app1_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <service android:name=".TimerSuspendService" >
+            <intent-filter>
+                <action android:name="droidlogic.intent.action.suspend"></action>
+            </intent-filter>
+        </service>
+        <receiver android:name="com.droidlogic.droidlivetv.TimerSuspendReceiver">
+            <intent-filter>
+                <action android:name="droidlogic.intent.action.TIMER_SUSPEND" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".shortcut.AppointedProgramReceiver" >
+            <intent-filter>
+                <action android:name="droidlogic.intent.action.droid_appointed_program" />
+            </intent-filter>
+        </receiver>
+        <activity android:name=".favlistsettings.SortFavActivity"
+            android:theme="@style/DialogTransparent" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <service
+            android:name=".favlistsettings.InterationService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":remote" />
+    </application>
+
+</manifest>

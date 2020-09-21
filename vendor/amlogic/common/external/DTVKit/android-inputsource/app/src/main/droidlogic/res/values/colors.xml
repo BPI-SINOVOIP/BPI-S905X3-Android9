@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="common_text_color">#B3EEEEEE</color>
+    <color name="common_background">#37474F</color>
+    <color name="common_item_background">#263238</color>
+    <color name="common_focus">#00BFFF</color>
+    <color name="common_red">#FF0000</color>
+    <color name="common_green">#00FF00</color>
+    <color name="common_blue">#0000FF</color>
+    <color name="common_yellow">#ffff00</color>
+    <color name="common_white">#ffffff</color>
+
+    <!-- epg -->
+     <color name="color_text_blue_0">#FF39A8D5</color>
+     <color name="color_text_blue_1">#FF92D4EA</color>
+     <color name="divider_1">#44FFFFFF</color>
+     <color name="selected">#FFFFFF</color>
+     <color name="save_selected">#55019587</color>
+     <color name="color_text_focused">#FFFFFFFF</color>
+     <color name="color_text_item">#FF65686F</color>
+     <color name="color_text_prompt">#FF808080</color>
+     <color name="transparent">#00000000</color>
+</resources>

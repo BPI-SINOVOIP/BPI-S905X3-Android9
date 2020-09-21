@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="partner_show_live_tv_on_start_up">false</bool>
+
+    <bool name="disable_disconnected_inputs">true</bool>
+    <bool name="show_physical_tuners_separately">false</bool>
+    <!-- DO NOT TRANSLATE -->
+    <string name="partner_app_sorting_mode" translatable="false">recency</string>
+
+    <!--
+        DO NOT TRANSLATE
+        List showing default out of box ordering for the launcher.
+        The higher in this list a package appears, the higher it will be in the launcher.
+        Since the apps row and games row are separate, we can safely put them in the same array.
+        This same list will be used to determine the initial ordering of recommendations.
+        The Google default out of box ordering will supercede this ordering if there is a conflict.
+    -->
+
+    <!-- DO NOT TRANSLATE -->
+    <string-array name="home_screen_row_ordering" translatable="false">
+        <item>partner_row</item>
+        <item>games_row</item>
+        <item>apps_row</item>
+        <item>settings_row</item>
+    </string-array>
+
+  <!--  <item type="drawable" name="partner_row_icon">@drawable/ic_title_custom</item>
+    <item type="drawable" name="apps_row_icon">@drawable/ic_title_apps</item>
+    <item type="drawable" name="games_row_icon">@drawable/ic_title_games</item>
+    <item type="drawable" name="inputs_row_icon">@drawable/ic_title_custom</item>
+    <item type="drawable" name="settings_row_icon">@drawable/ic_title_settings</item>-->
+
+    <!-- DO NOT TRANSLATE -->
+    <string name="partner_font" translatable="false">sans-serif-bold</string>
+
+    <!-- DO NOT TRANSLATE -->
+    <string name="launcher_category" translatable="false">android.intent.category.LEANBACK_LAUNCHER</string>
+</resources>

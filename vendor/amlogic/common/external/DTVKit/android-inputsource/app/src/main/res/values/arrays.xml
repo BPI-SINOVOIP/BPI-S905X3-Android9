@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="polarity_entries">
+        <item>H</item>
+        <item>V</item>
+    </string-array>
+
+    <string-array name="polarity_entry_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="direction_entries">
+        <item>east</item>
+        <item>west</item>
+    </string-array>
+
+    <string-array name="direction_entry_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="search_mode_entries">
+        <item>blind</item>
+        <item>satellite</item>
+        <item>transponder</item>
+    </string-array>
+
+    <string-array name="search_mode_entry_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="fec_mode_entries">
+        <item>auto</item>
+        <item>1/2</item>
+        <item>2/3</item>
+        <item>3/4</item>
+        <item>5/6</item>
+        <item>7/8</item>
+        <item>1/4</item>
+        <item>1/3</item>
+        <item>2/5</item>
+        <item>8/9</item>
+        <item>9/10</item>
+        <item>3/5</item>
+        <item>4/5</item>
+    </string-array>
+
+    <string-array name="fec_mode_entry_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
+
+    <string-array name="modulation_mode_entries">
+        <item>auto</item>
+        <item>qpsk</item>
+        <item>8psk</item>
+        <item>16qam</item>
+    </string-array>
+
+    <string-array name="modulation_mode_entry_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="dvbt_bandwidth_entries">
+        <item>5MHZ</item>
+        <item>6MHZ</item>
+        <item>7MHZ</item>
+        <item>8MHZ</item>
+        <item>10MHZ</item>
+    </string-array>
+
+    <string-array name="dvbt_mode_entries">
+        <item>1K</item>
+        <item>2K</item>
+        <item>4K</item>
+        <item>8K</item>
+        <item>16K</item>
+        <item>32K</item>
+    </string-array>
+
+    <string-array name="dvbt_type_entries">
+        <item>DVB-T</item>
+        <item>DVB-T2</item>
+    </string-array>
+
+    <string-array name="dvbc_mode_entries">
+        <!--<item>QAM4</item>-->
+        <!--<item>QAM8</item>-->
+        <item>QAM16</item>
+        <item>QAM32</item>
+        <item>QAM64</item>
+        <item>QAM128</item>
+        <item>QAM256</item>
+        <item>AUTO</item>
+    </string-array>
+
+    <string-array name="public_search_mode_entries">
+        <item>Manual</item>
+        <item>Auto</item>
+    </string-array>
+
+    <string-array name="public_search_method_entries">
+        <item>Channel Frequency</item>
+        <item>Channel Number</item>
+    </string-array>
+</resources>

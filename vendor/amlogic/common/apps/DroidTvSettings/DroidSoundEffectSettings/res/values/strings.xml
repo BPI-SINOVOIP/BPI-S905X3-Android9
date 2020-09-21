@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Main app title [CHAR LIMIT=40] -->
+    <string name="settings_app_name">Droid Sound Effect Settings</string>
+
+    <!-- Leanback Launcher App Title for main Settings app [CHAR LIMIT=40] -->
+    <string name="launcher_settings_app_name">Droid Sound Effect Settings</string>
+
+    <!-- Title for OK [CHAR LIMIT=50] -->
+    <string name="title_ok">OK</string>
+    <!-- Title for DNS 2 [CHAR LIMIT=50] -->
+    <string name="title_cancel">Cancel</string>
+    <string name="action_on_title">On</string>
+    <!-- Title for an action which turns a feature off [CHAR LIMIT=30] -->
+    <string name="action_off_title">Off</string>
+    <!-- Title for a status description saying that a feature is on [CHAR LIMIT=30] -->
+    <string name="action_on_description">On</string>
+    <!-- Title for a status description saying that a feature is off [CHAR LIMIT=30] -->
+    <string name="action_off_description">Off</string>
+
+    <!-- tv setting. -->
+    <string name="tv_sound">Sound</string>
+    <string name="settings_mode">Settings</string>
+    <string name="dap_sound">Dolby Audio Effect</string>
+    <string name="tv_sound_mode">Sound Mode</string>
+    <string name="tv_audio_effect_band1">Band 1:</string>
+    <string name="tv_audio_effect_band2">Band 2:</string>
+    <string name="tv_audio_effect_band3">Band 3:</string>
+    <string name="tv_audio_effect_band4">Band 4:</string>
+    <string name="tv_audio_effect_band5">Band 5:</string>
+    <string name="tv_audio_five_band">Five Band Settings</string>
+    <string name="multi_settings">Multi settings</string>
+    <string name="tv_treble_bass_effect">Treblebass</string>
+    <string name="tv_treble">Treble</string>
+    <string name="tv_bass">Bass</string>
+    <string name="tv_balance_effect">Balance</string>
+    <string name="tv_spdif">SPDIF</string>
+    <string name="tv_virtual_surround">Virtual Surround</string>
+    <string name="title_tv_dts_srs_effect">DTS</string>
+    <string name="title_tv_dts_tru_bass">TruSurround</string>
+    <string name="title_tv_dts_dialog_clarity">Dialog Clarity</string>
+    <string name="title_tv_dts_tru_surround">TruBass</string>
+    <string name="title_tv_dts_virtualx">VirtualX</string>
+    <string name="title_tv_dts_virtualx_effect">DTS VirtualX</string>
+    <string name="title_tv_dts_virtualx_truvolumehd">DTS TruVolume HD</string>
+    <string name="tv_sound_output_device">Sound Output Device</string>
+    <string name="tv_sound_agc">AGC</string>
+    <string name="tv_sound_agc_enable">AGC Enable</string>
+    <string name="tv_sound_agc_max_level">Max Level</string>
+    <string name="tv_sound_agc_attrack_time">Attrack Time</string>
+    <string name="tv_sound_agc_release_time">Release Time</string>
+    <string name="title_tv_dbx">DBX</string>
+    <string name="title_tv_dbx_enable">DBX Enable</string>
+    <string name="title_tv_dbx_param_sonics">Sonics</string>
+    <string name="title_tv_dbx_param_volume">Volume</string>
+    <string name="title_tv_dbx_param_surround">Surround</string>
+    <string name="title_tv_dbx_sound_mode">Sound Mode</string>
+    <string name="tv_sound_standard">standard</string>
+    <string name="tv_sound_music">music</string>
+    <string name="tv_sound_news">news</string>
+    <string name="tv_sound_user">user</string>
+    <string name="tv_spdif_off">off</string>
+    <string name="tv_spdif_pcm">pcm</string>
+    <string name="tv_spdif_raw">raw</string>
+    <string name="tv_switch_on">on</string>
+    <string name="tv_switch_off">off</string>
+    <string name="tv_settings">Settings</string>
+    <string name="title_tv_audio_delay_and_prescale">Output Delay and Prescale</string>
+    <string name="title_tv_audio_delay_speaker">Speaker</string>
+    <string name="title_tv_audio_delay_spdif">Spdif</string>
+    <string name="title_tv_audio_prescale">Prescale</string>
+    <string name="title_tv_sound_audio_settings">Audio Settings</string>
+    <string name="title_tv_sound_audio_settings_by_source">Audio Settings by source id</string>
+
+</resources>

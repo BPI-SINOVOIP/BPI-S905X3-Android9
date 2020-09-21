@@ -1,0 +1,21 @@
+#!/system/bin/sh
+
+PPPOE_PIDFILE="/system/etc/ppp/pppoe.pid"
+
+# Check for pidfile
+    PPPOE_PID=`cat $PPPOE_PIDFILE`
+    echo "$PPPOE_PIDFILE"
+    echo "$PPPOE_PID"
+    # Check if still running
+    kill -0 $PPPOE_PID > /dev/null 2>&1
+    if [ $? != 0 ] ; then
+                        echo "The pppoe(PID $PPPOE_PID) appears to have died" >& 2
+    fi
+
+    # Kill pppoe, which should in turn kill pppd
+    echo "Killing pppoe (PID $PPPOE_PID)"
+    kill -9 $PPPOE_PID > /dev/null 2>&1 || exit 1
+
+    rm "$PPPOE_PIDFILE" 
+
+exit 0

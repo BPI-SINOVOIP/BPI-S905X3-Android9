@@ -1,0 +1,6 @@
+on early-boot
+    start rc_server
+
+service rc_server /vendor/bin/rc_server
+    user root
+    group system

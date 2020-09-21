@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (C) 2015 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License
+  -->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+        android:title="@string/dolby_audio_processing">
+
+    <ListPreference
+        android:key="dap_mode"
+        android:persistent="false"
+        android:entries="@array/dap_mode_entries"
+        android:entryValues="@array/dap_mode_entry_values"
+        android:title="@string/sound_mode"
+        android:summary="%s" />
+    <PreferenceCategory
+        android:key="dap_detail"
+        android:title="@string/dap_detail">
+        <SwitchPreference
+            android:key="dap_volume_leveler"
+            android:persistent="false"
+            android:title="@string/dap_volume_leveler" />
+        <SeekBarPreference
+            android:key="dap_volume_leveler_amount"
+            android:persistent="false"
+            android:max="10" />
+        <Preference
+            android:key="dap_vl_info"
+            android:title="@string/dap_volume_leveler"
+            android:summary="@string/off" />
+        <SwitchPreference
+            android:key="dap_dialog_enhancer"
+            android:persistent="false"
+            android:title="@string/dap_dialog_enhancer" />
+        <SeekBarPreference
+            android:key="dap_dialog_enhancer_amount"
+            android:persistent="false"
+            android:max="16" />
+        <Preference
+            android:key="dap_de_info"
+            android:title="@string/dap_dialog_enhancer"
+            android:summary="@string/off" />
+        <SeekBarPreference
+            android:key="dap_surround_boost"
+            android:persistent="false"
+            android:max="6"
+            android:title="@string/dap_surround_boost" />
+        <Preference
+            android:key="dap_geq_info"
+            android:title="@string/dap_geq" />
+        <ListPreference
+            android:key="dap_geq"
+            android:persistent="false"
+            android:entries="@array/dap_geq_entries"
+            android:entryValues="@array/dap_geq_entry_values"
+            android:title="@string/dap_geq"
+            android:summary="%s" />
+        <SeekBarPreference
+            android:key="effect_band1"
+            android:persistent="false"
+            android:title="@string/dap_geq_band1" />
+        <SeekBarPreference
+            android:key="effect_band2"
+            android:persistent="false"
+            android:title="@string/dap_geq_band2" />
+        <SeekBarPreference
+            android:key="effect_band3"
+            android:persistent="false"
+            android:title="@string/dap_geq_band3" />
+        <SeekBarPreference
+            android:key="effect_band4"
+            android:persistent="false"
+            android:title="@string/dap_geq_band4" />
+        <SeekBarPreference
+            android:key="effect_band5"
+            android:persistent="false"
+            android:title="@string/dap_geq_band5" />
+    </PreferenceCategory>
+</PreferenceScreen>

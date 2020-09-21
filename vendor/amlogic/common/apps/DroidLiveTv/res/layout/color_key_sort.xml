@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/sort_sort_text"
+        android:layout_width="@dimen/circle_width"
+        android:layout_height="@dimen/circle_heigth"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/circle_gray"
+        android:gravity="center"
+        android:text="@string/sort_sort_text"
+        android:textSize="@dimen/title_text_size"
+        android:textColor="@color/black"
+        android:textStyle="bold" />
+
+    <com.droidlogic.droidlivetv.favlistsettings.MarqueeButton
+        android:id="@+id/sort_sort_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/selector_buttonitem"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/button_text_size"
+        android:nextFocusRight="@id/red_sort_button"
+        android:text="@string/sort_sort" />
+</LinearLayout>

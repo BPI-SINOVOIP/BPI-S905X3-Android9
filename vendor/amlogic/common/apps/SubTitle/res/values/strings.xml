@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="option_title_str">Subtitle Option</string>
+    <string name="opt_sub_track">Subtitle Track </string>
+    <string name="opt_close">Close</string>
+    <string name="no_subtitle_str">No Subtitle!</string>
+</resources>

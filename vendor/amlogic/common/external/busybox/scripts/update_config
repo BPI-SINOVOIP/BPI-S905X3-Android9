@@ -1,0 +1,15 @@
+#!/bin/bash -ex
+#
+# Update relevant files after config change
+# shade@chemlab.org
+
+for config in full minimal ; do
+	rm -f .config.old
+	cp -f .config-$config .config
+	make clean prepare busybox.links
+	make -s show-sources > busybox-$config.sources
+	mkdir -p include-$config
+	mv -f include/{autoconf,applet_tables,usage_compressed,bbconfigopts}.h include-$config
+	mv -f busybox.links busybox-$config.links
+	rm -f .config
+done

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="polarity_entries">
+        <item>水平</item>
+        <item>垂直</item>
+    </string-array>
+
+    <string-array name="direction_entries">
+        <item>东</item>
+        <item>西</item>
+    </string-array>
+
+    <string-array name="search_mode_entries">
+        <item>盲扫</item>
+        <item>卫星</item>
+        <item>转发器</item>
+    </string-array>
+
+    <string-array name="custom_single_double_entries">
+        <item>单本振</item>
+        <item>双本振</item>
+    </string-array>
+</resources>

@@ -1,0 +1,21 @@
+/*evt_table 字段列表*/
+"db_id integer primary key autoincrement",	/**< 数据库保存的唯一索引*/ 
+"src integer",										/**< 源标识*/
+"db_net_id integer",								/**< 该TS所属网络的数据库保存的net_table中的唯一索引*/
+"db_ts_id integer", 									/**< 该service所属TS的数据库保存的ts_table中的唯一索引*/
+"db_srv_id integer", 								/**< 该event所属service的数据库保存的srv_table中的唯一索引*/
+"event_id integer",									/**< event id*/ 
+"name text",										/**< 事件名称*/
+"start integer",									/**< 开始时间，以秒为单位*/  
+"end integer",										/**< 结束时间，以秒为单位*/ 
+"descr text",										/**< 事件描述*/
+"items text",										/**< 扩展事件描述的Items,格式为 item_description:item_char*/
+"ext_descr text",									/**< 扩展事件描述*/
+"nibble_level integer",								/**< 事件分类，具体值对应的分类参考DVB SI 标准的Content Descriptor描述*/
+"sub_flag integer",									/**< 预约标志, 0未被预约，1预约播放，2预约录像*/
+"sub_status integer",								/**< 预约播放状态, 0-尚未通知用户, 1-已得到用户确认,正等待开始时间到达时通知播放*/
+"parental_rating integer",							/**< 父母权限控制*/
+"source_id integer",								/**< ATSC source_id*/
+"rrt_ratings text",									/**< ATSC ContentAdvisoryDescr中取出的级别信息，具体格式为用,隔开每个级别，单个级别
+                                                         为 rating_region dimension_index rating_value_index 用空格隔开，如
+                                                         1 2 3,1 3 4,2 0 1 代表由3个级别*/

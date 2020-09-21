@@ -1,0 +1,24 @@
+cc_library_static {
+    name: "libenv",
+    vendor_available: true,
+    //vndk: {
+    //    enabled: true,
+    //},
+    srcs: [
+        "uboot_env.cpp",
+        "set_display_mode.cpp",
+    ],
+    static_libs: [
+        "libcutils",
+        "libsystemcontrol_static",
+        "libc++_static",
+    ],
+    include_dirs: [
+        "bootable/recovery",
+        "system/core/libutils/include",
+        "system/core/liblog/include",
+        "vendor/amlogic/common/frameworks/services/systemcontrol",
+    ],
+    //stl: "c++_static",
+    cflags: ["-Werror"],
+}

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.droidlogic"
+    android:sharedUserId="android.uid.system">
+
+    <permission-group
+        android:name="droidlogic.permission-group.SYSTEM_CONTROL"
+        android:label="@string/droidlogic_perm_group_label"
+        android:description="@string/droidlogic_perm_group_description" />
+
+    <permission
+        android:name="droidlogic.permission.SYSTEM_CONTROL"
+        android:permissionGroup="droidlogic.permission-group.SYSTEM_CONTROL"
+        android:protectionLevel="signature"
+        android:label="@string/droidlogic_perm_system_control_label"
+        android:description="@string/droidlogic_perm_system_control_description" />
+
+    <protected-broadcast android:name="droidlogic.intent.action.SYSTEM_CONTROL_EVENT" />
+
+    <protected-broadcast android:name="com.droidvold.action.MEDIA_REMOVED" />
+    <protected-broadcast android:name="com.droidvold.action.MEDIA_UNMOUNTED" />
+    <protected-broadcast android:name="com.droidvold.action.MEDIA_CHECKING" />
+    <protected-broadcast android:name="com.droidvold.action.MEDIA_MOUNTED" />
+    <protected-broadcast android:name="com.droidvold.action.MEDIA_BAD_REMOVAL" />
+    <protected-broadcast android:name="com.droidvold.action.MEDIA_UNMOUNTABLE" />
+    <protected-broadcast android:name="com.droidvold.action.MEDIA_EJECT" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="droidlogic.permission.SYSTEM_CONTROL" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.HDMI_CEC" />
+
+    <uses-permission android:name="android.permission.MANAGE_USERS" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.CONTROL_KEYGUARD" />
+    <uses-permission android:name="android.permission.SET_TIME" />
+    <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED"/>
+
+    <application android:name=".DroidlogicApplication"
+                 android:persistent="true"
+                 android:hasCode="true"
+                 android:label="@string/droidlogic_system_label"
+                 android:allowClearUserData="false"
+                 android:killAfterRestore="false"
+                 android:icon="@drawable/ic_launcher_droidlogic"
+                 android:supportsRtl="true"
+                 android:directBootAware="true">
+
+        <uses-library android:name="droidlogic.software.core" />
+        <uses-library android:name="droidlogic.tv.software.core" />
+        <receiver android:name="com.droidlogic.UsbCameraReceiver">
+            <intent-filter>
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+                <action android:name="android.hardware.usb.action.USB_DEVICE_DETACHED" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.droidlogic.Optimization" />
+        <service android:name="com.droidlogic.NtpService" />
+        <service android:name="com.droidlogic.NetflixService" />
+        <service android:name="com.droidlogic.DialogBluetoothService" />
+        <service android:name="com.droidlogic.EsmService" />
+        <service android:name="com.droidlogic.DDRBandwidthService" />
+        <service android:name="com.droidlogic.DroidLogicEarcService" />
+        <service android:name="com.droidlogic.OneTouchPlayService" />
+        <service android:name="com.droidlogic.NetworkSwitchService" />
+        <service android:name="com.droidlogic.DroidLogicPowerService" />
+        <service android:name="com.droidlogic.PrebuiltChannelsService"
+             android:enabled="true"
+             android:exported="true">
+             <intent-filter>
+                 <action android:name="com.droidlogic.PrebuiltChannelsService" />
+             </intent-filter>
+        </service>
+        <service android:name="com.droidlogic.DolbyAudioEffectService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.droidlogic.DolbyAudioEffectService" />
+            </intent-filter>
+        </service>
+        <receiver android:name="com.droidlogic.BootComplete">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.PRE_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.droidlogic.FastBootComplete">
+            <intent-filter android:priority="2147483647">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.droidlogic.EthernetWifiSwitch">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.droidlogic.GlobalKeyReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.GLOBAL_BUTTON" />
+            </intent-filter>
+        </receiver>
+        <provider
+            android:name="com.droidlogic.database.DataProvider"
+            android:authorities="com.droidlogic.database"
+            android:exported="true">
+            <!--android:writePermission="com.droidlogic.database.WRITE_DATA">-->
+        <grant-uri-permission android:pathPattern="/tv_control_scan" />
+        <grant-uri-permission android:pathPattern="/tv_control_sound" />
+        <grant-uri-permission android:pathPattern="/tv_control_pppoe" />
+        <grant-uri-permission android:pathPattern="/tv_control_others" />
+        <grant-uri-permission android:pathPattern="/prop_table" />
+        <grant-uri-permission android:pathPattern="/string_table" />
+        </provider>
+    </application>
+
+</manifest>

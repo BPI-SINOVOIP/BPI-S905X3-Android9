@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    android:sharedUserId="android.uid.system"
+    android:versionCode="1"
+    android:versionName="1.0" package="com.droidlogic.appinstall">
+
+
+    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="23"/>
+    <supports-screens android:largeScreens="true" android:smallScreens="true" android:resizeable="true" android:normalScreens="true"></supports-screens>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_MEDIA_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.INSTALL_PACKAGES"></uses-permission>
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"></uses-permission>
+    <uses-permission android:name="android.permission.DELETE_PACKAGES"></uses-permission>
+    <uses-permission android:name="android.permission.CLEAR_APP_USER_DATA"></uses-permission>
+    <uses-permission android:name="android.permission.CLEAR_APP_CACHE"></uses-permission>
+    <original-package android:name="com.droidlogic.appinstall" />
+
+    <application android:icon="@mipmap/icon" android:label="@string/app_name" android:debuggable="false">
+        <uses-library android:name="droidlogic.software.core" />
+        <activity android:name=".main"
+            android:configChanges="orientation|fontScale|screenSize|screenLayout"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

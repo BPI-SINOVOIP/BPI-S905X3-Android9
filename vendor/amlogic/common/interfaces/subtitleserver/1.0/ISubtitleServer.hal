@@ -1,0 +1,161 @@
+/*
+ * Copyright 2017 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package vendor.amlogic.hardware.subtitleserver@1.0;
+
+import ISubtitleServerCallback;
+
+
+interface ISubtitleServer {
+  showSub(int32_t pos)
+    generates (int32_t ret);
+
+  open(string path)
+      generates (int32_t ret);
+
+  openIdx(int32_t idx)
+    generates (int32_t ret);
+
+  close()
+    generates (int32_t ret);
+
+  getTotal()
+      generates (int32_t ret);
+
+  setTotal(int32_t total)
+    generates (int32_t ret);
+
+  next()
+      generates (int32_t ret);
+
+  previous()
+      generates (int32_t ret);
+
+  option()
+      generates (int32_t ret);
+
+  getType()
+      generates (int32_t ret);
+
+  setType(int32_t type)
+    generates (int32_t ret);
+
+  getTypeDetial()
+      generates (int32_t ret);
+
+  setTypeDetial(int32_t type)
+    generates (int32_t ret);
+
+  setTextColor(int32_t color)
+    generates (int32_t ret);
+
+  setTextSize(int32_t size)
+    generates (int32_t ret);
+
+  setGravity(int32_t gravity)
+    generates (int32_t ret);
+
+  setTextStyle(int32_t style)
+    generates (int32_t ret);
+
+  setPosHeight(int32_t height)
+    generates (int32_t ret);
+
+  setImgRatio(float ratioW, float ratioH, int32_t maxW, int32_t maxH)
+    generates (int32_t ret);
+
+  clear()
+      generates (int32_t ret);
+
+  resetForSeek()
+      generates (int32_t ret);
+
+  hide()
+      generates (int32_t ret);
+
+  display()
+      generates (int32_t ret);
+
+  getCurName()
+      generates (string str);
+
+  getName()
+      generates (string str);
+
+  getLanguage()
+      generates (string str);
+
+  setCurName(string curName)
+      generates (int32_t ret);
+
+  setName(string name)
+      generates (int32_t ret);
+
+  setLanguage(string language)
+      generates (int32_t ret);
+
+  load(string path)
+      generates (int32_t ret);
+
+  setSurfaceViewParam(int32_t x, int32_t y, int32_t w, int32_t h)
+    generates (int32_t ret);
+
+  creat()
+    generates (int32_t ret);
+
+  setSubPid(int32_t pid)
+    generates (int32_t ret);
+
+  setPageId(int32_t pageId)
+    generates (int32_t ret);
+
+  setAncPageId(int32_t ancPageId)
+    generates (int32_t ret);
+
+  setChannelId(int32_t channelId)
+    generates (int32_t ret);
+
+  setClosedCaptionVfmt(int32_t vfmt)
+    generates (int32_t ret);
+
+  getSubHeight()
+      generates (int32_t ret);
+
+  setSubHeight(int32_t height)
+    generates (int32_t ret);
+
+  getSubWidth()
+      generates (int32_t ret);
+
+  setSubWidth(int32_t width)
+    generates (int32_t ret);
+
+  setSubType(int32_t type)
+    generates (int32_t ret);
+
+  subTitleIdCallback(int32_t event, int32_t id)
+    generates (int32_t ret);
+
+  subTitleAvailableCallback(int32_t available)
+    generates (int32_t ret);
+
+  destory()
+    generates (int32_t ret);
+
+
+  setCallback(ISubtitleServerCallback callback, ConnectType type);
+
+};

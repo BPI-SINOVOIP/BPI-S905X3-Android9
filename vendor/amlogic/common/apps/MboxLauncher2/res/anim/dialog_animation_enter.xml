@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright (c) 2014 Amlogic, Inc. All rights reserved.
+
+ This source code is subject to the terms and conditions defined in the
+ file 'LICENSE' which is part of this source code package.
+
+ Description: resource file
+-->
+
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+
+<scale  
+android:interpolator= "@android:anim/accelerate_decelerate_interpolator"
+android:fromXScale="1.0"
+android:toXScale="1.0"
+android:fromYScale="0.0"
+android:toYScale="1.0"
+android:pivotX="50%"
+android:pivotY="100%"
+android:fillAfter="true"
+android:duration="400">
+</scale>
+
+</set>

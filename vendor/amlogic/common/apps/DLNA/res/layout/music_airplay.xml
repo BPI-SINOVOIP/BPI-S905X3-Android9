@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2012 Amlogic, Inc.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/buttonview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:background="@drawable/play_bar"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="0dp"
+        android:orientation="vertical" >
+
+        <com.droidlogic.mediacenter.dlna.MarqueeTextView
+            android:id="@+id/music_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:singleLine="true"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/music_actor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/music_title"
+            android:layout_below="@id/music_title"
+            android:textSize="18dp" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:contentDescription="@string/music_image"
+        android:src="@drawable/style_back" />
+
+    <ImageButton
+        android:id="@+id/btn_pre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:contentDescription="@string/music_image"
+        android:src="@drawable/style_prev" >
+    </ImageButton>
+
+    <ImageButton
+        android:id="@+id/btn_play_pause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:contentDescription="@string/music_image"
+        android:src="@drawable/style_pause" >
+    </ImageButton>
+
+    <ImageButton
+        android:id="@+id/btn_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:contentDescription="@string/music_image"
+        android:src="@drawable/style_stop" />
+
+    <ImageButton
+        android:id="@+id/btn_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:contentDescription="@string/music_image"
+        android:src="@drawable/style_next" >
+    </ImageButton>
+
+</LinearLayout><!--
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:orientation="horizontal"
+    android:background="#000000">
+    
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1">
+		<ImageView 
+		    android:id="@+id/music_poster"
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent"
+		    android:src="@drawable/music"
+			android:scaleType="center"
+		    android:contentDescription="@string/music_image"
+		    />
+	</RelativeLayout>
+	
+    <RelativeLayout 
+        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+         android:layout_weight="1"
+        >
+        <TextView 
+            android:id="@+id/music_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="40dp"
+            android:textSize="30dp"
+            android:singleLine="true" 
+            android:ellipsize="marquee" 
+            android:marqueeRepeatLimit="marquee_forever" 
+            />
+        <TextView android:id="@+id/music_actor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:layout_below="@id/music_title"
+            android:layout_alignLeft="@id/music_title"/>
+        
+        <ImageButton android:id="@+id/btn_pre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="50dp"
+            android:layout_alignParentBottom="true"
+            android:contentDescription="@string/music_image"
+            android:background="@drawable/style_prev"
+            android:padding="0dp"/>
+        
+        <ImageButton android:id="@+id/btn_play_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/btn_pre"
+            android:layout_alignBottom="@id/btn_pre" 
+            android:contentDescription="@string/music_image"
+            android:background ="@drawable/style_pause"
+            android:padding="0dp"/>
+        
+        <ImageButton android:id="@+id/btn_stop"
+            android:layout_toRightOf="@id/btn_play_pause"
+            android:layout_alignBottom="@id/btn_pre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/music_image"
+            android:src="@drawable/style_stop"
+            android:padding="0dp"/>
+        <ImageButton android:id="@+id/btn_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/btn_stop"
+            android:layout_alignBottom="@id/btn_pre"
+            android:contentDescription="@string/music_image"
+            android:src="@drawable/style_next"
+            android:padding="0dp"/>
+    </RelativeLayout>
+</LinearLayout>
+-->
+

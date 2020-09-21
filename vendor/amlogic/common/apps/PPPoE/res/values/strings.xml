@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2012 Amlogic, Inc.
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources>
+    <string name="app_name">PPPoE</string>
+    <string name="network_interface_list">Network interfaces:</string>    
+    <string name="menu_cancel">Discard</string>
+    <string name="pppoe_conf_perf_title">Pppoe Configure</string>
+    <string name="pppoe_config_title">Configure Pppoe</string>
+    <string name="pppoe_user_name">User name</string>
+    <string name="pppoe_passwd">Password</string>
+    <string name="pppoe_dial">Dial</string>
+    <string name="pppoe_disconnect">Disconnect</string>
+    <string name="pppoe_dial_waiting_msg">Please wait for dial...</string>
+    <string name="pppoe_hangup_waiting_msg">Please wait for hangup...</string>
+    <string name="pppoe_conf_summary">Configure dial</string>
+    <string name="pppoe_connect_ok">Connect Ok!</string>
+    <string name="pppoe_connect_failed">Connect failed</string>
+    <string name="pppoe_connect_failed_server_no_response">NO Response</string>
+    <string name="pppoe_connect_failed_auth">Invalid username or password</string>    
+    <string name="pppoe_disconnect_ok">Disconnect OK!</string>
+    <string name="pppoe_disconnect_failed">Disconnect failed!</string>
+    <string name="pppoe_ppp_interface_occupied">ppp interface occupied!</string>
+    <string name="amlogic_ok">OK</string>
+    <string name="pppoe_auto_dial">Auto Dial on Reboot</string>
+    <string name="please_insert_the_cable">Please insert the cable</string>
+</resources>

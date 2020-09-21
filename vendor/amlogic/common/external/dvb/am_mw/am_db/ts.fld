@@ -1,0 +1,18 @@
+/*ts_table 字段列表*/
+"db_id integer primary key autoincrement",	/**< 数据库保存的唯一索引*/ 
+"src integer",										/**< 源标识 C/T/S*/
+"db_net_id integer",								/**< 该TS所属网络的数据库保存的net_table中的唯一索引*/ 
+"ts_id integer", 									/**< Transport stream id*/ 
+"freq integer", 									/**< 频率,Hz*/ 
+"symb integer", 									/**< 符号率,symbol/s*/ 
+"mod integer",									/**< 调制方式*/ 
+"bw integer",                                       /**< 带宽*/
+"snr integer",										/**< SNR*/
+"ber integer",										/**< BER*/
+"strength integer",									/**< Strength*/
+"db_sat_para_id integer",							/**< 卫星信号下，保存的sat_para_table中的数据库唯一索引，非卫星信号下无效*/
+"polar integer",									/**< 极化方式,0-V, 1-H*/
+"std integer",										/**< ATV 声音,视频制式*/
+"aud_mode",											/**< ATV 声道*/
+"flags integer",									/**< ATV AFC的值*/
+"dvbt_flag  integer"								/*dvb-t模式 ，0-DVB-T，1-DVB-T2*/

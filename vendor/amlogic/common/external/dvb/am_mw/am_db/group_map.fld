@@ -1,0 +1,4 @@
+/*group_map_table 字段列表*/
+"db_id integer primary key autoincrement",	/**< 数据库保存的唯一索引*/ 
+"db_srv_id integer",					/**< service的数据库索引*/
+"db_grp_id integer",					/**< 该service所属分组的数据库索引*/

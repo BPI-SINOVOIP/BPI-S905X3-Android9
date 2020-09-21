@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (C) 2012 Amlogic, Inc.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <string name="cancel" >"取消"</string>
+    <string name="unknown_apps_dlg_title" >"禁止安装"</string>
+    <string name="unknown_apps_dlg_text" >"为了安全起见，您的设备已设置为禁止安装不是从 Android 电子市场中获取的应用程序。"</string>
+    <string name="settings" >"设置"</string>
+    <string name="app_name">&quot;应用安装&quot;</string>
+    <string name="exit">&quot;退出&quot;</string>
+    <string name="alertdialog_title">&quot;选择设备来浏览安装文件&quot;</string>
+    <string name="no_apk_found">&quot;没有发现安装文件&quot;</string>
+    <string name="scanning_init">&quot;正在浏览 ...\n\n&quot;</string>
+    <string name="handling_selected_package_init">&quot;正在处理所选包:  \n&quot;</string>
+    <string name="install">安装</string>
+    <string name="uninstall">卸载</string>
+	<string name="selectall">选择全部</string>
+	<string name="unselect_all">取消全部</string>
+	<string name="refresh">刷新</string>
+	<string name="about">关于</string>
+	<string name="no_select_apks">&quot;你还没有选择安装包来安装/卸载&quot;</string>
+	<string name="scanning">&quot;正在浏览 ...\n&quot;</string>
+	<string name="handling_selected_package">&quot;正在处理所选包:  &quot;</string>
+	<string name="about_appInstaller">&quot;应用安装&quot;</string>
+	<string name="about_version">&quot;\n 版本: &quot;</string>
+	<string name="about_date">&quot;\n 日期: &quot;</string>
+	<string name="no_space">空间不足，退出安装</string>
+	<string name="memory_device_str">内部存储器 </string>
+	<string name="sdcard_device_str">本机磁盘</string>
+	<string name="ext_sdcard_device_str">外部存储卡</string>
+	<string name="sata_device_str">SATA</string>
+	<string name="usb_device_str">USB设备</string>
+	<string name="cdrom_device_str">光盘驱动器</string>
+</resources>

@@ -1,0 +1,16 @@
+diff --git a/icu4c/source/common/Android.bp b/icu4c/source/common/Android.bp
+index 96ec5bf..706b79f 100644
+--- a/icu4c/source/common/Android.bp
++++ b/icu4c/source/common/Android.bp
+@@ -253,3 +253,11 @@ cc_library {
+     defaults: ["libicuuc_defaults"],
+     static_libs: ["libicuuc_stubdata"],
+ }
++
++cc_library_static {
++    name: "libicuuc_static",
++    host_supported: true,
++    unique_host_soname: true,
++    defaults: ["libicuuc_defaults"],
++    static_libs: ["libicuuc_stubdata"],
++}

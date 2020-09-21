@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2012 Amlogic, Inc.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:id="@+id/LinearLayout01"
+        android:layout_width="match_parent"
+        android:weightSum="1"
+        android:layout_height="60dp">
+        <TextView
+            android:id="@+id/Dir"
+            android:background="@android:drawable/edit_text"
+            android:textColor="#000"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:editable="true"
+            android:singleLine="true"
+            android:inputType="textUri"
+            android:text="@string/defpath"
+            android:gravity="left|center_vertical"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:textSize="24sp">
+        </TextView>
+        <ImageButton
+            android:background="@drawable/exit_state"
+            android:id="@+id/Exit"
+            android:layout_height="50dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="50dp"
+            android:layout_gravity="right|center_vertical">
+        </ImageButton>
+    </LinearLayout>
+    <FrameLayout
+        android:id="@+id/FrameLayout01"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.droidlogic.appinstall.CheckAbleList
+            android:layout_width="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:id="@+id/APKList"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+        </com.droidlogic.appinstall.CheckAbleList>
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:id="@+id/ScanInfo"
+            android:visibility="invisible">
+        </TextView>
+    </FrameLayout>
+</LinearLayout>

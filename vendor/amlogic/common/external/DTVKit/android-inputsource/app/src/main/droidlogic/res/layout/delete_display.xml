@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_icon"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical|center_horizontal"
+    android:gravity="center_vertical|center_horizontal"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/circle_yellow"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/ic_brightness_yellow_30dp"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/textView_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal"
+        android:paddingRight="20dp"
+        android:text="@string/dialog_title_delete"
+        android:textColor="#B3EEEEEE"
+        android:textSize="14sp" />
+</LinearLayout>

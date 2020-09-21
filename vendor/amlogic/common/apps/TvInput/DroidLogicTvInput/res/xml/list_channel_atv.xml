@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <Preference
+        android:key="channel"
+        android:title="@string/channel" >
+    </Preference>
+
+    <Preference
+        android:key="channel_info"
+        android:title="@string/channel_info" >
+    </Preference>
+
+    <Preference
+        android:key="color_system"
+        android:title="@string/color_system" >
+    </Preference>
+
+    <Preference
+        android:key="sound_system"
+        android:title="@string/sound_system" >
+    </Preference>
+
+    <Preference
+        android:key="volume_compensate"
+        android:title="@string/volume_compensate" >
+    </Preference>
+
+    <Preference
+        android:key="fine_tune"
+        android:title="@string/fine_tune" >
+    </Preference>
+
+    <Preference
+        android:key="manual_search"
+        android:title="@string/manual_search" >
+    </Preference>
+
+    <Preference
+        android:key="auto_search"
+        android:title="@string/auto_search" >
+    </Preference>
+
+    <Preference
+        android:key="channel_edit"
+        android:title="@string/channel_edit" >
+    </Preference>
+
+    <Preference
+        android:key="switch_channel"
+        android:title="@string/switch_channel" >
+    </Preference>
+
+    <Preference
+        android:key="mts"
+        android:title="@string/mts" >
+    </Preference>
+
+</PreferenceScreen>

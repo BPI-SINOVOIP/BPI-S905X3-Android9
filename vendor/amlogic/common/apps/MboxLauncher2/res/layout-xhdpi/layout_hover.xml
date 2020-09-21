@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright (c) 2014 Amlogic, Inc. All rights reserved.
+
+ This source code is subject to the terms and conditions defined in the
+ file 'LICENSE' which is part of this source code package.
+
+ Description: resource file
+-->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+>
+<ImageView
+	android:id="@+id/img_hover_home"
+	android:layout_height="match_parent"
+	android:layout_width="match_parent"
+	android:scaleType="fitCenter"
+	android:layout_centerInParent="true">
+</ImageView>
+
+<ImageView
+	android:id="@+id/img_hover_second"
+	android:layout_height="match_parent"
+	android:layout_width="match_parent"
+    android:paddingTop="0dp"
+    android:paddingLeft="11dp"
+    android:paddingBottom="23dp"
+    android:paddingRight="11dp"
+	android:scaleType="fitCenter">
+</ImageView>
+
+<com.droidlogic.mboxlauncher.MyTextView
+	android:id="@+id/tx_hover_top"
+	android:layout_height="wrap_content"
+	android:layout_width="wrap_content"
+	android:layout_marginTop="8dp"
+	android:layout_marginLeft="8dp"
+	android:gravity="center"
+	android:textSize="24dp"
+	android:textColor="@color/btn_text_color"
+	android:singleLine="true"
+	android:marqueeRepeatLimit="marquee_forever"
+	android:ellipsize="marquee">
+</com.droidlogic.mboxlauncher.MyTextView>
+
+<com.droidlogic.mboxlauncher.MyTextView
+	android:id="@+id/tx_hover_bottom"
+	android:layout_height="wrap_content"
+	android:layout_width="wrap_content"
+	android:layout_centerHorizontal="true"
+	android:layout_alignParentBottom="true"
+	android:layout_marginLeft="4dp"
+	android:layout_marginRight="4dp"
+	android:gravity="center"
+	android:textSize="20dp"
+	android:textColor="@color/btn_text_color"
+	android:singleLine="true"
+	android:marqueeRepeatLimit="marquee_forever"
+	android:ellipsize="marquee">
+</com.droidlogic.mboxlauncher.MyTextView>
+</RelativeLayout>

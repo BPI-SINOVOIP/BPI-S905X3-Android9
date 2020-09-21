@@ -1,0 +1,78 @@
+<resources>
+    <string name="app_name">DTVKit Source</string>
+    <string-array name="satellites">
+        <item>Astra 28.2</item>
+    </string-array>
+    <string-array name="polarities">
+        <item>水平</item>
+        <item>垂直</item>
+        <item>左</item>
+        <item>右</item>
+    </string-array>
+    <string-array name="fecs">
+        <item>自动</item>
+        <item>1/2</item>
+        <item>2/3</item>
+        <item>3/4</item>
+        <item>5/6</item>
+        <item>7/8</item>
+        <item>1/4</item>
+        <item>1/3</item>
+        <item>2/5</item>
+        <item>8/9</item>
+        <item>9/10</item>
+    </string-array>
+    <string-array name="modulations">
+        <item>自动</item>
+        <item>qpsk</item>
+        <item>8psk</item>
+        <item>16qam</item>
+    </string-array>
+    <string name="strSearchNotStarted">搜台未启动</string>
+    <string name="strSearchDescription">按下搜索开始搜索DVB-T的节目.</string>
+    <string name="strStartSearch">开始搜索</string>
+    <string name="strStopSearch">停止搜索</string>
+    <string name="strTextview">文字</string>
+    <string name="strTestString">测试BINDER连接!!</string>
+    <string name="strNetworkSearch">网络搜索</string>
+    <string name="strDVBS2">DVBS-2</string>
+    <string name="strPlaceholder">产品自定义设置.</string>
+    <string name="strImportSatellite">导入卫星数据</string>
+    <string name="strSetUp">设置</string>
+    <string name="strSetUpNotFound">没有找到设置程序!</string>
+    <string name="strClearOld">清除旧节目</string>
+    <string name="strSearchMode">搜索模式:</string>
+    <string name="strFecMode">前向纠错模式:</string>
+    <string name="strModulationMode">调制模式:</string>
+    <string name="invalid_parameter">无效的参数!</string>
+
+    <!-- manaul search -->
+    <string name="strManualSearch">手动搜索</string>
+    <string name="strAutoSearch">自动搜索</string>
+    <string name="search_method">搜索方法:</string>
+    <string name="search_frequency">频率:</string>
+    <string name="search_frequency_hint">MHz</string>
+    <string name="search_number">频道号:</string>
+    <string name="search_number_hint">数字</string>
+    <string name="dvbt_search_bandwidth">带宽:</string>
+    <string name="dvbt_search_mode">模式:</string>
+    <string name="dvbt_search_type">类型:</string>
+    <string name="dvbc_search_mode">模式:</string>
+    <string name="dvbt_search_symbol_rate">符号率:</string>
+    <string name="public_search_mode">搜索模式:</string>
+    <string name="public_search_channel_name">Channel Name:</string>
+    <string name="public_dvb_search">DVB搜台</string>
+    <string name="sync_tv_provider">更新数据库，请等待!</string>
+    <string name="dvb_network_change">检测到码流更新, 正在重新搜索新频道!</string>
+    <string name="dvb_network_change_confirm">搜索</string>
+    <string name="dvb_network_change_cancel">取消</string>
+
+    <!-- pvr record delete -->
+    <string name="pvr_record_confirm_delete_schedule">请先删除PVR录制计划和录制文件!</string>
+    <string name="pvr_record_confirm_stop_record">请先取消录制计划!</string>
+    <string name="pvr_record_confirm_ok">执行</string>
+    <string name="pvr_record_confirm_cancel">退出</string>
+    <string name="pvr_record_confirm_deleting">删除中，请稍等...</string>
+    <string name="pvr_record_confirm_delete_done">删除完成!</string>
+    <string name="pvr_record_confirm_stop_done">取消完成!</string>
+</resources>

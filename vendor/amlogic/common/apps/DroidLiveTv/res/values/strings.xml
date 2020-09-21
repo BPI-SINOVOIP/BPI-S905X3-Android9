@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="app_name">DroidLiveTv</string>
+    <string name="app1_name">ShortCutActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    
+    <string name="condensed_font" translatable="false">sans-serif-condensed</string>
+    <string name="option_item_text_font" translatable="false">@string/condensed_font</string>
+    <string name="option_item_secondary_text_font" translatable="false">@string/condensed_font</string>
+    <!-- pictrue mode -->
+    <string name="picture">Picture</string>
+    <string name="picture_mode">Picture Mode</string>
+    <string name="standard">standard</string>
+    <string name="vivid">vivid</string>
+    <string name="soft">soft</string>
+    <string name="sport">sport</string>
+    <string name="monitor">monitor</string>
+    <string name="user">user</string>
+    <!-- sound mode -->
+    <string name="sound">Sound</string>
+    <string name="sound_mode">Sound Mode</string>
+    <string name="music">music</string>
+    <string name="news">news</string>
+    <string name="movie">movie</string>
+    <string name="game">game</string>
+    <!-- ratio mode -->
+    <string name="aspect_ratio">Aspect Ratio</string>
+    <string name="auto">auto</string>
+    <string name="four2three">4 : 3</string>
+    <string name="panorama">panorama</string>
+    <string name="full_screen">full screen</string>
+    <!-- fav & list-->
+    <string name="tv">TV</string>
+    <string name="radio">Radio</string>
+    <string name="favourite_list">Favourite List</string>
+    <string name="channel_list">Channel list</string>
+    <!-- sleep mode -->
+    <string name="sleep_timer">Sleep Timer</string>
+    <string name="time_15min">15 min</string>
+    <string name="time_30min">30 min</string>
+    <string name="time_45min">45 min</string>
+    <string name="time_60min">60 min</string>
+    <string name="time_90min">90 min</string>
+    <string name="time_120min">120 min</string>
+    <string name="on">on</string>
+    <string name="off">off</string>
+    <!-- for time suspend ui -->
+    <string name="suspend_dialog_title">Suspend Countdown</string>
+    <string name="cancel_suspend">Cancel Countdown</string>
+    <string name="countdown_tips">seconds later shut down!</string>
+
+    <!-- for epg ui -->
+    <string name="program_guide">Program guide</string>
+    <string name="program_information">Program details</string>
+    <string name="no_information">No information!</string>
+    <string name="no_program">No program!</string>
+    <string name="date">Date</string>
+    <string name="appointed_success">Appointment success</string>
+    <string name="appointed_cancel">Cancel appointment</string>
+    <string name="appointed_expired">Program expired!</string>
+    <string name="appointed_donot_appoint_current">Current playing program canot be appointed !</string>
+    <string name="appointed_watch">Watch</string>
+    <string name="appointed_record">Record</string>
+    <string name="appointed_title">Appoint confirm</string>
+    <string name="cancel">cancel</string>
+    <string name="ok">OK</string>
+    <string name="appointed_overlap_title">Another schedule <xliff:g id="program_name" example="test">%1$s</xliff:g> <xliff:g id="time_period" example="00:00~01:00">%2$s</xliff:g> is set during the selected time period. Do you still want to add ?</string>
+    <string name="appointed_overlap_add">Add</string>
+    <string name="appointed_overlap_cancel">Cancel Add</string>
+    <string name="switch_program_propmt">seconds later auto switch</string>
+    <string name="watch_program">Watch appointed program: </string>
+    <string name="program_event_name">Event Name: </string>
+    <string name="program_genre">Genre: </string>
+    <string name="program_rating">Rating: </string>
+    <string name="program_short">Description: </string>
+    <string name="program_extend">Extend: </string>
+    <string name="appointed_watch_conflict">Another appointment <xliff:g id="program_name" example="test">%1$s</xliff:g> <xliff:g id="time_period" example="00:00~01:00">%2$s</xliff:g> will be started at the same time. Do you want to replace it ?</string>
+    <string name="appointed_watch_conflict_cancel">Cancel</string>
+    <string name="appointed_watch_conflict_replace">Replace</string>
+
+    <!-- favlist settings -->
+    <string name="favlist_all_tv">All TV</string>
+    <string name="favlist_satellite">Satellite:</string>
+    <string name="favlist_transponder">Transponder:</string>
+    <string name="sort_all">All</string>
+    <string name="sort_a_z">A-Z</string>
+    <string name="sort_z_a">Z-A</string>
+    <string name="sort_tp">TP</string>
+    <string name="sort_network">NetWork Id</string>
+    <string name="sort_sort">Sort</string>
+    <string name="sort_sort_text">i</string>
+    <string name="f1_key">F1</string>
+    <string name="f2_key">F2</string>
+    <string name="f3_key">F3</string>
+    <string name="f4_key">F4</string>
+    <string name="f1_find">Find</string>
+    <string name="f2_add_fav">Add To Fav</string>
+    <string name="f3_satellite">Satellite</string>
+    <string name="f4_favourite_list">Favourite List</string>
+    <string name="channel_list_all">ALL TV</string>
+    <string name="channel_search">Search</string>
+    <string name="channel_search_result">Search Result</string>
+    <string name="edit_fav_list">Edit Favlist</string>
+    <string name="edit_fav_list_add">ADD</string>
+    <string name="edit_fav_list_del">DELETE</string>
+    <string name="edit_fav_list_edit">EDIT</string>
+    <string name="edit_fav_list_ok">OK</string>
+    <string name="edit_fav_list_add_description">Add new fav page</string>
+    <string name="edit_fav_list_add_type_in_description">please type in name</string>
+    <string name="edit_fav_list_del_description">Delete fav page \"%1$2s\"</string>
+    <string name="edit_fav_list_edit_description">Edit fav page \"%1$2s\"</string>
+    <string name="edit_fav_list_name_invalid">please type in complete name !</string>
+    <string name="edit_fav_list_name_exist">fav name exists already!</string>
+    <string name="edit_fav_list_name_limit">fav page is limit below 64!</string>
+    <string name="service_type_tv">Tv</string>
+    <string name="service_type_radio">Radio</string>
+    <string name="service_type_other">Other</string>
+</resources>

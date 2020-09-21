@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2014 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources>
+    <integer name="setup_fade_in_duration">250</integer>
+    <integer name="setup_fade_out_duration">250</integer>
+    <integer name="action_title_max_lines">3</integer>
+    <integer name="dialog_animation_duration">150</integer>
+
+    <bool name="display_need_digital_sounds">true</bool>
+    <bool name="display_need_screen_resolution">true</bool>
+    <string name="display_filter_outputmode">480i60hz,576i50hz</string>
+    <bool name="display_need_hdr_function">true</bool>
+    <bool name="display_need_sdr_function">true</bool>
+    <bool name="display_need_playback_set_function">true</bool>
+    <bool name="display_need_bluetooth_remote_function">true</bool>
+
+    <!--tv-->
+    <bool name="tv_pq_need_pictrue_mode">true</bool>
+    <bool name="tv_pq_need_brightness">true</bool>
+    <bool name="tv_pq_need_contrast">true</bool>
+    <bool name="tv_pq_need_color">true</bool>
+    <bool name="tv_pq_need_sharpness">true</bool>
+    <bool name="tv_pq_need_tone">true</bool>
+    <bool name="tv_pq_need_aspect_ratio">true</bool>
+    <bool name="tv_pq_need_color_temprature">true</bool>
+    <bool name="tv_pq_need_dnr">true</bool>
+    <bool name="tv_pq_need_saturation">true</bool>
+    <bool name="tv_pq_need_hue">true</bool>
+    <bool name="tv_pq_need_hdmicolor">true</bool>
+    <bool name="tv_pq_need_backlight">true</bool>
+
+    <!--box-->
+    <bool name="box_pq_need_pictrue_mode">true</bool>
+    <bool name="box_pq_need_brightness">true</bool>
+    <bool name="box_pq_need_contrast">true</bool>
+    <bool name="box_pq_need_color">true</bool>
+    <bool name="box_pq_need_sharpness">false</bool>
+    <bool name="box_pq_need_tone">true</bool>
+    <bool name="box_pq_need_aspect_ratio">true</bool>
+    <bool name="box_pq_need_color_temprature">false</bool>
+    <bool name="box_pq_need_dnr">true</bool>
+    <bool name="box_pq_need_saturation">true</bool>
+    <bool name="box_pq_need_hue">false</bool>
+    <bool name="box_pq_need_hdmicolor">false</bool>
+    <bool name="box_pq_need_backlight">false</bool>
+    <bool name="display_need_dolby_vision_function">true</bool>
+</resources>

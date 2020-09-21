@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- cec language setting. -->
+    <array name="cec_language" translatable="false">
+        <item>chi</item>
+        <item>zho</item>
+        <item>eng</item>
+        <item>jpn</item>
+        <item>kor</item>
+        <item>fra</item>
+        <item>fre</item>
+        <item>ger</item>
+        <item>deu</item>
+        <item>cpp</item>
+        <item>spa</item>
+        <item>rus</item>
+        <item>ara</item>
+        <item>hin</item>
+    </array>
+    <array name="language" translatable="false">
+        <item>zh</item>
+        <item>zh</item>
+        <item>en</item>
+        <item>ja</item>
+        <item>ko</item>
+        <item>fr</item>
+        <item>fr</item>
+        <item>de</item>
+        <item>de</item>
+        <item>pt</item>
+        <item>es</item>
+        <item>ru</item>
+        <item>ar</item>
+        <item>en</item>
+    </array>
+    <array name="country" translatable="false">
+        <item>CN</item>
+        <item>TW</item>
+        <item>US</item>
+        <item>JP</item>
+        <item>KR</item>
+        <item>FR</item>
+        <item>FR</item>
+        <item>DE</item>
+        <item>DE</item>
+        <item>PT</item>
+        <item>ES</item>
+        <item>RU</item>
+        <item>SA</item>
+        <item>IN</item>
+    </array>
+    <string-array translatable="false" name="config_ntpServer_list">
+        <item>ntp.sjtu.edu.cn</item>
+        <item>cn.pool.ntp.org</item>
+        <item>ntp.api.bz</item>
+        <item>pool.ntp.org</item>
+        <item>asia.pool.ntp.org</item>
+        <item>0.asia.pool.ntp.org</item>
+        <item>1.asia.pool.ntp.org</item>
+        <item>2.asia.pool.ntp.org</item>
+        <item>3.asia.pool.ntp.org</item>
+    </string-array>
+</resources>

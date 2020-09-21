@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+<FrameLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="0.15"
+    android:background="@drawable/normal_bg">
+</FrameLayout>
+
+<FrameLayout android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_weight="0.7"
+             android:background="@drawable/normal_bg" >
+<include android:id="@+id/navigation_dpad" layout="@layout/navigation_dpad" />
+</FrameLayout>
+
+<FrameLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="0.15"
+    android:background="@drawable/normal_bg">
+</FrameLayout>
+
+<LinearLayout android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/normal_bg"
+              android:padding="12dip"
+              android:orientation="horizontal" >
+<ImageButton
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:background="@drawable/normal_bg"
+          android:visibility="invisible"
+          android:layout_weight="0.05" />
+<com.droidlogic.smartremote.ui.RemoteImageButton
+           android:layout_width="wrap_content"
+           android:layout_height="@dimen/normal_button_hight"
+           android:layout_weight="0.4"
+           android:scaleType="center"
+           android:background="@drawable/key_bg"
+           android:src="@drawable/navi_back_normal"
+           android:id="@+id/navigation_back" />
+<ImageButton
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:background="@drawable/normal_bg"
+          android:visibility="invisible"
+          android:layout_weight="0.1" />
+<com.droidlogic.smartremote.ui.RemoteImageButton
+           android:layout_width="wrap_content"
+           android:layout_height="@dimen/normal_button_hight"
+           android:layout_weight="0.4"
+           android:scaleType="center"
+           android:background="@drawable/key_bg"
+           android:src="@drawable/navi_home_normal"
+           android:id="@+id/navigation_home" />
+<ImageButton
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:background="@drawable/normal_bg"
+          android:visibility="invisible"
+          android:layout_weight="0.05" />     
+</LinearLayout>    
+</LinearLayout>

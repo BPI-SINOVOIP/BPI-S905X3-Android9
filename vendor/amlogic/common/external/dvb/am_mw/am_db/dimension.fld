@@ -1,0 +1,77 @@
+/*dimension_table 字段列表*/
+"db_id integer primary key autoincrement",	/**< 数据库保存的唯一索引*/ 
+"rating_region integer",					/**< rating region, 0 resvered for Analog VChip*/
+"rating_region_name text",					/**< region名字，如 US(50 states + possessions)*/ 
+"name text", 								/**< dimension名字 如 MPAA*/ 
+"index_j integer",							/**< 该dimension位于所在region的索引位置，可用于content_advisory_descr对应*/
+"graduated_scale integer", 					/**< graduated scale value*/ 
+"version integer",							/**< RRT版本*/
+"values_defined integer", 					/**< value的个数，0~value-1 的value值有效*/ 
+
+/* Note that values_defined is 4bits, up to 16 values ,
+ *so we define all 16 values here instead of building a new value_table
+ */
+"abbrev0 text",								/**< abbrev value text*/ 
+"text0 text",								/**< value text*/
+"locked0 integer",							/**< 该value是否lock，0:unlocked, 其他 locked*/
+
+"abbrev1 text",					
+"text1 text",					
+"locked1 integer",
+
+"abbrev2 text",					
+"text2 text",					
+"locked2 integer",
+
+"abbrev3 text",					
+"text3 text",					
+"locked3 integer",
+
+"abbrev4 text",					
+"text4 text",					
+"locked4 integer",
+
+"abbrev5 text",					
+"text5 text",					
+"locked5 integer",
+
+"abbrev6 text",					
+"text6 text",					
+"locked6 integer",
+
+"abbrev7 text",					
+"text7 text",					
+"locked7 integer",
+
+"abbrev8 text",					
+"text8 text",					
+"locked8 integer",
+
+"abbrev9 text",					
+"text9 text",					
+"locked9 integer",
+
+"abbrev10 text",					
+"text10 text",					
+"locked10 integer",
+
+"abbrev11 text",					
+"text11 text",					
+"locked11 integer",
+
+"abbrev12 text",					
+"text12 text",					
+"locked12 integer",
+
+"abbrev13 text",					
+"text13 text",					
+"locked13 integer",
+
+"abbrev14 text",					
+"text14 text",					
+"locked14 integer",
+
+"abbrev15 text",					
+"text15 text",					
+"locked15 integer",
+

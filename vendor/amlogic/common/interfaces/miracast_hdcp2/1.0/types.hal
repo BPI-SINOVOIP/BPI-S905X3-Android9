@@ -1,0 +1,35 @@
+/*
+ * Copyright (C) 2017 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package vendor.amlogic.hardware.miracast_hdcp2@1.0;
+
+enum Result : int32_t {
+    OBSERVER_NOTIFY = 0x00000001,
+    HDCP_SET_OBSERVER = 0x00000003,
+    HDCP_INIT_ASYNC = 0x00000004,
+    HDCP_SHUTDOWN_ASYNC = 0x00000005,
+    HDCP_GET_CAPS = 0x00000006,
+    HDCP_ENCRYPT = 0x00000007,
+    HDCP_ENCRYPT_NATIVE = 0x00000008,
+    HDCP_DECRYPT = 0x00000009,
+};
+
+enum Status: int32_t {
+	OK                = 0,
+	NO_ERROR          = 0, 
+	NO_INIT           = -19,
+	INVALID_OPERATION = -38,
+};

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/f2_icon_text"
+        android:layout_width="@dimen/rectangle_width"
+        android:layout_height="@dimen/rectangle_heigth"
+        android:layout_marginRight="5dp"
+        android:background="@color/function_text_color"
+        android:gravity="center"
+        android:text="@string/f2_key"
+        android:textSize="@dimen/rectangle_text_size" />
+
+    <com.droidlogic.droidlivetv.favlistsettings.MarqueeButton
+        android:id="@+id/f2_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/selector_buttonitem"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/button_text_size"
+        android:text="@string/f2_add_fav" />
+</LinearLayout>

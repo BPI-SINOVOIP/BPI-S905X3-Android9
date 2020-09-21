@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="polarity_entries">
+        <item>水平</item>
+        <item>垂直</item>
+    </string-array>
+
+    <string-array name="direction_entries">
+        <item>东</item>
+        <item>西</item>
+    </string-array>
+
+    <string-array name="search_mode_entries">
+        <item>盲扫</item>
+        <item>卫星</item>
+        <item>转发器</item>
+    </string-array>
+
+    <string-array name="dvbt_bandwidth_entries">
+        <item>5MHZ</item>
+        <item>6MHZ</item>
+        <item>7MHZ</item>
+        <item>8MHZ</item>
+        <item>10MHZ</item>
+    </string-array>
+
+    <string-array name="dvbt_mode_entries">
+        <item>1K</item>
+        <item>2K</item>
+        <item>4K</item>
+        <item>8K</item>
+        <item>16K</item>
+        <item>32K</item>
+    </string-array>
+
+    <string-array name="dvbt_type_entries">
+        <item>DVB-T</item>
+        <item>DVB-T2</item>
+    </string-array>
+
+    <string-array name="dvbc_mode_entries">
+        <!--<item>QAM4</item>-->
+        <!--<item>QAM8</item>-->
+        <item>QAM16</item>
+        <item>QAM32</item>
+        <item>QAM64</item>
+        <item>QAM128</item>
+        <item>QAM256</item>
+        <item>自动</item>
+    </string-array>
+
+    <string-array name="public_search_mode_entries">
+        <item>手动搜索</item>
+        <item>自动搜索</item>
+    </string-array>
+
+    <string-array name="public_search_method_entries">
+        <item>频率</item>
+        <item>频道号</item>
+    </string-array>
+</resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+ 	<!-- Used in videobar.java -->
+     <string-array name="tv_panel">
+        <item>TV</item>
+        <item>Panel</item>
+    </string-array>
+    
+      <string-array name="play_mode">
+        <item>repeat list</item>
+        <item>repeat one</item>
+     </string-array>
+     
+      <string-array name="audio_trace">
+        <item>aac</item>
+        <item>mp3</item>
+     </string-array>
+     
+      <string-array name="subtitle">
+        <item>subtitle switch</item>
+        <item>font</item>
+        <item>color</item>
+        <item>position depth</item>
+     </string-array>
+     
+      <string-array name="display">
+        <item>4:3</item>
+        <item>16:9</item>
+     </string-array>
+     
+      <string-array name="brightness">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+     </string-array>
+     
+</resources>

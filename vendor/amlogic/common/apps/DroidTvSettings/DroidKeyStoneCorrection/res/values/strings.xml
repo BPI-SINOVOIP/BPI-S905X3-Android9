@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">keystone correction</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="warning">中央的圆为正圆时屏幕符比例合系统设置</string>
+    <string name="choose">\"OK\"选点</string>
+    <string name="adjust">调整</string>
+    <string name="return_">返回</string>
+    <string name="more_setting">更多设置</string>
+    <string name="on_off">skip to correction</string>
+    <string name="first_str">当前校正点在左上角</string>
+    <string name="second_str">当前校正点在左下角</string>
+    <string name="third_str">当前校正点在右下角</string>
+    <string name="fourth_str">当前校正点在右上角</string>
+    <string name="on_off_value">off</string>
+</resources>

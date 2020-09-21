@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright (c) 2014 Amlogic, Inc. All rights reserved.
+
+ This source code is subject to the terms and conditions defined in the
+ file 'LICENSE' which is part of this source code package.
+
+ Description: resource file
+-->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/layout_menu"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+	<com.droidlogic.mboxlauncher.MyGridLayout
+			android:id="@+id/gv_shortcut"
+	        android:layout_width="1040dp"
+	        android:layout_height="200dp"
+            android:orientation="horizontal"
+	        android:columnCount="11"
+	        android:rowCount="1"
+	        android:layout_marginLeft="120dp"
+	        android:layout_marginTop="582dp"
+            android:layout_centerHorizontal="true"
+	        android:descendantFocusability="afterDescendants"
+	/>
+</RelativeLayout>
+

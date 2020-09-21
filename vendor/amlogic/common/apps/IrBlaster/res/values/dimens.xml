@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!-- Cling -->
+    <dimen name="text_button_hight">62dp</dimen>
+  	<dimen name="cntl_button_hight">62dp</dimen>
+    <dimen name="normal_button_hight">52dp</dimen>
+    <dimen name="func_num_button_hight">52dp</dimen>
+
+
+		<dimen name="text_button_width">100dp</dimen>
+  	<dimen name="cntl_button_width">120dp</dimen>
+    <dimen name="normal_button_width">100dp</dimen>
+    <dimen name="func_num_button_width">100dp</dimen>
+
+		
+    <dimen name="navi_dpad_margin">-6dp</dimen>
+</resources>

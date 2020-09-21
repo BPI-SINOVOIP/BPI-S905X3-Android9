@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <Preference
+        android:key="settings"
+        android:title="@string/settings" >
+    </Preference>
+
+    <Preference
+        android:key="dtv_type"
+        android:title="@string/dtv_type" >
+    </Preference>
+
+    <Preference
+        android:key="sleep_timer"
+        android:title="@string/sleep_timer" >
+    </Preference>
+
+    <Preference
+        android:key="menu_time"
+        android:title="@string/menu_time" >
+    </Preference>
+
+    <Preference
+        android:key="startup_setting"
+        android:title="@string/startup_setting" >
+    </Preference>
+
+    <Preference
+        android:key="dynamic_backlight"
+        android:title="@string/dynamic_backlight" >
+    </Preference>
+
+    <Preference
+        android:key="default_language"
+        android:title="@string/defalut_lan" >
+    </Preference>
+
+    <Preference
+        android:key="sub_switch"
+        android:title="@string/sub_switch" >
+    </Preference>
+
+    <Preference
+        android:key="ad_switch"
+        android:title="@string/ad_switch" >
+    </Preference>
+
+    <Preference
+        android:key="ad_mix_level"
+        android:title="@string/ad_mix" >
+    </Preference>
+
+    <Preference
+        android:key="restore_factory"
+        android:title="@string/restore_factory" >
+    </Preference>
+
+    <Preference
+        android:key="fbc_upgrade"
+        android:title="@string/fbc_upgrade" >
+    </Preference>
+
+    <Preference
+        android:key="hdmi20"
+        android:title="@string/hdmi20" >
+    </Preference>
+
+</PreferenceScreen>

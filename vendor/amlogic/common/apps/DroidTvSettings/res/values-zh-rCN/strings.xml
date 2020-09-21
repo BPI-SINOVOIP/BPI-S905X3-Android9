@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Main app title [CHAR LIMIT=40] -->
+    <string name="settings_app_name">"Droid 设置"</string>
+
+    <!-- Leanback Launcher App Title for main Settings app [CHAR LIMIT=40] -->
+    <string name="launcher_settings_app_name">"Droid 设置"</string>
+
+    <!-- Preference which manages more settings. [CHAR LIMIT=50] -->
+    <string name="system_more_setting">"更多设置"</string>
+    <string name="upgrade_bluetooth_remote">"蓝牙遥控升级"</string>
+    <string name="device_display">"显示"</string>
+    <string name="device_outputmode">"屏幕分辨率"</string>
+    <string name="device_displaymode">输出制式</string>
+    <string name="device_color">"色彩"</string>
+    <string name="device_colorattribute">"格式和色深"</string>
+    <string name="device_outputmode_color_space">"色彩空间设置"</string>
+    <string name="device_outputmode_color_depth">"色深设置"</string>
+    <string name="device_position">"屏幕缩放"</string>
+    <string name="device_outputmode_auto">"自动切换到最佳分辨率"</string>
+    <string name="device_dolbyvision_auto">"自动切换到最佳杜比视界模式"</string>
+    <string name="device_outputmode_deepcolor">"深色模式"</string>
+    <string name="device_outputmode_confirm_mode">"确认关闭深色模式"</string>
+    <string name="device_outputmode_confirm_deepcolor">"确认打开深色模式"</string>
+    <string name="device_outputmode_change">"确认切换至模式："</string>
+    <string name="device_outputmode_countdown">"秒后恢复原来制式"</string>
+    <string name="device_position_zoomout">"缩小屏幕"</string>
+    <string name="device_position_zoomin">"放大屏幕"</string>
+    <string name="device_position_description">"当前缩放比例是"</string>
+    <string name="device_sound">"声音"</string>
+    <string name="audio_mixing">"音频混合"</string>
+    <string name="audio_mixing_summary_on">支持杜比5.1声道</string>
+    <string name="audio_mixing_summary_off">支持杜比7.1声道</string>
+    <string name="dolby_audio_processing">杜比音效</string>
+    <string name="sound_mode">音效</string>
+    <string name="dap_detail">用户调整</string>
+    <string name="dap_volume_leveler">音量调整</string>
+    <string name="dap_dialog_enhancer">对白增强</string>
+    <string name="dap_surround_boost">环绕音增强</string>
+    <string name="dap_geq_gains">均衡器</string>
+    <string name="dap_geq_band1">低频</string>
+    <string name="dap_geq_band2">中低频</string>
+    <string name="dap_geq_band3">中频</string>
+    <string name="dap_geq_band4">高频</string>
+    <string name="dap_geq_band5">超高频</string>
+    <string name="arc_latency">HDMI/ARC 延时</string>
+    <string name="audio_output_latency">音频输出延时</string>
+
+    <string name="device_rotation_land">"横屏拉伸"</string>
+    <string name="device_sound_digital">"数字音频"</string>
+    <string name="device_sound_digital_auto">"自动检测"</string>
+    <string name="device_sound_digital_auto_off">"关闭"</string>
+    <string name="device_sound_dts">"DTS 音效"</string>
+    <string name="device_sound_dts_downmix">"DTS Downmix"</string>
+    <string name="device_sound_dts_downmix_o">"Lo/Ro"</string>
+    <string name="device_sound_dts_downmix_t">"Lt/Rt"</string>
+    <string name="device_sound_dts_drcscale">"DTS DRC范围"</string>
+    <string name="device_sound_dts_sound">"DTS声音"</string>
+    <string name="device_sound_dts_dialnorm">"DTS Dialnorm"</string>
+    <string name="device_sound_dts_trans">"DTS 解码器"</string>
+    <string name="device_sound_dts_trans_auto">"自动"</string>
+    <string name="device_sound_dts_trans_51pcm">"5.1 PCM 解码器"</string>
+    <string name="device_sound_dts_trans_71pcm">"7.1 PCM 解码器"</string>
+    <string name="device_sound_dts_mulasset">"DTS 多资源解码器"</string>
+    <string name="device_sound_dolby">"杜比音频"</string>
+    <string name="device_sound_dolby_drcmode">"杜比模式"</string>
+    <string name="device_sound_dolby_drcoff">"关闭"</string>
+    <string name="device_sound_ad_surport">"辅助音"</string>
+
+    <string name="power_key_action">"电源"</string>
+    <string name="power_action_suspend">"待机"</string>
+    <string name="power_action_restart">"重启"</string>
+    <string name="power_action_shutdown">"关机"</string>
+
+    <string name="system_cec">"HDMI CEC"</string>
+    <string name="title_cec_control">"CEC 控制"</string>
+    <string name="title_cec_switch">"CEC 开关"</string>
+    <string name="title_cec_one_key_play">"单键播放"</string>
+    <string name="title_cec_auto_power_off">"单键关机"</string>
+    <string name="title_cec_auto_change_language">"语言切换"</string>
+    <string name="title_cec_arc_switch">"ARC 开关"</string>
+    <string name="playback_settings">"播放设置"</string>
+
+    <!-- Hdmi self-adaption switch -->
+    <string name="playback_hdmi_selfadaption">"HDMI 自适应"</string>
+    <string name="playback_hdmi_selfadaption_part">部分模式</string>
+    <string name="playback_hdmi_selfadaption_total">完全模式</string>
+    <string name="playback_hdmi_selfadaption_part_desc">只支持23.976hz,29.97hz,59.94hz自适应</string>
+    <string name="playback_hdmi_selfadaption_total_desc">支持所有频率自适应</string>
+
+    <string name="system_powerkeyaction">"电源键定义"</string>
+
+    <!-- Preference which manages power key definition. -->
+    <string name="power_key_definition">"电源键定义"</string>
+    <string name="power_key_shutdown">"关机"</string>
+    <string name="power_key_suspend">"休眠"</string>
+
+    <string name="power_on_mode">上电模式</string>
+    <string name="power_on">开机</string>
+    <string name="power_on_standby">待机</string>
+    <string name="power_on_last">记忆</string>
+
+    <!-- Title for OK [CHAR LIMIT=50] -->
+    <string name="title_ok">"确定"</string>
+    <!-- Title for DNS 2 [CHAR LIMIT=50] -->
+    <string name="title_cancel">"取消"</string>
+    <string name="action_on_title">"开启"</string>
+    <!-- Title for an action which turns a feature off [CHAR LIMIT=30] -->
+    <string name="action_off_title">"关闭"</string>
+    <!-- Title for a status description saying that a feature is on [CHAR LIMIT=30] -->
+    <string name="action_on_description">"开启"</string>
+    <!-- Title for a status description saying that a feature is off [CHAR LIMIT=30] -->
+    <string name="action_off_description">"关闭"</string>
+    <string name="device_hdr">"HDR 转 SDR"</string>
+    <string name="device_sdr">"SDR 转 HDR"</string>
+    <string name="captions_display_on">"开启"</string>
+    <!-- Subtext used under the captions_display string to denote that captions will NOT be shown. [CHAR LIMIT=50] -->
+    <string name="captions_display_off">"关闭"</string>
+    <string name="on">"开启"</string>
+    <!-- [CHAR LIMIT=20] Title for status off for location services -->
+    <string name="off">"关闭"</string>
+    <string name="device_sound_digital_pcm">PCM</string>
+    <string name="device_sound_digital_hdmi">HDMI</string>
+    <string name="device_sound_digital_spdif">SPDIF</string>
+    <string name="device_sound_dolby_drcline">LINE</string>
+    <string name="device_sound_dolby_drcrf">RF</string>
+
+    <!-- Image description for the sync failed icon. -->
+    <string name="sync_failed">"同步失败"</string>
+    <!-- Animation description for the sync active icon. -->
+    <string name="sync_active">"正在同步"</string>
+    <string name="netflix_esn">"Netflix ESN"</string>
+    <string name="crypt_keeper_encrypt_title">"加密电视"</string>
+    <string name="crypt_keeper_settings_title">"加密"</string>
+    <string name="crypt_keeper_encrypted_summary">"已加密"</string>
+    <string name="enter_password">"要启动Android，请输入您的密码"</string>
+    <string name="starting_android">"正在启动 Android…"</string>
+    <string name="crypt_keeper_switch_input_method">"切换输入法"</string>
+    <string name="cryptkeeper_wrong_password">"密码错误"</string>
+    <string name="cryptkeeper_return_to_call">"返回通话"</string>
+    <string name="cryptkeeper_emergency_call">"紧急呼救"</string>
+    <string name="crypt_keeper_dialog_need_password_title">"没有锁屏PIN码或密码"</string>
+    <string name="crypt_keeper_button_text">"加密电视"</string>
+    <string name="crypt_keeper_low_charge_text">"请为电池充电，然后重试。"</string>
+    <string name="crypt_keeper_unplugged_text">"请插上充电器，然后重试。"</string>
+    <string name="crypt_keeper_dialog_need_password_message">"您需要先设置锁屏 PIN 码或密码，才能开始加密。"</string>
+    <string name="crypt_keeper_desc">
+     您可以对自己的帐号、设置、下载的应用及其数据、媒体和其他文件进行加密。加密手机后，如果您设置了屏幕锁定（即图案、数字PIN码或密码），那么您必须在每次开机时解锁屏幕，才能将手机解密。除此之外，唯一的解密方法就是恢复出厂设置，但这会清除您所有的数据。\n\n加密过程至少需要1个小时的时间。在开始加密之前，您必须先将电池充满电，并让手机在整个加密过程中保持电源接通状态。如果加密过程出现中断，您将丢失部分或所有数据。"</string>
+    <string name="crypt_keeper_confirm_title">"要加密吗？"</string>
+    <string name="crypt_keeper_final_desc">
+    "加密操作无法撤消，如果您中断该过程，则会丢失数据。加密过程需要1小时或更长时间，在此期间，电视会重新启动数次。"
+    </string>
+    <!-- Title of the progress screen while encrypting the device -->
+    <string name="crypt_keeper_setup_title">"正在加密"</string>
+
+    <string name="crypt_keeper_setup_description">"正在加密您的平板电脑(已完成 <xliff:g id="PERCENT">^1</xliff:g>%),请耐心等待."
+    </string>
+    <string name="crypt_keeper_setup_time_remaining">"您的电视正在加密，请耐心等待。剩余时间：<xliff:g id="DURATION">^1</xliff:g>"</string>
+    <string name="crypt_keeper_force_power_cycle">"要解锁您的电视，请将其关机然后再重启。"</string>
+        <!-- Warn user their device will be wiped if they make x more failed attempts -->
+    <string name="crypt_keeper_warn_wipe">"警告：如果解锁尝试再失败<xliff:g id="COUNT">^1</xliff:g>次，您的设备将被清空！"
+    </string>
+
+    <!-- Informational text on the password entry screen prompting the user for their password -->
+    <string name="crypt_keeper_enter_password">"键入密码"</string>
+
+    <!-- Title of the encryption screen when encrypting the device failed -->
+    <string name="crypt_keeper_failed_title">"加密失败"</string>
+
+    <!-- Informational text when encryption fails -->
+    <string name="crypt_keeper_failed_summary">
+     "加密过程中断，无法完成。因此，您已无法再使用电视上的数据。\n\n要继续使用您的电视，您需要恢复出厂设置。恢复出厂设置后对电视进行设置时，您可以将之前备份到Google帐号的所有数据恢复到电视中。"
+    </string>
+
+    <!-- Title of the encryption screen when decrypting the device failed -->
+    <string name="crypt_keeper_data_corrupt_title">"解密失败"</string>
+
+    <!-- Informational text when encryption fails -->
+    <string name="crypt_keeper_data_corrupt_summary">"您输入的密码正确无误，但遗憾的是，您的数据已损坏。\n\n要继续使用您的电视，您需要将其恢复出厂设置。对恢复出厂设置后的电视进行设置时，您可以恢复之前备份到 Google 帐号的任何数据。"
+    </string>
+    <!-- Image button description to switch input method -->
+    <string name="master_clear_button_text">"恢复出厂设置"</string>
+    <string name="checking_decryption">"正在检查…"</string>
+    <string name="cryptkeeper_wrong_pin">"PIN 码错误"</string>
+    <string name="cryptkeeper_wrong_pattern">"图案错误"</string>
+    <string name="enter_pin">"要启动Android，请输入您的PIN码"</string>
+    <string name="enter_pattern">"要启动Android，请绘制您的解锁图案"</string>
+    <string name="lockpattern_too_many_failed_confirmation_attempts">"尝试解锁失败次数过多。请在 <xliff:g id="NUMBER">%d</xliff:g> 秒后重试。"</string>
+    <string name="lock_profile_wipe_attempts">"请重试。您目前已尝试 <xliff:g id="CURRENT_ATTEMPTS">%1$d</xliff:g> 次，最多可尝试 <xliff:g id="TOTAL_ATTEMPTS">%2$d</xliff:g> 次。"</string>
+    <string name="global_change_warning">"此设置会影响这台电视上的所有用户。"</string>
+    <string name="battery_history_seconds">"<xliff:g id="SECONDS">%1$d</xliff:g> 秒"</string>
+    <string name="battery_history_days">"<xliff:g id="DAYS">%1$d</xliff:g>天<xliff:g id="HOURS">%2$d</xliff:g>小时<xliff:g id="MINUTES">%3$d</xliff:g>分<xliff:g id="SECONDS">%4$d</xliff:g>秒"</string>
+    <string name="battery_history_hours">"<xliff:g id="HOURS">%1$d</xliff:g>小时<xliff:g id="MINUTES">%2$d</xliff:g>分<xliff:g id="SECONDS">%3$d</xliff:g>秒"</string>
+    <string name="battery_history_minutes">"<xliff:g id="MINUTES">%1$d</xliff:g>分<xliff:g id="SECONDS">%2$d</xliff:g>秒"</string>
+    <string name="battery_history_minutes_no_seconds">"<xliff:g id="MINUTES">%1$d</xliff:g>分钟"</string>
+    <string name="battery_history_hours_no_seconds">"<xliff:g id="HOURS">%1$d</xliff:g>小时<xliff:g id="MINUTES">%2$d</xliff:g>分钟"</string>
+    <string name="battery_history_days_no_seconds">"<xliff:g id="DAYS">%1$d</xliff:g>天<xliff:g id="HOURS">%2$d</xliff:g>小时<xliff:g id="MINUTES">%3$d</xliff:g>分钟"</string>
+    <string name="cancel">"取消"</string>
+    <string name="lock_profile_wipe_warning_content_pattern">"如果您这次绘制的工作解锁图案仍然有误，您的工作资料和相关数据都将从此设备中移除。"</string>
+    <string name="lockpassword_confirm_your_pin_generic">"请输入您的设备 PIN 码以继续"</string>
+    <string name="lockpassword_confirm_your_pin_generic_profile">"请输入您的工作 PIN 码以继续"</string>
+    <string name="lock_profile_wipe_warning_title">"最后一次尝试"</string>
+    <string name="lock_profile_wipe_content">"错误次数过多。您的工作资料和相关数据将会从此设备中移除。"</string>
+    <string name="lock_profile_wipe_dismiss">"关闭"</string>
+    <string name="lockpassword_confirm_your_password_generic">"请输入您的设备密码以继续"</string>
+    <string name="lockpassword_confirm_your_password_generic_profile">"请输入您的工作密码以继续"</string>
+    <string name="lockpassword_strong_auth_required_reason_restart_device_pin">"请输入您的设备 PIN 码以继续。重启设备后需要输入设备 PIN 码。"</string>
+    <string name="lockpassword_strong_auth_required_reason_restart_work_pin">"请输入您的工作密码以继续。重启设备后需要输入工作密码。"</string>
+    <string name="lockpassword_strong_auth_required_reason_restart_device_password">"请输入您的设备密码以继续。重启设备后需要输入设备密码。"</string>
+    <string name="lockpassword_strong_auth_required_reason_restart_work_password">"请输入您的工作密码以继续。重启设备后需要输入工作密码。"</string>
+    <string name="lockpassword_confirm_your_password_header">"确认您的密码"</string>
+    <string name="lockpassword_confirm_your_pin_header">"确认 PIN 码"</string>
+    <string name="lockpassword_invalid_password">"密码错误"</string>
+    <string name="lockpassword_invalid_pin">"PIN 码错误"</string>
+    <string name="lock_profile_wipe_warning_content_password">"如果您这次输入的工作密码仍然有误，您的工作资料和相关数据都将从此设备中移除。"</string>
+    <string name="lock_profile_wipe_warning_content_pin">"如果您这次输入的工作 PIN 码仍然有误，您的工作资料和相关数据都将从此设备中移除。"</string>
+
+    <string name="settings_menu">菜单</string>
+    <string name="tv_sound">声音</string>
+    <string name="tv_sound_mode">声音模式</string>
+
+    <string name="tv_treble_bass_effect">高低音</string>
+    <string name="tv_treble">高音</string>
+    <string name="tv_bass">低音</string>
+    <string name="tv_balance_effect">平衡</string>
+    <string name="tv_virtual_surround">虚拟环绕音</string>
+    <string name="tv_surround">环绕音</string>
+    <string name="tv_dialog_clarity">清脆人声</string>
+    <string name="tv_bass_boost">低音增强</string>
+    <string name="tv_sound_output_device">声音输出设备</string>
+    <string name="pq_backlight">背光</string>
+    <string name="tv_audio_ad_switch">声音AD开关</string>
+    <string name="tv_audio_ad_mix_level">声音AD混合度</string>
+    <string name="tv_restore_factory">电视恢复出厂设置</string>
+    <string name="tv_ensure_restore">确认恢复出厂设置</string>
+    <string name="tv_ok">确定</string>
+    <string name="tv_warning">警告</string>
+    <string name="tv_prompt_def_set">恢复出厂状态将会恢复出厂的设置数据</string>
+    <string name="tv_prompt2">恢复默认设置</string>
+    <string name="tv_cancel">取消</string>
+    <string name="dolby_vision">杜比视界</string>
+    <string name="dolby_vision_set">杜比视界功能设置</string>
+    <string name="dolby_vision_tv">电视杜比视界</string>
+    <string name="dolby_vision_tv_set">杜比视界功能设置</string>
+    <string name="dolby_vision_default_enable">打开杜比视界</string>
+    <string name="dolby_vision_off">关闭杜比视界</string>
+
+    <string name="pq_pictrue">图像</string>
+    <string name="pq_pictrue_mode">图像模式</string>
+    <string name="pq_custom">自定义设置</string>
+    <string name="pq_brightness">亮度</string>
+    <string name="pq_contrast">对比度</string>
+    <string name="pq_saturation">色饱和度</string>
+    <string name="pq_sharpness">锐度</string>
+    <string name="pq_color_temprature">色温</string>
+    <string name="pq_aspect_ratio">屏幕画面比例</string>
+    <string name="pq_dnr">数字降噪</string>
+    <string name="pq_backlight_settings">背光设置</string>
+    <string name="pq_hdmi_color">HDMI色彩范围模式</string>
+    <string name="pq_standard">标准</string>
+    <string name="pq_vivid">生动</string>
+    <string name="pq_soft">柔和</string>
+    <string name="pq_movie">电影</string>
+    <string name="pq_sport">运动</string>
+    <string name="pq_monitor">显示器</string>
+    <string name="pq_game">游戏</string>
+    <string name="pq_user">用户</string>
+
+    <!-- keystone correction. -->
+    <string name="keystone">keyStone校正</string>
+
+    <string name="tv_channel">频道</string>
+    <string name="system_setting">设置</string>
+    <string name="settings_mode">设置</string>
+    <string name="tv_settings">设置</string>
+    <string name="tv_pip">画中画</string>
+    <string name="tv_menu_time">菜单显示时间</string>
+    <string name="tv_sleep_timer">睡眠定时器</string>
+    <string name="tv_startup_setting">开机启动设置</string>
+    <string name="tv_startup_lancher">桌面</string>
+    <string name="tv_startup_tv">电视</string>
+    <string name="tv_multi_audio">多音效</string>
+    <string name="tv_closed_captions">字幕</string>
+    <string name="tv_av_parental_controls">家长控制</string>
+    <string name="tv_dynamic_backlight">自动背光</string>
+    <string name="tv_default_language">默认语言</string>
+    <string name="tv_daylight_saving_time">夏令时</string>
+    <string name="tv_fbc_upgrade">FBC升级</string>
+    <string name="tv_factory_menu">工厂菜单</string>
+
+    <string name="tv_sound_agc">"自动增益控制"</string>
+    <string name="tv_sound_agc_enable">"自动增益控制"</string>
+    <string name="tv_sound_agc_max_level">"最大电平"</string>
+    <string name="tv_sound_agc_attrack_time">"攻击时间"</string>
+    <string name="tv_sound_agc_release_time">"释放时间"</string>
+
+    <!-- multi source backup label -->
+    <string name="input_dtv_kit">DTVKit</string>
+    <string name="input_google_channel">在线频道</string>
+
+    <string name="hdmi_audio_latency">HDMI音频输出偏移</string>
+    <string name="arc_hdmi_audio_latency">HDMI ARC 音频输出偏移</string>
+</resources>

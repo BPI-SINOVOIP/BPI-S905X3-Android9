@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright (c) 2014 Amlogic, Inc. All rights reserved.
+
+ This source code is subject to the terms and conditions defined in the
+ file 'LICENSE' which is part of this source code package.
+
+ Description: resource file
+-->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:background="@color/transparent_background"
+	android:layout_marginTop="18dp"
+	android:descendantFocusability="blocksDescendants"
+	>
+		<GridView
+			android:id="@+id/list_status"
+            android:scrollbars="none"
+	        android:drawSelectorOnTop="false"
+	        android:verticalSpacing="0dip"
+	        android:horizontalSpacing="0dip"
+	        android:numColumns="5"
+	        android:fadingEdgeLength="48dip"
+	        android:cacheColorHint="#00000000"
+	        android:layout_width="265dp"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:paddingTop="0dp"
+	        android:paddingBottom="0dp"
+	        android:paddingLeft="0dp"
+	        android:paddingRight="0dp"
+	        android:focusable="false"
+	        android:layout_marginTop="5dp"
+	        android:layout_marginLeft="106dp"
+		/>
+
+		<ImageView
+			android:id="@+id/img_weather"
+			android:layout_width="106dp"
+			android:layout_height="106dp"
+			android:layout_marginTop="5dp"
+			android:layout_marginLeft="510dp"
+		/>
+
+		<TextView
+			android:id="@+id/tx_temp"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_toRightOf="@+id/img_weather"
+			android:layout_marginTop="15dp"
+			android:textSize="30dp"
+		/>
+		<TextView
+			android:id="@+id/tx_city"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_toRightOf="@+id/tx_temp"
+			android:layout_marginTop="20dp"
+			android:textSize="20dp"
+		/>
+
+		<TextView
+			android:id="@+id/tx_time"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="15dp"
+			android:layout_toLeftOf="@+id/tx_date"
+			android:layout_marginRight="20dp"
+			android:textSize="30dp"
+		/>
+
+		<TextView
+			android:id="@+id/tx_date"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="20dp"
+			android:layout_marginRight="106dp"
+			android:layout_alignParentRight="true"
+			android:textSize="20dp"
+		/>
+
+	</RelativeLayout>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Main app title [CHAR LIMIT=40] -->
+    <string name="settings_app_name">"Droid 音效設定"</string>
+
+    <!-- Leanback Launcher App Title for main Settings app [CHAR LIMIT=40] -->
+    <string name="launcher_settings_app_name">"Droid 音效設定"</string>
+
+    <!-- Title for OK [CHAR LIMIT=50] -->
+    <string name="title_ok">"確定"</string>
+    <!-- Title for DNS 2 [CHAR LIMIT=50] -->
+    <string name="title_cancel">"取消"</string>
+    <string name="action_on_title">"開啟"</string>
+    <!-- Title for an action which turns a feature off [CHAR LIMIT=30] -->
+    <string name="action_off_title">"關閉"</string>
+    <!-- Title for a status description saying that a feature is on [CHAR LIMIT=30] -->
+    <string name="action_on_description">"開啟"</string>
+    <!-- Title for a status description saying that a feature is off [CHAR LIMIT=30] -->
+    <string name="action_off_description">"關閉"</string>
+
+    <string name="dap_sound">杜比音效</string>
+
+    <string name="tv_sound_agc">"自動增益控制"</string>
+    <string name="tv_sound_agc_enable">"自動增益控制"</string>
+    <string name="tv_sound_agc_max_level">"最大電平"</string>
+    <string name="tv_sound_agc_attrack_time">"攻擊時間"</string>
+    <string name="tv_sound_agc_release_time">"釋放時間"</string>
+</resources>

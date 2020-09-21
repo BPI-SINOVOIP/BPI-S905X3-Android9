@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright (c) 2014 Amlogic, Inc. All rights reserved.
+
+ This source code is subject to the terms and conditions defined in the
+ file 'LICENSE' which is part of this source code package.
+
+ Description: resource file
+-->
+
+<resources>
+   <string-array name="week">
+         <item>星期天</item>
+         <item>星期一</item> 
+         <item>星期二</item>
+         <item>星期三</item> 
+         <item>星期四</item>
+         <item>星期五</item>
+     	 <item>星期六</item>
+    </string-array>
+
+    <string-array name="month">
+         <item>1月</item>
+         <item>2月</item> 
+         <item>3月</item>
+         <item>4月</item>
+         <item>5月</item> 
+         <item>6月</item>
+         <item>7月</item>
+     	 <item>8月</item>
+     	 <item>9月</item>
+     	 <item>10月</item>
+     	 <item>11月</item>
+     	 <item>12月</item>   	 
+    </string-array> 
+</resources>  

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2012 Amlogic, Inc.
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="com.droidlogic.FileBrower"
+      android:versionCode="1"
+      android:versionName="4.0">
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_MEDIA_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>    
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <application android:icon="@mipmap/filebrower" android:label="@string/app_name"
+                 android:banner="@drawable/banner">
+        <uses-library android:name="droidlogic.software.core" />
+        <activity android:name=".FileBrower"
+        		  android:configChanges="orientation|screenSize|screenLayout"
+                  android:label="@string/app_name"
+                  >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.GET_CONTENT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.OPENABLE" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
+        </activity>
+		<activity android:name="ThumbnailView1"
+				  android:configChanges="orientation|screenSize|screenLayout"
+				  >
+		</activity>	
+		<service android:name=".ThumbnailScannerService"></service>	
+    </application>
+    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="23"/>
+</manifest>

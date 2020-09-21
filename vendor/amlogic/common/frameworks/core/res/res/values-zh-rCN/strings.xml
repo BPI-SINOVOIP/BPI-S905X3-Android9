@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <string name="droidlogic_system_label">droidlogic 系统</string>
+    <string name="droidlogic_perm_group_label">droidlogic权限组</string>
+    <string name="droidlogic_perm_group_description">包含所有的droidlogic权限</string>
+    <string name="droidlogic_perm_system_control_label">droidlogic 系统控制权限</string>
+    <string name="droidlogic_perm_system_control_description">如果要使用系统控制的服务, 必须要申请这个权限</string>
+</resources>

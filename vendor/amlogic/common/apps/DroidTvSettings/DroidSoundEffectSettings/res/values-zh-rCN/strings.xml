@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Main app title [CHAR LIMIT=40] -->
+    <string name="settings_app_name">"Droid 音效设置"</string>
+
+    <!-- Leanback Launcher App Title for main Settings app [CHAR LIMIT=40] -->
+    <string name="launcher_settings_app_name">"Droid 音效设置"</string>
+
+    <!-- Title for OK [CHAR LIMIT=50] -->
+    <string name="title_ok">"确定"</string>
+    <!-- Title for DNS 2 [CHAR LIMIT=50] -->
+    <string name="title_cancel">"取消"</string>
+    <string name="action_on_title">"开启"</string>
+    <!-- Title for an action which turns a feature off [CHAR LIMIT=30] -->
+    <string name="action_off_title">"关闭"</string>
+    <!-- Title for a status description saying that a feature is on [CHAR LIMIT=30] -->
+    <string name="action_on_description">"开启"</string>
+    <!-- Title for a status description saying that a feature is off [CHAR LIMIT=30] -->
+    <string name="action_off_description">"关闭"</string>
+
+    <string name="dap_sound">杜比音效</string>
+    <string name="tv_sound">声音</string>
+    <string name="tv_sound_mode">声音模式</string>
+
+    <string name="tv_treble_bass_effect">高低音</string>
+    <string name="tv_treble">高音</string>
+    <string name="tv_bass">低音</string>
+    <string name="tv_balance_effect">平衡</string>
+    <string name="tv_virtual_surround">虚拟环绕音</string>
+    <string name="tv_surround">环绕音</string>
+    <string name="tv_dialog_clarity">清脆人声</string>
+    <string name="tv_bass_boost">低音增强</string>
+    <string name="tv_sound_output_device">声音输出设备</string>
+
+    <string name="tv_sound_agc">"自动增益控制"</string>
+    <string name="tv_sound_agc_enable">"自动增益控制"</string>
+    <string name="tv_sound_agc_max_level">"最大电平"</string>
+    <string name="tv_sound_agc_attrack_time">"攻击时间"</string>
+    <string name="tv_sound_agc_release_time">"释放时间"</string>
+</resources>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="200dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="@android:color/transparent">
+
+    <TextView
+        android:id="@+id/dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textColor="@color/color_text_blue_1"
+        android:text="@string/appointed_title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/dialog_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:textSize="16sp"
+            android:textColor="@color/color_text_blue_1"
+            android:background="@drawable/selector"
+            android:text="@string/appointed_overlap_cancel" />
+
+        <Button
+            android:id="@+id/dialog_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:textSize="16sp"
+            android:textColor="@color/color_text_blue_1"
+            android:background="@drawable/selector"
+            android:text="@string/appointed_overlap_add" />
+    </LinearLayout>
+</LinearLayout>

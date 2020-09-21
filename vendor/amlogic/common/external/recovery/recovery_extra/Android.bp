@@ -1,0 +1,26 @@
+cc_library_static {
+    name: "librecovery_amlogic",
+    vendor_available: true,
+    //vndk: {
+    //    enabled: true,
+    //},
+    srcs: ["recovery_amlogic.cpp"],
+    static_libs: [
+        "libfstab",
+        "libselinux",
+    ],
+    include_dirs: [
+        "bootable/recovery",
+        "system/vold",
+        "system/core/adb",
+        "system/core/base/include",
+        "system/core/fs_mgr/include",
+        "system/core/libcutils/include",
+        "system/core/libutils/include",
+        "system/core/libziparchive/include",
+        "bootable/recovery/bootloader_message/include",
+        "device/amlogic/common/recovery",
+        "vendor/amlogic/common/external/recovery",
+    ],
+    cflags: ["-Werror"],
+}

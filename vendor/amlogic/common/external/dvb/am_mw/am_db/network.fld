@@ -1,0 +1,5 @@
+/*net_table 字段列表*/
+"db_id integer primary key autoincrement",	/**< 数据库保存的唯一索引*/ 
+"name text", 							/**< 网络名称*/ 
+"network_id integer",					/**< network id*/ 
+"src integer",							/**< 源标识*/

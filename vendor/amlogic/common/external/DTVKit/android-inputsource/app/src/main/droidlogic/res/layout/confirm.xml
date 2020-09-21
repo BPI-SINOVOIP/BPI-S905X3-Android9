@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/saving_dialog_width"
+    android:layout_height="@dimen/saving_dialog_height"
+    android:layout_gravity="center_vertical|center_horizontal"
+    android:background="@color/common_item_background"
+    android:gravity="center_vertical|center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/saving"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/saving_dialog_text_divide"
+        android:layout_marginBottom="@dimen/saving_dialog_text_divide"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/dialog_confirm"
+        android:textColor="@color/common_yellow"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/wait"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/dialog_confirm_delete"
+        android:textColor="@color/common_white" />
+
+</LinearLayout>

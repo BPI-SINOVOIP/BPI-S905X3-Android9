@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2012 Amlogic, Inc.
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"  
+    android:layout_height="148dip" 
+    android:layout_width="148dip"
+    android:layout_centerHorizontal="true"
+    >
+    <FrameLayout
+      android:id="@+id/frameLayout" 
+    	android:orientation="vertical"    	
+    	android:layout_width="100dip"
+    	android:layout_height="100dip"
+    	android:layout_centerHorizontal="true"   
+    >   	
+    <ImageView 
+    	android:id="@+id/itemImage"  
+        android:layout_width="fill_parent" 
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/preview" 
+        android:layout_height="fill_parent">   
+    </ImageView> 
+    <ImageView 
+    	android:layout_height="wrap_content" 
+    	android:id="@+id/itemMark"  
+        android:layout_width="wrap_content"           
+        android:src="@drawable/item_img_unsel">   
+    </ImageView> 
+    </FrameLayout> 
+    <TextView 
+    		android:id="@+id/itemText" 
+    		android:layout_width="fill_parent" 
+    		android:layout_height="wrap_content"   
+        android:layout_below="@+id/frameLayout"         
+        android:layout_centerHorizontal="true"  
+        android:gravity="center"        
+        android:textSize="18sp"
+        android:textStyle="bold" 
+        android:textColor="@color/item_text_color" 
+        >
+    </TextView>   
+</RelativeLayout>   

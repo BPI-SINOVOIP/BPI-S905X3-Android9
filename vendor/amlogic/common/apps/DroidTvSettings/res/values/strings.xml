@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Main app title [CHAR LIMIT=40] -->
+    <string name="settings_app_name">Droid Settings</string>
+
+    <!-- Leanback Launcher App Title for main Settings app [CHAR LIMIT=40] -->
+    <string name="launcher_settings_app_name">Droid Settings</string>
+
+    <!-- Preference which manages more settings. [CHAR LIMIT=50] -->
+    <string name="system_more_setting">More settings</string>
+    <string name="system_setting">Settings</string>
+    <string name="upgrade_bluetooth_remote">Upgrade bluetoothremote</string>
+    <string name="device_display">Display</string>
+    <string name="device_outputmode">Screen resolution</string>
+    <string name="device_displaymode">Display Mode</string>
+    <string name="device_color">Color</string>
+    <string name="device_colorattribute">Format and Depth</string>
+    <string name="device_outputmode_color_space">Color Space Settings</string>
+    <string name="device_outputmode_color_depth">Color Depth Settings</string>
+    <string name="device_outputmode_auto">Auto switch to best resolution</string>
+    <string name="device_dolbyvision_auto">Auto switch to best dolby vision</string>
+    <string name="hdr_priority">HDR Priority</string>
+    <string name="hdr10">HDR10</string>
+    <string name="hdr_priority_change">Confirm change HDR Priority to:</string>
+    <string name="hdr_priority_countdown"> seconds later restore old HDR Priority</string>
+    <string name="device_outputmode_deepcolor">deep color mode</string>
+    <string name="device_hdr_policy">HDR policy</string>
+    <string name="device_outputmode_confirm_mode">Confirm turn off deep color mode</string>
+    <string name="device_outputmode_confirm_deepcolor">Confirm turn on deep color mode</string>
+    <string name="device_outputmode_change">Confirm change to mode:</string>
+    <string name="device_outputmode_countdown"> seconds later restore old mode</string>
+    <string name="device_position">Screen position</string>
+    <string name="device_position_zoomout">Zoom out screen</string>
+    <string name="device_position_zoomin">Zoom in screen</string>
+    <string name="device_position_description">current scaling is</string>
+
+    <string name="hdr_policy_sink">Always Hdr</string>
+    <string name="hdr_policy_source">Adaptive Hdr</string>
+
+    <!-- Preference which manages play back settings. -->
+    <string name="playback_settings">Playback settings</string>
+    <!-- Hdmi self-adaption switch -->
+    <string name="playback_hdmi_selfadaption">HDMI self-adaption</string>
+    <string name="playback_hdmi_selfadaption_part">part mode</string>
+    <string name="playback_hdmi_selfadaption_total">totle mode</string>
+    <string name="playback_hdmi_selfadaption_part_desc">only support 23.976hz,29.97hz,59.94hz self adaption</string>
+    <string name="playback_hdmi_selfadaption_total_desc">support all frequencys self adaption</string>
+
+    <string name="power_key_action">Power</string>
+    <string name="system_powerkeyaction">Powerkey definition</string>
+
+    <!-- Preference which manages power key definition. -->
+    <string name="power_key_definition">Power key definition</string>
+    <string name="power_key_shutdown">shutdown</string>
+    <string name="power_key_suspend">suspend and resume</string>
+
+    <string name="power_on_mode">Poweron Mode</string>
+    <string name="power_on">On</string>
+    <string name="power_on_standby">Standby</string>
+    <string name="power_on_last">Last</string>
+
+    <!-- Title for OK [CHAR LIMIT=50] -->
+    <string name="title_ok">OK</string>
+    <!-- Title for DNS 2 [CHAR LIMIT=50] -->
+    <string name="title_cancel">Cancel</string>
+    <string name="action_on_title">On</string>
+    <!-- Title for an action which turns a feature off [CHAR LIMIT=30] -->
+    <string name="action_off_title">Off</string>
+    <!-- Title for a status description saying that a feature is on [CHAR LIMIT=30] -->
+    <string name="action_on_description">On</string>
+    <!-- Title for a status description saying that a feature is off [CHAR LIMIT=30] -->
+    <string name="action_off_description">Off</string>
+    <string name="device_hdr">HDR to SDR</string>
+    <string name="device_sdr">SDR to HDR</string>
+    <string name="dolby_vision">Dolby Vision</string>
+    <string name="dolby_vision_set">Dolby Vision Set</string>
+    <string name="dolby_vision_tv">TV Dolby Vision</string>
+    <string name="dolby_vision_tv_set">TV Dolby Vision Set</string>
+    <string name="dolby_vision_default_enable">Dolby vision enable</string>
+    <string name="dolby_vision_sink_led">Dolby vision sink-led</string>
+    <string name="dolby_vision_low_latency_yuv">Dolby vision source-led</string>
+    <string name="dolby_vision_low_latency_rgb">Dolby vision source-led (RGB)</string>
+    <string name="dolby_vision_off">Dolby vision disable</string>
+    <string name="dolby_vision_graphics_priority">Dolby Vision Graphics Priority</string>
+    <string name="graphics_priority">Graphics Priority</string>
+    <string name="video_priority">Video Priority</string>
+    <string name="captions_display_on">On</string>
+    <!-- Subtext used under the captions_display string to denote that captions will NOT be shown. [CHAR LIMIT=50] -->
+    <string name="captions_display_off">Off</string>
+    <string name="on">On</string>
+    <!-- [CHAR LIMIT=20] Title for status off for location services -->
+    <string name="off">Off</string>
+    <!-- Title for preference screen controlling sound settings [CHAR LIMIT=50] -->
+    <string name="device_sound">Audio Output</string>
+    <string name="audio_mixing">Audio Mixing</string>
+    <string name="audio_mixing_summary_on">support 5.1 channels through Dolby Audio playback</string>
+    <string name="audio_mixing_summary_off">support 7.1 channels through Dolby Audio playback</string>
+    <string name="dolby_audio_processing">Dolby Audio Effect</string>
+    <string name="sound_mode">Audio Effect</string>
+    <string name="dap_detail">User Control</string>
+    <string name="dap_volume_leveler">Volume Leveler</string>
+    <string name="dap_dialog_enhancer">Dialog Enhancer</string>
+    <string name="dap_surround_boost">Surround Boost</string>
+    <string name="dap_geq">Equalizer</string>
+    <string name="dap_geq_band1">low frequency</string>
+    <string name="dap_geq_band2">low-middle frequency</string>
+    <string name="dap_geq_band3">middle frequency</string>
+    <string name="dap_geq_band4">high frequency</string>
+    <string name="dap_geq_band5">ultra-high frequency</string>
+    <string name="arc_latency">HDMI/ARC latency</string>
+    <string name="audio_output_latency">Audio Output Latency</string>
+
+    <!-- Title for preference which controls surround sound passthrough function [CHAR LIMIT=50] -->
+    <string name="device_sound_digital">Digital Audio Format</string>
+    <string name="device_sound_digital_auto">Auto detection</string>
+    <string name="device_sound_digital_auto_off">OFF</string>
+    <string name="device_sound_digital_pcm">PCM</string>
+    <string name="device_sound_digital_hdmi">HDMI</string>
+    <string name="device_sound_digital_spdif">SPDIF</string>
+    <string name="device_sound_dts">DTS Sounds</string>
+    <string name="device_sound_dts_downmix">DTS Downmix</string>
+    <string name="device_sound_dts_downmix_o">Lo/Ro</string>
+    <string name="device_sound_dts_downmix_t">Lt/Rt</string>
+    <string name="device_sound_dts_drcscale">DTS Drcscale</string>
+    <string name="device_sound_dts_sound">Dts sounds</string>
+    <string name="device_sound_dts_dialnorm">DTS Dialnorm</string>
+    <string name="device_sound_dts_trans">DTS Transcoder</string>
+    <string name="device_sound_dts_trans_auto">Auto</string>
+    <string name="device_sound_dts_trans_51pcm">5.1 PCM Transcoder</string>
+    <string name="device_sound_dts_trans_71pcm">7.1 PCM Transcoder</string>
+    <string name="device_sound_dts_mulasset">DTS Mulasset</string>
+    <string name="device_sound_dolby">Dolby sounds</string>
+    <string name="device_sound_dolby_drcmode">DRC mode</string>
+    <string name="device_sound_dolby_drcoff">OFF</string>
+    <string name="device_sound_dolby_drcline">LINE</string>
+    <string name="device_sound_dolby_drcrf">RF</string>
+    <string name="device_sound_ad_surport">"Associate Audio"</string>
+
+    <string name="surround_sound_format_e_ac3_joc">Dolby Atmos in Dolby Digital Plus</string>
+    <string name="surround_sound_format_ac3">Dolby Digital</string>
+    <string name="surround_sound_format_e_ac3">Dolby Digital Plus</string>
+    <string name="surround_sound_format_dts">DTS</string>
+    <string name="surround_sound_format_dts_hd">DTS-HD</string>
+    <string name="surround_sound_format_aac_lc">AAC</string>
+    <string name="surround_sound_format_truehd">Dolby TrueHD</string>
+    <string name="surround_sound_format_ac4">Dolby AC-4</string>
+
+    <!--audio out switch-->
+    <string name="device_box_audio_lineout">Lineout</string>
+    <string name="device_box_audio_hdmi">Hdmi</string>
+    <string name="device_tv_audio_speaker">Speaker</string>
+    <string name="device_tv_audio_arc">Arc</string>
+    <string name="device_audio_spdif">Spdif</string>
+
+    <!-- Image description for the sync failed icon. -->
+    <string name="sync_failed">Sync failed</string>
+    <!-- Animation description for the sync active icon. -->
+    <string name="sync_active">Sync active</string>
+    <string name="system_cec">HDMI CEC</string>
+    <string name="cec_control">CEC Control</string>
+    <string name="title_cec_switch">CEC Switch</string>
+    <string name="title_cec_one_key_play">One key play</string>
+    <string name="title_cec_auto_power_off">Device auto power off</string>
+    <string name="title_cec_auto_wake_up">Tv auto power on</string>
+    <string name="title_cec_auto_change_language">Auto change language</string>
+    <string name="title_cec_device_list">Device Select List</string>
+    <string name="title_cec_arc_switch">ARC Switch</string>
+    <string name="power_action_suspend">suspend</string>
+    <string name="power_action_restart">restart</string>
+    <string name="power_action_shutdown">shutdown</string>
+    <string name="netflix_esn">Netflix ESN</string>
+    <string name="crypt_keeper_encrypt_title">Encrypt MBOX</string>
+    <string name="crypt_keeper_settings_title">Encryption</string>
+    <string name="crypt_keeper_encrypted_summary">Encrypted</string>
+    <string name="enter_password">To start Android, enter your password</string>
+    <string name="starting_android">Starting Android\u2026</string>
+    <string name="crypt_keeper_switch_input_method">Switch input method</string>
+    <string name="cryptkeeper_wrong_password">Wrong Password</string>
+    <string name="cryptkeeper_return_to_call">Return to call</string>
+    <string name="cryptkeeper_emergency_call">Emergency call</string>
+    <string name="crypt_keeper_dialog_need_password_title">No lock screen PIN or password</string>
+    <string name="crypt_keeper_button_text">Encrypt Mbox</string>
+    <string name="crypt_keeper_low_charge_text">Charge your battery and try again.</string>
+    <string name="crypt_keeper_unplugged_text">Plug in your charger and try again.</string>
+    <string name="crypt_keeper_dialog_need_password_message">You need to set a lock screen PIN or password before you can start encryption.</string>
+    <string name="crypt_keeper_desc">
+      You can encrypt your accounts, settings, downloaded apps and their data,
+      media, and other files. After you encrypt your tablet, assuming you\u2019ve set up a screen lock
+      (that is, a pattern or numeric PIN or password), you\u2019ll need to unlock the screen to decrypt
+      the tablet every time you power it on. The only other way to decrypt is to perform a factory
+      data reset, erasing all your data.\n\nEncryption takes an hour or more. You must start with
+      a charged battery and keep your tablet plugged in throughout the process. If you interrupt it,
+      you\u2019ll lose some or all of your data</string>
+    <string name="crypt_keeper_confirm_title">Encrypt?</string>
+    <string name="crypt_keeper_final_desc">
+    The encryption operation is irreversible and if you interrupt it, you\u2019ll lose data.
+    Encryption takes an hour or more, during which the tablet will restart several times.
+    </string>
+ <!-- Title of the progress screen while encrypting the device -->
+    <string name="crypt_keeper_setup_title">Encrypting</string>
+
+    <string name="crypt_keeper_setup_description">Wait while your phone
+    is being encrypted. <xliff:g id="percent" example="50">^1</xliff:g>% complete.</string>
+    <string name="crypt_keeper_setup_time_remaining">Wait while your phone
+    is being encrypted. Time remaining: <xliff:g id="duration" example="1:23">^1</xliff:g></string>
+    <string name="crypt_keeper_force_power_cycle">To unlock your phone, turn it off and then on.</string>
+
+
+    <!-- Warn user their device will be wiped if they make x more failed attempts -->
+    <string name="crypt_keeper_warn_wipe">Warning: Your device will be wiped after
+    <xliff:g id="count" example="7">^1</xliff:g> more failed attempts to be unlocked!
+    </string>
+
+    <!-- Informational text on the password entry screen prompting the user for their password -->
+    <string name="crypt_keeper_enter_password">Type your password</string>
+
+    <!-- Title of the encryption screen when encrypting the device failed -->
+    <string name="crypt_keeper_failed_title">Encryption unsuccessful</string>
+
+    <!-- Informational text when encryption fails -->
+    <string name="crypt_keeper_failed_summary">
+      Encryption was interrupted and can\u2019t complete. As a result, the data on
+      your phone is no longer accessible.
+      \n\nTo resume using your phone, you need to perform a factory reset.
+      When you set up your phone after the reset, you\u2019ll have an opportunity
+      to restore any data that was backed up to your Google Account.
+    </string>
+
+    <!-- Title of the encryption screen when decrypting the device failed -->
+    <string name="crypt_keeper_data_corrupt_title">Decryption unsuccessful</string>
+
+    <!-- Informational text when encryption fails -->
+    <string name="crypt_keeper_data_corrupt_summary">
+      The password you entered is correct, but unfortunately your data is
+      corrupt.
+      \n\nTo resume using your phone, you need to perform a factory reset.
+      When you set up your phone after the reset, you\u2019ll have an opportunity
+      to restore any data that was backed up to your Google Account.
+    </string>
+
+    <!-- Image button description to switch input method -->
+    <string name="master_clear_button_text">Reset Mbx</string>
+    <string name="checking_decryption">Checking\u2026</string>
+    <string name="cryptkeeper_wrong_pin">Wrong PIN</string>
+    <string name="cryptkeeper_wrong_pattern">Wrong Pattern</string>
+    <string name="enter_pin">To start Android, enter your PIN</string>
+    <string name="enter_pattern">To start Android, draw your pattern</string>
+    <string name="lockpattern_too_many_failed_confirmation_attempts">Too many incorrect attempts. Try again in <xliff:g id="number">%d</xliff:g> seconds.</string>
+    <string name="lock_profile_wipe_attempts">Try again. Attempt <xliff:g id="current_attempts">%1$d</xliff:g> of <xliff:g id="total_attempts">%2$d</xliff:g>.</string>
+    <string name="global_change_warning">This setting affects all users on this tablet.</string>
+    <string name="battery_history_seconds"><xliff:g id="seconds">%1$d</xliff:g>s</string>
+    <string name="battery_history_days"><xliff:g id="days">%1$d</xliff:g>d <xliff:g id="hours">%2$d</xliff:g>h <xliff:g id="minutes">%3$d</xliff:g>m <xliff:g id="seconds">%4$d</xliff:g>s</string>
+    <string name="battery_history_hours"><xliff:g id="hours">%1$d</xliff:g>h <xliff:g id="minutes">%2$d</xliff:g>m <xliff:g id="seconds">%3$d</xliff:g>s</string>
+    <string name="battery_history_minutes"><xliff:g id="minutes">%1$d</xliff:g>m <xliff:g id="seconds">%2$d</xliff:g>s</string>
+    <string name="battery_history_minutes_no_seconds"><xliff:g id="minutes">%1$d</xliff:g>m</string>
+    <string name="battery_history_hours_no_seconds"><xliff:g id="hours">%1$d</xliff:g>h <xliff:g id="minutes">%2$d</xliff:g>m</string>
+    <string name="battery_history_days_no_seconds"><xliff:g id="days">%1$d</xliff:g>d <xliff:g id="hours">%2$d</xliff:g>h <xliff:g id="minutes">%3$d</xliff:g>m</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm_fingerprint_icon_content_description">Use your fingerprint to continue.</string>
+    <string name="lock_profile_wipe_warning_content_pattern">If you enter an incorrect work pattern on this attempt, your work profile and associated data will be removed from this device.</string>
+    <string name="lockpassword_confirm_your_pin_generic">Enter your device PIN to continue</string>
+    <string name="lockpassword_confirm_your_pin_generic_profile">Enter your work PIN to continue</string>
+    <string name="lock_profile_wipe_warning_title">Last try</string>
+    <string name="lock_profile_wipe_content">Too many incorrect attempts. Your work profile and associated data will be removed from this device.</string>
+    <string name="lock_profile_wipe_dismiss">Dismiss</string>
+    <string name="lockpassword_confirm_your_password_generic">Enter your device password to continue</string>
+    <string name="lockpassword_confirm_your_password_generic_profile">Enter your work password to continue</string>
+    <string name="lockpassword_strong_auth_required_reason_restart_device_pin">Enter your device PIN to continue. Required after device restarts.</string>
+    <string name="lockpassword_strong_auth_required_reason_restart_work_pin">Enter your work PIN to continue. Required after device restarts.</string>
+    <string name="lockpassword_strong_auth_required_reason_restart_device_password">Enter your device password to continue. Required after device restarts.</string>
+    <string name="lockpassword_strong_auth_required_reason_restart_work_password">Enter your work password to continue. Required after device restarts.</string>
+    <string name="lockpassword_confirm_your_password_header">Confirm your password</string>
+    <string name="lockpassword_confirm_your_pin_header">Confirm your PIN</string>
+    <string name="lockpassword_invalid_password">Wrong password</string>
+    <string name="lockpassword_invalid_pin">Wrong PIN</string>
+    <string name="lock_profile_wipe_warning_content_password">If you enter an incorrect work password on this attempt, your work profile and associated data will be removed from this device.</string>
+    <string name="lock_profile_wipe_warning_content_pin">If you enter an incorrect work PIN on this attempt, your work profile and associated data will be removed from this device.</string>
+
+    <string name="settings_menu">Menu</string>
+    <!-- picture mode setting. -->
+    <string name="pq_pictrue">Picture</string>
+    <string name="pq_pictrue_mode">Picture Mode</string>
+    <string name="pq_brightness">Brightness</string>
+    <string name="pq_contrast">Contrast</string>
+    <string name="pq_saturation">Saturation</string>
+    <string name="pq_color">color</string>
+    <string name="pq_sharpness">Sharpness</string>
+    <string name="pq_backlight">Backlight</string>
+    <string name="pq_tone">Tone</string>
+    <string name="pq_hue">Hue</string>
+    <string name="ntsc">NTSC</string>
+    <string name="pal">PAL</string>
+    <string name="pq_color_temprature">Color Temprature</string>
+    <string name="pq_aspect_ratio">Aspect Ratio</string>
+    <string name="pq_dnr">DNR</string>
+    <string name="pq_hdmi_color">Hdmi Color Range Mode</string>
+    <string name="pq_standard">standard</string>
+    <string name="pq_vivid">vivid</string>
+    <string name="pq_soft">soft</string>
+    <string name="pq_movie">movie</string>
+    <string name="pq_sport">sport</string>
+    <string name="pq_monitor">monitor</string>
+    <string name="pq_game">game</string>
+    <string name="pq_user">user</string>
+    <string name="pq_warm">warm</string>
+    <string name="pq_cool">cool</string>
+    <string name="pq_auto">auto</string>
+    <string name="pq_four2three">4 : 3</string>
+    <string name="pq_panorama">panorama</string>
+    <string name="pq_full_screen">full screen</string>
+    <string name="pq_on">on</string>
+    <string name="pq_off">off</string>
+    <string name="pq_medium">medium</string>
+    <string name="pq_high">high</string>
+    <string name="pq_low">low</string>
+    <string name="pq_increase">increase</string>
+    <string name="pq_decrease">decrease</string>
+    <string name="pq_mode_lr">left right mode</string>
+    <string name="pq_mode_rl">right left mode</string>
+    <string name="pq_mode_ud">up down mode</string>
+    <string name="pq_mode_du">down up mode</string>
+    <string name="pq_mode_3d_to_2d">3D to 2D</string>
+    <string name="pq_custom">Custom Settings</string>
+    <string name="pq_backlight_settings">Backlight Settings</string>
+    <!-- keystone correction. -->
+    <string name="keystone">keyStone Correction</string>
+    <!-- tv setting. -->
+    <string name="tv_name">TV</string>
+    <string name="tv_channel">Channel</string>
+    <string name="tv_dtv_type">DTV Type</string>
+    <string name="tv_sound_channel">Sound Channel</string>
+    <string name="tv_channel_info">Channel Info</string>
+    <string name="channel_info_channel">channel</string>
+    <string name="channel_info_frequency">frequency</string>
+    <string name="channel_info_type">type</string>
+    <string name="channel_info_service_id">service ID</string>
+    <string name="channel_info_pcr_id">Pcr ID</string>
+    <string name="tv_search_channel">Search Channel</string>
+    <string name="tv_volume_compensate">Volume Compensate</string>
+    <string name="tv_source">Signal Source</string>
+    <string name="input_long_label_for_tuner">TV (antenna/cable)</string>
+    <string name="tv_sound">Sound</string>
+    <string name="settings_mode">Settings</string>
+    <string name="tv_sound_mode">Sound Mode</string>
+    <string name="input_atv">ATV</string>
+    <string name="input_dtv">DTV</string>
+    <string name="input_dtv_kit">DTVKit</string>
+    <string name="input_google_channel">Live Channels</string>
+    <string name="tv_audio_effect_band1">Band 1:</string>
+    <string name="tv_audio_effect_band2">Band 2:</string>
+    <string name="tv_audio_effect_band3">Band 3:</string>
+    <string name="tv_audio_effect_band4">Band 4:</string>
+    <string name="tv_audio_effect_band5">Band 5:</string>
+    <string name="tv_audio_five_band">Five Band Settings</string>
+    <string name="multi_settings">Multi settings</string>
+    <string name="tv_treble_bass_effect">Treble&#60;bass</string>
+    <string name="tv_treble">Treble</string>
+    <string name="tv_bass">Bass</string>
+    <string name="tv_balance_effect">Balance</string>
+    <string name="tv_spdif">SPDIF</string>
+    <string name="tv_dts_effect">DTS</string>
+    <string name="tv_virtual_surround">Virtual Surround</string>
+    <string name="tv_surround">Surround</string>
+    <string name="tv_dialog_clarity">Dialog Clarity</string>
+    <string name="tv_bass_boost">Bass Boost</string>
+    <string name="tv_sound_output_device">Sound Output Device</string>
+    <string name="tv_sound_agc">AGC</string>
+    <string name="tv_sound_agc_enable">AGC Enable</string>
+    <string name="tv_sound_agc_max_level">Max Level</string>
+    <string name="tv_sound_agc_attrack_time">Attrack Time</string>
+    <string name="tv_sound_agc_release_time">Release Time</string>
+    <string name="tv_sound_standard">standard</string>
+    <string name="tv_sound_music">music</string>
+    <string name="tv_sound_news">news</string>
+    <string name="tv_sound_user">user</string>
+    <string name="tv_spdif_off">off</string>
+    <string name="tv_spdif_pcm">pcm</string>
+    <string name="tv_spdif_raw">raw</string>
+    <string name="tv_switch_on">on</string>
+    <string name="tv_switch_off">off</string>
+    <string name="tv_settings">Settings</string>
+    <string name="tv_startup_setting">Startup Setting</string>
+    <string name="tv_switch_channel">Switch Channel</string>
+    <string name="tv_channel_edit">Channel Edit</string>
+    <string name="tv">TV</string>
+    <string name="radio">Radio</string>
+    <string name="tv_parental_controls">Parental Controls</string>
+    <string name="tv_pip">PIP</string>
+    <string name="tv_atv_mts">MTS</string>
+    <string name="tv_menu_time">Menu Time</string>
+    <string name="tv_sleep_timer">Sleep Timer</string>
+    <string name="tv_multi_audio">Multi Audio</string>
+    <string name="tv_closed_captions">Closed Captions</string>
+    <string name="tv_av_parental_controls">Parental Controls</string>
+    <string name="tv_dynamic_backlight">Dynamic BackLight</string>
+    <string name="tv_default_language">Default Language</string>
+    <string name="tv_audio_ad_switch">Audio AD Switch</string>
+    <string name="tv_audio_ad_mix_level">Audio AD Mix Level</string>
+    <string name="tv_restore_factory">TV Restore Factory</string>
+    <string name="tv_daylight_saving_time">Daylight Saving Time</string>
+    <string name="tv_fbc_upgrade">FBC Upgrade</string>
+    <string name="tv_hdmi_switch">HDMI 2.0</string>
+    <string name="tv_startup_lancher">launcher</string>
+    <string name="tv_factory_menu">Factory Menu</string>
+    <string name="tv_startup_tv">TV</string>
+    <string name="tv_settins_on">on</string>
+    <string name="tv_settins_off">off</string>
+    <string name="tv_hdmi1_switch">HDMI1</string>
+    <string name="tv_hdmi2_switch">HDMI2</string>
+    <string name="tv_hdmi3_switch">HDMI3</string>
+    <string name="tv_hdmi4_switch">HDMI4</string>
+    <string name="tv_ensure_restore">Ensure restore</string>
+    <string name="tv_ok">OK</string>
+    <string name="tv_warning">Warning</string>
+    <string name="tv_prompt_def_set">Restore default settings will restore the settings menu data to factory condition.</string>
+    <string name="tv_prompt2">Restore default settings.</string>
+    <string name="tv_cancel">Cancel</string>
+    <string name="tv_ensure_fbc_update">Ensure FBC Update</string>
+    <string name="tv_fbc_upgrade_detail">Please make sure to upgrade now.</string>
+    <string name="hdmi_audio_latency">HDMI Audio Latency</string>
+    <string name="arc_hdmi_audio_latency">HDMI ARC Audio Latency</string>
+</resources>

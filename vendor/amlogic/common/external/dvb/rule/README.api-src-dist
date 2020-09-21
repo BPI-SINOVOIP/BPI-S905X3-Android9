@@ -1,0 +1,12 @@
+1.If you want to build API for android target, build android SDK firstly
+2.tar zxvf AmlogicSetTopBox-api-src-xxxx.tgz
+3.cd AmlogicSetTopBox-api-src-xxxx
+4.edit config/env_xxxx.mk. xxxx is the target name(android, 8226h, 8226m). change the environment variables to your directories(absolute path name needed). the variables contains:
+	1)linux system
+		KERNEL_INCDIR: kernel header files directory
+		ROOTFS_INCDIR: packages installed header files directory
+		ROOTFS_LIBDIR: packages installed library files directory
+	2)android system
+		ANDROID_TOPDIR: root directory of the android SDK
+5.make TARGET=xxxx config, xxxx is the target name(android, 8226h, 8226m).
+6.make, and API libraries should be generated in "build/xxxx/am_adp" and "build/xxxx/am_mw". xxxx is the target name(android, 8226h, 8226m).

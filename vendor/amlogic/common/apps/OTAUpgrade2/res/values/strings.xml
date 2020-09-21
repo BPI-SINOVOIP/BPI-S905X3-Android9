@@ -1,0 +1,126 @@
+<!-- Copyright (C) 2012 Amlogic, Inc.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources>
+
+    <string name="app_name">UPDATE</string>
+    <string name="version_info">Version Information</string>
+    <string name="check_update">Check Update</string>
+    <string name="update_online">Online update</string>
+    <string name="update_local">Local update</string>
+    <string name="restart_system">Restart System</string>
+    <string name="capacty_not_enough">External Storage Capacity Not Enough,Please Release Memory</string>
+    <string name="data_not_enough">Device Memory Not Enough,Please Release Memory</string>
+    <string name="backup_title">Backup Your Data</string>
+    <string name="backup_info">System Will be Reset,Will Backup Your Data</string>
+    <string name="backup_ok">YES,Backup</string>
+    <string name="backup_cancel">NO,Discard</string>
+    <string name="backup_file">backup</string>
+    <string name="sdcard_title">Insert External Storage</string>
+    <string name="sdcard_info">Move External Storage unDesirable,OTAUpgrade Closing</string>
+    <string name="sdcard_ok">YES,Already Insert</string>
+    <string name="sdcard_cancel">NO,NO Backup</string>
+    <string name="sdcard_fileinsert">Is Your External Storage Insert?</string>
+    <string name="sdcard_fileexist">Is Backup File Exists In Your External Storage?</string>
+    <string name="check_connecting">now is connecting to server...</string>
+    <string name="menu_check">Check Update</string>
+    <string name="ota_update">OTA zip update</string>
+    <string name="install_ota_help">Start OTA update</string>
+    <string name="verifying">Verifying</string>
+    <string name="copying">Copying</string>
+    <string name="init_update">You can Update Your System Online.</string>
+    <string name="init_check">You can Check Update Online.</string>
+    <string name="menu_has_newversion">Discovery a New Version!</string>
+    <string name="menu_has_not_newnewsion">Now Is The Lastest Version</string>
+    <string name="notification_download_title">Download the Package Now!</string>
+    <string name="menu_download">Download The Lastest Package</string>
+    <string name="install_ota_output_confirm">This Action Can Not Be Interrupted When You Are Updating, please backup you data.</string>
+    <string name="install_ota_output_start">"Start Update...Please Ensure that Equipment Power"</string>
+    <string name="install_ota_output_checking">Checking The Package...</string>
+    <string name="install_prepare">Preparing...waitting</string>
+    <string name="install_ota_output_check_ok">Package Verify Successfully...</string>
+    <string name="install_ota_output_check_error">Verifying Failed Lease Check Your Package.</string>
+    <string name="install_ota_output_copying">Copying...</string>
+    <string name="install_ota_output_copy_ok">Copying Complete...</string>
+    <string name="install_ota_output_copy_failed">Copy Failed,Please Check Yout Free Space.</string>
+    <string name="install_ota_output_restart">Ready to Restart System...</string>
+    <string name="confirm_update">Update</string>
+    <string name="confirm_cancel">Cancel</string>
+    <string name="download_cancel">Cancel</string>
+    <string name="download_download">Download</string>
+    <string name="download_pause">Pause</string>
+    <string name="download_resume">Resume</string>
+    <string name="start">Start</string>
+    <string name="pause">Pause</string>
+    <string name="download_back">Check again</string>
+    <string name="download_update">Update Right Now</string>
+    <string name="download_error">Connecting Service Error!</string>
+    <string name="download_message">Download Is Not Finished, Go On?</string>
+    <string name="download_title">Download Notification</string>
+    <string name="sure">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="net_error">Check Failed!Please Check Your Network!</string>
+    <string name="check_now">Checking, Please Wait...</string>
+    <string name="check_failed">Undiscover New Version</string>
+    <string name="check_succeed">Discover a New Version!</string>
+    <string name="check_unknown">Check Failed!Check Your OTA Service Argent</string>
+    <string name="Download_succeed">Package Download Finish, Please Click to Update.</string>
+    <string name="Download_failed">Package Download Finish, But It Can Not Pass The Verify, Please Check Your Network.</string>
+    <string name="select">Select</string>
+    <string name="update_title">Update</string>
+    <string name="backup">BackUp</string>
+    <string name="backup_desc">BackUp Your Data Before Update</string>
+    <string name="restore">Restore</string>
+    <string name="restore_desc">Restore Your Data</string>
+    <string name="backuptitle">Backup&amp;Restore</string>
+    <string name="update_locale">UpdateLocale</string>
+    <string name="wipe_data">Wipe Data</string>
+    <string name="wipe_media">Wipe Media</string>
+    <string name="wipe_cache">Wipe Cache</string>
+    <string name="file_selector">Select Update File</string>
+    <string name="select_ok">Select</string>
+    <string name="select_cancel">Cancel</string>
+    <string name="file_not_exist">File Not Exist</string>
+    <string name="warnning_title">Warnning</string>
+    <string name="download_ok">download ok!</string>
+    <string name="btn_reload">Reload</string>
+    <string name="net_status_change">Current NetWork Status Changed</string>
+    <string name="warnning">External Storage Cannot Be Removed at This Moment</string>
+    <string name="download_err">Download Error Please Retry</string>
+    <string name="download_suc">Download Update File Success</string>
+    <string name="download_ing">Continue Downloading...</string>
+    <string name="stop_low_battery">Battery Is Less Than 20% Law! &#x000A;Focus Stop Update.</string>
+    <string name="stop_download_first">Stop Download First !</string>
+    <string name="check_title">System Update</string>
+    <string name="check_summary">Find a New Update Version,Click to Update</string>
+    <string name="download_summary">Download Update Files Success</string>
+    <string name="auto_check">Auto Check Update</string>
+    <string name="auto_check_close">Close Auto Check Update</string>
+     <string name="prepare_copy">Prepare to Copy Files</string>
+    <string name="start_copy">Copying...</string>
+    <string name="copy_failed_restart">Copy Files to Exteranl Storage:%s Failed,Restart Copying</string>
+	<string name="scan_title">Scanning</string>
+    <string name="scan_tip">Scanning,Please wait...</string>
+    <string name="backup_result">backup finish</string>
+    <string name="restore_result">restore will run background about few mininus</string>
+    <string name="remove_hit">backup will save to external storage if exists or backup save fail</string>
+    <string name="noti_msg">Download success</string>
+    <string name="update_download">Update Downloading</string>
+    <string name="prepare_waitting">"prepare,make sure BACKUP file in your external storage"</string>
+    <string name="reset_wipe">"update file is on the phone,cannot wipe data"</string>
+    <!-- Do Not Translate -->
+    <string name="cur_version">00502001</string>
+    <!-- Do Not Translate -->
+    <string name="otaupdateurl">http://10.28.11.53:8080/otaupdate/update</string>
+</resources>

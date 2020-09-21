@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="Src" format="reference"></attr>
+    <attr name="Amplitude" format="integer"></attr>
+    <attr name="RowNum" format="integer"></attr>
+    <attr name="ColumnNum" format="integer"></attr>
+    <attr name="Frequency" format="float"></attr>
+
+    <declare-styleable name="MikyouBannerView">
+        <attr name="Src"></attr>
+        <attr name="Amplitude"></attr>
+        <attr name="Frequency"></attr>
+        <attr name="RowNum"></attr>
+        <attr name="ColumnNum"></attr>
+    </declare-styleable>
+
+</resources>

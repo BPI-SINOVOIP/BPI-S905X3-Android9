@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="horizontal">
+    <!-- android:background="#ff5000"  -->
+    <!--<LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="30dp"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1">
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/dtvkit" />
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/obs" />
+    </LinearLayout>-->
+
+    <TextView
+        android:id="@+id/dvb_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_orange_dark"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/public_dvb_search"
+        android:textSize="@dimen/dvb_search_text_size"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="50dp"
+        android:layout_weight="5">
+
+        <CheckBox
+            android:id="@+id/network"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/strNetworkSearch" />
+
+        <LinearLayout
+            android:id="@+id/frequency_channel_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/frequency_channel_text"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="@string/search_method" />
+
+            <Spinner
+                android:id="@+id/frequency_channel_spinner"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:entries="@array/public_search_method_entries" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dvbt_bandwidth_containner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/dvbt_bandwidth_text"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="@string/dvbt_search_bandwidth" />
+
+            <Spinner
+                android:id="@+id/dvbt_bandwidth_spinner"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:entries="@array/dvbt_bandwidth_entries" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dvbt_mode_containner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/dvbt_mode_text"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="@string/dvbt_search_mode" />
+
+            <Spinner
+                android:id="@+id/dvbt_mode_spinner"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:entries="@array/dvbt_mode_entries" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dvbt_type_containner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/dvbt_type_text"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="@string/dvbt_search_type" />
+
+            <Spinner
+                android:id="@+id/dvbt_type_spinner"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:entries="@array/dvbt_type_entries" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dvbc_mode_containner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/dvbc_mode_text"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="@string/dvbc_search_mode" />
+
+            <Spinner
+                android:id="@+id/dvbc_mode_spinner"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:entries="@array/dvbc_mode_entries" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dvbc_symbol_containner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/dvbc_symbol_text"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="@string/dvbt_search_symbol_rate" />
+
+            <EditText
+                android:id="@+id/dvbc_symbol_edit"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="number" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/public_search_mode_containner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/public_search_mode_text"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="@string/public_search_mode" />
+
+            <Spinner
+                android:id="@+id/public_search_mode_spinner"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:entries="@array/public_search_mode_entries" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/public_typein_containner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/public_typein_text"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="" />
+
+            <EditText
+                android:id="@+id/public_typein_edit"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="@string/search_frequency_hint" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/public_search_channel_containner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/public_search_channel_text"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="@string/public_search_channel_name" />
+
+            <Spinner
+                android:id="@+id/public_search_channel_spinner"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:gravity="center" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/searchstatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/strSearchNotStarted"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+        <ProgressBar
+            android:id="@+id/searchprogress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#12355b"
+            android:text="@string/strAutoSearch"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/terrestrialstartsearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="1dp"
+                android:layout_weight="1"
+                android:background="@drawable/button"
+                android:text="@string/strStartSearch" />
+
+            <Button
+                android:id="@+id/terrestrialstopsearch"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="1dp"
+                android:layout_weight="1"
+                android:background="@drawable/button"
+                android:text="@string/strStopSearch" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/strSearchDvbcDescription"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,1 @@
+#define CONFIG_RUNCON 1

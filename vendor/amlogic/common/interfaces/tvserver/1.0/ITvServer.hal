@@ -1,0 +1,278 @@
+/*
+ * Copyright 2017 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package vendor.amlogic.hardware.tvserver@1.0;
+
+import ITvServerCallback;
+
+interface ITvServer {
+  disconnect();
+
+  lock();
+
+  unlock();
+
+  processCmd(int32_t type, int32_t size)
+      generates (int32_t ret);
+
+  setCallback(ITvServerCallback callback, ConnectType type);
+
+  startTv()
+      generates (int32_t ret);
+
+  stopTv()
+      generates (int32_t ret);
+
+  switchInputSrc(int32_t inputSrc)
+      generates (int32_t ret);
+
+  getInputSrcConnectStatus(int32_t inputSrc)
+      generates (int32_t ret);
+
+  getCurrentInputSrc()
+      generates (int32_t ret);
+
+  getHdmiAvHotplugStatus()
+      generates (int32_t ret);
+
+  getSupportInputDevices()
+      generates (int32_t result, string devices);
+
+  getHdmiPorts(int32_t inputSrc)
+      generates (int32_t ports);
+
+  getTvSupportCountries()
+      generates (string countries);
+
+  getTvDefaultCountry()
+      generates (string str);
+
+  getTvCountryName(string country_code)
+      generates (string str);
+
+  getTvSearchMode(string country_code)
+      generates (string str);
+
+  getTvDtvSupport(string country_code)
+      generates (bool ret);
+
+  getTvDtvSystem(string country_code)
+      generates (string str);
+
+  getTvAtvSupport(string country_code)
+      generates (bool ret);
+
+  getTvAtvColorSystem(string country_code)
+      generates (string str);
+
+  getTvAtvSoundSystem(string country_code)
+      generates (string str);
+
+  getTvAtvMinMaxFreq(string country_code)
+      generates (string str);
+
+  getTvAtvStepScan(string country_code)
+      generates (bool ret);
+
+  getCurSignalInfo()
+      generates (SignalInfo info);
+
+  setMiscCfg(string key, string val)
+      generates (int32_t ret);
+
+  getMiscCfg(string key, string def)
+      generates (string value);
+
+
+  isDviSIgnal()
+      generates (int32_t signal);
+
+  isVgaTimingInHdmi()
+      generates (int32_t signal);
+
+  setHdmiEdidVersion(int32_t port_id, int32_t ver)
+      generates (int32_t ret);
+
+  getHdmiEdidVersion(int32_t port_id)
+      generates (int32_t ret);
+
+  saveHdmiEdidVersion(int32_t port_id, int32_t ver)
+      generates (int32_t ret);
+
+  setHdmiColorRangeMode(int32_t range_mode)
+      generates (int32_t ret);
+
+  getHdmiColorRangeMode()
+      generates (int32_t ret);
+
+  handleGPIO(string key, int32_t is_out, int32_t edge)
+      generates (int32_t ret);
+
+  setSourceInput(int32_t inputSrc)
+      generates (int32_t ret);
+
+  setSourceInputExt(int32_t inputSrc, int32_t vInputSrc)
+      generates (int32_t ret);
+
+  setBlackoutEnable(int32_t status, int32_t is_save)
+      generates (int32_t ret);
+
+  getBlackoutEnable()
+      generates (int32_t ret);
+
+  getATVMinMaxFreq()
+      generates (int32_t ret, int32_t scanMinFreq, int32_t scanMaxFreq);
+
+  setAmAudioPreMute(int32_t mute)
+      generates (int32_t ret);
+
+  setDvbTextCoding(string coding)
+      generates (int32_t ret);
+
+  operateDeviceForScan(int32_t type)
+      generates (int32_t ret);
+
+  atvAutoScan(int32_t videoStd, int32_t audioStd, int32_t searchType, int32_t procMode)
+      generates (int32_t ret);
+
+  atvMunualScan(int32_t startFreq, int32_t endFreq, int32_t videoStd, int32_t audioStd)
+      generates (int32_t ret);
+
+  Scan(string feparas, string scanparas)
+      generates (int32_t ret);
+
+  dtvScan(int32_t mode, int32_t scan_mode, int32_t beginFreq, int32_t endFreq, int32_t para1, int32_t para2)
+      generates (int32_t ret);
+
+  pauseScan()
+      generates (int32_t ret);
+
+  resumeScan()
+      generates (int32_t ret);
+
+  dtvStopScan()
+      generates (int32_t ret);
+
+  tvSetFrontEnd(string feparas, int32_t force)
+      generates (int32_t ret);
+
+  sendPlayCmd(int32_t cmd, string id, string param)
+      generates (int32_t ret);
+
+  getCurrentSourceInput()
+      generates (int32_t ret);
+
+  getCurrentVirtualSourceInput()
+      generates (int32_t ret);
+
+  dtvSetAudioChannleMod(int32_t audioChannelIdx)
+      generates (int32_t ret);
+
+  dtvGetVideoFormatInfo()
+      generates (FormatInfo info);
+
+  dtvGetScanFreqListMode(int32_t mode)
+      generates(vec<FreqList> freqlist);
+
+  dtvGetSignalStrength()
+      generates(int32_t ret);
+
+  atvdtvGetScanStatus()
+      generates(int32_t value);
+
+  SSMInitDevice()
+    generates (int32_t ret);
+
+  FactoryCleanAllTableForProgram()
+    generates (int32_t ret);
+
+  tvSetFrontendParms(int32_t feType, int32_t freq, int32_t vStd, int32_t aStd, int32_t vfmt, int32_t soundsys, int32_t p1, int32_t p2)
+    generates (int32_t value);
+
+  setTvCountry(string country);
+
+  setAudioOutmode(int32_t mode)
+    generates (int32_t value);
+
+  getAudioOutmode()
+    generates (int32_t value);
+
+  getAudioStreamOutmode()
+    generates (int32_t value);
+
+  getAtvAutoScanMode()
+    generates (int32_t value);
+
+  vdinUpdateForPQ(int32_t gameStatus, int32_t pcStatus, int32_t autoSwitchFlag)
+    generates (int32_t value);
+
+  DtvSetAudioAD(int32_t enable, int32_t audio_pid, int32_t audio_format)
+    generates (int32_t value);
+
+  DtvSwitchAudioTrack(int32_t prog_id, int32_t audio_track_id)
+    generates (int32_t value);
+
+  DtvSwitchAudioTrack3(int32_t audio_pid, int32_t audio_format,int32_t audio_param)
+    generates (int32_t value);
+
+  setWssStatus(int32_t status)
+    generates (int32_t value);
+
+  searchRrtInfo(int32_t rating_region_id, int32_t dimension_id, int32_t value_id, int32_t program_id)
+    generates (RRTSearchInfo info);
+
+  updateRRT(int32_t freq, int32_t moudle, int32_t mode)
+    generates (int32_t value);
+
+  updateEAS(int32_t freq, int32_t moudle, int32_t mode)
+    generates (int32_t value);
+
+  sendRecordingCmd(int32_t cmd, string id, string param)
+    generates (int32_t ret);
+
+  setDeviceIdForCec(int32_t DeviceId)
+    generates (int32_t ret);
+
+  getTvRunStatus()
+    generates (int32_t ret);
+
+  getTvAction()
+    generates (int32_t ret);
+
+  setLcdEnable(int32_t enable)
+    generates (int32_t ret);
+
+  readMacAddress()
+    generates (Result result, int32_t[6] value);
+
+  saveMacAddress(int32_t[6] data_buf)
+    generates (int32_t ret);
+
+  getIwattRegs()
+    generates (int32_t ret);
+
+  setCurrentLanguage(string lang);
+
+  setSameSourceEnable(int32_t isEnable)
+    generates (int32_t ret);
+
+  setPreviewWindow(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
+    generates (int32_t ret);
+
+  setPreviewWindowMode(int32_t enable)
+    generates (int32_t ret);
+
+};

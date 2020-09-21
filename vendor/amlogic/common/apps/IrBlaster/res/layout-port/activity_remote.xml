@@ -1,0 +1,64 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/normal_bg"
+    android:orientation="vertical"
+    tools:context=".RemoteActivity" >
+<LinearLayout android:layout_weight="0.3"
+    		  android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+              
+<FrameLayout android:layout_width="wrap_content"
+             android:layout_height="match_parent"
+             android:layout_weight="0.5"
+             android:layout_margin="6dip"
+             android:background="@drawable/info_show_bg"
+             android:id="@+id/info_zone">
+<TextView  android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:id="@+id/info_text"
+           android:text="@string/app_name"
+           android:textColor="#ffffffff"
+           android:gravity="center"
+    />
+</FrameLayout>
+<FrameLayout android:layout_width="wrap_content"
+             android:layout_height="match_parent"
+             android:layout_weight="0.5"
+             android:background="@drawable/normal_bg"
+             android:id="@+id/cntl_zone"> 
+             
+<fragment android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:id="@+id/control"
+             android:name="com.droidlogic.smartremote.ui.ControlFragment"
+ />
+</FrameLayout>
+</LinearLayout>
+
+<FrameLayout android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:background="@drawable/normal_bg"
+             android:layout_weight="0.3"
+             android:id="@+id/func_zone">
+<fragment android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:id="@+id/function"
+             android:name="com.droidlogic.smartremote.ui.FunctionFragment"
+ />
+</FrameLayout>
+
+<FrameLayout android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_weight="0.4"
+             android:background="@drawable/normal_bg"
+             android:id="@+id/navi_zone">
+<fragment android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:id="@+id/navigation"
+             android:name="com.droidlogic.smartremote.ui.NavigationFragment"
+ />
+</FrameLayout>
+</LinearLayout>

@@ -1,0 +1,14 @@
+#!/bin/sh
+
+APP=@APP@
+BASE=@BASE@
+RELPATH=@RELPATH@
+
+DIRNAME=`dirname $0`
+ROOT=${DIRNAME}/${BASE}
+
+if [ "x$TARGET" = "x" ]; then
+	TARGET=`grep TARGET ${ROOT}/config/config.mk | sed s+TARGET=++`
+fi
+
+${ROOT}/build/${TARGET}/${RELPATH}/${APP} $@

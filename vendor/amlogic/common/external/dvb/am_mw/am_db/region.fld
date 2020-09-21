@@ -1,0 +1,12 @@
+/*region_table 字段列表*/
+"db_id integer primary key autoincrement",	/**< 数据库保存的唯一索引*/ 
+"name text",					/**< 区域名称,格式为 country_name,list_name, 例如 France,DVB-T*/
+"fe_type integer",				/**< 前端类型，参考linux/dvb/frontend.h*/
+"frequency integer",				/**< 频率, HZ*/
+"modulation integer",				/**< 调制方式, 参考linux/dvb/frontend.h fe_modulation*/
+"symbol_rate integer",				/**< 符号率, symbol/s*/
+"bandwidth integer",				/**< 带宽,参考linux/dvb/frontend.h fe_bandwidth*/
+"ofdm_mode integer",				/**< OFDM模式,参考linux/dvb/frontend.h OFDM_DVBT/OFDMDVBT2*/
+"logical_channel_num integer", /**逻辑频道号*/
+"display text", /**附加频道名称*/
+

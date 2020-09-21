@@ -1,0 +1,41 @@
+/*booking_table 字段列表*/
+"db_id integer primary key autoincrement",			/**< 数据库保存的唯一索引*/ 
+"db_srv_id integer",								/**< 预约所属SRV*/
+"db_evt_id integer",								/**< 预约事件*/
+"flag integer",										/**< 预约标志*/
+"status integer",									/**< 录像状态信息，如未开始，已完成等*/
+"start integer",									/**< 开始时间，以秒为单位*/  
+"duration integer",									/**< 持续时间，以秒为单位*/ 
+"srv_name text",									/**< 录像频道名称*/
+"evt_name text",									/**< 录像事件名称*/
+"file_name text",									/**< 录像文件名称，可用于文件回放*/
+
+/* Video */
+"vid_pid integer",									/**< 视频PID*/
+"vid_fmt integer",									/**< 视频格式*/
+
+/* Audios */
+"aud_pids text",									/**< 音频PID*/
+"aud_fmts text",									/**< 音频格式*/
+"aud_languages text",								/**< 音频语言，ISO-639-2语言编码,如eng, chs等*/
+
+/* Subtitles */
+"sub_pids text",									/**< Subtitle PID*/
+"sub_types text",									/**< Subtitle type*/
+"sub_composition_page_ids text",					/**< Composition page id*/
+"sub_ancillary_page_ids text",						/**< Aancillary page id*/
+"sub_languages text",								/**< ISO-639-2语言编码,如eng, chs等*/
+
+/* TeleTexts */
+"ttx_pids text",									/**< Teletext PID*/
+"ttx_types text",									/**< Teletext type*/
+"ttx_magazine_numbers text",						/**< Teletext Manazine Number*/
+"ttx_page_numbers text",							/**< Teletext Page Number*/
+"ttx_languages text",								/**< ISO-639-2语言编码,如eng, chs等*/
+
+/* Other streams */
+"other_pids text",									/**< 其他的录像PID信息*/
+
+"from_storage text",								/**< 录像所在的存储器路径*/
+"repeat integer",								/**< 预约重复类型*/
+

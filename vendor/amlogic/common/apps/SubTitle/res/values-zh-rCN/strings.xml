@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="option_title_str">字幕选项</string>
+    <string name="opt_sub_track">字幕轨道</string>
+    <string name="opt_close">关闭</string>
+    <string name="no_subtitle_str">没有字幕文件!</string>
+</resources>

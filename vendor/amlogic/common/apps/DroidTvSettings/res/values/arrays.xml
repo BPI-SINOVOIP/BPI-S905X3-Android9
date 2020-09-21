@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2014 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string-array name="dolby_sounds_entries">
+        <item>OFF</item>
+        <item>LINE</item>
+        <item>RF</item>
+    </string-array>
+
+    <string-array name="dolby_sounds_entry_values" translatable="false">
+        <item>off</item>
+        <item>line</item>
+        <item>rf</item>
+    </string-array>
+
+    <string-array name="dap_mode_entries">
+        <item>off</item>
+        <item>movie</item>
+        <item>music</item>
+        <item>night</item>
+        <item>user</item>
+    </string-array>
+
+    <string-array name="dap_mode_entry_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
+    <string-array name="dap_geq_entries">
+        <item>off</item>
+        <item>default</item>
+        <item>open</item>
+        <item>rich</item>
+        <item>focused</item>
+        <item>user</item>
+    </string-array>
+
+    <string-array name="dap_geq_entry_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <string-array name="digital_sounds_box_entries">
+        <item>PCM</item>
+        <item>SPDIF</item>
+        <item>AUTO</item>
+        <item>Manual</item>
+    </string-array>
+
+    <string-array name="digital_sounds_box_entry_values" translatable="false">
+        <item>pcm</item>
+        <item>spdif</item>
+        <item>auto</item>
+        <item>manual</item>
+    </string-array>
+
+    <string-array name="digital_sounds_tv_entries">
+        <item>PCM</item>
+        <item>AUTO</item>
+    </string-array>
+
+
+    <string-array name="digital_sounds_tv_entry_values" translatable="false">
+        <item>pcm</item>
+        <item>auto</item>
+    </string-array>
+
+    <string-array name="dts_sounds_entries">
+        <item>0</item>
+        <item>10%</item>
+        <item>20%</item>
+        <item>30%</item>
+        <item>40%</item>
+        <item>50%</item>
+        <item>60%</item>
+        <item>70%</item>
+        <item>80%</item>
+        <item>90%</item>
+        <item>100%</item>
+    </string-array>
+
+    <string-array name="dts_sounds_entry_values" translatable="false">
+        <item>0</item>
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+        <item>40</item>
+        <item>50</item>
+        <item>60</item>
+        <item>70</item>
+        <item>80</item>
+        <item>90</item>
+        <item>100</item>
+    </string-array>
+
+    <string-array name="dts_custom_sounds_entries">
+        <item>0</item>
+        <item>100%</item>
+    </string-array>
+
+    <string-array name="dts_custom_sounds_entry_values" translatable="false">
+        <item>0</item>
+        <item>100</item>
+    </string-array>
+
+    <string-array name="dolby_vision_entries">
+        <item>Dolby Vision OFF</item>
+        <item>Dolby Vision Follow Sink</item>
+        <item>Dolby Vision Follow Source</item>
+    </string-array>
+    <string-array name="dolby_vision_entry_values" translatable="false">
+        <item>dolby_vision_off</item>
+        <item>dolby_vision_sink</item>
+        <item>dolby_vision_source</item>
+    </string-array>
+
+    <string-array name="pq_pictrue_mode_entries">
+        <item>standard</item>
+        <item>vivid</item>
+        <item>soft</item>
+        <item>sport</item>
+        <item>movie</item>
+        <item>user</item>
+    </string-array>
+
+    <string-array name="pq_pictrue_mode_entry_values" translatable="false">
+        <item>standard</item>
+        <item>vivid</item>
+        <item>soft</item>
+        <item>sport</item>
+        <item>movie</item>
+        <item>user</item>
+    </string-array>
+
+    <string-array name="pq_color_temprature_entries">
+        <item>standard</item>
+        <item>warm</item>
+        <item>cool</item>
+    </string-array>
+
+    <string-array name="pq_color_temprature_entry_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="pq_aspect_ratio_entries">
+        <item>auto</item>
+        <item>4 : 3</item>
+        <item>panorama</item>
+        <item>full screen</item>
+    </string-array>
+
+    <string-array name="pq_aspect_ratio_entry_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="pq_dnr_entries">
+        <item>off</item>
+        <item>low</item>
+        <item>medium</item>
+        <item>high</item>
+        <item>auto</item>
+    </string-array>
+
+    <string-array name="pq_dnr_entry_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
+    <string-array name="pq_hdmi_color_entries">
+        <item>auto</item>
+        <item>full</item>
+        <item>limit</item>
+    </string-array>
+
+    <string-array name="pq_hdmi_color_entry_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="tv_sound_mode_entries">
+        <item>standard</item>
+        <item>music</item>
+        <item>news</item>
+        <item>movie</item>
+        <item>game</item>
+        <item>user</item>
+    </string-array>
+
+    <string-array name="tv_sound_mode_entry_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <string-array name="tv_spdif_entries">
+        <item>off</item>
+        <item>pcm</item>
+        <item>raw</item>
+    </string-array>
+
+    <string-array name="tv_spdif_entry_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="tv_sound_mode_extend_entries">
+        <item>standard</item>
+        <item>music</item>
+        <item>news</item>
+        <item>movie</item>
+        <item>game</item>
+        <item>user</item>
+    </string-array>
+
+    <string-array name="tv_sound_mode_extend_entry_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <string-array name="tv_dialogcharity_entries">
+        <item>off</item>
+        <item>low</item>
+        <item>high</item>
+    </string-array>
+
+    <string-array name="tv_dialogcharity_entry_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="tv_offon_entries">
+        <item>off</item>
+        <item>on</item>
+    </string-array>
+
+    <string-array name="tv_offon_entry_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="tv_sound_output_device_entries">
+        <item>Speaker</item>
+        <item>ARC</item>
+    </string-array>
+
+    <string-array name="tv_sound_output_device_entry_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="tv_dtv_type_entries">
+        <item>DTMB</item>
+        <item>DVB-C</item>
+        <item>DVB-T</item>
+        <item>DVB-T2</item>
+        <item>ATSC-T</item>
+        <item>ATSC-C</item>
+        <item>ISDB-T</item>
+    </string-array>
+
+    <string-array name="tv_dtv_type_entry_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+
+    <string-array name="tv_menu_time_entries">
+        <item>off</item>
+        <item>15s</item>
+        <item>30s</item>
+        <item>60s</item>
+        <item>120s</item>
+        <item>240s</item>
+    </string-array>
+
+    <string-array name="tv_menu_time_entry_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <string-array name="tv_sleep_timer_entries">
+        <item>off</item>
+        <item>15min</item>
+        <item>30min</item>
+        <item>45min</item>
+        <item>60min</item>
+        <item>90min</item>
+        <item>120min</item>
+    </string-array>
+
+    <string-array name="tv_sleep_timer_entry_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+
+    <string-array name="tv_sound_channel_entries">
+        <item>stereo</item>
+        <item>left channel</item>
+        <item>right channel</item>
+    </string-array>
+
+    <string-array name="tv_sound_channel_entry_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="tv_startup_entries">
+        <item>Launcher</item>
+        <item>TV</item>
+    </string-array>
+
+    <string-array name="tv_startup_entry_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="tv_switch_channel_entries">
+        <item>static-frame</item>
+        <item>black-frame</item>
+    </string-array>
+
+    <string-array name="tv_switch_channel_entry_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="tv_daylight_saving_time_entries">
+        <item>auto</item>
+        <item>on</item>
+        <item>off</item>
+    </string-array>
+
+    <string-array name="tv_daylight_saving_time_entry_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+</resources>

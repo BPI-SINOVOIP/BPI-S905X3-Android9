@@ -1,0 +1,25 @@
+cc_library_static {
+    name: "libamlogic_ui",
+    vendor_available: true,
+    //vndk: {
+    //    enabled: true,
+    //},
+    srcs: ["amlogic_ui.cpp"],
+    static_libs: [
+        "librecovery_amlogic",
+        "libenv",
+        "libsystemcontrol_static",
+    ],
+    include_dirs: [
+        "bootable/recovery",
+        "system/vold",
+        "system/core/adb",
+        "device/amlogic/common/recovery",
+        "system/core/base/include",
+        "system/core/libziparchive/include",
+        "system/core/libcutils/include",
+        "bootable/recovery/bootloader_message/include",
+        "system/core/libutils/include",
+    ],
+    cflags: ["-Werror"],
+}

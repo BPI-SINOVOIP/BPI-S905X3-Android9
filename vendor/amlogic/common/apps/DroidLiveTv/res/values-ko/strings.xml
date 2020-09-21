@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- for epg ui -->
+    <string name="program_guide">Program guide</string>
+    <string name="program_information">Program details</string>
+    <string name="no_information">No information!</string>
+    <string name="no_program">No program!</string>
+    <string name="date">Date</string>
+    <string name="appointed_success">Appointment success</string>
+    <string name="appointed_cancel">Cancel appointment</string>
+    <string name="appointed_expired">Program expired!</string>
+    <string name="cancel">cancel</string>
+	<string name="ok">확정하다</string>
+    <string name="switch_program_propmt">초자동으로 교환하다</string>
+    <string name="watch_program">예약 프로그램: </string>
+</resources>

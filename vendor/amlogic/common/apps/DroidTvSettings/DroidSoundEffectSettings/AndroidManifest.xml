@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:androidprv="http://schemas.android.com/apk/prv/res/android"
+    package="com.droidlogic.tv.soundeffectsettings"
+    android:sharedUserId="android.uid.system"
+    android:versionCode="1"
+    coreApp="true"
+    android:versionName="1.0" >
+
+    <uses-sdk android:minSdkVersion="23" />
+
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+    <uses-permission android:name="droidlogic.permission.SYSTEM_CONTROL" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <application
+        android:banner="@drawable/ic_launcher_banner_settings"
+        android:defaultToDeviceProtectedStorage="true"
+        android:directBootAware="true"
+        android:icon="@drawable/ic_volume_up"
+        android:label="@string/settings_app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Settings"
+        android:usesCleartextTraffic="true" >
+
+        <uses-library android:name="droidlogic.software.core" />
+        <uses-library android:name="droidlogic.tv.software.core" />
+        <activity
+            android:name=".SoundModeActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:excludeFromRecents="true"
+            android:label="@string/settings_app_name"
+            android:theme="@style/Theme.Settings.Transparent" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".TrebleBassSeekBarActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:excludeFromRecents="true"
+            android:exported="false" />
+         <activity
+            android:name=".BalanceSeekBarActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:excludeFromRecents="true"
+            android:exported="false" />
+         <activity
+            android:name=".DtsSoundSettingActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:excludeFromRecents="true"
+            android:exported="false" />
+        <activity
+            android:name=".DtsVirualXSettingFraActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:excludeFromRecents="true"
+            android:exported="false" />
+        <activity
+            android:name=".AgcSeekBarActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:excludeFromRecents="true"
+            android:exported="false" />
+        <activity
+            android:name=".DbxSettingActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:excludeFromRecents="true"
+            android:exported="false" />
+        <activity
+            android:name=".AudioSettingsActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:excludeFromRecents="true"
+            android:exported="false" />
+    </application>
+
+</manifest>

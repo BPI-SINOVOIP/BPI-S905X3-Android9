@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (C) 2016 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License
+-->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/device_outputmode" >
+
+    <SwitchPreference
+        android:key="best_resolution"
+        android:persistent="false"
+        android:title="@string/device_outputmode_auto"/>
+    <Preference android:key="displaymode_setting"
+        android:persistent="false"
+        android:title="@string/device_displaymode"
+        android:fragment="com.droidlogic.tv.settings.display.outputmode.OutputmodeFragment" />
+    <Preference
+        android:key="colordepth_setting"
+        android:title="@string/device_outputmode_color_depth"
+        android:fragment="com.droidlogic.tv.settings.display.outputmode.ColorDepthFragment"/>
+    <Preference
+        android:key="colorspace_setting"
+        android:title="@string/device_outputmode_color_space"
+        android:fragment="com.droidlogic.tv.settings.display.outputmode.ColorAttributeFragment"/>
+    <SwitchPreference
+        android:key="best_dolbyvision"
+        android:persistent="false"
+        android:title="@string/device_dolbyvision_auto"/>
+    <Preference
+        android:key="dolby_vision"
+        android:title="@string/dolby_vision"
+        android:fragment="com.droidlogic.tv.settings.display.dolbyvision.DolbyVisionSettingFragment"/>
+    <Preference
+        android:key="hdr_policy"
+        android:title="@string/device_hdr_policy"
+        android:fragment="com.droidlogic.tv.settings.display.dolbyvision.HdrPolicyFragment"/>
+    <Preference
+        android:key="dolby_vision_graphics_priority"
+        android:title="@string/dolby_vision_graphics_priority"
+        android:fragment="com.droidlogic.tv.settings.display.dolbyvision.GraphicsPrioritySettingFragment"/>
+    <Preference
+        android:key="hdr_priority"
+        android:title="@string/hdr_priority"
+        android:fragment="com.droidlogic.tv.settings.display.dolbyvision.HdrPriorityFragment"/>
+</PreferenceScreen>

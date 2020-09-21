@@ -1,0 +1,3 @@
+/*group_table 字段列表*/
+"db_id integer primary key autoincrement",	/**< 数据库保存的唯一索引*/ 
+"name text",							/**<分组名称*/

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="app_name">DroidLiveTv</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- pictrue mode -->
+    <string name="picture">图像</string>
+    <string name="picture_mode">图像模式</string>
+    <string name="standard">标准</string>
+    <string name="vivid">明亮</string>
+    <string name="soft">柔和</string>
+    <string name="sport">运动</string>
+    <string name="monitor">显示器</string>
+    <string name="user">用户</string>
+    <!-- sound mode -->
+    <string name="sound">声音</string>
+    <string name="sound_mode">声音模式</string>
+    <string name="music">音乐</string>
+    <string name="news">新闻</string>
+    <string name="movie">电影</string>
+    <!-- ratio mode -->
+    <string name="aspect_ratio">显示比例</string>
+    <string name="auto">自动</string>
+    <string name="panorama">全景</string>
+    <string name="full_screen">全屏</string>
+    <!-- fav & list-->
+    <string name="tv">电视</string>
+    <string name="radio">广播</string>
+    <string name="favourite_list">喜爱列表</string>
+    <string name="channel_list">频道列表</string>
+    <!-- sleep mode -->
+    <string name="sleep_timer">睡眠定时</string>
+    <string name="time_15min">15分钟</string>
+    <string name="time_30min">30分钟</string>
+    <string name="time_45min">45分钟</string>
+    <string name="time_60min">60分钟</string>
+    <string name="time_90min">90分钟</string>
+    <string name="time_120min">120分钟</string>
+    <string name="on">开</string>
+    <string name="off">关</string>
+    <!-- for time suspend ui -->
+    <string name="suspend_dialog_title">待机倒计时</string>
+    <string name="cancel_suspend">取消倒计时</string>
+    <string name="countdown_tips">秒后将关机</string>
+    <!-- for epg ui -->
+    <string name="program_guide">节目指南</string>
+    <string name="program_information">节目详情</string>
+    <string name="no_information">无信息!</string>
+    <string name="no_program">无信息!</string>
+    <string name="date">日期</string>
+    <string name="appointed_success">预约成功</string>
+    <string name="appointed_cancel">预约取消</string>
+    <string name="appointed_expired">节目过期!</string>
+    <string name="appointed_title">预约确认</string>
+    <string name="appointed_donot_appoint_current">不能预约当前播放的节目!</string>
+    <string name="appointed_watch">预约观看</string>
+    <string name="appointed_record">预约录制</string>
+    <string name="cancel">取消</string>
+    <string name="ok">确定</string>
+    <string name="appointed_overlap_title">另一个录制计划 <xliff:g id="program_name" example="test">%1$s</xliff:g> <xliff:g id="time_period" example="00:00~01:00">%2$s</xliff:g> 已经预约在当前时间段, 要继续添加吗 ?</string>
+    <string name="appointed_overlap_add">添加</string>
+    <string name="appointed_overlap_cancel">取消添加</string>
+    <string name="switch_program_propmt">秒后自动切换</string>
+    <string name="watch_program">观看预约的节目: </string>
+    <string name="program_event_name">节目名称: </string>
+    <string name="program_genre">类型: </string>
+    <string name="program_rating">等级: </string>
+    <string name="program_short">描述: </string>
+    <string name="program_extend">信息: </string>
+    <string name="appointed_watch_conflict">另一个预约 <xliff:g id="program_name" example="test">%1$s</xliff:g> <xliff:g id="time_period" example="00:00~01:00">%2$s</xliff:g> 预约时间冲突，要替换吗 ?</string>
+    <string name="appointed_watch_conflict_cancel">取消</string>
+    <string name="appointed_watch_conflict_replace">替换</string>
+
+    <!-- favlist settings -->
+    <string name="favlist_all_tv">所有节目</string>
+    <string name="favlist_satellite">卫星:</string>
+    <string name="favlist_transponder">转发器:</string>
+    <string name="sort_all">全部</string>
+    <string name="sort_a_z">A-Z</string>
+    <string name="sort_z_a">Z-A</string>
+    <string name="sort_tp">转发器</string>
+    <string name="sort_network">运营商</string>
+    <string name="sort_sort">排序</string>
+    <string name="sort_sort_text">i</string>
+    <string name="f1_key">F1</string>
+    <string name="f2_key">F2</string>
+    <string name="f3_key">F3</string>
+    <string name="f4_key">F4</string>
+    <string name="f1_find">查找</string>
+    <string name="f2_add_fav">添加到收藏夹</string>
+    <string name="f3_satellite">卫星</string>
+    <string name="f4_favourite_list">喜爱列表</string>
+    <string name="channel_list_all">所有节目</string>
+    <string name="channel_search">查找</string>
+    <string name="channel_search_result">查找结果</string>
+    <string name="edit_fav_list">编辑喜爱列表</string>
+    <string name="edit_fav_list_add">添加</string>
+    <string name="edit_fav_list_del">删除</string>
+    <string name="edit_fav_list_edit">编辑</string>
+    <string name="edit_fav_list_ok">确定</string>
+    <string name="edit_fav_list_add_description">添加新的喜爱页</string>
+    <string name="edit_fav_list_add_type_in_description">请输入名字</string>
+    <string name="edit_fav_list_del_description">删除喜爱页 \"%1$2s\"</string>
+    <string name="edit_fav_list_edit_description">编辑喜爱页 \"%1$2s\"</string>
+    <string name="edit_fav_list_name_invalid">请输入完整的名字!</string>
+    <string name="edit_fav_list_name_exist">改名称已经存在!</string>
+    <string name="edit_fav_list_name_limit">喜爱页面数不能超过64!</string>
+    <string name="service_type_tv">电视</string>
+    <string name="service_type_radio">广播</string>
+    <string name="service_type_other">其他</string>
+</resources>

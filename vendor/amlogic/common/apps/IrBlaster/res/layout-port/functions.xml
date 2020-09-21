@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="6dip"
+    android:background="@drawable/normal_bg"
+    android:id="@+id/func_zone"
+    android:orientation="horizontal"
+    >
+    
+<LinearLayout android:layout_width="wrap_content"
+             android:layout_height="match_parent"
+             android:layout_weight="0.15"
+             android:id="@+id/color_buttons"
+						 android:gravity="left"
+             android:orientation="vertical"
+             android:layout_marginRight="16dip"
+             android:background="@drawable/normal_bg">
+<com.droidlogic.smartremote.ui.RemoteButton
+             android:layout_width="@dimen/text_button_width" 
+             android:layout_height="wrap_content"
+             android:layout_weight="0.25"
+             android:layout_margin="2dip"
+             android:background="@drawable/red_color_bg"
+             android:id="@+id/func_def_red"
+       />
+<com.droidlogic.smartremote.ui.RemoteButton
+             android:layout_width="@dimen/text_button_width" 
+             android:layout_height="wrap_content"
+             android:layout_weight="0.25"
+             android:layout_margin="2dip"
+             android:background="@drawable/green_color_bg"
+             android:id="@+id/func_def_green"
+       />
+<com.droidlogic.smartremote.ui.RemoteButton
+             android:layout_width="@dimen/text_button_width" 
+             android:layout_height="wrap_content"
+             android:layout_weight="0.25"
+             android:layout_margin="2dip"
+             android:background="@drawable/blue_color_bg"
+             android:id="@+id/func_def_blue"
+       />
+<com.droidlogic.smartremote.ui.RemoteButton
+             android:layout_width="@dimen/text_button_width" 
+             android:layout_height="wrap_content"
+             android:layout_weight="0.25"
+             android:layout_margin="2dip"
+             android:background="@drawable/yellow_color_bg"
+             android:id="@+id/func_def_yellow"
+       />
+</LinearLayout>
+    
+<FrameLayout android:layout_width="wrap_content"
+             android:layout_height="match_parent"
+             android:layout_weight="0.7"
+             android:background="@drawable/normal_bg">
+<include android:id="@+id/fun_numbers" layout="@layout/numbers" />
+</FrameLayout>    
+
+<LinearLayout android:layout_width="wrap_content"
+             android:layout_height="match_parent"
+             android:layout_weight="0.15"
+						 android:gravity="right"
+             android:orientation="vertical"
+             android:layout_marginLeft="16dip"
+             android:background="@drawable/normal_bg">
+    <com.droidlogic.smartremote.ui.RemoteButton
+        	android:background="@drawable/key_bg"
+            android:gravity="center"
+            android:id="@+id/func_menu"
+            android:text="@string/func_menu"
+            android:layout_weight="1"
+            android:layout_width="@dimen/text_button_width"
+            android:layout_height="wrap_content"
+        />
+
+   <com.droidlogic.smartremote.ui.RemoteButton
+            android:background="@drawable/key_bg"
+            android:gravity="center"
+            android:id="@+id/func_voice"
+            android:text="@string/func_voice"
+            android:layout_weight="1"
+            android:layout_width="@dimen/text_button_width"
+            android:layout_height="wrap_content"
+        />
+    <com.droidlogic.smartremote.ui.RemoteButton
+            android:background="@drawable/key_bg"
+		       	android:gravity="center"
+            android:id="@+id/func_video"
+            android:text="@string/func_video"
+            android:layout_weight="1"
+            android:layout_width="@dimen/text_button_width"
+            android:layout_height="wrap_content"
+        />
+    <com.droidlogic.smartremote.ui.RemoteButton
+            android:background="@drawable/key_bg"
+            android:gravity="center"
+            android:id="@+id/func_source"
+            android:text="@string/func_source"
+            android:layout_weight="1"
+            android:layout_width="@dimen/text_button_width"
+            android:layout_height="wrap_content"
+        />
+</LinearLayout>
+</LinearLayout>

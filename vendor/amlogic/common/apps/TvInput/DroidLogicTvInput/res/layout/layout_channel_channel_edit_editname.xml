@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout   xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/content_item"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    >
+    <com.droidlogic.tvinput.settings.OptionEditText
+        android:id="@+id/edit_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="26sp"
+        android:textColor="@color/color_text_edit"
+        android:textColorHint="@color/color_text_hint"
+        android:maxLength="17"
+        />
+	<TextView
+		android:id="@+id/ensure_edit"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@drawable/item_background"
+        android:focusable="true"
+        android:text="@string/ok"
+        android:textSize="26sp"
+        android:textColor="@color/color_text_item"
+        />
+</LinearLayout>

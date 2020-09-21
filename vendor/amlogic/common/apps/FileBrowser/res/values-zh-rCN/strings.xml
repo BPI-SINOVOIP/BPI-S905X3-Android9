@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2012 Amlogic, Inc.
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources>   
+    <string name="app_name">文件管理器</string>
+    <string name="btn_home_str">设备列表</string>
+    <string name="btn_parent_str">返回</string>
+   
+    <string name="btn_edit_str">编辑</string>
+    <string name="btn_sort_str">排序</string>
+    <string name="btn_help_str">帮助</string>
+    <string name="btn_close_str">关闭</string>
+    
+    <string name="sort_dialog_title_str">文件排序</string>
+    <string name="sort_dialog_name_str">按文件名排序</string>
+    <string name="sort_dialog_date_str">按文件修改日期排序</string>
+    <string name="sort_dialog_size_str">按文件大小排序</string>
+    <string name="dialog_close_str">取消</string>
+    
+    <string name="edit_dialog_title_str">文件编辑</string>
+		<string name="edit_dialog_paste_file">粘贴文件:</string>
+    <string name="edit_dialog_copy_str">复制</string>
+    <string name="edit_dialog_delete_str">删除</string>
+    <string name="edit_dialog_paste_str">粘贴</string>
+    <string name="edit_dialog_cut_str">剪切</string>
+  	<string name="edit_dialog_rename_str">重命名</string>
+ 		<string name="edit_dialog_share_str">分享</string>
+  	<string name="cancel">取消</string>
+    <string name="ok">确定</string>
+  	  
+    <string name="load_dialog_msg_str">文件列表加载中，请稍等...</string>
+    
+    <string name="click_dialog_title_str">打开文件</string>
+    <string name="rootDevice">设备列表</string>
+    <string name="openMode">打开方式</string>
+    
+    <string name="FileBrowerDatabase_onCreate">"
+CREATE TABLE file_mark_table (_id INTEGER PRIMARY KEY AUTOINCREMENT, file_path TEXT, is_sel INTEGER);
+CREATE TABLE file_thumbnails_table (_id INTEGER PRIMARY KEY AUTOINCREMENT, file_path TEXT, file_data BLOB, dir_path TEXT );
+"</string>      
+    <string name="FileBrowerDatabase_onUpgrade">"
+DROP TABLE IF EXISTS file_mark_table
+DROP TABLE IF EXISTS file_thumbnails_table
+"</string>    
+
+	<string name="Toast_msg_del_ok">已删除选中的文件.</string>
+	<string name="Toast_msg_del_fail">删除选中的文件失败.</string>
+	<string name="Toast_msg_del_nofile">没有文件被选中删除.</string>
+	<string name="Toast_msg_paste_ok">已粘贴选中的文件到当前目录.</string>
+	<string name="Toast_msg_paste_nofile">没有文件被选中粘贴.</string>
+	<string name="Toast_msg_paste_writeable">无法粘贴,该目录只读.</string>
+	<string name="Toast_msg_paste_nospace">无法粘贴,空间不足.</string>
+	<string name="Toast_msg_cpy_nofile">没有文件被选中复制.</string>
+	<string name="Toast_msg_cut_nofile">没有文件被选中剪切.</string>
+	<string name="Toast_msg_cpy_todo">文件复制，请选择粘贴目录.</string>
+	<string name="Toast_msg_cut_todo">文件剪切，请选择粘贴目录.</string>
+	<string name="Toast_msg_paste_wrongpath">该目录无法进行粘贴.</string>
+	<string name="Toast_msg_edit_noopen">该目录无法进行编辑.</string>
+	<string name="Toast_msg_sort_noopen">该目录无法进行排序.</string>
+	<string name="Toast_msg_rename_morefile">不能同时重命名多个文件:</string>
+	<string name="Toast_msg_rename_nofile">没有文件被选中重命名.</string>
+	<string name="Toast_msg_share_nofile">文件夹不能共享，没有文件被选中.</string>
+	<string name="Toast_msg_share_nodev">没有共享设备.</string>
+	<string name="Toast_msg_rename_error">重命名失败.</string>
+	<string name="Toast_msg_rename_diffpath">不能在不同路径下重命名:</string>
+	<string name="Toast_msg_paste_sub_folder">无法粘贴，目标文件夹是源文件夹的子文件夹！</string>
+	<string name="Toast_msg_no_applicaton">没有合适的应用打开文件.</string>
+	
+	<string name="dialog_help_item_home_str">显示设备列表</string>
+	<string name="dialog_help_item_edit_str">显示编辑菜单</string>
+	<string name="dialog_help_item_mode_str">多选/打开模式</string>
+	<string name="dialog_help_item_sort_str">显示排序菜单</string>
+	<string name="dialog_help_item_parent_str">返回上级目录</string>
+	<string name="dialog_help_item_thumb_str">缩略图显示文件</string>
+	<string name="dialog_help_item_list_str">列表显示文件</string>
+	<string name="dialog_help_item_close_str">关闭文件管理器</string>
+	<string name="memory_device_str">内部存储器 </string>
+	<string name="sdcard_device_str">本机磁盘</string>
+	<string name="ext_sdcard_device_str">外部存储卡</string>
+	<string name="sata_device_str">SATA</string>
+	<string name="usb_device_str">USB设备</string>
+	<string name="cdrom_device_str">光盘驱动器</string>
+	<string name="Toast_copy_fail">拷贝失败！</string>
+	<string name="Toast_no_sdcard">TF卡不存在！</string>
+	<string name="Thumbnail_unsupport">添加附件时不支持缩略图模式. </string>
+</resources>

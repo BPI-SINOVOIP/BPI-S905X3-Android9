@@ -1,0 +1,1 @@
+cp -v btusb.ko /lib/modules/$(uname -r)/kernel/drivers/brcm/btusb.ko

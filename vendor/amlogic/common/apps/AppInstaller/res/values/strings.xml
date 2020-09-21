@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2012 Amlogic, Inc.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources>
+    <string name="app_name">AppInstaller</string>
+	<string name="exit">EXIT</string>
+	<string name="defpath">/sdcard</string>
+	<string name="settings">Settings</string>
+	<string name="cancel">Cancel</string>
+	<string name="unknown_apps_dlg_title">Install blocked</string>
+	<string name="unknown_apps_dlg_text">For security, your device is set to block installation of applications not obtained from Android Market.</string>
+	<string name="alertdialog_title">Choose device to scan apks</string>
+       <string name="choose_device_warning">Please click here to choose device to scan apks</string>
+	<string name="no_apk_found">No APK Found!</string>
+	<string name="scanning_init">&quot;Scanning ...\n\n&quot;</string>
+	<string name="apk_have_not_been_installed">&quot; You can't uninstall the uninstalled apk/apks.  \n&quot;</string>
+	<string name="handling_selected_package_init">&quot;Handling selected package:  \n&quot;</string>
+	<string name="install">Install</string>
+	<string name="uninstall">Uninstall</string>
+	<string name="selectall">Select all</string>
+	<string name="unselect_all">Unselect all</string>
+	<string name="refresh">Refresh</string>
+	<string name="about">About</string>
+	<string name="no_select_apks">&quot;You have not selected any APKs to install/uninstall&quot;</string>
+	<string name="scanning">&quot;Scanning ...\n&quot;</string>
+	<string name="handling_selected_package">&quot;Handling selected package:  &quot;</string>
+	<string name="about_appInstaller">&quot;AppInstaller&quot;</string>
+	<string name="about_version">&quot;\n Version: &quot;</string>
+	<string name="about_date">&quot;\n Date: &quot;</string>
+	<string name="no_space">No enough space for installation</string>
+	<string name="memory_device_str">Internal Memory </string>
+	<string name="sdcard_device_str">Local Disk</string>
+	<string name="ext_sdcard_device_str">External Storage Card</string>
+	<string name="sata_device_str">SATA</string>
+	<string name="usb_device_str">USB</string>
+	<string name="cdrom_device_str">CD ROM</string>
+</resources>

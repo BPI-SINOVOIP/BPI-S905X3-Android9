@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- for epg ui -->
+    <string name="program_guide">番組ガイド</string>
+    <string name="program_information">番組の詳細</string>
+    <string name="no_information">无信息!</string>
+    <string name="no_program">无信息!</string>
+    <string name="date">ひづけ</string>
+    <string name="appointed_success">予約に成功する</string>
+    <string name="appointed_cancel">予約をキャンセルする</string>
+    <string name="appointed_expired">番組が期限切れになる!</string>
+    <string name="cancel">きゃんせる</string>
+	<string name="ok">さだま·る</string>
+    <string name="switch_program_propmt">秒後に自動切り替えます。</string>
+    <string name="watch_program">予約を見ています: </string>
+</resources>

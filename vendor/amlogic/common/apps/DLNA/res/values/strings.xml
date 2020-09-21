@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2012 Amlogic, Inc.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources>
+
+    <string name="app_name">Media Center</string>
+    <string name="dmp_title">DLNA_DMP</string>
+    <string name="dmp_summary">Digital Media Player</string>
+    <string name="dmr_title">DLNA_DMR</string>
+    <string name="dmr_summary">Digital Media Renderer</string>
+    <string name="about">Settings</string>
+    <string name="title">title</string>
+    <string name="summary">Summary</string>
+    <string name="loading">LOADING....</string>
+    <string name="exitstr">Will Exit...</string>
+    <string name="str_unknown">UNKNOWN</string>
+    <string name="media_server">Media Server</string>
+    <string name="media_player">Media Player</string>
+    <string name="settings">Settings</string>
+    <string name="dms_start">Start Share</string>
+    <string name="dms_stop">Stop Share</string>
+    <string name="dms_add_mode">Add Share</string>
+    <string name="dms_add">Add Sharing</string>
+    <string name="setting_apk_summary">"Start Service When start APK"</string>
+    <string name="dms_browse">Local Sharing</string>
+    <string name="dms_add_disk">Set the local media store to share</string>
+    <string name="dms_add_dir">Add directories to share</string>
+    <string name="dms_del">Determine to remove this direcory?</string>
+    <string name="memory_device_str">Internal Memory </string>
+    <string name="sdcard_device_str">SD Card</string>
+    <string name="sata_device_str">SATA</string>
+    <string name="usb_device_str">USB</string>
+    <string name="volume">Volume</string>
+    <string name="str_ok">I Know</string>
+    <string name="str_cancel">Cancel</string>
+    <string name="str_loading">Loading...</string>
+    <string name="str_prompt">Prompting</string>
+    <string name="unsupported_file_format">unsupported file format</string>
+    <string name="str_back">..</string>
+    <string name="disply_err">Network Media Device not Found</string>
+    <string name="pic_largest">Has placed a maximum magnification</string>
+    <string name="pic_lest">Has placed a minimal magnification</string>
+    <string name="error_title">Error Occur!</string>
+    <string name="network_error">Network disconnected,MediaCenter Exits!</string>
+    <string name="no_device_error">Did not find any device!</string>
+    <string name="no_file_error">Did not find any file!</string>
+    <string name="myphoto">MyPhoto</string>
+    <string name="mymusic">MyMusic</string>
+    <string name="myvideo">MyVideo</string>
+    <string name="name_setting">Setting</string>
+    <string name="dlg_ok">OK</string>
+    <string name="dlg_cancel">Cancle</string>
+    <string name="set_name_title">My NetWork Player</string>
+    <string name="set_device_name">Change Network Player Name</string>
+    <string name="if_DMR_boot">Auto set local device as shared player</string>
+    <string name="if_DMS_boot">Auto share my media files</string>
+    <string name="boot_title">"Auto Start DMR"</string>
+    <string name="not_boot_title">"Start DMR"</string>
+    <string name="boot_run">Auto set local device as shared player</string>
+    <string name="not_boot_run">only when this APK started</string>
+    <string name="title_setting">System Setting</string>
+    <string name="title_dialog_setting">please input device shared name</string>
+    <string name="dms_device">All devices</string>
+    <string name="str_up">up</string>
+    <string name="browser_fail">Brower Network Files Failed</string>
+    <string name="str_down">down</string>
+    <string name="str_left">left</string>
+    <string name="str_right">right</string>
+    <string name="str_return">back</string>
+    <string name="str_ok_bottom">ok</string>
+    <string name="str_cursor">move cursor</string>
+    <string name="change_mode">Music Play Mode</string>
+    <string name="str_menu">Press Menu for func</string>
+    <string name="str_time_null" translatable="false">00:00:00</string>
+    <string name="toggle_setting_airplay">"Setting Airplay"</string>
+    <string name="toggle_setting_dmp">"Setting DMP"</string>
+    <string name="refresh">Refresh</string>
+    <string name="str_init">initializing...</string>
+    <string name="searching">Searching...</string>
+    <string name="no_device">No servers found</string>
+    <string name="no_files">No files found</string>
+    <string name="no_files_error">Network error</string>
+    <string name="out_of_size">Error size</string>
+    <string name="oper_click">Click to enter directory,Long Click to Add or Delete Share Directory</string>
+    <string name="video_err_title">Cannot play Video</string>
+    <string name="video_err_summary">Sorry,This Video Cannot be Played!</string>
+    <string name="video_next_title">tips</string>
+    <string name="video_next_summary">Ready for Next...</string>
+    <string name="video_next_exit">Exit</string>
+
+    <string name="airplay_title" translatable="false">AirPlayer</string>
+    <string name="airplay_summary">support for ios network display</string>
+    <string name="settings_summary">network player settings</string>
+    <string name="setting_version_summary" translatable="false">v201510232109</string>
+    
+    <string name="toggle_airplay">AIRPLAY</string>
+    <string name="toggle_setting">SETTINGS</string>
+    
+    <string name="popup_menu_my_android">My Android</string>
+    
+    
+    <string name="setting_service_title">Start AirPlay</string>
+    <string name="setting_boot_title">Automatically Start</string> 
+    <string name="setting_boot_summary">Automatically start when boot up</string> 
+    <string name="setting_device_title">Target Name</string>
+    <string name="setting_version_title">Version</string>
+    <string name="lock_settings_picker_title">Choose screen lock</string>
+    <string name="help_label">Help</string>
+    <string name="dialog_btn_cancel">Cancel</string>
+    <string name="dialog_btn_ok">OK</string>
+    
+    
+    <string name="loading_video">Loading video\u2026</string>
+    <string name="resume_playing_title">Resume video</string>
+    <string name="resume_playing_message">Resume playing from %s ?</string>
+    <string name="resume_playing_resume">Resume playing</string>
+    <string name="resume_playing_restart">Start over</string>
+    <string name="details_ms"  translatable="false">%1$02d:%2$02d</string>
+    <string name="details_hms"  translatable="false">%1$d:%2$02d:%3$02d</string>
+     
+    <string name="audio_play">Playing music</string>
+    <string name="audio_stop">Play stopped</string>
+    <string name="network_disconnected">Network disconnected</string>
+    <string name="play_fail">Can not play this video</string>
+    <string name="pic_unspport">This Picture cannot Zoom</string>
+    <string name="music_image">music image</string>
+    <string name="title_activity_music">Air Music</string>
+    <string name="error_info">Failed to get network files,automatically play the next song</string>
+    <string name="error_exit">Failed to Create MusicPlayer,Exit.</string>
+</resources>

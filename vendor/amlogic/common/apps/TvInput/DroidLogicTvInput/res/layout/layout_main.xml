@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+	<RelativeLayout
+		android:id="@+id/menu_and_content"
+		android:layout_width="385dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_menu">
+
+    <include
+        android:id="@+id/menubar"
+        android:layout_width="128dp"
+        android:layout_height="match_parent"
+        layout="@layout/layout_menu"
+        />
+
+    <FrameLayout
+        android:id="@+id/settings_list"
+        android:layout_width="260dp"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@id/menubar"
+        android:layout_marginRight="0dp"
+        />
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,1 @@
+if libdlna is changed, complie and replace dlna.jar by out\target\product\g02refDongle\obj\JAVA_LIBRARIES\libdlna_intermediates\javalib.jar

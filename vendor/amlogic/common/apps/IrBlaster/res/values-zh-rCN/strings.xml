@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">智能遥控</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">设置</string>
+    <string name="number_0">0</string>
+    <string name="number_1">1</string>
+    <string name="number_2">2</string>
+    <string name="number_3">3</string>
+    <string name="number_4">4</string>
+    <string name="number_5">5</string>
+    <string name="number_6">6</string>
+    <string name="number_7">7</string>
+    <string name="number_8">8</string>
+    <string name="number_9">9</string>
+    <string name="func_source">信号源</string>
+    <string name="func_menu">菜单</string>
+    <string name="func_voice">声音</string>
+    <string name="func_video">图像</string>
+    
+    <string name="cntl_power">电源</string>
+    <string name="cntl_voice">音控</string>
+    <string name="cntl_search">搜索型号</string>
+    <string name="cntl_mute">静音</string>
+    <string name="cntl_show_ch">频显</string>
+    
+    <string name="menu_redef">自定义</string>
+    <string name="menu_derive">数据导出</string>
+    <string name="menu_add_model">添加型号</string>
+    <string name="add_model_hint">输入新的型号名</string>
+    <string name="add_model_cancel">取消</string>
+    <string name="add_model_add">添加</string>
+    
+    <string name="deriving">数据导出中...</string>
+    <string name="derive_success">导出成功</string>
+    <string name="derive_failed">导出存在问题</string>
+    
+    <string name="menu_edit_ops">编辑选项</string>
+    <string name="delete_model">删除</string>
+    <string name="rename_model">重命名</string>
+    
+    <string name="msg_normal_use">正常使用</string>
+    <string name="msg_not_support">平台不支持</string>
+    <string name="msg_send_success">发送成功</string>
+    <string name="msg_send_failed">发送失败</string>
+    <string name="msg_send_undef">按键未定义</string>
+    <string name="msg_redef_success">自定义成功</string>
+    <string name="msg_redef_failed">自定义失败</string>
+    <string name="msg_redef_cancel">自定义取消</string>
+    <string name="msg_go_learn">准备自定义，请选择一个按键</string>
+    <string name="msg_learning">学习中...</string>
+    <string name="msg_initing">初始化... </string>
+    <string name="ok">确定</string>
+    <string name="protocol_nec">NEC</string>
+    <string name="protocol_unknow">未知</string>
+</resources>

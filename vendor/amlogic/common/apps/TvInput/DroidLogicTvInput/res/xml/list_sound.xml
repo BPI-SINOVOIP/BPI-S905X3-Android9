@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <Preference
+        android:key="sound"
+        android:title="@string/sound" >
+    </Preference>
+
+    <Preference
+        android:key="sound_mode"
+        android:title="@string/sound_mode" >
+    </Preference>
+
+    <Preference
+        android:key="treble"
+        android:title="@string/treble" >
+    </Preference>
+
+    <Preference
+        android:key="bass"
+        android:title="@string/bass" >
+    </Preference>
+
+    <Preference
+        android:key="balance"
+        android:title="@string/balance" >
+    </Preference>
+
+    <Preference
+        android:key="spdif"
+        android:title="@string/spdif" >
+    </Preference>
+
+    <Preference
+        android:key="virtual_surround"
+        android:title="@string/virtual_surround" >
+    </Preference>
+
+    <Preference
+        android:key="surround"
+        android:title="@string/surround" >
+    </Preference>
+
+    <Preference
+        android:key="dialog_clarity"
+        android:title="@string/dialog_clarity" >
+    </Preference>
+
+    <Preference
+        android:key="bass_boost"
+        android:title="@string/bass_boost" >
+    </Preference>
+
+</PreferenceScreen>

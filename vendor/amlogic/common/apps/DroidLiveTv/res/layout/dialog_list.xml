@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@color/dark_gray"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/dialog_list_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textSize="@dimen/title_text_size"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:background="@color/dark_gray"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ListView
+            android:id="@+id/dialog_listview"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@null"
+            android:listSelector="@drawable/selector_channellistitem" />
+
+        <LinearLayout
+            android:id="@+id/dialog_list_editname_container"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/display_fav_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textSize="@dimen/title_text_size" />
+
+            <EditText
+                android:id="@+id/rename_fav_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="textPersonName"
+                android:textSize="@dimen/content_text_size" />
+
+            <Button
+                android:id="@+id/button_rename"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@drawable/selector_favedit_buttonitem"
+                android:text="@string/edit_fav_list_ok"
+                android:textSize="@dimen/button_text_size" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

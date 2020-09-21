@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="switchselect">
+        <item>OFF</item>
+        <item>ON </item>
+    </string-array>
+</resources>

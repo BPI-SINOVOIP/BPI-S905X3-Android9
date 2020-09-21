@@ -1,0 +1,8 @@
+on property:vold.post_fs_data_done=1
+	start tee_hdcp
+
+service tee_hdcp /vendor/bin/tee_hdcp
+	oneshot
+	user root
+	group system
+	seclabel u:r:tee:s0

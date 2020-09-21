@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="horizontal"
+  android:layout_height="fill_parent" android:layout_width="fill_parent">
+  <ImageView android:id="@+id/icon"
+    android:layout_height="56dip" android:layout_width="56dip">
+  </ImageView>
+  <TextView android:id="@+id/text"
+    android:layout_width="0dip"
+    android:layout_weight="1.0"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:textColor="@drawable/black"
+	android:ellipsize="middle"
+    android:singleLine="true"
+    android:scrollHorizontally="true"
+  android:layout_height="56dp" android:fadeScrollbars="true" android:fadingEdge="vertical" android:isScrollContainer="false" android:layout_gravity="center_horizontal" android:gravity="left|center">
+  </TextView>
+</LinearLayout>

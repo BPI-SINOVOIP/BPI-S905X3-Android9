@@ -1,0 +1,70 @@
+/*srv_table 字段列表*/
+"db_id integer primary key autoincrement",				/**< 数据库保存的唯一索引*/ 
+"src integer",										/**< 源标识*/
+"db_net_id integer",								/**< 该TS所属网络的数据库保存的net_table中的唯一索引*/
+"db_ts_id integer", 									/**< 该service所属TS的数据库保存的ts_table中的唯一索引*/ 
+"name text",										/**< sevice name*/ 
+"service_id integer", 								/**< service id*/ 
+"service_type integer", 								/**< service type*/
+"eit_schedule_flag integer", 							/**< eit_schedule_flag*/
+"eit_pf_flag integer", 								/**< eit_present_following_flag*/
+"running_status integer", 							/**< running_status*/
+"free_ca_mode integer", 							/**< free_ca_mode*/
+"volume integer", 									/**< 音量*/
+"aud_track integer", 								/**< 声道*/
+"pmt_pid integer",                                               /**< PMT PID*/
+"vid_pid integer", 									/**< 视频PID*/
+"vid_fmt integer",									/**< 视频压缩格式*/
+"pcr_pid integer", 									/**< PCR PID*/
+"scrambled_flag integer",							/**< 加扰标识，0-无加扰，1-有加扰*/
+
+/**< 以下audio,subtitle,teletext的字段中，text型字段以字符串形式存储多个数值，每个数值用','分开，
+ *   取一组值时，需根据数值在字符串中的相同的顺序提取。如取第一组audio，应取pid1 fmt1 lang1*/
+"current_aud integer",                                            /**< 当前音频索引，0为第一个*/
+"aud_pids text",                                                  /**< 音频PIDs，格式为[pid1, pid2,...]*/
+"aud_fmts text",                                                  /**< 音频压缩格式，格式为[fmt1, fmt2,...]*/
+"aud_langs text",                                                 /**< 音频语言，多语言支持，格式为[lang1, lang2,...]*/	
+"aud_types text",																									/**< 音频类型，多语言支持，格式为[type1,type2,...]*/
+"current_sub integer",                                            /**< 当前subtitle索引，0为第一个*/
+"sub_pids text",                                                  /**< Subtitle PID*/
+"sub_types text",                                                 /**< Subtitle type*/
+"sub_composition_page_ids text",                                  /**< Composition page id*/
+"sub_ancillary_page_ids text",                                    /**< Aancillary page id*/
+"sub_langs text",                                                 /**< ISO-639-2语言编码,如eng, chs等*/
+
+"current_ttx integer",                                            /**< 当前teletext索引，0为第一个*/
+"ttx_pids text",                                                  /**< Teletext PID*/
+"ttx_types text",                                                 /**< Teletext type*/
+"ttx_magazine_nos text",                                          /**< Teletext Magazine Number*/
+"ttx_page_nos text",                                              /**< Teletext Page Number*/
+"ttx_langs text",                                                 /**< ISO-639-2语言编码,如eng, chs等*/
+
+"chan_num numeric",									/**< 频道号*/
+"skip integer",										/**< 是否隐藏, 0不隐藏，1隐藏*/
+"lock integer",										/**< 父母锁, 0不加锁，1加锁*/
+"favor integer",										/**< 喜爱设置，0非喜爱，1喜爱*/
+"lcn integer",										/**< LCN */
+"sd_lcn integer",									/**< logic channel number*/
+"hd_lcn integer",									/**< HD simulcast logic channel number*/
+"default_chan_num numeric",							/**< 默认频道号，用于多种排序方法时恢复默认排序，搜索完成后chan_num=default_chan_num*/
+"chan_order integer",								/**< 频道显示顺序，用户可在频道编辑里通过MOVE等操作改变该顺序，但显示的chan_num不变*/
+"lcn_order integer",								/**< 按LCN从小到达排序顺序*/
+"service_id_order integer",							/**< 按Service id从小到达排序顺序*/
+"hd_sd_order integer",								/**< 按高清在前，标清在后排序顺序*/
+
+"db_sat_para_id integer",							/**< 卫星信号下，保存的sat_para_table中的数据库唯一索引，非卫星信号下无效*/
+"dvbt2_plp_id integer",								/**< DVB-T2 data plp id, non-DVBT2 = -1*/
+
+/**< Note: the following fields are added for ATSC only, and they are NOT available for DVB*/
+"major_chan_num integer",							/**< ATSC 主频道号*/
+"minor_chan_num integer",							/**< ATSC 次频道号*/
+"access_controlled integer",						/**< ATSC. when set, that the events associated with 
+														this virtual channel may be access controlled. 
+														When the flag is set to ‘0’, event access is not 
+														restricted*/
+"hidden integer",									/**< ATSC 是否隐藏*/
+"hide_guide integer",									/**< ATSC 隐藏的节目是否可以在EPG中显示*/
+"source_id integer",								/**< ATSC program 的 source id，用于与EIT ETT中的source id对应*/
+
+"sdt_ver integer",									/*sdt version of current ts*/
+"aud_exten text" /**< 音频exten info，now used ac3 info，格式为[exten1,exten2,...]*/

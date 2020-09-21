@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <TextView
+        android:id="@+id/option_title"
+        android:layout_width="262dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="43dp"
+        android:layout_marginLeft="31dp"
+        android:paddingLeft="15dp"
+        android:textSize="27sp"
+        android:textColor="@color/color_text_item"
+        android:singleLine="true"
+        />
+    <com.droidlogic.tvinput.settings.OptionListView
+        android:id="@+id/option_list"
+        android:layout_width="262dp"
+        android:layout_height="375dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="31dp"
+        android:listSelector="@drawable/item_background"
+        android:divider="@color/transparent"
+        />
+</LinearLayout>

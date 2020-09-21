@@ -1,0 +1,9 @@
+Current Version: 2.0.20130913
+Base Version: 1.0
+Changes:
+    1. Add Menu for Version Information;
+    2. Update Locale Function from Udisk;
+    3. Increase the power detection and charge detection function;
+    4. Modify inappropriate UI display , and external sdcard plug bugs;
+    5. Add support for ICS_MR1;
+    6. fix bug for udisk update online;

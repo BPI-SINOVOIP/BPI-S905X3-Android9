@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright (c) 2014 Amlogic, Inc. All rights reserved.
+
+ This source code is subject to the terms and conditions defined in the
+ file 'LICENSE' which is part of this source code package.
+
+ Description: resource file
+-->
+
+<resources>
+
+    <string name="hello">Hello World</string>
+    <string name="app_name">新媒体盒启动器</string>
+    <string name="str_video">在线视频</string>
+    <string name="str_tvapp">电视 </string>
+    <string name="str_recommend">推荐</string>
+    <string name="str_setting">设置</string>
+    <string name="str_app">我的应用</string>
+    <string name="str_music">音乐</string>
+    <string name="str_local">本地播放</string>
+    <string name="str_nospace">快捷栏没有空间了！</string>
+    <string name="str_add">添加</string>
+    <string name="str_exit">退出</string>
+    <string name="str_no_signal">无信号</string>
+    <string name="str_audio_only">广播</string>
+    <string name="str_no_channel">无频道</string>
+    <string name="str_scrambeled">频道加密</string>
+    <string name="str_blocked">频道加锁</string>
+</resources>

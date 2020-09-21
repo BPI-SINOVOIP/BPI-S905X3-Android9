@@ -1,0 +1,99 @@
+<resources>
+    <string name="app_name">DTVKit Source</string>
+    <string-array name="satellites">
+        <item>Astra 28.2</item>
+    </string-array>
+    <string-array name="polarities">
+        <item>horizontal</item>
+        <item>vertical</item>
+        <item>left</item>
+        <item>right</item>
+    </string-array>
+    <string-array name="fecs">
+        <item>auto</item>
+        <item>1/2</item>
+        <item>2/3</item>
+        <item>3/4</item>
+        <item>5/6</item>
+        <item>7/8</item>
+        <item>1/4</item>
+        <item>1/3</item>
+        <item>2/5</item>
+        <item>8/9</item>
+        <item>9/10</item>
+    </string-array>
+    <string-array name="modulations">
+        <item>auto</item>
+        <item>qpsk</item>
+        <item>8psk</item>
+        <item>16qam</item>
+    </string-array>
+    <string-array name="cableModulations">
+        <item>auto</item>
+        <item>qam4</item>
+        <item>qam8</item>
+        <item>qam16</item>
+        <item>qam32</item>
+        <item>qam64</item>
+        <item>qam128</item>
+        <item>qam256</item>
+    </string-array>
+    <string name="strSearchNotStarted">Search not started</string>
+    <string name="strSearchDvbcDescription">Press START SEARCH to start searching for DVB-C channels.</string>
+    <string name="strSearchDvbtDescription">Press START SEARCH to start searching for DVB-T channels.</string>
+    <string name="strStartSearch">Start Search</string>
+    <string name="strManualSearch">Manual Search</string>
+    <string name="strAutoSearch">Auto Search</string>
+    <string name="strTextview">TextView</string>
+    <string name="strTestString">TEST BINDER CONNECTION!!</string>
+    <string name="strNetworkSearch">Network Search</string>
+    <string name="strDVBS2">DVBS-2</string>
+    <string name="strPlaceholder">Placeholder activity for product customisation.</string>
+    <string name="strImportSatellite">Import Satellites</string>
+    <string name="strSetUp">Set Up</string>
+    <string name="strSetUpNotFound">Setup Not Found!</string>
+    <string name="strClearOld">Clear Old Search</string>
+    <string name="strSearchMode">Search Mode:</string>
+    <string name="strFecMode">Forward Error Correction Mode:</string>
+    <string name="strModulationMode">Modulation Mode:</string>
+    <string name="invalid_parameter">Invalid parameter!</string>
+    <string name="strDvbc">DVB-C</string>
+    <string name="strDvbt">DVB-T</string>
+    <string name="strDvbs">DVB-S</string>
+
+    <string name="strStopSearch">Stop Search</string>
+    <string name="manualSearch">Manual Search</string>
+    <string name="autoSearch">Automatic Search</string>
+    <string name="terrestrial">Terrestrial</string>
+    <string name="satellite">Satellite</string>
+    <string name="cable">Cable</string>
+
+    <!-- manaul search -->
+    <string name="search_method">Search Method:</string>
+    <string name="search_frequency">Channel Frequency:</string>
+    <string name="search_frequency_hint">MHz</string>
+    <string name="search_number">Channel Number:</string>
+    <string name="search_number_hint">Number</string>
+    <string name="dvbt_search_bandwidth">Bandwidth:</string>
+    <string name="dvbt_search_mode">Mode:</string>
+    <string name="dvbt_search_type">Type:</string>
+    <string name="dvbc_search_mode">Mode:</string>
+    <string name="dvbt_search_symbol_rate">Symbol Rate:</string>
+    <string name="public_search_mode">Search Mode:</string>
+    <string name="public_search_channel_name">Channel Name:</string>
+    <string name="public_dvb_search">DVB SEARCH</string>
+    <string name="sync_tv_provider">Updating provider, please wait!</string>
+    <string name="dvb_network_change">Dvb channels has changed, searching new channels !</string>
+    <string name="dvb_network_change_confirm">Search</string>
+    <string name="dvb_network_change_cancel">Cancel</string>
+
+    <!-- pvr record delete -->
+    <string name="pvr_record_confirm_delete_schedule">Please delete pvr schedules files firstly!</string>
+    <string name="pvr_record_confirm_stop_record">Please cancel pvr schedules firstly!</string>
+    <string name="pvr_record_confirm_ok">Action</string>
+    <string name="pvr_record_confirm_cancel">Exit</string>
+    <string name="pvr_record_confirm_deleting">Please wait ! deleting...</string>
+    <string name="pvr_record_confirm_delete_done">Delete complete!</string>
+    <string name="pvr_record_confirm_stop_done">Cancel complete!</string>
+
+</resources>

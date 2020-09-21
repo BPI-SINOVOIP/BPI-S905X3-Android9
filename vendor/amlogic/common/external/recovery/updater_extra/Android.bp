@@ -1,0 +1,35 @@
+cc_library_static {
+    name: "libinstall_amlogic",
+    vendor_available: true,
+    //vndk: {
+    //    enabled: true,
+    //},
+    srcs: ["install_amlogic.cpp"],
+    cflags: [
+        "-Wall",
+        "-Wextra",
+    ] + [
+        "-Wwrite-strings",
+        "-Wno-sign-compare",
+        "-D_FILE_OFFSET_BITS=64",
+    ],
+    static_libs: [
+        "libfstab",
+        "libselinux",
+        "libbase",
+        "libenv",
+        "libsystemcontrol_static",
+    ],
+    include_dirs: [
+        "bootable/recovery", 
+        "bootable/recovery/updater/include",
+        "bootable/recovery/edify/include",
+        "bootable/recovery/otautil/include/otautil",
+        "bootable/recovery/bootloader_message/include",
+        "system/core/libziparchive/include",
+        "system/core/libcutils/include",
+        "system/core/libutils/include",
+        "system/core/fs_mgr/include",
+        "vendor/amlogic/common/external/recovery",
+    ],
+}
