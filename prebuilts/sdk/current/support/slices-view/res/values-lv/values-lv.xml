@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <plurals formatted="false" msgid="6241698511167107334" name="abc_slice_duration_days">
+      <item quantity="zero">Pirms <ns1:g id="ID_2">%d</ns1:g> dienām</item>
+      <item quantity="one">Pirms <ns1:g id="ID_2">%d</ns1:g> dienas</item>
+      <item quantity="other">Pirms <ns1:g id="ID_2">%d</ns1:g> dienām</item>
+    </plurals>
+    <plurals formatted="false" msgid="6996334305156847955" name="abc_slice_duration_min">
+      <item quantity="zero">Pirms <ns1:g id="ID_2">%d</ns1:g> minūtēm</item>
+      <item quantity="one">Pirms <ns1:g id="ID_2">%d</ns1:g> minūtes</item>
+      <item quantity="other">Pirms <ns1:g id="ID_2">%d</ns1:g> minūtēm</item>
+    </plurals>
+    <plurals formatted="false" msgid="6212691832333991589" name="abc_slice_duration_years">
+      <item quantity="zero">Pirms <ns1:g id="ID_2">%d</ns1:g> gadiem</item>
+      <item quantity="one">Pirms <ns1:g id="ID_2">%d</ns1:g> gada</item>
+      <item quantity="other">Pirms <ns1:g id="ID_2">%d</ns1:g> gadiem</item>
+    </plurals>
+    <string msgid="4188371422904147368" name="abc_slice_error">"Nevarēja izveidot savienojumu"</string>
+    <string msgid="1983560225998630901" name="abc_slice_more">"Vēl"</string>
+    <string msgid="6405516388971241142" name="abc_slice_more_content">"Vēl <ns1:g id="NUMBER">%1$d</ns1:g>"</string>
+    <string msgid="1567717014004692768" name="abc_slice_show_more">"Rādīt vairāk"</string>
+    <string msgid="8155085405396453848" name="abc_slice_updated">"Atjaunināts <ns1:g id="TIME">%1$s</ns1:g>"</string>
+</resources>

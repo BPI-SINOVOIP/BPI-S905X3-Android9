@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string msgid="1837365417701148489" name="ws_action_drawer_content_description">"操作抽屉式导航栏"</string>
+    <string msgid="7216697245762194759" name="ws_navigation_drawer_content_description">"抽屉式导航栏"</string>
+</resources>

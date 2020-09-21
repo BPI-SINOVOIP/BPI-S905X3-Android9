@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="car_grid_spacing_minimum">32dp</dimen>
+    <dimen name="car_gutter_size">24dp</dimen>
+    <dimen name="car_keyline_1">32dp</dimen>
+    <dimen name="car_keyline_1_keyline_3_diff">96dp</dimen>
+    <dimen name="car_keyline_1_neg">-32dp</dimen>
+    <dimen name="car_keyline_2">108dp</dimen>
+    <dimen name="car_keyline_2_neg">-108dp</dimen>
+    <dimen name="car_keyline_3">128dp</dimen>
+    <dimen name="car_keyline_3_neg">-128dp</dimen>
+    <dimen name="car_keyline_4">168dp</dimen>
+    <dimen name="car_keyline_4_neg">-168dp</dimen>
+    <integer name="car_dialog_column_number">10</integer>
+    <integer name="column_card_default_column_span">10</integer>
+</resources>

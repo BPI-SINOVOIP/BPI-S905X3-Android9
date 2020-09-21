@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string msgid="6209940985205889239" name="mr_button_content_description">"전송 버튼"</string>
+    <string msgid="7205934955575650355" name="mr_cast_button_connected">"전송 버튼. 연결됨"</string>
+    <string msgid="7767160474954808770" name="mr_cast_button_connecting">"전송 버튼. 연결 중"</string>
+    <string msgid="1214396433859225686" name="mr_cast_button_disconnected">"전송 버튼. 연결 해제됨"</string>
+    <string msgid="7883700464756247478" name="mr_chooser_searching">"기기를 찾는 중"</string>
+    <string msgid="1469819231928206099" name="mr_chooser_title">"전송 대상"</string>
+    <string msgid="8313236767081989488" name="mr_controller_album_art">"앨범아트"</string>
+    <string msgid="2406876321200529148" name="mr_controller_casting_screen">"화면 전송 중"</string>
+    <string msgid="1404151965680505956" name="mr_controller_close_description">"닫기"</string>
+    <string msgid="5621264648958127139" name="mr_controller_collapse_group">"접기"</string>
+    <string msgid="1224563715954797152" name="mr_controller_disconnect">"연결 끊기"</string>
+    <string msgid="6561849209271950311" name="mr_controller_expand_group">"확대"</string>
+    <string msgid="942251150039480236" name="mr_controller_no_info_available">"사용할 수 있는 정보 없음"</string>
+    <string msgid="5388112032574870059" name="mr_controller_no_media_selected">"선택된 미디어 없음"</string>
+    <string msgid="5465089322498973309" name="mr_controller_pause">"일시중지"</string>
+    <string msgid="2233159395781515552" name="mr_controller_play">"재생"</string>
+    <string msgid="6970507798830838731" name="mr_controller_stop">"중지"</string>
+    <string msgid="6043110833085090960" name="mr_controller_stop_casting">"전송 중지"</string>
+    <string msgid="390328956880221771" name="mr_controller_volume_slider">"볼륨 슬라이더"</string>
+    <string msgid="6445173646164603280" name="mr_system_route_name">"시스템"</string>
+    <string msgid="8951247913519682277" name="mr_user_route_category_name">"기기"</string>
+</resources>

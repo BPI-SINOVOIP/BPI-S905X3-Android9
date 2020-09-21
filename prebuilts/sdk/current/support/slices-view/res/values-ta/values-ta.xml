@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <string msgid="1983560225998630901" name="abc_slice_more">"மேலும்"</string>
+    <string msgid="6405516388971241142" name="abc_slice_more_content">"+ <ns1:g id="NUMBER">%1$d</ns1:g>"</string>
+    <string msgid="1567717014004692768" name="abc_slice_show_more">"மேலும் காட்டு"</string>
+</resources>

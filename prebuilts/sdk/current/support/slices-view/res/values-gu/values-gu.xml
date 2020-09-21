@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <string msgid="4188371422904147368" name="abc_slice_error">"કનેક્ટ કરી શકાયું નથી"</string>
+    <string msgid="1983560225998630901" name="abc_slice_more">"વધુ"</string>
+    <string msgid="6405516388971241142" name="abc_slice_more_content">"+ <ns1:g id="NUMBER">%1$d</ns1:g>"</string>
+    <string msgid="1567717014004692768" name="abc_slice_show_more">"વધુ બતાવો"</string>
+    <string msgid="8155085405396453848" name="abc_slice_updated">"<ns1:g id="TIME">%1$s</ns1:g> અપડેટ થયું"</string>
+</resources>

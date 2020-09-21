@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <string msgid="5024599872061409708" name="abc_slice_permission_allow">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‏‏‏‏‎‎‎‏‎‏‏‎‏‏‏‎‏‎‏‏‏‏‎‏‏‎‏‏‏‏‎‏‏‎‎‏‎‏‎‎‎‎‏‎‏‏‎‎‎‏‏‎‎‎‏‎‎‏‏‎‏‎‏‏‎‎‎Allow‎‏‎‎‏‎"</string>
+    <string msgid="5696872682700058611" name="abc_slice_permission_checkbox">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‏‏‏‏‎‎‏‏‏‏‎‎‎‎‏‏‏‏‎‏‎‏‏‎‏‏‏‎‎‎‎‏‎‏‏‎‎‎‎‏‏‎‏‏‏‏‎‏‏‎‏‎‏‎‏‏‏‏‏‏‏‏‎‎‏‏‎Allow ‎‏‎‎‏‏‎<ns1:g id="APP">%1$s</ns1:g>‎‏‎‎‏‏‏‎ to show slices from any app‎‏‎‎‏‎"</string>
+    <string msgid="3819478292430407705" name="abc_slice_permission_deny">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‏‏‎‏‏‎‏‎‏‎‎‎‎‎‎‎‏‏‎‎‎‎‎‏‏‎‏‎‎‎‏‎‏‎‎‏‏‏‏‏‏‏‎‏‎‎‎‎‏‎‏‎‎‏‎‎‎‎‎‎‏‏‎‎‏‎Deny‎‏‎‎‏‎"</string>
+    <string msgid="4525743640399572811" name="abc_slice_permission_text_1">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‏‏‎‏‏‏‏‏‎‏‏‎‎‏‏‏‎‏‎‏‎‏‎‏‏‏‏‎‏‏‏‎‎‏‏‎‎‏‏‏‎‎‏‏‏‏‏‏‏‏‏‏‎‏‏‏‏‎‏‎‎‏‎‏‏‎- It can read information from ‎‏‎‎‏‏‎<ns1:g id="APP">%1$s</ns1:g>‎‏‎‎‏‏‏‎‎‏‎‎‏‎"</string>
+    <string msgid="7323565634860251794" name="abc_slice_permission_text_2">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‏‏‏‏‏‎‎‏‎‏‏‎‏‎‎‎‏‎‏‎‎‎‏‎‎‎‎‎‏‎‎‏‎‎‏‎‎‏‏‎‏‏‎‎‎‏‏‎‏‎‎‏‏‏‏‎‏‎‏‎‎‏‎‎‏‎‎- It can take actions inside ‎‏‎‎‏‏‎<ns1:g id="APP">%1$s</ns1:g>‎‏‎‎‏‏‏‎‎‏‎‎‏‎"</string>
+    <string msgid="4175332421259324948" name="abc_slice_permission_title">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‏‏‎‏‏‏‎‎‏‏‏‏‏‎‎‎‏‏‏‎‎‎‎‏‎‏‎‏‏‎‏‏‏‎‎‎‏‏‏‎‎‎‏‎‏‎‏‎‏‎‏‏‎‏‏‏‎‎‎‎‏‎‏‎‎‎Allow ‎‏‎‎‏‏‎<ns1:g id="APP_0">%1$s</ns1:g>‎‏‎‎‏‏‏‎ to show ‎‏‎‎‏‏‎<ns1:g id="APP_2">%2$s</ns1:g>‎‏‎‎‏‏‏‎ slices?‎‏‎‎‏‎"</string>
+    <string msgid="3604847235923472451" name="abc_slices_permission_request">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‏‏‎‏‏‎‎‏‎‎‎‎‎‎‏‏‎‏‏‏‏‏‏‎‏‎‏‏‏‎‏‏‎‎‎‏‏‎‏‏‎‏‏‎‎‎‏‎‎‎‏‏‏‎‎‎‎‎‏‎‎‎‎‏‏‎‎‏‎‎‏‏‎<ns1:g id="APP_0">%1$s</ns1:g>‎‏‎‎‏‏‏‎ wants to show ‎‏‎‎‏‏‎<ns1:g id="APP_2">%2$s</ns1:g>‎‏‎‎‏‏‏‎ slices‎‏‎‎‏‎"</string>
+</resources>

@@ -1,0 +1,1565 @@
+// Automatically generated with:
+// pom2bp -sdk-version current -static-deps '-rewrite=^android.arch.core:common$=android-arch-core-common' '-rewrite=^android.arch.core:runtime$=android-arch-core-runtime' '-rewrite=^android.arch.lifecycle:common$=android-arch-lifecycle-common' '-rewrite=^android.arch.lifecycle:common-java8$=android-arch-lifecycle-common-java8' '-rewrite=^android.arch.lifecycle:extensions$=android-arch-lifecycle-extensions' '-rewrite=^android.arch.lifecycle:livedata$=android-arch-lifecycle-livedata' '-rewrite=^android.arch.lifecycle:livedata-core$=android-arch-lifecycle-livedata-core' '-rewrite=^android.arch.lifecycle:process$=android-arch-lifecycle-process' '-rewrite=^android.arch.lifecycle:runtime$=android-arch-lifecycle-runtime' '-rewrite=^android.arch.lifecycle:service$=android-arch-lifecycle-service' '-rewrite=^android.arch.lifecycle:viewmodel$=android-arch-lifecycle-viewmodel' '-rewrite=^android.arch.paging:common$=android-arch-paging-common' '-rewrite=^android.arch.paging:runtime$=android-arch-paging-runtime' '-rewrite=^android.arch.persistence.room:common$=android-arch-room-common' '-rewrite=^android.arch.persistence.room:migration$=android-arch-room-migration' '-rewrite=^android.arch.persistence.room:runtime$=android-arch-room-runtime' '-rewrite=^android.arch.persistence.room:testing$=android-arch-room-testing' '-rewrite=^android.arch.persistence:db$=android-arch-persistence-db' '-rewrite=^android.arch.persistence:db-framework$=android-arch-persistence-db-framework' '-rewrite=^androidx.annotation:annotation$=androidx.annotation_annotation' '-rewrite=^androidx.appcompat:appcompat$=androidx.appcompat_appcompat' '-rewrite=^androidx.arch.core:core-common$=androidx.arch.core_core-common' '-rewrite=^androidx.arch.core:core-runtime$=androidx.arch.core_core-runtime' '-rewrite=^androidx.asynclayoutinflater:asynclayoutinflater$=androidx.asynclayoutinflater_asynclayoutinflater' '-rewrite=^androidx.browser:browser$=androidx.browser_browser' '-rewrite=^androidx.car:car$=androidx.car_car' '-rewrite=^androidx.cardview:cardview$=androidx.cardview_cardview' '-rewrite=^androidx.collection:collection$=androidx.collection_collection' '-rewrite=^androidx.constraintlayout:constraintlayout$=androidx-constraintlayout_constraintlayout' '-rewrite=^androidx.constraintlayout:constraintlayout-solver$=androidx-constraintlayout_constraintlayout-solver' '-rewrite=^androidx.contentpaging:contentpaging$=androidx.contentpaging_contentpaging' '-rewrite=^androidx.coordinatorlayout:coordinatorlayout$=androidx.coordinatorlayout_coordinatorlayout' '-rewrite=^androidx.core:core$=androidx.core_core' '-rewrite=^androidx.cursoradapter:cursoradapter$=androidx.cursoradapter_cursoradapter' '-rewrite=^androidx.customview:customview$=androidx.customview_customview' '-rewrite=^androidx.documentfile:documentfile$=androidx.documentfile_documentfile' '-rewrite=^androidx.drawerlayout:drawerlayout$=androidx.drawerlayout_drawerlayout' '-rewrite=^androidx.dynamicanimation:dynamicanimation$=androidx.dynamicanimation_dynamicanimation' '-rewrite=^androidx.emoji:emoji$=androidx.emoji_emoji' '-rewrite=^androidx.emoji:emoji-appcompat$=androidx.emoji_emoji-appcompat' '-rewrite=^androidx.emoji:emoji-bundled$=androidx.emoji_emoji-bundled' '-rewrite=^androidx.exifinterface:exifinterface$=androidx.exifinterface_exifinterface' '-rewrite=^androidx.fragment:fragment$=androidx.fragment_fragment' '-rewrite=^androidx.gridlayout:gridlayout$=androidx.gridlayout_gridlayout' '-rewrite=^androidx.heifwriter:heifwriter$=androidx.heifwriter_heifwriter' '-rewrite=^androidx.interpolator:interpolator$=androidx.interpolator_interpolator' '-rewrite=^androidx.leanback:leanback$=androidx.leanback_leanback' '-rewrite=^androidx.leanback:leanback-preference$=androidx.leanback_leanback-preference' '-rewrite=^androidx.legacy:legacy-preference-v14$=androidx.legacy_legacy-preference-v14' '-rewrite=^androidx.legacy:legacy-support-core-ui$=androidx.legacy_legacy-support-core-ui' '-rewrite=^androidx.legacy:legacy-support-core-utils$=androidx.legacy_legacy-support-core-utils' '-rewrite=^androidx.legacy:legacy-support-v13$=androidx.legacy_legacy-support-v13' '-rewrite=^androidx.legacy:legacy-support-v4$=androidx.legacy_legacy-support-v4' '-rewrite=^androidx.lifecycle:lifecycle-common$=androidx.lifecycle_lifecycle-common' '-rewrite=^androidx.lifecycle:lifecycle-common-java8$=androidx.lifecycle_lifecycle-common-java8' '-rewrite=^androidx.lifecycle:lifecycle-extensions$=androidx.lifecycle_lifecycle-extensions' '-rewrite=^androidx.lifecycle:lifecycle-livedata$=androidx.lifecycle_lifecycle-livedata' '-rewrite=^androidx.lifecycle:lifecycle-livedata-core$=androidx.lifecycle_lifecycle-livedata-core' '-rewrite=^androidx.lifecycle:lifecycle-process$=androidx.lifecycle_lifecycle-process' '-rewrite=^androidx.lifecycle:lifecycle-runtime$=androidx.lifecycle_lifecycle-runtime' '-rewrite=^androidx.lifecycle:lifecycle-service$=androidx.lifecycle_lifecycle-service' '-rewrite=^androidx.lifecycle:lifecycle-viewmodel$=androidx.lifecycle_lifecycle-viewmodel' '-rewrite=^androidx.loader:loader$=androidx.loader_loader' '-rewrite=^androidx.localbroadcastmanager:localbroadcastmanager$=androidx.localbroadcastmanager_localbroadcastmanager' '-rewrite=^androidx.media:media$=androidx.media_media' '-rewrite=^androidx.mediarouter:mediarouter$=androidx.mediarouter_mediarouter' '-rewrite=^androidx.multidex:multidex$=androidx-multidex_multidex' '-rewrite=^androidx.multidex:multidex-instrumentation$=androidx-multidex_multidex-instrumentation' '-rewrite=^androidx.paging:paging-common$=androidx.paging_paging-common' '-rewrite=^androidx.paging:paging-runtime$=androidx.paging_paging-runtime' '-rewrite=^androidx.palette:palette$=androidx.palette_palette' '-rewrite=^androidx.percentlayout:percentlayout$=androidx.percentlayout_percentlayout' '-rewrite=^androidx.preference:preference$=androidx.preference_preference' '-rewrite=^androidx.print:print$=androidx.print_print' '-rewrite=^androidx.recommendation:recommendation$=androidx.recommendation_recommendation' '-rewrite=^androidx.recyclerview:recyclerview$=androidx.recyclerview_recyclerview' '-rewrite=^androidx.recyclerview:recyclerview-selection$=androidx.recyclerview_recyclerview-selection' '-rewrite=^androidx.room:room-common$=androidx.room_room-common' '-rewrite=^androidx.room:room-migration$=androidx.room_room-migration' '-rewrite=^androidx.room:room-runtime$=androidx.room_room-runtime' '-rewrite=^androidx.room:room-testing$=androidx.room_room-testing' '-rewrite=^androidx.slice:slice-builders$=androidx.slice_slice-builders' '-rewrite=^androidx.slice:slice-core$=androidx.slice_slice-core' '-rewrite=^androidx.slice:slice-view$=androidx.slice_slice-view' '-rewrite=^androidx.slidingpanelayout:slidingpanelayout$=androidx.slidingpanelayout_slidingpanelayout' '-rewrite=^androidx.sqlite:sqlite$=androidx.sqlite_sqlite' '-rewrite=^androidx.sqlite:sqlite-framework$=androidx.sqlite_sqlite-framework' '-rewrite=^androidx.swiperefreshlayout:swiperefreshlayout$=androidx.swiperefreshlayout_swiperefreshlayout' '-rewrite=^androidx.textclassifier:textclassifier$=androidx.textclassifier_textclassifier' '-rewrite=^androidx.transition:transition$=androidx.transition_transition' '-rewrite=^androidx.tvprovider:tvprovider$=androidx.tvprovider_tvprovider' '-rewrite=^androidx.vectordrawable:vectordrawable$=androidx.vectordrawable_vectordrawable' '-rewrite=^androidx.vectordrawable:vectordrawable-animated$=androidx.vectordrawable_vectordrawable-animated' '-rewrite=^androidx.versionedparcelable:versionedparcelable$=androidx.versionedparcelable_versionedparcelable' '-rewrite=^androidx.viewpager:viewpager$=androidx.viewpager_viewpager' '-rewrite=^androidx.wear:wear$=androidx.wear_wear' '-rewrite=^androidx.webkit:webkit$=androidx.webkit_webkit' '-rewrite=^com.android.support.constraint:constraint-layout$=android-support-constraint-layout' '-rewrite=^com.android.support.constraint:constraint-layout-solver$=android-support-constraint-layout-solver' '-rewrite=^com.android.support:animated-vector-drawable$=android-support-animatedvectordrawable' '-rewrite=^com.android.support:appcompat-v7$=android-support-v7-appcompat' '-rewrite=^com.android.support:asynclayoutinflater$=android-support-asynclayoutinflater' '-rewrite=^com.android.support:car$=android-support-car' '-rewrite=^com.android.support:cardview-v7$=android-support-v7-cardview' '-rewrite=^com.android.support:collections$=android-support-collections' '-rewrite=^com.android.support:contentpaging$=android-support-contentpaging' '-rewrite=^com.android.support:coordinatorlayout$=android-support-coordinatorlayout' '-rewrite=^com.android.support:cursoradapter$=android-support-cursoradapter' '-rewrite=^com.android.support:customtabs$=android-support-customtabs' '-rewrite=^com.android.support:customview$=android-support-customview' '-rewrite=^com.android.support:design$=android-support-design' '-rewrite=^com.android.support:design-animation$=android-support-design-animation' '-rewrite=^com.android.support:design-bottomappbar$=android-support-design-bottomappbar' '-rewrite=^com.android.support:design-bottomnavigation$=android-support-design-bottomnavigation' '-rewrite=^com.android.support:design-bottomsheet$=android-support-design-bottomsheet' '-rewrite=^com.android.support:design-button$=android-support-design-button' '-rewrite=^com.android.support:design-canvas$=android-support-design-canvas' '-rewrite=^com.android.support:design-card$=android-support-design-card' '-rewrite=^com.android.support:design-chip$=android-support-design-chip' '-rewrite=^com.android.support:design-circularreveal$=android-support-design-circularreveal' '-rewrite=^com.android.support:design-circularreveal-cardview$=android-support-design-circularreveal-cardview' '-rewrite=^com.android.support:design-circularreveal-coordinatorlayout$=android-support-design-circularreveal-coordinatorlayout' '-rewrite=^com.android.support:design-color$=android-support-design-color' '-rewrite=^com.android.support:design-dialog$=android-support-design-dialog' '-rewrite=^com.android.support:design-drawable$=android-support-design-drawable' '-rewrite=^com.android.support:design-expandable$=android-support-design-expandable' '-rewrite=^com.android.support:design-floatingactionbutton$=android-support-design-floatingactionbutton' '-rewrite=^com.android.support:design-internal$=android-support-design-internal' '-rewrite=^com.android.support:design-math$=android-support-design-math' '-rewrite=^com.android.support:design-navigation$=android-support-design-navigation' '-rewrite=^com.android.support:design-resources$=android-support-design-resources' '-rewrite=^com.android.support:design-ripple$=android-support-design-ripple' '-rewrite=^com.android.support:design-shape$=android-support-design-shape' '-rewrite=^com.android.support:design-snackbar$=android-support-design-snackbar' '-rewrite=^com.android.support:design-stateful$=android-support-design-stateful' '-rewrite=^com.android.support:design-tabs$=android-support-design-tabs' '-rewrite=^com.android.support:design-textfield$=android-support-design-textfield' '-rewrite=^com.android.support:design-theme$=android-support-design-theme' '-rewrite=^com.android.support:design-transformation$=android-support-design-transformation' '-rewrite=^com.android.support:design-typography$=android-support-design-typography' '-rewrite=^com.android.support:design-widget$=android-support-design-widget' '-rewrite=^com.android.support:documentfile$=android-support-documentfile' '-rewrite=^com.android.support:drawerlayout$=android-support-drawerlayout' '-rewrite=^com.android.support:exifinterface$=android-support-exifinterface' '-rewrite=^com.android.support:gridlayout-v7$=android-support-v7-gridlayout' '-rewrite=^com.android.support:heifwriter$=android-support-heifwriter' '-rewrite=^com.android.support:interpolator$=android-support-interpolator' '-rewrite=^com.android.support:leanback-v17$=android-support-v17-leanback' '-rewrite=^com.android.support:loader$=android-support-loader' '-rewrite=^com.android.support:localbroadcastmanager$=android-support-localbroadcastmanager' '-rewrite=^com.android.support:mediarouter-v7$=android-support-v7-mediarouter' '-rewrite=^com.android.support:multidex$=android-support-multidex' '-rewrite=^com.android.support:multidex-instrumentation$=android-support-multidex-instrumentation' '-rewrite=^com.android.support:palette-v7$=android-support-v7-palette' '-rewrite=^com.android.support:percent$=android-support-percent' '-rewrite=^com.android.support:preference-leanback-v17$=android-support-v17-preference-leanback' '-rewrite=^com.android.support:preference-v14$=android-support-v14-preference' '-rewrite=^com.android.support:preference-v7$=android-support-v7-preference' '-rewrite=^com.android.support:print$=android-support-print' '-rewrite=^com.android.support:recommendation$=android-support-recommendation' '-rewrite=^com.android.support:recyclerview-selection$=android-support-recyclerview-selection' '-rewrite=^com.android.support:recyclerview-v7$=android-support-v7-recyclerview' '-rewrite=^com.android.support:slices-builders$=android-slices-builders' '-rewrite=^com.android.support:slices-core$=android-slices-core' '-rewrite=^com.android.support:slices-view$=android-slices-view' '-rewrite=^com.android.support:slidingpanelayout$=android-support-slidingpanelayout' '-rewrite=^com.android.support:support-annotations$=android-support-annotations' '-rewrite=^com.android.support:support-compat$=android-support-compat' '-rewrite=^com.android.support:support-content$=android-support-support-content' '-rewrite=^com.android.support:support-core-ui$=android-support-core-ui' '-rewrite=^com.android.support:support-core-utils$=android-support-core-utils' '-rewrite=^com.android.support:support-dynamic-animation$=android-support-dynamic-animation' '-rewrite=^com.android.support:support-emoji$=android-support-emoji' '-rewrite=^com.android.support:support-emoji-appcompat$=android-support-emoji-appcompat' '-rewrite=^com.android.support:support-emoji-bundled$=android-support-emoji-bundled' '-rewrite=^com.android.support:support-fragment$=android-support-fragment' '-rewrite=^com.android.support:support-media-compat$=android-support-media-compat' '-rewrite=^com.android.support:support-tv-provider$=android-support-tv-provider' '-rewrite=^com.android.support:support-v13$=android-support-v13' '-rewrite=^com.android.support:support-v4$=android-support-v4' '-rewrite=^com.android.support:support-vector-drawable$=android-support-vectordrawable' '-rewrite=^com.android.support:swiperefreshlayout$=android-support-swiperefreshlayout' '-rewrite=^com.android.support:textclassifier$=android-support-textclassifier' '-rewrite=^com.android.support:transition$=android-support-transition' '-rewrite=^com.android.support:versionedparcelable$=android-versionedparcelable' '-rewrite=^com.android.support:viewpager$=android-support-viewpager' '-rewrite=^com.android.support:wear$=android-support-wear' '-rewrite=^com.android.support:webkit$=android-support-webkit' '-rewrite=^com.android.temp.support:design$=androidx.design_design' '-rewrite=^com.android.temp.support:design-animation$=androidx.design_design-animation' '-rewrite=^com.android.temp.support:design-bottomappbar$=androidx.design_design-bottomappbar' '-rewrite=^com.android.temp.support:design-bottomnavigation$=androidx.design_design-bottomnavigation' '-rewrite=^com.android.temp.support:design-bottomsheet$=androidx.design_design-bottomsheet' '-rewrite=^com.android.temp.support:design-button$=androidx.design_design-button' '-rewrite=^com.android.temp.support:design-canvas$=androidx.design_design-canvas' '-rewrite=^com.android.temp.support:design-card$=androidx.design_design-card' '-rewrite=^com.android.temp.support:design-chip$=androidx.design_design-chip' '-rewrite=^com.android.temp.support:design-circularreveal$=androidx.design_design-circularreveal' '-rewrite=^com.android.temp.support:design-circularreveal-cardview$=androidx.design_design-circularreveal-cardview' '-rewrite=^com.android.temp.support:design-circularreveal-coordinatorlayout$=androidx.design_design-circularreveal-coordinatorlayout' '-rewrite=^com.android.temp.support:design-color$=androidx.design_design-color' '-rewrite=^com.android.temp.support:design-dialog$=androidx.design_design-dialog' '-rewrite=^com.android.temp.support:design-drawable$=androidx.design_design-drawable' '-rewrite=^com.android.temp.support:design-expandable$=androidx.design_design-expandable' '-rewrite=^com.android.temp.support:design-floatingactionbutton$=androidx.design_design-floatingactionbutton' '-rewrite=^com.android.temp.support:design-internal$=androidx.design_design-internal' '-rewrite=^com.android.temp.support:design-math$=androidx.design_design-math' '-rewrite=^com.android.temp.support:design-navigation$=androidx.design_design-navigation' '-rewrite=^com.android.temp.support:design-resources$=androidx.design_design-resources' '-rewrite=^com.android.temp.support:design-ripple$=androidx.design_design-ripple' '-rewrite=^com.android.temp.support:design-shape$=androidx.design_design-shape' '-rewrite=^com.android.temp.support:design-snackbar$=androidx.design_design-snackbar' '-rewrite=^com.android.temp.support:design-stateful$=androidx.design_design-stateful' '-rewrite=^com.android.temp.support:design-tabs$=androidx.design_design-tabs' '-rewrite=^com.android.temp.support:design-textfield$=androidx.design_design-textfield' '-rewrite=^com.android.temp.support:design-theme$=androidx.design_design-theme' '-rewrite=^com.android.temp.support:design-transformation$=androidx.design_design-transformation' '-rewrite=^com.android.temp.support:design-typography$=androidx.design_design-typography' '-rewrite=^com.android.temp.support:design-widget$=androidx.design_design-widget' '-rewrite=^com.google.android.material:material$=com.google.android.material_material' '-rewrite=^com.google.android:flexbox$=flexbox' -extra-deps=android-support-car=prebuilt-android.car-stubs -exclude=androidx.room_room-migration -exclude=androidx.room_room-testing -exclude=android-arch-room-migration -exclude=android-arch-room-testing .
+
+java_import {
+    name: "androidx.annotation_annotation-nodeps",
+    jars: ["m2repository/androidx/annotation/annotation/1.0.0-alpha1/annotation-1.0.0-alpha1.jar"],
+    sdk_version: "current",
+}
+
+java_library_static {
+    name: "androidx.annotation_annotation",
+    sdk_version: "current",
+    static_libs: [
+        "androidx.annotation_annotation-nodeps",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.appcompat_appcompat-nodeps",
+    aars: ["m2repository/androidx/appcompat/appcompat/1.0.0-alpha1/appcompat-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.core_core",
+        "androidx.cursoradapter_cursoradapter",
+        "androidx.legacy_legacy-support-core-utils",
+        "androidx.fragment_fragment",
+        "androidx.vectordrawable_vectordrawable",
+        "androidx.vectordrawable_vectordrawable-animated",
+    ],
+}
+
+android_library {
+    name: "androidx.appcompat_appcompat",
+    sdk_version: "current",
+    manifest: "manifests/androidx.appcompat_appcompat/AndroidManifest.xml",
+    static_libs: [
+        "androidx.appcompat_appcompat-nodeps",
+        "androidx.annotation_annotation",
+        "androidx.collection_collection",
+        "androidx.core_core",
+        "androidx.cursoradapter_cursoradapter",
+        "androidx.legacy_legacy-support-core-utils",
+        "androidx.fragment_fragment",
+        "androidx.vectordrawable_vectordrawable",
+        "androidx.vectordrawable_vectordrawable-animated",
+    ],
+    java_version: "1.7",
+}
+
+java_import {
+    name: "androidx.arch.core_core-common-nodeps",
+    jars: ["m2repository/androidx/arch/core/core-common/2.0.0-alpha1/core-common-2.0.0-alpha1.jar"],
+    sdk_version: "current",
+}
+
+java_library_static {
+    name: "androidx.arch.core_core-common",
+    sdk_version: "current",
+    static_libs: [
+        "androidx.arch.core_core-common-nodeps",
+        "androidx.annotation_annotation",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.arch.core_core-runtime-nodeps",
+    aars: ["m2repository/androidx/arch/core/core-runtime/2.0.0-alpha1/core-runtime-2.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+    ],
+}
+
+android_library {
+    name: "androidx.arch.core_core-runtime",
+    sdk_version: "current",
+    manifest: "manifests/androidx.arch.core_core-runtime/AndroidManifest.xml",
+    static_libs: [
+        "androidx.arch.core_core-runtime-nodeps",
+        "androidx.annotation_annotation",
+        "androidx.arch.core_core-common",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.asynclayoutinflater_asynclayoutinflater-nodeps",
+    aars: ["m2repository/androidx/asynclayoutinflater/asynclayoutinflater/1.0.0-alpha1/asynclayoutinflater-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.core_core",
+    ],
+}
+
+android_library {
+    name: "androidx.asynclayoutinflater_asynclayoutinflater",
+    sdk_version: "current",
+    manifest: "manifests/androidx.asynclayoutinflater_asynclayoutinflater/AndroidManifest.xml",
+    static_libs: [
+        "androidx.asynclayoutinflater_asynclayoutinflater-nodeps",
+        "androidx.annotation_annotation",
+        "androidx.core_core",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.browser_browser-nodeps",
+    aars: ["m2repository/androidx/browser/browser/1.0.0-alpha1/browser-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.core_core",
+        "androidx.interpolator_interpolator",
+        "androidx.legacy_legacy-support-core-ui",
+    ],
+}
+
+android_library {
+    name: "androidx.browser_browser",
+    sdk_version: "current",
+    manifest: "manifests/androidx.browser_browser/AndroidManifest.xml",
+    static_libs: [
+        "androidx.browser_browser-nodeps",
+        "androidx.annotation_annotation",
+        "androidx.collection_collection",
+        "androidx.core_core",
+        "androidx.interpolator_interpolator",
+        "androidx.legacy_legacy-support-core-ui",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.car_car-nodeps",
+    aars: ["m2repository/androidx/car/car/1.0.0-alpha3/car-1.0.0-alpha3.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "com.google.android.material_material",
+        "androidx.appcompat_appcompat",
+        "androidx.cardview_cardview",
+        "androidx.legacy_legacy-support-v4",
+        "androidx.recyclerview_recyclerview",
+        "androidx.gridlayout_gridlayout",
+    ],
+}
+
+android_library {
+    name: "androidx.car_car",
+    sdk_version: "current",
+    manifest: "manifests/androidx.car_car/AndroidManifest.xml",
+    static_libs: [
+        "androidx.car_car-nodeps",
+        "androidx.annotation_annotation",
+        "com.google.android.material_material",
+        "androidx.appcompat_appcompat",
+        "androidx.cardview_cardview",
+        "androidx.legacy_legacy-support-v4",
+        "androidx.recyclerview_recyclerview",
+        "androidx.gridlayout_gridlayout",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.cardview_cardview-nodeps",
+    aars: ["m2repository/androidx/cardview/cardview/1.0.0-alpha1/cardview-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+    ],
+}
+
+android_library {
+    name: "androidx.cardview_cardview",
+    sdk_version: "current",
+    manifest: "manifests/androidx.cardview_cardview/AndroidManifest.xml",
+    static_libs: [
+        "androidx.cardview_cardview-nodeps",
+        "androidx.annotation_annotation",
+    ],
+    java_version: "1.7",
+}
+
+java_import {
+    name: "androidx.collection_collection-nodeps",
+    jars: ["m2repository/androidx/collection/collection/1.0.0-alpha1/collection-1.0.0-alpha1.jar"],
+    sdk_version: "current",
+}
+
+java_library_static {
+    name: "androidx.collection_collection",
+    sdk_version: "current",
+    static_libs: [
+        "androidx.collection_collection-nodeps",
+        "androidx.annotation_annotation",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.coordinatorlayout_coordinatorlayout-nodeps",
+    aars: ["m2repository/androidx/coordinatorlayout/coordinatorlayout/1.0.0-alpha1/coordinatorlayout-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.core_core",
+        "androidx.customview_customview",
+    ],
+}
+
+android_library {
+    name: "androidx.coordinatorlayout_coordinatorlayout",
+    sdk_version: "current",
+    manifest: "manifests/androidx.coordinatorlayout_coordinatorlayout/AndroidManifest.xml",
+    static_libs: [
+        "androidx.coordinatorlayout_coordinatorlayout-nodeps",
+        "androidx.annotation_annotation",
+        "androidx.core_core",
+        "androidx.customview_customview",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.core_core-nodeps",
+    aars: ["m2repository/androidx/core/core/1.0.0-alpha1/core-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.lifecycle_lifecycle-runtime",
+        "androidx.versionedparcelable_versionedparcelable",
+    ],
+}
+
+android_library {
+    name: "androidx.core_core",
+    sdk_version: "current",
+    manifest: "manifests/androidx.core_core/AndroidManifest.xml",
+    static_libs: [
+        "androidx.core_core-nodeps",
+        "androidx.annotation_annotation",
+        "androidx.collection_collection",
+        "androidx.lifecycle_lifecycle-runtime",
+        "androidx.versionedparcelable_versionedparcelable",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.cursoradapter_cursoradapter-nodeps",
+    aars: ["m2repository/androidx/cursoradapter/cursoradapter/1.0.0-alpha1/cursoradapter-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+    ],
+}
+
+android_library {
+    name: "androidx.cursoradapter_cursoradapter",
+    sdk_version: "current",
+    manifest: "manifests/androidx.cursoradapter_cursoradapter/AndroidManifest.xml",
+    static_libs: [
+        "androidx.cursoradapter_cursoradapter-nodeps",
+        "androidx.annotation_annotation",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.customview_customview-nodeps",
+    aars: ["m2repository/androidx/customview/customview/1.0.0-alpha1/customview-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.core_core",
+    ],
+}
+
+android_library {
+    name: "androidx.customview_customview",
+    sdk_version: "current",
+    manifest: "manifests/androidx.customview_customview/AndroidManifest.xml",
+    static_libs: [
+        "androidx.customview_customview-nodeps",
+        "androidx.annotation_annotation",
+        "androidx.core_core",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.documentfile_documentfile-nodeps",
+    aars: ["m2repository/androidx/documentfile/documentfile/1.0.0-alpha1/documentfile-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+    ],
+}
+
+android_library {
+    name: "androidx.documentfile_documentfile",
+    sdk_version: "current",
+    manifest: "manifests/androidx.documentfile_documentfile/AndroidManifest.xml",
+    static_libs: [
+        "androidx.documentfile_documentfile-nodeps",
+        "androidx.annotation_annotation",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.drawerlayout_drawerlayout-nodeps",
+    aars: ["m2repository/androidx/drawerlayout/drawerlayout/1.0.0-alpha1/drawerlayout-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.core_core",
+        "androidx.customview_customview",
+    ],
+}
+
+android_library {
+    name: "androidx.drawerlayout_drawerlayout",
+    sdk_version: "current",
+    manifest: "manifests/androidx.drawerlayout_drawerlayout/AndroidManifest.xml",
+    static_libs: [
+        "androidx.drawerlayout_drawerlayout-nodeps",
+        "androidx.annotation_annotation",
+        "androidx.core_core",
+        "androidx.customview_customview",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.dynamicanimation_dynamicanimation-nodeps",
+    aars: ["m2repository/androidx/dynamicanimation/dynamicanimation/1.0.0-alpha1/dynamicanimation-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.core_core",
+        "androidx.legacy_legacy-support-core-utils",
+    ],
+}
+
+android_library {
+    name: "androidx.dynamicanimation_dynamicanimation",
+    sdk_version: "current",
+    manifest: "manifests/androidx.dynamicanimation_dynamicanimation/AndroidManifest.xml",
+    static_libs: [
+        "androidx.dynamicanimation_dynamicanimation-nodeps",
+        "androidx.collection_collection",
+        "androidx.core_core",
+        "androidx.legacy_legacy-support-core-utils",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.emoji_emoji-appcompat-nodeps",
+    aars: ["m2repository/androidx/emoji/emoji-appcompat/1.0.0-alpha1/emoji-appcompat-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.emoji_emoji",
+        "androidx.appcompat_appcompat",
+    ],
+}
+
+android_library {
+    name: "androidx.emoji_emoji-appcompat",
+    sdk_version: "current",
+    manifest: "manifests/androidx.emoji_emoji-appcompat/AndroidManifest.xml",
+    static_libs: [
+        "androidx.emoji_emoji-appcompat-nodeps",
+        "androidx.emoji_emoji",
+        "androidx.appcompat_appcompat",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.emoji_emoji-bundled-nodeps",
+    aars: ["m2repository/androidx/emoji/emoji-bundled/1.0.0-alpha1/emoji-bundled-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.emoji_emoji",
+    ],
+}
+
+android_library {
+    name: "androidx.emoji_emoji-bundled",
+    sdk_version: "current",
+    manifest: "manifests/androidx.emoji_emoji-bundled/AndroidManifest.xml",
+    static_libs: [
+        "androidx.emoji_emoji-bundled-nodeps",
+        "androidx.emoji_emoji",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.emoji_emoji-nodeps",
+    aars: ["m2repository/androidx/emoji/emoji/1.0.0-alpha1/emoji-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.core_core",
+    ],
+}
+
+android_library {
+    name: "androidx.emoji_emoji",
+    sdk_version: "current",
+    manifest: "manifests/androidx.emoji_emoji/AndroidManifest.xml",
+    static_libs: [
+        "androidx.emoji_emoji-nodeps",
+        "androidx.core_core",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.exifinterface_exifinterface-nodeps",
+    aars: ["m2repository/androidx/exifinterface/exifinterface/1.0.0-alpha1/exifinterface-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+    ],
+}
+
+android_library {
+    name: "androidx.exifinterface_exifinterface",
+    sdk_version: "current",
+    manifest: "manifests/androidx.exifinterface_exifinterface/AndroidManifest.xml",
+    static_libs: [
+        "androidx.exifinterface_exifinterface-nodeps",
+        "androidx.annotation_annotation",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.fragment_fragment-nodeps",
+    aars: ["m2repository/androidx/fragment/fragment/1.0.0-alpha1/fragment-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.core_core",
+        "androidx.legacy_legacy-support-core-ui",
+        "androidx.legacy_legacy-support-core-utils",
+        "androidx.loader_loader",
+        "androidx.lifecycle_lifecycle-viewmodel",
+    ],
+}
+
+android_library {
+    name: "androidx.fragment_fragment",
+    sdk_version: "current",
+    manifest: "manifests/androidx.fragment_fragment/AndroidManifest.xml",
+    static_libs: [
+        "androidx.fragment_fragment-nodeps",
+        "androidx.annotation_annotation",
+        "androidx.core_core",
+        "androidx.legacy_legacy-support-core-ui",
+        "androidx.legacy_legacy-support-core-utils",
+        "androidx.loader_loader",
+        "androidx.lifecycle_lifecycle-viewmodel",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.gridlayout_gridlayout-nodeps",
+    aars: ["m2repository/androidx/gridlayout/gridlayout/1.0.0-alpha1/gridlayout-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.core_core",
+        "androidx.legacy_legacy-support-core-ui",
+    ],
+}
+
+android_library {
+    name: "androidx.gridlayout_gridlayout",
+    sdk_version: "current",
+    manifest: "manifests/androidx.gridlayout_gridlayout/AndroidManifest.xml",
+    static_libs: [
+        "androidx.gridlayout_gridlayout-nodeps",
+        "androidx.core_core",
+        "androidx.legacy_legacy-support-core-ui",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.heifwriter_heifwriter-nodeps",
+    aars: ["m2repository/androidx/heifwriter/heifwriter/1.0.0-alpha1/heifwriter-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+    ],
+}
+
+android_library {
+    name: "androidx.heifwriter_heifwriter",
+    sdk_version: "current",
+    manifest: "manifests/androidx.heifwriter_heifwriter/AndroidManifest.xml",
+    static_libs: [
+        "androidx.heifwriter_heifwriter-nodeps",
+        "androidx.annotation_annotation",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.interpolator_interpolator-nodeps",
+    aars: ["m2repository/androidx/interpolator/interpolator/1.0.0-alpha1/interpolator-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+    ],
+}
+
+android_library {
+    name: "androidx.interpolator_interpolator",
+    sdk_version: "current",
+    manifest: "manifests/androidx.interpolator_interpolator/AndroidManifest.xml",
+    static_libs: [
+        "androidx.interpolator_interpolator-nodeps",
+        "androidx.annotation_annotation",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.leanback_leanback-preference-nodeps",
+    aars: ["m2repository/androidx/leanback/leanback-preference/1.0.0-alpha1/leanback-preference-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.appcompat_appcompat",
+        "androidx.recyclerview_recyclerview",
+        "androidx.preference_preference",
+        "androidx.legacy_legacy-preference-v14",
+        "androidx.leanback_leanback",
+    ],
+}
+
+android_library {
+    name: "androidx.leanback_leanback-preference",
+    sdk_version: "current",
+    manifest: "manifests/androidx.leanback_leanback-preference/AndroidManifest.xml",
+    static_libs: [
+        "androidx.leanback_leanback-preference-nodeps",
+        "androidx.collection_collection",
+        "androidx.appcompat_appcompat",
+        "androidx.recyclerview_recyclerview",
+        "androidx.preference_preference",
+        "androidx.legacy_legacy-preference-v14",
+        "androidx.leanback_leanback",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.leanback_leanback-nodeps",
+    aars: ["m2repository/androidx/leanback/leanback/1.0.0-alpha1/leanback-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.core_core",
+        "androidx.legacy_legacy-support-core-ui",
+        "androidx.media_media",
+        "androidx.fragment_fragment",
+        "androidx.recyclerview_recyclerview",
+    ],
+}
+
+android_library {
+    name: "androidx.leanback_leanback",
+    sdk_version: "current",
+    manifest: "manifests/androidx.leanback_leanback/AndroidManifest.xml",
+    static_libs: [
+        "androidx.leanback_leanback-nodeps",
+        "androidx.core_core",
+        "androidx.legacy_legacy-support-core-ui",
+        "androidx.media_media",
+        "androidx.fragment_fragment",
+        "androidx.recyclerview_recyclerview",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.legacy_legacy-preference-v14-nodeps",
+    aars: ["m2repository/androidx/legacy/legacy-preference-v14/1.0.0-alpha1/legacy-preference-v14-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.preference_preference",
+    ],
+}
+
+android_library {
+    name: "androidx.legacy_legacy-preference-v14",
+    sdk_version: "current",
+    manifest: "manifests/androidx.legacy_legacy-preference-v14/AndroidManifest.xml",
+    static_libs: [
+        "androidx.legacy_legacy-preference-v14-nodeps",
+        "androidx.preference_preference",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.legacy_legacy-support-core-ui-nodeps",
+    aars: ["m2repository/androidx/legacy/legacy-support-core-ui/1.0.0-alpha1/legacy-support-core-ui-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.core_core",
+        "androidx.legacy_legacy-support-core-utils",
+        "androidx.customview_customview",
+        "androidx.viewpager_viewpager",
+        "androidx.coordinatorlayout_coordinatorlayout",
+        "androidx.drawerlayout_drawerlayout",
+        "androidx.slidingpanelayout_slidingpanelayout",
+        "androidx.interpolator_interpolator",
+        "androidx.swiperefreshlayout_swiperefreshlayout",
+        "androidx.asynclayoutinflater_asynclayoutinflater",
+        "androidx.cursoradapter_cursoradapter",
+    ],
+}
+
+android_library {
+    name: "androidx.legacy_legacy-support-core-ui",
+    sdk_version: "current",
+    manifest: "manifests/androidx.legacy_legacy-support-core-ui/AndroidManifest.xml",
+    static_libs: [
+        "androidx.legacy_legacy-support-core-ui-nodeps",
+        "androidx.annotation_annotation",
+        "androidx.core_core",
+        "androidx.legacy_legacy-support-core-utils",
+        "androidx.customview_customview",
+        "androidx.viewpager_viewpager",
+        "androidx.coordinatorlayout_coordinatorlayout",
+        "androidx.drawerlayout_drawerlayout",
+        "androidx.slidingpanelayout_slidingpanelayout",
+        "androidx.interpolator_interpolator",
+        "androidx.swiperefreshlayout_swiperefreshlayout",
+        "androidx.asynclayoutinflater_asynclayoutinflater",
+        "androidx.cursoradapter_cursoradapter",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.legacy_legacy-support-core-utils-nodeps",
+    aars: ["m2repository/androidx/legacy/legacy-support-core-utils/1.0.0-alpha1/legacy-support-core-utils-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.core_core",
+        "androidx.documentfile_documentfile",
+        "androidx.loader_loader",
+        "androidx.localbroadcastmanager_localbroadcastmanager",
+        "androidx.print_print",
+    ],
+}
+
+android_library {
+    name: "androidx.legacy_legacy-support-core-utils",
+    sdk_version: "current",
+    manifest: "manifests/androidx.legacy_legacy-support-core-utils/AndroidManifest.xml",
+    static_libs: [
+        "androidx.legacy_legacy-support-core-utils-nodeps",
+        "androidx.annotation_annotation",
+        "androidx.core_core",
+        "androidx.documentfile_documentfile",
+        "androidx.loader_loader",
+        "androidx.localbroadcastmanager_localbroadcastmanager",
+        "androidx.print_print",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.legacy_legacy-support-v13-nodeps",
+    aars: ["m2repository/androidx/legacy/legacy-support-v13/1.0.0-alpha1/legacy-support-v13-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.legacy_legacy-support-v4",
+    ],
+}
+
+android_library {
+    name: "androidx.legacy_legacy-support-v13",
+    sdk_version: "current",
+    manifest: "manifests/androidx.legacy_legacy-support-v13/AndroidManifest.xml",
+    static_libs: [
+        "androidx.legacy_legacy-support-v13-nodeps",
+        "androidx.legacy_legacy-support-v4",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.legacy_legacy-support-v4-nodeps",
+    aars: ["m2repository/androidx/legacy/legacy-support-v4/1.0.0-alpha1/legacy-support-v4-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.core_core",
+        "androidx.media_media",
+        "androidx.legacy_legacy-support-core-utils",
+        "androidx.legacy_legacy-support-core-ui",
+        "androidx.fragment_fragment",
+    ],
+}
+
+android_library {
+    name: "androidx.legacy_legacy-support-v4",
+    sdk_version: "current",
+    manifest: "manifests/androidx.legacy_legacy-support-v4/AndroidManifest.xml",
+    static_libs: [
+        "androidx.legacy_legacy-support-v4-nodeps",
+        "androidx.core_core",
+        "androidx.media_media",
+        "androidx.legacy_legacy-support-core-utils",
+        "androidx.legacy_legacy-support-core-ui",
+        "androidx.fragment_fragment",
+    ],
+    java_version: "1.7",
+}
+
+java_import {
+    name: "androidx.lifecycle_lifecycle-common-java8-nodeps",
+    jars: ["m2repository/androidx/lifecycle/lifecycle-common-java8/2.0.0-alpha1/lifecycle-common-java8-2.0.0-alpha1.jar"],
+    sdk_version: "current",
+}
+
+java_library_static {
+    name: "androidx.lifecycle_lifecycle-common-java8",
+    sdk_version: "current",
+    static_libs: [
+        "androidx.lifecycle_lifecycle-common-java8-nodeps",
+        "androidx.lifecycle_lifecycle-common",
+        "androidx.annotation_annotation",
+    ],
+    java_version: "1.7",
+}
+
+java_import {
+    name: "androidx.lifecycle_lifecycle-common-nodeps",
+    jars: ["m2repository/androidx/lifecycle/lifecycle-common/2.0.0-alpha1/lifecycle-common-2.0.0-alpha1.jar"],
+    sdk_version: "current",
+}
+
+java_library_static {
+    name: "androidx.lifecycle_lifecycle-common",
+    sdk_version: "current",
+    static_libs: [
+        "androidx.lifecycle_lifecycle-common-nodeps",
+        "androidx.annotation_annotation",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.lifecycle_lifecycle-extensions-nodeps",
+    aars: ["m2repository/androidx/lifecycle/lifecycle-extensions/2.0.0-alpha1/lifecycle-extensions-2.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.lifecycle_lifecycle-runtime",
+        "androidx.arch.core_core-runtime",
+        "androidx.fragment_fragment",
+        "androidx.lifecycle_lifecycle-livedata",
+        "androidx.lifecycle_lifecycle-process",
+        "androidx.lifecycle_lifecycle-service",
+        "androidx.lifecycle_lifecycle-viewmodel",
+    ],
+}
+
+android_library {
+    name: "androidx.lifecycle_lifecycle-extensions",
+    sdk_version: "current",
+    manifest: "manifests/androidx.lifecycle_lifecycle-extensions/AndroidManifest.xml",
+    static_libs: [
+        "androidx.lifecycle_lifecycle-extensions-nodeps",
+        "androidx.arch.core_core-common",
+        "androidx.lifecycle_lifecycle-common",
+        "androidx.lifecycle_lifecycle-runtime",
+        "androidx.arch.core_core-runtime",
+        "androidx.fragment_fragment",
+        "androidx.lifecycle_lifecycle-livedata",
+        "androidx.lifecycle_lifecycle-process",
+        "androidx.lifecycle_lifecycle-service",
+        "androidx.lifecycle_lifecycle-viewmodel",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.lifecycle_lifecycle-livedata-core-nodeps",
+    aars: ["m2repository/androidx/lifecycle/lifecycle-livedata-core/2.0.0-alpha1/lifecycle-livedata-core-2.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.arch.core_core-runtime",
+    ],
+}
+
+android_library {
+    name: "androidx.lifecycle_lifecycle-livedata-core",
+    sdk_version: "current",
+    manifest: "manifests/androidx.lifecycle_lifecycle-livedata-core/AndroidManifest.xml",
+    static_libs: [
+        "androidx.lifecycle_lifecycle-livedata-core-nodeps",
+        "androidx.lifecycle_lifecycle-common",
+        "androidx.arch.core_core-common",
+        "androidx.arch.core_core-runtime",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.lifecycle_lifecycle-livedata-nodeps",
+    aars: ["m2repository/androidx/lifecycle/lifecycle-livedata/2.0.0-alpha1/lifecycle-livedata-2.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.arch.core_core-runtime",
+        "androidx.lifecycle_lifecycle-livedata-core",
+    ],
+}
+
+android_library {
+    name: "androidx.lifecycle_lifecycle-livedata",
+    sdk_version: "current",
+    manifest: "manifests/androidx.lifecycle_lifecycle-livedata/AndroidManifest.xml",
+    static_libs: [
+        "androidx.lifecycle_lifecycle-livedata-nodeps",
+        "androidx.arch.core_core-common",
+        "androidx.arch.core_core-runtime",
+        "androidx.lifecycle_lifecycle-livedata-core",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.lifecycle_lifecycle-process-nodeps",
+    aars: ["m2repository/androidx/lifecycle/lifecycle-process/2.0.0-alpha1/lifecycle-process-2.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.lifecycle_lifecycle-runtime",
+    ],
+}
+
+android_library {
+    name: "androidx.lifecycle_lifecycle-process",
+    sdk_version: "current",
+    manifest: "manifests/androidx.lifecycle_lifecycle-process/AndroidManifest.xml",
+    static_libs: [
+        "androidx.lifecycle_lifecycle-process-nodeps",
+        "androidx.lifecycle_lifecycle-runtime",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.lifecycle_lifecycle-runtime-nodeps",
+    aars: ["m2repository/androidx/lifecycle/lifecycle-runtime/2.0.0-alpha1/lifecycle-runtime-2.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+    ],
+}
+
+android_library {
+    name: "androidx.lifecycle_lifecycle-runtime",
+    sdk_version: "current",
+    manifest: "manifests/androidx.lifecycle_lifecycle-runtime/AndroidManifest.xml",
+    static_libs: [
+        "androidx.lifecycle_lifecycle-runtime-nodeps",
+        "androidx.lifecycle_lifecycle-common",
+        "androidx.arch.core_core-common",
+        "androidx.annotation_annotation",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.lifecycle_lifecycle-service-nodeps",
+    aars: ["m2repository/androidx/lifecycle/lifecycle-service/2.0.0-alpha1/lifecycle-service-2.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.lifecycle_lifecycle-runtime",
+    ],
+}
+
+android_library {
+    name: "androidx.lifecycle_lifecycle-service",
+    sdk_version: "current",
+    manifest: "manifests/androidx.lifecycle_lifecycle-service/AndroidManifest.xml",
+    static_libs: [
+        "androidx.lifecycle_lifecycle-service-nodeps",
+        "androidx.lifecycle_lifecycle-runtime",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.lifecycle_lifecycle-viewmodel-nodeps",
+    aars: ["m2repository/androidx/lifecycle/lifecycle-viewmodel/2.0.0-alpha1/lifecycle-viewmodel-2.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+    ],
+}
+
+android_library {
+    name: "androidx.lifecycle_lifecycle-viewmodel",
+    sdk_version: "current",
+    manifest: "manifests/androidx.lifecycle_lifecycle-viewmodel/AndroidManifest.xml",
+    static_libs: [
+        "androidx.lifecycle_lifecycle-viewmodel-nodeps",
+        "androidx.annotation_annotation",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.loader_loader-nodeps",
+    aars: ["m2repository/androidx/loader/loader/1.0.0-alpha1/loader-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.core_core",
+        "androidx.lifecycle_lifecycle-livedata-core",
+        "androidx.lifecycle_lifecycle-viewmodel",
+    ],
+}
+
+android_library {
+    name: "androidx.loader_loader",
+    sdk_version: "current",
+    manifest: "manifests/androidx.loader_loader/AndroidManifest.xml",
+    static_libs: [
+        "androidx.loader_loader-nodeps",
+        "androidx.annotation_annotation",
+        "androidx.core_core",
+        "androidx.lifecycle_lifecycle-livedata-core",
+        "androidx.lifecycle_lifecycle-viewmodel",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.localbroadcastmanager_localbroadcastmanager-nodeps",
+    aars: ["m2repository/androidx/localbroadcastmanager/localbroadcastmanager/1.0.0-alpha1/localbroadcastmanager-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+    ],
+}
+
+android_library {
+    name: "androidx.localbroadcastmanager_localbroadcastmanager",
+    sdk_version: "current",
+    manifest: "manifests/androidx.localbroadcastmanager_localbroadcastmanager/AndroidManifest.xml",
+    static_libs: [
+        "androidx.localbroadcastmanager_localbroadcastmanager-nodeps",
+        "androidx.annotation_annotation",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.media_media-nodeps",
+    aars: ["m2repository/androidx/media/media/1.0.0-alpha1/media-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.core_core",
+    ],
+}
+
+android_library {
+    name: "androidx.media_media",
+    sdk_version: "current",
+    manifest: "manifests/androidx.media_media/AndroidManifest.xml",
+    static_libs: [
+        "androidx.media_media-nodeps",
+        "androidx.annotation_annotation",
+        "androidx.core_core",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.mediarouter_mediarouter-nodeps",
+    aars: ["m2repository/androidx/mediarouter/mediarouter/1.0.0-alpha1/mediarouter-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.media_media",
+        "androidx.appcompat_appcompat",
+        "androidx.palette_palette",
+    ],
+}
+
+android_library {
+    name: "androidx.mediarouter_mediarouter",
+    sdk_version: "current",
+    manifest: "manifests/androidx.mediarouter_mediarouter/AndroidManifest.xml",
+    static_libs: [
+        "androidx.mediarouter_mediarouter-nodeps",
+        "androidx.media_media",
+        "androidx.appcompat_appcompat",
+        "androidx.palette_palette",
+    ],
+    java_version: "1.7",
+}
+
+java_import {
+    name: "androidx.paging_paging-common-nodeps",
+    jars: ["m2repository/androidx/paging/paging-common/2.0.0-alpha1/paging-common-2.0.0-alpha1.jar"],
+    sdk_version: "current",
+}
+
+java_library_static {
+    name: "androidx.paging_paging-common",
+    sdk_version: "current",
+    static_libs: [
+        "androidx.paging_paging-common-nodeps",
+        "androidx.annotation_annotation",
+        "androidx.arch.core_core-common",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.paging_paging-runtime-nodeps",
+    aars: ["m2repository/androidx/paging/paging-runtime/2.0.0-alpha1/paging-runtime-2.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.arch.core_core-runtime",
+        "androidx.lifecycle_lifecycle-runtime",
+        "androidx.lifecycle_lifecycle-livedata",
+        "androidx.recyclerview_recyclerview",
+    ],
+}
+
+android_library {
+    name: "androidx.paging_paging-runtime",
+    sdk_version: "current",
+    manifest: "manifests/androidx.paging_paging-runtime/AndroidManifest.xml",
+    static_libs: [
+        "androidx.paging_paging-runtime-nodeps",
+        "androidx.paging_paging-common",
+        "androidx.arch.core_core-runtime",
+        "androidx.lifecycle_lifecycle-runtime",
+        "androidx.lifecycle_lifecycle-livedata",
+        "androidx.recyclerview_recyclerview",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.palette_palette-nodeps",
+    aars: ["m2repository/androidx/palette/palette/1.0.0-alpha1/palette-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.core_core",
+        "androidx.legacy_legacy-support-core-utils",
+    ],
+}
+
+android_library {
+    name: "androidx.palette_palette",
+    sdk_version: "current",
+    manifest: "manifests/androidx.palette_palette/AndroidManifest.xml",
+    static_libs: [
+        "androidx.palette_palette-nodeps",
+        "androidx.core_core",
+        "androidx.legacy_legacy-support-core-utils",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.percentlayout_percentlayout-nodeps",
+    aars: ["m2repository/androidx/percentlayout/percentlayout/1.0.0-alpha1/percentlayout-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.core_core",
+    ],
+}
+
+android_library {
+    name: "androidx.percentlayout_percentlayout",
+    sdk_version: "current",
+    manifest: "manifests/androidx.percentlayout_percentlayout/AndroidManifest.xml",
+    static_libs: [
+        "androidx.percentlayout_percentlayout-nodeps",
+        "androidx.core_core",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.preference_preference-nodeps",
+    aars: ["m2repository/androidx/preference/preference/1.0.0-alpha1/preference-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.core_core",
+        "androidx.fragment_fragment",
+        "androidx.appcompat_appcompat",
+        "androidx.recyclerview_recyclerview",
+    ],
+}
+
+android_library {
+    name: "androidx.preference_preference",
+    sdk_version: "current",
+    manifest: "manifests/androidx.preference_preference/AndroidManifest.xml",
+    static_libs: [
+        "androidx.preference_preference-nodeps",
+        "androidx.collection_collection",
+        "androidx.core_core",
+        "androidx.fragment_fragment",
+        "androidx.appcompat_appcompat",
+        "androidx.recyclerview_recyclerview",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.print_print-nodeps",
+    aars: ["m2repository/androidx/print/print/1.0.0-alpha1/print-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+    ],
+}
+
+android_library {
+    name: "androidx.print_print",
+    sdk_version: "current",
+    manifest: "manifests/androidx.print_print/AndroidManifest.xml",
+    static_libs: [
+        "androidx.print_print-nodeps",
+        "androidx.annotation_annotation",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.recommendation_recommendation-nodeps",
+    aars: ["m2repository/androidx/recommendation/recommendation/1.0.0-alpha1/recommendation-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+    ],
+}
+
+android_library {
+    name: "androidx.recommendation_recommendation",
+    sdk_version: "current",
+    manifest: "manifests/androidx.recommendation_recommendation/AndroidManifest.xml",
+    static_libs: [
+        "androidx.recommendation_recommendation-nodeps",
+        "androidx.annotation_annotation",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.recyclerview_recyclerview-selection-nodeps",
+    aars: ["m2repository/androidx/recyclerview/recyclerview-selection/1.0.0-alpha1/recyclerview-selection-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.recyclerview_recyclerview",
+        "androidx.core_core",
+    ],
+}
+
+android_library {
+    name: "androidx.recyclerview_recyclerview-selection",
+    sdk_version: "current",
+    manifest: "manifests/androidx.recyclerview_recyclerview-selection/AndroidManifest.xml",
+    static_libs: [
+        "androidx.recyclerview_recyclerview-selection-nodeps",
+        "androidx.annotation_annotation",
+        "androidx.recyclerview_recyclerview",
+        "androidx.core_core",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.recyclerview_recyclerview-nodeps",
+    aars: ["m2repository/androidx/recyclerview/recyclerview/1.0.0-alpha1/recyclerview-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.core_core",
+        "androidx.legacy_legacy-support-core-ui",
+    ],
+}
+
+android_library {
+    name: "androidx.recyclerview_recyclerview",
+    sdk_version: "current",
+    manifest: "manifests/androidx.recyclerview_recyclerview/AndroidManifest.xml",
+    static_libs: [
+        "androidx.recyclerview_recyclerview-nodeps",
+        "androidx.annotation_annotation",
+        "androidx.core_core",
+        "androidx.legacy_legacy-support-core-ui",
+    ],
+    java_version: "1.7",
+}
+
+java_import {
+    name: "androidx.room_room-common-nodeps",
+    jars: ["m2repository/androidx/room/room-common/2.0.0-alpha1/room-common-2.0.0-alpha1.jar"],
+    sdk_version: "current",
+}
+
+java_library_static {
+    name: "androidx.room_room-common",
+    sdk_version: "current",
+    static_libs: [
+        "androidx.room_room-common-nodeps",
+        "androidx.annotation_annotation",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.room_room-runtime-nodeps",
+    aars: ["m2repository/androidx/room/room-runtime/2.0.0-alpha1/room-runtime-2.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.sqlite_sqlite-framework",
+        "androidx.sqlite_sqlite",
+        "androidx.arch.core_core-runtime",
+        "androidx.legacy_legacy-support-core-utils",
+    ],
+}
+
+android_library {
+    name: "androidx.room_room-runtime",
+    sdk_version: "current",
+    manifest: "manifests/androidx.room_room-runtime/AndroidManifest.xml",
+    static_libs: [
+        "androidx.room_room-runtime-nodeps",
+        "androidx.room_room-common",
+        "androidx.sqlite_sqlite-framework",
+        "androidx.sqlite_sqlite",
+        "androidx.arch.core_core-runtime",
+        "androidx.legacy_legacy-support-core-utils",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.slice_slice-builders-nodeps",
+    aars: ["m2repository/androidx/slice/slice-builders/1.0.0-alpha1/slice-builders-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.slice_slice-core",
+        "androidx.core_core",
+    ],
+}
+
+android_library {
+    name: "androidx.slice_slice-builders",
+    sdk_version: "current",
+    manifest: "manifests/androidx.slice_slice-builders/AndroidManifest.xml",
+    static_libs: [
+        "androidx.slice_slice-builders-nodeps",
+        "androidx.annotation_annotation",
+        "androidx.slice_slice-core",
+        "androidx.core_core",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.slice_slice-core-nodeps",
+    aars: ["m2repository/androidx/slice/slice-core/1.0.0-alpha1/slice-core-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.appcompat_appcompat",
+    ],
+}
+
+android_library {
+    name: "androidx.slice_slice-core",
+    sdk_version: "current",
+    manifest: "manifests/androidx.slice_slice-core/AndroidManifest.xml",
+    static_libs: [
+        "androidx.slice_slice-core-nodeps",
+        "androidx.annotation_annotation",
+        "androidx.appcompat_appcompat",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.slice_slice-view-nodeps",
+    aars: ["m2repository/androidx/slice/slice-view/1.0.0-alpha1/slice-view-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.lifecycle_lifecycle-livedata-core",
+        "androidx.slice_slice-core",
+        "androidx.recyclerview_recyclerview",
+    ],
+}
+
+android_library {
+    name: "androidx.slice_slice-view",
+    sdk_version: "current",
+    manifest: "manifests/androidx.slice_slice-view/AndroidManifest.xml",
+    static_libs: [
+        "androidx.slice_slice-view-nodeps",
+        "androidx.lifecycle_lifecycle-livedata-core",
+        "androidx.slice_slice-core",
+        "androidx.recyclerview_recyclerview",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.slidingpanelayout_slidingpanelayout-nodeps",
+    aars: ["m2repository/androidx/slidingpanelayout/slidingpanelayout/1.0.0-alpha1/slidingpanelayout-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.core_core",
+        "androidx.customview_customview",
+    ],
+}
+
+android_library {
+    name: "androidx.slidingpanelayout_slidingpanelayout",
+    sdk_version: "current",
+    manifest: "manifests/androidx.slidingpanelayout_slidingpanelayout/AndroidManifest.xml",
+    static_libs: [
+        "androidx.slidingpanelayout_slidingpanelayout-nodeps",
+        "androidx.annotation_annotation",
+        "androidx.core_core",
+        "androidx.customview_customview",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.sqlite_sqlite-framework-nodeps",
+    aars: ["m2repository/androidx/sqlite/sqlite-framework/2.0.0-alpha1/sqlite-framework-2.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.sqlite_sqlite",
+    ],
+}
+
+android_library {
+    name: "androidx.sqlite_sqlite-framework",
+    sdk_version: "current",
+    manifest: "manifests/androidx.sqlite_sqlite-framework/AndroidManifest.xml",
+    static_libs: [
+        "androidx.sqlite_sqlite-framework-nodeps",
+        "androidx.annotation_annotation",
+        "androidx.sqlite_sqlite",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.sqlite_sqlite-nodeps",
+    aars: ["m2repository/androidx/sqlite/sqlite/2.0.0-alpha1/sqlite-2.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+    ],
+}
+
+android_library {
+    name: "androidx.sqlite_sqlite",
+    sdk_version: "current",
+    manifest: "manifests/androidx.sqlite_sqlite/AndroidManifest.xml",
+    static_libs: [
+        "androidx.sqlite_sqlite-nodeps",
+        "androidx.annotation_annotation",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.swiperefreshlayout_swiperefreshlayout-nodeps",
+    aars: ["m2repository/androidx/swiperefreshlayout/swiperefreshlayout/1.0.0-alpha1/swiperefreshlayout-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.core_core",
+        "androidx.interpolator_interpolator",
+    ],
+}
+
+android_library {
+    name: "androidx.swiperefreshlayout_swiperefreshlayout",
+    sdk_version: "current",
+    manifest: "manifests/androidx.swiperefreshlayout_swiperefreshlayout/AndroidManifest.xml",
+    static_libs: [
+        "androidx.swiperefreshlayout_swiperefreshlayout-nodeps",
+        "androidx.annotation_annotation",
+        "androidx.core_core",
+        "androidx.interpolator_interpolator",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.transition_transition-nodeps",
+    aars: ["m2repository/androidx/transition/transition/1.0.0-alpha1/transition-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.core_core",
+    ],
+}
+
+android_library {
+    name: "androidx.transition_transition",
+    sdk_version: "current",
+    manifest: "manifests/androidx.transition_transition/AndroidManifest.xml",
+    static_libs: [
+        "androidx.transition_transition-nodeps",
+        "androidx.annotation_annotation",
+        "androidx.core_core",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.tvprovider_tvprovider-nodeps",
+    aars: ["m2repository/androidx/tvprovider/tvprovider/1.0.0-alpha1/tvprovider-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.core_core",
+    ],
+}
+
+android_library {
+    name: "androidx.tvprovider_tvprovider",
+    sdk_version: "current",
+    manifest: "manifests/androidx.tvprovider_tvprovider/AndroidManifest.xml",
+    static_libs: [
+        "androidx.tvprovider_tvprovider-nodeps",
+        "androidx.annotation_annotation",
+        "androidx.core_core",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.vectordrawable_vectordrawable-animated-nodeps",
+    aars: ["m2repository/androidx/vectordrawable/vectordrawable-animated/1.0.0-alpha1/vectordrawable-animated-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.vectordrawable_vectordrawable",
+        "androidx.legacy_legacy-support-core-ui",
+    ],
+}
+
+android_library {
+    name: "androidx.vectordrawable_vectordrawable-animated",
+    sdk_version: "current",
+    manifest: "manifests/androidx.vectordrawable_vectordrawable-animated/AndroidManifest.xml",
+    static_libs: [
+        "androidx.vectordrawable_vectordrawable-animated-nodeps",
+        "androidx.vectordrawable_vectordrawable",
+        "androidx.legacy_legacy-support-core-ui",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.vectordrawable_vectordrawable-nodeps",
+    aars: ["m2repository/androidx/vectordrawable/vectordrawable/1.0.0-alpha1/vectordrawable-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.core_core",
+    ],
+}
+
+android_library {
+    name: "androidx.vectordrawable_vectordrawable",
+    sdk_version: "current",
+    manifest: "manifests/androidx.vectordrawable_vectordrawable/AndroidManifest.xml",
+    static_libs: [
+        "androidx.vectordrawable_vectordrawable-nodeps",
+        "androidx.annotation_annotation",
+        "androidx.core_core",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.versionedparcelable_versionedparcelable-nodeps",
+    aars: ["m2repository/androidx/versionedparcelable/versionedparcelable/1.0.0-alpha1/versionedparcelable-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+    ],
+}
+
+android_library {
+    name: "androidx.versionedparcelable_versionedparcelable",
+    sdk_version: "current",
+    manifest: "manifests/androidx.versionedparcelable_versionedparcelable/AndroidManifest.xml",
+    static_libs: [
+        "androidx.versionedparcelable_versionedparcelable-nodeps",
+        "androidx.annotation_annotation",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.viewpager_viewpager-nodeps",
+    aars: ["m2repository/androidx/viewpager/viewpager/1.0.0-alpha1/viewpager-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.core_core",
+        "androidx.customview_customview",
+    ],
+}
+
+android_library {
+    name: "androidx.viewpager_viewpager",
+    sdk_version: "current",
+    manifest: "manifests/androidx.viewpager_viewpager/AndroidManifest.xml",
+    static_libs: [
+        "androidx.viewpager_viewpager-nodeps",
+        "androidx.annotation_annotation",
+        "androidx.core_core",
+        "androidx.customview_customview",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.wear_wear-nodeps",
+    aars: ["m2repository/androidx/wear/wear/1.0.0-alpha1/wear-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.legacy_legacy-support-core-ui",
+        "androidx.fragment_fragment",
+        "androidx.recyclerview_recyclerview",
+        "androidx-constraintlayout_constraintlayout",
+    ],
+}
+
+android_library {
+    name: "androidx.wear_wear",
+    sdk_version: "current",
+    manifest: "manifests/androidx.wear_wear/AndroidManifest.xml",
+    static_libs: [
+        "androidx.wear_wear-nodeps",
+        "androidx.annotation_annotation",
+        "androidx.legacy_legacy-support-core-ui",
+        "androidx.fragment_fragment",
+        "androidx.recyclerview_recyclerview",
+        "androidx-constraintlayout_constraintlayout",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "androidx.webkit_webkit-nodeps",
+    aars: ["m2repository/androidx/webkit/webkit/1.0.0-alpha1/webkit-1.0.0-alpha1.aar"],
+    sdk_version: "current",
+    static_libs: [
+        "androidx.core_core",
+    ],
+}
+
+android_library {
+    name: "androidx.webkit_webkit",
+    sdk_version: "current",
+    manifest: "manifests/androidx.webkit_webkit/AndroidManifest.xml",
+    static_libs: [
+        "androidx.webkit_webkit-nodeps",
+        "androidx.annotation_annotation",
+        "androidx.core_core",
+    ],
+    java_version: "1.7",
+}

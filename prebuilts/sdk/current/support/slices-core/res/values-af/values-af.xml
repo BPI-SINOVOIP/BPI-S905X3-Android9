@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <string msgid="5024599872061409708" name="abc_slice_permission_allow">"Laat toe"</string>
+    <string msgid="5696872682700058611" name="abc_slice_permission_checkbox">"Laat <ns1:g id="APP">%1$s</ns1:g> toe om skyfies uit enige program te wys"</string>
+    <string msgid="3819478292430407705" name="abc_slice_permission_deny">"Weier"</string>
+    <string msgid="4525743640399572811" name="abc_slice_permission_text_1">"– Dit kan inligting in <ns1:g id="APP">%1$s</ns1:g> lees"</string>
+    <string msgid="7323565634860251794" name="abc_slice_permission_text_2">"– Dit kan handelinge binne <ns1:g id="APP">%1$s</ns1:g> uitvoer"</string>
+    <string msgid="4175332421259324948" name="abc_slice_permission_title">"Laat <ns1:g id="APP_0">%1$s</ns1:g> toe om <ns1:g id="APP_2">%2$s</ns1:g>-skyfies te wys?"</string>
+    <string msgid="3604847235923472451" name="abc_slices_permission_request">"<ns1:g id="APP_0">%1$s</ns1:g> wil <ns1:g id="APP_2">%2$s</ns1:g>-skyfies wys"</string>
+</resources>

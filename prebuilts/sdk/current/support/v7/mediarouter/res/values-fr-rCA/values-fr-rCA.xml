@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string msgid="6209940985205889239" name="mr_button_content_description">"Bouton Diffuser"</string>
+    <string msgid="7205934955575650355" name="mr_cast_button_connected">"Bouton Diffuser. Connecté"</string>
+    <string msgid="7767160474954808770" name="mr_cast_button_connecting">"Bouton Diffuser. Connexion en cours…"</string>
+    <string msgid="1214396433859225686" name="mr_cast_button_disconnected">"Bouton Diffuser. Déconnecté"</string>
+    <string msgid="7883700464756247478" name="mr_chooser_searching">"Recherche d\'appareils"</string>
+    <string msgid="1469819231928206099" name="mr_chooser_title">"Diffuser vers"</string>
+    <string msgid="8313236767081989488" name="mr_controller_album_art">"Image de l\'album"</string>
+    <string msgid="2406876321200529148" name="mr_controller_casting_screen">"Diffusion de l\'écran en cours"</string>
+    <string msgid="1404151965680505956" name="mr_controller_close_description">"Fermer"</string>
+    <string msgid="5621264648958127139" name="mr_controller_collapse_group">"Réduire"</string>
+    <string msgid="1224563715954797152" name="mr_controller_disconnect">"Dissocier"</string>
+    <string msgid="6561849209271950311" name="mr_controller_expand_group">"Développer"</string>
+    <string msgid="942251150039480236" name="mr_controller_no_info_available">"Aucune donnée trouvée"</string>
+    <string msgid="5388112032574870059" name="mr_controller_no_media_selected">"Aucun média sélectionné"</string>
+    <string msgid="5465089322498973309" name="mr_controller_pause">"Pause"</string>
+    <string msgid="2233159395781515552" name="mr_controller_play">"Lire"</string>
+    <string msgid="6970507798830838731" name="mr_controller_stop">"Arrêter"</string>
+    <string msgid="6043110833085090960" name="mr_controller_stop_casting">"Arrêter la diffusion"</string>
+    <string msgid="390328956880221771" name="mr_controller_volume_slider">"Curseur de réglage du volume"</string>
+    <string msgid="6445173646164603280" name="mr_system_route_name">"Système"</string>
+    <string msgid="8951247913519682277" name="mr_user_route_category_name">"Appareils"</string>
+</resources>

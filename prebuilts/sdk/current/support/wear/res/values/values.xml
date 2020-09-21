@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="circular_progress_layout_color_scheme_colors">
+        <item>@color/circular_progress_layout_red</item>
+        <item>@color/circular_progress_layout_yellow</item>
+        <item>@color/circular_progress_layout_green</item>
+        <item>@color/circular_progress_layout_blue</item>
+    </array>
+    <color name="circular_progress_layout_background_color">#00000000</color>
+    <color name="circular_progress_layout_blue">#FF2196F3</color>
+    <color name="circular_progress_layout_green">#FF4CAF50</color>
+    <color name="circular_progress_layout_red">#FFF44336</color>
+    <color name="circular_progress_layout_yellow">#FFFFEB3B</color>
+    <declare-styleable name="BoxInsetLayout_Layout">
+        <!-- The types of insets this view can force on its children. The view will respect the
+             defined values of other child attributes such as ones provided by
+             {@link android.view.ViewGroup.MarginLayoutParams}, but it will add an additional inset
+              as requested -->
+        <attr name="boxedEdges">
+            <!-- Default boxing setting. There are no insets forced on the child views. -->
+            <flag name="none" value="0x00"/>
+            <!-- The view will force an inset on the left edge of the children. -->
+            <flag name="left" value="0x01"/>
+            <!-- The view will force an inset on the top edge of the children. -->
+            <flag name="top" value="0x02"/>
+            <!-- The view will force an inset on the right edge of the children. -->
+            <flag name="right" value="0x04"/>
+            <!-- The view will force an inset on the bottom edge of the children. -->
+            <flag name="bottom" value="0x08"/>
+            <!-- The view will force an inset on all of the edges of the children. -->
+            <flag name="all" value="0x0F"/>
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="CircledImageView">
+        <attr name="android:src"/>
+        <!-- Sets the color of the circle. -->
+        <attr format="color" name="background_color"/>
+        <!-- Sets the radius of the circle. -->
+        <attr format="dimension" name="background_radius"/>
+        <!-- Sets the radius of the circle while the circle is being pressed. -->
+        <attr format="dimension" name="background_radius_pressed"/>
+        <!-- Sets the width of the border. -->
+        <attr format="dimension" name="background_border_width"/>
+        <!-- Sets the color of the border. -->
+        <attr format="color" name="background_border_color"/>
+        <!-- Sets the stroke cap for the border around the circle. -->
+        <attr format="enum" name="background_border_cap">
+            <enum name="butt" value="0"/>
+            <enum name="round" value="1"/>
+            <enum name="square" value="2"/>
+        </attr>
+        <!-- Sets the padding between the edge of the circle and the start of the image. -->
+        <attr format="dimension" name="img_padding"/>
+        <!-- Sets the width of the shadow. -->
+        <attr format="dimension" name="background_shadow_width"/>
+        <!-- Sets the percentage of the circle which the image should occupy. -->
+        <attr format="dimension" name="img_circle_percentage"/>
+        <!-- Sets the percentage of the circle which the image should should be offset
+             horizontally. -->
+        <attr format="dimension" name="img_horizontal_offset_percentage"/>
+        <!-- Sets the tint color of the image. -->
+        <attr format="color" name="img_tint"/>
+        <!-- Sets the radius of the circle to be a percentage of the largest dimension of the
+             view. -->
+        <attr format="fraction" name="background_radius_percent"/>
+        <!-- Sets the circle radius when pressed. -->
+        <attr format="fraction" name="background_radius_pressed_percent"/>
+        <!-- Sets which dimension to use if the image isn't square. -->
+        <attr format="enum" name="clip_dimen">
+            <enum name="none" value="0"/>
+            <enum name="height" value="1"/>
+            <enum name="width" value="2"/>
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="CircularProgressLayout">
+        <!-- Sets the color of the background circle. -->
+        <attr format="color" name="backgroundColor"/>
+        <!-- Sets the stroke width of the progress indicator. -->
+        <attr format="dimension" name="strokeWidth"/>
+        <!-- Sets the color scheme used by the progress indicator. This may be an array of colors or
+        a single color. If an array of colors is used, first color will be used for determinate
+        progress indicator, while the rest will be shown in order during indeterminate spinner. -->
+        <attr format="reference|color" name="colorSchemeColors"/>
+        <!-- Sets if the progress should be shown as an indeterminate spinner. -->
+        <attr format="boolean" name="indeterminate"/>
+    </declare-styleable>
+    <declare-styleable name="PageIndicatorView">
+        <!-- Sets the distance between dots. -->
+        <attr format="dimension" name="wsPageIndicatorDotSpacing"/>
+        <!-- Sets the radius of a dot when it is not selected. -->
+        <attr format="dimension" name="wsPageIndicatorDotRadius"/>
+        <!-- Sets the radius of a dot when it is selected. -->
+        <attr format="dimension" name="wsPageIndicatorDotRadiusSelected"/>
+        <!-- Sets the color of a dot when it is not selected. -->
+        <attr format="color" name="wsPageIndicatorDotColor"/>
+        <!-- Sets the color of a dot when it is selected. -->
+        <attr format="color" name="wsPageIndicatorDotColorSelected"/>
+        <!-- Sets whether the dots should fade out after inactivity. -->
+        <attr format="boolean" name="wsPageIndicatorDotFadeWhenIdle"/>
+        <!-- Sets the delay between the pager arriving at an idle state, and the fade out animation
+             beginning, in milliseconds. -->
+        <attr format="integer" name="wsPageIndicatorDotFadeOutDelay"/>
+        <!-- Sets the duration of the fade out animation. -->
+        <attr format="integer" name="wsPageIndicatorDotFadeOutDuration"/>
+        <!-- Sets the duration of the fade in animation. -->
+        <attr format="integer" name="wsPageIndicatorDotFadeInDuration"/>
+        <!-- Sets the shadow color. -->
+        <attr format="color" name="wsPageIndicatorDotShadowColor"/>
+        <!-- Sets the shadow radius. -->
+        <attr format="dimension" name="wsPageIndicatorDotShadowRadius"/>
+        <!-- Sets the horizontal shadow offset. -->
+        <attr format="dimension" name="wsPageIndicatorDotShadowDx"/>
+        <!-- Sets the vertical shadow offset. -->
+        <attr format="dimension" name="wsPageIndicatorDotShadowDy"/>
+    </declare-styleable>
+    <declare-styleable name="RoundedDrawable">
+        <attr name="android:src"/>
+        <!-- Sets the radius of the drawable. -->
+        <attr format="dimension" name="radius"/>
+        <!-- Sets the background color of the drawable. -->
+        <attr name="backgroundColor"/>
+        <!-- Sets if the drawable should be clipped. If this is true, drawable will be clipped to
+        rounded bounds. Otherwise, it will be scaled. -->
+        <attr format="boolean" name="clipEnabled"/>
+    </declare-styleable>
+    <declare-styleable name="WearableActionDrawerView">
+        <!-- Adds a title to the drawer content. -->
+        <attr format="string" name="drawerTitle"/>
+        <!-- Provides a Menu to the action drawer. -->
+        <attr format="reference" name="actionMenu"/>
+        <!-- Shows the overflow icon in the peek view rather than the first action's icon. Also,
+             taps on the peek view will open the drawer rather than executing the first action. -->
+        <attr format="boolean" name="showOverflowInPeek"/>
+    </declare-styleable>
+    <declare-styleable name="WearableDrawerView">
+        <!-- Sets which view should be shown in the drawer's peek state. -->
+        <attr format="reference" name="peekView"/>
+        <!-- Sets which view should be used as the drawer's content. -->
+        <attr format="reference" name="drawerContent"/>
+        <!-- Sets whether or not the drawer will automatically peek and un-peek.  -->
+        <attr format="boolean" name="enableAutoPeek"/>
+        <attr name="android:background"/>
+        <attr name="android:elevation"/>
+    </declare-styleable>
+    <declare-styleable name="WearableNavigationDrawerView">
+        <!-- Sets the navigation style. Defaults to singlePage. -->
+        <attr format="enum" name="navigationStyle">
+            <!-- Single page navigation drawer style. This is the default drawer style. It is ideal
+                 for 1-5 items, but works with up to 7 items. If more than 7 items exist, then the
+                 drawer will be displayed as empty. -->
+            <enum name="singlePage" value="0"/>
+            <!-- Multi-page navigation drawer style. Each item is on its own page. Useful when more
+                 than 7 items exist. -->
+            <enum name="multiPage" value="1"/>
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="WearableRecyclerView">
+        <!-- Taps within this radius and the radius of the screen are considered close enough to the
+            bezel to be candidates for circular scrolling. Expressed as a fraction of the screen's
+            radius. The default is the whole screen i.e 1.0f -->
+        <attr format="fraction" name="bezelWidth"/>
+        <!-- Enables/disables circular touch scrolling for this view. When enabled, circular touch
+            gestures around the edge of the screen will cause the view to scroll up or down. -->
+        <attr format="boolean" name="circularScrollingGestureEnabled"/>
+        <!-- Sets how many degrees the user has to rotate by to scroll through one screen height
+            when they are using the circular scrolling gesture. The default value equates 180
+            degrees scroll to one screen.-->
+        <attr format="float" name="scrollDegreesPerScreen"/>
+    </declare-styleable>
+    <dimen name="circular_progress_layout_stroke_width">4dp</dimen>
+    <dimen name="confirmation_overlay_image_size">64dp</dimen>
+    <dimen name="confirmation_overlay_text_size">14sp</dimen>
+    <dimen name="ws_action_drawer_expand_icon_top_margin">-3dp</dimen>
+    <dimen name="ws_action_drawer_item_bottom_padding">8dp</dimen>
+    <dimen name="ws_action_drawer_item_icon_padding">7dp</dimen>
+    <dimen name="ws_action_drawer_item_icon_right_margin">8dp</dimen>
+    <dimen name="ws_action_drawer_item_icon_size">36dp</dimen>
+    <dimen name="ws_action_drawer_item_text_size">14sp</dimen>
+    <dimen name="ws_action_drawer_item_top_padding">8dp</dimen>
+    <dimen name="ws_action_drawer_peek_top_padding">2dp</dimen>
+    <dimen name="ws_action_drawer_peek_view_height">43dp</dimen>
+    <item format="float" name="ws_action_drawer_title_end" type="dimen">.85</item>
+    <item format="float" name="ws_action_drawer_title_start" type="dimen">.15</item>
+    <dimen name="ws_drawer_view_edge_size">38dp</dimen>
+    <item format="float" name="ws_nav_drawer_margin_2_items_end" type="dimen">.8</item>
+    <item format="float" name="ws_nav_drawer_margin_2_items_start" type="dimen">.2</item>
+    <item format="float" name="ws_nav_drawer_margin_3_items_end" type="dimen">.84</item>
+    <item format="float" name="ws_nav_drawer_margin_3_items_start" type="dimen">.16</item>
+    <item format="float" name="ws_nav_drawer_margin_4_items_end" type="dimen">.87</item>
+    <item format="float" name="ws_nav_drawer_margin_4_items_start" type="dimen">.13</item>
+    <item format="float" name="ws_nav_drawer_margin_4_items_top" type="dimen">.169</item>
+    <item format="float" name="ws_nav_drawer_margin_5_items_middle_row_end" type="dimen">.87</item>
+    <item format="float" name="ws_nav_drawer_margin_5_items_middle_row_start" type="dimen">.13</item>
+    <item format="float" name="ws_nav_drawer_margin_5_items_top" type="dimen">.169</item>
+    <item format="float" name="ws_nav_drawer_margin_5_items_top_row_end" type="dimen">.726</item>
+    <item format="float" name="ws_nav_drawer_margin_5_items_top_row_start" type="dimen">.274</item>
+    <item format="float" name="ws_nav_drawer_margin_6_items_bottom" type="dimen">.732</item>
+    <item format="float" name="ws_nav_drawer_margin_6_items_end" type="dimen">.84</item>
+    <item format="float" name="ws_nav_drawer_margin_6_items_start" type="dimen">.16</item>
+    <item format="float" name="ws_nav_drawer_margin_6_items_top" type="dimen">.268</item>
+    <item format="float" name="ws_nav_drawer_margin_7_items_bottom" type="dimen">.831</item>
+    <item format="float" name="ws_nav_drawer_margin_7_items_middle_row_end" type="dimen">.87</item>
+    <item format="float" name="ws_nav_drawer_margin_7_items_middle_row_start" type="dimen">.13</item>
+    <item format="float" name="ws_nav_drawer_margin_7_items_top" type="dimen">.169</item>
+    <item format="float" name="ws_nav_drawer_margin_7_items_top_bottom_row_end" type="dimen">.726</item>
+    <item format="float" name="ws_nav_drawer_margin_7_items_top_bottom_row_start" type="dimen">.274</item>
+    <dimen name="ws_nav_drawer_single_page_circle_radius">24dp</dimen>
+    <dimen name="ws_nav_drawer_single_page_half_icon_size">14dp</dimen>
+    <dimen name="ws_nav_drawer_single_page_icon_padding">6dp</dimen>
+    <dimen name="ws_nav_drawer_single_page_icon_size">28dp</dimen>
+    <item format="float" name="ws_nav_drawer_text_guide" type="dimen">0.63</item>
+    <dimen name="ws_nav_drawer_text_size">12sp</dimen>
+    <dimen name="ws_peek_view_bottom_padding">8dp</dimen>
+    <dimen name="ws_peek_view_icon_size">22dp</dimen>
+    <dimen name="ws_peek_view_top_padding">8dp</dimen>
+    <dimen name="ws_switch_size">40dp</dimen>
+    <dimen name="ws_wearable_drawer_view_elevation">12dp</dimen>
+    <dimen name="ws_wrv_curve_default_x_offset">24dp</dimen>
+    <item name="confirmation_overlay_margin_above_text" type="fraction">5%</item>
+    <item name="confirmation_overlay_margin_side" type="fraction">4.167%</item>
+    <item name="ws_action_drawer_item_first_item_top_padding" type="fraction">15%</item>
+    <item name="ws_action_drawer_item_last_item_bottom_padding" type="fraction">15%</item>
+    <item name="ws_action_drawer_item_left_padding" type="fraction">15%</item>
+    <item name="ws_action_drawer_item_right_padding" type="fraction">10%</item>
+    <item name="ws_navigation_drawer_view_pager" type="id"/>
+    <string name="ws_action_drawer_content_description">Action drawer</string>
+    <string name="ws_navigation_drawer_content_description">Navigation drawer</string>
+    <style name="ConfirmationActivity" parent="android:Theme.Translucent.NoTitleBar.Fullscreen">
+        <item name="android:windowEnterAnimation">@null</item>
+        <item name="android:activityOpenEnterAnimation">@null</item>
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
+    <style name="Widget.Wear.WearableDrawerView" parent="">
+        <item name="android:elevation">@dimen/ws_wearable_drawer_view_elevation</item>
+        <item name="android:background">?android:attr/colorBackgroundFloating</item>
+    </style>
+    <style name="WsHorizontalGuideStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+    <style name="WsPageIndicatorViewStyle">
+        <item name="wsPageIndicatorDotSpacing">7.8dp</item>
+        <item name="wsPageIndicatorDotRadius">2.1dp</item>
+        <item name="wsPageIndicatorDotRadiusSelected">3.1dp</item>
+        <item name="wsPageIndicatorDotColor">?android:attr/colorForeground</item>
+        <item name="wsPageIndicatorDotColorSelected">?android:attr/colorForeground</item>
+        <item name="wsPageIndicatorDotFadeOutDelay">1000</item>
+        <item name="wsPageIndicatorDotFadeOutDuration">250</item>
+        <item name="wsPageIndicatorDotFadeInDuration">100</item>
+        <item name="wsPageIndicatorDotFadeWhenIdle">true</item>
+        <item name="wsPageIndicatorDotShadowColor">#66000000</item>
+        <item name="wsPageIndicatorDotShadowRadius">1dp</item>
+        <item name="wsPageIndicatorDotShadowDx">0.5dp</item>
+        <item name="wsPageIndicatorDotShadowDy">0.5dp</item>
+    </style>
+    <style name="WsSinglePageNavDrawerIconStyle">
+        <item name="android:layout_height">@dimen/ws_nav_drawer_single_page_icon_size</item>
+        <item name="android:layout_width">@dimen/ws_nav_drawer_single_page_icon_size</item>
+        <item name="android:padding">@dimen/ws_nav_drawer_single_page_icon_padding</item>
+        <item name="android:clipToPadding">false</item>
+        <item name="background_radius">@dimen/ws_nav_drawer_single_page_circle_radius</item>
+        <item name="background_color">#33ffffff</item>
+    </style>
+    <style name="WsVerticalGuideStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+    <style name="WsWearableActionDrawerItemText">
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:fontFamily">sans-serif-condensed-light</item>
+        <item name="android:maxLines">3</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textSize">@dimen/ws_action_drawer_item_text_size</item>
+    </style>
+    <style name="WsWearableActionDrawerTitleText" parent="android:TextAppearance.Material.Subhead">
+        <item name="android:alpha">0.7</item>
+    </style>
+</resources>

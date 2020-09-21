@@ -1,0 +1,183 @@
+android.frameworks.displayservice@1.0.so frameworks/hardware/interfaces/displayservice/1.0 frameworks/hardware/interfaces/displayservice/1.0
+android.frameworks.schedulerservice@1.0.so frameworks/hardware/interfaces/schedulerservice/1.0 frameworks/hardware/interfaces/schedulerservice/1.0
+android.frameworks.sensorservice@1.0.so frameworks/hardware/interfaces/sensorservice/1.0 frameworks/hardware/interfaces/sensorservice/1.0
+android.frameworks.vr.composer@1.0.so frameworks/hardware/interfaces/vr/composer/1.0 frameworks/hardware/interfaces/vr/composer/1.0
+android.hardware.audio.common@2.0.so hardware/interfaces/audio/common/2.0 hardware/interfaces/audio/common/2.0
+android.hardware.audio.common@2.0-util.so hardware/interfaces/audio/common/2.0/default
+android.hardware.audio.effect@2.0.so hardware/interfaces/audio/effect/2.0 hardware/interfaces/audio/effect/2.0
+android.hardware.audio@2.0.so hardware/interfaces/audio/2.0 hardware/interfaces/audio/2.0
+android.hardware.automotive.evs@1.0.so hardware/interfaces/automotive/evs/1.0 hardware/interfaces/automotive/evs/1.0
+android.hardware.automotive.vehicle@2.0.so hardware/interfaces/automotive/vehicle/2.0 hardware/interfaces/automotive/vehicle/2.0
+android.hardware.biometrics.fingerprint@2.1.so hardware/interfaces/biometrics/fingerprint/2.1 hardware/interfaces/biometrics/fingerprint/2.1
+android.hardware.bluetooth@1.0.so hardware/interfaces/bluetooth/1.0 hardware/interfaces/bluetooth/1.0
+android.hardware.boot@1.0.so hardware/interfaces/boot/1.0 hardware/interfaces/boot/1.0
+android.hardware.broadcastradio@1.0.so hardware/interfaces/broadcastradio/1.0 hardware/interfaces/broadcastradio/1.0
+android.hardware.broadcastradio@1.1.so hardware/interfaces/broadcastradio/1.1 hardware/interfaces/broadcastradio/1.1
+android.hardware.camera.common@1.0.so hardware/interfaces/camera/common/1.0 hardware/interfaces/camera/common/1.0
+android.hardware.camera.device@1.0.so hardware/interfaces/camera/device/1.0 hardware/interfaces/camera/device/1.0
+android.hardware.camera.device@3.2.so hardware/interfaces/camera/device/3.2 hardware/interfaces/camera/device/3.2
+android.hardware.camera.device@3.3.so hardware/interfaces/camera/device/3.3 hardware/interfaces/camera/device/3.3
+android.hardware.camera.metadata@3.2.so hardware/interfaces/camera/metadata/3.2 hardware/interfaces/camera/metadata/3.2
+android.hardware.camera.provider@2.4.so hardware/interfaces/camera/provider/2.4 hardware/interfaces/camera/provider/2.4
+android.hardware.cas.native@1.0.so hardware/interfaces/cas/native/1.0 hardware/interfaces/cas/native/1.0
+android.hardware.cas@1.0.so hardware/interfaces/cas/1.0 hardware/interfaces/cas/1.0
+android.hardware.configstore-utils.so hardware/interfaces/configstore/utils
+android.hardware.configstore@1.0.so hardware/interfaces/configstore/1.0 hardware/interfaces/configstore/1.0
+android.hardware.contexthub@1.0.so hardware/interfaces/contexthub/1.0 hardware/interfaces/contexthub/1.0
+android.hardware.drm@1.0.so hardware/interfaces/drm/1.0 hardware/interfaces/drm/1.0
+android.hardware.dumpstate@1.0.so hardware/interfaces/dumpstate/1.0 hardware/interfaces/dumpstate/1.0
+android.hardware.gatekeeper@1.0.so hardware/interfaces/gatekeeper/1.0 hardware/interfaces/gatekeeper/1.0
+android.hardware.gnss@1.0.so hardware/interfaces/gnss/1.0 hardware/interfaces/gnss/1.0
+android.hardware.graphics.bufferqueue@1.0.so hardware/interfaces/graphics/bufferqueue/1.0 hardware/interfaces/graphics/bufferqueue/1.0
+android.hardware.graphics.composer@2.1.so hardware/interfaces/graphics/composer/2.1 hardware/interfaces/graphics/composer/2.1
+android.hardware.health@1.0.so hardware/interfaces/health/1.0 hardware/interfaces/health/1.0
+android.hardware.ir@1.0.so hardware/interfaces/ir/1.0 hardware/interfaces/ir/1.0
+android.hardware.keymaster@3.0.so hardware/interfaces/keymaster/3.0 hardware/interfaces/keymaster/3.0
+android.hardware.light@2.0.so hardware/interfaces/light/2.0 hardware/interfaces/light/2.0
+android.hardware.media.omx@1.0.so hardware/interfaces/media/omx/1.0 hardware/interfaces/media/omx/1.0
+android.hardware.media@1.0.so hardware/interfaces/media/1.0 hardware/interfaces/media/1.0
+android.hardware.memtrack@1.0.so hardware/interfaces/memtrack/1.0 hardware/interfaces/memtrack/1.0
+android.hardware.neuralnetworks@1.0.so hardware/interfaces/neuralnetworks/1.0 hardware/interfaces/neuralnetworks/1.0
+android.hardware.nfc@1.0.so hardware/interfaces/nfc/1.0 hardware/interfaces/nfc/1.0
+android.hardware.oemlock@1.0.so hardware/interfaces/oemlock/1.0 hardware/interfaces/oemlock/1.0
+android.hardware.power@1.0.so hardware/interfaces/power/1.0 hardware/interfaces/power/1.0
+android.hardware.power@1.1.so hardware/interfaces/power/1.1 hardware/interfaces/power/1.1
+android.hardware.radio.deprecated@1.0.so hardware/interfaces/radio/deprecated/1.0 hardware/interfaces/radio/deprecated/1.0
+android.hardware.radio@1.0.so hardware/interfaces/radio/1.0 hardware/interfaces/radio/1.0
+android.hardware.radio@1.1.so hardware/interfaces/radio/1.1 hardware/interfaces/radio/1.1
+android.hardware.sensors@1.0.so hardware/interfaces/sensors/1.0 hardware/interfaces/sensors/1.0
+android.hardware.soundtrigger@2.0.so hardware/interfaces/soundtrigger/2.0 hardware/interfaces/soundtrigger/2.0
+android.hardware.tetheroffload.config@1.0.so hardware/interfaces/tetheroffload/config/1.0 hardware/interfaces/tetheroffload/config/1.0
+android.hardware.tetheroffload.control@1.0.so hardware/interfaces/tetheroffload/control/1.0 hardware/interfaces/tetheroffload/control/1.0
+android.hardware.thermal@1.0.so hardware/interfaces/thermal/1.0 hardware/interfaces/thermal/1.0
+android.hardware.thermal@1.1.so hardware/interfaces/thermal/1.1 hardware/interfaces/thermal/1.1
+android.hardware.tv.cec@1.0.so hardware/interfaces/tv/cec/1.0 hardware/interfaces/tv/cec/1.0
+android.hardware.tv.input@1.0.so hardware/interfaces/tv/input/1.0 hardware/interfaces/tv/input/1.0
+android.hardware.usb@1.0.so hardware/interfaces/usb/1.0 hardware/interfaces/usb/1.0
+android.hardware.usb@1.1.so hardware/interfaces/usb/1.1 hardware/interfaces/usb/1.1
+android.hardware.vibrator@1.0.so hardware/interfaces/vibrator/1.0 hardware/interfaces/vibrator/1.0
+android.hardware.vibrator@1.1.so hardware/interfaces/vibrator/1.1 hardware/interfaces/vibrator/1.1
+android.hardware.vr@1.0.so hardware/interfaces/vr/1.0 hardware/interfaces/vr/1.0
+android.hardware.weaver@1.0.so hardware/interfaces/weaver/1.0 hardware/interfaces/weaver/1.0
+android.hardware.wifi.offload@1.0.so hardware/interfaces/wifi/offload/1.0 hardware/interfaces/wifi/offload/1.0
+android.hardware.wifi.supplicant@1.0.so hardware/interfaces/wifi/supplicant/1.0 hardware/interfaces/wifi/supplicant/1.0
+android.hardware.wifi@1.0.so hardware/interfaces/wifi/1.0 hardware/interfaces/wifi/1.0
+android.hardware.wifi@1.1.so hardware/interfaces/wifi/1.1 hardware/interfaces/wifi/1.1
+android.hidl.allocator@1.0.so system/libhidl/transport/allocator/1.0 system/libhidl/transport/allocator/1.0
+android.hidl.token@1.0.so system/libhidl/transport/token/1.0 system/libhidl/transport/token/1.0
+android.hidl.token@1.0-utils.so system/libhidl/transport/token/1.0/utils system/libhidl/transport/token/1.0/utils
+android.system.net.netd@1.0.so system/hardware/interfaces/net/netd/1.0 system/hardware/interfaces/net/netd/1.0
+android.system.wifi.keystore@1.0.so system/hardware/interfaces/wifi/keystore/1.0 system/hardware/interfaces/wifi/keystore/1.0
+libadf.so system/core/adf/libadf system/core/adf/libadf
+libaudioroute.so system/media/audio_route
+libaudioutils.so system/media/audio_utils system/media/audio_utils
+libbinder.so frameworks/native/libs/binder frameworks/native/libs/binder
+libcamera_metadata.so system/media/camera
+libcap.so external/libcap external/libcap
+libcrypto.so external/boringssl external/boringssl
+libcrypto_utils.so system/core/libcrypto_utils system/core/libcrypto_utils
+libcurl.so external/curl external/curl
+libdiskconfig.so system/core/libdiskconfig system/core/libdiskconfig
+libdumpstateutil.so frameworks/native/cmds/dumpstate
+libevent.so external/libevent external/libevent
+libexif.so external/libexif
+libexpat.so external/expat external/expat
+libfmq.so system/libfmq
+libgatekeeper.so system/gatekeeper
+libgui.so frameworks/native/libs/gui
+libhardware_legacy.so hardware/libhardware_legacy
+libjpeg.so external/libjpeg-turbo external/libjpeg-turbo
+libkeymaster_messages.so system/keymaster
+libkeymaster_portable.so system/keymaster
+libkeymaster_staging.so system/keymaster
+libldacBT_abr.so external/libldac
+libldacBT_enc.so external/libldac
+liblz4.so external/lz4/lib external/lz4/lib
+libmedia_helper.so frameworks/av/media/libmedia frameworks/av/media/libmedia
+libmedia_omx.so frameworks/av/media/libmedia
+libmemtrack.so system/core/libmemtrack
+libnetutils.so system/core/libnetutils
+libnl.so external/libnl external/libnl
+libopus.so external/libopus
+libpagemap.so system/extras/libpagemap system/extras/libpagemap
+libpcre2.so external/pcre external/pcre
+libpiex.so external/piex
+libpng.so external/libpng external/libpng
+libpower.so hardware/libhardware_legacy hardware/libhardware_legacy
+libprocinfo.so system/core/libprocinfo system/core/libprocinfo
+libprotobuf-cpp-full.so external/protobuf
+libprotobuf-cpp-lite.so external/protobuf external/protobuf
+libradio_metadata.so system/media/radio
+libsoftkeymasterdevice.so system/keymaster system/keymaster
+libspeexresampler.so external/speex
+libsqlite.so external/sqlite/dist external/sqlite/dist
+libssl.so external/boringssl external/boringssl
+libstagefright_amrnb_common.so frameworks/av/media/libstagefright/codecs/amrnb/common
+libstagefright_enc_common.so frameworks/av/media/libstagefright/codecs/common frameworks/av/media/libstagefright/codecs/common
+libstagefright_flacdec.so frameworks/av/media/libstagefright/flac/dec
+libstagefright_foundation.so frameworks/av/media/libstagefright/foundation
+libstagefright_omx.so frameworks/av/media/libstagefright/omx
+libstagefright_omx_utils.so frameworks/av/media/libstagefright/omx
+libstagefright_soft_aacdec.so frameworks/av/media/libstagefright/codecs/aacdec
+libstagefright_soft_aacenc.so frameworks/av/media/libstagefright/codecs/aacenc
+libstagefright_soft_amrdec.so frameworks/av/media/libstagefright/codecs/amrnb/dec
+libstagefright_soft_amrnbenc.so frameworks/av/media/libstagefright/codecs/amrnb/enc
+libstagefright_soft_amrwbenc.so frameworks/av/media/libstagefright/codecs/amrwbenc
+libstagefright_soft_avcdec.so frameworks/av/media/libstagefright/codecs/avcdec
+libstagefright_soft_avcenc.so frameworks/av/media/libstagefright/codecs/avcenc
+libstagefright_soft_flacdec.so frameworks/av/media/libstagefright/codecs/flac/dec
+libstagefright_soft_flacenc.so frameworks/av/media/libstagefright/codecs/flac/enc
+libstagefright_soft_g711dec.so frameworks/av/media/libstagefright/codecs/g711/dec
+libstagefright_soft_gsmdec.so frameworks/av/media/libstagefright/codecs/gsm/dec
+libstagefright_soft_hevcdec.so frameworks/av/media/libstagefright/codecs/hevcdec
+libstagefright_soft_mp3dec.so frameworks/av/media/libstagefright/codecs/mp3dec
+libstagefright_soft_mpeg2dec.so frameworks/av/media/libstagefright/codecs/mpeg2dec
+libstagefright_soft_mpeg4dec.so frameworks/av/media/libstagefright/codecs/m4v_h263/dec
+libstagefright_soft_mpeg4enc.so frameworks/av/media/libstagefright/codecs/m4v_h263/enc
+libstagefright_soft_opusdec.so frameworks/av/media/libstagefright/codecs/opus/dec
+libstagefright_soft_rawdec.so frameworks/av/media/libstagefright/codecs/raw
+libstagefright_soft_vorbisdec.so frameworks/av/media/libstagefright/codecs/vorbis/dec
+libstagefright_soft_vpxdec.so frameworks/av/media/libstagefright/codecs/on2/dec
+libstagefright_soft_vpxenc.so frameworks/av/media/libstagefright/codecs/on2/enc
+libstagefright_xmlparser.so frameworks/av/media/libstagefright/xmlparser
+libsuspend.so system/core/libsuspend system/core/libsuspend
+libsysutils.so system/core/libsysutils
+libtinyalsa.so external/tinyalsa external/tinyalsa
+libtinyxml2.so external/tinyxml2 external/tinyxml2
+libui.so frameworks/native/libs/ui
+libusbhost.so system/core/libusbhost system/core/libusbhost
+libvixl-arm.so external/vixl external/vixl
+libvixl-arm64.so external/vixl external/vixl
+libvorbisidec.so external/tremolo
+libwifi-system-iface.so frameworks/opt/net/wifi/libwifi_system_iface frameworks/opt/net/wifi/libwifi_system_iface
+libxml2.so external/libxml2 external/libxml2
+libyuv.so external/libyuv/files external/libyuv/files
+libziparchive.so system/core/libziparchive system/core/libziparchive
+libclang_rt.ubsan_standalone-arm-android.so prebuilts/clang/host/linux-x86
+libclang_rt.asan-arm-android.so prebuilts/clang/host/linux-x86
+android.hardware.graphics.allocator@2.0.so hardware/interfaces/graphics/allocator/2.0 hardware/interfaces/graphics/allocator/2.0
+android.hardware.graphics.common@1.0.so hardware/interfaces/graphics/common/1.0 hardware/interfaces/graphics/common/1.0
+android.hardware.graphics.mapper@2.0.so hardware/interfaces/graphics/mapper/2.0 hardware/interfaces/graphics/mapper/2.0
+android.hardware.renderscript@1.0.so hardware/interfaces/renderscript/1.0 hardware/interfaces/renderscript/1.0
+android.hidl.memory@1.0.so system/libhidl/transport/memory/1.0 system/libhidl/transport/memory/1.0
+android.hidl.memory@1.0-impl.so system/libhidl/transport/memory/1.0/default
+libRSCpuRef.so frameworks/rs/cpu_ref
+libRSDriver.so frameworks/rs
+libRS_internal.so frameworks/rs
+libbacktrace.so system/core/libbacktrace system/core/libbacktrace
+libbase.so system/core/base system/core/base
+libbcinfo.so frameworks/compile/libbcc/bcinfo
+libblas.so external/cblas
+libc++.so external/libcxx
+libcompiler_rt.so external/compiler-rt external/compiler-rt
+libcutils.so system/core/libcutils system/core/libcutils
+libhardware.so hardware/libhardware
+libhidlbase.so system/libhidl/base
+libhidlmemory.so system/libhidl/libhidlmemory system/libhidl/libhidlmemory
+libhidltransport.so system/libhidl/transport
+libhwbinder.so system/libhwbinder
+libion.so system/core/libion system/core/libion
+liblzma.so external/lzma/C external/lzma/C
+libunwind.so external/libunwind external/libunwind
+libutils.so system/core/libutils system/core/libutils
+libz.so external/zlib external/zlib

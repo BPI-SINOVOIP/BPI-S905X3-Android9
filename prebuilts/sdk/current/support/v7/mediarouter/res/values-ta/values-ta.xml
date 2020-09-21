@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string msgid="6209940985205889239" name="mr_button_content_description">"அலைபரப்பும் பட்டன்"</string>
+    <string msgid="7205934955575650355" name="mr_cast_button_connected">"அலைபரப்பும் பட்டன். இணைக்கப்பட்டது"</string>
+    <string msgid="7767160474954808770" name="mr_cast_button_connecting">"அலைபரப்பும் பட்டன். இணைக்கிறது"</string>
+    <string msgid="1214396433859225686" name="mr_cast_button_disconnected">"அலைபரப்பும் பட்டன். துண்டிக்கப்பட்டது"</string>
+    <string msgid="7883700464756247478" name="mr_chooser_searching">"சாதனங்களைத் தேடுகிறது"</string>
+    <string msgid="1469819231928206099" name="mr_chooser_title">"இதற்கு அலைபரப்பு:"</string>
+    <string msgid="8313236767081989488" name="mr_controller_album_art">"ஆல்பம் ஆர்ட்"</string>
+    <string msgid="2406876321200529148" name="mr_controller_casting_screen">"திரையை அலைபரப்புகிறது"</string>
+    <string msgid="1404151965680505956" name="mr_controller_close_description">"மூடுவதற்கான பட்டன்"</string>
+    <string msgid="5621264648958127139" name="mr_controller_collapse_group">"சுருக்குவதற்கான பட்டன்"</string>
+    <string msgid="1224563715954797152" name="mr_controller_disconnect">"துண்டி"</string>
+    <string msgid="6561849209271950311" name="mr_controller_expand_group">"விரிவாக்குவதற்கான பட்டன்"</string>
+    <string msgid="942251150039480236" name="mr_controller_no_info_available">"தகவல் எதுவுமில்லை"</string>
+    <string msgid="5388112032574870059" name="mr_controller_no_media_selected">"மீடியா எதுவும் தேர்ந்தெடுக்கப்படவில்லை"</string>
+    <string msgid="5465089322498973309" name="mr_controller_pause">"இடைநிறுத்துவதற்கான பட்டன்"</string>
+    <string msgid="2233159395781515552" name="mr_controller_play">"இயக்குவதற்கான பட்டன்"</string>
+    <string msgid="6970507798830838731" name="mr_controller_stop">"நிறுத்துவதற்கான பட்டன்"</string>
+    <string msgid="6043110833085090960" name="mr_controller_stop_casting">"அலைபரப்புவதை நிறுத்து"</string>
+    <string msgid="390328956880221771" name="mr_controller_volume_slider">"ஒலியளவு ஸ்லைடர்"</string>
+    <string msgid="6445173646164603280" name="mr_system_route_name">"சிஸ்டம்"</string>
+    <string msgid="8951247913519682277" name="mr_user_route_category_name">"சாதனங்கள்"</string>
+</resources>

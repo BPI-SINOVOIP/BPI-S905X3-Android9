@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="car_margin">112dp</dimen>
+    <integer name="car_column_number">12</integer>
+    <integer name="car_dialog_column_number">10</integer>
+    <integer name="car_slide_up_menu_column_number">12</integer>
+    <integer name="column_card_default_column_span">12</integer>
+</resources>

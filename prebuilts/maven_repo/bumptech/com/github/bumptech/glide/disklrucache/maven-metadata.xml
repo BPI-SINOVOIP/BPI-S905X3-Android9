@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <groupId>com.github.bumptech.glide</groupId>
+    <artifactId>disklrucache</artifactId>
+    <versioning>
+        <versions>
+            <version>1.0.0-SNAPSHOT</version>
+        </versions>
+    </versioning>
+</metadata>

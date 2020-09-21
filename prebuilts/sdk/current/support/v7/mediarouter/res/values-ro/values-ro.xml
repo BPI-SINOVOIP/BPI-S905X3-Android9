@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string msgid="6209940985205889239" name="mr_button_content_description">"Butonul de proiecție"</string>
+    <string msgid="7205934955575650355" name="mr_cast_button_connected">"Butonul de proiecție. Conectat"</string>
+    <string msgid="7767160474954808770" name="mr_cast_button_connecting">"Butonul de proiecție. Se conectează"</string>
+    <string msgid="1214396433859225686" name="mr_cast_button_disconnected">"Butonul de proiecție. Deconectat"</string>
+    <string msgid="7883700464756247478" name="mr_chooser_searching">"Se caută dispozitive"</string>
+    <string msgid="1469819231928206099" name="mr_chooser_title">"Proiectați pe"</string>
+    <string msgid="8313236767081989488" name="mr_controller_album_art">"Grafica albumului"</string>
+    <string msgid="2406876321200529148" name="mr_controller_casting_screen">"Se proiectează ecranul"</string>
+    <string msgid="1404151965680505956" name="mr_controller_close_description">"Închideți"</string>
+    <string msgid="5621264648958127139" name="mr_controller_collapse_group">"Restrângeți"</string>
+    <string msgid="1224563715954797152" name="mr_controller_disconnect">"Deconectați"</string>
+    <string msgid="6561849209271950311" name="mr_controller_expand_group">"Extindeți"</string>
+    <string msgid="942251150039480236" name="mr_controller_no_info_available">"Nu sunt disponibile informații"</string>
+    <string msgid="5388112032574870059" name="mr_controller_no_media_selected">"Niciun conținut media selectat"</string>
+    <string msgid="5465089322498973309" name="mr_controller_pause">"Întrerupeți"</string>
+    <string msgid="2233159395781515552" name="mr_controller_play">"Redați"</string>
+    <string msgid="6970507798830838731" name="mr_controller_stop">"Opriți"</string>
+    <string msgid="6043110833085090960" name="mr_controller_stop_casting">"Nu mai proiectați"</string>
+    <string msgid="390328956880221771" name="mr_controller_volume_slider">"Glisor pentru volum"</string>
+    <string msgid="6445173646164603280" name="mr_system_route_name">"Sistem"</string>
+    <string msgid="8951247913519682277" name="mr_user_route_category_name">"Dispozitive"</string>
+</resources>

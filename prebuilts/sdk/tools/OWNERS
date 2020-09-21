@@ -1,0 +1,11 @@
+per-file *jack* = benoitlamarche@google.com
+per-file *jack* = jplesot@google.com
+
+per-file *jill* = benoitlamarche@google.com
+per-file *jill* = jplesot@google.com
+
+benoitlamarche@google.com # jack/jill
+jplesot@google.com        # jack/jill
+klyubin@google.com        # signapk
+srhines@google.com        # LLVM
+yroussel@google.com       # MultiDex

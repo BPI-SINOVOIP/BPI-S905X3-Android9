@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="car_drawer_max_width">1200dp</dimen>
+    <dimen name="car_keyline_4">182dp</dimen>
+    <dimen name="car_keyline_4_neg">-182dp</dimen>
+    <dimen name="car_margin">148dp</dimen>
+    <integer name="car_dialog_column_number">8</integer>
+    <integer name="column_card_default_column_span">8</integer>
+</resources>

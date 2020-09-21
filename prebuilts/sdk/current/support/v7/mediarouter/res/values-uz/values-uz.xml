@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string msgid="6209940985205889239" name="mr_button_content_description">"Translatsiya qilish tugmasi"</string>
+    <string msgid="7205934955575650355" name="mr_cast_button_connected">"Translatsiya tugmasi. Ulandi"</string>
+    <string msgid="7767160474954808770" name="mr_cast_button_connecting">"Translatsiya tugmasi. Ulanmoqda"</string>
+    <string msgid="1214396433859225686" name="mr_cast_button_disconnected">"Translatsiya tugmasi. Uzildi"</string>
+    <string msgid="7883700464756247478" name="mr_chooser_searching">"Qurilmalarni topish"</string>
+    <string msgid="1469819231928206099" name="mr_chooser_title">"Bunga translatsiya qilish:"</string>
+    <string msgid="8313236767081989488" name="mr_controller_album_art">"Albom muqovasi"</string>
+    <string msgid="2406876321200529148" name="mr_controller_casting_screen">"Ekran namoyish qilinmoqda"</string>
+    <string msgid="1404151965680505956" name="mr_controller_close_description">"Yopish"</string>
+    <string msgid="5621264648958127139" name="mr_controller_collapse_group">"Yig‘ish"</string>
+    <string msgid="1224563715954797152" name="mr_controller_disconnect">"Uzish"</string>
+    <string msgid="6561849209271950311" name="mr_controller_expand_group">"Yoyish"</string>
+    <string msgid="942251150039480236" name="mr_controller_no_info_available">"Ma’lumot yo‘q"</string>
+    <string msgid="5388112032574870059" name="mr_controller_no_media_selected">"Multimedia tanlamagan"</string>
+    <string msgid="5465089322498973309" name="mr_controller_pause">"Pauza"</string>
+    <string msgid="2233159395781515552" name="mr_controller_play">"Ijro"</string>
+    <string msgid="6970507798830838731" name="mr_controller_stop">"To‘xtatish"</string>
+    <string msgid="6043110833085090960" name="mr_controller_stop_casting">"Translatsiyani to‘xtatish"</string>
+    <string msgid="390328956880221771" name="mr_controller_volume_slider">"Tovush balandligi slayderi"</string>
+    <string msgid="6445173646164603280" name="mr_system_route_name">"Tizim"</string>
+    <string msgid="8951247913519682277" name="mr_user_route_category_name">"Qurilmalar"</string>
+</resources>

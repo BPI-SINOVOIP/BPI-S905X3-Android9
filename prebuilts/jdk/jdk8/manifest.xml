@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<manifest>
+  <remote fetch=".." name="goog" review="sso://googleplex-android/" />
+  <default remote="goog" revision="mirror-aosp-studio-master-dev" sync-j="4" />
+  <project name="platform/external/jetbrains/jdk8u" path="external/jetbrains/jdk8u" revision="8528ffc9e8499d0178ee982c3280493c0e2d7525" upstream="mirror-aosp-studio-master-dev" />
+  <project name="platform/external/jetbrains/jdk8u_corba" path="external/jetbrains/jdk8u_corba" revision="c55762da91519a85fb2fd0b4f415735a12cc4888" upstream="mirror-aosp-studio-master-dev" />
+  <project name="platform/external/jetbrains/jdk8u_hotspot" path="external/jetbrains/jdk8u_hotspot" revision="38469b8c8e872685dc7fbd57b8a1986f89d0552a" upstream="mirror-aosp-studio-master-dev" />
+  <project name="platform/external/jetbrains/jdk8u_jaxp" path="external/jetbrains/jdk8u_jaxp" revision="ad06f386190d159fe7bc8202b3abae2f1b218ecd" upstream="mirror-aosp-studio-master-dev" />
+  <project name="platform/external/jetbrains/jdk8u_jaxws" path="external/jetbrains/jdk8u_jaxws" revision="1608370faaf8ca1655f5442d66d2cfd6282747c7" upstream="mirror-aosp-studio-master-dev" />
+  <project name="platform/external/jetbrains/jdk8u_jdk" path="external/jetbrains/jdk8u_jdk" revision="142f30c6c0cd6d9daf35ae3248b2e3b753fb3344" upstream="mirror-aosp-studio-master-dev" />
+  <project name="platform/external/jetbrains/jdk8u_langtools" path="external/jetbrains/jdk8u_langtools" revision="fe8ba49ea8854950d9d756b7b2ac937c4a3f9577" upstream="mirror-aosp-studio-master-dev" />
+  <project name="platform/external/jetbrains/jdk8u_nashorn" path="external/jetbrains/jdk8u_nashorn" revision="45faba88ae10e979db10142c68d02d986018010a" upstream="mirror-aosp-studio-master-dev" />
+  <project name="toolchain/jdk/jdk9" path="toolchain/jdk/jdk9" revision="4c1e9bbe664e532f83b258e6c8a214b0241530d8" upstream="mirror-aosp-master" />
+  <project name="toolchain/jdk/jdk9_corba" path="toolchain/jdk/jdk9_corba" revision="b4ed46425f74345716ac4532e50a543226c1a1fe" upstream="mirror-aosp-master" />
+  <project name="toolchain/jdk/jdk9_hotspot" path="toolchain/jdk/jdk9_hotspot" revision="17fac2f462332e5590370849ec37fea9f014af97" upstream="mirror-aosp-master" />
+  <project name="toolchain/jdk/jdk9_jaxp" path="toolchain/jdk/jdk9_jaxp" revision="9d0d323a61a1cd4930ebca527673992ece7ab1d3" upstream="mirror-aosp-master" />
+  <project name="toolchain/jdk/jdk9_jaxws" path="toolchain/jdk/jdk9_jaxws" revision="cc2e16b7e6d0b1f6a4dbc28ffaf3a22b19991dd7" upstream="mirror-aosp-master" />
+  <project name="toolchain/jdk/jdk9_jdk" path="toolchain/jdk/jdk9_jdk" revision="d9bced18549d518442af72ecfa84506b26566283" upstream="mirror-aosp-master" />
+  <project name="toolchain/jdk/jdk9_langtools" path="toolchain/jdk/jdk9_langtools" revision="21d5ec9f070a5709fd8183c106840c13c0182a29" upstream="mirror-aosp-master" />
+  <project name="toolchain/jdk/jdk9_nashorn" path="toolchain/jdk/jdk9_nashorn" revision="fbaa32dd52163c8f4f939001dfd8a9f46a08eff2" upstream="mirror-aosp-master" />
+  <!-- prebuilts projects -->
+  <project clone-depth="1" name="platform/prebuilts/build-tools" path="prebuilts/build-tools" revision="13db9fd267baf97807d1271121837bd6a882670f" upstream="mirror-aosp-master" />
+  <project clone-depth="1" name="platform/prebuilts/clang/host/darwin-x86" path="prebuilts/clang/host/darwin-x86" revision="a342c52d2e5220273cbf1d3316b8fe1e4c7194ed" upstream="mirror-aosp-master" />
+  <project clone-depth="1" name="platform/prebuilts/clang/host/linux-x86" path="prebuilts/clang/host/linux-x86" revision="13c8d4e296fa2badce7d0dcabeafd63ff58774ba" upstream="mirror-aosp-master" />
+  <project clone-depth="1" name="platform/prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.15-4.8" path="prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.15-4.8" revision="2ccb38af8c940f1feef62ff5986f4bbc5d899e66" upstream="mirror-aosp-master" />
+  <project clone-depth="1" name="platform/prebuilts/studio/jdk" path="prebuilts/studio/jdk" revision="4d8d242a60231f0bf8e8622a64c368f0e2187d2d" upstream="mirror-aosp-studio-master-dev" />
+  <!-- build projects -->
+  <project clone-depth="1" name="toolchain/jdk/build" path="toolchain/jdk/build" revision="075263c362888278345e3c875bfbf23713cd0838" upstream="mirror-aosp-master" />
+  <project clone-depth="1" name="toolchain/jdk/deps" path="toolchain/jdk/deps" revision="76d7e49d62136f36810507a366504379174cc6b2" upstream="master" />
+</manifest>

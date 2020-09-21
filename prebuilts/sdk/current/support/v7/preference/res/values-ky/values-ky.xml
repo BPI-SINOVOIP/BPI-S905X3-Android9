@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <string msgid="3265458434114353660" name="expand_button_title">"Өркүндөтүлгөн"</string>
+    <string msgid="5255557321652385027" name="summary_collapsed_preference_list">"<ns1:g id="CURRENT_ITEMS">%1$s</ns1:g>, <ns1:g id="ADDED_ITEMS">%2$s</ns1:g>"</string>
+    <string msgid="2082379519172883894" name="v7_preference_off">"ӨЧҮК"</string>
+    <string msgid="7922757586228621900" name="v7_preference_on">"КҮЙҮК"</string>
+</resources>

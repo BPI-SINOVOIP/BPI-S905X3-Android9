@@ -1,0 +1,792 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="car_accent">@color/car_accent_dark</color>
+    <color name="car_accent_dark">@color/car_teal_700</color>
+    <color name="car_accent_light">@color/car_teal_200</color>
+    <color name="car_action1">@color/car_action1_dark</color>
+    <color name="car_action1_dark">@color/car_grey_50</color>
+    <color name="car_action1_light">@color/car_grey_900</color>
+    <color name="car_blue_300">#ff91a7ff</color>
+    <color name="car_blue_500">#ff5677fc</color>
+    <color name="car_blue_grey_800">#ff37474F</color>
+    <color name="car_blue_grey_900">#ff263238</color>
+    <color name="car_body1">@color/car_body1_dark</color>
+    <color name="car_body1_dark">@color/car_grey_900</color>
+    <color name="car_body1_light">@color/car_grey_100</color>
+    <color name="car_body2">@color/car_body2_dark</color>
+    <color name="car_body2_dark">@color/car_grey_650</color>
+    <color name="car_body2_light">@color/car_grey_400</color>
+    <color name="car_body3">@color/car_body3_dark</color>
+    <color name="car_body3_dark">@android:color/black</color>
+    <color name="car_body3_light">@android:color/white</color>
+    <color name="car_body4">@color/car_body4_dark</color>
+    <color name="car_body4_dark">@android:color/black</color>
+    <color name="car_body4_light">@android:color/white</color>
+    <color name="car_card">@color/car_card_light</color>
+    <color name="car_card_dark">@color/car_dark_blue_grey_700</color>
+    <color name="car_card_inverse">@color/car_card_dark</color>
+    <color name="car_card_light">@color/car_grey_50</color>
+    <color name="car_card_ripple_background">@color/car_card_ripple_background_dark</color>
+    <color name="car_card_ripple_background_dark">#3d000000</color>
+    <color name="car_card_ripple_background_inverse">@color/car_card_ripple_background_light</color>
+    <color name="car_card_ripple_background_light">#3dffffff</color>
+    <color name="car_dark_blue_grey_600">#ff222B31</color>
+    <color name="car_dark_blue_grey_700">#ff172026</color>
+    <color name="car_dark_blue_grey_800">#ff11181d</color>
+    <color name="car_dark_blue_grey_900">#ff090C0F</color>
+    <color name="car_green_500">#ff0f9d58</color>
+    <color name="car_green_700">#ff0b8043</color>
+    <color name="car_grey_100">#fff5f5f5</color>
+    <color name="car_grey_1000">#cc000000</color>
+    <color name="car_grey_200">#ffeeeeee</color>
+    <color name="car_grey_300">#ffe0e0e0</color>
+    <color name="car_grey_400">#ffbdbdbd</color>
+    <color name="car_grey_50">#fffafafa</color>
+    <color name="car_grey_500">#ff9e9e9e</color>
+    <color name="car_grey_600">#ff757575</color>
+    <color name="car_grey_650">#ff6B6B6B</color>
+    <color name="car_grey_700">#ff616161</color>
+    <color name="car_grey_800">#ff424242</color>
+    <color name="car_grey_900">#ff212121</color>
+    <color name="car_headline1">@color/car_headline1_dark</color>
+    <color name="car_headline1_dark">@color/car_grey_800</color>
+    <color name="car_headline1_light">@color/car_grey_100</color>
+    <color name="car_headline2">@color/car_headline2_dark</color>
+    <color name="car_headline2_dark">@color/car_grey_900</color>
+    <color name="car_headline2_light">@color/car_grey_100</color>
+    <color name="car_headline3">@color/car_headline3_dark</color>
+    <color name="car_headline3_dark">@color/car_grey_900</color>
+    <color name="car_headline3_light">@android:color/white</color>
+    <color name="car_headline4">@color/car_headline4_dark</color>
+    <color name="car_headline4_dark">@android:color/black</color>
+    <color name="car_headline4_light">@android:color/white</color>
+    <color name="car_indigo_800">#ff283593</color>
+    <color name="car_label1">@color/car_label1_dark</color>
+    <color name="car_label1_dark">@color/car_grey_900</color>
+    <color name="car_label1_light">@color/car_grey_50</color>
+    <color name="car_light_blue_300">#ff4fc3f7</color>
+    <color name="car_light_blue_500">#ff03A9F4</color>
+    <color name="car_light_blue_600">#ff039be5</color>
+    <color name="car_light_blue_700">#ff0288d1</color>
+    <color name="car_light_blue_800">#ff0277bd</color>
+    <color name="car_light_blue_900">#ff01579b</color>
+    <color name="car_list_divider">@color/car_list_divider_dark</color>
+    <color name="car_list_divider_dark">#1f000000</color>
+    <color name="car_list_divider_inverse">@color/car_list_divider_light</color>
+    <color name="car_list_divider_light">#1fffffff</color>
+    <color name="car_list_header">@color/car_blue_500</color>
+    <color name="car_red_400">#ffe06055</color>
+    <color name="car_red_500">#ffdb4437</color>
+    <color name="car_red_500a">#ffd50000</color>
+    <color name="car_red_700">#ffc53929</color>
+    <color name="car_scrollbar_thumb">@color/car_scrollbar_thumb_dark</color>
+    <color name="car_scrollbar_thumb_dark">#7f0b0f12</color>
+    <color name="car_scrollbar_thumb_inverse">@color/car_scrollbar_thumb_light</color>
+    <color name="car_scrollbar_thumb_light">#99ffffff</color>
+    <color name="car_seekbar_track_background">@color/car_seekbar_track_background_light</color>
+    <color name="car_seekbar_track_background_dark">@color/car_grey_700</color>
+    <color name="car_seekbar_track_background_light">@color/car_grey_400</color>
+    <color name="car_seekbar_track_secondary_progress">@color/car_grey_500</color>
+    <color name="car_teal_200">#ff80cbc4</color>
+    <color name="car_teal_700">#ff00796b</color>
+    <color name="car_tint">@color/car_tint_dark</color>
+    <color name="car_tint_dark">@color/car_grey_900</color>
+    <color name="car_tint_inverse">@color/car_tint_light</color>
+    <color name="car_tint_light">@color/car_grey_50</color>
+    <color name="car_title">@color/car_title_dark</color>
+    <color name="car_title2">@color/car_title2_dark</color>
+    <color name="car_title2_dark">@color/car_grey_900</color>
+    <color name="car_title2_light">@color/car_grey_100</color>
+    <color name="car_title_dark">@color/car_grey_900</color>
+    <color name="car_title_light">@color/car_grey_100</color>
+    <color name="car_white_1000">#1effffff</color>
+    <color name="car_yellow_500">#fff4b400</color>
+    <color name="car_yellow_800">#ffee8100</color>
+    <color name="speed_bump_background">#FFD0D0D0</color>
+    <declare-styleable name="ActionBar">
+        <!-- The number of horizontal slots. The minimum number is 3. -->
+        <attr format="integer" name="columns"/>
+    </declare-styleable>
+    <declare-styleable name="CarTheme">
+        <!-- ================== -->
+        <!-- Theming Attributes -->
+        <!-- ================== -->
+        <eat-comment/>
+
+        <!-- Attribute for specifying the styling of dialogs within a car theme. Note: this is
+             different from the style that is applied to framework/AppCompat dialogs. This will
+             only affect the styling of dialogs provided by the car support library. -->
+        <attr format="reference" name="carDialogTheme"/>
+
+        <!-- An attribute for specifying a style that modifies the look of a PagedListView. -->
+        <attr format="reference" name="pagedListViewStyle"/>
+
+        <!-- ================= -->
+        <!-- Dialog Attributes -->
+        <!-- ================= -->
+        <eat-comment/>
+
+        <!-- The background color of a dialog. -->
+        <attr format="color" name="dialogBackgroundColor"/>
+
+        <!-- The style of the title text in a CarAlertDialog. -->
+        <attr format="reference" name="dialogTitleStyle"/>
+        <!-- The style of the body text in a CarAlertDialog or the list items in a CarListDialog. -->
+        <attr format="reference" name="dialogBodyStyle"/>
+        <!-- The style of the action buttons in a CarAlertDialog. -->
+        <attr format="reference" name="dialogButtonStyle"/>
+        <!-- A theme for the styling of the list in a CarListDialog. -->
+        <attr format="reference" name="dialogListTheme"/>
+
+        <!-- ================= -->
+        <!-- Drawer Attributes -->
+        <!-- ================= -->
+        <eat-comment/>
+
+        <!-- The background color of the drawer. -->
+        <attr format="color" name="drawerBackgroundColor"/>
+        <!-- The color of the header text and arrow in the drawer. -->
+        <attr format="color" name="drawerHeaderColor"/>
+        <!-- The ripple color for items in the drawer. -->
+        <attr format="color" name="drawerRippleColor"/>
+        <!-- The TextAppearance of each item's title text in the drawer list. -->
+        <attr format="reference" name="drawerItemTitleTextAppearance"/>
+        <!-- The TextAppearance of each item's body text in the drawer list. -->
+        <attr format="reference" name="drawerItemBodyTextAppearance"/>
+        <!-- The styling of the list in the drawer. -->
+        <attr format="reference" name="drawerListStyle"/>
+
+    </declare-styleable>
+    <declare-styleable name="ClickThroughToolbar">
+        <!-- Whether or not clicks on this toolbar will pass through to an underlying view. This
+             value is false by default. -->
+        <attr format="boolean" name="clickThrough"/>
+    </declare-styleable>
+    <declare-styleable name="ColumnCardView">
+        <!-- The number of columns that this ColumnCardView should span across. This value will
+             determine the width of the card. -->
+        <attr format="integer" name="columnSpan"/>
+    </declare-styleable>
+    <declare-styleable name="DrawerArrowDrawable">
+        <!-- The color of the arrow. -->
+        <attr format="color" name="carArrowColor"/>
+        <!-- Whether the arrow will animate when switches directions. -->
+        <attr format="boolean" name="carArrowAnimate"/>
+        <!-- The size of the arrow's bounding box. -->
+        <attr format="dimension" name="carArrowSize"/>
+        <!-- The length of the top and bottom bars that merge to form the point of the arrow. -->
+        <attr format="dimension" name="carArrowHeadLength"/>
+        <!-- The length of arrow shaft. -->
+        <attr format="dimension" name="carArrowShaftLength"/>
+        <!-- The thickness of each of the bars that form the arrow. -->
+        <attr format="dimension" name="carArrowThickness"/>
+        <!-- The spacing between the menu bars (i.e. the "hamburger" icon). -->
+        <attr format="dimension" name="carMenuBarSpacing"/>
+        <!-- The size of the menu bars (i.e. the "hamburger" icon). -->
+        <attr format="dimension" name="carMenuBarThickness"/>
+    </declare-styleable>
+    <declare-styleable name="ListItem">
+        <!-- The background color of each ListItem. -->
+        <attr format="color" name="listItemBackgroundColor"/>
+        <!-- The TextAppearance of the title text in the ListItem. -->
+        <attr format="reference" name="listItemTitleTextAppearance"/>
+        <!-- The TextAppearance of the body text in the ListItem. -->
+        <attr format="reference" name="listItemBodyTextAppearance"/>
+        <!-- The TextAppearance of the text in the Subheader ListItem. -->
+        <attr format="reference" name="listItemSubheaderTextAppearance"/>
+    </declare-styleable>
+    <declare-styleable name="PagedListView">
+        <!-- Whether or not to offset the list view by the width of scroll bar. Setting this to
+             true will ensure that any views within the list will not overlap the scroll bar.
+             Deprecated: use gutter instead. If gutter is specified, this value is ignored.-->
+        <attr format="boolean" name="offsetScrollBar"/>
+        <!-- Whether to include a gutter to the start, end or both sides of the list view items.
+             The gutter width will be the width of the scrollbar, and by default will be set to
+             both. -->
+        <attr format="enum" name="gutter">
+            <!-- No gutter on either side, the list view items will extend the full width of the
+                 PagedListView. -->
+            <enum name="none" value="0"/>
+            <!-- Include a gutter on the start side only (i.e. the side with the scrollbar). -->
+            <enum name="start" value="1"/>
+            <!-- Include a gutter on the end side only (i.e. the opposite side to the
+                 scrollbar). -->
+            <enum name="end" value="2"/>
+            <!-- Include a gutter on both sides of the list view items. -->
+            <enum name="both" value="3"/>
+        </attr>
+        <!-- The size of the gutter that is either at the start, end or both sides of the
+             items in the PagedListView. There is a default value that changes per screen size if
+             a gutter size is not explicitly set.-->
+        <attr format="dimension" name="gutterSize"/>
+        <!-- Whether to display the scrollbar or not. Defaults to true. -->
+        <attr format="boolean" name="scrollBarEnabled"/>
+        <!-- Sets the color of the scroll bar. This color only affects the thumb of the scroll bar;
+             the up/down buttons are unaffected. To set these, use upButtonIcon and downButtonIcon
+             respectively. -->
+        <attr format="color" name="scrollBarColor"/>
+        <!-- The top margin before the scroll bar is drawn. -->
+        <attr format="dimension" name="scrollBarTopMargin"/>
+        <!-- The width of the container that will hold the scrollbar. The scrollbar is centered
+             within this value. If this value is not explicitly set, the scrollbar centers itself
+             within the car_margin value. -->
+        <attr format="dimension" name="scrollBarContainerWidth"/>
+        <!-- Whether or not to show a vertical diving line between each item of the list. Divider
+             after the last item (LinearLayoutManager) or row (GridLayoutManager) will not be shown
+             but there will be an offset for divider space. -->
+        <attr format="boolean" name="showPagedListViewDivider"/>
+        <!-- An optional id that specifies a child View whose starting edge will be used to
+             determine the start position of the dividing line. -->
+        <attr format="reference" name="alignDividerStartTo"/>
+        <!-- An optional id that specifies a child View whose ending edge will be used to
+             determine the end position of the dividing line. -->
+        <attr format="reference" name="alignDividerEndTo"/>
+        <!-- A starting margin before the drawing of the dividing line. This margin will be an
+             offset from the view specified by "alignDividerStartTo" if given. -->
+        <attr format="dimension" name="dividerStartMargin"/>
+        <!-- An ending margin before the drawing of the dividing line. This margin will be an
+             offset from the view specified by "alignDividerEndTo" if given. -->
+        <attr format="dimension" name="dividerEndMargin"/>
+        <!-- The color of the list divider. -->
+        <attr format="color" name="listDividerColor"/>
+        <!-- The width of the margin on the right side of the list.
+             Deprecated: use gutter instead. If gutter is specified, this value is ignored.-->
+        <attr format="dimension" name="listEndMargin"/>
+        <!-- An optional vertical spacing between items in the list. In GridLayoutManager items in
+             the last row would still have spacing at bottom. -->
+        <attr format="dimension" name="itemSpacing"/>
+        <!-- The icon to be used for the up button of the scroll bar. -->
+        <attr format="reference" name="upButtonIcon"/>
+        <!-- The icon to be used for the down button of the scroll bar.  -->
+        <attr format="reference" name="downButtonIcon"/>
+        <!-- The amount of space before the first item in the list view. This space is
+             scrollable with the contents of the list. -->
+        <attr format="reference" name="listContentTopOffset"/>
+        <!-- Vertically center the list contents when the number of items in the list does not take
+             up the full height of the PagedListView. This value is "false" by default. -->
+        <attr format="boolean" name="verticallyCenterListContent"/>
+        <!-- Specifies how the PagedListView should respond to day/night mode events. The values
+             here should match the DayNightStyle @interface. See that class for more
+             information. -->
+        <attr format="enum" name="dayNightStyle">
+            <!-- Automatically changes colors for day/night, assuming the content is light during
+                 the day and dark during the night. This is the default behavior. -->
+            <enum name="auto" value="0"/>
+            <!-- Automatically changes colors for day/night, with the colors being inverted from
+                 "auto". -->
+            <enum name="auto_inverse" value="1"/>
+            <!-- Fixes the colors to be light colored.  -->
+            <enum name="always_light" value="2"/>
+            <!-- Fixes the colors to be dark colored.  -->
+            <enum name="always_dark" value="3"/>
+            <!-- Fixes the colors to be light colored.
+                 Deprecated: use "always_light" instead. -->
+            <enum name="force_night" value="4"/>
+            <!-- Fixes the colors to be dark colored.
+                 Deprecated: use "always_dark" instead. -->
+            <enum name="force_day" value="5"/>
+        </attr>
+    </declare-styleable>
+    <dimen name="app_header_height">96dp</dimen>
+    <dimen name="car_action1_size">26sp</dimen>
+    <dimen name="car_action2_size">26sp</dimen>
+    <dimen name="car_action_bar_activation_ring_radius">64dp</dimen>
+    <dimen name="car_action_bar_activation_ring_stroke_width">3dp</dimen>
+    <dimen name="car_action_bar_button_height">128dp</dimen>
+    <dimen name="car_action_bar_button_ripple_radius">48dp</dimen>
+    <dimen name="car_action_bar_button_width">128dp</dimen>
+    <dimen name="car_action_bar_buttons_space">@dimen/car_padding_4</dimen>
+    <dimen name="car_action_bar_elevation">2dp</dimen>
+    <dimen name="car_action_bar_height">96dp</dimen>
+    <dimen name="car_action_bar_touch_ripple_size">38dp</dimen>
+    <dimen name="car_action_button_icon_inset">24dp</dimen>
+    <dimen name="car_action_button_ripple_inset">16dp</dimen>
+    <dimen name="car_alpha_jump_button_size">@dimen/car_scroll_bar_button_size</dimen>
+    <dimen name="car_app_bar_default_elevation">8dp</dimen>
+    <dimen name="car_app_bar_height">80dp</dimen>
+    <dimen name="car_app_icon_size">76dp</dimen>
+    <dimen name="car_application_icon_size">44dp</dimen>
+    <dimen name="car_arrow_head_length">18dp</dimen>
+    <dimen name="car_arrow_shaft_length">34dp</dimen>
+    <dimen name="car_arrow_size">96dp</dimen>
+    <dimen name="car_arrow_thickness">3dp</dimen>
+    <dimen name="car_avatar_icon_size">56dp</dimen>
+    <dimen name="car_avatar_size">56dp</dimen>
+    <dimen name="car_body1_size">32sp</dimen>
+    <dimen name="car_body2_size">26sp</dimen>
+    <dimen name="car_body3_size">16sp</dimen>
+    <dimen name="car_body4_size">14sp</dimen>
+    <dimen name="car_body5_size">18sp</dimen>
+    <dimen name="car_borderless_button_horizontal_padding">0dp</dimen>
+    <dimen name="car_button_height">56dp</dimen>
+    <dimen name="car_button_horizontal_padding">@dimen/car_padding_4</dimen>
+    <dimen name="car_button_min_width">158dp</dimen>
+    <dimen name="car_button_radius">@dimen/car_radius_1</dimen>
+    <dimen name="car_card_action_bar_height">76dp</dimen>
+    <dimen name="car_card_header_height">76dp</dimen>
+    <dimen name="car_dialog_action_bar_height">@dimen/car_card_action_bar_height</dimen>
+    <dimen name="car_dialog_elevation">16dp</dimen>
+    <dimen name="car_dialog_header_height">@dimen/car_card_header_height</dimen>
+    <dimen name="car_double_line_list_item_height">@dimen/car_single_line_list_item_height</dimen>
+    <dimen name="car_drawer_list_item_end_icon_size">56dp</dimen>
+    <dimen name="car_drawer_list_item_end_margin">32dp</dimen>
+    <dimen name="car_drawer_list_item_icon_end_margin">32dp</dimen>
+    <dimen name="car_drawer_list_item_icon_size">64dp</dimen>
+    <dimen name="car_drawer_list_item_small_icon_size">56dp</dimen>
+    <dimen name="car_drawer_max_width">720dp</dimen>
+    <dimen name="car_drawer_progress_bar_size">48dp</dimen>
+    <dimen name="car_fab_icon_size">76dp</dimen>
+    <dimen name="car_grid_spacing_minimum">32dp</dimen>
+    <dimen name="car_gutter_size">16dp</dimen>
+    <dimen name="car_headline1_size">45sp</dimen>
+    <dimen name="car_headline2_size">32sp</dimen>
+    <dimen name="car_headline3_size">24sp</dimen>
+    <dimen name="car_headline4_size">20sp</dimen>
+    <dimen name="car_keyline_1">24dp</dimen>
+    <dimen name="car_keyline_1_keyline_3_diff">88dp</dimen>
+    <dimen name="car_keyline_1_neg">-24dp</dimen>
+    <dimen name="car_keyline_2">96dp</dimen>
+    <dimen name="car_keyline_2_neg">-96dp</dimen>
+    <dimen name="car_keyline_3">112dp</dimen>
+    <dimen name="car_keyline_3_neg">-112dp</dimen>
+    <dimen name="car_keyline_4">148dp</dimen>
+    <dimen name="car_keyline_4_neg">-148dp</dimen>
+    <dimen name="car_label1_size">26sp</dimen>
+    <dimen name="car_label2_size">64sp</dimen>
+    <dimen name="car_large_avatar_size">96dp</dimen>
+    <dimen name="car_last_card_peek_amount">16dp</dimen>
+    <dimen name="car_list_dialog_title_elevation">16dp</dimen>
+    <dimen name="car_list_divider_height">1dp</dimen>
+    <dimen name="car_margin">20dp</dimen>
+    <dimen name="car_menu_bar_length">40dp</dimen>
+    <dimen name="car_menu_bar_spacing">6dp</dimen>
+    <dimen name="car_navigation_bar_height">80dp</dimen>
+    <dimen name="car_padding_0">4dp</dimen>
+    <dimen name="car_padding_1">10dp</dimen>
+    <dimen name="car_padding_2">12dp</dimen>
+    <dimen name="car_padding_3">16dp</dimen>
+    <dimen name="car_padding_4">20dp</dimen>
+    <dimen name="car_padding_5">40dp</dimen>
+    <dimen name="car_padding_6">64dp</dimen>
+    <dimen name="car_pill_button_size">56dp</dimen>
+    <dimen name="car_primary_icon_size">44dp</dimen>
+    <dimen name="car_progress_bar_height">@dimen/car_seekbar_height</dimen>
+    <dimen name="car_radius_1">4dp</dimen>
+    <dimen name="car_radius_2">8dp</dimen>
+    <dimen name="car_radius_3">16dp</dimen>
+    <dimen name="car_radius_5">100dp</dimen>
+    <dimen name="car_sample_row_height">128dp</dimen>
+    <dimen name="car_scroll_bar_button_size">56dp</dimen>
+    <dimen name="car_scroll_bar_thumb_width">6dp</dimen>
+    <dimen name="car_secondary_icon_size">24dp</dimen>
+    <dimen name="car_seekbar_height">6dp</dimen>
+    <dimen name="car_seekbar_padding">26dp</dimen>
+    <dimen name="car_seekbar_text_overlap">-20dp</dimen>
+    <dimen name="car_seekbar_thumb_size">24dp</dimen>
+    <dimen name="car_seekbar_thumb_stroke">1dp</dimen>
+    <dimen name="car_single_line_list_item_height">96dp</dimen>
+    <dimen name="car_slide_down_menu_initial_height">@dimen/car_slide_up_menu_initial_height</dimen>
+    <dimen name="car_slide_up_menu_initial_height">76dp</dimen>
+    <dimen name="car_status_bar_height">36dp</dimen>
+    <dimen name="car_status_bar_icon_size">24dp</dimen>
+    <dimen name="car_sub_header_height">76dp</dimen>
+    <dimen name="car_text_input_line_height">2dp</dimen>
+    <dimen name="car_text_vertical_margin">2dp</dimen>
+    <dimen name="car_title2_size">32sp</dimen>
+    <dimen name="car_title_size">32sp</dimen>
+    <dimen name="car_touch_target_size">76dp</dimen>
+    <dimen name="car_vertical_line_divider_height">60dp</dimen>
+    <dimen name="car_vertical_line_divider_width">1dp</dimen>
+    <dimen name="speed_bump_lock_out_drawable_margin_bottom">8dp</dimen>
+    <dimen name="speed_bump_lock_out_message_height">96dp</dimen>
+    <integer name="alpha_jump_button_columns">6</integer>
+    <integer name="car_action_bar_collapse_anim_duration">233</integer>
+    <integer name="car_action_bar_expand_anim_duration">333</integer>
+    <integer name="car_borderless_button_text_length_limit">20</integer>
+    <integer name="car_column_number">4</integer>
+    <integer name="car_dialog_column_number">10</integer>
+    <integer name="car_slide_down_menu_column_number">4</integer>
+    <integer name="car_slide_up_menu_column_number">4</integer>
+    <integer name="column_card_default_column_span">4</integer>
+    <integer name="speed_bump_fade_duration_ms">167</integer>
+    <integer name="speed_bump_lock_out_color_change_ms">500</integer>
+    <integer name="speed_bump_lock_out_color_change_start_delay_ms">5433</integer>
+    <integer name="speed_bump_lock_out_duration_ms">5933</integer>
+    <integer name="speed_bump_translate_y_duration_ms">300</integer>
+    <string name="action_bar_expand_collapse_button">Expand/collapse button</string>
+    <string name="alpha_jump_placeholder_text" translatable="false">A</string>
+    <string name="car_drawer_close" translatable="false">Close drawer</string>
+    <string name="car_drawer_open" translatable="false">Open drawer</string>
+    <string name="ellipsis" translatable="false">…</string>
+    <string name="speed_bump_lockout_message">Focus on the road</string>
+    <style name="CarListVerticalDivider">
+        <item name="android:layout_width">@dimen/car_vertical_line_divider_width</item>
+        <item name="android:layout_height">@dimen/car_vertical_line_divider_height</item>
+        <item name="android:layout_marginStart">@dimen/car_padding_4</item>
+        <item name="android:background">@color/car_list_divider</item>
+    </style>
+    <style name="TextAppearance.Car" parent="TextAppearance.AppCompat"/>
+    <style name="TextAppearance.Car.Action1">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">@dimen/car_action1_size</item>
+        <item name="android:textColor">@color/car_accent</item>
+    </style>
+    <style name="TextAppearance.Car.ActionBar.Menu" parent="TextAppearance.Car.Action1">
+        <item name="android:textColor">?attr/actionMenuTextColor</item>
+    </style>
+    <style name="TextAppearance.Car.Body1">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/car_body1_size</item>
+        <item name="android:textColor">@color/car_body1</item>
+    </style>
+    <style name="TextAppearance.Car.Body1.Dark">
+        <item name="android:textColor">@color/car_body2_dark</item>
+    </style>
+    <style name="TextAppearance.Car.Body1.Light">
+        <item name="android:textColor">@color/car_body1_light</item>
+    </style>
+    <style name="TextAppearance.Car.Body2">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/car_body2_size</item>
+        <item name="android:textColor">@color/car_body2</item>
+    </style>
+    <style name="TextAppearance.Car.Body2.Dark">
+        <item name="android:textColor">@color/car_body2_dark</item>
+    </style>
+    <style name="TextAppearance.Car.Body2.Light">
+        <item name="android:textColor">@color/car_body2_light</item>
+    </style>
+    <style name="TextAppearance.Car.Body3">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/car_body3_size</item>
+        <item name="android:textColor">@color/car_body3</item>
+    </style>
+    <style name="TextAppearance.Car.Body4">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/car_body4_size</item>
+        <item name="android:textColor">@color/car_body4</item>
+    </style>
+    <style name="TextAppearance.Car.Headline1">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/car_headline1_size</item>
+        <item name="android:textColor">@color/car_headline1</item>
+    </style>
+    <style name="TextAppearance.Car.Headline1.Dark">
+        <item name="android:textColor">@color/car_headline1_dark</item>
+    </style>
+    <style name="TextAppearance.Car.Headline1.Light">
+        <item name="android:textColor">@color/car_headline1_light</item>
+    </style>
+    <style name="TextAppearance.Car.Headline2">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/car_headline2_size</item>
+        <item name="android:textColor">@color/car_headline2</item>
+    </style>
+    <style name="TextAppearance.Car.Headline3">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/car_headline3_size</item>
+        <item name="android:textColor">@color/car_headline3</item>
+    </style>
+    <style name="TextAppearance.Car.Headline4">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/car_headline4_size</item>
+        <item name="android:textColor">@color/car_headline4</item>
+    </style>
+    <style name="TextAppearance.Car.Hint" parent="TextAppearance.Car.Body2"/>
+    <style name="TextAppearance.Car.Label1">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/car_label1_size</item>
+        <item name="android:textColor">@color/car_label1</item>
+    </style>
+    <style name="TextAppearance.Car.Subheader" parent="TextAppearance.Car.Title2">
+        <item name="android:textColor">@color/car_accent</item>
+    </style>
+    <style name="TextAppearance.Car.Subheader.Dark" parent="TextAppearance.Car.Subheader">
+        <item name="android:textColor">@color/car_accent_dark</item>
+    </style>
+    <style name="TextAppearance.Car.Subheader.Light" parent="TextAppearance.Car.Subheader">
+        <item name="android:textColor">@color/car_accent_light</item>
+    </style>
+    <style name="TextAppearance.Car.Title">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/car_title_size</item>
+        <item name="android:textColor">@color/car_title</item>
+    </style>
+    <style name="TextAppearance.Car.Title.Dark">
+        <item name="android:textColor">@color/car_title_dark</item>
+    </style>
+    <style name="TextAppearance.Car.Title.Light">
+        <item name="android:textColor">@color/car_title_light</item>
+    </style>
+    <style name="TextAppearance.Car.Title2">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/car_title2_size</item>
+        <item name="android:textColor">@color/car_title2</item>
+    </style>
+    <style name="TextAppearance.Car.Title2.Dark">
+        <item name="android:textColor">@color/car_title2_dark</item>
+    </style>
+    <style name="TextAppearance.Car.Title2.Light">
+        <item name="android:textColor">@color/car_title2_light</item>
+    </style>
+    <style name="Theme.Car.Dark.Dialog" parent="Theme.Car.Dialog">
+        <item name="android:colorControlHighlight">@color/car_card_ripple_background_inverse</item>
+        <item name="colorControlHighlight">@color/car_card_ripple_background_inverse</item>
+        <item name="dialogButtonStyle">@style/Widget.Car.Button.Borderless.Colored</item>
+        <item name="dialogBackgroundColor">@color/car_card_dark</item>
+        <item name="dialogListTheme">@style/Theme.Car.Light.List.DarkItems</item>
+        <item name="dialogTitleStyle">@style/Widget.Car.Dialog.Title.Light</item>
+        <item name="dialogBodyStyle">@style/Widget.Car.Dialog.Body.Light</item>
+    </style>
+    <style name="Theme.Car.Dark.Dialog.Alert" parent="Theme.Car.Dialog.Alert">
+        <item name="android:background">@color/car_card_dark</item>
+        <item name="android:listDividerAlertDialog">@drawable/car_list_divider_light</item>
+        <item name="android:textColorPrimary">@color/car_body2_light</item>
+        <item name="android:windowTitleStyle">@style/Widget.Car.Dialog.Title.Light</item>
+    </style>
+    <style name="Theme.Car.Dark.NoActionBar" parent="Theme.Car.NoActionBar">
+        <item name="android:alertDialogTheme">@style/Theme.Car.Dark.Dialog.Alert</item>
+        <item name="android:colorControlHighlight">@color/car_card_ripple_background_inverse</item>
+        <item name="android:seekBarStyle">@style/Widget.Car.SeekBar.Light</item>
+        <item name="alertDialogTheme">@style/Theme.Car.Dark.Dialog.Alert</item>
+        <item name="carDialogTheme">@style/Theme.Car.Dark.Dialog</item>
+        <item name="colorControlHighlight">@color/car_card_ripple_background_inverse</item>
+        <item name="pagedListViewStyle">@style/Widget.Car.Light.List.LightDivider</item>
+        <item name="listItemBackgroundColor">@color/car_card_dark</item>
+        <item name="listItemTitleTextAppearance">@style/TextAppearance.Car.Body1.Light</item>
+        <item name="listItemBodyTextAppearance">@style/TextAppearance.Car.Body2.Light</item>
+        <item name="listItemSubheaderTextAppearance">
+            @style/TextAppearance.Car.Subheader.Light</item>
+        <item name="seekBarStyle">@style/Widget.Car.SeekBar.Light</item>
+    </style>
+    <style name="Theme.Car.Dark.NoActionBar.Drawer">
+        <item name="drawerArrowStyle">@style/Widget.Car.DrawerArrowToggle</item>
+        <item name="drawerBackgroundColor">@color/car_card_dark</item>
+        <item name="drawerRippleColor">@color/car_card_ripple_background_light</item>
+        <item name="drawerHeaderColor">@color/car_title2_light</item>
+        <item name="drawerItemTitleTextAppearance">@style/TextAppearance.Car.Body1.Light</item>
+        <item name="drawerItemBodyTextAppearance">@style/TextAppearance.Car.Body2.Light</item>
+        <item name="drawerListStyle">@style/Widget.Car.Light.List.LightDivider</item>
+    </style>
+    <style name="Theme.Car.Dialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:colorControlHighlight">@color/car_card_ripple_background</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="colorControlHighlight">@color/car_card_ripple_background</item>
+        <item name="dialogButtonStyle">@style/Widget.Car.Button.Borderless.Colored</item>
+        <item name="dialogBackgroundColor">@color/car_card</item>
+        <item name="dialogListTheme">@style/Theme.Car.List</item>
+        <item name="dialogTitleStyle">@style/Widget.Car.Dialog.Title</item>
+        <item name="dialogBodyStyle">@style/Widget.Car.Dialog.Body</item>
+    </style>
+    <style name="Theme.Car.Dialog.Alert" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:background">@color/car_card</item>
+        <item name="android:borderlessButtonStyle">@style/Widget.Car.Button.Borderless.Colored</item>
+        <item name="android:colorButtonNormal">@color/car_accent</item>
+        <item name="android:listDividerAlertDialog">@drawable/car_list_divider</item>
+        <item name="android:textColorPrimary">@color/car_body2</item>
+        <item name="android:windowTitleStyle">@style/Widget.Car.Dialog.Title</item>
+        <item name="buttonBarNeutralButtonStyle">@style/Widget.Car.Button.Borderless.Colored</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.Car.Button.Borderless.Colored</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.Car.Button.Borderless.Colored</item>
+    </style>
+    <style name="Theme.Car.Light.Dialog.Alert" parent="Theme.Car.Dialog.Alert">
+        <item name="android:background">@color/car_card_light</item>
+        <item name="android:listDividerAlertDialog">@drawable/car_list_divider_dark</item>
+        <item name="android:textColorPrimary">@color/car_body2_dark</item>
+        <item name="android:windowTitleStyle">@style/Widget.Car.Dialog.Title.Dark</item>
+    </style>
+    <style name="Theme.Car.Light.List" parent="Theme.Car.List">
+        <item name="pagedListViewStyle">@style/Widget.Car.Light.List.LightDivider</item>
+    </style>
+    <style name="Theme.Car.Light.List.DarkItems">
+        <item name="listItemBackgroundColor">@color/car_card_dark</item>
+        <item name="listItemTitleTextAppearance">@style/TextAppearance.Car.Body1.Light</item>
+        <item name="listItemBodyTextAppearance">@style/TextAppearance.Car.Body2.Light</item>
+    </style>
+    <style name="Theme.Car.Light.NoActionBar" parent="Theme.Car.NoActionBar"/>
+    <style name="Theme.Car.Light.NoActionBar.Drawer" parent="Theme.Car.NoActionBar.Drawer"/>
+    <style name="Theme.Car.List" parent="android:Theme">
+        <item name="pagedListViewStyle">@style/Widget.Car.List</item>
+        <item name="listItemBackgroundColor">@color/car_card</item>
+        <item name="listItemTitleTextAppearance">@style/TextAppearance.Car.Body1</item>
+        <item name="listItemBodyTextAppearance">@style/TextAppearance.Car.Body2</item>
+    </style>
+    <style name="Theme.Car.NoActionBar" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:colorAccent">@color/car_accent</item>
+        <item name="android:colorButtonNormal">@color/car_accent</item>
+        <item name="android:colorControlHighlight">@color/car_card_ripple_background</item>
+        <item name="android:buttonStyle">@style/Widget.Car.Button</item>
+        <item name="android:borderlessButtonStyle">@style/Widget.Car.Button.Borderless.Colored</item>
+        <item name="android:progressBarStyleHorizontal">@style/Widget.Car.ProgressBar.Horizontal</item>
+        <item name="android:textColorHint">@color/car_body2</item>
+        <item name="android:editTextStyle">@style/Widget.Car.EditText</item>
+        <item name="android:editTextColor">@color/car_body1</item>
+        <item name="android:colorControlNormal">@color/car_body2</item>
+        <item name="android:seekBarStyle">@style/Widget.Car.SeekBar</item>
+        <item name="actionBarItemBackground">@drawable/car_card_ripple_background</item>
+        <item name="actionBarSize">@dimen/car_app_bar_height</item>
+        <item name="actionButtonStyle">@style/Widget.Car.ActionButton</item>
+        <item name="actionMenuTextAppearance">@style/TextAppearance.Car.ActionBar.Menu</item>
+        <item name="actionMenuTextColor">@drawable/car_borderless_button_text_color</item>
+        <item name="carDialogTheme">@style/Theme.Car.Dialog</item>
+        <item name="colorControlHighlight">@color/car_card_ripple_background</item>
+        <item name="listItemBackgroundColor">@color/car_card</item>
+        <item name="listItemTitleTextAppearance">@style/TextAppearance.Car.Body1</item>
+        <item name="listItemBodyTextAppearance">@style/TextAppearance.Car.Body2</item>
+        <item name="listItemSubheaderTextAppearance">@style/TextAppearance.Car.Subheader</item>
+        <item name="pagedListViewStyle">@style/Widget.Car.List</item>
+        <item name="seekBarStyle">@style/Widget.Car.SeekBar</item>
+        <item name="toolbarNavigationButtonStyle">@style/Widget.Car.Toolbar.Button.Navigation</item>
+        <item name="toolbarStyle">@style/Widget.Car.Toolbar</item>
+    </style>
+    <style name="Theme.Car.NoActionBar.Drawer">
+        <item name="drawerArrowStyle">@style/Widget.Car.DrawerArrowToggle</item>
+        <item name="drawerBackgroundColor">@color/car_card</item>
+        <item name="drawerRippleColor">@color/car_card_ripple_background</item>
+        <item name="drawerHeaderColor">@color/car_title2</item>
+        <item name="drawerItemTitleTextAppearance">@style/TextAppearance.Car.Body1</item>
+        <item name="drawerItemBodyTextAppearance">@style/TextAppearance.Car.Body2</item>
+        <item name="drawerListStyle">@style/Widget.Car.List</item>
+    </style>
+    <style name="Widget.Car.ActionButton" parent="Widget.AppCompat.ActionButton">
+        <item name="android:background">?attr/actionBarItemBackground</item>
+        <item name="android:minHeight">@dimen/car_action_bar_height</item>
+        <item name="android:paddingLeft">@dimen/car_padding_2</item>
+        <item name="android:paddingRight">@dimen/car_padding_2</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:tint">@color/car_tint</item>
+    </style>
+    <style name="Widget.Car.Button" parent="Widget.AppCompat.Button">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:layout_height">@dimen/car_button_height</item>
+        <item name="android:minWidth">@dimen/car_button_min_width</item>
+        <item name="android:paddingStart">@dimen/car_button_horizontal_padding</item>
+        <item name="android:paddingEnd">@dimen/car_button_horizontal_padding</item>
+        <item name="android:textSize">@dimen/car_action1_size</item>
+        <item name="android:background">@drawable/car_button_background</item>
+        <item name="android:textColor">@drawable/car_button_text_color</item>
+    </style>
+    <style name="Widget.Car.Button.ActionBar">
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:padding">@dimen/car_action_button_icon_inset</item>
+        <item name="android:background">@drawable/car_action_button_background</item>
+        <item name="android:tint">@color/car_tint</item>
+    </style>
+    <style name="Widget.Car.Button.Borderless.Colored" parent="Widget.AppCompat.Button.Borderless.Colored">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:layout_height">@dimen/car_button_height</item>
+        <item name="android:minWidth">@dimen/car_button_min_width</item>
+        <item name="android:paddingStart">@dimen/car_borderless_button_horizontal_padding</item>
+        <item name="android:paddingEnd">@dimen/car_borderless_button_horizontal_padding</item>
+        <item name="android:textSize">@dimen/car_action1_size</item>
+        <item name="android:textColor">@drawable/car_borderless_button_text_color</item>
+    </style>
+    <style name="Widget.Car.Button.Borderless.Colored.Dark">
+        <item name="android:textColor">@drawable/car_borderless_button_text_color</item>
+    </style>
+    <style name="Widget.Car.Button.Borderless.Colored.Light">
+        <item name="android:textColor">@drawable/car_borderless_button_text_color</item>
+    </style>
+    <style name="Widget.Car.Dark.List" parent="Widget.Car.List">
+        <item name="dayNightStyle">force_day</item>
+    </style>
+    <style name="Widget.Car.Dark.List.LightDivider">
+        <item name="listDividerColor">@color/car_list_divider_light</item>
+    </style>
+    <style name="Widget.Car.Dialog" parent="android:Widget"/>
+    <style name="Widget.Car.Dialog.Body">
+        <item name="android:textAppearance">@style/TextAppearance.Car.Body2</item>
+    </style>
+    <style name="Widget.Car.Dialog.Body.Dark">
+        <item name="android:textAppearance">@style/TextAppearance.Car.Body2.Dark</item>
+    </style>
+    <style name="Widget.Car.Dialog.Body.Light">
+        <item name="android:textAppearance">@style/TextAppearance.Car.Body2.Light</item>
+    </style>
+    <style name="Widget.Car.Dialog.Title">
+        <item name="android:maxLines">1</item>
+        <item name="android:textAppearance">@style/TextAppearance.Car.Title2</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textAlignment">viewStart</item>
+    </style>
+    <style name="Widget.Car.Dialog.Title.Dark">
+        <item name="android:textAppearance">@style/TextAppearance.Car.Title2.Dark</item>
+    </style>
+    <style name="Widget.Car.Dialog.Title.Light">
+        <item name="android:textAppearance">@style/TextAppearance.Car.Title2.Light</item>
+    </style>
+    <style name="Widget.Car.DrawerArrowToggle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@color/car_title2</item>
+        <item name="spinBars">true</item>
+        <item name="barLength">@dimen/car_menu_bar_length</item>
+        <item name="thickness">@dimen/car_arrow_thickness</item>
+        <item name="gapBetweenBars">@dimen/car_menu_bar_spacing</item>
+        <item name="arrowShaftLength">@dimen/car_arrow_shaft_length</item>
+        <item name="arrowHeadLength">@dimen/car_arrow_head_length</item>
+        <item name="drawableSize">@dimen/car_arrow_size</item>
+    </style>
+    <style name="Widget.Car.EditText" parent="Widget.AppCompat.EditText">
+        <item name="android:textColor">?attr/editTextColor</item>
+        <item name="android:textAppearance">@style/TextAppearance.Car.Body1</item>
+    </style>
+    <style name="Widget.Car.Light.List" parent="Widget.Car.List">
+        <item name="dayNightStyle">force_night</item>
+    </style>
+    <style name="Widget.Car.Light.List.LightDivider">
+        <item name="listDividerColor">@color/car_list_divider_light</item>
+    </style>
+    <style name="Widget.Car.List" parent="android:Widget">
+        <item name="dayNightStyle">auto</item>
+        <item name="listDividerColor">@color/car_list_divider</item>
+    </style>
+    <style name="Widget.Car.List.Inverse">
+        <item name="dayNightStyle">auto_inverse</item>
+        <item name="listDividerColor">@color/car_list_divider_inverse</item>
+    </style>
+    <style name="Widget.Car.ListItem" parent="android:Widget">
+        <item name="listItemBackgroundColor">@color/car_card</item>
+        <item name="listItemTitleTextAppearance">@style/TextAppearance.Car.Body1</item>
+        <item name="listItemBodyTextAppearance">@style/TextAppearance.Car.Body2</item>
+    </style>
+    <style name="Widget.Car.ListItem.Dark">
+        <item name="listItemBackgroundColor">@color/car_card_dark</item>
+        <item name="listItemTitleTextAppearance">@style/TextAppearance.Car.Body1.Light</item>
+        <item name="listItemBodyTextAppearance">@style/TextAppearance.Car.Body2.Light</item>
+    </style>
+    <style name="Widget.Car.ProgressBar.Horizontal" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:minHeight">@dimen/car_progress_bar_height</item>
+        <item name="android:maxHeight">@dimen/car_progress_bar_height</item>
+    </style>
+    <style name="Widget.Car.SeekBar" parent="Widget.AppCompat.SeekBar">
+        <item name="android:progressDrawable">@drawable/car_seekbar_track</item>
+        <item name="android:thumb">@drawable/car_seekbar_thumb</item>
+    </style>
+    <style name="Widget.Car.SeekBar.Dark">
+        <item name="android:progressDrawable">@drawable/car_seekbar_track_light</item>
+        <item name="android:thumb">@drawable/car_seekbar_thumb_dark</item>
+    </style>
+    <style name="Widget.Car.SeekBar.Light">
+        <item name="android:progressDrawable">@drawable/car_seekbar_track_dark</item>
+        <item name="android:thumb">@drawable/car_seekbar_thumb_light</item>
+    </style>
+    <style name="Widget.Car.Toolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="android:minHeight">?attr/actionBarSize</item>
+        <item name="background">@color/car_card</item>
+        <item name="contentInsetEnd">@dimen/car_keyline_1</item>
+        <item name="contentInsetStart">@dimen/car_keyline_1</item>
+        <item name="elevation">@dimen/car_action_bar_elevation</item>
+        <item name="subtitleTextAppearance">@style/TextAppearance.Car.Body2</item>
+        <item name="titleTextAppearance">@style/TextAppearance.Car.Title2</item>
+        <item name="navigationIcon">@drawable/ic_nav_arrow_back</item>
+    </style>
+    <style name="Widget.Car.Toolbar.Button.Navigation" parent="Widget.AppCompat.Toolbar.Button.Navigation">
+        <item name="android:background">@drawable/car_card_ripple_background</item>
+        <item name="android:scaleType">center</item>
+        <item name="android:tint">@color/car_tint</item>
+    </style>
+</resources>

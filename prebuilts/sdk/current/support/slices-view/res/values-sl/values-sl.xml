@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <plurals formatted="false" msgid="6241698511167107334" name="abc_slice_duration_days">
+      <item quantity="one">pred <ns1:g id="ID_2">%d</ns1:g> dnem</item>
+      <item quantity="two">pred <ns1:g id="ID_2">%d</ns1:g> dnevoma</item>
+      <item quantity="few">pred <ns1:g id="ID_2">%d</ns1:g> dnevi</item>
+      <item quantity="other">pred <ns1:g id="ID_2">%d</ns1:g> dnevi</item>
+    </plurals>
+    <plurals formatted="false" msgid="6996334305156847955" name="abc_slice_duration_min">
+      <item quantity="one">pred <ns1:g id="ID_2">%d</ns1:g> minuto</item>
+      <item quantity="two">pred <ns1:g id="ID_2">%d</ns1:g> minutama</item>
+      <item quantity="few">pred <ns1:g id="ID_2">%d</ns1:g> minutami</item>
+      <item quantity="other">pred <ns1:g id="ID_2">%d</ns1:g> minutami</item>
+    </plurals>
+    <plurals formatted="false" msgid="6212691832333991589" name="abc_slice_duration_years">
+      <item quantity="one">pred <ns1:g id="ID_2">%d</ns1:g> letom</item>
+      <item quantity="two">pred <ns1:g id="ID_2">%d</ns1:g> letoma</item>
+      <item quantity="few">pred <ns1:g id="ID_2">%d</ns1:g> leti</item>
+      <item quantity="other">pred <ns1:g id="ID_2">%d</ns1:g> leti</item>
+    </plurals>
+    <string msgid="4188371422904147368" name="abc_slice_error">"Povezava ni mogoča"</string>
+    <string msgid="1983560225998630901" name="abc_slice_more">"Več"</string>
+    <string msgid="6405516388971241142" name="abc_slice_more_content">"in še <ns1:g id="NUMBER">%1$d</ns1:g>"</string>
+    <string msgid="1567717014004692768" name="abc_slice_show_more">"Pokaži več"</string>
+    <string msgid="8155085405396453848" name="abc_slice_updated">"Posodobljeno: <ns1:g id="TIME">%1$s</ns1:g>"</string>
+</resources>

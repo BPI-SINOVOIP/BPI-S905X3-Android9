@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <attr format="reference" name="sliceViewStyle"/>
+    <declare-styleable name="SliceView">
+        <!-- Color to use for any title text within the slice. -->
+        <attr format="color" name="titleColor"/>
+        <!-- Color to use for any other text within the slice. -->
+        <attr format="color" name="subtitleColor"/>
+        <!-- Color to use for tinting elements within the slice. Normally an app
+         providing a slice is able to specify a color to use for tinting, specifying
+         a tint color here will override the app supplied color. -->
+        <attr format="color" name="tintColor"/>
+
+        <!-- Text size to use for title text in the header of the slice. -->
+        <attr format="dimension" name="headerTitleSize"/>
+        <!-- Text size to use for subtitle text in the header of the slice. -->
+        <attr format="dimension" name="headerSubtitleSize"/>
+        <!-- Vertical padding to use between header title text and header subtitle text. -->
+        <attr format="dimension" name="headerTextVerticalPadding"/>
+
+        <!-- Text size to use for title text in a non-header row of the slice. -->
+        <attr format="dimension" name="titleSize"/>
+        <!-- Text size to use for subtitle text in a non-header row of the slice. -->
+        <attr format="dimension" name="subtitleSize"/>
+        <!-- Vertical padding to use between title text and subtitle text. -->
+        <attr format="dimension" name="textVerticalPadding"/>
+
+        <!-- Text size to use for title text in a grid row of the slice. -->
+        <attr format="dimension" name="gridTitleSize"/>
+        <!-- Text size to use for the subtitle text in a grid row of the slice. -->
+        <attr format="dimension" name="gridSubtitleSize"/>
+        <!-- Vertical padding to use between title text and subtitle text in a grid cell. -->
+        <attr format="dimension" name="gridTextVerticalPadding"/>
+        <!-- A grid row with all images goes right to the edge of the view if it's the first or
+         last row of a slice. Use this to specify padding to apply to the top of the grid row in
+         this situation. -->
+        <attr format="dimension" name="gridTopPadding"/>
+        <!-- A grid row with all images goes right to the edge of the view if it's the first or
+         last row of a slice. Use this to specify padding to apply to the bottom of the grid row in
+         this situation. -->
+        <attr format="dimension" name="gridBottomPadding"/>
+    </declare-styleable>
+    <dimen name="abc_slice_action_row_height">48dp</dimen>
+    <dimen name="abc_slice_big_pic_max_height">140dp</dimen>
+    <dimen name="abc_slice_big_pic_min_height">120dp</dimen>
+    <dimen name="abc_slice_grid_gutter">4dp</dimen>
+    <dimen name="abc_slice_grid_image_min_width">60dp</dimen>
+    <dimen name="abc_slice_grid_image_only_height">86dp</dimen>
+    <dimen name="abc_slice_grid_image_text_height">120dp</dimen>
+    <dimen name="abc_slice_grid_max_height">140dp</dimen>
+    <dimen name="abc_slice_grid_min_height">60dp</dimen>
+    <dimen name="abc_slice_grid_small_image_text_height">120dp</dimen>
+    <dimen name="abc_slice_grid_text_inner_padding">2dp</dimen>
+    <dimen name="abc_slice_grid_text_padding">10dp</dimen>
+    <dimen name="abc_slice_icon_size">24dp</dimen>
+    <dimen name="abc_slice_large_height">240dp</dimen>
+    <dimen name="abc_slice_padding">16dp</dimen>
+    <dimen name="abc_slice_row_active_input_height">120dp</dimen>
+    <dimen name="abc_slice_row_max_height">60dp</dimen>
+    <dimen name="abc_slice_row_min_height">48dp</dimen>
+    <dimen name="abc_slice_row_range_height">48dp</dimen>
+    <dimen name="abc_slice_shortcut_size">56dp</dimen>
+    <dimen name="abc_slice_small_height">48dp</dimen>
+    <dimen name="abc_slice_small_image_size">48dp</dimen>
+    <plurals name="abc_slice_duration_days">
+        <item quantity="one"><ns1:g example="1">%d</ns1:g> day ago</item>
+        <item quantity="other"><ns1:g example="2">%d</ns1:g> days ago</item>
+    </plurals>
+    <plurals name="abc_slice_duration_min">
+        <item quantity="one"><ns1:g example="1">%d</ns1:g> min ago</item>
+        <item quantity="other"><ns1:g example="2">%d</ns1:g> min ago</item>
+    </plurals>
+    <plurals name="abc_slice_duration_years">
+        <item quantity="one"><ns1:g example="1">%d</ns1:g> yr ago</item>
+        <item quantity="other"><ns1:g example="2">%d</ns1:g> yr ago</item>
+    </plurals>
+    <string name="abc_slice_error">Couldn\'t connect</string>
+    <string name="abc_slice_more">More</string>
+    <string name="abc_slice_more_content">+ <ns1:g example="5" id="number">%1$d</ns1:g></string>
+    <string name="abc_slice_show_more">Show more</string>
+    <string name="abc_slice_updated">Updated <ns1:g example="5 min ago" id="time">%1$s</ns1:g></string>
+    <style name="Widget.SliceView" parent="">
+        <item name="tintColor">@null</item>
+        <!-- Colors -->
+        <item name="titleColor">?android:attr/textColorPrimary</item>
+        <item name="subtitleColor">?android:attr/textColorSecondary</item>
+
+        <!-- Text sizes -->
+        <item name="headerTitleSize">16sp</item>
+        <item name="headerSubtitleSize">14sp</item>
+        <item name="titleSize">14sp</item>
+        <item name="subtitleSize">14sp</item>
+        <item name="gridTitleSize">12sp</item>
+        <item name="gridSubtitleSize">12sp</item>
+    </style>
+</resources>

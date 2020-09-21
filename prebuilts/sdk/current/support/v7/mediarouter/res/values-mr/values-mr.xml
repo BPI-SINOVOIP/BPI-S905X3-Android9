@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string msgid="6209940985205889239" name="mr_button_content_description">"कास्ट बटण"</string>
+    <string msgid="7205934955575650355" name="mr_cast_button_connected">"कास्ट बटण. कनेक्ट केले"</string>
+    <string msgid="7767160474954808770" name="mr_cast_button_connecting">"कास्ट बटण. कनेक्ट करत आहे"</string>
+    <string msgid="1214396433859225686" name="mr_cast_button_disconnected">"कास्ट बटण. डिस्कनेक्ट केले"</string>
+    <string msgid="7883700464756247478" name="mr_chooser_searching">"डिव्हाइस शोधत आहे"</string>
+    <string msgid="1469819231928206099" name="mr_chooser_title">"यावर कास्ट करा"</string>
+    <string msgid="8313236767081989488" name="mr_controller_album_art">"अल्बम कला"</string>
+    <string msgid="2406876321200529148" name="mr_controller_casting_screen">"स्क्रीन कास्‍ट करत आहे"</string>
+    <string msgid="1404151965680505956" name="mr_controller_close_description">"बंद"</string>
+    <string msgid="5621264648958127139" name="mr_controller_collapse_group">"कोलॅप्स"</string>
+    <string msgid="1224563715954797152" name="mr_controller_disconnect">"‍डिस्कनेक्ट करा"</string>
+    <string msgid="6561849209271950311" name="mr_controller_expand_group">"विस्तार करा"</string>
+    <string msgid="942251150039480236" name="mr_controller_no_info_available">"कोणतीही माहिती उपलब्ध नाही"</string>
+    <string msgid="5388112032574870059" name="mr_controller_no_media_selected">"मीडिया निवडला नाही"</string>
+    <string msgid="5465089322498973309" name="mr_controller_pause">"विराम द्या"</string>
+    <string msgid="2233159395781515552" name="mr_controller_play">"खेळा"</string>
+    <string msgid="6970507798830838731" name="mr_controller_stop">"थांबा"</string>
+    <string msgid="6043110833085090960" name="mr_controller_stop_casting">"कास्ट करणे थांबवा"</string>
+    <string msgid="390328956880221771" name="mr_controller_volume_slider">"व्हॉल्यूम स्लायडर"</string>
+    <string msgid="6445173646164603280" name="mr_system_route_name">"सिस्टम"</string>
+    <string msgid="8951247913519682277" name="mr_user_route_category_name">"डिव्हाइस"</string>
+</resources>

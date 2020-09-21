@@ -1,0 +1,42 @@
+cc_prebuilt_library_shared {
+    name: "libLLVM_android",
+    host_supported: true,
+    target: {
+        linux_glibc_x86_64: {
+            srcs: ["linux/lib64/libLLVM_android.so"],
+        },
+        darwin_x86_64: {
+            srcs: ["darwin/lib64/libLLVM_android.dylib"],
+        },
+        // TODO(ccross): this is necessary because the prebuilt module must have
+        // all the variants that are in the source module.  Ideally Soong's
+        // arch mutator should handle this.
+        windows: {
+            enabled: true,
+        }
+    },
+}
+
+cc_prebuilt_library_shared {
+    name: "libclang_android",
+    host_supported: true,
+    target: {
+        linux_glibc_x86_64: {
+            srcs: ["linux/lib64/libclang_android.so"],
+        },
+        darwin_x86_64: {
+            srcs: ["darwin/lib64/libclang_android.dylib"],
+        },
+        // TODO(ccross): this is necessary because the prebuilt module must have
+        // all the variants that are in the source module.  Ideally Soong's
+        // arch mutator should handle this.
+        windows: {
+            enabled: true,
+        }
+    },
+}
+
+java_import {
+    name: "sdk-core-lambda-stubs",
+    jars: ["core-lambda-stubs.jar"],
+}

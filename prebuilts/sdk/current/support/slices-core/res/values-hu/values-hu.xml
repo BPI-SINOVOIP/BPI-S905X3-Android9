@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <string msgid="5024599872061409708" name="abc_slice_permission_allow">"Engedélyezés"</string>
+    <string msgid="5696872682700058611" name="abc_slice_permission_checkbox">"Engedélyezi a(z) <ns1:g id="APP">%1$s</ns1:g> alkalmazásnak, hogy bármely alkalmazásból részletet jelenítsen meg"</string>
+    <string msgid="3819478292430407705" name="abc_slice_permission_deny">"Elutasítás"</string>
+    <string msgid="4525743640399572811" name="abc_slice_permission_text_1">"– Információkat olvashat a(z) <ns1:g id="APP">%1$s</ns1:g> alkalmazásból"</string>
+    <string msgid="7323565634860251794" name="abc_slice_permission_text_2">"– Műveleteket végezhet a(z) <ns1:g id="APP">%1$s</ns1:g> alkalmazáson belül"</string>
+    <string msgid="4175332421259324948" name="abc_slice_permission_title">"Engedélyezi a(z) <ns1:g id="APP_0">%1$s</ns1:g> alkalmazásnak, hogy részleteket mutasson a(z) <ns1:g id="APP_2">%2$s</ns1:g> alkalmazásból?"</string>
+    <string msgid="3604847235923472451" name="abc_slices_permission_request">"A(z) <ns1:g id="APP_0">%1$s</ns1:g> alkalmazás részleteket szeretne megjeleníteni a(z) <ns1:g id="APP_2">%2$s</ns1:g> alkalmazásból"</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <string msgid="5024599872061409708" name="abc_slice_permission_allow">"అనుమతించు"</string>
+    <string msgid="5696872682700058611" name="abc_slice_permission_checkbox">"ఏ యాప్ నుండి అయినా స్లైస్‌లను చూపించడానికి <ns1:g id="APP">%1$s</ns1:g>ని అనుమతించండి"</string>
+    <string msgid="3819478292430407705" name="abc_slice_permission_deny">"తిరస్కరించు"</string>
+    <string msgid="4525743640399572811" name="abc_slice_permission_text_1">"- ఇది <ns1:g id="APP">%1$s</ns1:g> నుండి సమాచారాన్ని చదవగలుగుతుంది"</string>
+    <string msgid="7323565634860251794" name="abc_slice_permission_text_2">"- ఇది <ns1:g id="APP">%1$s</ns1:g> లోపల చర్యలు తీసుకోగలుగుతుంది"</string>
+    <string msgid="4175332421259324948" name="abc_slice_permission_title">"<ns1:g id="APP_2">%2$s</ns1:g> స్లైస్‌లను చూపించడానికి <ns1:g id="APP_0">%1$s</ns1:g>ని అనుమతించాలా?"</string>
+    <string msgid="3604847235923472451" name="abc_slices_permission_request">"<ns1:g id="APP_0">%1$s</ns1:g> <ns1:g id="APP_2">%2$s</ns1:g> స్లైస్‌లను చూపించాలనుకుంటోంది"</string>
+</resources>

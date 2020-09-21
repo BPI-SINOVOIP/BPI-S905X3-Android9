@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <string msgid="5024599872061409708" name="abc_slice_permission_allow">"ਕਰਨ ਦਿਓ"</string>
+    <string msgid="5696872682700058611" name="abc_slice_permission_checkbox">"<ns1:g id="APP">%1$s</ns1:g> ਨੂੰ ਕਿਸੇ ਵੀ ਐਪ ਵਿੱਚੋਂ ਹਿੱਸੇ ਦਿਖਾਉਣ ਦਿਓ"</string>
+    <string msgid="3819478292430407705" name="abc_slice_permission_deny">"ਅਸਵੀਕਾਰ ਕਰੋ"</string>
+    <string msgid="4525743640399572811" name="abc_slice_permission_text_1">"- ਇਹ <ns1:g id="APP">%1$s</ns1:g> ਵਿੱਚੋਂ ਜਾਣਕਾਰੀ ਪੜ੍ਹ ਸਕਦਾ ਹੈ"</string>
+    <string msgid="7323565634860251794" name="abc_slice_permission_text_2">"- ਇਸ <ns1:g id="APP">%1$s</ns1:g> ਦੇ ਅੰਦਰ ਕਾਰਵਾਈਆਂ ਕਰ ਸਕਦਾ ਹੈ"</string>
+    <string msgid="4175332421259324948" name="abc_slice_permission_title">"ਕੀ <ns1:g id="APP_0">%1$s</ns1:g> ਨੂੰ <ns1:g id="APP_2">%2$s</ns1:g> ਦੇ ਹਿੱਸੇ ਦਿਖਾਉਣ ਦੇਣੇ ਹਨ?"</string>
+    <string msgid="3604847235923472451" name="abc_slices_permission_request">"<ns1:g id="APP_0">%1$s</ns1:g> ਦੀ <ns1:g id="APP_2">%2$s</ns1:g> ਦੇ ਹਿੱਸੇ ਦਿਖਾਉਣ ਦੀ ਇੱਛਾ ਹੈ"</string>
+</resources>

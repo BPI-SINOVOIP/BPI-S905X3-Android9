@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="car_accent">@color/car_accent_light</color>
+    <color name="car_action1">@color/car_action1_light</color>
+    <color name="car_body1">@color/car_body1_light</color>
+    <color name="car_body2">@color/car_body2_light</color>
+    <color name="car_body3">@color/car_body3_light</color>
+    <color name="car_body4">@color/car_body4_light</color>
+    <color name="car_card">@color/car_card_dark</color>
+    <color name="car_card_inverse">@color/car_card_light</color>
+    <color name="car_card_ripple_background">@color/car_card_ripple_background_light</color>
+    <color name="car_card_ripple_background_inverse">@color/car_card_ripple_background_dark</color>
+    <color name="car_headline1">@color/car_headline1_light</color>
+    <color name="car_headline2">@color/car_headline2_light</color>
+    <color name="car_headline3">@color/car_headline3_light</color>
+    <color name="car_headline4">@color/car_headline4_light</color>
+    <color name="car_label1">@color/car_label1_light</color>
+    <color name="car_list_divider">@color/car_list_divider_light</color>
+    <color name="car_list_divider_inverse">@color/car_list_divider_dark</color>
+    <color name="car_scrollbar_thumb">@color/car_scrollbar_thumb_light</color>
+    <color name="car_scrollbar_thumb_inverse">@color/car_scrollbar_thumb_dark</color>
+    <color name="car_tint">@color/car_tint_light</color>
+    <color name="car_tint_inverse">@color/car_tint_dark</color>
+    <color name="car_title">@color/car_title_light</color>
+    <color name="car_title2">@color/car_title2_light</color>
+    <color name="speed_bump_background">#FF4C4C4C</color>
+</resources>

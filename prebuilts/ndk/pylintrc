@@ -1,0 +1,11 @@
+[MESSAGES CONTROL]
+disable=missing-docstring,fixme,locally-disabled
+
+
+[BASIC]
+# Good variable names which should always be accepted, separated by a comma
+good-names=i,j,k,ex,Run,_
+
+
+[FORMAT]
+max-line-length=79

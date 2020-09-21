@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="EmojiEditText">
+        <attr format="integer" name="maxEmojiCount"/>
+    </declare-styleable>
+    <declare-styleable name="EmojiExtractTextLayout">
+        <attr format="enum" name="emojiReplaceStrategy">
+            <!-- Replace strategy that uses the value given in EmojiCompat.Config. Default
+            value. -->
+            <enum name="defaultStrategy" value="0"/>
+            <!-- Replace strategy to add EmojiSpans for all emoji that were found. -->
+            <enum name="all" value="1"/>
+            <!-- Replace strategy to add EmojiSpans only for emoji that do not exist in the
+            system. -->
+            <enum name="nonExistent" value="2"/>
+        </attr>
+    </declare-styleable>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <string msgid="5024599872061409708" name="abc_slice_permission_allow">"許可"</string>
+    <string msgid="5696872682700058611" name="abc_slice_permission_checkbox">"すべてのアプリのスライスを表示することを <ns1:g id="APP">%1$s</ns1:g> に許可する"</string>
+    <string msgid="3819478292430407705" name="abc_slice_permission_deny">"拒否"</string>
+    <string msgid="4525743640399572811" name="abc_slice_permission_text_1">"- <ns1:g id="APP">%1$s</ns1:g> からの情報を読み取ることができます"</string>
+    <string msgid="7323565634860251794" name="abc_slice_permission_text_2">"- <ns1:g id="APP">%1$s</ns1:g> 内部で操作することがあります"</string>
+    <string msgid="4175332421259324948" name="abc_slice_permission_title">"<ns1:g id="APP_2">%2$s</ns1:g> のスライスの表示を <ns1:g id="APP_0">%1$s</ns1:g> に許可しますか？"</string>
+    <string msgid="3604847235923472451" name="abc_slices_permission_request">"<ns1:g id="APP_0">%1$s</ns1:g> が <ns1:g id="APP_2">%2$s</ns1:g> のスライスの表示をリクエストしています"</string>
+</resources>
