@@ -1,0 +1,31 @@
+type pppoe_wrapper, domain;
+type pppoe_wrapper_exec, exec_type, vendor_file_type, file_type;
+#
+init_daemon_domain(pppoe_wrapper)
+
+allow pppoe_wrapper vendor_file:file { execute };
+
+#
+#allow pppoe_wrapper ppp_exec:file { execute_no_trans execute getattr read open };
+#allow pppoe_wrapper pppoe_wrapper_exec:file { entrypoint read execute };
+#allow pppoe_wrapper system_file:file execute_no_trans;
+#allow pppoe_wrapper pppoe_wrapper:process setfscreate;
+#allow pppoe_wrapper pppoe_wrapper:capability { net_raw dac_override net_admin setgid setuid kill };
+#allow pppoe_wrapper pppoe_wrapper:netlink_route_socket { bind create read write };
+#allow pppoe_wrapper property_socket:sock_file write;
+#allow pppoe_wrapper system_app:unix_dgram_socket sendto;
+#allow pppoe_wrapper ppp_data_file:sock_file { create write setattr unlink };
+#allow pppoe_wrapper ppp_data_file:dir { write search setattr create add_name mounton remove_name };
+#allow pppoe_wrapper ppp_data_file:file { create write open lock getattr read unlink };
+#allow pppoe_wrapper ppp_system_file:dir search;
+#allow pppoe_wrapper socket_device:dir { add_name write };
+#allow pppoe_wrapper socket_device:sock_file { create setattr };
+#allow pppoe_wrapper pppoe_wrapper_socket:sock_file { create setattr write };
+#allow pppoe_wrapper shell_exec:file { execute_no_trans execute read open };
+#allow pppoe_wrapper net_radio_prop:property_service set;
+#allow pppoe_wrapper dhcp_prop:property_service set;
+#allow pppoe_wrapper init:unix_stream_socket connectto;
+#allow pppoe_wrapper socket_device:sock_file { setattr write };
+#allow pppoe_wrapper rootfs:file { read open getattr };
+#allow pppoe_wrapper shell_exec:file getattr;
+#allow pppoe_wrapper proc_net:file { read open getattr };

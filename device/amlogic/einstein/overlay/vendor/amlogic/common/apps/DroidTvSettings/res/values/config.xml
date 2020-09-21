@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <bool name="display_need_hdr_function">false</bool>
+    <bool name="display_need_sdr_function">false</bool>
+    <bool name="display_need_digital_sounds">false</bool>
+    <bool name="display_need_screen_resolution">false</bool>
+    <bool name="display_need_hdmicec_function">false</bool>
+    <bool name="display_need_playback_set_function">false</bool>
+    <bool name="display_need_bluetooth_remote_function">false</bool>
+</resources>

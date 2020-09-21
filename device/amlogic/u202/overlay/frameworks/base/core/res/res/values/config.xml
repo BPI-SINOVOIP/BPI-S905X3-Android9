@@ -1,0 +1,106 @@
+<resources>
+
+    <!-- This string array should be overridden by the device to present a list of network
+         attributes.  This is used by the connectivity manager to decide which networks can coexist
+         based on the hardware -->
+    <!-- An Array of "[Connection name],[ConnectivityManager.TYPE_xxxx],
+         [associated radio-type],[priority],[restoral-timer(ms)],[dependencyMet]  -->
+    <!-- the 5th element "restore-time" indicates the number of milliseconds to delay
+         before automatically restore the default connection.  Set -1 if the connection
+         does not require auto-restore. -->
+    <!-- the 6th element indicates boot-time dependency-met value. -->
+    <string-array translatable="false" name="networkAttributes">
+        <item>"wifi,1,1,1,-1,true"</item>
+        <item>"ethernet,9,9,9,-1,true"</item>
+        <item>"pppoe,18,18,1,-1,true"</item>
+    </string-array>
+    <!-- Array of ConnectivityManager.TYPE_xxxx values allowable for tethering__-->
+        <!-- Common options are [1, 4] for TYPE_WIFI and TYPE_MOBILE_DUN or
+                 <!== [0,1,5,7] for TYPE_MOBILE, TYPE_WIFI, TYPE_MOBILE_HIPRI and TYPE_BLUETOOTH -->
+    <!-- [18,9] for TYPE_PPPOE, TYPE_ETHERNET -->
+    <integer-array translatable="false" name="config_tether_upstream_types">
+        <item>1</item>
+        <item>18</item>
+        <item>9</item>
+    </integer-array>
+    <!-- This string array should be overridden by the device to present a list of radio
+         attributes.  This is used by the connectivity manager to decide which networks can coexist
+         based on the hardware -->
+    <!-- An Array of "[ConnectivityManager connectionType],
+                      [# simultaneous connection types]"  -->
+    <string-array translatable="false" name="radioAttributes">
+        <item>"1,1"</item>
+        <item>"9,1"</item>
+        <item>"18,1"</item>
+    </string-array>
+
+    <!-- List of regexpressions describing the interface (if any) that represent tetherable
+         Wifi interfaces.  If the device doesn't want to support tethering over Wifi this
+         should be empty.  An example would be "softap.*" -->
+    <string-array translatable="false" name="config_tether_wifi_regexs">
+        <item>"wlan0"</item>
+    </string-array>
+
+    <!-- If supported and enabled, are dreams activated when asleep and charging? (by default) -->
+    <bool name="config_dreamsActivatedOnSleepByDefault">true</bool>
+    <!-- ComponentName of the default dream (Settings.Secure.DEFAULT_SCREENSAVER_COMPONENT) -->
+    <string name="config_dreamsDefaultComponent">com.android.deskclock/com.android.deskclock.Screensaver</string>
+
+    <!-- Whether WiFi display is supported by this device.
+         There are many prerequisites for this feature to work correctly.
+         Here are a few of them:
+         * The WiFi radio must support WiFi P2P.
+         * The WiFi radio must support concurrent connections to the WiFi display and
+           to an access point.
+         * The Audio Flinger audio_policy.conf file must specify a rule for the "r_submix"
+           remote submix module.  This module is used to record and stream system
+           audio output to the WiFi display encoder in the media server.
+         * The remote submix module "audio.r_submix.default" must be installed on the device.
+         * The device must be provisioned with HDCP keys (for protected content).
+    -->
+    <!--<bool name="config_enableWifiDisplay">true</bool>-->
+    <!--<bool name="config_enableWifiP2pAutoAcceptInvitation">true</bool>-->
+    <bool name="config_sms_capable">false</bool>
+    <!-- Flag indicating whether the current device is "voice capable".
+         If true, this means that the device supports circuit-switched
+         (i.e. voice) phone calls over the telephony network, and is
+         allowed to display the in-call UI while a cellular voice call is
+         active.  This can be overridden to false for "data only" devices
+         which can't make voice calls and don't support any in-call UI.
+
+         Note: this flag is subtly different from the
+         PackageManager.FEATURE_TELEPHONY system feature, which is
+         available on *any* device with a telephony radio, even if the
+         device is data-only. -->
+    <bool name="config_voice_capable">false</bool>
+
+    <!-- Enable overlay for all location components. -->
+    <bool name="config_enableNetworkLocationOverlay" translatable="false">true</bool>
+    <bool name="config_enableFusedLocationOverlay" translatable="false">true</bool>
+    <bool name="config_enableGeocoderOverlay" translatable="false">true</bool>
+    <bool name="config_enableGeofenceOverlay" translatable="false">true</bool>
+
+    <!--
+       Sets the package names whose certificates should be used to
+       verify location providers are allowed to be loaded.
+    -->
+    <string-array name="config_locationProviderPackageNames" translatable="false">
+        <item>com.google.android.gms</item>
+        <item>com.android.location.fused</item>
+    </string-array>
+
+    <bool name="config_defaultInTouchMode">false</bool>
+    <!-- Whether the device uses the default focus highlight when focus state isn't specified. -->
+    <bool name="config_useDefaultFocusHighlight">false</bool>
+
+    <!-- Keyguard component -->
+    <string name="config_keyguardComponent" translatable="false">com.droidlogic/com.droidlogic.StubKeyguardService</string>
+
+    <bool name="config_showNavigationBar">true</bool>
+    <!-- disable wallpaper, which may consume too much boot time -->
+    <!-- cannot disable wallpaper, com.android.settings will crash! -->
+    <!--bool name="config_enableWallpaperService">false</bool-->
+
+    <!-- Remote server that can provide NTP responses. -->
+    <string translatable="false" name="config_ntpServer">2.android.pool.ntp.org</string>
+</resources>

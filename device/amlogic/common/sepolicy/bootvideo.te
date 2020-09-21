@@ -1,0 +1,29 @@
+type bootvideo, domain;
+type bootvideo_exec, exec_type, vendor_file_type, file_type;
+#init_daemon_domain(bootvideo)
+#binder_use(bootvideo);
+#unix_socket_connect(bootvideo, property, init);
+
+#Bootvideo
+allow bootvideo media_prop:file { read open getattr };
+allow bootvideo sysfs:file { read open getattr };
+allow bootvideo proc:file { read open getattr };
+allow bootvideo sysfs_audio_cap:file { read open getattr };
+
+#Self
+allow bootvideo self:process execmem;
+
+#System device
+allow bootvideo audio_device:dir r_dir_perms;
+
+allow bootvideo system_control:binder call;
+
+allow bootvideo media_prop:property_service set;
+allow bootvideo property_socket:sock_file write;
+
+allow bootvideo sysfs_xbmc:file { open read write getattr };
+
+#--------------------------------------------------------------------#
+#  product_shipping_api_level=28 vendor/system cannot share prop
+#--------------------------------------------------------------------#
+#set_prop(bootvideo, system_prop)

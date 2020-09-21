@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<audio_effects_conf version="2.0" xmlns="http://schemas.android.com/audio/audio_effects_conf/v2_0">
+    <libraries>
+        <library name="bundle" path="libbundlewrapper.so"/>
+        <library name="reverb" path="libreverbwrapper.so"/>
+        <library name="visualizer" path="libvisualizer.so"/>
+        <library name="downmix" path="libdownmix.so"/>
+        <library name="loudness_enhancer" path="libldnhncr.so"/>
+        <library name="proxy" path="libeffectproxy.so"/>
+        <library name="audio_pre_processing" path="libaudiopreprocessing.so"/>
+        <library name="dynamics_processing" path="libdynproc.so"/>
+        <library name="hpeq" path="libhpeqwrapper.so"/>
+        <library name="avl" path="libavl.so"/>
+        <library name="balance" path="libbalance.so"/>
+        <library name="srs" path="libsrswrapper.so"/>
+        <library name="treblebass" path="libtreblebasswrapper.so"/>
+        <library name="virtualsurround" path="libvirtualsurround.so"/>
+        <library name="ms12dapwrapper" path="libms12dapwrapper.so"/>
+        <library name="geq" path="libgeq.so"/>
+        <library name="virtualx" path="libvirtualx.so"/>
+        <library name="dbx" path="libdbx.so"/>
+    </libraries>
+    <effects>
+        <effect name="bassboost" library="bundle" uuid="8631f300-72e2-11df-b57e-0002a5d5c51b"/>
+        <effect name="virtualizer" library="bundle" uuid="1d4033c0-8557-11df-9f2d-0002a5d5c51b"/>
+        <effect name="equalizer" library="bundle" uuid="ce772f20-847d-11df-bb17-0002a5d5c51b"/>
+        <effect name="volume" library="bundle" uuid="119341a0-8469-11df-81f9-0002a5d5c51b"/>
+        <effect name="reverb_env_aux" library="reverb" uuid="4a387fc0-8ab3-11df-8bad-0002a5d5c51b"/>
+        <effect name="reverb_env_ins" library="reverb" uuid="c7a511a0-a3bb-11df-860e-0002a5d5c51b"/>
+        <effect name="reverb_pre_aux" library="reverb" uuid="f29a1400-a3bb-11df-8ddc-0002a5d5c51b"/>
+        <effect name="reverb_pre_ins" library="reverb" uuid="172cdf00-a3bc-11df-a72f-0002a5d5c51b"/>
+        <effect name="visualizer" library="visualizer" uuid="d069d9e0-8329-11df-9168-0002a5d5c51b"/>
+        <effect name="downmix" library="downmix" uuid="93f04452-e4fe-41cc-91f9-e475b6d1d69f"/>
+        <effect name="loudness_enhancer" library="loudness_enhancer" uuid="fa415329-2034-4bea-b5dc-5b381c8d1e2c"/>
+        <effect name="aec" library="audio_pre_processing" uuid="4b8b4260-3429-11e6-a6c7-0002a5d5c51b"/>
+        <effect name="ns" library="audio_pre_processing" uuid="5dbdc480-3429-11e6-a499-0002a5d5c51b"/>
+        <effect name="dynamics_processing" library="dynamics_processing" uuid="e0e6539b-1781-7261-676f-6d7573696340"/>
+        <effect name="hpeq" library="hpeq" uuid="049754aa-c4cf-439f-897e-37dd0c381120"/>
+        <effect name="avl" library="avl" uuid="08246a2a-b2d3-4621-b804-42c9b478eb9d"/>
+        <effect name="balance" library="balance" uuid="6f33b3a0-578e-11e5-892f-0002a5d5c51b"/>
+        <effect name="srs" library="srs" uuid="8a857720-0209-11e2-a9d8-0002a5d5c51b"/>
+        <effect name="treblebass" library="treblebass" uuid="76733af0-2889-11e2-81c1-0800200c9a66"/>
+        <effect name="virtualsurround" library="virtualsurround" uuid="c8459cd3-4400-4859-b76b-e12cc2aa67ce"/>
+        <effect name="ms12dapwrapper" library="ms12dapwrapper" uuid="86cafba6-3ff3-485d-b8df-0de96b34b272"/>
+        <effect name="geq" library="geq" uuid="2e2a5fa6-cae8-45f5-bb70-a29c1f3074b2"/>
+        <effect name="virtualx" library="virtualx" uuid="61821587-ce3c-4aac-9122-86d874ea1fb1"/>
+        <effect name="dbx" library="dbx" uuid="07210842-7432-4624-8b97-35ac8782efa3"/>
+    </effects>
+    <!--preprocess>
+        <stream type="voice_communication">
+            <apply effect="aec"/>
+            <apply effect="ns"/>
+        </stream>
+    </preprocess-->
+</audio_effects_conf>

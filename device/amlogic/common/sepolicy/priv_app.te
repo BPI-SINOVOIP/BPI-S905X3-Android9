@@ -1,0 +1,30 @@
+allow priv_app fuseblk:dir { search };
+allow priv_app fuseblk:file { read open getattr };
+allow priv_app proc_modules:file { getattr read open };
+allow priv_app proc_interrupts:file { getattr read open };
+
+allow priv_app media_prop:file { read };
+allow priv_app dvb_device:chr_file rw_file_perms;
+#allow priv_app property_socket:sock_file { write };
+
+#allow priv_app vendor_file:file { open read getattr execute };
+
+allow priv_app zygote:dir { search read };
+#allow priv_app zygote:file { open read };
+allow priv_app device:dir { read search open };
+
+allow priv_app proc_stat:file { getattr open };
+
+allow priv_app { su_exec bootanim_exec bootstat_exec }:file { getattr };
+allow priv_app proc_uptime:file read;
+
+allow priv_app hdmicecd_hwservice:hwservice_manager { find };
+allow priv_app hdmicecd:binder { call transfer };
+allow priv_app tvserver_hwservice:hwservice_manager { find };
+allow priv_app systemcontrol_hwservice:hwservice_manager { find };
+allow priv_app system_control:binder { call transfer};
+allow priv_app tvserver:binder { call transfer };
+allow priv_app param_tv_file:file { create open read write setattr getattr lock unlink };
+allow priv_app param_tv_file:dir { search read open write add_name remove_name getattr };
+
+allow priv_app vendor_platform_prop:file { read open getattr };

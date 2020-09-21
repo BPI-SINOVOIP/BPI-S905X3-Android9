@@ -1,0 +1,27 @@
+type dtvkitserver, domain;
+type dtvkitserver_exec, exec_type, vendor_file_type, file_type;
+init_daemon_domain(dtvkitserver)
+
+allow dtvkitserver hwservicemanager_prop:file { open read getattr };
+allow dtvkitserver self:capability sys_nice;
+allow dtvkitserver hwservicemanager:binder { call transfer };
+allow dtvkitserver system_control:binder {call transfer};
+allow dtvkitserver sysfs_video:dir {search};
+allow dtvkitserver vendor_data_file:dir{write read add_name remove_name open search};
+allow dtvkitserver vendor_data_file:file {ioctl getattr read write open create lock setattr unlink};
+allow dtvkitserver vendor_data_file:chr_file{ioctl};
+allow dtvkitserver vndbinder_device:chr_file { read write open ioctl };
+allow dtvkitserver vndservicemanager:binder { call transfer };
+allow dtvkitserver dvb_device:chr_file { open read write ioctl getattr};
+allow dtvkitserver vendor_shell_exec:file execute_no_trans;
+allow dtvkitserver sysfs:file { write open };
+allow dtvkitserver platform_app:binder { call };
+allow dtvkitserver { dtvkitserver_hwservice  hidl_base_hwservice }:hwservice_manager { add };
+allow dtvkitserver systemcontrol_hwservice:hwservice_manager {find};
+get_prop(dtvkitserver, tv_prop)
+set_prop(dtvkitserver, tv_prop)
+get_prop(dtvkitserver, media_prop)
+allow dtvkitserver tv_prop:file { read open getattr };
+allow dtvkitserver video_device:chr_file { read write open ioctl getattr };
+allow dtvkitserver vendor_video_device:chr_file { read write open ioctl getattr };
+allow dtvkitserver codec_device:chr_file { read write open ioctl };

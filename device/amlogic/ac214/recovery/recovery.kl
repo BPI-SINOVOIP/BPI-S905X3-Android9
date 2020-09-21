@@ -1,0 +1,21 @@
+# This is map table for recovery, use this define the key map for recovery system
+
+# 'type' defines options for recovery, currently we have 'select','up','down','mode_switch'
+# key# defines key value map to type
+# use define in kernel/include/input.h
+# common key defines:
+# KEY_ENTER		97
+# KEY_TAB		15
+# KEY_BACK		158
+# KEY_DOWN		108
+# KEY_VOLUMEDOWN	114
+# KEY_PAGEDOWN		109
+# KEY_UP		103
+# KEY_PAGEUP		104
+# KEY_VOLUMEUP		115
+
+# type		key1		key2		key3		key4
+select		97		28		15		158
+down		108		114		109
+up		103		104		115
+back_door	128		26		118

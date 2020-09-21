@@ -1,0 +1,11 @@
+readlinkat: 1
+pread64: 1
+eventfd2: 1
+eventfd: 1
+epoll_create1: 1
+getdents64: 1
+epoll_ctl: 1
+epoll_pwait: 1
+_llseek: 1
+uname: 1
+

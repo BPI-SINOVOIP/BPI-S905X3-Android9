@@ -1,0 +1,10 @@
+# Configure if pattern.efuse(SECURE_BOOT_SET) is anti-rollback protection enabled.
+enable_antirollback=false
+
+# Configure firmware anti-rollback versions for FIP, BL2 and BL3-* components.
+bl2_arb_cvn=0x0
+fip_arb_cvn=0x0
+bl30_arb_cvn=0x0
+bl31_arb_cvn=0x0
+bl32_arb_cvn=0x0
+bl33_arb_cvn=0x0

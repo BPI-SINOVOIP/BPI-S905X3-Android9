@@ -1,0 +1,13 @@
+allow shell rootfs:file { entrypoint execute read getattr };
+allow shell sysfs_amhdmitx:file { open read write getattr };
+allow shell sysfs_amhdmitx:dir search;
+allow shell sysfs_remote:dir search;
+allow shell sysfs_remote:file { open read write getattr };
+
+allow shell debugfs_mali:dir { search };
+
+allow shell metadata_file:dir getattr;
+allow shell unlabeled:dir getattr;
+
+allow shell sysfs_audio_cap:file getattr;
+allow shell hdcptx_device:chr_file { open read write getattr ioctl };

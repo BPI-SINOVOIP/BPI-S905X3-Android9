@@ -1,0 +1,24 @@
+type ntfs_3g, domain;
+type ntfs_3g_exec, exec_type, vendor_file_type, file_type;
+
+allow ntfs_3g droidvold:fd use;
+allow ntfs_3g fuseblk:filesystem { mount unmount };
+
+allow ntfs_3g devpts:chr_file rw_file_perms;
+allow ntfs_3g droidvold:fifo_file rw_file_perms;
+allow ntfs_3g self:capability { setgid setuid sys_admin };
+
+allow ntfs_3g block_device:dir { open read search getattr };
+allow ntfs_3g sda_block_device:dir search;
+allow ntfs_3g sda_block_device:blk_file rw_file_perms;
+
+allow ntfs_3g fuse_device:chr_file rw_file_perms;
+allow ntfs_3g tmpfs:dir {open read search getattr };
+
+allow ntfs_3g mnt_media_rw_file:dir { create_dir_perms mounton };
+allow ntfs_3g mnt_media_rw_file:file create_file_perms;
+
+allow ntfs_3g proc:file { open read getattr };
+
+#init_daemon_domain(ntfs-3g)
+

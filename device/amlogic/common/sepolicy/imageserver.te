@@ -1,0 +1,49 @@
+type imageserver, domain, coredomain;
+type imageserver_exec, exec_type, file_type;
+
+typeattribute imageserver mlstrustedsubject;
+
+init_daemon_domain(imageserver)
+
+allow imageserver hwservicemanager:binder { call transfer };
+allow imageserver systemcontrol_hwservice:hwservice_manager { find };
+allow imageserver system_control:binder { call };
+allow imageserver { imageserver_hwservice  hidl_base_hwservice }:hwservice_manager { add };
+r_dir_file(system_control, domain)
+r_dir_file(system_control, binderservicedomain)
+r_dir_file(system_control, appdomain)
+r_dir_file(system_control, platform_app)
+allow imageserver sdcardfs:dir { search write add_name };
+allow imageserver sdcardfs:file { read open getattr create write };
+allow imageserver media_rw_data_file:dir { search read open write add_name };
+allow imageserver media_rw_data_file:file { read open getattr create setattr write };
+allow imageserver appdomain:file { r_file_perms };
+allow imageserver fuse:dir r_dir_perms;
+allow imageserver fuse:file r_file_perms;
+allow imageserver vfat:file { read open getattr};
+allow imageserver { mnt_user_file storage_file }:dir { getattr search };
+allow imageserver { mnt_user_file storage_file }:lnk_file { getattr read };
+
+allow imageserver picture_device:chr_file { read write open ioctl };
+allow imageserver kernel:system module_request;
+allow imageserver tmpfs:dir { getattr search };
+allow imageserver sysfs_video:file rw_file_perms;
+allow imageserver { sysfs_video sysfs_cec sysfs_am_vecm }:dir { search };
+allow imageserver fuseblk:file { read open getattr };
+allow imageserver vfat:dir {search};
+allow imageserver imageserver:udp_socket { create setopt connect getopt getattr write read };
+allow imageserver imageserver:tcp_socket { create setopt connect getopt getattr write read };
+allow imageserver fwmarkd_socket:sock_file { write };
+allow imageserver port:tcp_socket { name_connect };
+allow imageserver imageserver:capability { net_raw };
+allow imageserver dnsproxyd_socket:sock_file { write };
+allow imageserver netd:unix_stream_socket { connectto };
+allow imageserver shell_data_file:file { create };
+#allow imageserver vndbinder_device:chr_file { read write open ioctl };
+allow imageserver system_prop:property_service { set };
+allow imageserver sysfs_di:dir { search };
+allow imageserver sysfs_di:file { read write open };
+#allow imageserver sysfs:file {read write open };
+
+set_prop(imageserver, hwservicemanager_prop)
+get_prop(imageserver, hwservicemanager_prop)

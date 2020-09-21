@@ -1,0 +1,13 @@
+allow e2fs cache_block_device:blk_file { read getattr open ioctl write };
+
+allow e2fs metadata_block_device:blk_file { read getattr open ioctl write };
+allow e2fs product_block_device:blk_file { read getattr open ioctl write };
+
+allow e2fs devpts:chr_file { read write getattr ioctl };
+allow e2fs odm_block_device:blk_file getattr;
+allow e2fs dtbo_block_device:blk_file getattr;
+allow e2fs system_block_fsck_device:blk_file getattr;
+allow e2fs tee_block_device:blk_file { getattr ioctl open read write };
+allow e2fs vendor_block_device:blk_file getattr;
+allow e2fs sysfs_fs_ext4_features:dir search;
+allow e2fs param_block_device:blk_file { getattr ioctl open read write };

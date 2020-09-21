@@ -1,0 +1,6 @@
+allow hal_power_default sysfs_mpgpu_cmd:file { read write open };
+allow hal_power_default sysfs_power_trigger:file { read write open };
+allow hal_power_default hdmicecd_hwservice:hwservice_manager { find };
+allow hal_power_default hdmicecd:binder { call transfer };
+allow hal_power_default vendor_platform_prop:file { open read getattr };
+allow hal_power_default vendor_platform_prop:file { open read getattr };

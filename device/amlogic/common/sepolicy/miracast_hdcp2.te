@@ -1,0 +1,31 @@
+type miracast_hdcp2, domain;
+type miracast_hdcp2_exec, exec_type, vendor_file_type, file_type;
+
+init_daemon_domain(miracast_hdcp2)
+net_domain(miracast_hdcp2)
+
+allow miracast_hdcp2 unify_device:chr_file { ioctl open read write };
+allow miracast_hdcp2 sysfs_unifykey:dir { search };
+allow miracast_hdcp2 sysfs_unifykey:file { read write open getattr };
+
+allow miracast_hdcp2 drm_device:chr_file { read open write ioctl };
+
+allow miracast_hdcp2 hwservicemanager:binder { call transfer };
+allow miracast_hdcp2 hwservicemanager_prop:file { open read getattr };
+allow miracast_hdcp2 hwservicemanager_prop:file { open read getattr };
+allow miracast_hdcp2 { miracast_hdcp2_hwservice  hidl_base_hwservice }:hwservice_manager { add };
+
+allow miracast_hdcp2 miracast_hdcp2:tcp_socket { create read write setopt bind listen connect };
+allow miracast_hdcp2 port:tcp_socket { name_bind name_connect };
+allow miracast_hdcp2 node:tcp_socket { node_bind };
+allow miracast_hdcp2 miracast_hdcp2:capability { net_raw };
+allow miracast_hdcp2 fwmarkd_socket:sock_file { write };
+allow miracast_hdcp2 netd:unix_stream_socket { connectto };
+
+allow miracast_hdcp2 hdcp_file:file { read open write getattr create unlink rename };
+allow miracast_hdcp2 hdcp_file:dir { read open write getattr create search add_name remove_name rmdir};
+allow miracast_hdcp2 vendor_data_file:dir { read open getattr search write add_name create };
+allow miracast_hdcp2 vendor_data_file:file { read open write getattr create unlink rename append };
+allow miracast_hdcp2 system_app:binder { transfer call };
+allow miracast_hdcp2 media_prop:file { read getattr open };
+allow miracast_hdcp2 mediaserver:binder{ transfer call };

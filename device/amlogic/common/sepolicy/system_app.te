@@ -1,0 +1,89 @@
+allow system_app sysfs_mpgpu_scale:file { read write open };
+allow system_app cache_recovery_file:dir { search read open write add_name remove_name };
+allow system_app cache_recovery_file:file { create getattr setattr open read write unlink  };
+allow system_app cache_file:dir {search open read write unlink add_name remove_name};
+allow system_app cache_file:file {create getattr write open unlink read};
+allow system_app update_engine:binder {call transfer};
+
+allow system_app rootfs:dir { getattr };
+
+#allow system_app vendor_file:file { read open getattr execute };
+
+allow system_app system_app:netlink_kobject_uevent_socket { create };
+
+allow system_app update_data_file:dir search;
+
+allow system_app { pppoe_service subtitle_service }:service_manager { add };
+
+allow system_app system_app:netlink_kobject_uevent_socket { create setopt bind read getopt };
+
+allow system_app mnt_media_rw_file:dir r_dir_perms;
+allow system_app { systemcontrol_hwservice hdmicecd_hwservice subtitleserver_hwservice}:hwservice_manager { find };
+
+allow system_app { system_control hdmicecd tvserver subtitleserver}:binder { call transfer };
+
+allow system_app { droidvold_hwservice tvserver_hwservice }:hwservice_manager { find };
+allow system_app droidvold:binder { call transfer };
+
+allow system_app droidmount_service:service_manager { add };
+
+allow system_app remotecontrol_hwservice:hwservice_manager { add };
+allow system_app hidl_base_hwservice:hwservice_manager { add };
+
+allow system_app fuseblk:dir create_dir_perms;
+allow system_app fuseblk:file create_file_perms;
+
+allow system_app sysfs_di:dir search;
+
+allow system_app sysfs_video:dir search;
+allow system_app sysfs_video:file { getattr open read write };
+
+allow system_app sysfs_clock:file { getattr open read };
+
+allow sysfs_display tmpfs:filesystem associate;
+
+allow system_app sysfs_display:dir search;
+allow system_app sysfs_display:file { read write open getattr };
+
+#--------------------------------------------------------------------#
+#  product_shipping_api_level=28 vendor/system cannot share prop
+#--------------------------------------------------------------------#
+get_prop(system_app, tv_prop)
+#set_prop(system_app, media_prop)
+get_prop(system_app, media_prop)
+#set_prop(system_app, netflix_prop)
+get_prop(system_app, netflix_prop)
+get_prop(system_app, vendor_platform_prop)
+get_prop(system_app, vendor_app_prop)
+get_prop(system_app, vendor_default_prop)
+
+allow system_app vbi_device:chr_file { read write open ioctl };
+allow system_app vendor_file:file r_file_perms;
+allow system_app sysfs_video:dir { search };
+allow system_app sysfs_video:file r_file_perms;
+allow system_app sysfs_amhdmitx:dir search;
+allow system_app sysfs_amhdmitx:file { getattr open read };
+allow system_app sysfs_pm:file r_file_perms;
+allow system_app vendor_app_file:file { read open getattr execute };
+allow system_app dvb_device:chr_file { open read write ioctl getattr};
+allow system_app codec_device:chr_file { open read write ioctl getattr};
+allow system_app param_tv_file:file { create open read write setattr getattr lock unlink };
+allow system_app param_tv_file:dir { search read open write add_name remove_name getattr };
+
+allow system_app sysfs_xbmc:file rw_file_perms;
+
+allow system_app subtitle_device:chr_file rw_file_perms;
+allow system_app debugfs_mali:dir search;
+#allow system_app media_prop:property_service { set };
+
+allow system_app miracast_hdcp2_hwservice:hwservice_manager { find };
+allow system_app miracast_hdcp2:binder { call transfer };
+allow system_app miracast_prop:file { read open getattr };
+
+allow system_app sysfs_video:chr_file {open ioctl read write};
+allow system_app tv_prop:file {open read getattr};
+allow system_app param_tv_file:dir { search read write open add_name remove_name rmdir };
+allow system_app param_tv_file:file { create open read write setattr getattr lock unlink ioctl };
+allow system_app vendor_video_device:chr_file {open ioctl read write};
+allow system_app debugfs_mali:dir search;
+

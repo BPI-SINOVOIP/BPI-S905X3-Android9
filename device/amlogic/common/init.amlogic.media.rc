@@ -1,0 +1,36 @@
+on fs
+	insmod /vendor/lib/modules/media_clock.ko
+
+	write /sys/module/firmware_class/parameters/path "/vendor/lib/firmware/"
+	insmod /vendor/lib/modules/firmware.ko
+
+	insmod /vendor/lib/modules/decoder_common.ko
+	insmod /vendor/lib/modules/stream_input.ko
+	insmod /vendor/lib/modules/amvdec_avs.ko
+	insmod /vendor/lib/modules/amvdec_h264.ko
+	insmod /vendor/lib/modules/amvdec_mh264.ko
+	insmod /vendor/lib/modules/amvdec_h264mvc.ko
+	insmod /vendor/lib/modules/amvdec_h265.ko
+	insmod /vendor/lib/modules/amvdec_mjpeg.ko
+	insmod /vendor/lib/modules/amvdec_mmjpeg.ko
+	insmod /vendor/lib/modules/amvdec_mpeg12.ko
+	insmod /vendor/lib/modules/amvdec_mmpeg12.ko
+	insmod /vendor/lib/modules/amvdec_mpeg4.ko
+	insmod /vendor/lib/modules/amvdec_mmpeg4.ko
+	insmod /vendor/lib/modules/amvdec_real.ko
+	insmod /vendor/lib/modules/amvdec_vc1.ko
+	insmod /vendor/lib/modules/amvdec_vp9.ko
+	insmod /vendor/lib/modules/amvdec_avs2.ko
+	insmod /vendor/lib/modules/encoder.ko
+	insmod /vendor/lib/modules/vpu.ko
+	insmod /vendor/lib/modules/amvdec_mavs.ko
+
+	setprop media.metadataretriver.disable-8k true
+	# make sure mediadrm for drm use
+	mkdir /data/vendor/mediadrm 0770 media mediadrm
+
+service tee_preload_fw /vendor/bin/tee_preload_fw
+    class core
+    user root
+    group system
+    oneshot

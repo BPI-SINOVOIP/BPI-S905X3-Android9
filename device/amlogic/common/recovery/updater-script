@@ -1,0 +1,14 @@
+ui_print("update logo.img...");
+package_extract_file("logo.img", "/dev/block/logo");
+ui_print("update dtbo.img...");
+package_extract_file("dtbo.img", "/dev/block/dtbo");
+ui_print("update dtb.img...");
+backup_data_cache(dtb, /cache/recovery/);
+write_dtb_image(package_extract_file("dt.img"));
+ui_print("update recovery.img...");
+backup_data_cache(recovery, /cache/recovery/);
+package_extract_file("recovery.img", "/dev/block/recovery");
+ui_print("update vbmeta.img...");
+package_extract_file("vbmeta.img", "/dev/block/vbmeta");
+ui_print("update bootloader.img...");
+write_bootloader_image(package_extract_file("bootloader.img"));

@@ -1,0 +1,3 @@
+adj:0,200,400,600,900,906
+#need div for each element
+minfree:2048,6144,7168,8793,10240,15360

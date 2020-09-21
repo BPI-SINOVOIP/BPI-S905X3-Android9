@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dtvkit>
+    <tuner ts_input="2" dvbt2="yes" dvbs2="yes" dvbc="yes"/>
+    <demux live="yes" pip="yes" rec="yes" playback="no" si="yes"/>
+    <demux live="yes" pip="yes" rec="yes" playback="no" si="yes"/>
+    <demux live="no" pip="no" rec="no" playback="yes" si="no"/>
+    <recorder/>
+    <recorder/>
+    <ci_slot/>
+    <vdec/>
+    <adec/>
+    <adec/>
+    <av demux="0"/>
+    <ci_source is_set_tsout="0" tsout_source="0" is_set_tssource="0" camPlug_tssource="3" camUnPlug_tssource="0" is_changeTo_utf8="0" encodec_source="gb2312"/>
+    <pvr encrypt="0x0" />
+    <country code="deu" />
+</dtvkit>

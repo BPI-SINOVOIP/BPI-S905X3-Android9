@@ -1,0 +1,147 @@
+allow recovery input_device:chr_file write;
+allow recovery kmsg_device:chr_file { write open read };
+allow recovery self:netlink_kobject_uevent_socket { create setopt bind read };
+allow recovery sysfs_xbmc:file { read write open };
+allow recovery system_prop:property_service set;
+allow recovery self:capability net_admin;
+
+allow recovery rootfs:dir create_dir_perms;
+allow recovery sysfs:dir mounton;
+
+allow recovery vfat:dir create_dir_perms;
+allow recovery vfat:file create_file_perms;
+
+allow recovery env_device:chr_file rw_file_perms;
+allow recovery input_device:chr_file write;
+allow recovery property_data_file:dir { search };
+allow recovery device:dir rw_dir_perms;
+allow recovery bootloader_device:chr_file rw_file_perms;
+allow recovery defendkey_device:chr_file rw_file_perms;
+allow recovery dtb_device:chr_file { open read write };
+allow recovery recovery:capability { net_admin };
+
+allow recovery sysfs_unifykey:dir search;
+allow recovery sysfs_unifykey:file rw_file_perms;
+allow recovery sysfs_display:file rw_file_perms;
+allow recovery sysfs_display:dir { r_dir_perms search };
+allow recovery sysfs_am_vecm:dir search;
+allow recovery sysfs_am_vecm:file { open read write };
+allow recovery sysfs_audio_cap:file r_file_perms;
+allow recovery sysfs_cec:file rw_file_perms;
+
+#--------------------------------------------------------------------#
+#  product_shipping_api_level=28 vendor/system cannot share prop
+#--------------------------------------------------------------------#
+get_prop(recovery, uboot_prop)
+get_prop(recovery, bluetooth_prop)
+get_prop(recovery, vendor_platform_prop)
+set_prop(recovery, boottime_prop)
+set_prop(recovery, ctl_bootanim_prop)
+
+allow recovery self:capability2 syslog;
+allow recovery sysfs_fs_ext4_features:dir search;
+allow recovery sysfs_fs_ext4_features:file read;
+
+#allow recovery update_data_file:file rw_file_perms;
+#allow recovery update_data_file:dir { search read write open };
+
+allow recovery graphics_device:dir {search};
+allow recovery graphics_device:chr_file {open read write ioctl};
+
+allow shell rootfs:file { entrypoint execute getattr open read };
+
+allow recovery bcmdl_prop:file { getattr open };
+allow recovery media_prop:file { getattr open };
+allow recovery sysfs_audio_cap:file { open read write };
+allow recovery sysfs_video:file { open read write };
+allow recovery tv_config_prop:file { getattr open };
+allow recovery tv_prop:file { getattr open };
+allow recovery wifi_prop:file { getattr open };
+
+allow recovery cache_file:dir mounton;
+allow recovery tmpfs:blk_file write;
+
+allow recovery sysfs:dir { open read };
+allow recovery sysfs_display:file { open read write };
+allow recovery sysfs_video:dir search;
+
+allow recovery sysfs_store:file { open read write getattr };
+allow recovery sysfs_defendkey:file { open read write getattr };
+allow recovery sysfs_usb:file { open read write getattr };
+allow recovery sysfs_boottype:file { open read write getattr };
+allow recovery sysfs_thermal:file { open read write getattr };
+allow recovery sysfs_amhdmitx:file { open read write getattr };
+allow recovery sysfs_amvdec:file { open read write getattr };
+allow recovery sysfs_remote:file { open read write getattr };
+
+allow recovery sysfs_display:file { open read write getattr };
+
+allow recovery sysfs_store:dir search;
+allow recovery sysfs_defendkey:dir search;
+allow recovery sysfs_usb:dir search;
+allow recovery sysfs_boottype:dir search;
+allow recovery sysfs_thermal:dir search;
+allow recovery sysfs_amhdmitx:dir search;
+allow recovery sysfs_amvdec:dir search;
+allow recovery sysfs_remote:dir search;
+
+allow recovery sysfs_display:dir search;
+
+allow recovery ffs_prop:property_service set;
+
+allow recovery bluetooth_prop:file { getattr open };
+allow recovery boottime_prop:file { getattr open };
+allow recovery ctl_bootanim_prop:file { getattr open };
+allow recovery ctl_bugreport_prop:file { getattr open };
+allow recovery ctl_console_prop:file { getattr open };
+
+allow recovery ctl_dumpstate_prop:file { getattr open };
+allow recovery ctl_fuse_prop:file { getattr open };
+allow recovery ctl_interface_restart_prop:file { getattr open };
+allow recovery ctl_interface_start_prop:file { getattr open };
+allow recovery sysfs_display:chr_file { ioctl open read write getattr };
+
+allow recovery ctl_interface_stop_prop:file { getattr open };
+allow recovery ctl_mdnsd_prop:file { getattr open };
+allow recovery ctl_restart_prop:file { getattr open };
+allow recovery ctl_rildaemon_prop:file { getattr open };
+allow recovery ctl_sigstop_prop:file { getattr open };
+
+allow recovery ctl_start_prop:file { getattr open };
+allow recovery ctl_stop_prop:file { getattr open };
+allow recovery device_logging_prop:file { getattr open };
+allow recovery dumpstate_options_prop:file { getattr open };
+
+allow recovery logpersistd_logging_prop:file { getattr open };
+allow recovery lowpan_prop:file { getattr open };
+allow recovery mmc_prop:file { getattr open };
+allow recovery self:capability fsetid;
+allow recovery net_dns_prop:file { getattr open };
+allow recovery overlay_prop:file { getattr open };
+allow recovery persistent_properties_ready_prop:file { getattr open };
+allow recovery safemode_prop:file { getattr open };
+
+allow recovery sysfs_am_vecm:dir search;
+allow recovery sysfs_am_vecm:file { read write open };
+
+allow sysfs_display tmpfs:filesystem associate;
+allow recovery sysfs_display:lnk_file { open read write getattr };
+
+allow init reco_file:file { open read create write };
+
+allow recovery aml_display_prop:file { getattr open read };
+allow recovery bluetooth_a2dp_offload_prop:file { getattr open };
+allow recovery exported_bluetooth_prop:file { getattr open };
+allow recovery exported_overlay_prop:file { getattr open };
+allow recovery exported_wifi_prop:file { getattr open };
+
+allow shell tmpfs:file {open read getattr};
+allow shell rootfs:file {execute_no_trans};
+
+allow recovery hdmirx0_device:chr_file { read write open ioctl getattr };
+
+allow recovery param_tv_file:dir { create search open read };
+allow recovery param_tv_file:file { open read };
+allow recovery unify_device:chr_file { open read write ioctl };
+
+allow recovery proc_vm_writable:file rw_file_perms;

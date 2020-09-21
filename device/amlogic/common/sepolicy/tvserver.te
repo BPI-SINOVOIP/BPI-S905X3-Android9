@@ -1,0 +1,80 @@
+type tvserver, domain;
+type tvserver_exec, exec_type, vendor_file_type, file_type;
+
+init_daemon_domain(tvserver)
+
+allow tvserver vndbinder_device:chr_file { read write open ioctl };
+allow tvserver vndservicemanager:binder { call transfer };
+
+allow tvserver hwservicemanager:binder { call transfer };
+allow tvserver { tvserver_hwservice  hidl_base_hwservice }:hwservice_manager { add };
+
+allow tvserver hwservicemanager_prop:file { open read getattr };
+
+allow tvserver { hal_tv_input_default system_app }:binder { call transfer };
+
+
+allow tvserver { video_device vendor_video_device dvb_video_device amvideo_device mediactl_video_device }:chr_file  { read write open ioctl getattr };
+allow tvserver { hdmirx0_device avin_device }:chr_file  { read write open ioctl getattr };
+
+allow tvserver audio_device:dir { search };
+allow tvserver audio_device:chr_file { read write open ioctl };
+
+get_prop(tvserver, media_prop)
+get_prop(tvserver, tv_prop)
+set_prop(tvserver, tv_prop)
+set_prop(tvserver, tv_config_prop)
+get_prop(tvserver, vendor_default_prop)
+allow tvserver tv_prop:file { read open getattr };
+
+allow tvserver proc:file { read write open ioctl getattr };
+
+allow tvserver param_tv_file:dir  { search read write open add_name remove_name rmdir };
+allow tvserver param_tv_file:file { create open read write setattr getattr lock unlink ioctl };
+allow param_tv_file labeledfs:filesystem { associate };
+
+allow tvserver { vendor_shell_exec vendor_toolbox_exec vendor_file }:file execute_no_trans;
+
+allow tvserver { system_control }:binder { call transfer };
+
+#allow tvserver hal_allocator_default:fd { use };
+allow tvserver { sysfs_cec sysfs_video sysfs_audio sysfs_lcd sysfs_rdma sysfs_di sysfs_am_vecm }:file { read write open getattr };
+
+allow tvserver sysfs_display:file { read open getattr };
+
+allow tvserver system_file:dir { open };
+allow tvserver { sysfs_video sysfs_di sysfs_am_vecm }:dir { search };
+
+allow tvserver systemcontrol_hwservice:hwservice_manager { find };
+
+allow tvserver proc_asound:dir { search };
+allow tvserver proc_asound:file { open read };
+
+allow tvserver sysfs_unifykey:dir { search };
+allow tvserver sysfs_unifykey:file { write read open };
+
+allow tvserver sysfs_cec:dir { search };
+
+allow tvserver mnt_vendor_file:dir { add_name write create remove_name search read open rmdir ioctl };
+allow tvserver mnt_vendor_file:file { create open write setattr getattr lock read rename unlink link ioctl };
+
+allow tvserver platform_app:binder { call };
+allow tvserver sysfs:file { read write open };
+
+#add for search channel
+allow tvserver dvb_device:chr_file { open read write ioctl };
+allow tvserver frontend_device:chr_file { open read write ioctl };
+allow tvserver priv_app:binder { call };
+allow tvserver codec_device:chr_file { read write open ioctl };
+
+#add for timeshift
+allow tvserver vendor_data_file:dir { search remove_name write add_name create };
+allow tvserver vendor_data_file:file { unlink write create open read getattr };
+
+allow tvserver sysfs_amhdmitx:dir search;
+allow tvserver sysfs_amhdmitx:file { write open read getattr };
+
+allow tvserver hdmicecd:binder { call transfer };
+
+allow tvserver sysfs_stb:file   { read open write getattr};
+allow tvserver sysfs_stb:dir   {search};

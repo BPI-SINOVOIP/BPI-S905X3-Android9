@@ -1,0 +1,281 @@
+<MediaSettings>
+
+    <!-- Each camcorder profile defines a set of predefined configuration parameters -->
+    <CamcorderProfiles cameraId="0" startOffsetMs="50">
+
+        <EncoderProfile quality="1080p" fileFormat="3gp" duration="60">
+            <Video codec="h264"
+            bitRate="8000000"
+            width="1920"
+            height="1080"
+            frameRate="30" />
+
+            <Audio codec="amrwb"
+            bitRate="23050"
+            sampleRate="16000"
+            channels="1" />
+        </EncoderProfile>
+
+        <EncoderProfile quality="timelapse1080p" fileFormat="3gp" duration="60">
+            <Video codec="h264"
+            bitRate="8000000"
+            width="1920"
+            height="1080"
+            frameRate="30" />
+
+            <Audio codec="amrwb"
+            bitRate="23050"
+            sampleRate="16000"
+            channels="1" />
+        </EncoderProfile>
+
+        <EncoderProfile quality="720p" fileFormat="3gp" duration="60">
+            <Video codec="h264"
+            bitRate="6000000"
+            width="1280"
+            height="720"
+            frameRate="30" />
+
+            <Audio codec="amrwb"
+            bitRate="23050"
+            sampleRate="16000"
+            channels="1" />
+        </EncoderProfile>
+
+        <EncoderProfile quality="timelapse720p" fileFormat="3gp" duration="60">
+            <Video codec="h264"
+            bitRate="6000000"
+            width="1280"
+            height="720"
+            frameRate="30" />
+
+            <Audio codec="amrwb"
+            bitRate="23050"
+            sampleRate="16000"
+            channels="1" />
+        </EncoderProfile>
+
+        <EncoderProfile quality="480p" fileFormat="3gp" duration="60">
+            <Video codec="h264"
+            bitRate="6000000"
+            width="640"
+            height="480"
+            frameRate="30" />
+
+            <Audio codec="amrwb"
+            bitRate="23050"
+            sampleRate="16000"
+            channels="1" />
+        </EncoderProfile>
+
+        <EncoderProfile quality="timelapse480p" fileFormat="3gp" duration="60">
+            <Video codec="h264"
+            bitRate="6000000"
+            width="640"
+            height="480"
+            frameRate="30" />
+
+            <Audio codec="amrwb"
+            bitRate="23050"
+            sampleRate="16000"
+            channels="1" />
+        </EncoderProfile>
+
+        <EncoderProfile quality="cif" fileFormat="3gp" duration="30">
+            <Video codec="h264"
+            bitRate="1440000"
+            width="352"
+            height="288"
+            frameRate="30" />
+
+            <Audio codec="amrwb"
+            bitRate="23050"
+            sampleRate="16000"
+            channels="1" />
+        </EncoderProfile>
+
+        <EncoderProfile quality="timelapsecif" fileFormat="3gp" duration="30">
+            <Video codec="h264"
+            bitRate="1440000"
+            width="352"
+            height="288"
+            frameRate="30" />
+
+            <Audio codec="amrwb"
+            bitRate="23050"
+            sampleRate="16000"
+            channels="1" />
+        </EncoderProfile>
+
+        <ImageEncoding quality="70" />
+        <ImageEncoding quality="80" />
+        <ImageEncoding quality="90" />
+
+    </CamcorderProfiles>
+
+    <CamcorderProfiles cameraId="1" startOffsetMs="50">
+
+        <EncoderProfile quality="1080p" fileFormat="3gp" duration="60">
+            <Video codec="h264"
+            bitRate="8000000"
+            width="1920"
+            height="1080"
+            frameRate="30" />
+
+            <Audio codec="amrwb"
+            bitRate="23050"
+            sampleRate="16000"
+            channels="1" />
+        </EncoderProfile>
+
+        <EncoderProfile quality="timelapse1080p" fileFormat="3gp" duration="60">
+            <Video codec="h264"
+            bitRate="8000000"
+            width="1920"
+            height="1080"
+            frameRate="30" />
+
+            <Audio codec="amrwb"
+            bitRate="23050"
+            sampleRate="16000"
+            channels="1" />
+        </EncoderProfile>
+
+        <EncoderProfile quality="720p" fileFormat="3gp" duration="60">
+            <Video codec="h264"
+            bitRate="6000000"
+            width="1280"
+            height="720"
+            frameRate="30" />
+
+            <Audio codec="amrwb"
+            bitRate="23050"
+            sampleRate="16000"
+            channels="1" />
+        </EncoderProfile>
+
+        <EncoderProfile quality="timelapse720p" fileFormat="3gp" duration="60">
+            <Video codec="h264"
+            bitRate="6000000"
+            width="1280"
+            height="720"
+            frameRate="30" />
+
+            <Audio codec="amrwb"
+            bitRate="23050"
+            sampleRate="16000"
+            channels="1" />
+        </EncoderProfile>
+
+        <EncoderProfile quality="480p" fileFormat="3gp" duration="60">
+            <Video codec="h264"
+            bitRate="6000000"
+            width="640"
+            height="480"
+            frameRate="30" />
+
+            <Audio codec="amrwb"
+            bitRate="23050"
+            sampleRate="16000"
+            channels="1" />
+        </EncoderProfile>
+
+        <EncoderProfile quality="timelapse480p" fileFormat="3gp" duration="60">
+            <Video codec="h264"
+            bitRate="6000000"
+            width="640"
+            height="480"
+            frameRate="30" />
+
+            <Audio codec="amrwb"
+            bitRate="23050"
+            sampleRate="16000"
+            channels="1" />
+        </EncoderProfile>
+
+        <EncoderProfile quality="cif" fileFormat="3gp" duration="30">
+            <Video codec="h264"
+            bitRate="1440000"
+            width="352"
+            height="288"
+            frameRate="30" />
+
+            <Audio codec="amrwb"
+            bitRate="23050"
+            sampleRate="16000"
+            channels="1" />
+        </EncoderProfile>
+
+        <EncoderProfile quality="timelapsecif" fileFormat="3gp" duration="30">
+            <Video codec="h264"
+            bitRate="1440000"
+            width="352"
+            height="288"
+            frameRate="30" />
+
+            <Audio codec="amrwb"
+            bitRate="23050"
+            sampleRate="16000"
+            channels="1" />
+        </EncoderProfile>
+
+        <ImageEncoding quality="70" />
+        <ImageEncoding quality="80" />
+        <ImageEncoding quality="90" />
+
+    </CamcorderProfiles>
+
+    <EncoderOutputFileFormat name="3gp" />
+    <EncoderOutputFileFormat name="mp4" />
+
+    <VideoDecoderCap name="wmv" enabled="true" />
+    <AudioDecoderCap name="wma" enabled="true" />
+
+    <VideoEncoderCap name="h263" enabled="true"
+        minBitRate="192000" maxBitRate="420000"
+        minFrameWidth="176" maxFrameWidth="352"
+        minFrameHeight="144" maxFrameHeight="288"
+        minFrameRate="1" maxFrameRate="20" />
+
+    <VideoEncoderCap name="h264" enabled="true"
+        minBitRate="192000" maxBitRate="6000000"
+        minFrameWidth="176" maxFrameWidth="1920"
+        minFrameHeight="144" maxFrameHeight="1080"
+        minFrameRate="5" maxFrameRate="30" />
+
+    <VideoEncoderCap name="m4v" enabled="true"
+        minBitRate="192000" maxBitRate="1440000"
+        minFrameWidth="176" maxFrameWidth="640"
+        minFrameHeight="144" maxFrameHeight="480"
+        minFrameRate="1" maxFrameRate="15" />
+
+    <AudioEncoderCap name="amrwb" enabled="true"
+        minBitRate="6600" maxBitRate="23050"
+        minSampleRate="16000" maxSampleRate="16000"
+        minChannels="1" maxChannels="1" />
+
+    <AudioEncoderCap name="aac" enabled="true"
+        minBitRate="758" maxBitRate="288000"
+        minSampleRate="8000" maxSampleRate="48000"
+        minChannels="1" maxChannels="1" />
+
+    <AudioEncoderCap name="heaac" enabled="true"
+        minBitRate="8000" maxBitRate="64000"
+        minSampleRate="16000" maxSampleRate="48000"
+        minChannels="1" maxChannels="1" />
+
+    <AudioEncoderCap name="aaceld" enabled="true"
+        minBitRate="16000" maxBitRate="192000"
+        minSampleRate="16000" maxSampleRate="48000"
+        minChannels="1" maxChannels="1" />
+
+    <AudioEncoderCap name="amrwb" enabled="true"
+        minBitRate="6600" maxBitRate="23050"
+        minSampleRate="16000" maxSampleRate="16000"
+        minChannels="1" maxChannels="1" />
+
+    <AudioEncoderCap name="amrnb" enabled="true"
+        minBitRate="4750" maxBitRate="12200"
+        minSampleRate="8000" maxSampleRate="8000"
+        minChannels="1" maxChannels="1" />
+</MediaSettings>

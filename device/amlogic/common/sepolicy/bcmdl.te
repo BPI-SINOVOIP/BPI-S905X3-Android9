@@ -1,0 +1,13 @@
+type bcmdl, domain;
+type bcmdl_exec, exec_type,vendor_file_type, file_type;
+allow bcmdl usb_device:dir { read open search };
+init_daemon_domain(bcmdl)
+allow bcmdl usb_device:chr_file { read open write ioctl };
+allow bcmdl bcmdl:capability { net_raw net_admin };
+allow bcmdl bcmdl:netlink_kobject_uevent_socket { create setopt bind read };
+allow bcmdl property_socket:sock_file write;
+allow bcmdl init:unix_stream_socket connectto;
+allow bcmdl sysfs:file { open read getattr };
+allow bcmdl proc:file { open read getattr };
+allow bcmdl sysfs:dir { read open };
+allow bcmdl bcmdl_prop:property_service { set };

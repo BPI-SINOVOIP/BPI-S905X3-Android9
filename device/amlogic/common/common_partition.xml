@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<partitions>
+    <partition name="bootloader" size="0x400000" path="" />
+    <partition name="reserved" size="0x4000000" path="" />

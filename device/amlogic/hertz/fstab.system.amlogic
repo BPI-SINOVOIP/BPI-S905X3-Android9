@@ -1,0 +1,17 @@
+# Android fstab file.
+#<src>                                                  <mnt_point>         <type>    <mnt_flags and options>                       <fs_mgr_flags>
+# The filesystem that contains the filesystem checker binary (typically /system) cannot
+# specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
+
+/dev/block/misc       /misc               emmc      defaults      defaults
+/dev/block/data       /data               ext4      noatime,nosuid,nodev,nodelalloc,nomblk_io_submit,errors=panic    wait,check,fileencryption=aes-256-xts,quota,formattable,reservedsize=32M
+/dev/block/cache      /cache              ext4      noatime,nosuid,nodev,nodelalloc,nomblk_io_submit,errors=panic    wait,check,formattable
+/dev/block/metadata   /metadata              ext4      noatime,nosuid,nodev,nodelalloc,nomblk_io_submit,errors=panic    wait,check,formattable
+/devices/*.sd/mmc_host/sd*  auto          auto       defaults     voldmanaged=sdcard1:auto,encryptable=userdata
+/devices/*dwc3/xhci-hcd.0.auto/usb?/*/host*/target*/block/sd*  auto  auto  defaults  voldmanaged=usb:auto,encryptable=userdata
+/devices/*dwc3/xhci-hcd.0.auto/usb?/*/host*/target*/block/sr*  auto  auto  defaults  voldmanaged=sr0:auto,encryptable=userdata
+/dev/block/loop     auto                loop      defaults                                  voldmanaged=loop:auto
+/dev/block/param    /mnt/vendor/param                ext4      noatime,nosuid,nodev,nodelalloc,nomblk_io_submit,errors=panic    wait,check,quota,formattable
+# Add for zram. zramsize can be in numeric (byte) , in percent
+/dev/block/zram0     /mnt/vendor/swap_zram0             swap      defaults                             wait,zramsize=268435456
+/dev/block/tee       /mnt/vendor/tee                 ext4      noatime,nosuid,nodev,nodelalloc,nomblk_io_submit,errors=panic    wait,check,formattable

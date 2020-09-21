@@ -1,0 +1,10 @@
+type hdcp_tx22, domain;
+type hdcp_tx22_exec, exec_type, vendor_file_type, file_type;
+init_daemon_domain(hdcp_tx22)
+
+allow hdcp_tx22 hdcptx_device:chr_file { open read write getattr ioctl };
+allow hdcp_tx22 system_file:file execute_no_trans;
+
+allow hdcp_tx22 sysfs:file rw_file_perms;
+allow hdcp_tx22 sysfs_amhdmitx:dir search;
+allow hdcp_tx22 sysfs_amhdmitx:file { getattr open read write ioctl };

@@ -1,0 +1,2 @@
+tv_remote                                 u:object_r:tv_remote_service:s0
+display.qservice                          u:object_r:surfaceflinger_service:s0

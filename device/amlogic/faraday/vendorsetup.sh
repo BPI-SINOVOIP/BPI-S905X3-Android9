@@ -1,0 +1,3 @@
+add_lunch_combo faraday-eng
+add_lunch_combo faraday-user
+add_lunch_combo faraday-userdebug

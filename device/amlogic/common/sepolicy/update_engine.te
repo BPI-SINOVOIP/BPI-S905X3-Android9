@@ -1,0 +1,23 @@
+# Allow read/write on system and boot partitions.
+allow update_engine misc_block_device:blk_file rw_file_perms;
+allow update_engine vendor_block_device:blk_file rw_file_perms;
+allow update_engine vbmeta_block_device:blk_file rw_file_perms;
+allow update_engine odm_block_device:blk_file rw_file_perms;
+allow update_engine product_block_device:blk_file rw_file_perms;
+allow update_engine dtbo_block_device:blk_file rw_file_perms;
+allow update_engine system_app:binder { call };
+
+allow update_engine system_file:file execute_no_trans;
+allow update_engine labeledfs:filesystem mount;
+allow update_engine otadexopt_service:service_manager find;
+allow update_engine otapreopt_chroot_exec:file { execute execute_no_trans getattr open read };
+allow update_engine postinstall_file:dir mounton;
+allow update_engine self:capability sys_chroot;
+allow update_engine system_server:binder call;
+allow update_engine toolbox_exec:file { execute execute_no_trans getattr open read };
+allow update_engine system_server:binder transfer;
+
+#allow update_engine sysfs:file {read open getattr};
+allow update_engine sysfs:blk_file {read write getattr};
+allow update_engine rootfs:dir {getattr};
+allow update_engine system_block_fsck_device:blk_file { getattr ioctl open read write };

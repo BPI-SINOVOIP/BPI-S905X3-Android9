@@ -1,0 +1,19 @@
+allow zygote cpuctl_device:dir search;
+allow zygote self:process execmem;
+allow zygote mediaserver:process { getpgid setpgid };
+
+allow zygote untrusted_app:process ptrace;
+
+allow zygote self:capability sys_nice;
+
+get_prop(zygote, media_prop)
+
+allow zygote kernel:system module_request;
+
+#allow zygote vendor_file:file { read open getattr execute };
+
+#allow zygote cgroup:file { create };
+
+allow zygote adbd:unix_stream_socket connectto;
+allow zygote ashmem_device:chr_file execute;
+allow zygote servicemanager:binder call;

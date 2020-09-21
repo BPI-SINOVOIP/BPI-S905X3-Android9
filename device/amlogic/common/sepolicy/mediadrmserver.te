@@ -1,0 +1,5 @@
+allow mediadrmserver media_data_file:lnk_file { create read write };
+allow mediadrmserver drm_device:chr_file { read open write ioctl };
+#allow mediadrmserver sysfs:file  { open read write};
+allow mediadrmserver kernel:system module_request;
+get_prop(mediadrmserver, media_prop)

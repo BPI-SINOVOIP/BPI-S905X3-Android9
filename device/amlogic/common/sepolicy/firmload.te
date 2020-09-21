@@ -1,0 +1,10 @@
+type firmload, domain;
+type firmload_exec, exec_type, vendor_file_type, file_type;
+init_daemon_domain(firmload)
+
+allow firmload drm_device:chr_file { open read write ioctl };
+allow firmload rootfs:lnk_file getattr;
+#allow firmload system_data_file:dir { write add_name create write };
+#allow firmload system_data_file:file { read open getattr };
+#allow firmload sysfs:file { read open getattr };
+allow firmload proc:file { read open getattr };

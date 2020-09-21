@@ -1,0 +1,8 @@
+
+
+user=_app seinfo=platform name=com.droidlogic domain=aml_core_app type=app_data_file levelFrom=app
+
+user=_app seinfo=platform name=com.droidlogic.SubTitleService domain=aml_core_app type=app_data_file
+
+#user=_app seinfo=platform name=com.droidlogic.tvsource domain=aml_core_app type=app_data_file
+#user=_app seinfo=platform name=com.droidlogic.tvinput domain=aml_core_app type=app_data_file

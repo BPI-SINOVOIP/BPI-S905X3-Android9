@@ -1,0 +1,22 @@
+allow audioserver { sysfs_xbmc sysfs_digital_codec sysfs_audio_samesource sysfs_audio_cap }:file { open read write getattr };
+allow audioserver property_socket:sock_file { open write };
+allow audioserver vendor_file:file { read };
+allow audioserver sysfs_aud_output_chs:file { open read write getattr };
+allow audioserver kernel:system module_request;
+
+get_prop(audioserver, media_prop)
+
+# netlink_kobject_uevent_socket event
+allow audioserver self:netlink_kobject_uevent_socket create_socket_perms_no_ioctl;
+
+# operation hidraw device
+allow audioserver hidraw_audio_device:chr_file rw_file_perms;
+
+#bootanim
+allow audioserver bootanim:binder call;
+
+#operation property;
+
+set_prop(audioserver, audio_prop)
+
+get_prop(audioserver, vendor_platform_prop)

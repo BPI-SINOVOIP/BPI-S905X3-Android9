@@ -1,0 +1,13 @@
+#allow surfaceflinger vendor_file:file { open read getattr execute };
+allow surfaceflinger system_control_service:service_manager find;
+allow surfaceflinger video_device:chr_file rw_file_perms;
+allow surfaceflinger vendor_video_device:chr_file rw_file_perms;
+
+
+get_prop(surfaceflinger, tv_prop)
+set_prop(surfaceflinger, ctl_default_prop)
+
+allow surfaceflinger media_prop:file { read };
+get_prop(surfaceflinger, media_prop)
+
+allow surfaceflinger debugfs_mali:dir { search };

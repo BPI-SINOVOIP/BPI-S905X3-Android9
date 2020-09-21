@@ -1,0 +1,6 @@
+allow hal_tv_input_default tvserver_hwservice:hwservice_manager { find };
+allow hal_tv_input_default tvserver:binder { call transfer };
+
+#allow hal_tv_input_default binder_device:chr_file { ioctl };
+#allow hal_tv_input_default hal_allocator_default:fd { use };
+#allow hal_tv_input_default hal_allocator_default:binder { call transfer };

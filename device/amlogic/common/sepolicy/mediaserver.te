@@ -1,0 +1,50 @@
+allow mediaserver system_server:unix_stream_socket { read write setopt };
+allow mediaserver video_device:chr_file rw_file_perms;
+allow mediaserver vendor_video_device:chr_file rw_file_perms;
+allow mediaserver codec_device:chr_file rw_file_perms;
+
+allow mediaserver  sysfs_mpgpu_scale:file  { open read write};
+
+#allow mediaserver vendor_file:file { read open getattr execute };
+allow mediaserver sysfs_video:file  rw_file_perms;
+allow mediaserver sysfs_audio:file  {open read  write getattr};
+
+get_prop(mediaserver, media_prop)
+get_prop(mediaserver, vendor_platform_prop)
+
+allow mediaserver bootanim:binder { call transfer };
+allow mediaserver bootanim:fd  use;
+allow mediaserver system_data_file:file { read getattr };
+allow mediaserver miracast_hdcp2_hwservice:hwservice_manager { find };
+allow mediaserver hal_cas_hwservice:hwservice_manager { find };
+# For interfacing with miracast hdcp2 HAL
+allow mediaserver miracast_hdcp2_hwservice:hwservice_manager find;
+allow mediaserver miracast_hdcp2:binder { call transfer };
+allow mediaserver hal_cas_default:binder{ call transfer };
+allow mediaserver sysfs_video:dir { search };
+allow mediaserver sysfs_display:file   { open read getattr};
+allow mediaserver drm_device:chr_file {ioctl open read write};
+allow mediaserver sysfs_xbmc:file {write open read getattr};
+allow mediaserver sysfs_audio_cap:file {open read};
+allow mediaserver sysfs_amhdmitx:dir {search};
+allow mediaserver sysfs_stb:file   { read open write getattr};
+allow mediaserver sysfs_stb:dir   {search};
+allow mediaserver dvb_device:chr_file { open read write ioctl };
+allow mediaserver sysfs_vdec:file   {read write open getattr};
+allow mediaserver tv_prop:file    {open read getattr};
+allow mediaserver mediaserver:netlink_kobject_uevent_socket {create setopt bind read};
+allow mediaserver proc_version:file  {open read getattr};
+allow mediaserver uio_device:chr_file { open read write };
+allow mediaserver sysfs_audio:dir {search};
+allow mediaserver sysfs_audio:lnk_file {read};
+allow mediaserver self:udp_socket { ioctl read};
+
+#============= mediaserver ctsplayer==============
+allow mediaserver ctsplayer_file:file { open read write };
+allow mediaserver uboot_prop:file { getattr open read };
+allow mediaserver sysfs_amvdec:file { open read write };
+allow mediaserver sysfs_di:dir search;
+allow mediaserver sysfs_display:lnk_file read;
+allow mediaserver sysfs_display:dir search;
+allow mediaserver systemcontrol_hwservice:hwservice_manager find;
+allow mediaserver system_control:binder { call transfer };

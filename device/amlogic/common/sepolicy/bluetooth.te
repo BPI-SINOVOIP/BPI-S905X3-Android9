@@ -1,0 +1,5 @@
+type device_stpbt, dev_type,fs_type;
+allow bluetooth system_control_service:service_manager find;
+allow bluetooth device_stpbt:chr_file { open read write };
+allow bluetooth kernel:system { module_request };
+allow bluetooth debugfs_mali:dir { search };

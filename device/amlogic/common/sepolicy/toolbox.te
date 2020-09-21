@@ -1,0 +1,3 @@
+allow toolbox unlabeled:dir getattr;
+allow toolbox vendor_file:system module_load;
+allow toolbox toolbox:capability sys_module;

@@ -1,0 +1,5 @@
+# TODO: Add rules to allow update_verifier to read system_block_device.
+allow update_verifier system_block_device:blk_file r_file_perms;
+allow update_verifier rootfs:file { getattr read open };
+#allow update_verifier proc:file { read open getattr };
+#allow update_verifier misc_block_device:blk_file rw_file_perms;

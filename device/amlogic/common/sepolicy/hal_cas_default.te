@@ -1,0 +1,7 @@
+allow hal_cas_default vndbinder_device:chr_file { read write open ioctl };
+allow hal_cas_default drm_device:chr_file { open read write ioctl };
+allow hal_cas_default media_prop:file { open read getattr };
+allow hal_cas_default hwservicemanager:binder { call transfer };
+allow hal_cas_default hwservicemanager_prop:file { open read getattr };
+allow hal_cas_default system_app:binder { transfer call };
+allow hal_cas_default mediaserver:binder{ transfer call };

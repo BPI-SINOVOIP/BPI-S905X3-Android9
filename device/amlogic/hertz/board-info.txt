@@ -1,0 +1,2 @@
+require board=hertz
+require version-bootloader=01.01.180822.145544

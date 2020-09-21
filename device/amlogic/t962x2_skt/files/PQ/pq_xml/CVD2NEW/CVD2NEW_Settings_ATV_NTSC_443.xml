@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Form name="CVD2NEW_Settings_ATV_NTSC_443" platform="txlx" commands="">
+<Group num="0" val="0">
+<Page tab_title="CVD2NEW_Settings_ATV_NTSC_443" layout="24x4">
+<Control ui_type="slider" name="CVD_YC_DLY" sig="1538" range="0~15" addr="0x7" mask="3:0" dst="U" desc="CVD_YC_DLY" default="14" value="14" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="CVD_UV_DLY" sig="1538" range="0~15" addr="0x11b" mask="27:24" dst="U" desc="CVD_UV_DLY" default="4" value="4" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="CVD_CONTRAST" sig="1538" range="0~255" addr="0x8" mask="7:0" dst="U" desc="CVD_CONTRAST" default="124" value="124" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="CVD_BRIGHTNESS" sig="1538" range="0~255" addr="0x9" mask="7:0" dst="U" desc="CVD_BRIGHTNESS" default="28" value="28" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="CVD_SATURATION" sig="1538" range="0~255" addr="0xa" mask="7:0" dst="U" desc="CVD_SATURATION" default="120" value="120" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="CVD_HUE" sig="1538" range="0~255" addr="0xb" mask="7:0" dst="U" desc="CVD_HUE" default="0" value="0" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="CVD_BRIGHTNESS_AML" sig="1538" range="0~511" addr="0x157" mask="8:0" dst="U" desc="CVD_CONTRAST_AML" default="30" value="30" cmd="common:2,0xff654000"/>
+<Control ui_type="checkbox" name="CVD_BRIGHTNESS_AML_EN" sig="1538" range="0~1" addr="0x157" mask="15:15" dst="U" desc="reg_brightness_aml_en" default="1" value="1" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="CVD_CONTRAST_AML" sig="1538" range="0~1023" addr="0x157" mask="25:16" dst="U" desc="CVD_BRIGHTNESS_AML" default="115" value="115" cmd="common:2,0xff654000"/>
+<Control ui_type="checkbox" name="CVD_CTI0_en" sig="1538" range="0~1" addr="0xb5" mask="3:3" dst="U" desc="Pchroma_peak_en Default = 0" default="0" value="0" cmd="common:2,0xff654000"/>
+<Control ui_type="checkbox" name="CVD_CTI0Coring_en" sig="1538" range="0~1" addr="0xb5" mask="2:2" dst="U" desc="Schroma_peak Default = 1" default="0" value="0" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="CVD_CTI0_gain" sig="1538" range="0~3" addr="0xb5" mask="1:0" dst="U" desc="Spchroma_peak Default = 3" default="2" value="2" cmd="common:2,0xff654000"/>
+<Control ui_type="checkbox" name="CVD_CTI1_en" sig="1538" range="0~1" addr="0xb5" mask="7:7" dst="U" desc="Schroma_peak_en Default = 0" default="1" value="1" cmd="common:2,0xff654000"/>
+<Control ui_type="checkbox" name="CVD_CTI1Coring_en" sig="1538" range="0~1" addr="0xb5" mask="6:6" dst="U" desc="Schroma_coring_en Default = 1" default="0" value="0" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="CVD_CTI1_gain" sig="1538" range="0~3" addr="0xb5" mask="5:4" dst="U" desc="Schroma_peak Default = 3" default="2" value="2" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_53[7:0]" sig="1538" range="0~255" addr="0x153" mask="7:0" dst="U" desc="reg_k1_inphase3d" default="112" value="112" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_53[15:8]" sig="1538" range="0~255" addr="0x153" mask="15:8" dst="U" desc="reg_k2_inphase3d" default="32" value="32" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_53[23:16]" sig="1538" range="0~255" addr="0x153" mask="23:16" dst="U" desc="reg_k3_texture3d" default="80" value="80" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_53[31:24]" sig="1538" range="0~255" addr="0x153" mask="31:24" dst="U" desc="reg_k4_inphase2d" default="80" value="80" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_54[7:0]" sig="1538" range="0~255" addr="0x154" mask="7:0" dst="U" desc="reg_k5_texture3d" default="128" value="128" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_54[15:8]" sig="1538" range="0~255" addr="0x154" mask="15:8" dst="U" desc="reg_k6_inphase2d" default="250" value="250" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_54[23:16]" sig="1538" range="0~255" addr="0x154" mask="23:16" dst="U" desc="reg_k7_oophase_n" default="64" value="64" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_54[31:24]" sig="1538" range="0~255" addr="0x154" mask="31:24" dst="U" desc="reg_k8_oophase_b" default="0" value="0" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_55[9:0]" sig="1538" range="0~1023" addr="0x155" mask="9:0" dst="U" desc="reg_hcfd_mtn_th" default="12" value="12" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_55[21:12]" sig="1538" range="0~1023" addr="0x155" mask="21:12" dst="U" desc="reg_mainpath_mtn_th" default="1" value="1" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_55[23]" sig="1538" range="0~1" addr="0x155" mask="23:23" dst="U" desc="reg_md2_inp2d_min" default="1" value="1" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_55[22]" sig="1538" range="0~1" addr="0x155" mask="22:22" dst="U" desc="reg_md2_hcfd_txt3d_inp2d_min" default="0" value="0" cmd="common:2,0xff654000"/>
+<Control ui_type="checkbox" name="ACD_REG_55[30]" sig="1538" range="0~1" addr="0x155" mask="30:30" dst="U" desc="reg_md2_mainpath_mtn_en" default="1" value="1" cmd="common:2,0xff654000"/>
+<Control ui_type="checkbox" name="ACD_REG_55[31]" sig="1538" range="0~1" addr="0x155" mask="31:31" dst="U" desc="reg_hcfd_mtn_en" default="1" value="1" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_56" sig="1538" range="0~15" addr="0x156" mask="23:20" dst="U" desc="ACD_REG_56" default="1" value="1" cmd="common:2,0xff654000"/>
+<Control ui_type="checkbox" name="ACD_REG_58[31]" sig="1538" range="0~1" addr="0x158" mask="31:31" dst="U" desc="reg_f01234_still_en" default="1" value="1" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_58[27:25]" sig="1538" range="0~7" addr="0x158" mask="27:25" dst="U" desc="reg_md2_main_path_mtn_shift 0:*1, 1:*1/2, 2: *1/4, 3:*1/8, 4: *2, 5: *4, 7: *8," default="0" value="0" cmd="common:2,0xff654000"/>
+<Control ui_type="checkbox" name="ACD_REG_58[24]" sig="1538" range="0~1" addr="0x158" mask="24:24" dst="U" desc="reg_f4_still_en" default="1" value="1" cmd="common:2,0xff654000"/>
+<Control ui_type="checkbox" name="ACD_REG_58[23]" sig="1538" range="0~1" addr="0x158" mask="23:23" dst="U" desc="reg_f3_still_en" default="1" value="1" cmd="common:2,0xff654000"/>
+<Control ui_type="checkbox" name="ACD_REG_58[22]" sig="1538" range="0~1" addr="0x158" mask="22:22" dst="U" desc="reg_f2_still_en" default="1" value="1" cmd="common:2,0xff654000"/>
+<Control ui_type="checkbox" name="ACD_REG_58[21]" sig="1538" range="0~1" addr="0x158" mask="21:21" dst="U" desc="reg_f1_still_en" default="1" value="1" cmd="common:2,0xff654000"/>
+<Control ui_type="checkbox" name="ACD_REG_58[20]" sig="1538" range="0~1" addr="0x158" mask="20:20" dst="U" desc="reg_f0_still_en" default="1" value="1" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_58[19:16]" sig="1538" range="0~15" addr="0x158" mask="19:16" dst="U" desc="reg_f4_still_th" default="1" value="1" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_58[15:12]" sig="1538" range="0~15" addr="0x158" mask="15:12" dst="U" desc="reg_f3_still_th" default="1" value="1" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_58[11:8]" sig="1538" range="0~15" addr="0x158" mask="11:8" dst="U" desc="reg_f2_still_th" default="1" value="1" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_58[7:4]" sig="1538" range="0~15" addr="0x158" mask="7:4" dst="U" desc="reg_f1_still_th" default="1" value="1" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_58[3:0]" sig="1538" range="0~15" addr="0x158" mask="3:0" dst="U" desc="reg_f0_still_th" default="1" value="1" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_64[31:24]" sig="1538" range="0~255" addr="0x164" mask="31:24" dst="U" desc="reg_k4_ip_err" default="16" value="16" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_64[23:16]" sig="1538" range="0~255" addr="0x164" mask="23:16" dst="U" desc="reg_k3_core_ip" default="16" value="16" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_64[15:8]" sig="1538" range="0~255" addr="0x164" mask="15:8" dst="U" desc="reg_k2_lp_err" default="16" value="16" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_64[7:0]" sig="1538" range="0~255" addr="0x164" mask="7:0" dst="U" desc="reg_k1_hp_err4" default="64" value="64" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_65[31:24]" sig="1538" range="0~255" addr="0x165" mask="31:24" dst="U" desc="reg_k8_disable_tb" default="64" value="64" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_65[23:16]" sig="1538" range="0~255" addr="0x165" mask="23:16" dst="U" desc="reg_k7_disable_tb" default="64" value="64" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_65[15:8]" sig="1538" range="0~255" addr="0x165" mask="15:8" dst="U" desc="reg_k6_disable_tb" default="64" value="64" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_65[7:0]" sig="1538" range="0~255" addr="0x165" mask="7:0" dst="U" desc="reg_k5_fc_tb_gain" default="64" value="64" cmd="common:2,0xff654000"/>
+<Control ui_type="checkbox" name="ACD_REG_66[31]" sig="1538" range="0~1" addr="0x166" mask="31:31" dst="U" desc="New_2dcomb_enable" default="1" value="1" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_66[11:10]" sig="1538" range="0~3" addr="0x166" mask="11:10" dst="U" desc="reg_notch_vcomb_yin_sel,1D/2D blending input sel: 00: old, 01: err_2d_tb_mid/4, 10: err_2d_tb_mid/2,11: err_2d_tb_mid" default="3" value="3" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_66[9:8]" sig="1538" range="0~3" addr="0x166" mask="9:8" dst="U" desc="reg_notch_vcomb_cin_sel,1D/2D blending input sel: 00: old, 01: err_2d_tb_mid/4, 10: err_2d_tb_mid/2,11: err_3d_tb_mid" default="3" value="3" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_66[7]" sig="1538" range="0~1" addr="0x166" mask="7:7" dst="U" desc="reg_hp_ip_err_min,component for err_top/bot: 1: min(inphase_err,hp_err), 0: sum(inphase_err,hp_err)" default="0" value="0" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_66[6]" sig="1538" range="0~1" addr="0x166" mask="6:6" dst="U" desc="reg_aml_hdiff_in_sel,1: horizontal diff filt 0:" default="1" value="1" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_66[5:4]" sig="1538" range="0~3" addr="0x166" mask="5:4" dst="U" desc="Vcomb input sel: 00: old, 1: err_top/bot_dis/4, 2: err_top/bot_dis/2, 3:err_top/bot_dis" default="1" value="1" cmd="common:2,0xff654000"/>
+<Control ui_type="checkbox" name="ACD_REG_89[31]" sig="1538" range="0~1" addr="0x189" mask="31:31" dst="U" desc="md2 dot suppress mode enable" default="0" value="0" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_89[21:12]" sig="1538" range="0~1023" addr="0x189" mask="21:12" dst="U" desc="reg_md2_dot_sup_hp_eng,hp portion energy threshold to enable md2 dot sup mode" default="24" value="24" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_89[9:0]" sig="1538" range="0~1023" addr="0x189" mask="9:0" dst="U" desc="reg_md2_dot_sup_inp3d_th,inphase3d portion threshold to enable md3 dot sup mode" default="24" value="24" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_8A[12:0]" sig="1538" range="0~8192" addr="0x18a" mask="12:0" dst="U" desc="reg_md2_dot_sup_lp_htrans_th,low pass portion transition threshold to enable md2 dot sup mode" default="16" value="16" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_8A[25:16]" sig="1538" range="0~1023" addr="0x18a" mask="25:16" dst="U" desc="reg_md2_dot_sup_mpmtn_th,main path motion threshold to enable md2 dot sup mode" default="4" value="4" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_8B[15:0]" sig="1538" range="0~65535" addr="0x18b" mask="15:0" dst="U" desc="global inphase 3d error threshold to enable do sup mode" default="0" value="0" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_8B[27:16]" sig="1538" range="0~4096" addr="0x18b" mask="27:16" dst="U" desc="global inphase 3d error threshold to enable do sup mode" default="0" value="0" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_8C[15:0]" sig="1538" range="0~65535" addr="0x18c" mask="15:0" dst="U" desc="global chroma energy threshold to enable do sup mode" default="0" value="0" cmd="common:2,0xff654000"/>
+<Control ui_type="slider" name="ACD_REG_8C[27:16]" sig="1538" range="0~4096" addr="0x18c" mask="27:16" dst="U" desc="global chroma energy threshold to enable do sup mode" default="0" value="0" cmd="common:2,0xff654000"/>
+</Page>
+</Group>
+</Form>
+

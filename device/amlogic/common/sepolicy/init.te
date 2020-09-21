@@ -1,0 +1,41 @@
+allow init self:capability { sys_module };
+allow init tmpfs:lnk_file { create_file_perms };
+allow init tmpfs:blk_file { getattr read write open };
+
+#allow init sysfs:dir { add_name };
+allow init sysfs:file { create };
+
+allow init kernel:system module_request;
+allow init configfs:file { create getattr open unlink write };
+
+#allow init cgroup:file create_file_perms;
+allow init { system_file vendor_file rootfs}:system { module_load };
+
+allow init vendor_file:file { execute };
+
+allow init { tee_block_device userdata_block_device cache_block_device block_device metadata_block_device vbmeta_block_device }:blk_file { relabelto write read };
+allow init { vendor_block_device system_block_fsck_device odm_block_device param_block_device product_block_device dtbo_block_device }:blk_file { relabelto write read };
+
+allow init boot_block_device:blk_file relabelto;
+
+allow init configfs:file { create getattr open unlink write };
+allow init configfs:lnk_file { create unlink };
+
+allow init sysfs_devices_system_cpu:file { create };
+#allow init sysfs_devices_system_cpu:dir { write add_name };
+allow init functionfs:dir mounton;
+
+allow init property_socket:sock_file write;
+#allow init proc:dir { write add_name };
+#allow init proc:file { setattr };
+
+allow init debugfs:dir { mounton };
+
+allow init mnt_vendor_file:dir mounton;
+allow init tee_data_file:dir mounton;
+
+allow init socket_device:sock_file { create setattr unlink };
+
+allow init drm_device:chr_file { setattr read write open ioctl };
+allow init firmload_exec:file {getattr};
+allow init param_tv_file:dir mounton;

@@ -1,0 +1,26 @@
+allow fsck_untrusted vold_block_device:blk_file { getattr read write open ioctl };
+allow fsck_untrusted sda_block_device:blk_file { create getattr read write open ioctl };
+allow fsck_untrusted vold:unix_stream_socket { read write };
+
+allow fsck_untrusted fsck_exec:file entrypoint;
+allow fsck_untrusted block_device:dir getattr;
+allow fsck_untrusted vold_block_device:blk_file lock;
+allow fsck_untrusted self:capability sys_admin;
+
+allow fsck_untrusted fuseblk:filesystem { mount unmount };
+allow fsck_untrusted devpts:chr_file rw_file_perms;
+allow fsck_untrusted self:capability { setgid setuid sys_admin };
+
+allow fsck_untrusted block_device:dir { open read search getattr };
+allow fsck_untrusted sda_block_device:dir search;
+allow fsck_untrusted sda_block_device:blk_file rw_file_perms;
+allow fsck_untrusted fuse_device:chr_file rw_file_perms;
+
+allow fsck_untrusted tmpfs:dir {open read search getattr };
+allow fsck_untrusted mnt_media_rw_file:dir { create_dir_perms mounton };
+allow fsck_untrusted mnt_media_rw_file:file create_file_perms;
+
+allow fsck_untrusted mnt_media_rw_stub_file:dir { getattr mounton };
+allow fsck_untrusted proc:file { getattr };
+allow fsck_untrusted proc_filesystems:file { open read getattr };
+

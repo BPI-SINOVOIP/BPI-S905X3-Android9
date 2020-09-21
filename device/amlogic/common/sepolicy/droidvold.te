@@ -1,0 +1,100 @@
+type droidvold, domain;
+type droidvold_exec, exec_type, vendor_file_type, file_type;
+
+init_daemon_domain(droidvold)
+
+# Read access to pseudo filesystems.
+r_dir_file(droidvold, proc)
+r_dir_file(droidvold, sysfs_type)
+
+
+allow droidvold proc_meminfo:file r_file_perms;
+allow droidvold self:capability { setgid setuid };
+
+allow droidvold cpuctl_device:dir search;
+
+allow droidvold device:dir { open read };
+allow droidvold usb_device:dir { open read search };
+#allow droidvold system_data_file:fifo_file { open read write };
+
+allow droidvold block_device:dir { create read write search add_name };
+
+allow droidvold fuseblk:filesystem { mount unmount };
+
+allow droidvold self:capability { net_admin sys_admin chown fowner fsetid };
+
+allow droidvold tmpfs:dir create_dir_perms;
+allow droidvold tmpfs:dir mounton;
+
+allow droidvold kernel:system module_request;
+allow droidvold mnt_media_rw_file:dir { r_dir_perms };
+allow droidvold mnt_media_rw_stub_file:dir { r_dir_perms mounton };
+
+allow droidvold droidvold:netlink_kobject_uevent_socket { create setopt bind read getopt };
+
+allow droidvold rootfs:dir mounton;
+allow droidvold rootfs:file { read open getattr };
+
+allow droidvold { sysfs sysfs_zram sysfs_zram_uevent }:dir { open read search };
+allow droidvold { sysfs sysfs_zram sysfs_zram_uevent }:file { write open read };
+
+allow droidvold file_contexts_file:file r_file_perms;
+
+allow proc_net proc:filesystem { associate };
+
+allow droidvold self:process { setexec setfscreate };
+allow droidvold sysfs:file { getattr };
+# For sgdisk launched through popen()
+# allow droidvold shell_exec:file rx_file_perms;
+
+allow droidvold hwservicemanager_prop:file { open read getattr };
+
+allow droidvold hwservicemanager:binder { call transfer };
+allow droidvold { droidvold_hwservice  hidl_base_hwservice }:hwservice_manager { add };
+
+allow droidvold system_app:binder { call transfer };
+
+allow droidvold mnt_media_rw_file:dir { create_dir_perms mounton };
+allow droidvold mnt_media_rw_file:file create_file_perms;
+
+#allow droidvold ntfs:filesystem { mount unmount};
+#allow droidvold exfat:filesystem { mount unmount};
+#allow droidvold vfat:filesystem { mount unmount};
+#allow droidvold { vfat exfat ntfs }:dir rw_dir_perms;
+
+allow droidvold iso9660:filesystem { mount unmount};
+allow droidvold hfsplus:filesystem { mount unmount};
+
+# For vold Process::killProcessesWithOpenFiles function.
+allow droidvold domain:dir r_dir_perms;
+allow droidvold domain:{ file lnk_file } r_file_perms;
+allow droidvold domain:process { signal sigkill };
+allow droidvold self:capability { kill };
+
+allow droidvold platform_app:file r_file_perms;
+allow droidvold platform_app:dir { open read getattr search };
+allow droidvold init:file r_file_perms;
+allow droidvold init:dir { r_dir_perms search };
+
+allow droidvold platform_app:lnk_file { open getattr read };
+allow droidvold init:lnk_file { open getattr read };
+allow droidvold untrusted_app:lnk_file { open getattr read };
+
+
+# Allowed read-only access to droidvold block devices to extract UUID/label
+allow droidvold vold_device:blk_file r_file_perms;
+allow droidvold sda_block_device:dir search;
+allow droidvold sda_block_device:blk_file r_file_perms;
+
+allow droidvold fuse_device:chr_file r_file_perms;
+
+allow droidvold devpts:chr_file rw_file_perms;
+
+domain_auto_trans(droidvold, ntfs_3g_exec, ntfs_3g);
+
+allow droidvold loop_device:blk_file { open read write ioctl };
+allow droidvold fuseblk:dir { search };
+allow droidvold fuseblk:file { open read write };
+
+allow droidvold sdcardfs:filesystem { mount unmount remount };
+allow droidvold storage_file:dir { write add_name create setattr mounton search getattr };

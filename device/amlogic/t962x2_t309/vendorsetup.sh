@@ -1,0 +1,3 @@
+add_lunch_combo t962x2_t309-eng
+add_lunch_combo t962x2_t309-user
+add_lunch_combo t962x2_t309-userdebug

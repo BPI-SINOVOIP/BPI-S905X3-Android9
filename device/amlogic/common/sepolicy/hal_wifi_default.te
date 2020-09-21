@@ -1,0 +1,18 @@
+allow hal_wifi_default sysfs_wifi:file write;
+allow hal_wifi_default self:capability sys_module;
+allow hal_wifi_default proc_modules:file rw_file_perms;
+allow hal_wifi_default radio_device:chr_file rw_file_perms;
+allow hal_wifi_default vendor_data_file:dir rw_file_perms;
+allow hal_wifi_default device:dir rw_file_perms;
+allow hal_wifi_default usb_device:dir rw_file_perms;
+allow hal_wifi_default vendor_data_file:dir  { search add_name};
+allow hal_wifi_default ctl_default_prop:property_service  set;
+allow hal_wifi_default vendor_data_file:file  { open setattr create read write};
+allow hal_wifi_default self:netlink_kobject_uevent_socket create_socket_perms_no_ioctl;
+allow hal_wifi_default { system_file vendor_file }:system module_load;
+
+#allow hal_wifi_default hal_wifi_default:capability chown;
+allow hal_wifi_default kernel:system module_request;
+
+allow hal_wifi_default vendor_data_file:dir { search };
+

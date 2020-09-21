@@ -1,0 +1,43 @@
+allow hal_graphics_composer_default vndbinder_device:chr_file { read write open ioctl };
+allow hal_graphics_composer_default hal_graphics_composer_default:netlink_kobject_uevent_socket { create setopt bind read shutdown };
+#allow hal_graphics_composer_default vndservicemanager:file { open read getattr };
+#allow hal_graphics_composer_default vndservicemanager:dir { search };
+allow hal_graphics_composer_default vndservicemanager:binder { call transfer };
+
+allow hal_graphics_composer_default systemcontrol_hwservice:hwservice_manager { find };
+allow hal_graphics_composer_default system_control:binder { call transfer };
+
+allow hal_graphics_composer_default video_device:chr_file rw_file_perms;
+allow hal_graphics_composer_default vendor_video_device:chr_file rw_file_perms;
+allow hal_graphics_composer_default graphics_device:chr_file {open read write ioctl};
+allow hal_graphics_composer_default sysfs_video:file rw_file_perms;
+allow hal_graphics_composer_default sysfs:file rw_file_perms;
+
+allow hal_graphics_composer_default sysfs_display:dir search;
+allow hal_graphics_composer_default sysfs_display:lnk_file { open read write ioctl };
+allow hal_graphics_composer_default sysfs_display:file { read write open getattr };
+allow hal_graphics_composer_default sysfs_display:chr_file { ioctl read write open };
+allow hal_graphics_composer_default display_device:chr_file r_file_perms;
+allow hal_graphics_composer_default sysfs_amhdmitx:file { read write open getattr };
+allow hal_graphics_composer_default sysfs_amhdmitx:dir search;
+
+allow hal_graphics_composer_default tv_prop:file { getattr open read };
+get_prop(hal_graphics_composer_default, tv_prop)
+
+allow hal_graphics_composer_default media_prop:file { getattr open read  };
+get_prop(hal_graphics_composer_default, media_prop)
+
+allow hal_graphics_composer_default sysfs_video:dir { search };
+allow hal_graphics_composer_default sysfs_display:file { read write open getattr };
+
+allow hal_graphics_composer_default vendor_platform_prop:file {getattr open read};
+get_prop(hal_graphics_composer_default, vendor_platform_prop)
+get_prop(hal_graphics_composer_default, vendor_default_prop)
+
+allow hal_graphics_composer_default kernel:process { setsched };
+allow hal_graphics_composer_default debugfs_mali:dir {search };
+
+allow hal_graphics_composer_default vendor_persist_prop:file  { read open getattr};
+get_prop(hal_graphics_composer_default, vendor_persist_prop)
+
+hal_client_domain(hal_graphics_composer_default, hal_graphics_allocator)

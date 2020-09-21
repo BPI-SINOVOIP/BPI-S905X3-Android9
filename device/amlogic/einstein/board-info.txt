@@ -1,0 +1,2 @@
+require board=t962x_r311
+require version-bootloader=01.01.180822.145544

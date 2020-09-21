@@ -1,0 +1,2 @@
+on boot
+    insmod /vendor/lib/modules/8188eu.ko ifname=wlan0 if2name=p2p0

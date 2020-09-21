@@ -1,0 +1,15 @@
+allow bootanim sysfs_video:dir { search };
+allow bootanim sysfs_video:file { open read write getattr };
+allow bootanim input_device:dir {open read write search };
+allow bootanim input_device:chr_file {open read write ioctl };
+allow bootanim sysfs_display:file {open read write ioctl };
+allow bootanim video_device:chr_file {open read write getattr ioctl };
+allow bootanim sysfs_audio:file {open read write getattr };
+allow bootanim system_data_file:file { open read };
+allow bootanim system_data_file:dir { open read };
+allow bootanim mediaserver_service:service_manager { find };
+allow bootanim mediaserver:binder { call transfer };
+set_prop(bootanim, system_prop)
+get_prop(bootanim, media_prop)
+allow bootanim debugfs_mali:dir { search };
+

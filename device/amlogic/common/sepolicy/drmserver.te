@@ -1,0 +1,14 @@
+allow drmserver sysfs_xbmc:file rw_file_perms;
+#allow drmserver sysfs:file rw_file_perms;
+allow drmserver drm_data_file:lnk_file  {create open read write};
+#allow drmserver system_control_service:service_manager  find;
+#allow drmserver system_control:binder  call;
+allow drmserver mediaserver:dir  {getattr};
+allow drmserver kernel:system module_request;
+
+
+allow drmserver unlabeled:file { read };
+
+allow drmserver bootanim:fd { use };
+allow drmserver system_data_file:file { read };
+

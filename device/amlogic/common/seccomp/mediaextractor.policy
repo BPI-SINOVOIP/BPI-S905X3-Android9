@@ -1,0 +1,8 @@
+readlinkat: 1
+pread64: 1
+mmap: 1
+getuid: 1
+newfstatat: 1
+getrlimit: 1
+sched_setscheduler: 1
+recvfrom: 1

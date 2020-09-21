@@ -1,0 +1,129 @@
+# Amlogic AV streaming devices
+/dev/amvideo              0660   media     system
+/dev/ionvideo             0660   media     system
+/dev/ppmgr                0660   media     system
+/dev/amstream_sub         0660   media     system
+/dev/amstream_sub_read    0660   media     system
+/dev/amstream_rm          0660   media     system
+/dev/amstream_mpps        0660   media     system
+/dev/amstream_mpts        0660   media     system
+/dev/amstream_mpts_sched  0660   media     system
+/dev/amstream_abuf        0660   media     system
+/dev/amstream_vbuf        0660   media     system
+/dev/amstream_vframe      0660   media     system
+/dev/amstream_vbuf_sched  0660   media     system
+/dev/amstream_hevc        0660   media     system
+/dev/amstream_hevc_frame  0660   media     system
+/dev/amstream_hevc_sched  0660   media     system
+/dev/amstream_dves_avc    0660   media     system
+/dev/amstream_dves_hevc   0660   media     system
+/dev/audiodsp0            0660   media     system
+/dev/uio0                 0660   system     mediadrm
+/dev/video0               0660   system     camera
+/dev/video1               0660   system     camera
+/dev/video10              0660   system	   mediadrm
+/dev/video11              0660   media     system
+/dev/video13              0660   system     mediadrm
+/dev/video14              0660   system     mediadrm
+/dev/video15              0660   system     mediadrm
+/dev/video16              0660   system     mediadrm
+/dev/video16              0660   system     mediadrm
+/dev/video17              0660   system     mediadrm
+/dev/video18              0660   system     mediadrm
+/dev/video19              0660   system     mediadrm
+/dev/video20              0660   system     mediadrm
+/dev/video21              0660   system     mediadrm
+/dev/video23              0660   system     mediadrm
+/dev/video50              0660   system     camera
+/dev/amaudio_utils        0660   media     system
+/dev/amaudio_ctl          0660   media     system
+/dev/amvenc_avc           0660   mediacodec     system
+/dev/HevcEnc              0660   mediacodec     system
+/dev/amsubtitle           0660   media     system
+/dev/jpegenc		  0660   media     system
+/dev/videosync            0660   media     system
+/dev/ac_sbuf0             0660   system    camera
+/dev/ac_isp4uf            0660   system    camera
+
+
+#audio data
+/dev/audio_data_debug     0660   mediacodec audio
+/dev/amjpegdec            0666   system     system
+/dev/ge2d                 0660   system     system
+/dev/vdin0                0660   system     system
+/dev/vdin1                0660   system     system
+/dev/virtmem              0666   system     system
+
+# Mali
+/dev/ump                  0666   system     graphics
+/dev/mali                 0666   system     graphics
+/dev/mali0                0666   system     graphics
+/dev/ion                  0666   system     graphics
+
+# sw_sync
+/dev/sw_sync                 0666   system     graphics
+
+#possible serial
+/dev/ttyS1                0660   bluetooth     bluetooth
+/dev/ttyS2                0660   bluetooth     bluetooth
+/dev/ttyS3                0666   system     system
+/dev/ttya0                0660   system     system
+/dev/ttya1                0660   system     system
+/dev/ptya0                0660   system     system
+/dev/ptya1                0660   system     system
+/dev/ttyHS2               0666   bluetooth  bluetooth
+/dev/ttyS20               0664   system     system
+
+#For invensense`s sensors
+/dev/mpu                  0666   system     system
+/dev/mpuirq               0666   system     system
+/dev/accelirq             0666   system     system
+/dev/timerirq             0666   system     system
+
+#bluetooth
+/sys/devices/platform/bt-dev/rfkill/rfkill0   state   0660    bluetooth   bluetooth
+/sys/devices/platform/bt-dev/rfkill/rfkill0   type    0660    bluetooth   bluetooth
+/sys/devices/bt-dev.*/rfkill/rfkill0   state   0660    bluetooth   bluetooth
+/sys/devices/bt-dev.*/rfkill/rfkill0   type    0660    bluetooth   bluetooth
+/dev/rtk_btusb            0660   bluetooth  bluetooth
+/dev/bt_usb0              0660   bluetooth  bluetooth
+#mtkbt
+/dev/stpbt			0664   bluetooth  bluetooth
+#/vendor/lib/btmtksdio.ko  	0660   bluetooth  bluetooth
+#/vendor/lib/libbt-vendor.so     0660   bluetooth  bluetooth
+#/vendor/lib/libbluetooth_mtk.so 0660   bluetooth  bluetooth
+
+
+/dev/rtkbt_dev            0660   bluetooth  bluetooth
+/dev/hidraw*              0660   system     audio
+#hdmi cec
+/sys/class/amhdmitx/amhdmitx0   phy_addr     0664    system    system
+/sys/class/amhdmitx/amhdmitx0   hpd_state    0664    system    system
+/sys/class/amhdmitx/amhdmitx0   cec          0664    system    system
+
+/dev/btusb0                0660   bluetooth     bluetooth
+
+## nanosic add
+/dev/hidraw*             0660   system     audio
+## nanosic add
+
+/sys/class/video/device_resolution    0666   system     system
+
+#
+/dev/graphics/*           0660   root       graphics
+/dev/display              0660   root       graphics
+/dev/display2             0660   root       graphics
+
+# For USB Joysticks
+/dev/input/js*            0664   system     system
+
+/dev/wifi_power           0660   wifi       wifi
+
+/dev/otz_client           0666   drm        drm
+
+#consumerir
+/dev/irblaster1           0660   system     system
+# DVB API device nodes
+/dev/dvb0.frontend0                 0666   root       system
+
+/dev/vndbinder						0666   root       root

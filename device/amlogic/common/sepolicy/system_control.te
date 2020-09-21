@@ -1,0 +1,175 @@
+type system_control, domain;
+type system_control_exec, exec_type, vendor_file_type, file_type;
+
+init_daemon_domain(system_control)
+
+allow system_control vndbinder_device:chr_file { read write open ioctl };
+allow system_control vndservicemanager:binder { call transfer };
+#allow system_control default_android_vndservice:service_manager { add };
+
+allow system_control hwservicemanager:binder { call transfer };
+allow system_control { systemcontrol_hwservice  hidl_base_hwservice }:hwservice_manager { add };
+
+allow system_control sysfs:file rw_file_perms;
+allow system_control sysfs_devices_system_cpu:file rw_file_perms;
+
+allow system_control system_control:netlink_kobject_uevent_socket { create setopt bind read shutdown };
+allow system_control self:capability { net_admin };
+
+allow system_control unify_device:chr_file { ioctl open read write };
+
+allow system_control vendor_shell_exec:file execute_no_trans;
+allow system_control vendor_file:file execute_no_trans;
+
+allow system_control sysfs_display:dir search;
+allow system_control sysfs_di:dir search;
+#unix_socket_connect(system_control, vold, vold);
+#unix_socket_connect(system_control, property, init);
+
+allow system_control mnt_vendor_file:dir { add_name write };
+allow system_control mnt_vendor_file:file { create open read write };
+allow system_control sysfs_amvdec:file { open read write };
+
+allow system_control mnt_vendor_file:dir { search read open remove_name rmdir };
+allow system_control mnt_vendor_file:file { setattr getattr lock unlink };
+
+# Property Service write
+#--------------------------------------------------------------------#
+#  product_shipping_api_level=28 vendor/system cannot share prop
+#--------------------------------------------------------------------#
+get_prop(system_control, tv_config_prop)
+get_prop(system_control, bcmdl_prop)
+get_prop(system_control, safemode_prop)
+get_prop(system_control, mmc_prop)
+get_prop(system_control, device_logging_prop)
+get_prop(system_control, vendor_platform_prop)
+set_prop(system_control, vendor_platform_prop)
+get_prop(system_control, vendor_default_prop)
+
+set_prop(system_control, media_prop)
+get_prop(system_control, media_prop)
+set_prop(system_control, uboot_prop)
+get_prop(system_control, uboot_prop)
+set_prop(system_control, tv_prop)
+get_prop(system_control, tv_prop)
+
+set_prop(system_control, vendor_persist_prop)
+get_prop(system_control, vendor_persist_prop)
+
+set_prop(system_control, netflix_prop)
+get_prop(system_control, netflix_prop)
+
+#get_prop(system_control, wifi_prop)
+set_prop(system_control, boottime_prop)
+get_prop(system_control, boottime_prop)
+
+set_prop(system_control, overlay_prop)
+get_prop(system_control, overlay_prop)
+set_prop(system_control, net_dns_prop)
+get_prop(system_control, net_dns_prop)
+set_prop(system_control, logpersistd_logging_prop)
+get_prop(system_control, logpersistd_logging_prop)
+set_prop(system_control, hwservicemanager_prop)
+get_prop(system_control, hwservicemanager_prop)
+set_prop(system_control, dumpstate_options_prop)
+#set_prop(system_control, bluetooth_prop)
+#get_prop(system_control, bluetooth_prop)
+
+set_prop(system_control, persistent_properties_ready_prop)
+get_prop(system_control, persistent_properties_ready_prop)
+
+get_prop(system_control, system_boot_reason_prop)
+
+# ctl interface
+set_prop(system_control, ctl_default_prop)
+set_prop(system_control, ctl_dhcp_pan_prop)
+set_prop(system_control, ctl_bugreport_prop)
+
+allow system_control block_device:dir r_dir_perms;
+
+allow system_control sysfs_audio_cap:file {open getattr read};
+allow system_control sysfs_audio:file {open getattr read};
+allow system_control sysfs_video:file rw_file_perms;
+allow system_control { sysfs_video sysfs_cec sysfs_am_vecm }:dir { search };
+allow system_control sysfs_cec:file rw_file_perms;
+
+#allow system_control app_data_file:file rw_file_perms;
+
+r_dir_file(system_control, domain)
+r_dir_file(system_control, binderservicedomain)
+r_dir_file(system_control, appdomain)
+r_dir_file(system_control, platform_app)
+
+
+allow system_control appdomain:dir { getattr search };
+allow system_control appdomain:file { r_file_perms };
+allow system_control platform_app:dir { search };
+
+allow system_control param_tv_file:dir  { search read write open add_name remove_name rmdir create };
+allow system_control param_tv_file:file { create open read write setattr getattr lock unlink };
+
+#allow system_control shell_exec:file { execute_no_trans execute open read getattr };
+allow system_control sysfs_digital_codec:file { read write };
+#allow system_control system_file:file execute_no_trans;
+
+allow system_control { env_device cri_block_device }:blk_file { getattr read open write };
+allow system_control self:capability sys_nice;
+
+allow system_control system_app:binder { call };
+allow system_control droidvold_hwservice:hwservice_manager { find };
+allow system_control droidvold:binder { call };
+
+
+allow system_control { video_device amvecm_device }:chr_file  { read write open ioctl getattr };
+allow system_control { vendor_video_device }:chr_file  { read write open ioctl getattr };
+allow system_control di0_device:chr_file { read write open ioctl };
+allow system_control param_tv_file:dir { write search add_name create };
+allow system_control param_tv_file:file { create read write open getattr ioctl};
+allow system_control sysfs_amhdmitx:dir search;
+allow system_control sysfs_amvdec:file { create open read write getattr};
+allow system_control sysfs_xbmc:file { read open };
+
+allow system_control vendor_configs_file:file { ioctl lock };
+allow system_control sysfs_display:lnk_file { read write open getattr };
+allow system_control { sysfs_display sysfs_am_vecm sysfs_display sysfs_amhdmitx }:file { read write open getattr };
+
+allow system_control sysfs_unifykey:dir { search };
+allow system_control sysfs_unifykey:file { read write open };
+allow system_control unlabeled:dir search;
+allow system_control sysfs_mpgpu_scale:file { read write open } ;
+allow system_control hdmirx0_device:chr_file { read write open ioctl getattr };
+
+allow system_control exported_system_prop:file { read } ;
+get_prop(system_control, exported_system_prop);
+
+allow system_control storage_file:dir {read write search};
+allow system_control storage_file:lnk_file {open read write getattr};
+allow system_control sdcardfs:dir {search};
+allow system_control sdcardfs:file {read open getattr};
+allow system_control vfat:file { read open getattr};
+
+allow system_control tvserver:binder { call transfer };
+allow system_control tvserver_hwservice:hwservice_manager find;
+allow system_control sysfs_leds:dir search;
+
+allow system_control hal_keymaster_hwservice:hwservice_manager { find };
+allow system_control hal_keymaster_default:binder { call };
+
+allow system_control sysfs_clock:file { read open };
+allow system_control debugfs_demod:dir { search };
+allow system_control debugfs_demod:file { read write open };
+
+allow system_control hci_attach_dev:chr_file { ioctl open read write };
+allow system_control uhid_device:chr_file { ioctl open read write };
+
+allow system_control sysfs_stb:file { read open write getattr};
+allow system_control sysfs_stb:dir {search};
+allow system_control sysfs_xbmc:file { read write };
+allow system_control priv_app:binder { call transfer };
+allow system_control hdmicecd:binder { call transfer };
+allow system_control aml_core_app:binder { call transfer };
+allow system_control hal_graphics_composer_default:binder { call transfer };
+allow system_control platform_app:binder { call transfer };
+allow system_control untrusted_app:binder { call transfer };
+
+allow system_control display_device:chr_file { open read write };

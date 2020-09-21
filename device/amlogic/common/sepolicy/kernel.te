@@ -1,0 +1,6 @@
+allow kernel self:capability mknod;
+#allow kernel device:blk_file { ioctl read write create getattr setattr unlink };
+allow kernel device:dir {rw_file_perms rw_dir_perms write create rmdir };
+allow kernel device:chr_file { getattr setattr create unlink };
+
+allow kernel vendor_file:file { getattr read open };

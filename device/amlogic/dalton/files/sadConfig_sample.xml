@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (C) 2018 The Android Open Source Project
+
+         Licensed under the Apache License, Version 2.0 (the "License");
+         you may not use this file except in compliance with the License.
+         You may obtain a copy of the License at
+
+                    http://www.apache.org/licenses/LICENSE-2.0
+
+         Unless required by applicable law or agreed to in writing, software
+         distributed under the License is distributed on an "AS IS" BASIS,
+         WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+         See the License for the specific language governing permissions and
+         limitations under the License.
+-->
+<!-- A sample Short Audio Descriptor configuration xml -->
+<config version="1.0" xmlns:xi="http://www.w3.org/2001/XMLSchema">
+    <!-- Device section:
+        There is a list of configurations in this sad config for all the input audio
+        devices that the current Android device supports.
+        Each device has the following attributes:
+            "type": type of the audio device.
+        And the following element:
+            "supportedFormat": the supported format info of the device. There can be
+                               multiple formats supported by one audio device.
+    -->
+    <device type="VX_AUDIO_DEVICE_IN_HDMI_ARC">
+        <!-- SupportedFormat section:
+            The details of the short audio descriptor of a specific audio format
+            supported by the audio device. Attributes as follows:
+                "format": format enum of the current supported format.
+                "descriptor": three-byte short audio descriptor for the given format in hex.
+        -->
+        <supportedFormat format="AUDIO_FORMAT_LPCM" descriptor="011a03"/>
+        <!-- SupportedFormat Section -->
+        <supportedFormat format="AUDIO_FORMAT_DD" descriptor="0d0506"/>
+    </device>
+    <!-- Device Section -->
+    <device type="AUDIO_DEVICE_IN_SPDIF">
+        <!-- SupportedFormat Section -->
+        <supportedFormat format="AUDIO_FORMAT_LPCM" descriptor="010203"/>
+        <!-- SupportedFormat Section -->
+        <supportedFormat format="AUDIO_FORMAT_DD" descriptor="040506"/>
+    </device>
+</config>

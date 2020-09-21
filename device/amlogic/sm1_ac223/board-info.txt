@@ -1,0 +1,2 @@
+require board=sm1_ac223
+require version-bootloader=01.01.180822.145544

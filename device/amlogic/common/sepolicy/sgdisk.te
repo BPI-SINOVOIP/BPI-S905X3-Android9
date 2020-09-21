@@ -1,0 +1,4 @@
+allow sgdisk kernel:system module_request;
+
+allow sgdisk vold_block_device:blk_file { create getattr read write open ioctl };
+allow sgdisk vold:unix_stream_socket { read write };

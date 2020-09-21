@@ -1,0 +1,9 @@
+vendor.amlogic.hardware.systemcontrol::ISystemControl              u:object_r:systemcontrol_hwservice:s0
+vendor.amlogic.hardware.hdmicec::IDroidHdmiCEC                     u:object_r:hdmicecd_hwservice:s0
+vendor.amlogic.hardware.droidvold::IDroidVold                      u:object_r:droidvold_hwservice:s0
+vendor.amlogic.hardware.tvserver::ITvServer                        u:object_r:tvserver_hwservice:s0
+vendor.amlogic.hardware.remotecontrol::IRemoteControl              u:object_r:remotecontrol_hwservice:s0
+vendor.amlogic.hardware.imageserver::IImageService                 u:object_r:imageserver_hwservice:s0
+vendor.amlogic.hardware.subtitleserver::ISubtitleServer            u:object_r:subtitleserver_hwservice:s0
+vendor.amlogic.hardware.dtvkitserver::IDTVKitServer                u:object_r:dtvkitserver_hwservice:s0
+vendor.amlogic.hardware.miracast_hdcp2::IHDCPService               u:object_r:miracast_hdcp2_hwservice:s0

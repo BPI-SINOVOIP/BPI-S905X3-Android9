@@ -1,0 +1,104 @@
+typeattribute hal_memtrack_default mlstrustedsubject;
+
+allow hal_memtrack_default proc:file { r_file_perms };
+allow hal_memtrack_default system_app:file { r_file_perms };
+allow hal_memtrack_default system_app:dir { search };
+allow hal_memtrack_default servicemanager:file { r_file_perms };
+allow hal_memtrack_default servicemanager:dir { search };
+allow hal_memtrack_default hwservicemanager:file { r_file_perms };
+allow hal_memtrack_default hwservicemanager:dir { search };
+allow hal_memtrack_default vndservicemanager:file { r_file_perms };
+allow hal_memtrack_default vndservicemanager:dir { search };
+allow hal_memtrack_default hal_dumpstate_default:file { r_file_perms };
+allow hal_memtrack_default hal_dumpstate_default:dir { search };
+allow hal_memtrack_default hal_configstore_default:file { r_file_perms };
+allow hal_memtrack_default hal_configstore_default:dir { search };
+
+allow hal_memtrack_default hal_cas_default:dir search;
+allow hal_memtrack_default hal_cas_default:file { r_file_perms };
+allow hal_memtrack_default hal_health_default:dir search;
+allow hal_memtrack_default hal_health_default:file { r_file_perms };
+allow hal_memtrack_default hal_light_default:dir search;
+allow hal_memtrack_default hal_light_default:file { r_file_perms };
+allow hal_memtrack_default hal_thermal_default:dir search;
+allow hal_memtrack_default hal_thermal_default:file { r_file_perms };
+allow hal_memtrack_default thermalserviced:dir search;
+allow hal_memtrack_default thermalserviced:file { r_file_perms };
+allow hal_memtrack_default debugfs:dir { read open };
+allow hal_memtrack_default sysfs:file { r_file_perms };
+
+allow hal_memtrack_default incidentd:dir search;
+allow hal_memtrack_default incidentd:file { getattr open read };
+allow hal_memtrack_default traceur_app:dir search;
+allow hal_memtrack_default traceur_app:file { getattr open read };
+allow hal_memtrack_default untrusted_app_27:dir search;
+allow hal_memtrack_default untrusted_app_27:file { getattr open read };
+
+allow hal_memtrack_default perfprofd:dir search;
+allow hal_memtrack_default perfprofd:file { getattr open read };
+allow hal_memtrack_default secure_element:dir search;
+allow hal_memtrack_default secure_element:file { getattr open read };
+
+allow hal_memtrack_default { priv_app platform_app untrusted_app su drmserver hal_memtrack_default hal_bluetooth_default bluetooth installd keystore mdnsd isolated_app }:dir { search };
+allow hal_memtrack_default { priv_app platform_app untrusted_app su drmserver hal_bluetooth_default bluetooth installd keystore mdnsd isolated_app }:file { r_file_perms };
+
+allow hal_memtrack_default { gatekeeperd tombstoned webview_zygote zygote netd wificond sdcardd hal_camera_default hal_tv_cec_default }:dir { search };
+allow hal_memtrack_default { gatekeeperd tombstoned webview_zygote zygote netd wificond sdcardd hal_camera_default hal_tv_cec_default }:file { r_file_perms };
+
+allow hal_memtrack_default { hal_audio_default hal_usb_default hal_power_default hal_wifi_default hal_drm_default }:dir { search };
+allow hal_memtrack_default { hal_audio_default hal_usb_default hal_power_default hal_wifi_default hal_drm_default }:file { r_file_perms };
+allow hal_memtrack_default { hal_graphics_composer_default hal_graphics_allocator_default hal_gatekeeper_default }:dir { search };
+allow hal_memtrack_default { hal_graphics_composer_default hal_graphics_allocator_default hal_gatekeeper_default }:file { r_file_perms };
+
+allow hal_memtrack_default { hal_graphics_composer_default hal_graphics_allocator_default hal_gatekeeper_default }:dir { search };
+allow hal_memtrack_default { hal_graphics_composer_default hal_graphics_allocator_default hal_gatekeeper_default }:file { r_file_perms };
+
+allow hal_memtrack_default { hal_keymaster_default droidvold adbd tee hdmicecd bluetooth untrusted_app_25 }:dir { search };
+allow hal_memtrack_default { hal_keymaster_default droidvold adbd tee hdmicecd bluetooth untrusted_app_25 }:file { r_file_perms };
+
+allow hal_memtrack_default { mediadrmserver mediaextractor mediametrics mediacodec audioserver cameraserver mediaserver }:dir { search };
+allow hal_memtrack_default { mediadrmserver mediaextractor mediametrics mediacodec audioserver cameraserver mediaserver }:file { r_file_perms };
+
+allow hal_memtrack_default { logd ueventd vold system_server init shell surfaceflinger lmkd healthd system_control }:dir { search };
+allow hal_memtrack_default { logd ueventd vold system_server init shell surfaceflinger lmkd healthd system_control }:file { r_file_perms };
+
+allow hal_memtrack_default hal_bluetooth_default:dir search;
+allow hal_memtrack_default hal_bluetooth_default:file r_file_perms;
+
+allow hal_memtrack_default mediaprovider:dir search;
+allow hal_memtrack_default mediaprovider:file { r_file_perms };
+allow hal_memtrack_default radio:dir search;
+allow hal_memtrack_default radio:file { r_file_perms };
+allow hal_memtrack_default vendor_init:dir search;
+allow hal_memtrack_default vendor_init:file { r_file_perms };
+
+allow hal_memtrack_default hal_tv_input_default:dir search;
+allow hal_memtrack_default hal_tv_input_default:file r_file_perms;
+
+allow hal_memtrack_default perfprofd:dir search;
+allow hal_memtrack_default aml_core_app:dir search;
+allow hal_memtrack_default aml_core_app:file r_file_perms;
+
+allow hal_memtrack_default tvserver:dir search;
+allow hal_memtrack_default tvserver:file r_file_perms;
+
+allow hal_memtrack_default hdcp_rx22:dir { search read };
+allow hal_memtrack_default hdcp_rx22:file { read open getattr };
+allow hal_memtrack_default dtvkitserver:dir {search};
+allow hal_memtrack_default dtvkitserver:file {read open getattr};
+
+allow hal_memtrack_default subtitleserver:dir {search};
+allow hal_memtrack_default subtitleserver:file r_file_perms;
+
+allow hal_memtrack_default debugfs_mali:dir { search read open };
+allow hal_memtrack_default debugfs_ion:dir { search read open };
+
+allow hal_memtrack_default debugfs_mali:file { r_file_perms };
+allow hal_memtrack_default debugfs_ion:file { r_file_perms };
+allow hal_memtrack_default sysfs_mali:file { r_file_perms };
+
+allow hal_memtrack_default { hal_drm_clearkey imageserver rc_server hal_wifi_supplicant_default screen_control }:dir { search };
+allow hal_memtrack_default { hal_drm_clearkey imageserver rc_server hal_wifi_supplicant_default screen_control }:file { read open getattr };
+
+allow hal_memtrack_default { miracast_hdcp2 }:dir { search read };
+allow hal_memtrack_default { miracast_hdcp2 }:file { read open getattr };

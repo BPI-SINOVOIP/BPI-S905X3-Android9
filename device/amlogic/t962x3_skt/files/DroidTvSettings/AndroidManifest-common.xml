@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ /* Copyright (c) 2014 Amlogic, Inc. All rights reserved.
+**
+** This source code is subject to the terms and conditions defined in the
+** file 'LICENSE' which is part of this source code package.
+**
+** Description: manifest
+*/
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:androidprv="http://schemas.android.com/apk/prv/res/android"
+    package="com.droidlogic.tv.settings"
+    android:sharedUserId="android.uid.system"
+    android:versionCode="1"
+    coreApp="true"
+    android:versionName="1.0" >
+    <application
+        android:banner="@drawable/ic_launcher_banner_settings"
+        android:defaultToDeviceProtectedStorage="true"
+        android:directBootAware="true"
+        android:icon="@drawable/logo_settings_color_48dp"
+        android:label="@string/settings_app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Settings"
+        android:usesCleartextTraffic="true" >
+
+        <uses-library android:name="droidlogic.tv.software.core" />
+    </application>
+</manifest>

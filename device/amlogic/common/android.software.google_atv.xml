@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+    <feature name="android.hardware.type.television" />
+    <!-- Feature to specify if the device supports adding device admins. -->
+    <!--    <feature name="android.software.device_admin" /> -->
+    <feature name="android.software.leanback" />
+    <feature name="android.software.leanback_only" />
+    <feature name="android.software.cant_save_state" />
+    <!-- for google play store -->
+    <feature name="nrdp.modelgroup" />
+    <feature name="com.google.android.tv.installed" />
+</permissions>

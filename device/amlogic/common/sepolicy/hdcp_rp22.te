@@ -1,0 +1,45 @@
+type hdcp_rp22, domain;
+type hdcp_rp22_exec, exec_type, vendor_file_type, file_type;
+init_daemon_domain(hdcp_rp22)
+type hdcprp_device, dev_type;
+
+allow hdcp_rp22 hdcprp_device:chr_file { open read write getattr ioctl };
+
+allow hdcp_rp22 system_file:file execute_no_trans;
+allow hdcp_rp22 hdcp_rp22_exec:file {entrypoint read};
+
+#allow hdcp_rp22 shell_exec:file rx_file_perms;
+
+allow hdcp_rp22 sysfs:file rw_file_perms;
+
+allow hdcp_rp22 param_tv_file:dir  { search create read write open add_name remove_name rmdir };
+allow hdcp_rp22 param_tv_file:file { create open read write setattr getattr lock unlink };
+allow hdcp_rp22 kmsg_device:chr_file {write};
+allow hdcp_rp22 device:dir {write};
+allow hdcp_rp22 kmsg_device:chr_file {open};
+allow hdcp_rp22 hdcptx_device:chr_file {open read write ioctl};
+
+allow hdcp_rp22 mnt_media_rw_file:file { create read write open };
+allow hdcp_rp22 mnt_media_rw_file:dir { write add_name };
+allow hdcp_rp22 rootfs:lnk_file {getattr};
+allow hdcp_rp22 storage_file:dir {read write search};
+allow hdcp_rp22 storage_file:file {open read write getattr};
+allow hdcp_rp22 storage_file:lnk_file {open read write getattr};
+allow hdcp_rp22 tmpfs:dir {search getattr};
+allow hdcp_rp22 tmpfs:file create_file_perms;
+allow hdcp_rp22 mnt_user_file:dir {read write search};
+allow hdcp_rp22 mnt_user_file:file {open read write getattr};
+allow hdcp_rp22 mnt_user_file:lnk_file {open read write getattr};
+allow hdcp_rp22 fuse:dir {create open read write search add_name getattr};
+allow hdcp_rp22 fuse:file {open create read write getattr};
+allow hdcp_rp22 fuse:file rw_file_perms;
+#allow hdcp_rp22 app_data_file:file rw_file_perms;
+#allow hdcp_rp22 app_data_file:dir search;
+allow hdcp_rp22 fuse:lnk_file {open read write getattr};
+allow hdcp_rp22 { mnt_user_file storage_file }:dir { create open read write search add_name getattr };
+allow hdcp_rp22 { mnt_user_file storage_file }:lnk_file { open read write getattr };
+allow hdcp_rp22 sysfs_cec:dir { search open };
+allow hdcp_rp22 sysfs_cec:file { read open write getattr };
+allow hdcp_rp22 sysfs_amhdmitx:dir search;
+allow hdcp_rp22 sysfs_amhdmitx:file { getattr open read write ioctl };
+allow hdcp_rp22 mnt_vendor_file:dir {search};

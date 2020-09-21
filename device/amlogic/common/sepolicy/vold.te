@@ -1,0 +1,13 @@
+#allow vold tee_data_file:dir { open read ioctl };
+
+allow vold vold_block_device:blk_file { create write read open getattr ioctl unlink };
+
+allow vold param_tv_file:dir { ioctl open read search };
+allow vold swap_data_file:dir { read open ioctl };
+
+#for hw keymaster
+allow vold drm_device:chr_file  {open read write ioctl};
+
+allow vold fsck_exec:file {execute read open };
+allow vold kernel:system module_request;
+

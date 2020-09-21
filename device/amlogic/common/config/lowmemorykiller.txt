@@ -1,0 +1,4 @@
+adj:0,200,400,600,900,906
+#need div for each element
+# keep at least 80M for visible.
+minfree:10240,24288,28528,32600,36624

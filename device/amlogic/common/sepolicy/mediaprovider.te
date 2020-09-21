@@ -1,0 +1,5 @@
+allow mediaprovider media_prop:file { getattr open read };
+
+allow mediaprovider fuseblk:dir { open read search };
+allow mediaprovider fuseblk:file { getattr open read };
+

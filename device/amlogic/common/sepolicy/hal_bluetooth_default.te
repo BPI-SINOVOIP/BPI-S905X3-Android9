@@ -1,0 +1,4 @@
+allow hal_bluetooth_default device_stpbt:chr_file { read open write };
+allow hal_bluetooth_default vendor_platform_prop:property_service { set };
+allow hal_bluetooth_default vendor_platform_prop:file { read open getattr };
+get_prop(hal_bluetooth_default, bluetooth_prop);

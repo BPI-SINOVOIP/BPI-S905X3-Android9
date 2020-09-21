@@ -1,0 +1,2 @@
+allow hal_wifi_supplicant_default proc_net:file rw_file_perms;
+allow hal_wifi_supplicant_default proc_modules:file { read open getattr};

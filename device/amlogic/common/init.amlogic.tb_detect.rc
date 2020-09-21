@@ -1,0 +1,7 @@
+on early-init
+    insmod /vendor/lib/modules/tb_detect.ko
+
+on boot
+    chown media system /sys/class/ppmgr/tb_detect
+    chmod 0664 /sys/class/ppmgr/tb_detect
+    write /sys/class/ppmgr/tb_detect 2

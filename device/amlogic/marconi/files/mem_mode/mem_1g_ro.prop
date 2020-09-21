@@ -1,0 +1,8 @@
+ro.config.low_ram=true
+ro.config.max_starting_bg=8
+
+dalvik.vm.heapgrowthlimit=160m
+dalvik.vm.heapmaxfree=4m
+dalvik.vm.heapsize=224m
+dalvik.vm.heapstartsize=4m
+

@@ -1,0 +1,6 @@
+allow ueventd drm_device:chr_file { create getattr setattr relabelfrom relabelto } ;
+
+allow ueventd tmpfs:blk_file { getattr setattr };
+allow ueventd sysfs_display:chr_file { create setattr };
+
+allow { ueventd drm_device } tmpfs:filesystem { associate } ;

@@ -1,0 +1,13 @@
+system_control                              u:object_r:system_control_service:s0
+hdmi_cec                                    u:object_r:hdmi_cec_service:s0
+subtitle_service                            u:object_r:subtitle_service:s0
+image.player                                u:object_r:imageserver_service:s0
+pppoe                                       u:object_r:pppoe_service:s0
+tvservice                                   u:object_r:tvserver_service:s0
+media.screenmediasource                     u:object_r:screenmediasource_service:s0
+tee_supplicant                              u:object_r:tee_service:s0
+tv_remote                                   u:object_r:tv_remote_service:s0
+droidmount                                  u:object_r:droidmount_service:s0
+bcmdl                                       u:object_r:bcmdl_service:s0
+screen_control                              u:object_r:screen_control_service:s0
+miracast_hdcp2                              u:object_r:miracast_hdcp2_service:s0

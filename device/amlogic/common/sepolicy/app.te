@@ -1,0 +1,5 @@
+#allow untrusted_app vendor_file:file { getattr read open execute };
+allow untrusted_app sysfs_zram:file { read open getattr };
+allow untrusted_app sysfs_zram:dir { search };
+allow appdomain galcore_device:chr_file { open getattr read write ioctl };
+allow untrusted_app_all graphics_device:dir { search };

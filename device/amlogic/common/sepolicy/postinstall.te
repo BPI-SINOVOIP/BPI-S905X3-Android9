@@ -1,0 +1,10 @@
+allow postinstall ota_data_file:file { create getattr lock open read setattr unlink write };
+allow postinstall self:capability { chown setgid setuid fowner };
+#allow postinstall vendor_app_file:dir search;
+#allow postinstall vendor_app_file:file { getattr open read };
+allow postinstall ota_data_file:dir { add_name getattr read remove_name write create open search };
+allow postinstall postinstall_file:filesystem getattr;
+allow postinstall proc_filesystems:file { getattr open read };
+allow postinstall tmpfs:file read;
+allow postinstall ota_data_file:lnk_file { create read };
+allow postinstall user_profile_data_file:dir search;

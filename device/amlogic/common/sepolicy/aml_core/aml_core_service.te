@@ -1,0 +1,48 @@
+type aml_core_app, domain, binderservicedomain;
+app_domain(aml_core_app)
+net_domain(aml_core_app)
+
+# allow aml core service communicate with system services
+allow aml_core_app connectivity_service:service_manager find;
+allow aml_core_app display_service:service_manager find;
+
+#never allowed
+#allow aml_core_app hdmi_control_service:service_manager find;
+
+allow aml_core_app network_management_service:service_manager find;
+allow aml_core_app systemcontrol_hwservice:hwservice_manager find;
+allow aml_core_app activity_service:service_manager find;
+allow aml_core_app accessibility_service:service_manager find;
+allow aml_core_app audio_service:service_manager find;
+allow aml_core_app content_service:service_manager find;
+allow aml_core_app graphicsstats_service:service_manager find;
+allow aml_core_app input_method_service:service_manager find;
+allow aml_core_app power_service:service_manager find;
+allow aml_core_app surfaceflinger_service:service_manager find;
+allow aml_core_app tv_input_service:service_manager find;
+allow aml_core_app tvserver_hwservice:hwservice_manager find;
+allow aml_core_app user_service:service_manager find;
+allow aml_core_app audioserver_service:service_manager find;
+allow aml_core_app bluetooth_manager_service:service_manager find;
+allow aml_core_app cameraserver_service:service_manager find;
+allow aml_core_app droidvold_hwservice:hwservice_manager find;
+allow aml_core_app sysfs_mpgpu_scale:file read;
+allow aml_core_app trust_service:service_manager find;
+allow aml_core_app user_service:service_manager find;
+
+
+allow aml_core_app system_control:binder { call transfer };
+
+binder_call(aml_core_app, droidvold)
+binder_call(aml_core_app, tvserver)
+
+set_prop(aml_core_app, system_prop)
+
+#allow aml_core_app sysfs:file { open read };
+allow aml_core_app sysfs_di:dir search;
+allow aml_core_app sysfs_mpgpu_scale:file open;
+allow aml_core_app sysfs_video:dir search;
+allow aml_core_app sysfs_video:file r_file_perms;
+allow aml_core_app vendor_file:file { r_file_perms };
+
+allow aml_core_app vendor_file:file execute;

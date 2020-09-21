@@ -1,0 +1,18 @@
+allow netd kernel:system module_request;
+allow netd self:capability sys_module;
+#allow netd self:capability sys_admin;
+
+allow netd servicemanager:binder call;
+
+#allow netd proc_net:dir { write add_name };
+allow netd proc_net:file { create };
+
+allow netd rootfs:lnk_file { getattr };
+allow netd self:capability sys_nice;
+
+allow netd imageserver:fd { use };
+allow netd imageserver:tcp_socket { read write getopt setopt };
+
+#for vmx
+allow netd tee:fd { use };
+allow netd tee:tcp_socket { read write setopt getopt };

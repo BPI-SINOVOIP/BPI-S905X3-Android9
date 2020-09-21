@@ -1,0 +1,3 @@
+
+allow screen_control vendor_video_device:chr_file { read write open ioctl getattr };
+

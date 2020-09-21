@@ -1,0 +1,2 @@
+allow hal_tv_cec_default hdmicecd_hwservice:hwservice_manager { find };
+allow hal_tv_cec_default hdmicecd:binder { call transfer };

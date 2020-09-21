@@ -1,0 +1,27 @@
+#allow mediacodec system_control_service:service_manager find;
+allow mediacodec drm_device:chr_file { setattr read write open ioctl };
+allow mediacodec sysfs:file  { open read write };
+#allow mediacodec sysfs_xbmc:file  { open read write};
+#allow mediacodec audioserver_service:service_manager find;
+get_prop(mediacodec, media_prop)
+
+allow mediacodec kernel:system module_request;
+allow mediacodec mediaserver:dir { search };
+allow mediacodec mediaserver:file { read open };
+allow mediacodec video_device:chr_file rw_file_perms;
+allow mediacodec vendor_video_device:chr_file rw_file_perms;
+allow mediacodec codec_device:chr_file rw_file_perms;
+
+allow mediacodec sysfs_video:file rw_file_perms;
+allow mediacodec sysfs_video:dir r_dir_perms;
+
+allow mediacodec system_file:dir { read open };
+allow mediacodec system_server:fifo_file { write append };
+allow mediacodec { sysfs_am_vecm }:dir { search };
+allow mediacodec sysfs_am_vecm:file { read write open getattr };
+allow mediacodec uio_device:chr_file rw_file_perms;
+allow mediacodec audio_device:chr_file { setattr open read write };
+allow mediacodec sysfs_audio:file { open read write };
+allow mediacodec vendor_platform_prop:file { open read getattr };
+allow mediacodec sysfs_amhdmitx:file rw_file_perms;
+allow mediacodec sysfs_amhdmitx:dir search;

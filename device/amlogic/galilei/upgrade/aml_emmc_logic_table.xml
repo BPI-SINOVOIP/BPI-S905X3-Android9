@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="GB2312" ?>
+<!--//Copy the length from /partitions of your dts-->
+<Partition_Info>
+<Part PartitionName="logo"          FileSystem="raw"    Length="0x800000"/>
+<Part PartitionName="recovery"      FileSystem="raw"    Length="0x1800000"/>
+<Part PartitionName="misc"          FileSystem="raw"    Length="0x800000"/>
+<Part PartitionName="dtbo"          FileSystem="raw"    Length="0x800000"/>
+<Part PartitionName="cri_data"      FileSystem="raw"    Length="0x800000"/>
+<Part PartitionName="param"         FileSystem="ext4"   Length="0x1000000"/>
+<Part PartitionName="boot"          FileSystem="raw"    Length="0x1000000"/>
+<Part PartitionName="rsv"           FileSystem="raw"    Length="0x1000000"/>
+<Part PartitionName="tee"           FileSystem="ext4"   Length="0x2000000"/>
+<Part PartitionName="vendor"        FileSystem="ext4"   Length="0x10000000"/>
+<Part PartitionName="odm"           FileSystem="ext4"   Length="0x10000000"/>
+<Part PartitionName="system"        FileSystem="ext4"   Length="0x74000000"/>
+<Part PartitionName="cache"         FileSystem="ext4"   Length="0x46000000"/>
+<Part PartitionName="data"          FileSystem="ext4"   Length="0xffffffff"/>
+</Partition_Info>

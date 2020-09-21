@@ -1,0 +1,9 @@
+type hal_drm_data, data_file_type, file_type;
+
+allow hal_drm_default vndbinder_device:chr_file { read write open ioctl };
+allow hal_drm_default drm_device:chr_file { read open write ioctl };
+allow hal_drm_default hal_drm_data:file { read open write getattr create unlink rename };
+allow hal_drm_default hal_drm_data:dir { read open write getattr create search add_name remove_name rmdir};
+allow hal_drm_default self:capability sys_nice;
+
+get_prop(hal_drm_default, media_prop)

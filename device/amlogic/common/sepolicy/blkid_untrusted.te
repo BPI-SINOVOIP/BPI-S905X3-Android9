@@ -1,0 +1,4 @@
+# blkid for untrusted block devices
+allow blkid_untrusted vold_block_device:blk_file { getattr read open ioctl };
+allow blkid_untrusted sda_block_device:blk_file { r_file_perms getattr };
+allow blkid_untrusted vold:unix_stream_socket { read write };

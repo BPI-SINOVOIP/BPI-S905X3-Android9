@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    # according CEA-861-D
+    # AUDIO_FORMAT_RESERVED = 00;
+    # AUDIO_FORMAT_LINEAR_PCM = 01;
+    # AUDIO_FORMAT_AC_3 = 02;
+    # AUDIO_FORMAT_MPEG1 = 03;
+    # AUDIO_FORMAT_MP3 = 04;
+    # AUDIO_FORMAT_MPEG2 = 05;
+    # AUDIO_FORMAT_AAC = 06;
+    # AUDIO_FORMAT_DTS = 07;
+    # AUDIO_FORMAT_ATRAC = 08;
+    # AUDIO_FORMAT_ONE_BIT_AUDIO = 09;
+    # AUDIO_FORMAT_DOLBY_DIGITAL_PLUS = 0A;
+    # AUDIO_FORMAT_DTS_HD = 0B;
+    # AUDIO_FORMAT_MAT = 0C;
+    # AUDIO_FORMAT_DST = 0D;
+    # AUDIO_FORMAT_WMA_PRO = 0E;
+    # AUDIO_FORMAT_RESERVED1 = 0F;
+-->
+<config version="1.0" xmlns:xi="http://www.w3.org/2001/XMLSchema">
+    <device type="VX_AUDIO_DEVICE_IN_HDMI_ARC">
+        <supportedFormat format="AUDIO_FORMAT_LPCM" descriptor="097F05"/>
+        <supportedFormat format="AUDIO_FORMAT_DD" descriptor="150750"/>
+        <supportedFormat format="AUDIO_FORMAT_DDP" descriptor="570701"/>
+    </device>
+</config>

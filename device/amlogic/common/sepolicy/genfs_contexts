@@ -1,0 +1,16 @@
+genfscon fuseblk /       u:object_r:fuseblk:s0
+genfscon hfsplus /       u:object_r:hfsplus:s0
+genfscon iso9660 /       u:object_r:iso9660:s0
+genfscon udf     /       u:object_r:udf:s0
+#genfscon proc    /mounts u:object_r:proc_mounts:s0
+genfscon proc    /bluetooth/sleep/lpm     u:object_r:proc_bluetooth_writable:s0
+genfscon proc    /bluetooth/sleep/btwrite u:object_r:proc_bluetooth_writable:s0
+#genfscon ntfs    /       u:object_r:ntfs:s0
+#genfscon exfat   /       u:object_r:exfat:s0
+genfscon debugfs  /mali0       u:object_r:debugfs_mali:s0
+genfscon debugfs  /mali0/ctx      u:object_r:debugfs_mali:s0
+genfscon debugfs  /ion/heaps         u:object_r:debugfs_ion:s0
+genfscon debugfs  /demod       u:object_r:debugfs_demod:s0
+genfscon proc    /sys/vm/watermark_scale_factor u:object_r:proc_vm_writable:s0
+genfscon proc    /sys/vm/min_free_kbytes u:object_r:proc_vm_writable:s0
+

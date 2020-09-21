@@ -1,0 +1,39 @@
+allow hwservicemanager system_control:binder { call transfer };
+allow hwservicemanager system_control:dir { search };
+allow hwservicemanager system_control:file { read open };
+allow hwservicemanager system_control:process { getattr };
+
+allow hwservicemanager hdmicecd:binder { call transfer };
+allow hwservicemanager hdmicecd:dir { search };
+allow hwservicemanager hdmicecd:file { read open };
+allow hwservicemanager hdmicecd:process { getattr };
+
+allow hwservicemanager droidvold:binder { call transfer };
+allow hwservicemanager droidvold:dir { search };
+allow hwservicemanager droidvold:file { read open };
+allow hwservicemanager droidvold:process { getattr };
+
+allow hwservicemanager tvserver:binder { call transfer };
+allow hwservicemanager tvserver:dir { search };
+allow hwservicemanager tvserver:file { read open };
+allow hwservicemanager tvserver:process { getattr };
+
+allow hwservicemanager imageserver:binder { call transfer };
+allow hwservicemanager imageserver:dir { search };
+allow hwservicemanager imageserver:file { read open };
+allow hwservicemanager imageserver:process { getattr };
+
+allow hwservicemanager subtitleserver:binder { call transfer };
+allow hwservicemanager subtitleserver:dir { search };
+allow hwservicemanager subtitleserver:file { read open };
+allow hwservicemanager subtitleserver:process { getattr };
+
+allow hwservicemanager dtvkitserver:binder { call transfer };
+allow hwservicemanager dtvkitserver:dir { search };
+allow hwservicemanager dtvkitserver:file { read open };
+allow hwservicemanager dtvkitserver:process { getattr };
+
+allow hwservicemanager miracast_hdcp2:binder { call transfer };
+allow hwservicemanager miracast_hdcp2:dir { search };
+allow hwservicemanager miracast_hdcp2:file { read open };
+allow hwservicemanager miracast_hdcp2:process { getattr };

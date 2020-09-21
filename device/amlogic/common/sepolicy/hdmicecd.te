@@ -1,0 +1,26 @@
+type hdmicecd, domain;
+type hdmicecd_exec, exec_type, vendor_file_type, file_type;
+
+init_daemon_domain(hdmicecd)
+
+allow hdmicecd vndbinder_device:chr_file { read write open ioctl };
+allow hdmicecd vndservicemanager:binder { call transfer };
+
+allow hdmicecd hwservicemanager:binder { call transfer };
+allow hdmicecd { hdmicecd_hwservice  hidl_base_hwservice }:hwservice_manager { add };
+
+allow hdmicecd cec_device:chr_file { open read write ioctl };
+allow hdmicecd hwservicemanager_prop:file { open read getattr };
+
+allow hdmicecd system_control:binder { call transfer };
+allow hdmicecd systemcontrol_hwservice:hwservice_manager { find };
+
+allow hdmicecd tvserver_hwservice:hwservice_manager { find };
+allow hdmicecd tvserver:binder { transfer call };
+
+allow hdmicecd { hal_tv_cec_default system_app }:binder { call transfer };
+
+allow hdmicecd vendor_platform_prop:file { open read getattr };
+
+allow hdmicecd hdmicecd:netlink_kobject_uevent_socket { create setopt bind read shutdown };
+

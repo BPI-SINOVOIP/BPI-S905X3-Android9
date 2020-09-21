@@ -1,0 +1,12 @@
+#allow fsck block_device:blk_file { getattr read write };
+allow fsck tmpfs:blk_file { getattr read write open ioctl };
+
+allow fsck { vold_block_device param_block_device drm_block_device tee_block_device }:blk_file { getattr read write open ioctl };
+
+allow fsck { vendor_block_device odm_block_device userdata_block_device cache_block_device metadata_block_device product_block_device dtbo_block_device }:blk_file { getattr read write open ioctl };
+
+allow fsck { system_block_fsck_device }:blk_file { getattr read write open ioctl };
+
+allow fsck unlabeled:dir getattr;
+
+allow fsck rootfs:lnk_file  { getattr };

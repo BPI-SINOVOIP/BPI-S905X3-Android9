@@ -1,0 +1,21 @@
+allow mediaextractor init:unix_stream_socket { connectto };
+get_prop(mediaextractor, media_prop)
+get_prop(mediaextractor, vendor_default_prop)
+get_prop(mediaextractor, vendor_platform_prop)
+
+allow mediaextractor vfat:file { read getattr };
+allow mediaextractor fuseblk:file { read getattr };
+allow mediaextractor fuse:file { read getattr };
+allow mediaextractor sdcardfs:file { read getattr };
+allow mediaextractor system_server:fifo_file { write getattr append };
+allow mediaextractor same_process_hal_file:dir { read open };
+allow mediaextractor same_process_hal_file:file { read open getattr execute};
+allow platform_app iso9660:dir { search open read getattr };
+allow platform_app iso9660:file { open read getattr };
+
+allow mediaextractor exfat:file { read getattr };
+allow mediaextractor property_socket:sock_file write;
+
+allow mediaextractor bootanim:fd { use };
+allow mediaextractor system_data_file:file { read getattr };
+

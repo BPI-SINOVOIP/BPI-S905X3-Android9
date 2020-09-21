@@ -1,0 +1,14 @@
+type rc_server, domain;
+type rc_server_exec, exec_type, vendor_file_type, file_type;
+
+init_daemon_domain(rc_server)
+
+allow rc_server vndbinder_device:chr_file rw_file_perms;
+
+vndbinder_use(rc_server);
+hwbinder_use(rc_server);
+
+allow rc_server remotecontrol_hwservice:hwservice_manager add;
+allow rc_server hidl_base_hwservice:hwservice_manager add;
+
+get_prop(rc_server, hwservicemanager_prop);

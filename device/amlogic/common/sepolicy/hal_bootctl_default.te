@@ -1,0 +1,12 @@
+allow hal_bootctl_default rootfs:file {read open getattr};
+allow hal_bootctl_default proc:file { open read getattr};
+allow hal_bootctl_default block_device:dir search;
+allow hal_bootctl_default misc_block_device:blk_file {read open write};
+
+allow hal_bootctl_default sysfs_dt_firmware_android:dir { open read search };
+allow hal_bootctl_default sysfs_dt_firmware_android:file { getattr open read };
+
+allow hal_bootctl_default proc_cmdline:file read;
+
+allow hal_bootctl_default sysfs:dir { open read };
+#allow hal_bootctl_default sysfs:file { getattr open read };

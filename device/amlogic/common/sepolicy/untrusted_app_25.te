@@ -1,0 +1,7 @@
+#allow untrusted_app_25 sysfs:file { open read };
+
+allow untrusted_app_25 fuseblk:dir  { search };
+allow untrusted_app_25 fuseblk:file { read open getattr };
+
+allow untrusted_app_25 debugfs_mali:dir { search };
+allow untrusted_app_27 debugfs_mali:dir { search };

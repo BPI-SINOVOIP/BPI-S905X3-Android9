@@ -1,0 +1,59 @@
+# bt remote map
+key 1     BACK
+key 2     1
+key 3     2
+key 4     3
+key 5     4
+key 6     5
+key 7     6
+key 8     7
+key 9     8
+key 10    9
+key 11    0
+key 217   ASSIST
+key 158   BACK
+key 353   DPAD_CENTER
+key 108   DPAD_DOWN
+key 103   DPAD_UP
+key 172   HOME
+key 105   DPAD_LEFT
+key 106   DPAD_RIGHT
+key 115   VOLUME_UP
+key 114   VOLUME_DOWN
+key 116   POWER
+#key 139   MENU
+key 113   VOLUME_MUTE
+key 362   GUIDE
+key 167   MEDIA_RECORD
+key 402   CHANNEL_UP
+key 403   CHANNEL_DOWN
+
+key 208   MEDIA_FAST_FORWARD
+key 164   MEDIA_PLAY_PAUSE
+key 168   MEDIA_REWIND
+
+key usage 0x0c000f    0
+key usage 0x0c0037    1
+key usage 0x0c0038    2
+key usage 0x0c0039    3
+key usage 0x0c003a    4
+key usage 0x0c003b    5
+key usage 0x0c003c    6
+key usage 0x0c003d    7
+key usage 0x0c003e    8
+key usage 0x0c003f    9
+
+key usage 0x0c000d  YOUTUBE
+key usage 0x0c0007  SETTINGS
+key usage 0x0c000e  STEM_1
+key usage 0x0c0009 PROG_RED
+key usage 0x0c000a PROG_GREEN
+key usage 0x0c000b PROG_YELLOW
+key usage 0x0c000c PROG_BLUE
+key usage 0x0c0008 MENU
+
+#key 194   GOOGLE_PLAY_MUSIC
+#key 134   GOOGLE_PLAY
+#key 138   GOOGLE_PLAY_MOVIES
+
+
