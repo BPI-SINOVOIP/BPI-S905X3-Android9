@@ -1,0 +1,25 @@
+language: cpp
+
+dist: trusty
+sudo: required
+
+compiler:
+  - clang
+
+cache: apt
+
+before_script:
+  - sudo apt-get update -qq
+  - sudo apt-get install -y realpath
+  - wget https://github.com/ninja-build/ninja/releases/download/v1.7.2/ninja-linux.zip
+  - unzip ninja-linux.zip -d ~/bin
+
+script:
+  - make -j4 ckati ckati_tests
+  - ruby runtest.rb -c
+  - ruby runtest.rb -c -n
+  - ruby runtest.rb -c -n -a
+  - ./ninja_test
+  - ./string_piece_test
+  - ./strutil_test
+  - ./find_test

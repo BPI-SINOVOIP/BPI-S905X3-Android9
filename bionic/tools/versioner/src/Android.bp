@@ -1,0 +1,52 @@
+cc_binary_host {
+    name: "versioner",
+
+    cpp_std: "gnu++17",
+
+    srcs: [
+        "versioner.cpp",
+        "Arch.cpp",
+        "CompilationType.cpp",
+        "DeclarationDatabase.cpp",
+        "Driver.cpp",
+        "Preprocessor.cpp",
+        "SymbolDatabase.cpp",
+        "Utils.cpp",
+        "VFS.cpp",
+    ],
+
+    shared_libs: [
+        "libclang_android",
+        "libLLVM_android",
+        "libbase",
+    ],
+
+    header_libs: [
+        "llvm-headers",
+        "clang-headers",
+    ],
+
+    cflags: [
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unused-parameter",
+        "-fno-omit-frame-pointer",
+
+        "-D__STDC_CONSTANT_MACROS",
+        "-D__STDC_LIMIT_MACROS",
+
+        "-D_LIBCPP_ENABLE_CXX17_REMOVED_BINDERS",
+    ],
+
+    target: {
+        host: {
+            cppflags: [
+                "-fno-rtti",
+            ],
+        },
+        windows: {
+            enabled: false,
+        },
+    },
+}
