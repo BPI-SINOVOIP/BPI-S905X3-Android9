@@ -1,0 +1,7 @@
+{% if param %}
+{% for link in param %}
+<a class="button small" href="{{ link.href }}">{{ link.name }}</a>
+{% endfor %}
+{% else %}
+None
+{% endif %}

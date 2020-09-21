@@ -1,0 +1,20 @@
+Open modes are ignored if the user doesn't want the file to be created:
+http://man7.org/linux/man-pages/man2/open.2.html
+
+We're going to start emitting compile-time warnings about this soon.
+Since this project has -Werror enabled (thank you!), we need to either
+make the mode useful or remove the mode bits.
+
+diff --git a/tools/testing/selftests/kcmp/kcmp_test.c b/tools/testing/selftests/kcmp/kcmp_test.c
+index a5a4da856dfe..ef7927e5940f 100644
+--- a/tools/testing/selftests/kcmp/kcmp_test.c
++++ b/tools/testing/selftests/kcmp/kcmp_test.c
+@@ -49,7 +49,7 @@ int main(int argc, char **argv)
+ 		int pid2 = getpid();
+ 		int ret;
+ 
+-		fd2 = open(kpath, O_RDWR, 0644);
++		fd2 = open(kpath, O_RDWR);
+ 		if (fd2 < 0) {
+ 			perror("Can't open file");
+ 			ksft_exit_fail();

@@ -1,0 +1,24 @@
+# Copyright 2018 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "dhaddock, Chromium OS"
+NAME = "autoupdate_DisconnectReconnectNetwork"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "platform"
+TEST_TYPE = "client"
+PURPOSE = "Kill the network, ensure update engine doesn't continue, reconnect."
+TIME = "SHORT"
+
+DOC = """
+This test is used to pull the network cable from the DUTs and ensure that
+update_engine is able to continue with the update after it is done.
+
+The length of time the test waits can be configured by passing in a
+time_without_network=X variable. X is defined in seconds.
+
+This test will not be run standalone. It will be kicked off from a server
+side test.
+"""
+
+job.run_test('autoupdate_DisconnectReconnectNetwork')

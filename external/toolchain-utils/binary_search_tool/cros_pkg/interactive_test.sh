@@ -1,0 +1,1 @@
+../common/interactive_test.sh

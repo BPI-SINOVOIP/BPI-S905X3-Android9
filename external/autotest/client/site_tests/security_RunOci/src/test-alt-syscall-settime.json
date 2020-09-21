@@ -1,0 +1,6 @@
+{
+    "run_oci_args": ["--cgroup_parent=chronos_containers", "--alt_syscall=third_party"],
+    "program_argv": ["/bin/date", "-u", "--set", "010101"],
+    "expected_stderr": "date: cannot set date: Function not implemented",
+    "expected_result": "Mon Jan  1 00:00:00 UTC 2001"
+}

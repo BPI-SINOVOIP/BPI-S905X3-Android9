@@ -1,0 +1,29 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'scunningham'
+NAME = 'policy_CookiesSessionOnlyForUrls.urlnotin_block'
+# TODO(krishnargv): enable this test once crbug.com/712713 is fixed.
+# ATTRIBUTES = 'suite:bvt-perbuild, suite:policy'
+TIME = 'SHORT'
+TEST_CATEGORY = 'Functional'
+TEST_CLASS = 'enterprise'
+TEST_TYPE = 'client'
+
+DOC = '''
+Verify effects of CookiesSessionOnlyForUrls policy.
+
+This test case verifies the behavior and appearance of Chrome OS when the user
+policy CookiesSessionOnlyForUrls does not contain a pattern that matches the
+URL of a visited page, and DefaultCookiesSetting=2 (ie, block cookies by
+default).
+
+The test case shall pass if the browser blocks cookie storage for the test
+page, because the page URL does not match any of the URL patterns specified in
+CookiesSessionOnlyForUrls. It shall fail if the browser allows cookie storage
+for the test page.
+
+'''
+
+job.run_test('policy_CookiesSessionOnlyForUrls', case='UrlNotIn_Block')

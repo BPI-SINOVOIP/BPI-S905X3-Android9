@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package nugget.app.protoapi;
+
+message SOCinformation {
+  string git_version = 1;
+  string complier_version = 2;
+  string compiled_by = 3;
+  uint32 chip_version = 4;
+  Temperature junction_temperature = 5;
+}
+
+message Temperature {
+  uint32 degrees_celsius = 1;
+}

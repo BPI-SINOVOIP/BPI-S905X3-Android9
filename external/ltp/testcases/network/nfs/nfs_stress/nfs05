@@ -1,0 +1,43 @@
+#!/bin/sh
+# Copyright (c) 2015-2016 Oracle and/or its affiliates. All Rights Reserved.
+# Copyright (c) International Business Machines  Corp., 2001
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of
+# the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it would be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+#  DESCRIPTION: This script sets up the NFS directories in the remote machine
+#               and invokes the program make_tree with parameters.
+#
+# Created by: Robbie Williamson (robbiew@us.ibm.com)
+
+TCID="nfs05"
+TST_TOTAL=1
+TST_CLEANUP="nfs_cleanup"
+
+DIR_NUM=${DIR_NUM:-"20"}
+FILE_NUM=${FILE_NUM:-"50"}
+THREAD_NUM=${THREAD_NUM:-"8"}
+
+. nfs_lib.sh
+. test_net.sh
+
+tst_check_cmds make gcc
+
+nfs_setup
+
+tst_resm TINFO "start nfs05_make_tree -d $DIR_NUM -f $FILE_NUM -t $THREAD_NUM"
+ROD nfs05_make_tree -d $DIR_NUM -f $FILE_NUM -t $THREAD_NUM
+
+tst_resm TPASS "test finished"
+
+tst_exit

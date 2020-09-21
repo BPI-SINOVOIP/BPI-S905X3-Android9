@@ -1,0 +1,13 @@
+[
+  {
+    "description": "EXFAT filesystem",
+    "filesystem_type": "exfat",
+    "volume_name": "EXFAT",
+    "expected_rename_status": 0,
+
+    "mkfs_options": [ "-n", "EMPTY1" ],
+    "mount_options": ["rw", "nodev", "noexec", "nosuid", "sync" ],
+    "expected_mount_status": 0,
+    "expected_mount_path": "/media/removable/EMPTY1"
+  }
+]

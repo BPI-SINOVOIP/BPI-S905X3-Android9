@@ -1,0 +1,28 @@
+diff --git a/Android.bp b/Android.bp
+index a581b0a53..36159c5ae 100644
+--- a/Android.bp
++++ b/Android.bp
+@@ -40,8 +40,11 @@ cc_library {
+         "-Wno-clobbered",
+         "-Wno-error",
+         "-fexceptions",
++	CFLAGS_FOR_BENCH_SUITE
+     ],
+ 
++    ldflags: [LDFLAGS_FOR_BENCH_SUITE],
++
+     cppflags: [
+         "-std=c++11",
+         "-fno-threadsafe-statics",
+@@ -1470,8 +1473,11 @@ cc_test {
+         "-U_FORTIFY_SOURCE",
+         "-D_FORTIFY_SOURCE=1",
+         "-DSKIA_IMPLEMENTATION=1",
++	CFLAGS_FOR_BENCH_SUITE
+     ],
+ 
++    ldflags: [LDFLAGS_FOR_BENCH_SUITE],
++
+     cppflags: [
+         "-std=c++11",
+         "-fno-threadsafe-statics",

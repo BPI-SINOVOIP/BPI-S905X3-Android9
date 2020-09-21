@@ -1,0 +1,38 @@
+# Copyright (c) 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+
+AUTHOR = "Chrome OS Team"
+NAME = "firmware_EmmcWriteLoad"
+PURPOSE = "To ensure eMMC functions properly during heavy loads."
+CRITERIA = "This test will fail if eMMC timesout and chromeos install fails."
+ATTRIBUTES = "suite:faft_stress"
+TIME = "LONG"
+TEST_CATEGORY = "Stress"
+TEST_CLASS = "firmware"
+TEST_TYPE = "server"
+
+
+DOC = """
+This test requires a USB disk plugged-in, which contains a Chrome OS test
+image (built by "build_image test"). On runtime, this test first switches
+DUT to developer mode. When dev_boot_usb=0, pressing Ctrl-U on developer
+screen should not boot the USB disk. When dev_boot_usb=1, pressing Ctrl-U
+should boot the USB disk. It will then continually install chromeos while
+monitoring dmesg for errors.
+
+The length of time in minutes should be specified by the parameter
+-a 'minutes_to_run=240'
+"""
+
+args_dict = utils.args_to_dict(args)
+servo_args = hosts.CrosHost.get_servo_arguments(args_dict)
+
+def run_emmcwriteload(machine):
+    host = hosts.create_host(machine, servo_args=servo_args)
+    job.run_test("firmware_EmmcWriteLoad", host=host, cmdline_args=args,
+                 disable_sysinfo=True, dev_mode=True, tag="dev")
+
+parallel_simple(run_emmcwriteload, machines)

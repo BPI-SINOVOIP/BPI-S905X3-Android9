@@ -1,0 +1,31 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include "bin-trees.h"
+
+static void
+real_pre_order_traverse_no_recurse (tree_ptr root)
+{
+  struct stack_struct *stack = NULL;
+
+  if (root != NULL)
+    push (&stack, root);
+
+  while (stack != NULL)
+  {
+    tree_ptr current = pop (&stack);
+    printf ("%d ", current->data);
+    if (current->right != NULL)
+      push (&stack, current->right);
+    if (current->left != NULL)
+      push (&stack, current->left);
+  }
+  return;
+}
+
+void
+pre_order_traverse_no_recurse (tree_ptr root)
+{
+  printf ("pre-order traversal, without recursion: \n");
+  real_pre_order_traverse_no_recurse (root);
+  printf ("\n");
+}

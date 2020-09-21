@@ -1,0 +1,67 @@
+/*
+ * Copyright (C) 2017 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+apply plugin: 'java'
+apply plugin: 'org.anarres.jarjar'
+apply plugin: 'maven'
+
+ext {
+    flatbuffersDir = '../../flatbuffers'
+}
+
+buildscript {
+    boolean unbundleBuild = (new File("unbundled-build")).exists()
+    repositories {
+        maven { url '../../../prebuilts/tools/common/m2/repository' }
+        if (unbundleBuild) {
+            jcenter()
+        }
+    }
+
+    dependencies {
+        classpath 'org.anarres.jarjar:jarjar-gradle:1.0.0'
+    }
+}
+
+sourceSets {
+    main {
+        java.srcDirs = ['src/java', "${flatbuffersDir}/java"]
+    }
+}
+
+compileJava {
+    sourceCompatibility = JavaVersion.VERSION_1_7
+    targetCompatibility = JavaVersion.VERSION_1_7
+}
+
+jarjar.repackage('rename') {
+    destinationName "noto-emoji-compat-java.jar"
+    from files(sourceSets.main.output.classesDirs)
+    dependsOn sourceSets.main.output
+    classRename 'com.google.flatbuffers.**', 'androidx.text.emoji.flatbuffer.@1'
+}
+
+configurations {
+    parser
+}
+
+artifacts {
+    parser(rename.destinationPath) {
+        name 'noto-emoji-compat'
+        type 'jar'
+        builtBy rename
+    }
+}

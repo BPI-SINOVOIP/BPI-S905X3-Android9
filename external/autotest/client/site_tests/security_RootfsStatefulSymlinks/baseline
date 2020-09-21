@@ -1,0 +1,128 @@
+{
+  "/etc/ipsec.conf": {
+    "can_dangle": true,
+    "destination": "/run/l2tpipsec_vpn/current/ipsec.conf",
+    "owner": "root",
+    "group": "ipsec",
+    "mode": "0640"
+  },
+  "/etc/ipsec.d/cacerts/cacert.der": {
+    "can_dangle": true,
+    "destination": "/run/l2tpipsec_vpn/current/cacert.der",
+    "owner": "root",
+    "group": "ipsec",
+    "mode": "0640"
+  },
+  "/etc/ipsec.secrets": {
+    "can_dangle": true,
+    "destination": "/run/l2tpipsec_vpn/current/ipsec.secrets",
+    "owner": "root",
+    "group": "ipsec",
+    "mode": "0640"
+  },
+  "/etc/localtime": {
+    "can_dangle": true,
+    "destination": "/var/lib/timezone/localtime",
+    "owner": "root",
+    "group": "root",
+    "mode": "0644"
+  },
+  "/etc/machine-id": {
+    "can_dangle": false,
+    "destination": "/var/lib/dbus/machine-id",
+    "owner": "root",
+    "group": "root",
+    "mode": "0644"
+  },
+  "/etc/resolv.conf": {
+    "can_dangle": false,
+    "destination": "/run/shill/resolv.conf",
+    "owner": "root",
+    "group": "root",
+    "mode": "0644"
+  },
+  "/etc/strongswan.conf": {
+    "can_dangle": true,
+    "destination": "/run/l2tpipsec_vpn/current/strongswan.conf",
+    "owner": "root",
+    "group": "ipsec",
+    "mode": "0640"
+  },
+  "/etc/env.d/python": {
+    "can_dangle": true,
+    "destination": "/usr/local/etc/env.d/python",
+    "owner": "root",
+    "group": "root",
+    "mode": "0755"
+  },
+  "/usr/bin/python": {
+    "can_dangle": true,
+    "destination": "/usr/local/bin/python2.7",
+    "owner": "root",
+    "group": "root",
+    "mode": "0755"
+  },
+  "/usr/bin/python2": {
+    "can_dangle": true,
+    "destination": "/usr/local/bin/python2.7",
+    "owner": "root",
+    "group": "root",
+    "mode": "0755"
+  },
+  "/usr/bin/python2.7": {
+    "can_dangle": true,
+    "destination": "/usr/local/bin/python2.7",
+    "owner": "root",
+    "group": "root",
+    "mode": "0755"
+  },
+  "/usr/bin/python3": {
+    "can_dangle": true,
+    "destination": "/usr/local/bin/python3",
+    "owner": "root",
+    "group": "root",
+    "mode": "0755"
+  },
+  "/usr/bin/python3.3": {
+    "can_dangle": true,
+    "destination": "/usr/local/bin/python3.3",
+    "owner": "root",
+    "group": "root",
+    "mode": "0755"
+  },
+  "/usr/bin/python3.4": {
+    "can_dangle": true,
+    "destination": "/usr/local/bin/python3.4",
+    "owner": "root",
+    "group": "root",
+    "mode": "0755"
+  },
+  "/usr/lib/debug": {
+    "can_dangle": true,
+    "destination": "/usr/local/usr/lib/debug",
+    "owner": "root",
+    "group": "root",
+    "mode": "0755"
+  },
+  "/usr/lib/portage": {
+    "can_dangle": true,
+    "destination": "/usr/local/lib/portage",
+    "owner": "root",
+    "group": "root",
+    "mode": "0755"
+  },
+  "/usr/lib/python-exec": {
+    "can_dangle": true,
+    "destination": "/usr/local/lib/python-exec",
+    "owner": "root",
+    "group": "root",
+    "mode": "0755"
+  },
+  "/usr/bin/ssh": {
+    "can_dangle": true,
+    "destination": "/usr/local/bin/ssh",
+    "owner": "root",
+    "group": "root",
+    "mode": "0755"
+  }
+}

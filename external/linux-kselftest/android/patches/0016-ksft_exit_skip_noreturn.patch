@@ -1,0 +1,13 @@
+diff --git a/tools/testing/selftests/kselftest.h b/tools/testing/selftests/kselftest.h
+index 1ae565ed9bf0..05a4b9ad80c9 100644
+--- a/tools/testing/selftests/kselftest.h
++++ b/tools/testing/selftests/kselftest.h
+@@ -165,7 +165,7 @@ static inline int ksft_exit_xpass(void)
+ 	exit(KSFT_XPASS);
+ }
+ 
+-static inline int ksft_exit_skip(const char *msg, ...)
++static inline void __noreturn ksft_exit_skip(const char *msg, ...)
+ {
+ 	if (msg) {
+ 		va_list args;

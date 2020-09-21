@@ -1,0 +1,13 @@
+java_import {
+    name: "kotlin-reflect",
+    host_supported: true,
+    jars: ["lib/kotlin-reflect.jar"],
+    sdk_version: "core_current",
+}
+
+java_import {
+    name: "kotlin-stdlib",
+    host_supported: true,
+    jars: ["lib/kotlin-stdlib.jar"],
+    sdk_version: "core_current",
+}

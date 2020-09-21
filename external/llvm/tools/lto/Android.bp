@@ -1,0 +1,90 @@
+//
+// Copyright (C) 2015 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+// For the host only
+// =====================================================
+
+cc_library_host_shared {
+    name: "libLTO",
+    defaults: ["llvm-defaults"],
+    srcs: [
+        "lto.cpp",
+        "LTODisassembler.cpp",
+    ],
+    group_static_libs: true,
+    static_libs: [
+        "libLLVMLinker",
+        "libLLVMipo",
+        "libLLVMDebugInfoDWARF",
+        "libLLVMDebugInfoPDB",
+        "libLLVMIRReader",
+        "libLLVMBitWriter",
+        "libLLVMBitReader",
+        "libLLVMARMCodeGen",
+        "libLLVMARMAsmParser",
+        "libLLVMARMAsmPrinter",
+        "libLLVMDebugInfoCodeView",
+        "libLLVMARMInfo",
+        "libLLVMARMDesc",
+        "libLLVMARMDisassembler",
+        "libLLVMMipsCodeGen",
+        "libLLVMMipsInfo",
+        "libLLVMMipsDesc",
+        "libLLVMMipsAsmParser",
+        "libLLVMMipsAsmPrinter",
+        "libLLVMMipsDisassembler",
+        "libLLVMX86CodeGen",
+        "libLLVMX86Info",
+        "libLLVMX86Desc",
+        "libLLVMX86AsmParser",
+        "libLLVMX86AsmPrinter",
+        "libLLVMX86Utils",
+        "libLLVMX86Disassembler",
+        "libLLVMAArch64CodeGen",
+        "libLLVMAArch64Info",
+        "libLLVMAArch64Desc",
+        "libLLVMAArch64AsmParser",
+        "libLLVMAArch64AsmPrinter",
+        "libLLVMAArch64Utils",
+        "libLLVMAArch64Disassembler",
+        "libLLVMExecutionEngine",
+        "libLLVMRuntimeDyld",
+        "libLLVMMCJIT",
+        "libLLVMOrcJIT",
+        "libLLVMGlobalISel",
+        "libLLVMAsmPrinter",
+        "libLLVMSelectionDAG",
+        "libLLVMCodeGen",
+        "libLLVMObject",
+        "libLLVMScalarOpts",
+        "libLLVMInstCombine",
+        "libLLVMInstrumentation",
+        "libLLVMTransformObjCARC",
+        "libLLVMTransformUtils",
+        "libLLVMVectorize",
+        "libLLVMAnalysis",
+        "libLLVMTarget",
+        "libLLVMMCDisassembler",
+        "libLLVMMC",
+        "libLLVMMCParser",
+        "libLLVMCore",
+        "libLLVMAsmParser",
+        "libLLVMOption",
+        "libLLVMLTO",
+        "libLLVMSupport",
+        "libLLVMProfileData",
+    ],
+}

@@ -1,0 +1,20 @@
+License: OFL 1.1
+License File: LICENSE_OFL
+
+License: Unicode
+License File: LICENSE_UNICODE
+
+Description:
+Noto Color Emoji Compat font is generated using Noto Color Emoji font using createfont.py. The
+compat font is under font/ directory.
+
+While generating the compat font, Noto Color Emoji font and data files from Unicode are used.
+
+data/emoji-metadata.txt is updated using the Noto Color Emoji font and data files from
+Unicode.
+
+supported-emojis/emojis.txt file contains list of emojis that are supported by the font. Main
+purpose is testing. It is generated using the Unicode files.
+
+Noto Color Emoji font is under the <android_source>/external/noto-fonts/emoji/ directory. Unicode
+files are under the <android_source>/external/unicode/ directory.

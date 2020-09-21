@@ -1,0 +1,15 @@
+{
+	"run_oci_args": ["--cgroup_parent=chronos_containers"],
+	"program_argv": ["/bin/echo", "-n", "This should not run"],
+	"expected_result": "",
+	"overrides": {
+		"hooks": {
+			"prestart": [
+				{
+					"path": "/bin/false",
+					"args": ["false"]
+				}
+			]
+		}
+	}
+}

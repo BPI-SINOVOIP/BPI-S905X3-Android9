@@ -1,0 +1,10 @@
+--- android_icu4j/src/main/java/android/icu/util/TimeUnit.java	2017-08-25 08:53:42.697863240 +0100
++++ android_icu4j/src/main/java/android/icu/util/TimeUnit.java	2017-08-25 08:54:12.473921238 +0100
+@@ -15,7 +15,6 @@
+ 
+ /**
+  * Measurement unit for time units.
+- * @see TimeUnitAmount
+  * @see TimeUnit
+  * @author markdavis
+  */

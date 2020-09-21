@@ -1,0 +1,57 @@
+#!/usr/bin/python
+#
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+# Collect network stats from the DUT.
+# For now just collect the byte count from the default interface.
+
+from autotest_lib.client.common_lib import utils
+
+def get_network_stats(machine):
+    try:
+        dut = hosts.create_target_machine(machine)
+
+        # The information is not critical, so ping the DUT first
+        # and if it doesn't reply quickly, give up.
+        if utils.ping(dut.hostname, tries=1, timeout=3) != 0:
+            logging.info('ping failed: not collecting network stats')
+            return
+
+        # In a single ssh call, get list of network interfaces
+        # and their byte counts.
+        result = dut.run('route; echo SEPARATOR; cat /proc/net/dev')
+
+        # Split output
+        lines = result.stdout.splitlines()
+        separator_index = lines.index('SEPARATOR')
+        route_lines = lines[:separator_index]
+        proc_lines = lines[separator_index+1:]
+
+        for line in route_lines:
+            fields = line.split()
+            # look for default network interface
+            if fields[0] == 'default':
+                iface = fields[7]
+                iface_prefix = iface + ':'
+                break
+        else:
+            logging.info('get_network_stats: no default interface')
+            return
+
+        for line in proc_lines:
+            fields = line.split()
+            # Look for the interface in /proc/net/dev.
+            if fields[0] == iface_prefix:
+                logging.info('get_network_stats: %s RXbytes %s TXbytes %s',
+                             network_stats_label, fields[1], fields[9])
+                break
+        else:
+            logging.info('get_network_stats: iface %s not in /proc/net/dev',
+                         iface)
+    except Exception as e:
+        logging.info('get_network_stats: ignoring exception: %s', e)
+
+
+job.parallel_simple(get_network_stats, machines)

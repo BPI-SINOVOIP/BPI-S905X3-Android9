@@ -1,0 +1,7 @@
+* current source is based on libopus 1.2.1 (https://git.xiph.org/?p=opus.git;a=snapshot;h=defbc370ec764d3d0dc43c45911e455b5e483b30;sf=tgz)
+* libopus is BSD-licensed - http://www.opus-codec.org/license/
+
+Updating:
+* Run "convert_android_asm.sh" from the root of the library (external/libopus).
+  This uses 'arm2gnu.pl' included in libopus to convert ARM ASM files to GNU ASM
+  files for building under the Android NDK.

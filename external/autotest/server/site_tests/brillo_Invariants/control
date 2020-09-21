@@ -1,0 +1,18 @@
+# Copyright 2015 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'zeuthen'
+NAME = 'brillo_Invariants'
+TIME = 'FAST'
+TEST_TYPE = 'Server'
+ATTRIBUTES = 'suite:brillo-bvt,suite:brillo-postsubmit'
+
+DOC = """
+Check for things that should look the same on all Brillo devices.
+"""
+
+def run(machine):
+    job.run_test('brillo_Invariants', host=hosts.create_host(machine))
+
+parallel_simple(run, machines)

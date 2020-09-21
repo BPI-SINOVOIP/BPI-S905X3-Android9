@@ -1,0 +1,15 @@
+URL: https://github.com/hamcrest/JavaHamcrest/archive/f540af9fd49f33cc07b3446a8895c7b51cbf0944.zip
+Version: f540af9fd49f33cc07b3446a8895c7b51cbf0944
+BugComponent: 40416
+
+Version f540af9fd49f33cc07b3446a8895c7b51cbf0944 was chosen because it is the
+point at which v2.0.0.0 and master diverge. There are only about 7 commits
+on v2.0.0.0 which are not on master but they do conflict with some changes in
+master. Those changes appear to be relatively minor and while it is not clear
+what the future holds for Hamcrest given that it has had no activity since June
+2016 it seems unnecessary to take those extra 7 commits given the potential for
+conflicts in future upgrades.
+
+Local Changes:
+    Remove hamcrest-library/src/main/java/org/hamcrest/beans/ as Android does not support java.beans.
+    

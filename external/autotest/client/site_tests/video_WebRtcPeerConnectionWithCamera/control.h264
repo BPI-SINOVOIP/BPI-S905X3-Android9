@@ -1,0 +1,29 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "Chrome OS Project, chromeos-video@google.com"
+NAME = "video_WebRtcPeerConnectionWithCamera.h264"
+PURPOSE = "Check WebRTC local peer connection can be established"
+CRITERIA = "This test will fail if WebRTC peer connection not established"
+ATTRIBUTES = "suite:av_webcam"
+TIME = "MEDIUM"
+TEST_CATEGORY = "Performance"
+TEST_CLASS = "video"
+TEST_TYPE = "client"
+DEPENDENCIES = "webcam"
+BUG_TEMPLATE = {
+    "labels": ["OS-Chrome"],
+    "components": ["OS>Kernel>Video"],
+}
+
+DOC = """
+This test starts a local WebRTC call with two peer connections and ensures
+we get the right width and height for the video stream. This is done by
+checking both the video tag's attributes and peer connection stats
+(using getStats). Unless there's a direct failure, stats for the call are
+reported to the performance dashboard.
+"""
+
+job.run_test("video_WebRtcPeerConnectionWithCamera",
+             video_codec="H264", tag='h264')

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# We have some very rudimentary command line processing, which we
+# share with run-model-inventory.
+
+SCRIPT_DIR=$(dirname $(readlink -f $0))
+cd $SCRIPT_DIR/..
+. contrib/inventory_options
+
+# Let's balance out the pools for the deputies before sending the eMail.
+BALANCE_POOL_LOG=balance_pool.log.$(date +%Y-%m-%d)
+ARGS=( --production --all-models all_critical_pools )
+site_utils/balance_pools.py "${ARGS[@]}" &> logs/dut-data/$BALANCE_POOL_LOG
+
+site_utils/lab_inventory.py $OPTIONS "${POOL_NOTIFY[@]}"

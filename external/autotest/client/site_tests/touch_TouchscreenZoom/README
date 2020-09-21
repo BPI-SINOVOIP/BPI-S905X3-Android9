@@ -1,0 +1,12 @@
+touch_TouchscreenZoom uses two gesture files per device.
+
+With all zooms, do not make stray gestures.  Use only two fingers.  Once the
+zoom starts, do not stop movement or lift fingers until gesture is complete.
+
+<DEVICE_NAME>_touchscreen_zoom_in:
+    Press two fingers to the touchscreen such that they are close together, but
+    not touching.  Smoothly spread them apart.
+
+<DEVICE_NAME>_touchscreen_zoom_out:
+    Press two fingers to the touchscreen such that they are separated.  Smoothly
+    bring them together, but do not let them touch.

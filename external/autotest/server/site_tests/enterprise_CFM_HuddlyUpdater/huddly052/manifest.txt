@@ -1,0 +1,3 @@
+mv2_app.version:0.5.2
+hw_rev:6
+mv2_boot.version:0.2.2

@@ -1,0 +1,7 @@
+GPIO0_GPIO0:    read 1 drive 1
+GPIO0_GPIO1:    read 0 drive 0
+GPIO0_GPIO2:    read 0 drive 0
+(?P<ccd_enabled>GPIO0_GPIO5:    read 0 drive 0)?\n
+GPIO0_GPIO11:   read (1|0) drive 1
+GPIO1_GPIO0:    read 1 INT_RISING
+(?P<ccd_v0>GPIO1_GPIO1:    read 0 INT_HIGH)?

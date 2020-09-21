@@ -1,0 +1,4 @@
+URL: http://llvm.org/git/clang.git
+Version: Rolling from upstream + cherry-picks
+BugComponent: 117395
+Owners: srhines, android-llvm

@@ -1,0 +1,88 @@
+#!/bin/bash
+
+# This script runs tests for the Go toolchain on target devices.
+# It can be used for both ChromeOS and Android targets.
+#
+# Many of the test drivers that come from upstream do not support
+# cross-compiling and running the tests remotely. The patches in
+# the ./patch/ directory must be applied to the upstream sources
+# to add this support.
+#
+# Usage: test_go [-v] [-vv] [-full] <target>...
+#   -v: enable verbose test output from compiler tests.
+#   -v: enable verbose test output from standard library tests.
+#   -full: run all standard library tests (without the -short flag).
+
+verbose_run_test=""
+verbose_go_test=""
+testflags="-short"
+while [[ "$1" == -* ]]
+do
+	case "$1" in
+		-v) verbose_run_test="-v" ;;
+		-vv) verbose_go_test="-v" ;;
+		-full) testflags="-timeout=2h" ;;
+		*) echo "unrecognized flag: $1" ;;
+	esac
+	shift
+done
+
+go_local build -o runtest test/run.go
+runtest="${PWD}/runtest"
+
+function run_test()
+	{
+	GOOS="$(go_${target} env GOOS)" GOARCH="$(go_${target} env GOARCH)" ${runtest} -n=1 ${verbose_run_test} -show_skips -summary -target="${target}" "$@"
+	}
+
+function go_test()
+	{
+	go_${target} test -p=1 ${verbose_go_test} -exec="go_${target}_exec" ${testflags} "$@"
+	}
+
+function go_test_target()
+	{
+	go_local test -p=1 ${verbose_go_test} ${testflags} "$@" -target="${target}"
+	}
+
+for target in "$@"
+do
+	echo
+	echo "## ${target}"
+
+	echo
+	echo "# test"
+	(cd test && run_test)
+
+	echo
+	echo "# std"
+	go_test std
+
+	echo
+	echo "# GOMAXPROCS=2 -cpu=1,2,4 runtime"
+	GOMAXPROCS=2 go_test -cpu=1,2,4 runtime
+
+	echo
+	echo "# -cpu=10 sync"
+	go_test -cpu=10 sync
+
+	echo
+	echo "# runtime crypto/x509 -target=${target}"
+	go_test_target runtime crypto/x509
+
+	echo
+	echo "# misc/cgo/{stdio,life}"
+	run_test misc/cgo/{stdio,life}
+
+	echo
+	echo "# misc/cgo/{test,testtls,nocgo}"
+	GOTRACEBACK=2 go_test ./misc/cgo/{test,testtls,nocgo}
+
+	echo
+	echo "# misc/cgo/testcshared"
+	(cd misc/cgo/testcshared && target="${target}" ./test.bash)
+
+	echo
+	echo "# misc/cgo/testsigfwd"
+	(cd misc/cgo/testsigfwd && go_${target} run -exec="go_${target}_exec" main.go)
+done

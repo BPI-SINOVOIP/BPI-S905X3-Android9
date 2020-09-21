@@ -1,0 +1,70 @@
+From 0fd3eaf312c6284450f758e3a49c5cfd855e4847 Mon Sep 17 00:00:00 2001
+From: Tri Vo <trong@google.com>
+Date: Wed, 21 Sep 2016 15:10:38 -0700
+Subject: [PATCH] Compile breakpoints and x86 tests. Test: make vts
+
+Change-Id: I0c5dd63b3386adb22f3370a8b736d190c781bd4f
+---
+
+ [smuckle@google.com: drop changes to Android-specific files for
+  tracking of changes to upstream]
+
+ tools/testing/selftests/x86/test_FISTTP.c |  18 +++++
+
+diff --git a/tools/testing/selftests/x86/test_FISTTP.c b/tools/testing/selftests/x86/test_FISTTP.c
+index b8e61a047f6b..6cae2d45b246 100644
+--- a/tools/testing/selftests/x86/test_FISTTP.c
++++ b/tools/testing/selftests/x86/test_FISTTP.c
+@@ -24,7 +24,11 @@ int test(void)
+ 	feclearexcept(FE_DIVBYZERO|FE_INEXACT|FE_INVALID|FE_OVERFLOW|FE_UNDERFLOW);
+ 	asm volatile ("\n"
+ 	"	fld1""\n"
++#ifdef __clang__
++	"	fisttps	res16""\n"
++#else
+ 	"	fisttp	res16""\n"
++#endif
+ 	"	fld1""\n"
+ 	"	fisttpl	res32""\n"
+ 	"	fld1""\n"
+@@ -44,7 +48,11 @@ int test(void)
+ 	feclearexcept(FE_DIVBYZERO|FE_INEXACT|FE_INVALID|FE_OVERFLOW|FE_UNDERFLOW);
+ 	asm volatile ("\n"
+ 	"	fldpi""\n"
++#ifdef __clang__
++	"	fisttps	res16""\n"
++#else
+ 	"	fisttp	res16""\n"
++#endif
+ 	"	fldpi""\n"
+ 	"	fisttpl	res32""\n"
+ 	"	fldpi""\n"
+@@ -65,7 +73,13 @@ int test(void)
+ 	asm volatile ("\n"
+ 	"	fldpi""\n"
+ 	"	fchs""\n"
++#ifdef __clang__
++	"	fisttps	res16""\n"
++#else
++    // clang will complain: ambiguous instructions require an explicit suffix
++    // (could be 'fisttps', or 'fisttpl')
+ 	"	fisttp	res16""\n"
++#endif
+ 	"	fldpi""\n"
+ 	"	fchs""\n"
+ 	"	fisttpl	res32""\n"
+@@ -87,7 +101,11 @@ int test(void)
+ 	feclearexcept(FE_DIVBYZERO|FE_INEXACT|FE_INVALID|FE_OVERFLOW|FE_UNDERFLOW);
+ 	asm volatile ("\n"
+ 	"	fldln2""\n"
++#ifdef __clang__
++	"	fisttps	res16""\n"
++#else
+ 	"	fisttp	res16""\n"
++#endif
+ 	"	fldln2""\n"
+ 	"	fisttpl	res32""\n"
+ 	"	fldln2""\n"
+-- 
+2.13.1.518.g3df882009-goog
+

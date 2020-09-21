@@ -1,0 +1,102 @@
+syntax = "proto3";
+
+package nugget.app.protoapi;
+
+enum KeySize {
+  KS_RESERVED = 0;
+  s128b = 16;
+  s192b = 24;
+  s256b = 32;
+}
+
+enum DcryptError {
+  DE_RESERVED = 0;
+  DE_NO_ERROR = 1;
+  INVALID_PLAINTEXT = 2;
+  MISSING_PARAMETER = 3;
+  KEYSIZE_MISMATCH = 4;
+}
+
+// TODO remove this when oneof support is added to nanopb
+enum OneofTestParametersCase {
+  TPC_RESERVED = 0;
+  kTrngTest = 1;
+  kAesCbcEncryptTest = 2;
+  kAesGcmEncryptTest = 3;
+  kAesCmacTest = 4;
+  kFullStressTest = 5;
+}
+
+// TODO remove this when oneof support is added to nanopb
+enum OneofTestResultsCase {
+  ONEOF_NAME_NOT_SET = 0;
+  kTrngTestResult = 1;
+  kAesCbcEncryptTestResult = 2;
+  kAesGcmEncryptTestResult = 3;
+  kAesCmacTestResult = 4;
+  kFullStressResult = 5;
+}
+
+message AesCbcEncryptTest {
+  KeySize key_size = 1;
+  uint32 number_of_blocks = 2;
+  bytes key = 3;
+  bytes initialization_vector = 4;
+  // TODO plain_text and number_of_blocks should be mutually exclusive.
+  // a oneof would be good for this but nanopb doesn't support dynamic lengths
+  // inside of a oneof.
+  bytes plain_text = 5;
+}
+
+message AesCbcEncryptTestResult {
+  DcryptError result_code = 1;
+  bytes initialization_vector = 2;
+  bytes cipher_text = 3;
+}
+
+message AesGcmEncryptTest {
+  bytes key = 1;
+  bytes iv = 2;
+  bytes plain_text = 3;
+  bytes aad = 4;
+  uint32 tag_len = 5;
+}
+
+message AesGcmEncryptTestResult {
+  DcryptError result_code = 1;
+  bytes cipher_text = 2;
+  bytes tag = 3;
+}
+
+message TrngTest {
+  uint32 number_of_bytes = 1;
+}
+
+message AesCmacTest {
+  bytes key = 1;
+  bytes plain_text = 2;
+};
+
+message AesCmacTestResult {
+  DcryptError result_code = 1;
+  bytes cmac = 2;
+};
+
+message TrngTestResult {
+  bytes random_bytes = 1;
+}
+
+/*
+TODO look into adding callback support to oneof fields in nanopb
+message TestingAPICall {
+  oneof test_parameters {
+      AesCbcEncryptTest aes_cbc_encrypt_test = 1;
+  }
+}
+
+message TestingAPIResponse {
+  oneof test_results {
+    AesCbcEncryptTestResult aes_cbc_encrypt_result = 1;
+  }
+}
+*/

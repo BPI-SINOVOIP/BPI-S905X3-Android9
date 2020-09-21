@@ -1,0 +1,11 @@
+cc_library_static {
+    name: "libpdfiumpdfiumbase",
+    defaults: ["pdfium-third-party"],
+
+    srcs: [
+        "base/allocator/partition_allocator/address_space_randomization.cc",
+        "base/allocator/partition_allocator/page_allocator.cc",
+        "base/allocator/partition_allocator/partition_alloc.cc",
+        "base/allocator/partition_allocator/spin_lock.cc",
+    ],
+}

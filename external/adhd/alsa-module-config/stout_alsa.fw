@@ -1,0 +1,9 @@
+[codec]
+0x10ec0269 0x17aa21fe 0
+
+[model]
+stout
+
+[hint]
+auto_mute = no
+auto_mic = no

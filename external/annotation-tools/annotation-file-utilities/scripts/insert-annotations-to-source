@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# Insert annotations (from an annotation file) into a Java source file.
+# For usage information, run: insert-annotations-to-source --help
+# See the Annotation File Utilities documentation for more information.
+
+# If the very first argument is "--debug-script", debug this script (but
+# don't pass --debug-script to the underlying program).
+DEBUG=0
+if [ "$1" = "--debug-script" ]; then
+  DEBUG=1
+  shift 1
+fi
+
+AFU=${AFU:-$(dirname $0)/..}
+AFU=`cd \`dirname $0\`/.. && pwd`
+ANNOTATION_FILE_UTILS=${ANNOTATION_FILE_UTILS:-${AFU}/bin:${AFU}/../scene-lib/bin:${AFU}/../asmx/bin:${AFU}/annotation-file-utilities.jar}
+LANGTOOLS=${LANGTOOLS:-${AFU}/../../jsr308-langtools}
+JAVAC_JAR=${JAVAC_JAR:-${LANGTOOLS}/dist/lib/javac.jar}
+
+if [ "$DEBUG" = "1" ]; then
+  echo "--- start of insert-annotations-to-source debugging output"
+  echo "AFU=${AFU}"
+  echo "ANNOTATION_FILE_UTILS=${ANNOTATION_FILE_UTILS}"
+  echo "LANGTOOLS=${LANGTOOLS}"
+  echo "JAVAC_JAR=${JAVAC_JAR}"
+  # Keep this in sync with the actual command below.
+  echo java -ea -Xmx512m -classpath ${JAVAC_JAR}:${ANNOTATION_FILE_UTILS}:${CLASSPATH} annotator.Main "$@"
+  echo "--- end of insert-annotations-to-source debugging output"
+fi
+
+# Augment, don't replace, CLASSPATH, so as to find user files.
+java -ea -Xmx512m -classpath ${JAVAC_JAR}:${ANNOTATION_FILE_UTILS}:${CLASSPATH} annotator.Main "$@"

@@ -1,0 +1,22 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+NAME = "platform_BootPerfServer.shard"
+AUTHOR = "Chrome OS Team"
+TIME = "SHORT"
+TEST_CATEGORY = "infra"
+TEST_CLASS = "platform"
+TEST_TYPE = "server"
+
+DOC = """This test reboots the client on a shard. When a shard is deleted,
+the client that is assigned to it will be rebooted, which guarantees that
+the client has a healthy testing history, and is ready for continuous jobs.
+"""
+
+
+def run_bootperf(machine):
+    host = hosts.create_host(machine)
+    job.run_test("platform_BootPerfServer", host=host)
+
+parallel_simple(run_bootperf, machines)

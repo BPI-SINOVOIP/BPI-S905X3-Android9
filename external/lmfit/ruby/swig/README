@@ -1,0 +1,29 @@
+SWIG wrapper for lmfit
+
+prepared as follows:
+
+$
+vi lmfit-ruby.i
+swig -ruby lmfit-ruby.i 
+ruby extconf.rb
+make
+#
+make install
+
+test:
+
+$
+irb
+require 'lmfit'
+include Lmfit
+
+a = new_doubleArray(3)
+doubleArray_setitem(a,0,1)
+doubleArray_setitem(a,1,3)
+doubleArray_setitem(a,2,5)
+Lmfit.lm_enorm(3,a)
+
+
+def f(t,p)
+    return p[0]+p[1]*t
+end

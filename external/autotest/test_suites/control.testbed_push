@@ -1,0 +1,30 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "Chrome OS Team"
+NAME = "testbed_push"
+PURPOSE = "To be run while testing the infrastruture for testbed support."
+
+TIME = "SHORT"
+TEST_CATEGORY = "General"
+TEST_CLASS = "suite"
+TEST_TYPE = "Server"
+
+DOC = """
+This is a test suite to verify infrastructure support for testbed.  It runs
+a suite of testbed tests to ensure functions like:
+1. Create testbed object and run adb command to connect to each device.
+2. Suite and provision support for testbed.
+3. Other testbed/adb_host operations like installing apk.
+"""
+
+import common
+from autotest_lib.server.cros.dynamic_suite import dynamic_suite
+
+args_dict['add_experimental'] = True
+args_dict['name'] = NAME
+args_dict['max_runtime_mins'] = 30
+args_dict['job'] = job
+
+dynamic_suite.reimage_and_run(**args_dict)

@@ -1,0 +1,151 @@
+03-13 22:29:05 I/ModuleRepo: chromeos2-row4-rack7-host11:22 running 1 modules, expected to complete in 3m 15s
+03-13 22:29:05 I/CompatibilityTest: Starting 1 module on chromeos2-row4-rack7-host11:22
+03-13 22:29:05 D/ConfigurationFactory: Loading configuration 'system-status-checkers'
+03-13 22:29:05 I/CompatibilityTest: Running system status checker before module execution: CtsSecurityTestCases
+03-13 22:29:05 D/ModuleDef: Preparer: ApkInstaller
+03-13 22:29:05 D/TestAppInstallSetup: Installing apk from /tmp/autotest-tradefed-install_NSzXkp/6788ea8941996ab9d36f560c87b93484/android-cts-7.1_r3-linux_x86-arm/android-cts/tools/../../android-cts/testcases/CtsSecurityTestCases.apk ...
+03-13 22:29:05 D/CtsSecurityTestCases.apk: Uploading CtsSecurityTestCases.apk onto device 'chromeos2-row4-rack7-host11:22'
+03-13 22:29:05 D/Device: Uploading file onto device 'chromeos2-row4-rack7-host11:22'
+03-13 22:29:14 D/RunUtil: Running command with timeout: 60000ms
+03-13 22:29:14 D/RunUtil: Running [aapt, dump, badging, /tmp/autotest-tradefed-install_NSzXkp/6788ea8941996ab9d36f560c87b93484/android-cts-7.1_r3-linux_x86-arm/android-cts/tools/../../android-cts/testcases/CtsSecurityTestCases.apk]
+03-13 22:29:15 D/ModuleDef: Test: AndroidJUnitTest
+03-13 22:29:15 W/InstrumentationTest: shell-timeout should be larger than test-timeout 900000; NOTE: extending shell-timeout to 990000, please consider fixing this!
+03-13 22:29:15 D/InstrumentationTest: Collecting test info for android.security.cts on device chromeos2-row4-rack7-host11:22
+03-13 22:29:15 I/RemoteAndroidTest: Running am instrument -w -r --abi armeabi-v7a  -e testFile /data/local/tmp/ajur/includes.txt -e debug false -e log true -e notTestFile /data/local/tmp/ajur/excludes.txt -e timeout_msec 900000 android.security.cts/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack7-host11:22
+03-13 22:29:18 I/RemoteAndroidTest: Running am instrument -w -r --abi armeabi-v7a  -e testFile /data/local/tmp/ajur/includes.txt -e debug false -e log false -e notTestFile /data/local/tmp/ajur/excludes.txt -e timeout_msec 900000 android.security.cts/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack7-host11:22
+03-13 22:29:19 D/ModuleListener: ModuleListener.testRunStarted(android.security.cts, 110)
+03-13 22:29:19 I/ConsoleReporter: [chromeos2-row4-rack7-host11:22] Starting armeabi-v7a CtsSecurityTestCases with 110 tests
+03-13 22:29:19 D/ModuleListener: ModuleListener.testStarted(android.security.cts.ARTBootASLRTest#testARTASLR)
+03-13 22:29:19 D/ModuleListener: ModuleListener.testEnded(android.security.cts.ARTBootASLRTest#testARTASLR, {})
+03-13 22:29:19 I/ConsoleReporter: [1/110 armeabi-v7a CtsSecurityTestCases chromeos2-row4-rack7-host11:22] android.security.cts.ARTBootASLRTest#testARTASLR pass
+03-13 22:29:19 D/ModuleListener: ModuleListener.testStarted(android.security.cts.ActivityManagerTest#testActivityManager_injectInputEvents)
+03-13 22:29:19 D/ModuleListener: ModuleListener.testEnded(android.security.cts.ActivityManagerTest#testActivityManager_injectInputEvents, {})
+03-13 22:29:19 I/ConsoleReporter: [2/110 armeabi-v7a CtsSecurityTestCases chromeos2-row4-rack7-host11:22] android.security.cts.ActivityManagerTest#testActivityManager_injectInputEvents pass
+03-13 22:29:19 D/ModuleListener: ModuleListener.testStarted(android.security.cts.AllocatePixelRefIntOverflowTest#testAllocateJavaPixelRefIntOverflow)
+03-13 22:29:19 D/ModuleListener: ModuleListener.testEnded(android.security.cts.AllocatePixelRefIntOverflowTest#testAllocateJavaPixelRefIntOverflow, {})
+03-13 22:29:19 I/ConsoleReporter: [3/110 armeabi-v7a CtsSecurityTestCases chromeos2-row4-rack7-host11:22] android.security.cts.AllocatePixelRefIntOverflowTest#testAllocateJavaPixelRefIntOverflow pass
+03-13 22:29:20 D/ModuleListener: ModuleListener.testStarted(android.security.cts.AslrTest#testOneExecutableIsPie)
+03-13 22:29:20 D/ModuleListener: ModuleListener.testEnded(android.security.cts.AslrTest#testOneExecutableIsPie, {})
+03-13 22:29:20 I/ConsoleReporter: [4/110 armeabi-v7a CtsSecurityTestCases chromeos2-row4-rack7-host11:22] android.security.cts.AslrTest#testOneExecutableIsPie pass
+03-13 22:29:20 D/ModuleListener: ModuleListener.testStarted(android.security.cts.AslrTest#testRandomization)
+03-13 22:29:38 D/ModuleListener: ModuleListener.testEnded(android.security.cts.AslrTest#testRandomization, {})
+03-13 22:29:38 I/ConsoleReporter: [5/110 armeabi-v7a CtsSecurityTestCases chromeos2-row4-rack7-host11:22] android.security.cts.AslrTest#testRandomization pass
+03-13 22:29:38 D/ModuleListener: ModuleListener.testStarted(android.security.cts.AslrTest#testVaRandomize)
+03-13 22:29:38 D/ModuleListener: ModuleListener.testEnded(android.security.cts.AslrTest#testVaRandomize, {})
+03-13 22:29:38 I/ConsoleReporter: [6/110 armeabi-v7a CtsSecurityTestCases chromeos2-row4-rack7-host11:22] android.security.cts.AslrTest#testVaRandomize pass
+03-13 22:29:38 D/ModuleListener: ModuleListener.testStarted(android.security.cts.BannedFilesTest#testNoCmdClient)
+03-13 22:29:38 D/ModuleListener: ModuleListener.testEnded(android.security.cts.BannedFilesTest#testNoCmdClient, {})
+03-13 22:29:38 I/ConsoleReporter: [7/110 armeabi-v7a CtsSecurityTestCases chromeos2-row4-rack7-host11:22] android.security.cts.BannedFilesTest#testNoCmdClient pass
+03-13 22:29:38 D/ModuleListener: ModuleListener.testStarted(android.security.cts.BannedFilesTest#testNoEnableRoot)
+03-13 22:29:38 D/ModuleListener: ModuleListener.testEnded(android.security.cts.BannedFilesTest#testNoEnableRoot, {})
+03-13 22:29:38 I/ConsoleReporter: [8/110 armeabi-v7a CtsSecurityTestCases chromeos2-row4-rack7-host11:22] android.security.cts.BannedFilesTest#testNoEnableRoot pass
+03-13 22:29:38 D/ModuleListener: ModuleListener.testStarted(android.security.cts.BannedFilesTest#testNoRootCmdSocket)
+03-13 22:29:39 D/ModuleListener: ModuleListener.testEnded(android.security.cts.BannedFilesTest#testNoRootCmdSocket, {})
+03-13 22:29:39 I/ConsoleReporter: [9/110 armeabi-v7a CtsSecurityTestCases chromeos2-row4-rack7-host11:22] android.security.cts.BannedFilesTest#testNoRootCmdSocket pass
+03-13 22:29:39 D/ModuleListener: ModuleListener.testStarted(android.security.cts.BannedFilesTest#testNoSetuidIp)
+03-13 22:29:39 D/ModuleListener: ModuleListener.testEnded(android.security.cts.BannedFilesTest#testNoSetuidIp, {})
+03-13 22:29:39 I/ConsoleReporter: [10/110 armeabi-v7a CtsSecurityTestCases chromeos2-row4-rack7-host11:22] android.security.cts.BannedFilesTest#testNoSetuidIp pass
+03-13 22:29:39 D/ModuleListener: ModuleListener.testStarted(android.security.cts.BannedFilesTest#testNoSetuidTcpdump)
+03-13 22:29:39 D/ModuleListener: ModuleListener.testEnded(android.security.cts.BannedFilesTest#testNoSetuidTcpdump, {})
+03-13 22:29:39 I/ConsoleReporter: [11/110 armeabi-v7a CtsSecurityTestCases chromeos2-row4-rack7-host11:22] android.security.cts.BannedFilesTest#testNoSetuidTcpdump pass
+03-13 22:29:39 D/ModuleListener: ModuleListener.testStarted(android.security.cts.BannedFilesTest#testNoSu)
+03-13 22:29:39 D/ModuleListener: ModuleListener.testEnded(android.security.cts.BannedFilesTest#testNoSu, {})
+03-13 22:29:39 I/ConsoleReporter: [12/110 armeabi-v7a CtsSecurityTestCases chromeos2-row4-rack7-host11:22] android.security.cts.BannedFilesTest#testNoSu pass
+03-13 22:29:39 D/ModuleListener: ModuleListener.testStarted(android.security.cts.BannedFilesTest#testNoSuInPath)
+03-13 22:29:39 D/ModuleListener: ModuleListener.testEnded(android.security.cts.BannedFilesTest#testNoSuInPath, {})
+03-13 22:29:39 I/ConsoleReporter: [13/110 armeabi-v7a CtsSecurityTestCases chromeos2-row4-rack7-host11:22] android.security.cts.BannedFilesTest#testNoSuInPath pass
+03-13 22:29:39 D/ModuleListener: ModuleListener.testStarted(android.security.cts.BannedFilesTest#testNoSunxiDebug)
+03-13 22:29:39 D/ModuleListener: ModuleListener.testEnded(android.security.cts.BannedFilesTest#testNoSunxiDebug, {})
+03-13 22:29:39 I/ConsoleReporter: [14/110 armeabi-v7a CtsSecurityTestCases chromeos2-row4-rack7-host11:22] android.security.cts.BannedFilesTest#testNoSunxiDebug pass
+03-13 22:29:39 D/ModuleListener: ModuleListener.testStarted(android.security.cts.BannedFilesTest#testNoSyncAgent)
+03-13 22:29:39 D/ModuleListener: ModuleListener.testEnded(android.security.cts.BannedFilesTest#testNoSyncAgent, {})
+03-13 22:29:39 I/ConsoleReporter: [15/110 armeabi-v7a CtsSecurityTestCases chromeos2-row4-rack7-host11:22] android.security.cts.BannedFilesTest#testNoSyncAgent pass
+03-13 22:29:39 D/ModuleListener: ModuleListener.testStarted(android.security.cts.BannedFilesTest#testNoSystemCmdSocket)
+03-13 22:29:39 D/ModuleListener: ModuleListener.testEnded(android.security.cts.BannedFilesTest#testNoSystemCmdSocket, {})
+03-13 22:29:39 I/ConsoleReporter: [16/110 armeabi-v7a CtsSecurityTestCases chromeos2-row4-rack7-host11:22] android.security.cts.BannedFilesTest#testNoSystemCmdSocket pass
+03-13 22:29:39 D/ModuleListener: ModuleListener.testStarted(android.security.cts.BitmapFactoryDecodeStreamTest#testNinePatchHeapOverflow)
+03-13 22:29:39 D/ModuleListener: ModuleListener.testEnded(android.security.cts.BitmapFactoryDecodeStreamTest#testNinePatchHeapOverflow, {})
+03-13 22:29:39 I/ConsoleReporter: [17/110 armeabi-v7a CtsSecurityTestCases chromeos2-row4-rack7-host11:22] android.security.cts.BitmapFactoryDecodeStreamTest#testNinePatchHeapOverflow pass
+03-13 22:29:39 D/ModuleListener: ModuleListener.testStarted(android.security.cts.BrowserTest#testBrowserPrivateDataAccess)
+03-13 22:29:44 D/ModuleListener: ModuleListener.testEnded(android.security.cts.BrowserTest#testBrowserPrivateDataAccess, {})
+03-13 22:29:44 I/ConsoleReporter: [18/110 armeabi-v7a CtsSecurityTestCases chromeos2-row4-rack7-host11:22] android.security.cts.BrowserTest#testBrowserPrivateDataAccess pass
+03-13 22:29:44 D/ModuleListener: ModuleListener.testStarted(android.security.cts.BrowserTest#testTabExhaustion)
+03-13 22:29:44 D/ModuleListener: ModuleListener.testEnded(android.security.cts.BrowserTest#testTabExhaustion, {})
+03-13 22:29:44 I/ConsoleReporter: [19/110 armeabi-v7a CtsSecurityTestCases chromeos2-row4-rack7-host11:22] android.security.cts.BrowserTest#testTabExhaustion pass
+03-13 22:29:44 D/ModuleListener: ModuleListener.testStarted(android.security.cts.BrowserTest#testTabReuse)
+03-13 22:29:44 D/ModuleListener: ModuleListener.testEnded(android.security.cts.BrowserTest#testTabReuse, {})
+03-13 22:29:44 I/ConsoleReporter: [20/110 armeabi-v7a CtsSecurityTestCases chromeos2-row4-rack7-host11:22] android.security.cts.BrowserTest#testTabReuse pass
+03-13 22:29:44 D/ModuleListener: ModuleListener.testStarted(android.security.cts.CertificateTest#testBlockCertificates)
+03-13 22:29:44 D/ModuleListener: ModuleListener.testEnded(android.security.cts.CertificateTest#testBlockCertificates, {})
+03-13 22:29:44 I/ConsoleReporter: [21/110 armeabi-v7a CtsSecurityTestCases chromeos2-row4-rack7-host11:22] android.security.cts.CertificateTest#testBlockCertificates pass
+03-13 22:29:44 D/ModuleListener: ModuleListener.testStarted(android.security.cts.CertificateTest#testNoAddedCertificates)
+03-13 22:29:45 D/ModuleListener: ModuleListener.testEnded(android.security.cts.CertificateTest#testNoAddedCertificates, {})
+03-13 22:29:45 I/ConsoleReporter: [22/110 armeabi-v7a CtsSecurityTestCases chromeos2-row4-rack7-host11:22] android.security.cts.CertificateTest#testNoAddedCertificates pass
+03-13 22:29:45 D/ModuleListener: ModuleListener.testStarted(android.security.cts.CertificateTest#testNoRemovedCertificates)
+03-13 22:29:45 D/ModuleListener: ModuleListener.testEnded(android.security.cts.CertificateTest#testNoRemovedCertificates, {})
+03-13 22:29:45 I/ConsoleReporter: [23/110 armeabi-v7a CtsSecurityTestCases chromeos2-row4-rack7-host11:22] android.security.cts.CertificateTest#testNoRemovedCertificates pass
+03-13 22:29:45 D/ModuleListener: ModuleListener.testStarted(android.security.cts.CharDeviceTest#testExynosKernelMemoryRead)
+03-13 22:29:45 D/ModuleListener: ModuleListener.testEnded(android.security.cts.CharDeviceTest#testExynosKernelMemoryRead, {})
+03-13 22:29:45 I/ConsoleReporter: [24/110 armeabi-v7a CtsSecurityTestCases chromeos2-row4-rack7-host11:22] android.security.cts.CharDeviceTest#testExynosKernelMemoryRead pass
+03-13 22:29:45 D/ModuleListener: ModuleListener.testStarted(android.security.cts.CharDeviceTest#testExynosRootingVuln)
+03-13 22:29:45 D/ModuleListener: ModuleListener.testEnded(android.security.cts.CharDeviceTest#testExynosRootingVuln, {})
+03-13 22:29:45 I/ConsoleReporter: [25/110 armeabi-v7a CtsSecurityTestCases chromeos2-row4-rack7-host11:22] android.security.cts.CharDeviceTest#testExynosRootingVuln pass
+03-13 22:29:45 D/ModuleListener: ModuleListener.testStarted(android.security.cts.ClonedSecureRandomTest#testCheckForDuplicateOutput)
+03-13 22:30:46 D/ModuleListener: ModuleListener.testEnded(android.security.cts.ClonedSecureRandomTest#testCheckForDuplicateOutput, {})
+03-13 22:30:46 I/ConsoleReporter: [26/110 armeabi-v7a CtsSecurityTestCases chromeos2-row4-rack7-host11:22] android.security.cts.ClonedSecureRandomTest#testCheckForDuplicateOutput pass
+03-13 22:30:46 D/ModuleListener: ModuleListener.testStarted(android.security.cts.ConscryptIntermediateVerificationTest#testIntermediateVerification)
+03-13 22:30:46 D/ModuleListener: ModuleListener.testEnded(android.security.cts.ConscryptIntermediateVerificationTest#testIntermediateVerification, {})
+03-13 22:30:46 I/ConsoleReporter: [27/110 armeabi-v7a CtsSecurityTestCases chromeos2-row4-rack7-host11:22] android.security.cts.ConscryptIntermediateVerificationTest#testIntermediateVerification pass
+03-13 22:30:46 D/ModuleListener: ModuleListener.testStarted(android.security.cts.DeviceIdleControllerTest#testAddWhiteList)
+03-13 22:31:04 D/BackgroundDeviceAction: Sleep for 5000 before starting logcat for chromeos2-row4-rack7-host11:22.
+03-13 22:31:04 I/InstrumentationResultParser: test run failed: 'Test run failed to complete. Expected 110 tests, received 27'
+03-13 22:31:04 D/ModuleListener: ModuleListener.testFailed(android.security.cts.DeviceIdleControllerTest#testAddWhiteList, Test failed to run to completion. Reason: 'Test run failed to complete. Expected 110 tests, received 27'. Check device logcat for details)
+03-13 22:31:04 I/ConsoleReporter: [28/110 armeabi-v7a CtsSecurityTestCases chromeos2-row4-rack7-host11:22] android.security.cts.DeviceIdleControllerTest#testAddWhiteList fail: Test failed to run to completion. Reason: 'Test run failed to complete. Expected 110 tests, received 27'. Check device logcat for details
+03-13 22:31:04 I/FailureListener: FailureListener.testFailed android.security.cts.DeviceIdleControllerTest#testAddWhiteList false true false
+03-13 22:31:06 D/FileUtil: Creating temp file at /tmp/autotest-tradefed-install_NSzXkp/6788ea8941996ab9d36f560c87b93484/android-cts-7.1_r3-linux_x86-arm/android-cts/tools/../../android-cts/logs/2017.03.13_22.28.26 with prefix "android.security.cts.DeviceIdleControllerTest#testAddWhiteList-logcat_" suffix ".zip"
+03-13 22:31:06 I/LogFileSaver: Saved log file /tmp/autotest-tradefed-install_NSzXkp/6788ea8941996ab9d36f560c87b93484/android-cts-7.1_r3-linux_x86-arm/android-cts/tools/../../android-cts/logs/2017.03.13_22.28.26/android.security.cts.DeviceIdleControllerTest#testAddWhiteList-logcat_7952032834779047236.zip
+03-13 22:31:06 I/ResultReporter: Saved logs for android.security.cts.DeviceIdleControllerTest#testAddWhiteList-logcat in /tmp/autotest-tradefed-install_NSzXkp/6788ea8941996ab9d36f560c87b93484/android-cts-7.1_r3-linux_x86-arm/android-cts/tools/../../android-cts/logs/2017.03.13_22.28.26/android.security.cts.DeviceIdleControllerTest#testAddWhiteList-logcat_7952032834779047236.zip
+03-13 22:31:06 D/FileUtil: Creating temp file at /tmp/3764431/cts/inv_1639864655957132693 with prefix "android.security.cts.DeviceIdleControllerTest#testAddWhiteList-logcat_" suffix ".zip"
+03-13 22:31:06 D/RunUtil: Running command with timeout: 10000ms
+03-13 22:31:06 D/RunUtil: Running [chmod]
+03-13 22:31:06 D/RunUtil: [chmod] command failed. return code 1
+03-13 22:31:06 D/FileUtil: Attempting to chmod /tmp/3764431/cts/inv_1639864655957132693/android.security.cts.DeviceIdleControllerTest#testAddWhiteList-logcat_6633338750974835141.zip to ug+rwx
+03-13 22:31:06 D/RunUtil: Running command with timeout: 10000ms
+03-13 22:31:06 D/RunUtil: Running [chmod, ug+rwx, /tmp/3764431/cts/inv_1639864655957132693/android.security.cts.DeviceIdleControllerTest#testAddWhiteList-logcat_6633338750974835141.zip]
+03-13 22:31:06 I/FileSystemLogSaver: Saved log file /tmp/3764431/cts/inv_1639864655957132693/android.security.cts.DeviceIdleControllerTest#testAddWhiteList-logcat_6633338750974835141.zip
+03-13 22:31:06 D/ModuleListener: ModuleListener.testEnded(android.security.cts.DeviceIdleControllerTest#testAddWhiteList, {})
+03-13 22:31:06 D/ModuleListener: ModuleListener.testRunFailed(Test run failed to complete. Expected 110 tests, received 27)
+03-13 22:31:06 I/ConsoleReporter: [chromeos2-row4-rack7-host11:22] Test run failed to complete. Expected 110 tests, received 27
+03-13 22:31:06 D/ModuleListener: ModuleListener.testRunEnded(0, {})
+03-13 22:31:06 I/ConsoleReporter: [chromeos2-row4-rack7-host11:22] armeabi-v7a CtsSecurityTestCases failed in 0 ms. 27 passed, 1 failed, 82 not executed
+03-13 22:31:06 I/AndroidNativeDeviceStateMonitor: Waiting for device chromeos2-row4-rack7-host11:22 to be ONLINE; it is currently NOT_AVAILABLE...
+03-13 22:31:09 D/BackgroundDeviceAction: Waiting for device chromeos2-row4-rack7-host11:22 online before starting.
+03-13 22:31:11 I/AndroidNativeDevice: Attempting recovery on chromeos2-row4-rack7-host11:22
+03-13 22:31:11 I/WaitDeviceRecovery: Pausing for 5000 for chromeos2-row4-rack7-host11:22 to recover
+03-13 22:31:16 I/AndroidNativeDeviceStateMonitor: Waiting for device chromeos2-row4-rack7-host11:22 to be ONLINE; it is currently NOT_AVAILABLE...
+03-13 22:32:16 W/TestInvocation: Invocation did not complete due to device chromeos2-row4-rack7-host11:22 becoming not available. Reason: Could not find device chromeos2-row4-rack7-host11:22
+03-13 22:32:16 W/ResultReporter: Invocation failed: com.android.tradefed.device.DeviceNotAvailableException: Could not find device chromeos2-row4-rack7-host11:22
+03-13 22:32:16 D/RunUtil: run interrupt allowed: false
+03-13 22:32:16 W/AndroidNativeDevice: AdbCommandRejectedException (device 'chromeos2-row4-rack7-host11:22' not found) when attempting shell ls "/sdcard/report-log-files/" on device chromeos2-row4-rack7-host11:22
+03-13 22:32:16 I/AndroidNativeDevice: Skipping recovery on chromeos2-row4-rack7-host11:22
+03-13 22:32:17 W/AndroidNativeDevice: AdbCommandRejectedException (device 'chromeos2-row4-rack7-host11:22' not found) when attempting shell ls "/sdcard/report-log-files/" on device chromeos2-row4-rack7-host11:22
+03-13 22:32:17 I/AndroidNativeDevice: Skipping recovery on chromeos2-row4-rack7-host11:22
+03-13 22:32:18 W/AndroidNativeDevice: AdbCommandRejectedException (device 'chromeos2-row4-rack7-host11:22' not found) when attempting shell ls "/sdcard/report-log-files/" on device chromeos2-row4-rack7-host11:22
+03-13 22:32:18 I/AndroidNativeDevice: Skipping recovery on chromeos2-row4-rack7-host11:22
+03-13 22:32:19 E/CollectorUtil: Caught exception during pull.
+03-13 22:32:19 E/CollectorUtil: Attempted shell ls "/sdcard/report-log-files/" multiple times on device chromeos2-row4-rack7-host11:22 without communication success. Aborting.
+com.android.tradefed.device.DeviceUnresponsiveException: Attempted shell ls "/sdcard/report-log-files/" multiple times on device chromeos2-row4-rack7-host11:22 without communication success. Aborting.
+	at com.android.tradefed.device.AndroidNativeDevice.performDeviceAction(AndroidNativeDevice.java:1550)
+	at com.android.tradefed.device.AndroidNativeDevice.executeShellCommand(AndroidNativeDevice.java:525)
+	at com.android.tradefed.device.AndroidNativeDevice.executeShellCommand(AndroidNativeDevice.java:565)
+	at com.android.tradefed.device.AndroidNativeDevice.doesFileExist(AndroidNativeDevice.java:893)
+	at com.android.compatibility.common.tradefed.util.CollectorUtil.pullFromDevice(CollectorUtil.java:55)
+	at com.android.compatibility.common.tradefed.targetprep.ReportLogCollector.tearDown(ReportLogCollector.java:98)
+	at com.android.tradefed.invoker.TestInvocation.doTeardown(TestInvocation.java:524)
+	at com.android.tradefed.invoker.TestInvocation.performInvocation(TestInvocation.java:451)
+	at com.android.tradefed.invoker.TestInvocation.invoke(TestInvocation.java:166)
+	at com.android.tradefed.command.CommandScheduler$InvocationThread.run(CommandScheduler.java:471)
+03-13 22:32:19 I/ResultReporter: Invocation finished in 3m 53s. PASSED: 27, FAILED: 1, NOT EXECUTED: 82, MODULES: 0 of 1
+03-13 22:32:28 I/ResultReporter: Test Result: /tmp/autotest-tradefed-install_NSzXkp/6788ea8941996ab9d36f560c87b93484/android-cts-7.1_r3-linux_x86-arm/android-cts/results/2017.03.13_22.28.26/test_result_failures.html
+03-13 22:32:28 I/ResultReporter: Full Result: /tmp/autotest-tradefed-install_NSzXkp/6788ea8941996ab9d36f560c87b93484/android-cts-7.1_r3-linux_x86-arm/android-cts/results/2017.03.13_22.28.26.zip
+

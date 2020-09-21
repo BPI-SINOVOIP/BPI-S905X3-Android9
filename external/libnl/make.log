@@ -1,0 +1,355 @@
+find: `vendor': No such file or directory
+============================================
+PLATFORM_VERSION_CODENAME=REL
+PLATFORM_VERSION=7.0
+TARGET_PRODUCT=aosp_bullhead
+TARGET_BUILD_VARIANT=eng
+TARGET_BUILD_TYPE=release
+TARGET_BUILD_APPS=
+TARGET_ARCH=arm64
+TARGET_ARCH_VARIANT=armv8-a
+TARGET_CPU_VARIANT=cortex-a53
+TARGET_2ND_ARCH=arm
+TARGET_2ND_ARCH_VARIANT=armv7-a-neon
+TARGET_2ND_CPU_VARIANT=cortex-a53.a57
+HOST_ARCH=x86_64
+HOST_2ND_ARCH=x86
+HOST_OS=linux
+HOST_OS_EXTRA=Linux-3.13.0-95-generic-x86_64-with-Ubuntu-14.04-trusty
+HOST_CROSS_OS=windows
+HOST_CROSS_ARCH=x86
+HOST_CROSS_2ND_ARCH=x86_64
+HOST_BUILD_TYPE=release
+BUILD_ID=NYC
+OUT_DIR=out
+AUX_OS_VARIANT_LIST=
+============================================
+make: Entering directory `/usr/local/google/home/pstew/build/aosp'
+ninja: no work to do.
+ninja: no work to do.
+Running kati to generate build-aosp_bullhead-mmm-external_libnl_Android.mk.ninja...
+No need to regenerate ninja file
+Starting build with ninja
+ninja: Entering directory `.'
+[  1% 1/68] target thumb C: libnl_32 <= external/libnl/lib/cache.c
+[  2% 2/68] target thumb C: libnl_32 <= external/libnl/lib/data.c
+external/libnl/lib/data.c:119:24: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+                        memcpy(data->d_data + data->d_size, buf, size);
+                               ~~~~~~~~~~~~ ^
+external/libnl/lib/data.c:121:24: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+                        memset(data->d_data + data->d_size, 0, size);
+                               ~~~~~~~~~~~~ ^
+2 warnings generated.
+[  4% 3/68] target thumb C: libnl_32 <= external/libnl/lib/nl.c
+external/libnl/lib/nl.c:694:18: warning: comparison of integers of different signs: '__kernel_size_t' (aka 'unsigned int') and 'ssize_t' (aka 'int') [-Wsign-compare]
+        if (iov.iov_len < n || (msg.msg_flags & MSG_TRUNC)) {
+            ~~~~~~~~~~~ ^ ~
+external/libnl/lib/nl.c:786:29: warning: missing field 'nl_pad' initializer [-Wmissing-field-initializers]
+        struct sockaddr_nl nla = {0};
+                                   ^
+external/libnl/lib/nl.c:917:23: warning: comparison of integers of different signs: '__u32' (aka 'unsigned int') and 'int' [-Wsign-compare]
+                        if (hdr->nlmsg_len < nlmsg_size(sizeof(*e))) {
+                            ~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~~~~~~~~~~~~
+3 warnings generated.
+[  5% 4/68] target thumb C: libnl_32 <= external/libnl/lib/cache_mngr.c
+[  7% 5/68] target thumb C: libnl_32 <= external/libnl/lib/socket.c
+[  8% 6/68] target thumb C: libnl_32 <= external/libnl/lib/addr.c
+external/libnl/lib/addr.c:707:14: warning: comparison of integers of different signs: 'socklen_t' (aka 'int') and 'unsigned int' [-Wsign-compare]
+                if (*salen < sizeof(*sai))
+                    ~~~~~~ ^ ~~~~~~~~~~~~
+external/libnl/lib/addr.c:719:14: warning: comparison of integers of different signs: 'socklen_t' (aka 'int') and 'unsigned int' [-Wsign-compare]
+                if (*salen < sizeof(*sa6))
+                    ~~~~~~ ^ ~~~~~~~~~~~~
+external/libnl/lib/addr.c:990:24: warning: comparison of integers of different signs: 'int' and 'unsigned int' [-Wsign-compare]
+        if (addr->a_prefixlen != (8 * addr->a_len)) {
+            ~~~~~~~~~~~~~~~~~ ^   ~~~~~~~~~~~~~~~
+3 warnings generated.
+[ 10% 7/68] target thumb C: libnl_32 <= external/libnl/lib/fib_lookup/lookup.c
+external/libnl/lib/fib_lookup/lookup.c:215:30: warning: missing field 'fl_fwmark' initializer [-Wmissing-field-initializers]
+        struct fib_result_nl fr = {0};
+                                    ^
+1 warning generated.
+[ 11% 8/68] target thumb C: libnl_32 <= external/libnl/lib/fib_lookup/request.c
+[ 13% 9/68] target thumb C: libnl_32 <= external/libnl/lib/object.c
+external/libnl/lib/object.c:134:22: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+                memcpy((void *)new + doff, (void *)obj + doff, size);
+                       ~~~~~~~~~~~ ^
+external/libnl/lib/object.c:134:42: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+                memcpy((void *)new + doff, (void *)obj + doff, size);
+                                           ~~~~~~~~~~~ ^
+2 warnings generated.
+[ 14% 10/68] target thumb C: libnl_32 <= external/libnl/lib/msg.c
+external/libnl/lib/msg.c:168:21: warning: comparison of integers of different signs: 'const __u32' (aka 'const unsigned int') and 'int' [-Wsign-compare]
+        if (nlh->nlmsg_len < nlmsg_msg_size(hdrlen))
+            ~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~~~~~~~~~~~~
+external/libnl/lib/msg.c:183:18: warning: comparison of integers of different signs: 'const __u32' (aka 'const unsigned int') and 'int' [-Wsign-compare]
+                nlh->nlmsg_len <= remaining);
+                ~~~~~~~~~~~~~~ ^  ~~~~~~~~~
+external/libnl/lib/msg.c:367:10: warning: comparison of integers of different signs: 'size_t' (aka 'unsigned int') and 'int' [-Wsign-compare]
+        if (max < nlmsg_total_size(0))
+            ~~~ ^ ~~~~~~~~~~~~~~~~~~~
+external/libnl/lib/msg.c:418:6: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+        buf += nlmsg_len;
+        ~~~ ^
+external/libnl/lib/msg.c:422:14: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+                memset(buf + len, 0, tlen - len);
+                       ~~~ ^
+external/libnl/lib/msg.c:842:7: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+        data += GENL_HDRLEN;
+        ~~~~ ^
+external/libnl/lib/msg.c:855:9: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+                        data += hdrsize;
+                        ~~~~ ^
+external/libnl/lib/msg.c:836:18: warning: comparison of integers of different signs: 'int' and 'unsigned int' [-Wsign-compare]
+        if (*payloadlen < GENL_HDRLEN)
+            ~~~~~~~~~~~ ^ ~~~~~~~~~~~
+external/libnl/lib/msg.c:897:32: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+                        dump_hex(ofd, nla_data(nla) + alen,
+                                      ~~~~~~~~~~~~~ ^
+external/libnl/lib/msg.c:920:4: warning: format specifies type 'char *' but the argument has type 'int' [-Wformat]
+                        strerror_r(-err->error, buf, sizeof(buf)));
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+external/libnl/lib/msg.c:915:21: warning: comparison of integers of different signs: 'int' and 'unsigned int' [-Wsign-compare]
+        if (nlmsg_len(hdr) >= sizeof(*err)) {
+            ~~~~~~~~~~~~~~ ^  ~~~~~~~~~~~~
+11 warnings generated.
+[ 16% 11/68] target thumb C: libnl_32 <= external/libnl/lib/attr.c
+external/libnl/lib/attr.c:150:19: warning: comparison of integers of different signs: 'int' and 'unsigned int' [-Wsign-compare]
+        return remaining >= sizeof(*nla) &&
+               ~~~~~~~~~ ^  ~~~~~~~~~~~~
+external/libnl/lib/attr.c:208:19: warning: comparison of integers of different signs: 'int' and 'unsigned int' [-Wsign-compare]
+        if (nla_len(nla) < minlen)
+            ~~~~~~~~~~~~ ^ ~~~~~~
+external/libnl/lib/attr.c:463:11: warning: comparison of integers of different signs: 'int' and 'size_t' (aka 'unsigned int') [-Wsign-compare]
+        if (tlen > msg->nm_size)
+            ~~~~ ^ ~~~~~~~~~~~~
+external/libnl/lib/attr.c:653:26: warning: comparison of integers of different signs: 'int' and 'unsigned int' [-Wsign-compare]
+        if (nla && nla_len(nla) >= sizeof(tmp))
+                   ~~~~~~~~~~~~ ^  ~~~~~~~~~~~
+external/libnl/lib/attr.c:815:41: warning: arithmetic on pointers to void is a GNU extension [-Wpointer-arith]
+        len = (void *) nlmsg_tail(msg->nm_nlh) - (void *) start;
+              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~~~~
+external/libnl/lib/attr.c:863:41: warning: arithmetic on pointers to void is a GNU extension [-Wpointer-arith]
+        len = (void *) nlmsg_tail(msg->nm_nlh) - (void *) attr;
+              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~~~
+6 warnings generated.
+[ 17% 12/68] target thumb C: libnl_32 <= external/libnl/lib/utils.c
+[ 19% 13/68] target thumb C: libnl_32 <= external/libnl/lib/handlers.c
+external/libnl/lib/handlers.c:85:3: warning: format specifies type 'char *' but the argument has type 'int' [-Wformat]
+                strerror_r(-e->error, buf, sizeof(buf)));
+                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+external/libnl/lib/handlers.c:206:11: warning: comparison of unsigned enum expression < 0 is always false [-Wtautological-compare]
+        if (kind < 0 || kind > NL_CB_KIND_MAX)
+            ~~~~ ^ ~
+external/libnl/lib/handlers.c:296:11: warning: comparison of unsigned enum expression < 0 is always false [-Wtautological-compare]
+        if (type < 0 || type > NL_CB_TYPE_MAX)
+            ~~~~ ^ ~
+external/libnl/lib/handlers.c:299:11: warning: comparison of unsigned enum expression < 0 is always false [-Wtautological-compare]
+        if (kind < 0 || kind > NL_CB_KIND_MAX)
+            ~~~~ ^ ~
+external/libnl/lib/handlers.c:346:11: warning: comparison of unsigned enum expression < 0 is always false [-Wtautological-compare]
+        if (kind < 0 || kind > NL_CB_KIND_MAX)
+            ~~~~ ^ ~
+5 warnings generated.
+[ 20% 14/68] target thumb C: libnl_32 <= external/libnl/lib/cache_mngt.c
+[ 22% 15/68] target thumb C: libnl_32 <= external/libnl/lib/genl/mngt.c
+external/libnl/lib/genl/mngt.c:250:22: warning: comparison of integers of different signs: 'int' and 'unsigned int' [-Wsign-compare]
+        if (ops->co_hdrsize < GENL_HDRSIZE(0)) {
+            ~~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~~~~~
+1 warning generated.
+[ 23% 16/68] target thumb C: libnl_32 <= external/libnl/lib/genl/ctrl.c
+[ 25% 17/68] target thumb C: libnl_32 <= external/libnl/lib/genl/genl.c
+external/libnl/lib/genl/genl.c:125:24: warning: comparison of integers of different signs: 'int' and 'unsigned int' [-Wsign-compare]
+        if (genlmsg_len(ghdr) < NLMSG_ALIGN(hdrlen))
+            ~~~~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~~~~~~~~~
+external/libnl/lib/genl/genl.c:261:32: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+        return genlmsg_user_hdr(gnlh) + NLMSG_ALIGN(hdrlen);
+               ~~~~~~~~~~~~~~~~~~~~~~ ^
+external/libnl/lib/genl/genl.c:365:25: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+        return nlmsg_data(nlh) + GENL_HDRLEN;
+               ~~~~~~~~~~~~~~~ ^
+3 warnings generated.
+[ 26% 18/68] target thumb C: libnl_32 <= external/libnl/lib/genl/family.c
+[ 27% 19/68] target thumb C: libnl_32 <= external/libnl/lib/route/rtnl.c
+[ 29% 20/68] target thumb C: libnl_32 <= external/libnl/lib/route/route_utils.c
+[ 30% 21/68] target thumb C: libnl_32 <= external/libnl/lib/error.c
+[ 32% 22/68] target thumb C: libnl_32 <= external/libnl/lib/netfilter/nfnl.c
+[ 33% 23/68] target thumb C: libnl_32 <= external/libnl/lib/version.c
+[ 35% 24/68] target thumb C: libnl_32 <= external/libnl/lib/hash.c
+[ 36% 25/68] target thumb C: libnl_32 <= external/libnl/lib/hashtable.c
+external/libnl/lib/hashtable.c:194:9: warning: invalid application of 'sizeof' to a void type [-Wpointer-arith]
+        return(__nl_hash(k, length, initval));
+               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+external/libnl/include/netlink/hash.h:64:62: note: expanded from macro '__nl_hash'
+#define __nl_hash(p, num, base) nl_hash_any((p), (num)*sizeof(*(p)), (base))
+                                                             ^~~~~~
+1 warning generated.
+[ 38% 26/68] target StaticLib: libnl_32 (out/target/product/bullhead/obj_arm/STATIC_LIBRARIES/libnl_intermediates/libnl.a)
+[ 39% 27/68] target SharedLib: libnl_32 (out/target/product/bullhead/obj_arm/SHARED_LIBRARIES/libnl_intermediates/LINKED/libnl.so)
+[ 41% 28/68] target Pack Relocations: libnl_32 (out/target/product/bullhead/obj_arm/SHARED_LIBRARIES/libnl_intermediates/PACKED/libnl.so)
+[ 42% 29/68] target Symbolic: libnl_32 (out/target/product/bullhead/symbols/system/lib/libnl.so)
+[ 44% 30/68] target Strip (mini debug info): libnl_32 (out/target/product/bullhead/obj_arm/lib/libnl.so)
+[ 45% 31/68] Notice file: external/libnl/NOTICE -- out/target/product/bullhead/obj/NOTICE_FILES/src//system/lib/libnl.so.txt
+[ 47% 32/68] Notice file: external/libnl/NOTICE -- out/target/product/bullhead/obj/NOTICE_FILES/src//system/lib64/libnl.a.txt
+[ 48% 33/68] Notice file: external/libnl/NOTICE -- out/target/product/bullhead/obj/NOTICE_FILES/src//system/lib/libnl.a.txt
+[ 50% 34/68] Install: out/target/product/bullhead/system/lib/libnl.so
+[ 51% 35/68] target  C: libnl <= external/libnl/lib/cache.c
+[ 52% 36/68] target  C: libnl <= external/libnl/lib/data.c
+external/libnl/lib/data.c:119:24: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+                        memcpy(data->d_data + data->d_size, buf, size);
+                               ~~~~~~~~~~~~ ^
+external/libnl/lib/data.c:121:24: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+                        memset(data->d_data + data->d_size, 0, size);
+                               ~~~~~~~~~~~~ ^
+2 warnings generated.
+[ 54% 37/68] target  C: libnl <= external/libnl/lib/nl.c
+external/libnl/lib/nl.c:694:18: warning: comparison of integers of different signs: '__kernel_size_t' (aka 'unsigned long') and 'ssize_t' (aka 'long') [-Wsign-compare]
+        if (iov.iov_len < n || (msg.msg_flags & MSG_TRUNC)) {
+            ~~~~~~~~~~~ ^ ~
+external/libnl/lib/nl.c:786:29: warning: missing field 'nl_pad' initializer [-Wmissing-field-initializers]
+        struct sockaddr_nl nla = {0};
+                                   ^
+external/libnl/lib/nl.c:917:23: warning: comparison of integers of different signs: '__u32' (aka 'unsigned int') and 'int' [-Wsign-compare]
+                        if (hdr->nlmsg_len < nlmsg_size(sizeof(*e))) {
+                            ~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~~~~~~~~~~~~
+3 warnings generated.
+[ 55% 38/68] target  C: libnl <= external/libnl/lib/addr.c
+external/libnl/lib/addr.c:990:24: warning: comparison of integers of different signs: 'int' and 'unsigned int' [-Wsign-compare]
+        if (addr->a_prefixlen != (8 * addr->a_len)) {
+            ~~~~~~~~~~~~~~~~~ ^   ~~~~~~~~~~~~~~~
+1 warning generated.
+[ 57% 39/68] target  C: libnl <= external/libnl/lib/cache_mngr.c
+[ 58% 40/68] target  C: libnl <= external/libnl/lib/socket.c
+[ 60% 41/68] target  C: libnl <= external/libnl/lib/fib_lookup/lookup.c
+external/libnl/lib/fib_lookup/lookup.c:215:30: warning: missing field 'fl_fwmark' initializer [-Wmissing-field-initializers]
+        struct fib_result_nl fr = {0};
+                                    ^
+1 warning generated.
+[ 61% 42/68] target  C: libnl <= external/libnl/lib/msg.c
+external/libnl/lib/msg.c:168:21: warning: comparison of integers of different signs: 'const __u32' (aka 'const unsigned int') and 'int' [-Wsign-compare]
+        if (nlh->nlmsg_len < nlmsg_msg_size(hdrlen))
+            ~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~~~~~~~~~~~~
+external/libnl/lib/msg.c:183:18: warning: comparison of integers of different signs: 'const __u32' (aka 'const unsigned int') and 'int' [-Wsign-compare]
+                nlh->nlmsg_len <= remaining);
+                ~~~~~~~~~~~~~~ ^  ~~~~~~~~~
+external/libnl/lib/msg.c:367:10: warning: comparison of integers of different signs: 'size_t' (aka 'unsigned long') and 'int' [-Wsign-compare]
+        if (max < nlmsg_total_size(0))
+            ~~~ ^ ~~~~~~~~~~~~~~~~~~~
+external/libnl/lib/msg.c:418:6: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+        buf += nlmsg_len;
+        ~~~ ^
+external/libnl/lib/msg.c:422:14: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+                memset(buf + len, 0, tlen - len);
+                       ~~~ ^
+external/libnl/lib/msg.c:842:7: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+        data += GENL_HDRLEN;
+        ~~~~ ^
+external/libnl/lib/msg.c:855:9: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+                        data += hdrsize;
+                        ~~~~ ^
+external/libnl/lib/msg.c:836:18: warning: comparison of integers of different signs: 'int' and 'unsigned long' [-Wsign-compare]
+        if (*payloadlen < GENL_HDRLEN)
+            ~~~~~~~~~~~ ^ ~~~~~~~~~~~
+external/libnl/lib/msg.c:897:32: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+                        dump_hex(ofd, nla_data(nla) + alen,
+                                      ~~~~~~~~~~~~~ ^
+external/libnl/lib/msg.c:920:4: warning: format specifies type 'char *' but the argument has type 'int' [-Wformat]
+                        strerror_r(-err->error, buf, sizeof(buf)));
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+external/libnl/lib/msg.c:915:21: warning: comparison of integers of different signs: 'int' and 'unsigned long' [-Wsign-compare]
+        if (nlmsg_len(hdr) >= sizeof(*err)) {
+            ~~~~~~~~~~~~~~ ^  ~~~~~~~~~~~~
+11 warnings generated.
+[ 63% 43/68] target  C: libnl <= external/libnl/lib/fib_lookup/request.c
+[ 64% 44/68] target  C: libnl <= external/libnl/lib/attr.c
+external/libnl/lib/attr.c:150:19: warning: comparison of integers of different signs: 'int' and 'unsigned long' [-Wsign-compare]
+        return remaining >= sizeof(*nla) &&
+               ~~~~~~~~~ ^  ~~~~~~~~~~~~
+external/libnl/lib/attr.c:208:19: warning: comparison of integers of different signs: 'int' and 'unsigned int' [-Wsign-compare]
+        if (nla_len(nla) < minlen)
+            ~~~~~~~~~~~~ ^ ~~~~~~
+external/libnl/lib/attr.c:463:11: warning: comparison of integers of different signs: 'int' and 'size_t' (aka 'unsigned long') [-Wsign-compare]
+        if (tlen > msg->nm_size)
+            ~~~~ ^ ~~~~~~~~~~~~
+external/libnl/lib/attr.c:653:26: warning: comparison of integers of different signs: 'int' and 'unsigned long' [-Wsign-compare]
+        if (nla && nla_len(nla) >= sizeof(tmp))
+                   ~~~~~~~~~~~~ ^  ~~~~~~~~~~~
+external/libnl/lib/attr.c:815:41: warning: arithmetic on pointers to void is a GNU extension [-Wpointer-arith]
+        len = (void *) nlmsg_tail(msg->nm_nlh) - (void *) start;
+              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~~~~
+external/libnl/lib/attr.c:863:41: warning: arithmetic on pointers to void is a GNU extension [-Wpointer-arith]
+        len = (void *) nlmsg_tail(msg->nm_nlh) - (void *) attr;
+              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~~~
+6 warnings generated.
+[ 66% 45/68] target  C: libnl <= external/libnl/lib/object.c
+external/libnl/lib/object.c:134:22: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+                memcpy((void *)new + doff, (void *)obj + doff, size);
+                       ~~~~~~~~~~~ ^
+external/libnl/lib/object.c:134:42: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+                memcpy((void *)new + doff, (void *)obj + doff, size);
+                                           ~~~~~~~~~~~ ^
+2 warnings generated.
+[ 67% 46/68] target  C: libnl <= external/libnl/lib/utils.c
+[ 69% 47/68] target  C: libnl <= external/libnl/lib/cache_mngt.c
+[ 70% 48/68] target  C: libnl <= external/libnl/lib/handlers.c
+external/libnl/lib/handlers.c:85:3: warning: format specifies type 'char *' but the argument has type 'int' [-Wformat]
+                strerror_r(-e->error, buf, sizeof(buf)));
+                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+external/libnl/lib/handlers.c:206:11: warning: comparison of unsigned enum expression < 0 is always false [-Wtautological-compare]
+        if (kind < 0 || kind > NL_CB_KIND_MAX)
+            ~~~~ ^ ~
+external/libnl/lib/handlers.c:296:11: warning: comparison of unsigned enum expression < 0 is always false [-Wtautological-compare]
+        if (type < 0 || type > NL_CB_TYPE_MAX)
+            ~~~~ ^ ~
+external/libnl/lib/handlers.c:299:11: warning: comparison of unsigned enum expression < 0 is always false [-Wtautological-compare]
+        if (kind < 0 || kind > NL_CB_KIND_MAX)
+            ~~~~ ^ ~
+external/libnl/lib/handlers.c:346:11: warning: comparison of unsigned enum expression < 0 is always false [-Wtautological-compare]
+        if (kind < 0 || kind > NL_CB_KIND_MAX)
+            ~~~~ ^ ~
+5 warnings generated.
+[ 72% 49/68] target  C: libnl <= external/libnl/lib/genl/ctrl.c
+[ 73% 50/68] target  C: libnl <= external/libnl/lib/genl/mngt.c
+external/libnl/lib/genl/mngt.c:250:22: warning: comparison of integers of different signs: 'int' and 'unsigned long' [-Wsign-compare]
+        if (ops->co_hdrsize < GENL_HDRSIZE(0)) {
+            ~~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~~~~~
+1 warning generated.
+[ 75% 51/68] target  C: libnl <= external/libnl/lib/genl/family.c
+[ 76% 52/68] target  C: libnl <= external/libnl/lib/genl/genl.c
+external/libnl/lib/genl/genl.c:125:24: warning: comparison of integers of different signs: 'int' and 'unsigned int' [-Wsign-compare]
+        if (genlmsg_len(ghdr) < NLMSG_ALIGN(hdrlen))
+            ~~~~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~~~~~~~~~
+external/libnl/lib/genl/genl.c:261:32: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+        return genlmsg_user_hdr(gnlh) + NLMSG_ALIGN(hdrlen);
+               ~~~~~~~~~~~~~~~~~~~~~~ ^
+external/libnl/lib/genl/genl.c:365:25: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+        return nlmsg_data(nlh) + GENL_HDRLEN;
+               ~~~~~~~~~~~~~~~ ^
+3 warnings generated.
+[ 77% 53/68] target  C: libnl <= external/libnl/lib/route/rtnl.c
+[ 79% 54/68] target  C: libnl <= external/libnl/lib/netfilter/nfnl.c
+[ 80% 55/68] target  C: libnl <= external/libnl/lib/route/route_utils.c
+[ 82% 56/68] target  C: libnl <= external/libnl/lib/error.c
+[ 83% 57/68] target  C: libnl <= external/libnl/lib/hash.c
+[ 85% 58/68] target  C: libnl <= external/libnl/lib/version.c
+[ 86% 59/68] target  C: libnl <= external/libnl/lib/hashtable.c
+external/libnl/lib/hashtable.c:194:9: warning: invalid application of 'sizeof' to a void type [-Wpointer-arith]
+        return(__nl_hash(k, length, initval));
+               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+external/libnl/include/netlink/hash.h:64:62: note: expanded from macro '__nl_hash'
+#define __nl_hash(p, num, base) nl_hash_any((p), (num)*sizeof(*(p)), (base))
+                                                             ^~~~~~
+1 warning generated.
+[ 88% 60/68] target StaticLib: libnl (out/target/product/bullhead/obj/STATIC_LIBRARIES/libnl_intermediates/libnl.a)
+[ 89% 61/68] target SharedLib: libnl (out/target/product/bullhead/obj/SHARED_LIBRARIES/libnl_intermediates/LINKED/libnl.so)
+[ 91% 62/68] target Pack Relocations: libnl (out/target/product/bullhead/obj/SHARED_LIBRARIES/libnl_intermediates/PACKED/libnl.so)
+[ 92% 63/68] target Symbolic: libnl (out/target/product/bullhead/symbols/system/lib64/libnl.so)
+[ 94% 64/68] target Strip (mini debug info): libnl (out/target/product/bullhead/obj/lib/libnl.so)
+[ 95% 65/68] Notice file: external/libnl/NOTICE -- out/target/product/bullhead/obj/NOTICE_FILES/src//system/lib64/libnl.so.txt
+[ 97% 66/68] Install: out/target/product/bullhead/system/lib64/libnl.so
+[ 98% 67/68] build out/target/product/bullhead/obj_arm/lib/libnl.so.toc
+[100% 68/68] build out/target/product/bullhead/obj/lib/libnl.so.toc
+make: Leaving directory `/usr/local/google/home/pstew/build/aosp'
+
+[0;32m#### make completed successfully (13 seconds) ####[00m
+

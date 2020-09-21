@@ -1,0 +1,16 @@
+Intel Vulkan ToDo
+=================
+
+Missing Features:
+ - Storage Image Without Format
+ - Investigate CTS failures on HSW
+ - Pipeline statistics queries
+ - Sparse memory
+
+Performance:
+ - Multi-{sampled/gen8,LOD} HiZ
+ - Compressed multisample support
+ - Pushing pieces of UBOs?
+ - Enable guardband clipping
+ - pma stall workaround
+ - Use soft-pin to avoid relocations

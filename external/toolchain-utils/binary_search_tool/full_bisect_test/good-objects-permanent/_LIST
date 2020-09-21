@@ -1,0 +1,7 @@
+build.o
+inorder_norecurse.o
+inorder.o
+main.o
+preorder_norecurse.o
+preorder.o
+stack.o

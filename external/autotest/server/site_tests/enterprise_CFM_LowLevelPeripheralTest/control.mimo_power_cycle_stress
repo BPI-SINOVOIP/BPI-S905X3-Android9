@@ -1,0 +1,44 @@
+# Copyright 2018 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+from autotest_lib.server.cros.cfm.configurable_test.dsl import *
+from autotest_lib.server import utils
+
+AUTHOR = "kerl@google.com, chromeos-meetings@google.com"
+NAME = "enterprise_CFM_LowLevelPeripheralTest.mimo_power_cycle_stress"
+PURPOSE = "Stresses a Mimo by repeatedly power cycling its USB port."
+CRITERIA = ("Mimo detectable as a USB device after each cycle "
+            "and no crash files appear")
+ATTRIBUTES = "suite:bluestreak, suite:bluestreak-release, suite:bluestreak-perbuild"
+TIME = "MEDIUM"
+TEST_CATEGORY = "Stress"
+TEST_TYPE = "server"
+DEPENDENCIES="mimo"
+
+DOC = """
+Repeatedly power cycle the connected Mimo and verify it appears
+as a USB device after each cycle. Verifies that no new crash files
+appear.
+"""
+
+cfm_test = CfmTest(
+    configuration=Configuration(skip_enrollment=True),
+    scenario=Scenario(
+        AssertUsbDevices(ALL_MIMO_DISPLAYS),
+        RepeatTimes(10, Scenario(
+            PowerCycleUsbPort(ALL_MIMO_DISPLAYS),
+            AssertNoNewCrashes()
+        ))
+    ),
+)
+
+args_dict = utils.args_to_dict(args)
+servo_args = hosts.CrosHost.get_servo_arguments(args_dict)
+def run_test(machine):
+    job.run_test("enterprise_CFM_LowLevelPeripheralTest",
+                 cfm_test = cfm_test,
+                 tag = 'mimo_power_cycle_stress',
+                 host = hosts.create_host(machine, servo_args=servo_args))
+
+
+parallel_simple(run_test, machines)

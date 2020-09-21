@@ -1,0 +1,13 @@
+bslot=@BSLOT@
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/@LIB@
+includedir=${prefix}/include
+
+Name: libmojo
+Description: Chrome Mojo IPC library
+Requires.private:
+Version: ${bslot}
+Libs: -lmojo-${bslot}.pic
+Libs.private:
+Cflags: -I${includedir}/libmojo-${bslot} -Wno-cast-qual -Wno-cast-align

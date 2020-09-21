@@ -1,0 +1,61 @@
+diff --git a/bench/ResultsWriter.h b/bench/ResultsWriter.h
+index f56deae..69a84c7 100644
+--- a/bench/ResultsWriter.h
++++ b/bench/ResultsWriter.h
+@@ -46,6 +46,9 @@ public:
+     // Record a single test metric.
+     virtual void metric(const char name[], double ms) {}
+ 
++    // Record a list of test metrics.
++    virtual void metrics(const char name[], const SkTArray<double> &array) {}
++
+     // Flush to storage now please.
+     virtual void flush() {}
+ };
+@@ -113,6 +116,17 @@ public:
+         SkASSERT(fConfig);
+         (*fConfig)[name] = ms;
+     }
++    void metrics(const char name[], const SkTArray<double> &array) override {
++        // The user who wrote this feature prefers NaNs over not having results.
++        // Hence, this ignores whether we have NaNs.
++        SkASSERT(fConfig);
++        Json::Value value = Json::Value(Json::arrayValue);
++        value.resize(array.count());
++        for (unsigned i = 0, e = array.count(); i != e; ++i) {
++          value[i] = array[i];
++        }
++        (*fConfig)[name] = value;
++    }
+ 
+     // Flush to storage now please.
+     void flush() override {
+diff --git a/bench/nanobench.cpp b/bench/nanobench.cpp
+index 0651302..0623d61 100644
+--- a/bench/nanobench.cpp
++++ b/bench/nanobench.cpp
+@@ -43,6 +43,7 @@
+ #include "SkSVGDOM.h"
+ #include "SkTaskGroup.h"
+ #include "SkThreadUtils.h"
++#include "SkTypes.h"
+ #include "ThermalManager.h"
+ #include "SkScan.h"
+ 
+@@ -1240,7 +1241,7 @@ int nanobench_main() {
+             target->setup();
+             bench->perCanvasPreDraw(canvas);
+ 
+-            int maxFrameLag;
++            int maxFrameLag = 0;
+             int loops = target->needsFrameTiming(&maxFrameLag)
+                 ? setup_gpu_bench(target, bench.get(), maxFrameLag)
+                 : setup_cpu_bench(overhead, target, bench.get());
+@@ -1290,6 +1291,7 @@ int nanobench_main() {
+             benchStream.fillCurrentOptions(log.get());
+             target->fillOptions(log.get());
+             log->metric("min_ms",    stats.min);
++            log->metrics("samples",  samples);
+ #if SK_SUPPORT_GPU
+             if (gpuStatsDump) {
+                 // dump to json, only SKPBench currently returns valid keys / values

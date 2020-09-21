@@ -1,0 +1,98 @@
+// Copyright (C) 2017 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+cc_library_static {
+    name: "libtflite_kernel_utils",
+    defaults: ["tflite_defaults"],
+    vendor_available: true,
+    srcs: [
+        "kernel_util.cc",
+        "internal/tensor_utils.cc",
+        "internal/quantization_util.cc",
+        "internal/reference/portable_tensor_utils.cc",
+        "internal/optimized/neon_tensor_utils.cc",
+    ],
+    header_libs: [
+        "gemmlowp_headers",
+    ],
+    cflags: [
+        "-Wno-extern-c-compat",
+    ]
+}
+
+cc_library_static {
+    name: "libtflite_kernels",
+    defaults: ["tflite_defaults"],
+    srcs: [
+        "activations.cc",
+        "add.cc",
+        "basic_rnn.cc",
+        "batch_to_space_nd.cc",
+	"bidirectional_sequence_rnn.cc",
+        "concatenation.cc",
+        "conv.cc",
+        "depthwise_conv.cc",
+        "div.cc",
+        "embedding_lookup.cc",
+        "embedding_lookup_sparse.cc",
+	"exp.cc",
+        "fully_connected.cc",
+        "gather.cc",
+        "hashtable_lookup.cc",
+        "kernel_util.cc",
+        "l2norm.cc",
+        "local_response_norm.cc",
+        "lsh_projection.cc",
+        "lstm.cc",
+        "mean.cc",
+        "mul.cc",
+        "pad.cc",
+        "pooling.cc",
+        "register.cc",
+        "reshape.cc",
+        "resize_bilinear.cc",
+        "skip_gram.cc",
+        "space_to_batch_nd.cc",
+        "space_to_depth.cc",
+	"split.cc",
+        "squeeze.cc",
+        "strided_slice.cc",
+        "sub.cc",
+        "svdf.cc",
+	"topk_v2.cc",
+        "transpose.cc",
+        "unidirectional_sequence_lstm.cc",
+        "unidirectional_sequence_rnn.cc",
+	"internal/kernel_utils.cc",
+        "internal/tensor_utils.cc",
+        "internal/quantization_util.cc",
+        "internal/reference/portable_tensor_utils.cc",
+        "internal/optimized/neon_tensor_utils.cc",
+    ],
+    header_libs: [
+        "flatbuffer_headers",
+        "gemmlowp_headers",
+        "libeigen",
+        "libtextclassifier_hash_headers",
+    ],
+    cflags: [
+        "-DNAMESPACE_FOR_HASH_FUNCTIONS=farmhash",
+        "-Wno-array-bounds",
+        "-Wno-extern-c-compat",
+        "-Wno-invalid-partial-specialization",
+        "-Wno-missing-field-initializers",
+        "-Wno-sign-compare",
+        "-Wno-unused-variable",
+    ],
+}

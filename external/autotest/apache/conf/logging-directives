@@ -1,0 +1,3 @@
+# How do we format our log messages?
+
+LogFormat "%v:%p %h %l %u %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\" %T" vhost_combined

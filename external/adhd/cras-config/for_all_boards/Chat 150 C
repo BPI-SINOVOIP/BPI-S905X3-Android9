@@ -1,0 +1,4 @@
+[Default]
+  volume_curve = simple_step
+  volume_step = 25
+  max_volume = 0

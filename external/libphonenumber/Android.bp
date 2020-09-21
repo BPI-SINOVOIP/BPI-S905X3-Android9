@@ -1,0 +1,76 @@
+//
+// Copyright (C) 2014 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+// For platform use, builds directly against core-libart to avoid circular
+// dependencies. *NOT* for unbundled use.
+java_library_static {
+    name: "libphonenumber-platform",
+
+    // For the platform, compile everything except the carrier to phone number
+    // which isn't used.
+    java_resource_dirs: [
+        "libphonenumber/src",
+        "geocoder/src",
+        "internal/prefixmapper/src",
+    ],
+
+    srcs: [
+        "libphonenumber/src/**/*.java",
+        "geocoder/src/**/*.java",
+        "internal/prefixmapper/src/**/*.java",
+    ],
+    jarjar_rules: "jarjar-rules.txt",
+
+    sdk_version: "core_current",
+    java_version: "1.7",
+}
+
+
+java_defaults {
+    name: "libphonenumber-unbundled-defaults",
+    java_resource_dirs: [
+        "libphonenumber/src",
+        "carrier/src",
+        "internal/prefixmapper/src",
+    ],
+
+    srcs: [
+        "libphonenumber/src/**/*.java",
+        "carrier/src/**/*.java",
+        "internal/prefixmapper/src/**/*.java",
+    ],
+}
+
+// For unbundled use, supports gingerbread and up.
+java_library_static {
+    name: "libphonenumber",
+    defaults: ["libphonenumber-unbundled-defaults"],
+
+    srcs: ["geocoder/src/**/*.java"],
+    java_resource_dirs: ["geocoder/src"],
+
+    sdk_version: "9",
+    java_version: "1.7",
+}
+
+// For unbundled use - without geocoder
+java_library_static {
+    name: "libphonenumber-nogeocoder",
+    defaults: ["libphonenumber-unbundled-defaults"],
+
+    sdk_version: "9",
+    java_version: "1.7",
+}
+

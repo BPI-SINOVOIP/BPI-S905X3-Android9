@@ -1,0 +1,18 @@
+# Copyright 2018 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'timkovich'
+NAME = 'policy_KeyboardDefaultToFunctionKeys.false'
+ATTRIBUTES = 'suite:bvt-perbuild, suite:policy'
+TIME = 'SHORT'
+TEST_CATEGORY = 'General'
+TEST_CLASS = 'enterprise'
+TEST_TYPE = 'client'
+
+DOC = '''
+Verify effect of 'KeyboardDefaultFunctionKeys' policy on Chrome OS behavior.
+
+'''
+
+job.run_test('policy_KeyboardDefaultToFunctionKeys', case='False')

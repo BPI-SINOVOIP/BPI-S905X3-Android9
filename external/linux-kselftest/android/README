@@ -1,0 +1,164 @@
+# Open Integration Issues
+
+### bpf/
+
+The bpf tests depend on the bpf and elf libraries, and several kernel
+config options that are not required by Android.
+
+### cpufreq/
+
+Cpufreq is not required by Android.
+
+### cpu-hotplug/
+
+Cpu hotplug is not required by Android.
+
+### filesystems/dnotify_test.c
+
+This test has an endless loop in it. It is not currently run as part of the
+kselftest suite.
+
+### firmware/
+
+These tests depend on a kernel module enabled by CONFIG_TEST_FIRMWARE, which is
+not required by Android.
+
+### ftrace/
+
+Ftrace is a debug feature and not required by Android.
+
+### gpio/
+
+The gpio test requires a test kernel module and gpiolib, neither of which are
+required by Android.
+
+### ipc/
+
+The ipc test requires CONFIG_EXPERT and CONFIG_CHECKPOINT_RESTORE be enabled,
+neither of which are required by Android.
+
+### lib/
+
+The lib/ tests rely on kernel modules enabled by CONFIG_TEST_PRINTF,
+CONFIG_TEST_BITMAP, and CONFIG_PRIME_NUMBERS. None of these are required by
+Android.
+
+### media_tests/
+
+The media_tests depend on /dev/mediaX and /dev/videoX files which may not be
+present. They also require manual inspection of dmesg and are not part of
+the normal kselftest suite.
+
+### membarrier/
+
+The membarrier test depends on CONFIG_EXPERT and CONFIG_MEMBARRIER being
+enabled, neither of which are required by Android.
+
+### memfd/
+
+These tests depend on FUSE which is not present in Android.
+
+### memory-hotplug/
+
+Memory hotplug is not required by Android.
+
+### mount/
+
+The mount test depends on CONFIG_USER_NS which is not required by Android.
+
+### mqueue/
+
+These tests depend on -lrt and -lpopt which are not present in Android.
+
+### net/
+
+The test_bpf.sh test requires a kernel module enabled by CONFIG_TEST_BPF.
+The netdevice.sh test operates on an ethernet interface.
+The psock_fanout test depends on CONFIG_BPF_SYSCALL which is not required on
+Android.
+
+### nsfs/
+
+These tests depend on CONFIG_USER_NS and CONFIG_PID_NS, neither of which are
+required by Android.
+
+### ntb/
+
+NTB (non-transparent bridge) is not required by Android.
+
+### pstore/
+
+Pstore is recommended, not required, for Android.
+
+### ptp/
+
+PTP support is not required by Android.
+
+### sigaltstack/
+
+This is a test for functionality that is not available in bionic (swapcontext()).
+
+### static_keys/
+
+This test depends on a kernel module enabled by CONFIG_TEST_STATIC_KEYS. This
+kernel module is not required by Android.
+
+### sync/
+
+These tests verify the legacy sync API which is deprecated on Android.
+
+### sysctl
+
+This test depends on a kernel module enabled by CONFIG_TEST_SYSCTL. This kernel
+module is not required by Android.
+
+### timers/
+
+The adjtick test adjusts the system time and takes 2 minutes.
+
+The change_skew test takes too long to run as part of VTS.
+
+The clocksource_switch test takes too long to run as part of VTS and also tries
+all clocksources.
+
+The freq_step test relies on clocks having a greater precision than what may be
+available.
+
+The leap-a-day test repeatedly modifies the system date in order to test leap
+second behavior. This may disrupt the target environment.
+
+The leapcrash test adjusts the system date and takes several minutes to run.
+
+The mqueue_lat test relies on mq_* calls which are not present on Android.
+
+The rtctest_setdate test modifies the RTC's time and date which may disrupt the
+target environment.
+
+The set-2038 test repeatedly sets the time in order to test edge cases. This
+may disrupt the target enviornment. The test also takes a long time.
+
+The set-tz test sets the timezone which may disrupt the target environment.
+
+The skew_consistency test takes too long to run as part of VTS.
+
+### user/
+
+This test depends on a kernel module enabled by CONFIG_TEST_USER_COPY. This
+kernel module is not required by Android.
+
+### vm/
+
+The hugepage-mmap, hugepage-shm, compaction, and map_hugetlb tests rely on
+hugetlbfs/hugetlb page support which is not required by Android.
+
+The userfaultfd test relies on the userfaultfd syscall which is not required by
+Android.
+
+### watchdog/
+
+The watchdog test depends on CONFIG_WATCHDOG which is not required by Android.
+
+### zram/
+
+The zram test depends on CONFIG_ZSMALLOC and CONFIG_ZRAM which are not required
+by Android.

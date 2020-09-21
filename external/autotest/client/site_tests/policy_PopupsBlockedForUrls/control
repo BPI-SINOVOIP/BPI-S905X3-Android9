@@ -1,0 +1,30 @@
+# Copyright 2015 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'scunningham'
+NAME = 'policy_PopupsBlockedForUrls'
+TIME = 'SHORT'
+TEST_CATEGORY = 'General'
+TEST_CLASS = 'enterprise'
+TEST_TYPE = 'client'
+
+DOC = '''
+Verify effects of PopupsBlockedForUrls policy on client behavior.
+
+This test verifies the effect of the PopupsBlockedForUrls user policy on
+Chrome OS client behavior when the DefaultPopupsSetting policy is set to 1.
+It exercises a range of policy values using four unique test cases, named:
+NotSet_Allow, 1Url_Block, 2Urls_Allow, and 3Urls_Block. See the test file
+for a full description of what each test case does.
+
+In general, a test shall pass if the browser only blocks popups on a test page
+that is in a domain listed in the PopupsBlockedForUrls policy. A test shall
+fail if the browser blocks popups on a page where they should be allowed, or
+allows popups on a page where they should be blocked.
+
+'''
+
+args_dict = utils.args_to_dict(args)
+
+job.run_test('policy_PopupsBlockedForUrls', **args_dict)

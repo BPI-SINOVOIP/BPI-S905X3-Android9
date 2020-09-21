@@ -1,0 +1,22 @@
+{
+  "input": [
+    {
+      "type": "svn", 
+      "mappings": [
+        "branches/google/gcc-4_7-mobile"
+      ], 
+      "address": "svn://gcc.gnu.org/svn/gcc"
+    }
+  ], 
+  "output": [
+    {
+      "type": "git", 
+      "ignores": [
+        ".svn", 
+        ".git"
+      ], 
+      "branch": "gcc.gnu.org/branches/google/gcc-4_7-mobile", 
+      "address": "https://chromium.googlesource.com/chromiumos/third_party/gcc.git"
+    }
+  ]
+}

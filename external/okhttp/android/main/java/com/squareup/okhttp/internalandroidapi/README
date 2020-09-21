@@ -1,0 +1,5 @@
+This package contains a facade over OkHttp that some parts of Android framework are allowed to
+depend on. This is not a stable API; it is an attempt to decouple framework code from OkHttp as
+much as is practical where public APIs cannot be used.
+
+Please talk to the maintainers before adding any new dependencies.

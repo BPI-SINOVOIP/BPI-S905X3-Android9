@@ -1,0 +1,303 @@
+05-19 12:55:09 I/ModuleRepo: chromeos4-row8-rack6-host1:22 running 1 modules, expected to complete in 33m 0s
+05-19 12:55:09 I/CompatibilityTest: Starting 1 module on chromeos4-row8-rack6-host1:22
+05-19 12:55:09 D/ConfigurationFactory: Loading configuration 'system-status-checkers'
+05-19 12:55:09 I/CompatibilityTest: Running system status checker before module execution: CtsPrintTestCases
+05-19 12:55:09 D/ModuleDef: Preparer: ApkInstaller
+05-19 12:55:09 D/TestAppInstallSetup: Installing apk from /tmp/autotest-tradefed-install_5UI1sQ/1a5d3a860c6414257d85e51e843e2815/android-cts-7.1_r5-linux_x86-x86/android-cts/tools/../../android-cts/testcases/CtsPrintTestCases.apk ...
+05-19 12:55:09 D/CtsPrintTestCases.apk: Uploading CtsPrintTestCases.apk onto device 'chromeos4-row8-rack6-host1:22'
+05-19 12:55:09 D/Device: Uploading file onto device 'chromeos4-row8-rack6-host1:22'
+05-19 12:55:12 D/RunUtil: Running command with timeout: 60000ms
+05-19 12:55:12 D/RunUtil: Running [aapt, dump, badging, /tmp/autotest-tradefed-install_5UI1sQ/1a5d3a860c6414257d85e51e843e2815/android-cts-7.1_r5-linux_x86-x86/android-cts/tools/../../android-cts/testcases/CtsPrintTestCases.apk]
+05-19 12:55:13 D/ModuleDef: Test: AndroidJUnitTest
+05-19 12:55:13 D/InstrumentationTest: Collecting test info for android.print.cts on device chromeos4-row8-rack6-host1:22
+05-19 12:55:13 I/RemoteAndroidTest: Running am instrument -w -r --abi x86  -e testFile /data/local/tmp/ajur/includes.txt -e debug false -e log true -e timeout_msec 300000 android.print.cts/android.support.test.runner.AndroidJUnitRunner on google-google_chromebook_pixel__2015_-chromeos4-row8-rack6-host1:22
+05-19 12:55:14 I/RemoteAndroidTest: Running am instrument -w -r --abi x86  -e testFile /data/local/tmp/ajur/includes.txt -e debug false -e log false -e timeout_msec 300000 android.print.cts/android.support.test.runner.AndroidJUnitRunner on google-google_chromebook_pixel__2015_-chromeos4-row8-rack6-host1:22
+05-19 12:55:15 D/ModuleListener: ModuleListener.testRunStarted(android.print.cts, 71)
+05-19 12:55:15 I/ConsoleReporter: [chromeos4-row8-rack6-host1:22] Starting x86 CtsPrintTestCases with 71 tests
+05-19 12:55:15 D/ModuleListener: ModuleListener.testStarted(android.print.cts.ClassParametersTest#testIllegalPrintDocumentInfo)
+05-19 12:55:15 D/ModuleListener: ModuleListener.testEnded(android.print.cts.ClassParametersTest#testIllegalPrintDocumentInfo, {})
+05-19 12:55:15 I/ConsoleReporter: [1/71 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.ClassParametersTest#testIllegalPrintDocumentInfo pass
+05-19 12:55:15 D/ModuleListener: ModuleListener.testStarted(android.print.cts.ClassParametersTest#testIllegalPrintAttributes)
+05-19 12:55:16 D/ModuleListener: ModuleListener.testEnded(android.print.cts.ClassParametersTest#testIllegalPrintAttributes, {})
+05-19 12:55:16 I/ConsoleReporter: [2/71 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.ClassParametersTest#testIllegalPrintAttributes pass
+05-19 12:55:16 D/ModuleListener: ModuleListener.testStarted(android.print.cts.CustomPrintOptionsTest#testChangeToAllPages)
+05-19 12:55:39 D/ModuleListener: ModuleListener.testEnded(android.print.cts.CustomPrintOptionsTest#testChangeToAllPages, {})
+05-19 12:55:39 I/ConsoleReporter: [3/71 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.CustomPrintOptionsTest#testChangeToAllPages pass
+05-19 12:55:39 D/ModuleListener: ModuleListener.testStarted(android.print.cts.CustomPrintOptionsTest#testChangeToAttributes)
+05-19 12:56:00 D/ModuleListener: ModuleListener.testEnded(android.print.cts.CustomPrintOptionsTest#testChangeToAttributes, {})
+05-19 12:56:00 I/ConsoleReporter: [4/71 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.CustomPrintOptionsTest#testChangeToAttributes pass
+05-19 12:56:00 D/ModuleListener: ModuleListener.testStarted(android.print.cts.CustomPrintOptionsTest#testChangeToAttributesNoCopy)
+05-19 12:56:17 D/ModuleListener: ModuleListener.testEnded(android.print.cts.CustomPrintOptionsTest#testChangeToAttributesNoCopy, {})
+05-19 12:56:17 I/ConsoleReporter: [5/71 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.CustomPrintOptionsTest#testChangeToAttributesNoCopy pass
+05-19 12:56:17 D/ModuleListener: ModuleListener.testStarted(android.print.cts.CustomPrintOptionsTest#testChangeToChangeEveryThing)
+05-19 12:56:37 D/ModuleListener: ModuleListener.testEnded(android.print.cts.CustomPrintOptionsTest#testChangeToChangeEveryThing, {})
+05-19 12:56:37 I/ConsoleReporter: [6/71 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.CustomPrintOptionsTest#testChangeToChangeEveryThing pass
+05-19 12:56:37 D/ModuleListener: ModuleListener.testStarted(android.print.cts.CustomPrintOptionsTest#testChangeToDefault)
+05-19 12:56:57 D/ModuleListener: ModuleListener.testEnded(android.print.cts.CustomPrintOptionsTest#testChangeToDefault, {})
+05-19 12:56:57 I/ConsoleReporter: [7/71 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.CustomPrintOptionsTest#testChangeToDefault pass
+05-19 12:56:57 D/ModuleListener: ModuleListener.testStarted(android.print.cts.CustomPrintOptionsTest#testChangeToDefaultNoCopy)
+05-19 12:57:18 D/ModuleListener: ModuleListener.testEnded(android.print.cts.CustomPrintOptionsTest#testChangeToDefaultNoCopy, {})
+05-19 12:57:18 I/ConsoleReporter: [8/71 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.CustomPrintOptionsTest#testChangeToDefaultNoCopy pass
+05-19 12:57:18 D/ModuleListener: ModuleListener.testStarted(android.print.cts.CustomPrintOptionsTest#testChangeToNonAttributes)
+05-19 12:57:35 D/ModuleListener: ModuleListener.testEnded(android.print.cts.CustomPrintOptionsTest#testChangeToNonAttributes, {})
+05-19 12:57:35 I/ConsoleReporter: [9/71 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.CustomPrintOptionsTest#testChangeToNonAttributes pass
+05-19 12:57:35 D/ModuleListener: ModuleListener.testStarted(android.print.cts.CustomPrintOptionsTest#testChangeToNonAttributesNoCopy)
+05-19 12:57:55 D/ModuleListener: ModuleListener.testEnded(android.print.cts.CustomPrintOptionsTest#testChangeToNonAttributesNoCopy, {})
+05-19 12:57:55 I/ConsoleReporter: [10/71 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.CustomPrintOptionsTest#testChangeToNonAttributesNoCopy pass
+05-19 12:57:55 D/ModuleListener: ModuleListener.testStarted(android.print.cts.CustomPrintOptionsTest#testChangeToNothing)
+05-19 12:58:15 D/ModuleListener: ModuleListener.testEnded(android.print.cts.CustomPrintOptionsTest#testChangeToNothing, {})
+05-19 12:58:15 I/ConsoleReporter: [11/71 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.CustomPrintOptionsTest#testChangeToNothing pass
+05-19 12:58:15 D/ModuleListener: ModuleListener.testStarted(android.print.cts.CustomPrintOptionsTest#testChangeToNothingNoCopy)
+05-19 12:58:35 D/ModuleListener: ModuleListener.testEnded(android.print.cts.CustomPrintOptionsTest#testChangeToNothingNoCopy, {})
+05-19 12:58:35 I/ConsoleReporter: [12/71 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.CustomPrintOptionsTest#testChangeToNothingNoCopy pass
+05-19 12:58:35 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PageRangeAdjustmentTest#testAllPagesWantedAndAllPagesWritten)
+05-19 12:58:43 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PageRangeAdjustmentTest#testAllPagesWantedAndAllPagesWritten, {})
+05-19 12:58:43 I/ConsoleReporter: [13/71 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PageRangeAdjustmentTest#testAllPagesWantedAndAllPagesWritten pass
+05-19 12:58:43 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PageRangeAdjustmentTest#testSomePagesWantedAndAllPagesWritten)
+05-19 12:58:58 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PageRangeAdjustmentTest#testSomePagesWantedAndAllPagesWritten, {})
+05-19 12:58:58 I/ConsoleReporter: [14/71 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PageRangeAdjustmentTest#testSomePagesWantedAndAllPagesWritten pass
+05-19 12:58:58 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PageRangeAdjustmentTest#testSomePagesWantedAndNotWritten)
+05-19 12:59:05 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PageRangeAdjustmentTest#testSomePagesWantedAndNotWritten, {})
+05-19 12:59:05 I/ConsoleReporter: [15/71 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PageRangeAdjustmentTest#testSomePagesWantedAndNotWritten pass
+05-19 12:59:05 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PageRangeAdjustmentTest#testSomePagesWantedAndSomeMorePagesWritten)
+05-19 12:59:17 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PageRangeAdjustmentTest#testSomePagesWantedAndSomeMorePagesWritten, {})
+05-19 12:59:17 I/ConsoleReporter: [16/71 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PageRangeAdjustmentTest#testSomePagesWantedAndSomeMorePagesWritten pass
+05-19 12:59:17 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PageRangeAdjustmentTest#testWantedPagesAlreadyWrittenForPreview)
+05-19 12:59:32 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PageRangeAdjustmentTest#testWantedPagesAlreadyWrittenForPreview, {})
+05-19 12:59:32 I/ConsoleReporter: [17/71 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PageRangeAdjustmentTest#testWantedPagesAlreadyWrittenForPreview pass
+05-19 12:59:32 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintAttributesTest#testDefaultMatchesSuggested0)
+05-19 12:59:45 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintAttributesTest#testDefaultMatchesSuggested0, {})
+05-19 12:59:45 I/ConsoleReporter: [18/71 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintAttributesTest#testDefaultMatchesSuggested0 pass
+05-19 12:59:45 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintAttributesTest#testDefaultMatchesSuggested1)
+05-19 13:00:00 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintAttributesTest#testDefaultMatchesSuggested1, {})
+05-19 13:00:00 I/ConsoleReporter: [19/71 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintAttributesTest#testDefaultMatchesSuggested1 pass
+05-19 13:00:00 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintAttributesTest#testDefaultMatchesSuggested2)
+05-19 13:00:13 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintAttributesTest#testDefaultMatchesSuggested2, {})
+05-19 13:00:13 I/ConsoleReporter: [20/71 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintAttributesTest#testDefaultMatchesSuggested2 pass
+05-19 13:00:13 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintAttributesTest#testDuplexModeSuggestion0)
+05-19 13:00:29 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintAttributesTest#testDuplexModeSuggestion0, {})
+05-19 13:00:29 I/ConsoleReporter: [21/71 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintAttributesTest#testDuplexModeSuggestion0 pass
+05-19 13:00:29 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintAttributesTest#testDuplexModeSuggestion1)
+05-19 13:00:44 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintAttributesTest#testDuplexModeSuggestion1, {})
+05-19 13:00:44 I/ConsoleReporter: [22/71 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintAttributesTest#testDuplexModeSuggestion1 pass
+05-19 13:00:44 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintAttributesTest#testMediaSizeSuggestion0)
+05-19 13:06:44 I/InstrumentationResultParser: test run failed: 'Instrumentation run failed due to 'Process crashed.''
+05-19 13:06:44 D/ModuleListener: ModuleListener.testFailed(android.print.cts.PrintAttributesTest#testMediaSizeSuggestion0, Test failed to run to completion. Reason: 'Instrumentation run failed due to 'Process crashed.''. Check device logcat for details)
+05-19 13:06:44 I/ConsoleReporter: [23/71 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintAttributesTest#testMediaSizeSuggestion0 fail: Test failed to run to completion. Reason: 'Instrumentation run failed due to 'Process crashed.''. Check device logcat for details
+05-19 13:06:44 I/FailureListener: FailureListener.testFailed android.print.cts.PrintAttributesTest#testMediaSizeSuggestion0 false true false
+05-19 13:06:46 D/FileUtil: Creating temp file at /tmp/autotest-tradefed-install_5UI1sQ/1a5d3a860c6414257d85e51e843e2815/android-cts-7.1_r5-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.05.19_12.54.33 with prefix "android.print.cts.PrintAttributesTest#testMediaSizeSuggestion0-logcat_" suffix ".zip"
+05-19 13:06:46 I/LogFileSaver: Saved log file /tmp/autotest-tradefed-install_5UI1sQ/1a5d3a860c6414257d85e51e843e2815/android-cts-7.1_r5-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.05.19_12.54.33/android.print.cts.PrintAttributesTest#testMediaSizeSuggestion0-logcat_1446935881019431378.zip
+05-19 13:06:46 I/ResultReporter: Saved logs for android.print.cts.PrintAttributesTest#testMediaSizeSuggestion0-logcat in /tmp/autotest-tradefed-install_5UI1sQ/1a5d3a860c6414257d85e51e843e2815/android-cts-7.1_r5-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.05.19_12.54.33/android.print.cts.PrintAttributesTest#testMediaSizeSuggestion0-logcat_1446935881019431378.zip
+05-19 13:06:46 D/FileUtil: Creating temp file at /tmp/3943087/cts/inv_8667528915868403746 with prefix "android.print.cts.PrintAttributesTest#testMediaSizeSuggestion0-logcat_" suffix ".zip"
+05-19 13:06:46 D/RunUtil: Running command with timeout: 10000ms
+05-19 13:06:46 D/RunUtil: Running [chmod]
+05-19 13:06:46 D/RunUtil: [chmod] command failed. return code 1
+05-19 13:06:46 D/FileUtil: Attempting to chmod /tmp/3943087/cts/inv_8667528915868403746/android.print.cts.PrintAttributesTest#testMediaSizeSuggestion0-logcat_1495588237908458867.zip to ug+rwx
+05-19 13:06:46 D/RunUtil: Running command with timeout: 10000ms
+05-19 13:06:46 D/RunUtil: Running [chmod, ug+rwx, /tmp/3943087/cts/inv_8667528915868403746/android.print.cts.PrintAttributesTest#testMediaSizeSuggestion0-logcat_1495588237908458867.zip]
+05-19 13:06:46 I/FileSystemLogSaver: Saved log file /tmp/3943087/cts/inv_8667528915868403746/android.print.cts.PrintAttributesTest#testMediaSizeSuggestion0-logcat_1495588237908458867.zip
+05-19 13:06:46 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintAttributesTest#testMediaSizeSuggestion0, {})
+05-19 13:06:46 D/ModuleListener: ModuleListener.testRunFailed(Instrumentation run failed due to 'Process crashed.')
+05-19 13:06:46 I/ConsoleReporter: [chromeos4-row8-rack6-host1:22] Instrumentation run failed due to 'Process crashed.'
+05-19 13:06:46 D/ModuleListener: ModuleListener.testRunEnded(0, {})
+05-19 13:06:46 I/ConsoleReporter: [chromeos4-row8-rack6-host1:22] x86 CtsPrintTestCases failed in 0 ms. 22 passed, 1 failed, 48 not executed
+05-19 13:16:50 W/RemoteAndroidTest: ShellCommandUnresponsiveException com.android.ddmlib.ShellCommandUnresponsiveException when running tests android.print.cts on google-google_chromebook_pixel__2015_-chromeos4-row8-rack6-host1:22
+05-19 13:16:50 I/InstrumentationResultParser: test run failed: 'Failed to receive adb shell test output within 600000 ms. Test may have timed out, or adb connection to device became unresponsive'
+05-19 13:16:50 D/ModuleListener: ModuleListener.testFailed(android.print.cts.PrintAttributesTest#testMediaSizeSuggestion0, Test failed to run to completion. Reason: 'Failed to receive adb shell test output within 600000 ms. Test may have timed out, or adb connection to device became unresponsive'. Check device logcat for details)
+05-19 13:16:50 I/ConsoleReporter: [23/71 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintAttributesTest#testMediaSizeSuggestion0 fail: Test failed to run to completion. Reason: 'Failed to receive adb shell test output within 600000 ms. Test may have timed out, or adb connection to device became unresponsive'. Check device logcat for details
+05-19 13:16:50 I/FailureListener: FailureListener.testFailed android.print.cts.PrintAttributesTest#testMediaSizeSuggestion0 false true false
+05-19 13:16:52 D/FileUtil: Creating temp file at /tmp/autotest-tradefed-install_5UI1sQ/1a5d3a860c6414257d85e51e843e2815/android-cts-7.1_r5-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.05.19_12.54.33 with prefix "android.print.cts.PrintAttributesTest#testMediaSizeSuggestion0-logcat_" suffix ".zip"
+05-19 13:16:52 I/LogFileSaver: Saved log file /tmp/autotest-tradefed-install_5UI1sQ/1a5d3a860c6414257d85e51e843e2815/android-cts-7.1_r5-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.05.19_12.54.33/android.print.cts.PrintAttributesTest#testMediaSizeSuggestion0-logcat_1832501125908690709.zip
+05-19 13:16:52 I/ResultReporter: Saved logs for android.print.cts.PrintAttributesTest#testMediaSizeSuggestion0-logcat in /tmp/autotest-tradefed-install_5UI1sQ/1a5d3a860c6414257d85e51e843e2815/android-cts-7.1_r5-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.05.19_12.54.33/android.print.cts.PrintAttributesTest#testMediaSizeSuggestion0-logcat_1832501125908690709.zip
+05-19 13:16:52 D/FileUtil: Creating temp file at /tmp/3943087/cts/inv_8667528915868403746 with prefix "android.print.cts.PrintAttributesTest#testMediaSizeSuggestion0-logcat_" suffix ".zip"
+05-19 13:16:52 D/RunUtil: Running command with timeout: 10000ms
+05-19 13:16:52 D/RunUtil: Running [chmod]
+05-19 13:16:52 D/RunUtil: [chmod] command failed. return code 1
+05-19 13:16:52 D/FileUtil: Attempting to chmod /tmp/3943087/cts/inv_8667528915868403746/android.print.cts.PrintAttributesTest#testMediaSizeSuggestion0-logcat_2793513150534136328.zip to ug+rwx
+05-19 13:16:52 D/RunUtil: Running command with timeout: 10000ms
+05-19 13:16:52 D/RunUtil: Running [chmod, ug+rwx, /tmp/3943087/cts/inv_8667528915868403746/android.print.cts.PrintAttributesTest#testMediaSizeSuggestion0-logcat_2793513150534136328.zip]
+05-19 13:16:52 I/FileSystemLogSaver: Saved log file /tmp/3943087/cts/inv_8667528915868403746/android.print.cts.PrintAttributesTest#testMediaSizeSuggestion0-logcat_2793513150534136328.zip
+05-19 13:16:52 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintAttributesTest#testMediaSizeSuggestion0, {})
+05-19 13:16:52 D/ModuleListener: ModuleListener.testRunFailed(Failed to receive adb shell test output within 600000 ms. Test may have timed out, or adb connection to device became unresponsive)
+05-19 13:16:52 I/ConsoleReporter: [chromeos4-row8-rack6-host1:22] Failed to receive adb shell test output within 600000 ms. Test may have timed out, or adb connection to device became unresponsive
+05-19 13:16:52 D/ModuleListener: ModuleListener.testRunEnded(0, {})
+05-19 13:16:52 I/ConsoleReporter: [chromeos4-row8-rack6-host1:22] x86 CtsPrintTestCases failed in 0 ms. 22 passed, 2 failed, 48 not executed
+05-19 13:16:52 W/AndroidNativeDevice: Device chromeos4-row8-rack6-host1:22 stopped responding when attempting run android.print.cts instrumentation tests
+05-19 13:16:52 I/AndroidNativeDevice: Attempting recovery on chromeos4-row8-rack6-host1:22
+05-19 13:16:52 I/WaitDeviceRecovery: Pausing for 5000 for chromeos4-row8-rack6-host1:22 to recover
+05-19 13:16:57 I/AndroidNativeDeviceStateMonitor: Device chromeos4-row8-rack6-host1:22 is already ONLINE
+05-19 13:16:57 I/AndroidNativeDeviceStateMonitor: Waiting 30000 ms for device chromeos4-row8-rack6-host1:22 shell to be responsive
+05-19 13:16:57 I/AndroidNativeDeviceStateMonitor: Device chromeos4-row8-rack6-host1:22 is already ONLINE
+05-19 13:16:57 I/AndroidNativeDeviceStateMonitor: Waiting 240000 ms for device chromeos4-row8-rack6-host1:22 boot complete
+05-19 13:16:57 I/DeviceStateMonitor: Waiting 239953 ms for device chromeos4-row8-rack6-host1:22 package manager
+05-19 13:16:58 I/AndroidNativeDeviceStateMonitor: Waiting 239273 ms for device chromeos4-row8-rack6-host1:22 external store
+05-19 13:16:58 I/AndroidNativeDeviceStateMonitor: Device chromeos4-row8-rack6-host1:22 is already ONLINE
+05-19 13:16:58 I/AndroidNativeDevice: root is required for encryption
+05-19 13:16:58 I/AndroidNativeDevice: "enable-root" set to false; ignoring 'adb root' request
+05-19 13:16:58 I/TestDevice: Attempting to disable keyguard on chromeos4-row8-rack6-host1:22 using input keyevent 82
+05-19 13:16:59 I/AndroidNativeDevice: Recovery successful for chromeos4-row8-rack6-host1:22
+05-19 13:16:59 I/AndroidNativeDeviceStateMonitor: Device chromeos4-row8-rack6-host1:22 is already ONLINE
+05-19 13:16:59 I/AndroidNativeDeviceStateMonitor: Waiting 5000 ms for device chromeos4-row8-rack6-host1:22 boot complete
+05-19 13:16:59 I/DeviceStateMonitor: Waiting 4940 ms for device chromeos4-row8-rack6-host1:22 package manager
+05-19 13:16:59 I/AndroidNativeDeviceStateMonitor: Waiting 4281 ms for device chromeos4-row8-rack6-host1:22 external store
+05-19 13:17:00 I/InstrumentationTest: Running individual tests using a test file
+05-19 13:17:00 D/InstrumentationFileTest: Test file /tmp/tf_testFile_com.android.tradefed.testtype.InstrumentationFileTest8279200021135919156.txt was successfully created
+05-19 13:17:00 D/InstrumentationFileTest: Test file /tmp/tf_testFile_com.android.tradefed.testtype.InstrumentationFileTest8279200021135919156.txt was successfully pushed to /data/local/tmp/tf_testFile_com.android.tradefed.testtype.InstrumentationFileTest8279200021135919156.txt on device
+05-19 13:17:00 I/RemoteAndroidTest: Running am instrument -w -r   -e testFile /data/local/tmp/tf_testFile_com.android.tradefed.testtype.InstrumentationFileTest8279200021135919156.txt -e timeout_msec 300000 android.print.cts/android.support.test.runner.AndroidJUnitRunner on google-google_chromebook_pixel__2015_-chromeos4-row8-rack6-host1:22
+05-19 13:17:01 D/ModuleListener: ModuleListener.testRunStarted(android.print.cts, 48)
+05-19 13:17:01 I/ConsoleReporter: [chromeos4-row8-rack6-host1:22] Continuing x86 CtsPrintTestCases with 48 tests
+05-19 13:17:01 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintJobTest#testAdvancedOption)
+05-19 13:17:14 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintJobTest#testAdvancedOption, {})
+05-19 13:17:14 I/ConsoleReporter: [1/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintJobTest#testAdvancedOption pass
+05-19 13:17:14 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintJobTest#testBlockWithReason)
+05-19 13:17:28 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintJobTest#testBlockWithReason, {})
+05-19 13:17:28 I/ConsoleReporter: [2/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintJobTest#testBlockWithReason pass
+05-19 13:17:29 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintJobTest#testFailWithReason)
+05-19 13:17:40 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintJobTest#testFailWithReason, {})
+05-19 13:17:40 I/ConsoleReporter: [3/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintJobTest#testFailWithReason pass
+05-19 13:17:40 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintJobTest#testOther)
+05-19 13:17:54 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintJobTest#testOther, {})
+05-19 13:17:54 I/ConsoleReporter: [4/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintJobTest#testOther pass
+05-19 13:17:54 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintJobTest#testSetStatus)
+05-19 13:18:09 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintJobTest#testSetStatus, {})
+05-19 13:18:09 I/ConsoleReporter: [5/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintJobTest#testSetStatus pass
+05-19 13:18:09 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintJobTest#testStateTransitions)
+05-19 13:19:28 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintJobTest#testStateTransitions, {})
+05-19 13:19:28 I/ConsoleReporter: [6/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintJobTest#testStateTransitions pass
+05-19 13:19:28 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintJobTest#testTag)
+05-19 13:19:42 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintJobTest#testTag, {})
+05-19 13:19:42 I/ConsoleReporter: [7/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintJobTest#testTag pass
+05-19 13:19:42 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrinterDiscoverySessionLifecycleTest#testCancelPrintServicesAlertDialog)
+05-19 13:20:00 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrinterDiscoverySessionLifecycleTest#testCancelPrintServicesAlertDialog, {})
+05-19 13:20:00 I/ConsoleReporter: [8/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrinterDiscoverySessionLifecycleTest#testCancelPrintServicesAlertDialog pass
+05-19 13:20:00 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrinterDiscoverySessionLifecycleTest#testNormalLifecycle)
+05-19 13:20:14 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrinterDiscoverySessionLifecycleTest#testNormalLifecycle, {})
+05-19 13:20:14 I/ConsoleReporter: [9/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrinterDiscoverySessionLifecycleTest#testNormalLifecycle pass
+05-19 13:20:14 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrinterDiscoverySessionLifecycleTest#testStartPrinterDiscoveryWithHistoricalPrinters)
+05-19 13:20:31 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrinterDiscoverySessionLifecycleTest#testStartPrinterDiscoveryWithHistoricalPrinters, {})
+05-19 13:20:31 I/ConsoleReporter: [10/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrinterDiscoverySessionLifecycleTest#testStartPrinterDiscoveryWithHistoricalPrinters pass
+05-19 13:20:31 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrinterCapabilitiesTest#testIllegalPrinterCapabilityInfos)
+05-19 13:20:37 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrinterCapabilitiesTest#testIllegalPrinterCapabilityInfos, {})
+05-19 13:20:37 I/ConsoleReporter: [11/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrinterCapabilitiesTest#testIllegalPrinterCapabilityInfos pass
+05-19 13:20:37 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrinterCapabilitiesTest#testInvalidDefaultColor)
+05-19 13:20:47 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrinterCapabilitiesTest#testInvalidDefaultColor, {})
+05-19 13:20:47 I/ConsoleReporter: [12/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrinterCapabilitiesTest#testInvalidDefaultColor pass
+05-19 13:20:47 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrinterCapabilitiesTest#testInvalidDefaultDuplexMode)
+05-19 13:20:58 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrinterCapabilitiesTest#testInvalidDefaultDuplexMode, {})
+05-19 13:20:58 I/ConsoleReporter: [13/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrinterCapabilitiesTest#testInvalidDefaultDuplexMode pass
+05-19 13:20:58 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrinterCapabilitiesTest#testPrinterCapabilityChange)
+05-19 13:22:55 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrinterCapabilitiesTest#testPrinterCapabilityChange, {})
+05-19 13:22:55 I/ConsoleReporter: [14/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrinterCapabilitiesTest#testPrinterCapabilityChange pass
+05-19 13:22:55 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrinterCapabilitiesTest#testSanePrinterCapabilityInfos)
+05-19 13:23:02 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrinterCapabilitiesTest#testSanePrinterCapabilityInfos, {})
+05-19 13:23:02 I/ConsoleReporter: [15/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrinterCapabilitiesTest#testSanePrinterCapabilityInfos pass
+05-19 13:23:02 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintServicesTest#testProgress)
+05-19 13:23:14 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintServicesTest#testProgress, {})
+05-19 13:23:14 I/ConsoleReporter: [16/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintServicesTest#testProgress pass
+05-19 13:23:14 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintServicesTest#testUpdateIcon)
+05-19 13:23:22 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintServicesTest#testUpdateIcon, {})
+05-19 13:23:22 I/ConsoleReporter: [17/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintServicesTest#testUpdateIcon pass
+05-19 13:23:22 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintDocumentAdapterContractTest#testCancelLongRunningLayout)
+05-19 13:23:29 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintDocumentAdapterContractTest#testCancelLongRunningLayout, {})
+05-19 13:23:29 I/ConsoleReporter: [18/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintDocumentAdapterContractTest#testCancelLongRunningLayout pass
+05-19 13:23:29 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintDocumentAdapterContractTest#testCancelLongRunningWrite)
+05-19 13:23:36 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintDocumentAdapterContractTest#testCancelLongRunningWrite, {})
+05-19 13:23:36 I/ConsoleReporter: [19/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintDocumentAdapterContractTest#testCancelLongRunningWrite pass
+05-19 13:23:36 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintDocumentAdapterContractTest#testDocumentInfoContentTypeNonDefined)
+05-19 13:23:51 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintDocumentAdapterContractTest#testDocumentInfoContentTypeNonDefined, {})
+05-19 13:23:51 I/ConsoleReporter: [20/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintDocumentAdapterContractTest#testDocumentInfoContentTypeNonDefined pass
+05-19 13:23:51 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintDocumentAdapterContractTest#testDocumentInfoContentTypePhoto)
+05-19 13:24:05 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintDocumentAdapterContractTest#testDocumentInfoContentTypePhoto, {})
+05-19 13:24:05 I/ConsoleReporter: [21/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintDocumentAdapterContractTest#testDocumentInfoContentTypePhoto pass
+05-19 13:24:05 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintDocumentAdapterContractTest#testDocumentInfoContentTypeUnknown)
+05-19 13:24:19 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintDocumentAdapterContractTest#testDocumentInfoContentTypeUnknown, {})
+05-19 13:24:19 I/ConsoleReporter: [22/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintDocumentAdapterContractTest#testDocumentInfoContentTypeUnknown pass
+05-19 13:24:19 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintDocumentAdapterContractTest#testDocumentInfoNothingSet)
+05-19 13:24:30 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintDocumentAdapterContractTest#testDocumentInfoNothingSet, {})
+05-19 13:24:30 I/ConsoleReporter: [23/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintDocumentAdapterContractTest#testDocumentInfoNothingSet pass
+05-19 13:24:30 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintDocumentAdapterContractTest#testDocumentInfoOnePageCount)
+05-19 13:24:45 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintDocumentAdapterContractTest#testDocumentInfoOnePageCount, {})
+05-19 13:24:45 I/ConsoleReporter: [24/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintDocumentAdapterContractTest#testDocumentInfoOnePageCount pass
+05-19 13:24:45 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintDocumentAdapterContractTest#testDocumentInfoThreePageCount)
+05-19 13:24:57 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintDocumentAdapterContractTest#testDocumentInfoThreePageCount, {})
+05-19 13:24:57 I/ConsoleReporter: [25/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintDocumentAdapterContractTest#testDocumentInfoThreePageCount pass
+05-19 13:24:57 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintDocumentAdapterContractTest#testDocumentInfoUnknownPageCount)
+05-19 13:25:08 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintDocumentAdapterContractTest#testDocumentInfoUnknownPageCount, {})
+05-19 13:25:08 I/ConsoleReporter: [26/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintDocumentAdapterContractTest#testDocumentInfoUnknownPageCount pass
+05-19 13:25:08 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintDocumentAdapterContractTest#testDocumentInfoZeroPageCount)
+05-19 13:25:23 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintDocumentAdapterContractTest#testDocumentInfoZeroPageCount, {})
+05-19 13:25:23 I/ConsoleReporter: [27/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintDocumentAdapterContractTest#testDocumentInfoZeroPageCount pass
+05-19 13:25:23 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintDocumentAdapterContractTest#testFailedLayout)
+05-19 13:25:30 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintDocumentAdapterContractTest#testFailedLayout, {})
+05-19 13:25:30 I/ConsoleReporter: [28/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintDocumentAdapterContractTest#testFailedLayout pass
+05-19 13:25:30 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintDocumentAdapterContractTest#testFailedWrite)
+05-19 13:25:38 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintDocumentAdapterContractTest#testFailedWrite, {})
+05-19 13:25:38 I/ConsoleReporter: [29/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintDocumentAdapterContractTest#testFailedWrite pass
+05-19 13:25:38 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintDocumentAdapterContractTest#testLayoutCallbackNotCalled)
+05-19 13:25:46 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintDocumentAdapterContractTest#testLayoutCallbackNotCalled, {})
+05-19 13:25:46 I/ConsoleReporter: [30/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintDocumentAdapterContractTest#testLayoutCallbackNotCalled pass
+05-19 13:25:46 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintDocumentAdapterContractTest#testNewPrinterSupportsSelectedPrintOptions)
+05-19 13:25:59 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintDocumentAdapterContractTest#testNewPrinterSupportsSelectedPrintOptions, {})
+05-19 13:25:59 I/ConsoleReporter: [31/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintDocumentAdapterContractTest#testNewPrinterSupportsSelectedPrintOptions pass
+05-19 13:25:59 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintDocumentAdapterContractTest#testNoPrintOptionsOrPrinterChange)
+05-19 13:26:13 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintDocumentAdapterContractTest#testNoPrintOptionsOrPrinterChange, {})
+05-19 13:26:13 I/ConsoleReporter: [32/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintDocumentAdapterContractTest#testNoPrintOptionsOrPrinterChange pass
+05-19 13:26:13 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintDocumentAdapterContractTest#testNoPrintOptionsOrPrinterChangeCanceled)
+05-19 13:26:20 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintDocumentAdapterContractTest#testNoPrintOptionsOrPrinterChangeCanceled, {})
+05-19 13:26:20 I/ConsoleReporter: [33/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintDocumentAdapterContractTest#testNoPrintOptionsOrPrinterChangeCanceled pass
+05-19 13:26:20 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintDocumentAdapterContractTest#testNotEnoughPages)
+05-19 13:26:32 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintDocumentAdapterContractTest#testNotEnoughPages, {})
+05-19 13:26:32 I/ConsoleReporter: [34/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintDocumentAdapterContractTest#testNotEnoughPages pass
+05-19 13:26:32 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintDocumentAdapterContractTest#testNothingChangesAllPagesWrittenFirstTime)
+05-19 13:26:45 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintDocumentAdapterContractTest#testNothingChangesAllPagesWrittenFirstTime, {})
+05-19 13:26:45 I/ConsoleReporter: [35/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintDocumentAdapterContractTest#testNothingChangesAllPagesWrittenFirstTime pass
+05-19 13:26:45 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintDocumentAdapterContractTest#testPrintOptionsChangeAndNoPrinterChange)
+05-19 13:27:05 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintDocumentAdapterContractTest#testPrintOptionsChangeAndNoPrinterChange, {})
+05-19 13:27:05 I/ConsoleReporter: [36/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintDocumentAdapterContractTest#testPrintOptionsChangeAndNoPrinterChange pass
+05-19 13:27:05 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintDocumentAdapterContractTest#testPrintOptionsChangeAndNoPrinterChangeAndContentChange)
+05-19 13:27:15 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintDocumentAdapterContractTest#testPrintOptionsChangeAndNoPrinterChangeAndContentChange, {})
+05-19 13:27:15 I/ConsoleReporter: [37/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintDocumentAdapterContractTest#testPrintOptionsChangeAndNoPrinterChangeAndContentChange pass
+05-19 13:27:15 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintDocumentAdapterContractTest#testPrintOptionsChangeAndPrinterChange)
+05-19 13:27:31 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintDocumentAdapterContractTest#testPrintOptionsChangeAndPrinterChange, {})
+05-19 13:27:31 I/ConsoleReporter: [38/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintDocumentAdapterContractTest#testPrintOptionsChangeAndPrinterChange pass
+05-19 13:27:31 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintDocumentAdapterContractTest#testRequestedPagesNotWritten)
+05-19 13:27:38 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintDocumentAdapterContractTest#testRequestedPagesNotWritten, {})
+05-19 13:27:38 I/ConsoleReporter: [39/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintDocumentAdapterContractTest#testRequestedPagesNotWritten pass
+05-19 13:27:38 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintDocumentAdapterContractTest#testWriteCallbackNotCalled)
+05-19 13:27:46 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintDocumentAdapterContractTest#testWriteCallbackNotCalled, {})
+05-19 13:27:46 I/ConsoleReporter: [40/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintDocumentAdapterContractTest#testWriteCallbackNotCalled pass
+05-19 13:27:46 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintAttributesTest#testMediaSizeSuggestion1)
+05-19 13:27:59 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintAttributesTest#testMediaSizeSuggestion1, {})
+05-19 13:27:59 I/ConsoleReporter: [41/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintAttributesTest#testMediaSizeSuggestion1 pass
+05-19 13:27:59 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintAttributesTest#testNegativeMargins)
+05-19 13:28:13 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintAttributesTest#testNegativeMargins, {})
+05-19 13:28:13 I/ConsoleReporter: [42/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintAttributesTest#testNegativeMargins pass
+05-19 13:28:13 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintAttributesTest#testNoSuggestion0)
+05-19 13:28:27 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintAttributesTest#testNoSuggestion0, {})
+05-19 13:28:27 I/ConsoleReporter: [43/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintAttributesTest#testNoSuggestion0 pass
+05-19 13:28:27 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintAttributesTest#testNoSuggestion1)
+05-19 13:28:43 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintAttributesTest#testNoSuggestion1, {})
+05-19 13:28:43 I/ConsoleReporter: [44/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintAttributesTest#testNoSuggestion1 pass
+05-19 13:28:43 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintAttributesTest#testNoSuggestion2)
+05-19 13:28:56 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintAttributesTest#testNoSuggestion2, {})
+05-19 13:28:56 I/ConsoleReporter: [45/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintAttributesTest#testNoSuggestion2 pass
+05-19 13:28:56 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintAttributesTest#testSuggestedDifferentFromDefault)
+05-19 13:29:12 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintAttributesTest#testSuggestedDifferentFromDefault, {})
+05-19 13:29:12 I/ConsoleReporter: [46/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintAttributesTest#testSuggestedDifferentFromDefault pass
+05-19 13:29:13 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrintAttributesTest#testUnsupportedSuggested)
+05-19 13:29:29 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrintAttributesTest#testUnsupportedSuggested, {})
+05-19 13:29:29 I/ConsoleReporter: [47/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrintAttributesTest#testUnsupportedSuggested pass
+05-19 13:29:29 D/ModuleListener: ModuleListener.testStarted(android.print.cts.PrinterInfoTest#testPrinterInfos)
+05-19 13:29:36 D/ModuleListener: ModuleListener.testEnded(android.print.cts.PrinterInfoTest#testPrinterInfos, {})
+05-19 13:29:36 I/ConsoleReporter: [48/48 x86 CtsPrintTestCases chromeos4-row8-rack6-host1:22] android.print.cts.PrinterInfoTest#testPrinterInfos pass
+05-19 13:29:36 D/ModuleListener: ModuleListener.testRunEnded(755592, {})
+05-19 13:29:36 I/ConsoleReporter: [chromeos4-row8-rack6-host1:22] x86 CtsPrintTestCases completed in 12m 35s. 48 passed, 0 failed, 0 not executed
+05-19 13:29:36 D/InstrumentationFileTest: Removed test file from device: /data/local/tmp/tf_testFile_com.android.tradefed.testtype.InstrumentationFileTest8279200021135919156.txt
+05-19 13:29:36 D/ModuleDef: Cleaner: ApkInstaller
+05-19 13:29:36 D/TestDevice: Uninstalling android.print.cts
+05-19 13:29:37 I/CompatibilityTest: Running system status checker after module execution: CtsPrintTestCases
+05-19 13:29:38 I/MonitoringUtils: Connectivity: passed check.
+05-19 13:29:39 D/RunUtil: run interrupt allowed: false
+05-19 13:29:39 I/ResultReporter: Invocation finished in 35m 5s. PASSED: 70, FAILED: 1, MODULES: 0 of 1
+05-19 13:29:40 I/ResultReporter: Test Result: /tmp/autotest-tradefed-install_5UI1sQ/1a5d3a860c6414257d85e51e843e2815/android-cts-7.1_r5-linux_x86-x86/android-cts/results/2017.05.19_12.54.33/test_result_failures.html
+05-19 13:29:40 I/ResultReporter: Full Result: /tmp/autotest-tradefed-install_5UI1sQ/1a5d3a860c6414257d85e51e843e2815/android-cts-7.1_r5-linux_x86-x86/android-cts/results/2017.05.19_12.54.33.zip

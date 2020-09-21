@@ -1,0 +1,4 @@
+URL: git clone http://git.videolan.org/git/x264.git
+Version: 3f5ed56d4105f68c01b86f94f41bb9bbefa3433b
+BugComponent: 162041
+Owners: ghartman, haining

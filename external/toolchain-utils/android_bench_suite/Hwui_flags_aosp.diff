@@ -1,0 +1,50 @@
+diff --git a/libs/hwui/Android.bp b/libs/hwui/Android.bp
+index 558cdc0faf3..1565be5b201 100644
+--- a/libs/hwui/Android.bp
++++ b/libs/hwui/Android.bp
+@@ -24,12 +24,15 @@ cc_defaults {
+         "-Werror",
+         "-fvisibility=hidden",
+         "-DHWUI_NEW_OPS",
++	CFLAGS_FOR_BENCH_SUITE
+ 
+         // GCC false-positives on this warning, and since we -Werror that's
+         // a problem
+         "-Wno-free-nonheap-object",
+     ],
+ 
++    ldflags: [LDFLAGS_FOR_BENCH_SUITE],
++
+     include_dirs: [
+         "external/skia/include/private",
+         "external/skia/src/core",
+@@ -214,6 +217,9 @@ cc_defaults {
+         export_proto_headers: true,
+     },
+ 
++    cflags: [CFLAGS_FOR_BENCH_SUITE],
++    ldflags: [LDFLAGS_FOR_BENCH_SUITE],
++
+     export_include_dirs: ["."],
+ }
+ 
+@@ -229,7 +235,8 @@ cc_library {
+ cc_library_static {
+     name: "libhwui_static_null_gpu",
+     defaults: ["libhwui_defaults"],
+-    cflags: ["-DHWUI_NULL_GPU"],
++    cflags: ["-DHWUI_NULL_GPU", CFLAGS_FOR_BENCH_SUITE],
++    ldflags: [LDFLAGS_FOR_BENCH_SUITE],
+     srcs: [
+         "debug/nullegl.cpp",
+         "debug/nullgles.cpp",
+@@ -319,7 +326,8 @@ cc_benchmark {
+     name: "hwuimicro",
+     defaults: ["hwui_test_defaults"],
+ 
+-    cflags: ["-DHWUI_NULL_GPU"],
++    cflags: ["-DHWUI_NULL_GPU", CFLAGS_FOR_BENCH_SUITE],
++    ldflags: [LDFLAGS_FOR_BENCH_SUITE],
+ 
+     whole_static_libs: ["libhwui_static_null_gpu"],
+

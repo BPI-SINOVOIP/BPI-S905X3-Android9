@@ -1,0 +1,55 @@
+07-24 22:32:21 I/CompatibilityTest: Starting 17 modules on chromeos4-row6-rack11-host11:22
+07-24 22:32:22 I/ConsoleReporter: [chromeos4-row6-rack11-host11:22] Starting armeabi-v7a CtsDeqpTestCases with 35452 tests
+07-24 22:32:39 I/ConsoleReporter: [1/35452 armeabi-v7a CtsDeqpTestCases chromeos4-row6-rack11-host11:22] dEQP-GLES31.info#vendor pass
+07-25 01:18:20 I/ConsoleReporter: [35452/35452 armeabi-v7a CtsDeqpTestCases chromeos4-row6-rack11-host11:22] dEQP-GLES31.functional.default_vertex_array_object#vertex_attrib_divisor pass
+07-25 01:18:26 I/ConsoleReporter: [chromeos4-row6-rack11-host11:22] armeabi-v7a CtsDeqpTestCases completed in 2h 46m 4s. 35452 passed, 0 failed, 0 not executed
+07-25 01:18:29 I/ConsoleReporter: [chromeos4-row6-rack11-host11:22] Continuing armeabi-v7a CtsDeqpTestCases with 81464 tests
+07-25 01:18:30 I/ConsoleReporter: [1/81464 armeabi-v7a CtsDeqpTestCases chromeos4-row6-rack11-host11:22] dEQP-VK.info#build pass
+07-25 01:19:06 I/ConsoleReporter: [81464/81464 armeabi-v7a CtsDeqpTestCases chromeos4-row6-rack11-host11:22] dEQP-VK.sparse_resources.buffer_sparse_memory_aliasing#buffer_size_2_24 pass
+07-25 01:19:06 I/ConsoleReporter: [chromeos4-row6-rack11-host11:22] armeabi-v7a CtsDeqpTestCases completed in 37s. 81464 passed, 0 failed, 0 not executed
+07-25 01:19:08 I/ConsoleReporter: [chromeos4-row6-rack11-host11:22] Continuing armeabi-v7a CtsDeqpTestCases with 40955 tests
+07-25 01:19:24 I/ConsoleReporter: [1/40955 armeabi-v7a CtsDeqpTestCases chromeos4-row6-rack11-host11:22] dEQP-GLES3.info#vendor pass
+07-25 01:23:12 I/ConsoleReporter: [5110/40955 armeabi-v7a CtsDeqpTestCases chromeos4-row6-rack11-host11:22] dEQP-GLES3.functional.shaders.indexing.matrix_subscript#mat3x4_dynamic_loop_write_static_loop_read_fragment pass
+07-25 01:23:39 D/BackgroundDeviceAction: Sleep for 5000 before starting logcat for chromeos4-row6-rack11-host11:22.
+07-25 01:23:39 W/DeqpTestRunner: ADB link failed, retrying after a cooldown period
+07-25 01:23:44 D/BackgroundDeviceAction: Waiting for device chromeos4-row6-rack11-host11:22 online before starting.
+07-25 01:23:45 W/AndroidNativeDevice: AdbCommandRejectedException (device 'chromeos4-row6-rack11-host11:22' not found) when attempting shell ps | grep com.drawelements on device chromeos4-row6-rack11-host11:22
+07-25 01:23:45 I/AndroidNativeDevice: Attempting recovery on chromeos4-row6-rack11-host11:22
+07-25 01:23:45 I/WaitDeviceRecovery: Pausing for 5000 for chromeos4-row6-rack11-host11:22 to recover
+07-25 01:23:50 I/AndroidNativeDeviceStateMonitor: Waiting for device chromeos4-row6-rack11-host11:22 to be ONLINE; it is currently NOT_AVAILABLE...
+07-25 01:24:50 W/DeqpTestRunner: ADB link failed, trying to recover
+07-25 01:24:50 I/AndroidNativeDevice: Attempting recovery on chromeos4-row6-rack11-host11:22
+07-25 01:24:50 I/WaitDeviceRecovery: Pausing for 5000 for chromeos4-row6-rack11-host11:22 to recover
+07-25 01:24:55 I/AndroidNativeDeviceStateMonitor: Waiting for device chromeos4-row6-rack11-host11:22 to be ONLINE; it is currently NOT_AVAILABLE...
+07-25 01:25:55 W/DeqpTestRunner: ADB link failed after recovery, rebooting device
+07-25 01:25:55 I/AndroidNativeDevice: Device reboot disabled by options, skipped.
+07-25 01:25:55 I/AndroidNativeDeviceStateMonitor: Waiting for device chromeos4-row6-rack11-host11:22 to be ONLINE; it is currently NOT_AVAILABLE...
+07-25 01:26:55 I/AndroidNativeDevice: Attempting recovery on chromeos4-row6-rack11-host11:22
+07-25 01:26:55 I/WaitDeviceRecovery: Pausing for 5000 for chromeos4-row6-rack11-host11:22 to recover
+07-25 01:27:00 I/AndroidNativeDeviceStateMonitor: Waiting for device chromeos4-row6-rack11-host11:22 to be ONLINE; it is currently NOT_AVAILABLE...
+07-25 01:28:00 W/DeqpTestRunner: Cannot recover ADB connection
+07-25 01:28:00 W/TestInvocation: Invocation did not complete due to device chromeos4-row6-rack11-host11:22 becoming not available. Reason: link killed after reboot
+07-25 01:28:00 W/ResultReporter: Invocation failed: com.android.tradefed.device.DeviceNotAvailableException: link killed after reboot
+07-25 01:28:00 D/RunUtil: run interrupt allowed: false
+07-25 01:28:00 W/AndroidNativeDevice: AdbCommandRejectedException (device 'chromeos4-row6-rack11-host11:22' not found) when attempting shell ls "/sdcard/report-log-files/" on device chromeos4-row6-rack11-host11:22
+07-25 01:28:00 I/AndroidNativeDevice: Skipping recovery on chromeos4-row6-rack11-host11:22
+07-25 01:28:01 W/AndroidNativeDevice: AdbCommandRejectedException (device 'chromeos4-row6-rack11-host11:22' not found) when attempting shell ls "/sdcard/report-log-files/" on device chromeos4-row6-rack11-host11:22
+07-25 01:28:01 I/AndroidNativeDevice: Skipping recovery on chromeos4-row6-rack11-host11:22
+07-25 01:28:02 W/AndroidNativeDevice: AdbCommandRejectedException (device 'chromeos4-row6-rack11-host11:22' not found) when attempting shell ls "/sdcard/report-log-files/" on device chromeos4-row6-rack11-host11:22
+07-25 01:28:02 I/AndroidNativeDevice: Skipping recovery on chromeos4-row6-rack11-host11:22
+07-25 01:28:03 E/CollectorUtil: Caught exception during pull.
+07-25 01:28:03 E/CollectorUtil: Attempted shell ls "/sdcard/report-log-files/" multiple times on device chromeos4-row6-rack11-host11:22 without communication success. Aborting.
+com.android.tradefed.device.DeviceUnresponsiveException: Attempted shell ls "/sdcard/report-log-files/" multiple times on device chromeos4-row6-rack11-host11:22 without communication success. Aborting.
+	at com.android.tradefed.device.AndroidNativeDevice.performDeviceAction(AndroidNativeDevice.java:1550)
+	at com.android.tradefed.device.AndroidNativeDevice.executeShellCommand(AndroidNativeDevice.java:525)
+	at com.android.tradefed.device.AndroidNativeDevice.executeShellCommand(AndroidNativeDevice.java:565)
+	at com.android.tradefed.device.AndroidNativeDevice.doesFileExist(AndroidNativeDevice.java:893)
+	at com.android.compatibility.common.tradefed.util.CollectorUtil.pullFromDevice(CollectorUtil.java:55)
+	at com.android.compatibility.common.tradefed.targetprep.ReportLogCollector.tearDown(ReportLogCollector.java:98)
+	at com.android.tradefed.invoker.TestInvocation.doTeardown(TestInvocation.java:524)
+	at com.android.tradefed.invoker.TestInvocation.performInvocation(TestInvocation.java:451)
+	at com.android.tradefed.invoker.TestInvocation.invoke(TestInvocation.java:166)
+	at com.android.tradefed.command.CommandScheduler$InvocationThread.run(CommandScheduler.java:471)
+07-25 01:28:05 I/ResultReporter: Invocation finished in 2h 56m 16s. PASSED: 122026, FAILED: 0, MODULES: 0 of 1
+07-25 01:28:12 I/ResultReporter: Test Result: /tmp/autotest-tradefed-install_Rsi2uv/1f769fe60c0939f5b847d40315f259df/android-cts-7.1_r7-linux_x86-arm/android-cts/results/2017.07.24_22.31.49/test_result_failures.html
+07-25 01:28:12 I/ResultReporter: Full Result: /tmp/autotest-tradefed-install_Rsi2uv/1f769fe60c0939f5b847d40315f259df/android-cts-7.1_r7-linux_x86-arm/android-cts/results/2017.07.24_22.31.49.zip

@@ -1,0 +1,18 @@
+//===---------------------------------------------------------------===
+// obj2yaml command line tool
+//===---------------------------------------------------------------===
+
+cc_binary_host {
+    name: "obj2yaml",
+    defaults: ["llvm-defaults"],
+    srcs: ["*.cpp"],
+    static_libs: [
+        "libLLVMObject",
+        "libLLVMObjectYAML",
+        "libLLVMMC",
+        "libLLVMMCParser",
+        "libLLVMBitReader",
+        "libLLVMCore",
+        "libLLVMSupport",
+    ],
+}

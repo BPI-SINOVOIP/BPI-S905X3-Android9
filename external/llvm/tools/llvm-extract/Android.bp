@@ -1,0 +1,22 @@
+//===---------------------------------------------------------------===
+// llvm-extract command line tool
+//===---------------------------------------------------------------===
+
+cc_binary_host {
+    name: "llvm-extract",
+    defaults: ["llvm-defaults"],
+    srcs: ["llvm-extract.cpp"],
+    static_libs: [
+        "libLLVMIRReader",
+        "libLLVMAsmParser",
+        "libLLVMObject",
+        "libLLVMBitReader",
+        "libLLVMBitWriter",
+        "libLLVMipo",
+        "libLLVMTransformUtils",
+        "libLLVMAnalysis",
+        "libLLVMTarget",
+        "libLLVMCore",
+        "libLLVMSupport",
+    ],
+}

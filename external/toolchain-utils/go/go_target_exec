@@ -1,0 +1,41 @@
+#!/bin/bash
+set -e -o pipefail
+
+# This wrapper copies an executable to a target device and executes it there.
+#
+# Usage: go_target_exec <target> <binary> <args>...
+#
+# This script can work with both ChromeOS/Android devices.
+#
+# It uses "target_tmpdir" to get the path to the temporary directory on the device.
+# It uses "target_cp" to copy the binary to the temporary directory on the device.
+# It uses "target_sh" to execute the binary remotely and get the output/exitcode.
+
+target="$1"
+shift
+
+binary="$1"
+shift
+
+# Get path to temporary directory on device and copy the binary over.
+tmpdir="$(target_tmpdir)"
+target_cp ${binary} ${target}:${tmpdir}/a.out
+
+# If current directory is inside GOROOT, then execute the binary in the
+# corresponding directory inside GOROOT on the device.
+targetdir="${tmpdir}"
+goroot="$(go_${target} env GOROOT)"
+if [[ "${PWD}" == ${goroot}/src/* ]]
+then
+	targetdir="${tmpdir}/go/src/${PWD#${goroot}/src/}"
+fi
+
+# Set GOROOT, and forward some environment variables to the remote shell.
+vars="GOROOT=${tmpdir}/go"
+vars+="${GOOS:+ GOOS=${GOOS}}"
+vars+="${GOARCH:+ GOARCH=${GOARCH}}"
+vars+="${GOMAXPROCS:+ GOMAXPROCS=${GOMAXPROCS}}"
+vars+="${GOTRACEBACK:+ GOTRACEBACK=${GOTRACEBACK}}"
+
+# Remotely execute the binary using ssh (for ChromeOS) or adb (for Android).
+target_sh ${target} "cd ${targetdir} && ${vars} ${tmpdir}/a.out $*"

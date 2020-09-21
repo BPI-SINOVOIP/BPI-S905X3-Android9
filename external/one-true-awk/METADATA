@@ -1,0 +1,19 @@
+name: "one-true-awk"
+description:
+    "This is the version of awk described in "The AWK Programming Language", by "
+    "Al Aho, Brian Kernighan, and Peter Weinberger (Addison-Wesley, 1988, ISBN "
+    "0-201-07981-X)."
+
+third_party {
+  url {
+    type: HOMEPAGE
+    value: "https://www.cs.princeton.edu/~bwk/btl.mirror/"
+  }
+  url {
+    type: ARCHIVE
+    value: "https://www.cs.princeton.edu/~bwk/btl.mirror/awk.tar.gz"
+  }
+  version: "20121220"
+  last_upgrade_date { year: 2017 month: 11 day: 16 }
+  license_type: NOTICE
+}

@@ -1,0 +1,99 @@
+// Copyright (C) 2017 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+cc_defaults {
+    name: "wayland_defaults",
+
+    cflags: [
+        "-Wall",
+        "-Wextra",
+        "-g",
+        "-Wstrict-prototypes",
+        "-Wmissing-prototypes",
+        "-fvisibility=hidden",
+        "-Wno-cast-qual",
+        "-Wno-pointer-arith",
+        "-Wno-unused-parameter",
+    ],
+}
+
+filegroup {
+    name: "wayland_core_protocol",
+    srcs: [
+        "protocol/wayland.xml",
+    ],
+}
+
+// Generate wayland-version.h
+genrule {
+    name: "wayland_version_header",
+    cmd: "$(location gen_wayland_version_header.sh) $(location configure.ac) < $(in) > $(out)",
+    srcs: ["src/wayland-version.h.in"],
+    out: ["wayland-version.h"],
+    tool_files: ["gen_wayland_version_header.sh", "configure.ac"],
+}
+
+// Build wayland_scanner, used to generate code
+cc_binary_host {
+    name: "wayland_scanner",
+    defaults: ["wayland_defaults"],
+    srcs: ["src/scanner.c", "src/wayland-util.c"],
+    cflags: ["-Wall", "-Werror"],
+    static_libs: ["libexpat"],
+    generated_headers: ["wayland_version_header"],
+}
+
+// Generate protocol source files used by both client and server
+genrule {
+    name: "wayland_core_protocol_sources",
+    cmd: "$(location wayland_scanner) code < $(in) > $(out)",
+    srcs: [":wayland_core_protocol"],
+    out: ["wayland-protocol.c"],
+    tools: ["wayland_scanner"],
+}
+
+// Generate protocol header files used by the client
+genrule {
+    name: "wayland_core_client_protocol_headers",
+    cmd: "$(location wayland_scanner) client-header < $(in) > $(out)",
+    srcs: [":wayland_core_protocol"],
+    out: ["wayland-client-protocol.h"],
+    tools: ["wayland_scanner"],
+}
+
+// Build wayland_client
+cc_library_static {
+    name: "libwayland_client",
+    vendor_available: true,
+    defaults: ["wayland_defaults"],
+    srcs: [
+       "src/connection.c",
+       "src/wayland-client.c",
+       "src/wayland-os.c",
+       "src/wayland-util.c",
+    ],
+    cflags: ["-Wall", "-Werror"],
+    generated_sources: ["wayland_core_protocol_sources"],
+    static_libs: ["libffi"],
+    local_include_dirs: ["src"],
+    generated_headers: [
+        "wayland_version_header",
+        "wayland_core_client_protocol_headers"
+    ],
+    export_include_dirs: ["src"],
+    export_generated_headers: [
+        "wayland_version_header",
+        "wayland_core_client_protocol_headers"
+    ],
+}

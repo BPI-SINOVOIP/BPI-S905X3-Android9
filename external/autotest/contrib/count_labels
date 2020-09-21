@@ -1,0 +1,75 @@
+#!/bin/bash
+#
+# Copyright 2014 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+#
+# count_labels:  Print a summary of how many times a particular label
+# value occurs in the output of an `atest host list` command.
+#
+# To find the sizes of the pools assigned to a board:
+#     atest host list -b board:$BOARD | count_labels -p
+#
+# To find how many of each board is assigned to a pool:
+#     atest host list -b pool:$POOL | count_labels -b
+
+USAGE="usage: $(basename $0)"
+HELP="\
+$USAGE -p | -b | -v | -l <label>
+$USAGE -h
+
+Standard input to this command is the output of some variant of
+'atest host list'.  The command line option selects a particular
+category of label to be counted:
+  -p: Count \"pool:\" label values.
+  -b: Count \"board:\" label values.
+  -m: Count \"model:\" label values.
+  -v: Count \"variant:\" label values.
+  -l <label>: Count values of labels named \"<label>:\"
+
+Exactly one label selection option must be supplied; there is no
+default, and multiple options aren't allowed.
+
+The comand reports the counts of the various values of the
+selected label.
+
+Example:
+  \$ atest host list -b board:daisy_skate | count_labels -p
+        9 bvt
+       14 suites
+        1 wificell
+"
+
+
+usage() {
+    if [ $# -ne 0 ]; then
+        echo "$@" >&2
+        echo >&2
+    fi
+    echo "$HELP" >&2
+    exit 1
+}
+
+COUNT=0
+ERR=0
+while getopts 'hpbmvl:' flag; do
+    case $flag in
+        p) LABEL=pool ;;
+        b) LABEL=board ;;
+        m) LABEL=model ;;
+        v) LABEL=variant ;;
+        l) LABEL=$OPTARG ;;
+        h|\?) ERR=1 ;;
+    esac
+    COUNT=$(( COUNT + 1 ))
+done
+
+if [ $COUNT -ne 1 ]; then
+    usage "Must have exactly one label-specifying option" >&2
+fi
+
+if [ $ERR -ne 0 ]; then
+    usage
+fi
+
+sed -e "/$LABEL:/ !d" -e "s=.*$LABEL:\([^,]*\).*=\1=" | sort | uniq -c

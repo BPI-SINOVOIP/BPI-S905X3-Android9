@@ -1,0 +1,20 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "rjahagir"
+NAME = "platform_InputNewTab"
+PURPOSE = """Verify that keyboard shortcuts ctrl+t and ctrl+w can open and close
+tabs respectively."""
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "platform"
+TEST_TYPE = "client"
+ATTRIBUTES = "suite:bvt-perbuild"
+
+DOC = """
+Open and close new tabs in browser using keyboard shortcut.
+The test will fail if the number of tabs open does not match the expected number of tabs.
+"""
+
+job.run_test("platform_InputNewTab")

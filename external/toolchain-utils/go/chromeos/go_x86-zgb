@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Invoke the Go cross compiler for x86-zgb.
+# Uses ../go_target to add PIE flags.
+#
+# This is just an example for an 386 board.
+
+GOOS="linux" GOARCH="386" CGO_ENABLED="1" \
+	CC="i686-pc-linux-gnu-gcc" \
+	CXX="i686-pc-linux-gnu-g++" \
+	exec go_target "$@"

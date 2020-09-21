@@ -1,0 +1,25 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "Chrome OS Team, chromeos-video@google.com"
+NAME = "video_VideoCapability"
+PURPOSE = "Monitor the capabilities on device"
+ATTRIBUTES = "suite:bvt-perbuild"
+TIME = "SHORT"
+TEST_CATEGORY = "General"
+TEST_CLASS = "video"
+TEST_TYPE = "client"
+JOB_RETRIES = 2
+
+BUG_TEMPLATE = {
+    'labels': ['OS-Chrome', 'VideoTestFailure'],
+    'cc': ['chromeos-video-test-failures@google.com'],
+}
+
+DOC = """
+This test compares capabilities detected by avtest_label_detect and
+static capabilities.
+"""
+
+job.run_test('video_VideoCapability')

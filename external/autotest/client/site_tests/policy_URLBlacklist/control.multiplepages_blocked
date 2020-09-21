@@ -1,0 +1,25 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'scunningham'
+NAME = 'policy_URLBlacklist.multiplepages_blocked'
+ATTRIBUTES = 'suite:bvt-perbuild, suite:policy'
+TIME = 'SHORT'
+TEST_CATEGORY = 'General'
+TEST_CLASS = 'enterprise'
+TEST_TYPE = 'client'
+
+DOC = '''
+Verify effects of URLBlacklist policy.
+
+This test case verifies the behavior of Chrome OS when URLBlacklist
+user policy is set to multiple URL patterns.
+
+A test case shall pass iff URLs that are in the URLBlacklist policy value
+are blocked, and all other URLs are allowed. The test case shall fail if the
+above behavior is not enforced.
+
+'''
+
+job.run_test('policy_URLBlacklist', case='MultiplePages_Blocked')

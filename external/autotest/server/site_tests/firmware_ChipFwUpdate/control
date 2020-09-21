@@ -1,0 +1,43 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "Chrome OS Team"
+NAME = "firmware_ChipFwUpdate"
+PURPOSE = "TCPC firmware update test."
+CRITERIA = "This test will pass if the updated bios.bin booted successfully."
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "firmware"
+TEST_TYPE = "server"
+
+DOC = """
+This test replaces chip (i.e. TCPC) firmware on the DUT's bios.bin
+and reboots into it.  The expectation is that the TCPC firmware
+is updated correctly when the system boots with the updated bios.bin
+
+Software sync applies the TCPC firmware update and verifies that
+it has been applied.  If the DUT rebooted successfully, we know
+that the test has passed.
+
+For independent verification, the firmware_CompareChipFwToShellBall
+FAFT test can be used to verify the running TCPC firmware versions.
+
+For complete testing, this test needs to be invoked to downgrade, then
+upgrade the TCPCs so that we have confidence that the update process
+really happened.
+"""
+
+from autotest_lib.client.common_lib import utils
+
+args_dict = utils.args_to_dict(args)
+servo_args = hosts.CrosHost.get_servo_arguments(args_dict)
+
+def run_chip_fw_update(machine):
+    # Setup the client machine.
+    host = hosts.create_host(machine, servo_args=servo_args)
+    job.run_test('firmware_ChipFwUpdate',
+                 host=host, cmdline_args=args)
+
+
+parallel_simple(run_chip_fw_update, machines)

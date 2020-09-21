@@ -1,0 +1,31 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "Chrome OS Team, chromeos-video@google.com"
+NAME = "camera_HAL3"
+PURPOSE = "Verify Chromium camera function with HAL3 interface."
+CRITERIA = """
+This test will fail if any of the tests in arc_camera3_test
+fails. Running arc_camera3_test is skipped on machines that are
+known to not support ARC++.
+"""
+ATTRIBUTES = "suite:bvt-perbuild"
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "video"
+TEST_TYPE = "client"
+DEPENDENCIES = "arc"
+BUG_TEMPLATE = {
+    'labels': ['OS-Chrome', 'VideoTestFailure'],
+    'cc': ['chromeos-video-test-failures@google.com'],
+}
+
+DOC = """
+This is a wrapper test for arc_camera3_test.
+For more information on HAL3 see:
+https://source.android.com/devices/camera/camera3.html
+https://android.googlesource.com/platform/hardware/libhardware/+/master/include/hardware/camera3.h
+"""
+
+job.run_test('camera_HAL3')

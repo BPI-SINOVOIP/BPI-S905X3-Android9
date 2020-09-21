@@ -1,0 +1,6 @@
+Any Android specific modifications to upstream archive-patcher should be listed
+here:
+
+(1) Deleted /integrationtest, /tools, /explainer and /generator as these are not
+    intended to be used on Android. Only /shared and /applier remain.
+

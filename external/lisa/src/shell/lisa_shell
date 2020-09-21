@@ -1,0 +1,434 @@
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+# Copyright (C) 2015, ARM Limited and contributors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# LISA Shell: the Linux Integrated System Analysis Shell
+
+# Setup colors
+source src/shell/lisa_colors
+
+# By default use internal libraries
+DEVMODE=${DEVMODE:-1}
+
+# Get base installation path of LISA
+export LISA_HOME="$(pwd)"
+
+# Run any android scripts before launching
+android_pre=$LISA_HOME/src/shell/android-pre.sh
+if [ -f $android_pre ]; then
+	source $android_pre;
+fi
+
+export PYTHONPATH=''
+export PYTHONPATH=$LISA_HOME/libs/utils:$PYTHONPATH
+export PYTHONPATH=$LISA_HOME/libs/wlgen:$PYTHONPATH
+export PYTHONPATH=$LISA_HOME:$PYTHONPATH
+
+if [ "x$DEVMODE" == "x1" ]; then
+	export PYTHONPATH=$LISA_HOME/libs/devlib:$PYTHONPATH
+	export PYTHONPATH=$LISA_HOME/libs/trappy:$PYTHONPATH
+	export PYTHONPATH=$LISA_HOME/libs/bart:$PYTHONPATH
+fi
+
+################################################################################
+# Generic LISA Shell commands
+################################################################################
+
+# LISA Shell On-Line HELP
+function lisa-help {
+clear
+echo -ne '\E[37;42m'
+echo "                                                                               "
+echo "                    .:: LISA Shell - HELP On-Line ::.                          "
+echo "                                                                               "
+echo -ne "$LISASHELL_RESET$LISASHELL_GREEN"
+cat $LISA_HOME/LisaShell.txt
+echo -ne "$LISASHELL_DEFAULT"
+}
+
+function lisa-version {
+echo -ne "$LISASHELL_GREEN"
+cat <<EOF
+
+.:: LISA ($(git describe --all))
+
+Submodules version:
+$(git submodule status)
+
+
+EOF
+echo -ne "$LISASHELL_DEFAULT"
+}
+
+################################################################################
+# LISA Update utility functions
+################################################################################
+
+function _lisa-update-usage {
+    echo "Usage: lisa-update (CMD)"
+	echo "  CMD: what to update (default: all)"
+	echo "       all - update lisa and all the external dependencies"
+	echo "       submodules - update external dependencies provided by submodules"
+	echo
+    echo "Update submodules (if DEVMODE enabled)"
+}
+
+function _lisa-update-submodules {
+echo -ne "${LISASHELL_BLUE}"
+if [ "x$DEVMODE" == "x1" ]; then
+	# Force update existing modules
+	echo
+	echo 'Developer mode ENABLED, updating local libraries...'
+	git submodule sync
+	git submodule update --init
+	echo 'DONE'
+fi
+echo -ne "$LISASHELL_DEFAULT"
+}
+
+function _lisa-update-all {
+echo -ne "${LISASHELL_BLUE}"
+echo -e "*** Update LISA installation"
+
+git update-index -q --refresh
+ret=$?
+if [ $ret -ne 0 ]; then
+    echo "LISA internal error: git update-index failed"
+    echo "Please report it: https://github.com/ARM-software/lisa/issues"
+    return $ret
+fi
+
+git diff-index --quiet --ignore-submodules HEAD
+ret=$?
+if [ $ret -ne 0 ]; then
+    echo "There are outstanding uncommitted changes."
+    echo "Please, commit your changes or stash them before you can update lisa"
+    return $ret
+fi
+
+curr_commit=$(git rev-parse HEAD)
+remote_name=$(git remote -v | grep -i ARM-software/lisa | grep -m 1 fetch | awk '{print $1}')
+if [ -z "$remote_name" ]; then
+    echo "Couldn't find ARM-Software upstream remote, can't automatically update"
+    return 1
+fi
+git merge-base --is-ancestor $curr_commit $remote_name/master
+ret=$?
+if [ $ret -ne 0 ]; then
+    echo "You have committed changes that are not part of $remote_name/master"
+    echo "Please move to the master branch before running lisa-update"
+    return $ret
+fi
+
+git pull --ff-only $remote_name master
+ret=$?
+if [ $ret -ne 0 ]; then
+    # git pull should have printed some error.  Abort and propagate the error code.
+    return $ret
+fi
+
+_lisa-update-submodules
+
+echo -ne "$LISASHELL_DEFAULT"
+}
+
+function lisa-update {
+CMD=${1:-all}
+echo
+case "x${CMD^^}" in
+'xSUBMODULES')
+	_lisa-update-submodules
+	;;
+'xALL')
+	_lisa-update-all
+	;;
+"xHELP"|*)
+	_lisa-update-usage
+	;;
+esac
+echo
+echo
+}
+
+################################################################################
+# LISA Notebooks utility functions
+################################################################################
+
+function _lisa-ipython-usage {
+    echo "Usage: lisa-ipython CMD [NETIF [PORT]]"
+	echo " CMD     - IPython Notebooks command (deafult: start)"
+	echo "  start  start the ipython server"
+	echo "   stop  stop the ipython server"
+    echo " NETIF   - the network interface to start the server on (default: lo)"
+    echo " PORT    - the tcp port for the server (default: 8888)"
+}
+
+function _lisa-ipython-start {
+# Get IP address for the specified interface
+IPADDR=$(/sbin/ifconfig $NETIF 2>/dev/null  | \
+	awk '/inet / {print $2}' | \
+	sed 's/addr://')
+if [ "x$IPADDR" == "x" ]; then
+    echo
+    echo "$NETIF is not a valid network interface"
+    echo
+    echo "Usage: $0 <NETIF>"
+    echo " NETIF - The network interface to start the server on"
+    echo
+    return 1
+fi
+# Setup paths
+PYDIR="$LISA_HOME/ipynb"
+LOGFILE="$PYDIR/server.log"
+PIDFILE="$PYDIR/server.pid"
+URLFILE="$PYDIR/server.url"
+
+# Generate server URL
+TOKEN=$(cat /dev/urandom | tr -dc 'a-fA-F0-9' | fold -w 48 | head -n 1)
+URL="http://$IPADDR:$PORT/?token=$TOKEN"
+
+# Check if an instance is already running
+if [ -f "$PIDFILE" ] && pgrep -F $PIDFILE >/dev/null; then
+	echo "Server already running:"
+    echo "  " $(cat $URLFILE)
+    xdg-open $(cat $URLFILE)
+	return 1
+fi
+
+# Start the server bindeed to the specified interface
+echo
+echo 'Notebook server configuration:'
+echo '  URL        : ' $URL
+echo '  Folder     : ' $PYDIR
+echo '  Logfile    : ' $LOGFILE
+echo '  PYTHONPATH : '
+echo -e "\t${PYTHONPATH//:/\\n\\t}"
+cd $PYDIR
+echo
+echo -n 'Notebook server task: '
+if which ipython >/dev/null; then
+    local cmd=ipython
+else
+    local cmd=jupyter
+fi
+nohup $cmd notebook --ip=$IPADDR --port=$PORT \
+                    --NotebookApp.token=$TOKEN \
+                    >$LOGFILE 2>&1 &
+echo $! >$PIDFILE
+echo $URL >$URLFILE
+cd - >/dev/null
+}
+
+function _lisa-ipython-stop {
+PYDIR="$LISA_HOME/ipynb"
+PIDFILE="$PYDIR/server.pid"
+if [ -f "$PIDFILE" ] && pgrep -F $PIDFILE >/dev/null; then
+	kill $(<$PIDFILE) 2>/dev/null
+fi
+rm -f $PIDFILE 2>/dev/null
+}
+
+function lisa-ipython {
+CMD=${1:-start}
+
+if [ "x$2" == "x" -a $USER == "vagrant" -a -e /vagrant/src/shell/lisa_shell ]; then
+    # NETIF not set and we are in a vagrant environment.  Default to
+    # eth0 as loopback won't let you connect from your host machine.
+    NETIF="eth0"
+else
+    NETIF=${2:-lo}
+fi
+
+PORT=${3:-8888}
+echo
+case "x${CMD^^}" in
+'xSTART')
+	echo "Starting IPython Notebooks..."
+	_lisa-ipython-start $NETIF $PORT
+	;;
+'xSTOP')
+	echo "Stopping IPython Notebooks..."
+	_lisa-ipython-stop
+	;;
+"xHELP"|*)
+	_lisa-ipython-usage
+	;;
+esac
+echo
+echo
+}
+
+function lisa-check-submods {
+if [ ! -f ./libs/devlib/setup.py ] ||
+   [ ! -f ./libs/bart/setup.py ] ||
+   [ ! -f ./libs/trappy/setup.py ]; then
+	echo "One or more submodules missing, updating";
+	lisa-update submodules
+fi
+}
+
+################################################################################
+# LISA Tests utility functions
+################################################################################
+
+function _lisa-test-usage {
+cat <<EOF
+Usage: lisa-test [--iterations ITERATIONS] [args] FILE[:CLASS]
+  Run automated tests. Tests can be found under the tests/ directory.
+
+  --iterations (or -n) sets the number of iterations to use for
+    each workload/target-conf, for tests that support this usage. 0 means use
+    the test's default iteration count.
+
+  This is a wrapper for the 'nosetests' utility, additional arguments are passed
+  to that tool.
+
+  Examples:
+    Run all EAS Generic tests:
+
+      lisa-test tests/eas/generic.py
+
+    Run RampUp test from EAS Generic suite:
+
+      lisa-test tests/eas/generic.py:RampUp
+
+    Run RampUp test from EAS Generic suite, generating an XML test
+    report via nose's XUnit plugin (see nosetests documentation):
+
+      lisa-test --with-xunit --xunit-file=report.xml tests/eas/generic.py:RampUp
+
+    Run RampUp test from EAS Generic suite, repeating the
+    workload 10 times and reporting how many times the test run
+    passed:
+
+      lisa-test --iterations 10 tests/eas/generic.py:RampUp
+
+    Run EAS Generic suite, repeating each workload 10 times:
+
+      lisa-test --iterations 10 tests/eas/generic.py
+EOF
+}
+
+function _lisa-test {
+nosetests -v --nocapture --nologcapture \
+          --logging-config=logging.conf \
+          $*
+}
+
+function lisa-test {
+local iterations=0 # Means use default - see libs/utils/test.py
+local extra_args=""
+
+echo
+while [[ $# -gt 0 ]]; do
+        case "$1" in
+                help|-h|--help)
+                        _lisa-test-usage
+                        return 0
+                        ;;
+                -n|--iterations)
+                        iterations="$2"
+                        shift
+                        ;;
+                *)
+                        # Unrecognised args are passed through to nosetests
+                        extra_args="$extra_args $1"
+                        ;;
+        esac
+        shift
+done
+
+if [ -z "$extra_args" ]; then
+        # No arguments provided, default to "help"
+        _lisa-test-usage
+        return 1
+fi
+
+(export LISA_TEST_ITERATIONS=$iterations; _lisa-test $extra_args)
+local retcode=$?
+echo
+echo
+return $retcode
+}
+
+function lisa-report {
+CMD=${1^^}
+[ "x$CMD" != "xHELP" ] && CMD=report
+echo
+case "x${CMD^^}" in
+'xREPORT')
+	./tools/report.py $*
+	;;
+"xHELP"|*)
+	./tools/report.py --help
+	;;
+esac
+echo
+echo
+}
+
+
+################################################################################
+# LISA Shell MAIN
+################################################################################
+
+# Setup Shell variables
+PS1="\[${LISASHELL_BLUE}\][LISAShell \[${LISASHELL_LCYAN}\]\W\[${LISASHELL_BLUE}\]] \> \[${LISASHELL_RESET}\]"
+
+# Dump out a nice LISA Shell logo
+clear
+
+# Android post shell initialization script
+android_post=$LISA_HOME/src/shell/android-post.sh
+if [ -f $android_post ]; then
+	source $android_post;
+fi
+
+echo -e '\E[37;44m'
+
+echo "                                                                               "
+echo "                        .:: LISA Shell ::.                                     "
+echo "                                                                               "
+echo -ne "$LISASHELL_RESET$LISASHELL_BLUE"
+cat <<EOF
+
+Welcome to the Linux Integrated System Analysis SHELL!
+
+LISA_HOME  : $LISA_HOME
+PYTHONPATH :
+EOF
+echo -e "\t${PYTHONPATH//:/\\n\\t}"
+
+if [ "x$DEVMODE" == "x1" ]; then
+lisa-check-submods
+cat <<EOF
+Submodules :
+EOF
+git submodule status
+fi
+
+cat <<EOF
+
+
+Type "lisa-help" for on-line help on available commands
+
+EOF
+
+# Setup default SHELL text color
+echo -e "$LISASHELL_DEFAULT"
+
+# vim: set tabstop=4:

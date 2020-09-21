@@ -1,0 +1,18 @@
+import logging
+
+from autotest_lib.server import crashcollect
+
+
+def crashdumps(machine):
+    host = hosts.create_target_machine(machine)
+    try:
+        if has_failed_tests:
+            crashcollect.get_crashdumps(host, test_start_time)
+        else:
+            crashcollect.report_crashdumps(host)
+            crashcollect.fetch_orphaned_crashdumps(
+                    host, crashcollect.get_host_infodir(host))
+    except Exception as e:
+        logging.error('Crash collection failed with %s', e)
+
+job.parallel_simple(crashdumps, machines, log=False)

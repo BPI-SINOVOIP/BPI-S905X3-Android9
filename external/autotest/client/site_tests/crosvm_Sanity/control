@@ -1,0 +1,28 @@
+# Copyright 2018 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "ChromeOS Team"
+NAME = "crosvm_Sanity"
+ATTRIBUTES = "suite:smoke, suite:vmtest-informational"
+PURPOSE = "Verify the virtualization environment is consistent with a baseline."
+CRITERIA = """
+This test will detect changes to the virtualization environment and fail when
+a baseline of features is not obtained.
+"""
+TIME = "SHORT"
+TEST_CATEGORY = "General"
+TEST_CLASS = "VM"
+TEST_TYPE = "client"
+
+DOC = """
+Set baseline expectations for hosting Chrome OS VM images. In the Chrome OS lab
+these are based on current Google Compute Engine (GCE) server offerings and
+represent the lowest common denominator to effectively run QEMU/kvm. As a
+result VMs can be thought of as a slightly outdated Intel Chromebox. GCE is not
+the only host environment, and it runs in a VM as well. We attempt to control
+this environment as well as possible. This test ensures relevant changes are
+detected over time.
+"""
+
+job.run_test('crosvm_Sanity')

@@ -1,0 +1,25 @@
+# Copyright (c) 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "Chrome OS Team"
+NAME = "power_LoadTest.WIRED_1hr_acok"
+ATTRIBUTES = "suite:power_daily"
+PURPOSE = "Measure power draw when system is under load."
+CRITERIA = "This test is a benchmark."
+TIME = "LONG"
+TEST_CATEGORY = "Benchmark"
+TEST_CLASS = "power"
+TEST_TYPE = "client"
+
+DOC = """
+This test runs a load test consisting of cycling though web pages, playing
+videos, etc. and measures battery power draw. The maximum duration of this test
+in seconds is determined by the loop_time * loop_cnt.
+"""
+loop_time = 3600
+loop_count = 1
+
+job.run_test('power_LoadTest', loop_time=loop_time, loop_count=loop_count,
+             test_low_batt_p=6, ac_ok=True, check_network=False,
+             tag=NAME.split('.')[1], gaia_login=False)

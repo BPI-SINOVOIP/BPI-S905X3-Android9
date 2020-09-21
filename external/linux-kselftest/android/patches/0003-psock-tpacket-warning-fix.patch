@@ -1,0 +1,14 @@
+Fix compilation warning.
+
+diff --git a/tools/testing/selftests/net/psock_tpacket.c b/tools/testing/selftests/net/psock_tpacket.c
+index 8cb5127c42af..e795a41c4771 100644
+--- a/tools/testing/selftests/net/psock_tpacket.c
++++ b/tools/testing/selftests/net/psock_tpacket.c
+@@ -377,6 +377,7 @@ static inline void *get_next_frame(struct ring *ring, int n)
+ 		return f0 + (n * ring->req3.tp_frame_size);
+ 	default:
+ 		bug_on(1);
++		return NULL;
+ 	}
+ }
+ 

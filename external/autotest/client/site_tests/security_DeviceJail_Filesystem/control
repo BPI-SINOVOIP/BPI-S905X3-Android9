@@ -1,0 +1,21 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "ejcaruso@chromium.org"
+NAME = "security_DeviceJail_Filesystem"
+PURPOSE = "Verify that the device jail FUSE server is functioning."
+TIME = "SHORT"
+ATTRIBUTES = "suite:security"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "security"
+TEST_TYPE = "client"
+DOC = """
+This test is not applicable if the jail-control device is not present.
+This restricts it to 3.14 or later kernels.
+Ensures that the only visible character devices in the device jail
+FUSE filesystem are explicitly whitelisted ones and USB devices, and
+that USB devices are not directly passed through.
+"""
+
+job.run_test('security_DeviceJail_Filesystem')

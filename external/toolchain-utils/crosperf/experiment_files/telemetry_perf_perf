@@ -1,0 +1,77 @@
+#!/bin/bash
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+#
+# Script for generating and running telemetry benchmarkes via crosperf with
+# different perf command lines in order to measure the impact of the perf
+# commands on performance. Crosperf cannot run the same benchmark multiple
+# times, so this script runs crosperf multpilpe times instead. Unfortunately,
+# this means you must compare the results yourself.
+#
+# Perf will run for the entire benchmark run, so results should be interpreted
+# in that context. i.e, if this shows a 3% overhead for a particular perf
+# command, that overhead would only be seen during the 2 seconds of measurement
+# during a Chrome OS Wide Profiling collection.
+set -e
+
+board=xxx #<you-board-here>
+remote=xxx #<your-remote-here>
+iterations=5
+chromeos_root=~/chromiumos
+chrome_src=~/chromium
+
+
+function GenerateExperiment() {
+  local perf_args="${1:+perf_args: $1}"
+  local track="$2"  # stable, beta, dev
+
+  cat <<_EOF
+$perf_args
+benchmark: page_cycler_v2.typical_25 {
+    suite: telemetry_Crosperf
+}
+
+$track {
+  build: latest-$track
+}
+_EOF
+}
+
+function RunExperiment() {
+  local name="$1"
+  local perf_command="$2"
+  GenerateExperiment "$perf_command" "stable" > /tmp/crosperf.exp
+  ./crosperf /tmp/crosperf.exp \
+    --name telemetry_perf_perf_${name} \
+    --board="${board}" \
+    --remote="${remote}" \
+    --iterations="${iterations}" \
+    --chromeos_root="${chromeos_root}" \
+    --chrome_src="${chrome_src}" \
+    --rerun=true \
+    --use_file_locks=true \
+    --locks_dir=/tmp/crosperf.locks
+}
+
+if [ "$board" = "xxx" -o "$remote" = "xxx" ]; then
+  echo "Please set board and remote at the top of this script before running."
+  exit -1
+fi
+
+
+# Note that "-a" is automatically inserted in the perf command line.
+
+# Control: No profiling.
+RunExperiment 'control' ''
+# This is our baseline standard 'cycles' perf command.
+RunExperiment 'cycles.flat' \
+  'record -e cycles -c 1000003'
+# Callgraph profiling.
+RunExperiment 'cycles.callgraph' \
+  'record -g -e cycles -c 4000037'
+# Memory bandwidth profiling. As a perf stat command, we expect imperceptible
+# overhead.
+RunExperiment 'memory.bandwidth' \
+  'stat -e cycles -e instructions -e uncore_imc/data_reads/ -e uncore_imc/data_writes/ -e cpu/event=0xD0,umask=0x11,name=MEM_UOPS_RETIRED-STLB_MISS_LOADS/ -e cpu/event=0xD0,umask=0x12,name=MEM_UOPS_RETIRED-STLB_MISS_STORES/'
+

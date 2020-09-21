@@ -1,0 +1,25 @@
+# Copyright 2015 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "rohitbm@chromium.org, chromeos-gfx"
+NAME = "graphics_WebGLAquarium.thermal"
+PURPOSE = "Execute the WebGL aquarium test suite to measure power."
+CRITERIA = "All suite tests must not crash/hang."
+TIME = "long"
+TEST_CATEGORY = "Performance"
+TEST_CLASS = "graphics"
+TEST_TYPE = "client"
+BUG_TEMPLATE = {
+    "components": ["OS>Kernel>Graphics"],
+}
+
+DOC = """
+This runs the WebGL aquarium test for 1hr with 1000 fish.
+"""
+
+job.run_test("graphics_WebGLAquarium",
+             test_duration_secs=3600,
+             test_setting_num_fishes=(1000),
+             tag='power',
+             power_test=True, ac_ok=True)

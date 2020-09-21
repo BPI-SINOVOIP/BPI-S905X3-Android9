@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# This wrapper runs adb with the serial number of the volantis device.
+# Replace YYYYYYYY with the actual serial number of the device.
+# This is just an example. Create one such wrapper for each Android
+# device used for running Go tests.
+
+exec adb -s YYYYYYYY "$@"

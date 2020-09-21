@@ -1,0 +1,83 @@
+#!/bin/bash
+set -e -o pipefail
+
+# This script wraps the go cross compilers.
+#
+# It ensures that Go binaries are linked with an external linker
+# by default (cross gcc). Appropriate flags are added to build a
+# position independent executable (PIE) for ASLR.
+# "export GOPIE=0" to temporarily disable this behavior.
+
+function pie_enabled()
+	{
+	[[ "${GOPIE}" != "0" ]]
+	}
+
+function has_ldflags()
+	{
+	# Check if any linker flags are present in argv.
+	for arg in "$@"
+	do
+		case "${arg}" in
+			-ldflags | -ldflags=*) return 0 ;;
+			-linkmode | -linkmode=*) return 0 ;;
+			-buildmode | -buildmode=*) return 0 ;;
+			-installsuffix | -installsuffix=*) return 0 ;;
+			-extld | -extld=*) return 0 ;;
+			-extldflags | -extldflags=*) return 0 ;;
+		esac
+	done
+	return 1
+	}
+
+pie_flags=()
+if pie_enabled && ! has_ldflags "$@"
+then
+	case "$1" in
+		build | install | run | test)
+			# Add "-buildmode=pie" to "go build|install|run|test" commands.
+			pie_flags=(
+				"$1"
+				"-buildmode=pie"
+			)
+			shift
+			;;
+		tool)
+			case "$2" in
+				asm)
+					# Handle direct assembler invocations ("go tool asm <args>").
+					pie_flags=(
+						"$1"
+						"$2"
+						"-shared"
+					)
+					shift 2
+					;;
+				compile)
+					# Handle direct compiler invocations ("go tool compile <args>").
+					pie_flags=(
+						"$1"
+						"$2"
+						"-shared"
+						"-installsuffix=shared"
+					)
+					shift 2
+					;;
+				link)
+					# Handle direct linker invocations ("go tool link <args>").
+					pie_flags=(
+						"$1"
+						"$2"
+						"-installsuffix=shared"
+						"-buildmode=pie"
+						"-extld"
+						"${CC}"
+					)
+					shift 2
+					;;
+			esac
+			;;
+	esac
+fi
+
+exec go "${pie_flags[@]}" "$@"

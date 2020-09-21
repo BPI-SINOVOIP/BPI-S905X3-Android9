@@ -1,0 +1,25 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'scunningham'
+NAME = 'policy_PopupsBlockedForUrls.notset_allow'
+ATTRIBUTES = 'suite:bvt-perbuild, suite:policy'
+TIME = 'SHORT'
+TEST_CATEGORY = 'General'
+TEST_CLASS = 'enterprise'
+TEST_TYPE = 'client'
+
+DOC = '''
+Verify effects of PopupsBlockedForUrls policy.
+
+This test case verifies the behavior of Chrome OS when PopupsBlockedForUrls
+user policy is not set to any URL pattern, and DefaultPopupsSetting policy
+is set to 1 (allow by default).
+
+The test case shall pass iff the browser allows popups for every test page.
+It shall fail if the browser blocks popups on any test page.
+
+'''
+
+job.run_test('policy_PopupsBlockedForUrls', case='NotSet_Allow')

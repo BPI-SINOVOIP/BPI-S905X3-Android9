@@ -1,0 +1,20 @@
+URL: https://github.com/Pragmatists/JUnitParams
+License: Apache License Version 2.0
+License File: LICENSE.txt
+
+Description:
+Parameterised tests that don't suck
+
+Local Modifications:
+      30244565 - Work around the Android API's lack of the class
+                 javax.lang.model.type.NullType by replacing
+                 with Void.
+      30244565 - Work around Android's lack of the
+                 java.beans.PropertyEditor and
+                 java.beans.PropertyEditorManager classes by
+                 removing the usages of them.
+      36074730 - Make sure that filters affect the Description.
+      36541809 - Hard code the description name to be compatible with CTS
+                 and prevent use of @TestCaseName.
+                 Ignore tests broken by the above change.
+      38419944 - Fix sharding on CTS.

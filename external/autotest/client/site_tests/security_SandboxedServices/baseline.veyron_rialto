@@ -1,0 +1,16 @@
+exe,euser,egroup,pidns,caps,nonewprivs,filter
+
+# See the baseline file for docs.
+
+pppd,root,root,No,No,No,No
+
+# TODO - it should be possible to run the watchdog as non-root
+rialto_modem_wa,root,root,No,No,No,No
+
+# TODO - can be removed after crbug.com/575732 and crbug.com/601174
+rialto_timezone,root,root,No,No,No,No
+
+# TODO - can be removed from system after crbug.com/574923 implemented
+rialto_update_r,root,root,No,No,No,No
+update_engine_c,root,root,No,No,No,No
+

@@ -1,0 +1,50 @@
+import sys
+
+from autotest_lib.server import utils
+from autotest_lib.server.cros import provision
+
+try:
+    from chromite.lib import metrics
+except ImportError:
+    metrics = utils.metrics_mock
+
+
+DURATION_METRIC = 'chromeos/autotest/autoserv/reset_duration'
+
+
+# A string of the form 'label1,label2:value,label3'.
+job_labels = locals().get('job_labels') or ','.join(args)
+labels_list = [l.strip() for l in job_labels.split(',') if l]
+
+
+def reset(machine):
+    print 'Starting to reset host %s' % machine
+    try:
+        job.record('START', None, 'reset')
+        target = hosts.create_target_machine(machine)
+        hostname = utils.get_hostname_from_machine(machine)
+        with metrics.SecondsTimer(DURATION_METRIC,
+                                  fields={'dut_host_name': hostname}):
+            # Assume cleanup always runs first.
+            target.cleanup()
+            provision.run_special_task_actions(job, target, labels_list,
+                                               provision.Cleanup)
+
+            target.verify()
+            provision.run_special_task_actions(job, target, labels_list,
+                                               provision.Verify)
+    except Exception:
+        logging.exception('Reset failed due to Exception.')
+        job.record('END FAIL', None, 'reset')
+        # See the provision control segment for the explanation of why we're
+        # doing this.
+        raise Exception('')
+    else:
+        hostname = utils.get_hostname_from_machine(machine)
+        job.record('END GOOD', None, 'reset',
+                   '%s reset successfully' % hostname)
+
+
+job.parallel_simple(reset, machines)
+
+# vim: set syntax=python :

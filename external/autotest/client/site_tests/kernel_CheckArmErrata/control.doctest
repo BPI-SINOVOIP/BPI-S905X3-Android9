@@ -1,0 +1,23 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+NAME = "kernel_CheckArmErrata.doctest"
+AUTHOR = "The Chromium OS Authors"
+PURPOSE = "Run doctests on kernel_CheckArmErrata"
+CRITERIA = """
+    Fails if any of the doctests in the main test fail.
+"""
+TIME = "SHORT"
+ATTRIBUTES = "suite:kernel_daily_regression"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "kernel"
+TEST_TYPE = "client"
+
+DOC = """
+    Attempts to run doctests on kernel_CheckArmErrata.
+
+    Tests are mocked and should be able to run even on non ARM boards.
+"""
+
+job.run_test("kernel_CheckArmErrata", doctest=True)

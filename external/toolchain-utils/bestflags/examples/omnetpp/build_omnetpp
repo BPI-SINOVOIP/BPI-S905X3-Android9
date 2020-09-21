@@ -1,0 +1,69 @@
+#!/bin/bash -x
+
+cd examples/omnetpp/cpu2006-redhat-ia32
+
+# Contains the optimization flags.
+flags=''
+
+# The index of the parameter.
+i=1
+
+# Indicate whether it is parsing the gcc param.
+in_gcc_param=false
+
+for parameter in "$@"
+  do
+    #  The last parameter is the file name.
+    if [ "$i" == "$#" ]; then
+      file=$parameter
+      break
+    fi
+
+    # The param is not a flag, it combines with the flag that comes right after.
+    # For example, --param max-inline-insns-single 
+    if [ "$parameter" == "-param" ]; then
+      in_gcc_param=true
+      flags+=-$parameter' '
+      let i++
+      continue
+    fi
+
+    # In in_gcc_param section, this flag follows the key word '--param'.
+    if [ $in_gcc_param == true ]; then
+      flags+=$parameter' '
+      let i++
+      in_gcc_param=false
+      continue
+    fi
+
+    # Normal flags.
+    flags+=-$parameter' '
+    let i++
+  done
+
+# Change the configuration file.
+content=$(sed s/amd64-m64-gcc41-kk/test$file/ config/linux64-amd64-pgi.cfg)
+echo "$content" | sed s/-O2/-O1\ "$flags"/ >config/linux64-amd64-pgi$file.cfg
+. ./shrc
+/usr/bin/time -o temp$file runspec --config linux64-amd64-pgi$file -D --action=build  471.omnetpp
+
+state=$?
+
+outfile="./benchspec/CPU2006/471.omnetpp/run/build_base_test$file.0000/omnetpp"
+
+if [ $state -eq 0 ];then
+  user_time=$(cat build_timer$file | grep "user" | cut -d "u" -f 1)
+  output_file="$file"
+
+  checksum=$(readelf -x .text $outfile | md5sum | cut -d " " -f 1)
+  file_size=$(ls -l $outfile | cut -d " " -f 5)
+  text_section=$(readelf -SW $outfile | grep ".text")
+  size_hex=$(echo $text_section | sed "s/\s\{1,\}/\ /g" | cut -d ' ' -f 6)
+  size=$(echo $size_hex | ( echo "ibase=16" ; tr '[:lower:]' '[:upper:]') | bc)
+
+  echo $checksum $user_time $output_file $file_size $size
+else
+  echo "error" "error" "error" "error" "error"
+fi
+
+return $state

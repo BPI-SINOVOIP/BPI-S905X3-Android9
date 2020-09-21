@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2014 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayoutMain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF">
+    <HorizontalScrollView
+        android:id="@+id/ScrollView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/buttonStartLatencyTest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/buttonTest_enabled"
+                android:drawableLeft="@drawable/ic_play_arrow"
+                android:drawableStart="@drawable/ic_play_arrow"
+                style="@style/TextAppearance.AppCompat.Button"
+                android:onClick="onButtonLatencyTest"/>
+
+            <Button
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/buttonStartBufferTest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/buttonBufferTest"
+                android:drawableLeft="@drawable/ic_play_arrow"
+                android:drawableStart="@drawable/ic_play_arrow"
+                style="@style/TextAppearance.AppCompat.Button"
+                android:onClick="onButtonBufferTest"/>
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <Button
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/buttonCalibrateSoundLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/buttonCalibrateSoundLevel"
+        android:drawableLeft="@drawable/ic_play_arrow"
+        android:drawableStart="@drawable/ic_play_arrow"
+        style="@style/TextAppearance.AppCompat.Button"
+        android:onClick="onButtonCalibrateSoundLevel" />
+
+    <TextView
+        android:id="@+id/textInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:text="@string/labelInfo"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Current Level"
+            android:id="@+id/textViewCurrentLevel"/>
+
+        <SeekBar
+            android:id="@+id/BarMasterLevel"
+            android:indeterminate="false"
+            android:max="100"
+            android:progress="0"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            style="?android:attr/progressBarStyleHorizontal" />
+    </LinearLayout>
+
+    <HorizontalScrollView
+        android:id="@+id/glitchReportPanel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible">
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Button
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/buttonRecorderBufferPeriod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_assessment"
+                    style="@style/TextAppearance.AppCompat.Button"
+                    android:text="@string/buttonRecorderBufferPeriod"
+                    android:onClick="onButtonRecorderBufferPeriod"/>
+
+                <Button
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/buttonPlayerBufferPeriod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_assessment"
+                    style="@style/TextAppearance.AppCompat.Button"
+                    android:text="@string/buttonPlayerBufferPeriod"
+                    android:onClick="onButtonPlayerBufferPeriod"/>
+            </LinearLayout>
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Button
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/buttonGlitches"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_description"
+                    style="@style/TextAppearance.AppCompat.Button"
+                    android:text="@string/buttonGlitches"
+                    android:onClick="onButtonGlitches"/>
+                <Button
+                    android:id="@+id/buttonHeatMap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_assessment"
+                    style="@style/TextAppearance.AppCompat.Button"
+                    android:text="@string/compareAll"
+                    android:onClick="onButtonHeatMap"/>
+            </LinearLayout>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:id="@+id/resultSummary"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="0mm"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+
+        <org.drrickorang.loopback.WavePlotView
+            android:id="@+id/viewWavePlot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/zoomAndSaveControlPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:padding="10dp"
+        android:visibility="invisible"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true">
+
+            <ImageButton
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/buttonZoomOutFull"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:paddingEnd="5dp"
+                android:paddingRight="5dp"
+                android:paddingLeft="5dp"
+                android:text="@string/buttonZoomOutFull"
+                android:src="@drawable/ic_zoom_out_full"
+                android:background="@null"
+                android:onClick="onButtonZoomOutFull"/>
+
+            <ImageButton
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/buttonZoomOut"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:paddingEnd="5dp"
+                android:paddingRight="5dp"
+                android:paddingLeft="5dp"
+                android:text="@string/buttonZoomOut"
+                android:src="@drawable/ic_zoom_out"
+                android:background="@null"
+                android:onClick="onButtonZoomOut"/>
+
+            <ImageButton
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/buttonZoomIn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:paddingEnd="5dp"
+                android:paddingRight="5dp"
+                android:paddingLeft="5dp"
+                android:text="@string/buttonZoomIn"
+                android:src="@drawable/ic_zoom_in"
+                android:background="@null"
+                android:onClick="onButtonZoomIn"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true">
+
+            <ImageButton
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/buttonReport"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:paddingEnd="5dp"
+                android:paddingRight="5dp"
+                android:paddingLeft="5dp"
+                android:src="@drawable/ic_report"
+                android:text="@string/buttonSave"
+                android:background="@null"
+                android:onClick="onButtonReport"/>
+
+            <ImageButton
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/buttonSave"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:paddingEnd="5dp"
+                android:paddingRight="5dp"
+                android:paddingLeft="5dp"
+                android:src="@drawable/ic_save"
+                android:text="@string/buttonSave"
+                android:background="@null"
+                android:onClick="onButtonSave"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

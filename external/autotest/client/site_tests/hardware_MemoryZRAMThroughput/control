@@ -1,0 +1,19 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+NAME = 'hardware_MemoryZRAMThroughput'
+AUTHOR = 'The Chromium OS Authors'
+PURPOSE = 'Measure page access throughput, with and without ZRAM.'
+ATTRIBUTES = "suite:crosbolt_perf_weekly"
+TIME='SHORT'
+TEST_CATEGORY = 'Performance'
+TEST_CLASS = "hardware"
+TEST_TYPE = 'client'
+JOB_RETRIES = 2
+
+DOC = """
+This test uses AutoTest's utils.memtotal() and utils.swaptotal().
+"""
+
+job.run_test('hardware_MemoryZRAMThroughput')

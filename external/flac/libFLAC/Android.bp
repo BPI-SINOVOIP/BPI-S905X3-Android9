@@ -1,0 +1,59 @@
+cc_library_static {
+    name: "libFLAC",
+    vendor_available: true,
+
+    srcs: [
+        "bitmath.c",
+        "bitreader.c",
+        "bitwriter.c",
+        "cpu.c",
+        "crc.c",
+        "fixed.c",
+        "float.c",
+        "format.c",
+        "lpc.c",
+        "memory.c",
+        "md5.c",
+        "stream_decoder.c",
+        "stream_encoder.c",
+        "stream_encoder_framing.c",
+        "window.c",
+    ],
+
+    local_include_dirs: ["include"],
+    header_libs: [
+        "libFLAC-config",
+        "libFLAC-headers",
+    ],
+    export_header_lib_headers: ["libFLAC-headers"],
+
+    cflags: [
+        "-DHAVE_CONFIG_H",
+        "-DFLAC__NO_MD5",
+        "-DFLAC__INTEGER_ONLY_LIBRARY",
+
+        "-D_REENTRANT",
+        "-DPIC",
+        "-DU_COMMON_IMPLEMENTATION",
+        "-fPIC",
+
+        "-O3",
+        "-funroll-loops",
+        "-finline-functions",
+        "-Werror",
+        "-Wno-unused-parameter",
+    ],
+
+    arch: {
+        arm: {
+            instruction_set: "arm",
+        },
+    },
+
+    sanitize: {
+        cfi: true,
+        diag: {
+            cfi: true,
+        },
+    },
+}

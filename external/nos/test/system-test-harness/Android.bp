@@ -1,0 +1,92 @@
+//
+// Copyright (C) 2017 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+subdirs = [
+    "tools",
+]
+
+cc_binary {
+    name: "citadel_integration_tests",
+    defaults: [
+        "nos_cc_hw_defaults",
+    ],
+    cflags: [
+        "-Wno-c99-extensions",
+        "-Wno-gnu-anonymous-struct",
+        "-Wno-nested-anon-types",
+    ],
+    srcs: [
+// AVB tests only run from the host.
+//        "src/avb_tests.cc",
+        "src/aes-cmac-tests.cc",
+        "src/gtest_with_gflags_main.cc",
+        "src/keymaster-import-key-tests.cc",
+        "src/keymaster-import-wrapped-key-tests.cc",
+// TODO: add provision tests once production-bit can be reliably reset.
+//       "src/keymaster-provision-tests.cc",
+        "src/nugget_core_tests.cc",
+        "src/runtests.cc",
+        "src/test-data/test-keys/rsa.cc",
+        "src/util.cc",
+        "src/weaver_tests.cc",
+    ],
+    include_dirs: ["."],
+    header_libs: [
+        "nos_headers",
+    ],
+    static_libs: [
+        "libgmock",
+        "libgtest",
+    ],
+    shared_libs: [
+        "libcrypto",
+        "libnos",
+        "libnos_client_citadel",
+        "libnosprotos",
+        "libprotobuf-cpp-full",
+        "libssl",
+        "nos_app_avb",
+        "nos_app_keymaster",
+        "nos_app_weaver",
+        "nugget_tools",
+    ],
+}
+
+cc_binary {
+    name: "stress_test",
+    defaults: [
+        "nos_cc_hw_defaults",
+    ],
+    srcs: [
+        "src/stress_test.cc",
+        "src/util.cc",
+    ],
+    include_dirs: ["."],
+    header_libs: [
+        "nos_headers",
+    ],
+    static_libs: [
+        "libgmock",
+        "libgtest",
+    ],
+    shared_libs: [
+        "libnos",
+        "libnos_client_citadel",
+        "libnosprotos",
+        "nugget_tools",
+        "libprotobuf-cpp-full",
+    ],
+}

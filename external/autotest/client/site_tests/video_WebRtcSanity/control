@@ -1,0 +1,27 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "Chrome OS Project, chromeos-video@google.com"
+NAME = "video_WebRtcSanity"
+PURPOSE = "Test that WebRTC getUserMedia succeeds with fake devices"
+CRITERIA = "This test will fail if WebRTC getUserMedia fails"
+ATTRIBUTES = "suite:bvt-perbuild"
+TIME = "MEDIUM"
+TEST_CATEGORY = "General"
+TEST_CLASS = "video"
+TEST_TYPE = "client"
+BUG_TEMPLATE = {
+    "labels": ["OS-Chrome"],
+    "components": ["OS>Kernel>Video"],
+}
+
+DOC = """
+This test runs a WebRTC getUserMedia call and assigns the camera stream to
+one video tag. This test will fail if any of these steps fail on the
+javascript level; it does not check if the frames we receive are actually
+sane. Furthermore, this test uses fake devices and not the real webcam.
+Frames and real webcams are checked by the video_WebRtcCamera test though.
+"""
+
+job.run_test("video_WebRtcSanity")

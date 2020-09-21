@@ -1,0 +1,35 @@
+# This example experiment file shows how to invoke the profiler (via
+# the perf_args above the benchmark).
+#
+# You should replace all the placeholders, marked by angle-brackets,
+# with the appropriate actual values.
+
+
+name: telemetry_crosperf_profiler_example
+
+board: <your-board-goes-here>
+
+# Note:  You can specify multiple remotes, to run your tests in parallel on
+# multiple machines. e.g. "remote: test-machine-1.com test-machine2.come
+# test-machine3.com"
+remote: <your-remote-goes-here>
+
+# Below is the line that causes the profiler to run.  Currently the
+# only profiler option is running 'perf' on the remote machine.  If
+# you want you can replace 'record' with 'stat'.  You would also need
+# to change the other args accordingly.  Crosperf automatically
+# inserts a '-a' if you use 'record' for you perf_args.  The results
+# of the perf run (perf.data and perf.report files) will be available
+# with the rest of the Crosperf results.
+perf_args: record -e cycles,instructions
+
+benchmark: page_cycler_v2.dhtml {
+    suite: telemetry_Crosperf
+    iterations: 1
+}
+
+# Replace the chromeos image below with the actual path to your test imnage.
+test_image {
+  chromeos_image:<path-to-your-chroot>/src/build/images/<board>/test-image/chromiumos_test_image.bin
+}
+

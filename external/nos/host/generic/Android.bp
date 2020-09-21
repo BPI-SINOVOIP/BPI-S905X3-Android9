@@ -1,0 +1,80 @@
+//
+// Copyright (C) 2017 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+cc_library_headers {
+    name: "nos_headers",
+    defaults: ["nos_cc_host_supported_defaults"],
+    export_include_dirs: ["nugget/include"],
+}
+
+cc_defaults {
+    name: "nos_proto_defaults",
+    cflags: [
+        "-Wno-unused-parameter",
+    ],
+}
+
+cc_defaults {
+    name: "nos_app_defaults",
+    defaults: ["nos_proto_defaults"],
+    header_libs: ["nos_headers"],
+    shared_libs: [
+        "libnos",
+        "libprotobuf-cpp-full",
+    ],
+}
+
+cc_defaults {
+    name: "nos_app_service_defaults",
+    defaults: [
+        "nos_app_defaults",
+        "nos_cc_defaults",
+    ],
+    shared_libs: ["libnosprotos"],
+    export_shared_lib_headers: ["libnosprotos"],
+}
+
+// Soong doesn't allow adding plugins to a protobuf compilation so we need to
+// invoke it directly. If we could pass a plugin, it could use insertion points
+// in the .pb.{cc,h} files rather than needing to generate new .client.{cpp,h}
+// files for each service.
+GEN_SERVICE = "$(location aprotoc) --plugin=protoc-gen-nos-client-cpp=$(location protoc-gen-nos-client-cpp) $(in) -Iexternal/protobuf/src -Iexternal/nos/host/generic/nugget/proto"
+
+GEN_SERVICE_SOURCE = GEN_SERVICE + " --nos-client-cpp_out=source:$(genDir) "
+GEN_SERVICE_HEADER = GEN_SERVICE + " --nos-client-cpp_out=header:$(genDir) "
+GEN_SERVICE_MOCK = GEN_SERVICE + " --nos-client-cpp_out=mock:$(genDir) "
+
+// A special target to be statically linkeed into recovery which is a system
+// (not vendor) component.
+cc_library_static {
+    name: "libnos_for_recovery",
+    cflags: [
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-zero-length-array",
+    ],
+    export_include_dirs: [
+        "nugget/include",
+        "libnos/include",
+        "libnos_datagram/include",
+        "libnos_transport/include",
+    ],
+    srcs: [
+        "libnos/debug.cpp",
+        "libnos_transport/transport.c",
+    ],
+}

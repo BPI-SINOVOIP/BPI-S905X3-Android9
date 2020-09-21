@@ -1,0 +1,68 @@
+cc_library {
+    name: "libvorbisidec",
+    vendor_available: true,
+    vndk: {
+        enabled: true,
+    },
+
+    srcs: [
+        "Tremolo/bitwise.c",
+        "Tremolo/codebook.c",
+        "Tremolo/dsp.c",
+        "Tremolo/floor0.c",
+        "Tremolo/floor1.c",
+        "Tremolo/floor_lookup.c",
+        "Tremolo/framing.c",
+        "Tremolo/mapping0.c",
+        "Tremolo/mdct.c",
+        "Tremolo/misc.c",
+        "Tremolo/res012.c",
+        "Tremolo/treminfo.c",
+        "Tremolo/vorbisfile.c",
+    ],
+
+    arch: {
+        arm: {
+            srcs: [
+                "Tremolo/bitwiseARM.s",
+                "Tremolo/dpen.s",
+                "Tremolo/floor1ARM.s",
+                "Tremolo/mdctARM.s",
+            ],
+            cflags: ["-D_ARM_ASSEM_"],
+            // Assembly code in asm_arm.h does not compile with Clang.
+            clang_asflags: ["-no-integrated-as"],
+
+            instruction_set: "arm",
+        },
+        arm64: {
+            cflags: ["-DONLY_C"],
+        },
+        mips: {
+            cflags: ["-DONLY_C"],
+        },
+        mips64: {
+            cflags: ["-DONLY_C"],
+        },
+        x86: {
+            cflags: ["-DONLY_C"],
+        },
+        x86_64: {
+            cflags: ["-DONLY_C"],
+        },
+    },
+
+    cflags: [
+        "-O2",
+        "-D_GNU_SOURCE",
+        "-funsigned-char",
+        "-Wall",
+        "-Werror",
+        "-Wno-unused-variable",
+    ],
+
+    local_include_dirs: ["Tremolo"],
+    export_include_dirs: ["."],
+
+    shared_libs: ["liblog"],
+}

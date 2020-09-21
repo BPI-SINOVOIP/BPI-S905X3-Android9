@@ -1,0 +1,26 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "malmnas@google.com, chromeos-meetings@google.com"
+NAME = "webrtc_PausePlayPeerConnections.audio"
+PURPOSE = "Ensures frequent pause and plays of peer connection streams work"
+CRITERIA = "Fails if the tab freezes during the test"
+ATTRIBUTES = ("suite:hotrod, suite:bluestreak, suite:bluestreak-release, "
+        "suite:bluestreak-perbuild, suite:bluestreak-pre-cq")
+TIME = "SHORT"
+TEST_CATEGORY = "Stress"
+TEST_CLASS = "audio"
+TEST_TYPE = "client"
+BUG_TEMPLATE = {
+    "labels": ["OS-Chrome"],
+    "components": ["OS>Kernel>Audio"],
+}
+
+DOC = """
+This test starts 10 peer connections with audio streams.
+The tests randomly pauses and plays the streams.
+"""
+
+job.run_test("webrtc_PausePlayPeerConnections", element_type='audio', tag='audio')
+

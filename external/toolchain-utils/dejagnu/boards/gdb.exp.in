@@ -1,0 +1,133 @@
+# Copyright 2011-2012 Free Software Foundation, Inc.
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# This file is a dejagnu "board file" and is used to run the testsuite
+# natively with gdbserver.
+#
+# To use this file:
+# bash$ touch ${my_dejagnu_dir}/my-dejagnu.exp
+# bash$ export DEJAGNU=${my_dejagnu_dir}/my-dejagnu.exp
+# bash$ mkdir ${my_dejagnu_dir}/boards
+# bash$ cp ${src_dir}/gdb/testsuite/boards/native-gdbserver.exp \
+#   ${my_dejagnu_dir}/boards
+# bash$ cd ${build_dir}/gdb
+# bash$ make check RUNTESTFLAGS="--target_board=native-gdbserver"
+
+load_generic_config "gdbserver"
+process_multilib_options ""
+
+# The default compiler for this target.
+set_board_info compiler "[find_gcc]"
+
+set_board_info cflags "-fno-stack-protector"
+set_board_info cxxflags "-fno-stack-protector"
+
+set remote_directory "/tmp"
+set chrome_device_ip __board_hostname__
+
+# This gdbserver can only run a process once per session.
+set_board_info gdb,do_reload_on_run 1
+
+# There's no support for argument-passing (yet).
+set_board_info noargs 1
+
+# Can't do input (or output) in the current gdbserver.
+set_board_info gdb,noinferiorio 1
+
+# gdbserver does not intercept target file operations and perform them
+# on the host.
+set_board_info gdb,nofileio 1
+
+#set_board_info sockethost "localhost:"
+set_board_info use_gdb_stub 1
+
+# We will be using the standard GDB remote protocol.
+set_board_info gdb_protocol "remote"
+
+# Test the copy of gdbserver in the build directory.
+# set_board_info gdb_server_prog "../gdbserver/gdbserver"
+
+# Can't do hardware watchpoints, in general (it depends on gdbserver support for your target arch)
+set_board_info gdb,no_hardware_watchpoints 1
+
+#Can't do record
+set_board_info gdb,use_precord 0
+set_board_info gdb,can_reverse 0
+
+
+set gdb_test_timeout 100
+set_board_info timeout 100
+
+set_board_info ssh,options "-i __tmp_testing_rsa__ -o ControlMaster=auto -o ControlPath=__tmp_dir__/%r@%h:%p -o StrictHostKeyChecking=no"
+
+set_board_info gdb_server_prog "__tmp_dir__/boards/gdbserver.sh "
+set_board_info sockethost "__board_hostname__:"
+set_board_info protocol standard
+set_board_info gdb,socketport "1234"
+
+
+proc ${board}_spawn { board cmd } {
+    global board_info
+
+    set baseboard [lindex [split $board "/"] 0]
+
+    set board_info($baseboard,isremote) 0
+    set result [remote_spawn $board $cmd]
+    set board_info($baseboard,isremote) 1
+
+    return $result
+}
+
+proc ${board}_exec { hostname program args } {
+    global board_info
+    verbose -log "$hostname $program $args"
+    set baseboard [lindex [split $hostname "/"] 0]
+
+    set board_info($baseboard,isremote) 0
+    set result [remote_exec $hostname $program $args]
+    set board_info($baseboard,isremote) 1
+
+    return $result
+}
+
+proc ${board}_download { board host dest } {
+    verbose -log "chrome_download $board $host $dest"
+    global board_info
+    set ssh_options [board_info $board ssh,options]
+    
+    global chrome_device_ip remote_directory remote_file
+    
+    verbose -log "scp -q $ssh_options $host root@$chrome_device_ip:$remote_directory/$dest"
+    set status [catch "exec scp -q $ssh_options $host root@$chrome_device_ip:$remote_directory/$dest" output]
+
+    if { $status == 0 } {
+        verbose -log "Copied $host to $remote_directory/$dest" 2
+        return "$remote_directory/$dest"
+    } else{
+        verbose -log "Download to $dest failed, $output." 2
+        return ""
+    }
+}
+
+proc ${board}_file { dest op args } {
+    if { $op == "delete" } {
+	return 0
+    }
+    return [eval [list standard_file $dest $op] $args]
+}
+
+proc skip_shlid_tests {} {
+  return 1
+}

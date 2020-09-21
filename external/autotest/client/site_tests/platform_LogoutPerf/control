@@ -1,0 +1,24 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "ChromeOS team"
+NAME = "platform_LogoutPerf"
+ATTRIBUTES = "suite:bvt-perbuild, suite:crosbolt_perf_perbuild"
+TIME = "SHORT"
+TEST_CATEGORY = "General"
+TEST_CLASS = "login"
+TEST_TYPE = "client"
+
+DOC = """
+This test measures the time elapsed for signing out from a logged on
+GAIA account.
+
+The test logs in using the telemetry gaia_login flag, and navigates to
+accounts.google.com to verify that we're logged in to gaia, as opposed
+to fake telemetry login, then we press the ctrl+shift+q twice to sign
+out and measures the time elasped between the uptime metric 'logout-started'
+and 'chrome-exec'.
+"""
+
+job.run_test('platform_LogoutPerf')

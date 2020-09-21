@@ -1,0 +1,23 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'krishnargv'
+NAME = 'policy_NotificationsAllowedForUrls.sitenotallowed_block'
+ATTRIBUTES = 'suite:regression, suite:policy'
+TIME = 'SHORT'
+TEST_CATEGORY = 'General'
+TEST_CLASS = 'enterprise'
+TEST_TYPE = 'client'
+
+DOC = '''
+Verify effects of NotificationsAllowedForUrls policy.
+
+This test case verifies the behavior and appearance of Chrome OS when user
+policy NotificationsAllowedForUrls contains URLs whose domains do not match
+the page that triggers a notification, and DefaultNotificationsSetting=2
+(Block Notifications).
+
+'''
+
+job.run_test('policy_NotificationsAllowedForUrls', case='SiteNotAllowed_Block')

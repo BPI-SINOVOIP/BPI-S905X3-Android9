@@ -1,0 +1,31 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+
+AUTHOR = "mruthven"
+NAME = "firmware_IntegratedU2F"
+PURPOSE = "Verify U2F"
+TIME = "SHORT"
+TEST_TYPE = "server"
+DEPENDENCIES = "servo"
+
+DOC = """
+Verify second-factor authentication (U2F) using the on-board cr50 firmware
+works.
+
+Run U2FTest on the DUT. Use servo to press the power button.
+"""
+
+args_dict = utils.args_to_dict(args)
+servo_args = hosts.CrosHost.get_servo_arguments(args_dict)
+
+def run(machine):
+    host = hosts.create_host(machine, servo_args=servo_args)
+
+    iterations = int(args_dict.get("iterations", 1))
+
+    job.run_test("firmware_IntegratedU2F", host=host, cmdline_args=args)
+
+parallel_simple(run, machines)

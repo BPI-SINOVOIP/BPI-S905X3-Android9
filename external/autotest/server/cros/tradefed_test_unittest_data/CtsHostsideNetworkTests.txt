@@ -1,0 +1,901 @@
+03-22 23:13:45 I/ModuleRepo: chromeos2-row4-rack5-host4:22 running 1 modules, expected to complete in 3m 56s
+03-22 23:13:45 I/CompatibilityTest: Starting 1 module on chromeos2-row4-rack5-host4:22
+03-22 23:13:45 D/ConfigurationFactory: Loading configuration 'system-status-checkers'
+03-22 23:13:45 I/CompatibilityTest: Running system status checker before module execution: CtsHostsideNetworkTests
+03-22 23:13:45 D/ModuleDef: Preparer: StubTargetPreparer
+03-22 23:13:45 D/TargetPreparer: skipping target prepare step
+03-22 23:13:45 D/ModuleDef: Test: JarHostTest
+03-22 23:13:45 D/ModuleListener: ModuleListener.testRunStarted(com.android.cts.net.HostsideVpnTests, 3)
+03-22 23:13:45 I/ConsoleReporter: [chromeos2-row4-rack5-host4:22] Starting x86 CtsHostsideNetworkTests with 3 tests
+03-22 23:13:45 D/DeviceTestCase: Running com.android.cts.net.HostsideVpnTests#testAppDisallowed()
+03-22 23:13:45 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideVpnTests#testAppDisallowed)
+03-22 23:13:45 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:13:46 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:13:46 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:13:46 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:13:46 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:13:48 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:13:49 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:13:49 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:13:49 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:13:49 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:13:50 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.VpnTest#testAppDisallowed com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:14:03 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:14:04 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:14:05 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideVpnTests#testAppDisallowed, {})
+03-22 23:14:05 I/ConsoleReporter: [1/3 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideVpnTests#testAppDisallowed pass
+03-22 23:14:05 D/DeviceTestCase: Running com.android.cts.net.HostsideVpnTests#testAppAllowed()
+03-22 23:14:05 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideVpnTests#testAppAllowed)
+03-22 23:14:05 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:14:05 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:14:05 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:14:05 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:14:05 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:14:08 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:14:08 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:14:08 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:14:08 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:14:08 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:14:10 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.VpnTest#testAppAllowed com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:14:22 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:14:23 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:14:24 D/ModuleListener: ModuleListener.testFailed(com.android.cts.net.HostsideVpnTests#testAppAllowed, java.lang.AssertionError: on-device tests failed:
+com.android.cts.net.hostside.VpnTest#testAppAllowed:
+junit.framework.AssertionFailedError: Socket opened before VPN connects should be closed when VPN connects
+at junit.framework.Assert.fail(Assert.java:50)
+at com.android.cts.net.hostside.VpnTest.assertSocketClosed(VpnTest.java:518)
+at com.android.cts.net.hostside.VpnTest.testAppAllowed(VpnTest.java:550)
+at java.lang.reflect.Method.invoke(Native Method)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at junit.framework.TestCase.runBare(TestCase.java:134)
+at junit.framework.TestResult$1.protect(TestResult.java:115)
+at android.support.test.internal.runner.junit3.AndroidTestResult.runProtected(AndroidTestResult.java:77)
+at junit.framework.TestResult.run(TestResult.java:118)
+at android.support.test.internal.runner.junit3.AndroidTestResult.run(AndroidTestResult.java:55)
+at junit.framework.TestCase.run(TestCase.java:124)
+at android.support.test.internal.runner.junit3.NonLeakyTestSuite$NonLeakyTest.run(NonLeakyTestSuite.java:63)
+at junit.framework.TestSuite.runTest(TestSuite.java:243)
+at junit.framework.TestSuite.run(TestSuite.java:238)
+at android.support.test.internal.runner.junit3.DelegatingTestSuite.run(DelegatingTestSuite.java:103)
+at android.support.test.internal.runner.junit3.AndroidTestSuite.run(AndroidTestSuite.java:68)
+at android.support.test.internal.runner.junit3.JUnit38ClassRunner.run(JUnit38ClassRunner.java:103)
+at org.junit.runners.Suite.runChild(Suite.java:128)
+at org.junit.runners.Suite.runChild(Suite.java:27)
+at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+at android.support.test.internal.runner.TestExecutor.execute(TestExecutor.java:59)
+at android.support.test.runner.AndroidJUnitRunner.onStart(AndroidJUnitRunner.java:272)
+at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:1925)
+
+	at com.android.cts.net.HostsideNetworkTestCase.runDeviceTests(HostsideNetworkTestCase.java:160)
+	at com.android.cts.net.HostsideVpnTests.testAppAllowed(HostsideVpnTests.java:41)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at com.android.tradefed.testtype.DeviceTestResult$1.protect(DeviceTestResult.java:81)
+	at com.android.tradefed.testtype.DeviceTestResult.runProtected(DeviceTestResult.java:56)
+	at com.android.tradefed.testtype.DeviceTestResult.run(DeviceTestResult.java:85)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at com.android.tradefed.testtype.DeviceTestCase.run(DeviceTestCase.java:180)
+	at com.android.tradefed.testtype.JUnitRunUtil.runTest(JUnitRunUtil.java:55)
+	at com.android.tradefed.testtype.JUnitRunUtil.runTest(JUnitRunUtil.java:38)
+	at com.android.tradefed.testtype.DeviceTestCase.run(DeviceTestCase.java:144)
+	at com.android.tradefed.testtype.HostTest.run(HostTest.java:253)
+	at com.android.compatibility.common.tradefed.testtype.ModuleDef.run(ModuleDef.java:247)
+	at com.android.compatibility.common.tradefed.testtype.CompatibilityTest.run(CompatibilityTest.java:439)
+	at com.android.tradefed.invoker.TestInvocation.runTests(TestInvocation.java:716)
+	at com.android.tradefed.invoker.TestInvocation.prepareAndRun(TestInvocation.java:491)
+	at com.android.tradefed.invoker.TestInvocation.performInvocation(TestInvocation.java:386)
+	at com.android.tradefed.invoker.TestInvocation.invoke(TestInvocation.java:166)
+	at com.android.tradefed.command.CommandScheduler$InvocationThread.run(CommandScheduler.java:471)
+)
+03-22 23:14:24 I/ConsoleReporter: [2/3 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideVpnTests#testAppAllowed fail: java.lang.AssertionError: on-device tests failed:
+com.android.cts.net.hostside.VpnTest#testAppAllowed:
+junit.framework.AssertionFailedError: Socket opened before VPN connects should be closed when VPN connects
+at junit.framework.Assert.fail(Assert.java:50)
+at com.android.cts.net.hostside.VpnTest.assertSocketClosed(VpnTest.java:518)
+at com.android.cts.net.hostside.VpnTest.testAppAllowed(VpnTest.java:550)
+at java.lang.reflect.Method.invoke(Native Method)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at junit.framework.TestCase.runBare(TestCase.java:134)
+at junit.framework.TestResult$1.protect(TestResult.java:115)
+at android.support.test.internal.runner.junit3.AndroidTestResult.runProtected(AndroidTestResult.java:77)
+at junit.framework.TestResult.run(TestResult.java:118)
+at android.support.test.internal.runner.junit3.AndroidTestResult.run(AndroidTestResult.java:55)
+at junit.framework.TestCase.run(TestCase.java:124)
+at android.support.test.internal.runner.junit3.NonLeakyTestSuite$NonLeakyTest.run(NonLeakyTestSuite.java:63)
+at junit.framework.TestSuite.runTest(TestSuite.java:243)
+at junit.framework.TestSuite.run(TestSuite.java:238)
+at android.support.test.internal.runner.junit3.DelegatingTestSuite.run(DelegatingTestSuite.java:103)
+at android.support.test.internal.runner.junit3.AndroidTestSuite.run(AndroidTestSuite.java:68)
+at android.support.test.internal.runner.junit3.JUnit38ClassRunner.run(JUnit38ClassRunner.java:103)
+at org.junit.runners.Suite.runChild(Suite.java:128)
+at org.junit.runners.Suite.runChild(Suite.java:27)
+at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+at android.support.test.internal.runner.TestExecutor.execute(TestExecutor.java:59)
+at android.support.test.runner.AndroidJUnitRunner.onStart(AndroidJUnitRunner.java:272)
+at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:1925)
+
+	at com.android.cts.net.HostsideNetworkTestCase.runDeviceTests(HostsideNetworkTestCase.java:160)
+	at com.android.cts.net.HostsideVpnTests.testAppAllowed(HostsideVpnTests.java:41)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at com.android.tradefed.testtype.DeviceTestResult$1.protect(DeviceTestResult.java:81)
+	at com.android.tradefed.testtype.DeviceTestResult.runProtected(DeviceTestResult.java:56)
+	at com.android.tradefed.testtype.DeviceTestResult.run(DeviceTestResult.java:85)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at com.android.tradefed.testtype.DeviceTestCase.run(DeviceTestCase.java:180)
+	at com.android.tradefed.testtype.JUnitRunUtil.runTest(JUnitRunUtil.java:55)
+	at com.android.tradefed.testtype.JUnitRunUtil.runTest(JUnitRunUtil.java:38)
+	at com.android.tradefed.testtype.DeviceTestCase.run(DeviceTestCase.java:144)
+	at com.android.tradefed.testtype.HostTest.run(HostTest.java:253)
+	at com.android.compatibility.common.tradefed.testtype.ModuleDef.run(ModuleDef.java:247)
+	at com.android.compatibility.common.tradefed.testtype.CompatibilityTest.run(CompatibilityTest.java:439)
+	at com.android.tradefed.invoker.TestInvocation.runTests(TestInvocation.java:716)
+	at com.android.tradefed.invoker.TestInvocation.prepareAndRun(TestInvocation.java:491)
+	at com.android.tradefed.invoker.TestInvocation.performInvocation(TestInvocation.java:386)
+	at com.android.tradefed.invoker.TestInvocation.invoke(TestInvocation.java:166)
+	at com.android.tradefed.command.CommandScheduler$InvocationThread.run(CommandScheduler.java:471)
+
+03-22 23:14:24 I/FailureListener: FailureListener.testFailed com.android.cts.net.HostsideVpnTests#testAppAllowed false true false
+03-22 23:14:26 D/FileUtil: Creating temp file at /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.22_23.13.15 with prefix "com.android.cts.net.HostsideVpnTests#testAppAllowed-logcat_" suffix ".zip"
+03-22 23:14:26 I/LogFileSaver: Saved log file /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.22_23.13.15/com.android.cts.net.HostsideVpnTests#testAppAllowed-logcat_8737293875465184240.zip
+03-22 23:14:26 I/ResultReporter: Saved logs for com.android.cts.net.HostsideVpnTests#testAppAllowed-logcat in /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.22_23.13.15/com.android.cts.net.HostsideVpnTests#testAppAllowed-logcat_8737293875465184240.zip
+03-22 23:14:26 D/FileUtil: Creating temp file at /tmp/3764431/cts/inv_7547767408652132625 with prefix "com.android.cts.net.HostsideVpnTests#testAppAllowed-logcat_" suffix ".zip"
+03-22 23:14:26 D/RunUtil: Running command with timeout: 10000ms
+03-22 23:14:26 D/RunUtil: Running [chmod]
+03-22 23:14:26 D/RunUtil: [chmod] command failed. return code 1
+03-22 23:14:26 D/FileUtil: Attempting to chmod /tmp/3764431/cts/inv_7547767408652132625/com.android.cts.net.HostsideVpnTests#testAppAllowed-logcat_3580095767801184163.zip to ug+rwx
+03-22 23:14:26 D/RunUtil: Running command with timeout: 10000ms
+03-22 23:14:26 D/RunUtil: Running [chmod, ug+rwx, /tmp/3764431/cts/inv_7547767408652132625/com.android.cts.net.HostsideVpnTests#testAppAllowed-logcat_3580095767801184163.zip]
+03-22 23:14:26 I/FileSystemLogSaver: Saved log file /tmp/3764431/cts/inv_7547767408652132625/com.android.cts.net.HostsideVpnTests#testAppAllowed-logcat_3580095767801184163.zip
+03-22 23:14:26 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideVpnTests#testAppAllowed, {})
+03-22 23:14:26 D/DeviceTestCase: Running com.android.cts.net.HostsideVpnTests#testDefault()
+03-22 23:14:26 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideVpnTests#testDefault)
+03-22 23:14:26 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:14:27 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:14:27 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:14:27 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:14:27 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:14:30 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:14:30 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:14:30 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:14:30 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:14:30 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:14:32 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.VpnTest#testDefault com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:14:47 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:14:48 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:14:49 D/ModuleListener: ModuleListener.testFailed(com.android.cts.net.HostsideVpnTests#testDefault, java.lang.AssertionError: on-device tests failed:
+com.android.cts.net.hostside.VpnTest#testDefault:
+junit.framework.AssertionFailedError: expected:<103> but was:<104>
+at junit.framework.Assert.fail(Assert.java:50)
+at junit.framework.Assert.failNotEquals(Assert.java:287)
+at junit.framework.Assert.assertEquals(Assert.java:67)
+at junit.framework.Assert.assertEquals(Assert.java:199)
+at junit.framework.Assert.assertEquals(Assert.java:205)
+at com.android.cts.net.hostside.VpnTest.assertSocketClosed(VpnTest.java:520)
+at com.android.cts.net.hostside.VpnTest.testDefault(VpnTest.java:535)
+at java.lang.reflect.Method.invoke(Native Method)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at junit.framework.TestCase.runBare(TestCase.java:134)
+at junit.framework.TestResult$1.protect(TestResult.java:115)
+at android.support.test.internal.runner.junit3.AndroidTestResult.runProtected(AndroidTestResult.java:77)
+at junit.framework.TestResult.run(TestResult.java:118)
+at android.support.test.internal.runner.junit3.AndroidTestResult.run(AndroidTestResult.java:55)
+at junit.framework.TestCase.run(TestCase.java:124)
+at android.support.test.internal.runner.junit3.NonLeakyTestSuite$NonLeakyTest.run(NonLeakyTestSuite.java:63)
+at junit.framework.TestSuite.runTest(TestSuite.java:243)
+at junit.framework.TestSuite.run(TestSuite.java:238)
+at android.support.test.internal.runner.junit3.DelegatingTestSuite.run(DelegatingTestSuite.java:103)
+at android.support.test.internal.runner.junit3.AndroidTestSuite.run(AndroidTestSuite.java:68)
+at android.support.test.internal.runner.junit3.JUnit38ClassRunner.run(JUnit38ClassRunner.java:103)
+at org.junit.runners.Suite.runChild(Suite.java:128)
+at org.junit.runners.Suite.runChild(Suite.java:27)
+at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+at android.support.test.internal.runner.TestExecutor.execute(TestExecutor.java:59)
+at android.support.test.runner.AndroidJUnitRunner.onStart(AndroidJUnitRunner.java:272)
+at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:1925)
+
+	at com.android.cts.net.HostsideNetworkTestCase.runDeviceTests(HostsideNetworkTestCase.java:160)
+	at com.android.cts.net.HostsideVpnTests.testDefault(HostsideVpnTests.java:37)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at com.android.tradefed.testtype.DeviceTestResult$1.protect(DeviceTestResult.java:81)
+	at com.android.tradefed.testtype.DeviceTestResult.runProtected(DeviceTestResult.java:56)
+	at com.android.tradefed.testtype.DeviceTestResult.run(DeviceTestResult.java:85)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at com.android.tradefed.testtype.DeviceTestCase.run(DeviceTestCase.java:180)
+	at com.android.tradefed.testtype.JUnitRunUtil.runTest(JUnitRunUtil.java:55)
+	at com.android.tradefed.testtype.JUnitRunUtil.runTest(JUnitRunUtil.java:38)
+	at com.android.tradefed.testtype.DeviceTestCase.run(DeviceTestCase.java:144)
+	at com.android.tradefed.testtype.HostTest.run(HostTest.java:253)
+	at com.android.compatibility.common.tradefed.testtype.ModuleDef.run(ModuleDef.java:247)
+	at com.android.compatibility.common.tradefed.testtype.CompatibilityTest.run(CompatibilityTest.java:439)
+	at com.android.tradefed.invoker.TestInvocation.runTests(TestInvocation.java:716)
+	at com.android.tradefed.invoker.TestInvocation.prepareAndRun(TestInvocation.java:491)
+	at com.android.tradefed.invoker.TestInvocation.performInvocation(TestInvocation.java:386)
+	at com.android.tradefed.invoker.TestInvocation.invoke(TestInvocation.java:166)
+	at com.android.tradefed.command.CommandScheduler$InvocationThread.run(CommandScheduler.java:471)
+)
+03-22 23:14:49 I/ConsoleReporter: [3/3 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideVpnTests#testDefault fail: java.lang.AssertionError: on-device tests failed:
+com.android.cts.net.hostside.VpnTest#testDefault:
+junit.framework.AssertionFailedError: expected:<103> but was:<104>
+at junit.framework.Assert.fail(Assert.java:50)
+at junit.framework.Assert.failNotEquals(Assert.java:287)
+at junit.framework.Assert.assertEquals(Assert.java:67)
+at junit.framework.Assert.assertEquals(Assert.java:199)
+at junit.framework.Assert.assertEquals(Assert.java:205)
+at com.android.cts.net.hostside.VpnTest.assertSocketClosed(VpnTest.java:520)
+at com.android.cts.net.hostside.VpnTest.testDefault(VpnTest.java:535)
+at java.lang.reflect.Method.invoke(Native Method)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at junit.framework.TestCase.runBare(TestCase.java:134)
+at junit.framework.TestResult$1.protect(TestResult.java:115)
+at android.support.test.internal.runner.junit3.AndroidTestResult.runProtected(AndroidTestResult.java:77)
+at junit.framework.TestResult.run(TestResult.java:118)
+at android.support.test.internal.runner.junit3.AndroidTestResult.run(AndroidTestResult.java:55)
+at junit.framework.TestCase.run(TestCase.java:124)
+at android.support.test.internal.runner.junit3.NonLeakyTestSuite$NonLeakyTest.run(NonLeakyTestSuite.java:63)
+at junit.framework.TestSuite.runTest(TestSuite.java:243)
+at junit.framework.TestSuite.run(TestSuite.java:238)
+at android.support.test.internal.runner.junit3.DelegatingTestSuite.run(DelegatingTestSuite.java:103)
+at android.support.test.internal.runner.junit3.AndroidTestSuite.run(AndroidTestSuite.java:68)
+at android.support.test.internal.runner.junit3.JUnit38ClassRunner.run(JUnit38ClassRunner.java:103)
+at org.junit.runners.Suite.runChild(Suite.java:128)
+at org.junit.runners.Suite.runChild(Suite.java:27)
+at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+at android.support.test.internal.runner.TestExecutor.execute(TestExecutor.java:59)
+at android.support.test.runner.AndroidJUnitRunner.onStart(AndroidJUnitRunner.java:272)
+at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:1925)
+
+	at com.android.cts.net.HostsideNetworkTestCase.runDeviceTests(HostsideNetworkTestCase.java:160)
+	at com.android.cts.net.HostsideVpnTests.testDefault(HostsideVpnTests.java:37)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at com.android.tradefed.testtype.DeviceTestResult$1.protect(DeviceTestResult.java:81)
+	at com.android.tradefed.testtype.DeviceTestResult.runProtected(DeviceTestResult.java:56)
+	at com.android.tradefed.testtype.DeviceTestResult.run(DeviceTestResult.java:85)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at com.android.tradefed.testtype.DeviceTestCase.run(DeviceTestCase.java:180)
+	at com.android.tradefed.testtype.JUnitRunUtil.runTest(JUnitRunUtil.java:55)
+	at com.android.tradefed.testtype.JUnitRunUtil.runTest(JUnitRunUtil.java:38)
+	at com.android.tradefed.testtype.DeviceTestCase.run(DeviceTestCase.java:144)
+	at com.android.tradefed.testtype.HostTest.run(HostTest.java:253)
+	at com.android.compatibility.common.tradefed.testtype.ModuleDef.run(ModuleDef.java:247)
+	at com.android.compatibility.common.tradefed.testtype.CompatibilityTest.run(CompatibilityTest.java:439)
+	at com.android.tradefed.invoker.TestInvocation.runTests(TestInvocation.java:716)
+	at com.android.tradefed.invoker.TestInvocation.prepareAndRun(TestInvocation.java:491)
+	at com.android.tradefed.invoker.TestInvocation.performInvocation(TestInvocation.java:386)
+	at com.android.tradefed.invoker.TestInvocation.invoke(TestInvocation.java:166)
+	at com.android.tradefed.command.CommandScheduler$InvocationThread.run(CommandScheduler.java:471)
+
+03-22 23:14:49 I/FailureListener: FailureListener.testFailed com.android.cts.net.HostsideVpnTests#testDefault false true false
+03-22 23:14:51 D/FileUtil: Creating temp file at /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.22_23.13.15 with prefix "com.android.cts.net.HostsideVpnTests#testDefault-logcat_" suffix ".zip"
+03-22 23:14:51 I/LogFileSaver: Saved log file /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.22_23.13.15/com.android.cts.net.HostsideVpnTests#testDefault-logcat_3916323955418166574.zip
+03-22 23:14:51 I/ResultReporter: Saved logs for com.android.cts.net.HostsideVpnTests#testDefault-logcat in /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.22_23.13.15/com.android.cts.net.HostsideVpnTests#testDefault-logcat_3916323955418166574.zip
+03-22 23:14:51 D/FileUtil: Creating temp file at /tmp/3764431/cts/inv_7547767408652132625 with prefix "com.android.cts.net.HostsideVpnTests#testDefault-logcat_" suffix ".zip"
+03-22 23:14:51 D/RunUtil: Running command with timeout: 10000ms
+03-22 23:14:51 D/RunUtil: Running [chmod]
+03-22 23:14:51 D/RunUtil: [chmod] command failed. return code 1
+03-22 23:14:51 D/FileUtil: Attempting to chmod /tmp/3764431/cts/inv_7547767408652132625/com.android.cts.net.HostsideVpnTests#testDefault-logcat_6862208225587156162.zip to ug+rwx
+03-22 23:14:51 D/RunUtil: Running command with timeout: 10000ms
+03-22 23:14:51 D/RunUtil: Running [chmod, ug+rwx, /tmp/3764431/cts/inv_7547767408652132625/com.android.cts.net.HostsideVpnTests#testDefault-logcat_6862208225587156162.zip]
+03-22 23:14:51 I/FileSystemLogSaver: Saved log file /tmp/3764431/cts/inv_7547767408652132625/com.android.cts.net.HostsideVpnTests#testDefault-logcat_6862208225587156162.zip
+03-22 23:14:51 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideVpnTests#testDefault, {})
+03-22 23:14:51 D/ModuleListener: ModuleListener.testRunEnded(65800, {})
+03-22 23:14:51 I/ConsoleReporter: [chromeos2-row4-rack5-host4:22] x86 CtsHostsideNetworkTests completed in 1m 5s. 1 passed, 2 failed, 0 not executed
+03-22 23:14:51 D/ModuleListener: ModuleListener.testRunStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests, 32)
+03-22 23:14:51 I/ConsoleReporter: [chromeos2-row4-rack5-host4:22] Continuing x86 CtsHostsideNetworkTests with 32 tests
+03-22 23:14:51 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataSaverMode_disabled()
+03-22 23:14:51 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataSaverMode_disabled)
+03-22 23:14:51 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:14:51 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:14:51 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:14:51 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:14:51 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:14:54 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:14:55 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:14:55 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:14:55 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:14:55 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:14:56 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.DataSaverModeTest#testGetRestrictBackgroundStatus_disabled com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:14:58 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:14:58 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:14:59 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataSaverMode_disabled, {})
+03-22 23:14:59 I/ConsoleReporter: [1/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataSaverMode_disabled pass
+03-22 23:14:59 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataSaverMode_whitelisted()
+03-22 23:14:59 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataSaverMode_whitelisted)
+03-22 23:14:59 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:15:00 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:15:00 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:15:00 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:15:00 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:15:02 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:15:03 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:15:03 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:15:03 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:15:03 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:15:04 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.DataSaverModeTest#testGetRestrictBackgroundStatus_whitelisted com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:15:06 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:15:07 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:15:07 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataSaverMode_whitelisted, {})
+03-22 23:15:07 I/ConsoleReporter: [2/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataSaverMode_whitelisted pass
+03-22 23:15:07 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataSaverMode_enabled()
+03-22 23:15:07 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataSaverMode_enabled)
+03-22 23:15:07 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:15:08 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:15:08 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:15:08 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:15:08 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:15:10 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:15:11 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:15:11 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:15:11 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:15:11 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:15:13 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.DataSaverModeTest#testGetRestrictBackgroundStatus_enabled com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:15:14 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:15:15 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:15:16 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataSaverMode_enabled, {})
+03-22 23:15:16 I/ConsoleReporter: [3/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataSaverMode_enabled pass
+03-22 23:15:16 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataSaverMode_blacklisted()
+03-22 23:15:16 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataSaverMode_blacklisted)
+03-22 23:15:16 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:15:17 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:15:17 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:15:17 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:15:17 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:15:19 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:15:20 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:15:20 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:15:20 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:15:20 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:15:21 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.DataSaverModeTest#testGetRestrictBackgroundStatus_blacklisted com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:15:22 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:15:23 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:15:24 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataSaverMode_blacklisted, {})
+03-22 23:15:24 I/ConsoleReporter: [4/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataSaverMode_blacklisted pass
+03-22 23:15:24 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataSaverMode_reinstall()
+03-22 23:15:24 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataSaverMode_reinstall)
+03-22 23:15:24 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:15:25 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:15:25 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:15:25 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:15:25 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:15:27 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:15:28 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:15:28 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:15:28 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:15:28 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:15:29 D/HostsideNetworkTests: Command: 'dumpsys package com.android.cts.net.hostside.app2'
+03-22 23:15:30 D/HostsideNetworkTests: Command: 'cmd netpolicy add restrict-background-whitelist 10066'
+03-22 23:15:30 D/HostsideNetworkTests: Command: 'cmd netpolicy list restrict-background-whitelist '
+03-22 23:15:30 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:15:31 D/HostsideNetworkTests: Command: 'cmd package list packages com.android.cts.net.hostside.app2'
+03-22 23:15:31 D/HostsideNetworkTests: Command: 'cmd netpolicy list restrict-background-whitelist '
+03-22 23:15:31 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:15:31 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:15:31 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:15:31 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:15:32 D/HostsideNetworkTests: Command: 'dumpsys package com.android.cts.net.hostside.app2'
+03-22 23:15:32 D/HostsideNetworkTests: Command: 'cmd netpolicy list restrict-background-whitelist '
+03-22 23:15:33 D/HostsideNetworkTests: Command: 'cmd netpolicy list restrict-background-whitelist '
+03-22 23:15:33 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:15:33 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:15:34 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataSaverMode_reinstall, {})
+03-22 23:15:34 I/ConsoleReporter: [5/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataSaverMode_reinstall pass
+03-22 23:15:34 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataSaverMode_requiredWhitelistedPackages()
+03-22 23:15:34 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataSaverMode_requiredWhitelistedPackages)
+03-22 23:15:34 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:15:35 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:15:35 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:15:35 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:15:35 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:15:37 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:15:38 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:15:38 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:15:38 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:15:38 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:15:39 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.DataSaverModeTest#testGetRestrictBackgroundStatus_requiredWhitelistedPackages com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:15:41 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:15:42 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:15:42 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataSaverMode_requiredWhitelistedPackages, {})
+03-22 23:15:42 I/ConsoleReporter: [6/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataSaverMode_requiredWhitelistedPackages pass
+03-22 23:15:42 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testBatterySaverModeMetered_disabled()
+03-22 23:15:42 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testBatterySaverModeMetered_disabled)
+03-22 23:15:42 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:15:43 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:15:43 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:15:43 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:15:43 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:15:45 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:15:46 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:15:46 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:15:46 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:15:46 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:15:48 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.BatterySaverModeMeteredTest#testBackgroundNetworkAccess_disabled com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:15:49 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:15:50 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:15:51 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testBatterySaverModeMetered_disabled, {})
+03-22 23:15:51 I/ConsoleReporter: [7/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testBatterySaverModeMetered_disabled pass
+03-22 23:15:51 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testBatterySaverModeMetered_whitelisted()
+03-22 23:15:51 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testBatterySaverModeMetered_whitelisted)
+03-22 23:15:51 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:15:52 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:15:52 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:15:52 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:15:52 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:15:54 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:15:55 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:15:55 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:15:55 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:15:55 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:15:56 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.BatterySaverModeMeteredTest#testBackgroundNetworkAccess_whitelisted com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:15:58 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:15:59 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:16:00 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testBatterySaverModeMetered_whitelisted, {})
+03-22 23:16:00 I/ConsoleReporter: [8/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testBatterySaverModeMetered_whitelisted pass
+03-22 23:16:00 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testBatterySaverModeMetered_enabled()
+03-22 23:16:00 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testBatterySaverModeMetered_enabled)
+03-22 23:16:00 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:16:00 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:16:00 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:16:00 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:16:00 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:16:03 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:16:04 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:16:04 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:16:04 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:16:04 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:16:05 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.BatterySaverModeMeteredTest#testBackgroundNetworkAccess_enabled com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:16:07 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:16:07 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:16:08 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testBatterySaverModeMetered_enabled, {})
+03-22 23:16:08 I/ConsoleReporter: [9/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testBatterySaverModeMetered_enabled pass
+03-22 23:16:08 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testBatterySaverMode_reinstall()
+03-22 23:16:08 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testBatterySaverMode_reinstall)
+03-22 23:16:08 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:16:09 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:16:09 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:16:09 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:16:09 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:16:11 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:16:12 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:16:12 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:16:12 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:16:12 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:16:13 D/HostsideNetworkTests: Command: 'cmd deviceidle enabled deep'
+03-22 23:16:13 W/HostsideNetworkTests: testBatterySaverMode_reinstall() skipped because device does not support Doze Mode
+03-22 23:16:13 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:16:14 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:16:15 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testBatterySaverMode_reinstall, {})
+03-22 23:16:15 I/ConsoleReporter: [10/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testBatterySaverMode_reinstall pass
+03-22 23:16:15 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testBatterySaverModeNonMetered_disabled()
+03-22 23:16:15 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testBatterySaverModeNonMetered_disabled)
+03-22 23:16:15 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:16:16 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:16:16 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:16:16 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:16:16 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:16:18 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:16:19 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:16:19 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:16:19 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:16:19 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:16:20 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.BatterySaverModeNonMeteredTest#testBackgroundNetworkAccess_disabled com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:16:22 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:16:23 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:16:24 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testBatterySaverModeNonMetered_disabled, {})
+03-22 23:16:24 I/ConsoleReporter: [11/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testBatterySaverModeNonMetered_disabled pass
+03-22 23:16:24 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testBatterySaverModeNonMetered_whitelisted()
+03-22 23:16:24 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testBatterySaverModeNonMetered_whitelisted)
+03-22 23:16:24 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:16:24 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:16:24 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:16:24 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:16:24 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:16:27 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:16:27 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:16:27 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:16:27 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:16:27 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:16:29 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.BatterySaverModeNonMeteredTest#testBackgroundNetworkAccess_whitelisted com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:16:30 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:16:31 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:16:32 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testBatterySaverModeNonMetered_whitelisted, {})
+03-22 23:16:32 I/ConsoleReporter: [12/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testBatterySaverModeNonMetered_whitelisted pass
+03-22 23:16:32 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testBatterySaverModeNonMetered_enabled()
+03-22 23:16:32 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testBatterySaverModeNonMetered_enabled)
+03-22 23:16:32 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:16:33 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:16:33 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:16:33 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:16:33 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:16:35 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:16:36 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:16:36 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:16:36 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:16:36 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:16:38 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.BatterySaverModeNonMeteredTest#testBackgroundNetworkAccess_enabled com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:16:39 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:16:40 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:16:41 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testBatterySaverModeNonMetered_enabled, {})
+03-22 23:16:41 I/ConsoleReporter: [13/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testBatterySaverModeNonMetered_enabled pass
+03-22 23:16:41 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleMetered_disabled()
+03-22 23:16:41 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleMetered_disabled)
+03-22 23:16:41 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:16:41 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:16:41 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:16:41 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:16:41 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:16:44 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:16:44 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:16:44 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:16:44 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:16:44 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:16:46 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.AppIdleMeteredTest#testBackgroundNetworkAccess_disabled com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:16:47 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:16:48 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:16:49 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleMetered_disabled, {})
+03-22 23:16:49 I/ConsoleReporter: [14/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleMetered_disabled pass
+03-22 23:16:49 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleMetered_whitelisted()
+03-22 23:16:49 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleMetered_whitelisted)
+03-22 23:16:49 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:16:49 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:16:49 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:16:49 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:16:49 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:16:52 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:16:52 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:16:52 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:16:52 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:16:52 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:16:54 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.AppIdleMeteredTest#testBackgroundNetworkAccess_whitelisted com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:16:55 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:16:56 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:16:57 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleMetered_whitelisted, {})
+03-22 23:16:57 I/ConsoleReporter: [15/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleMetered_whitelisted pass
+03-22 23:16:57 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleMetered_enabled()
+03-22 23:16:57 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleMetered_enabled)
+03-22 23:16:57 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:16:58 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:16:58 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:16:58 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:16:58 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:17:00 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:17:01 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:17:01 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:17:01 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:17:01 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:17:02 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.AppIdleMeteredTest#testBackgroundNetworkAccess_enabled com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:17:04 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:17:04 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:17:05 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleMetered_enabled, {})
+03-22 23:17:05 I/ConsoleReporter: [16/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleMetered_enabled pass
+03-22 23:17:05 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleNonMetered_disabled()
+03-22 23:17:05 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleNonMetered_disabled)
+03-22 23:17:05 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:17:06 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:17:06 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:17:06 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:17:06 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:17:08 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:17:09 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:17:09 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:17:09 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:17:09 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:17:10 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.AppIdleNonMeteredTest#testBackgroundNetworkAccess_disabled com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:17:11 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:17:12 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:17:13 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleNonMetered_disabled, {})
+03-22 23:17:13 I/ConsoleReporter: [17/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleNonMetered_disabled pass
+03-22 23:17:13 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleNonMetered_whitelisted()
+03-22 23:17:13 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleNonMetered_whitelisted)
+03-22 23:17:13 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:17:14 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:17:14 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:17:14 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:17:14 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:17:16 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:17:17 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:17:17 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:17:17 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:17:17 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:17:19 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.AppIdleNonMeteredTest#testBackgroundNetworkAccess_whitelisted com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:17:20 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:17:21 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:17:22 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleNonMetered_whitelisted, {})
+03-22 23:17:22 I/ConsoleReporter: [18/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleNonMetered_whitelisted pass
+03-22 23:17:22 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleNonMetered_enabled()
+03-22 23:17:22 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleNonMetered_enabled)
+03-22 23:17:22 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:17:22 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:17:22 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:17:22 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:17:22 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:17:25 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:17:26 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:17:26 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:17:26 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:17:26 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:17:27 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.AppIdleNonMeteredTest#testBackgroundNetworkAccess_enabled com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:17:28 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:17:29 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:17:30 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleNonMetered_enabled, {})
+03-22 23:17:30 I/ConsoleReporter: [19/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleNonMetered_enabled pass
+03-22 23:17:30 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleNonMetered_whenCharging()
+03-22 23:17:30 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleNonMetered_whenCharging)
+03-22 23:17:30 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:17:31 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:17:31 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:17:31 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:17:31 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:17:33 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:17:34 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:17:34 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:17:34 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:17:34 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:17:35 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.AppIdleNonMeteredTest#testAppIdleNetworkAccess_whenCharging com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:17:36 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:17:37 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:17:38 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleNonMetered_whenCharging, {})
+03-22 23:17:38 I/ConsoleReporter: [20/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleNonMetered_whenCharging pass
+03-22 23:17:38 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleMetered_whenCharging()
+03-22 23:17:38 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleMetered_whenCharging)
+03-22 23:17:38 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:17:39 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:17:39 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:17:39 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:17:39 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:17:41 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:17:42 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:17:42 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:17:42 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:17:42 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:17:43 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.AppIdleMeteredTest#testAppIdleNetworkAccess_whenCharging com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:17:45 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:17:46 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:17:47 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleMetered_whenCharging, {})
+03-22 23:17:47 I/ConsoleReporter: [21/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdleMetered_whenCharging pass
+03-22 23:17:47 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdle_toast()
+03-22 23:17:47 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdle_toast)
+03-22 23:17:47 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:17:47 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:17:47 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:17:47 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:17:47 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:17:50 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:17:50 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:17:50 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:17:50 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:17:50 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:17:52 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.AppIdleNonMeteredTest#testAppIdle_toast com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:17:53 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:17:54 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:17:55 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdle_toast, {})
+03-22 23:17:55 I/ConsoleReporter: [22/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testAppIdle_toast pass
+03-22 23:17:55 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeMetered_disabled()
+03-22 23:17:55 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeMetered_disabled)
+03-22 23:17:55 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:17:56 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:17:56 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:17:56 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:17:56 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:17:58 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:17:59 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:17:59 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:17:59 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:17:59 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:18:01 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.DozeModeMeteredTest#testBackgroundNetworkAccess_disabled com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:18:02 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:18:03 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:18:04 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeMetered_disabled, {})
+03-22 23:18:04 I/ConsoleReporter: [23/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeMetered_disabled pass
+03-22 23:18:04 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeMetered_whitelisted()
+03-22 23:18:04 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeMetered_whitelisted)
+03-22 23:18:04 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:18:04 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:18:04 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:18:04 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:18:04 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:18:06 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:18:07 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:18:07 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:18:07 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:18:07 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:18:09 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.DozeModeMeteredTest#testBackgroundNetworkAccess_whitelisted com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:18:10 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:18:11 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:18:12 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeMetered_whitelisted, {})
+03-22 23:18:12 I/ConsoleReporter: [24/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeMetered_whitelisted pass
+03-22 23:18:12 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeMetered_enabled()
+03-22 23:18:12 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeMetered_enabled)
+03-22 23:18:12 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:18:12 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:18:12 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:18:12 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:18:12 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:18:15 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:18:16 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:18:16 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:18:16 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:18:16 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:18:17 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.DozeModeMeteredTest#testBackgroundNetworkAccess_enabled com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:18:19 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:18:19 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:18:20 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeMetered_enabled, {})
+03-22 23:18:20 I/ConsoleReporter: [25/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeMetered_enabled pass
+03-22 23:18:20 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeMetered_enabledButWhitelistedOnNotificationAction()
+03-22 23:18:20 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeMetered_enabledButWhitelistedOnNotificationAction)
+03-22 23:18:20 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:18:21 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:18:21 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:18:21 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:18:21 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:18:24 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:18:25 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:18:25 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:18:25 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:18:25 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:18:26 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.DozeModeMeteredTest#testBackgroundNetworkAccess_enabledButWhitelistedOnNotificationAction com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:18:28 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:18:28 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:18:29 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeMetered_enabledButWhitelistedOnNotificationAction, {})
+03-22 23:18:29 I/ConsoleReporter: [26/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeMetered_enabledButWhitelistedOnNotificationAction pass
+03-22 23:18:29 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeNonMetered_disabled()
+03-22 23:18:29 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeNonMetered_disabled)
+03-22 23:18:29 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:18:30 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:18:30 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:18:30 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:18:30 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:18:32 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:18:33 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:18:33 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:18:33 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:18:33 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:18:34 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.DozeModeNonMeteredTest#testBackgroundNetworkAccess_disabled com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:18:36 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:18:37 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:18:38 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeNonMetered_disabled, {})
+03-22 23:18:38 I/ConsoleReporter: [27/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeNonMetered_disabled pass
+03-22 23:18:38 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeNonMetered_whitelisted()
+03-22 23:18:38 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeNonMetered_whitelisted)
+03-22 23:18:38 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:18:38 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:18:38 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:18:38 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:18:38 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:18:41 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:18:41 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:18:41 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:18:41 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:18:41 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:18:43 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.DozeModeNonMeteredTest#testBackgroundNetworkAccess_whitelisted com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:18:44 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:18:45 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:18:46 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeNonMetered_whitelisted, {})
+03-22 23:18:46 I/ConsoleReporter: [28/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeNonMetered_whitelisted pass
+03-22 23:18:46 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeNonMetered_enabled()
+03-22 23:18:46 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeNonMetered_enabled)
+03-22 23:18:46 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:18:47 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:18:47 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:18:47 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:18:47 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:18:49 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:18:50 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:18:50 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:18:50 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:18:50 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:18:51 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.DozeModeNonMeteredTest#testBackgroundNetworkAccess_enabled com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:18:53 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:18:54 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:18:54 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeNonMetered_enabled, {})
+03-22 23:18:54 I/ConsoleReporter: [29/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeNonMetered_enabled pass
+03-22 23:18:54 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeNonMetered_enabledButWhitelistedOnNotificationAction()
+03-22 23:18:54 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeNonMetered_enabledButWhitelistedOnNotificationAction)
+03-22 23:18:54 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:18:55 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:18:55 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:18:55 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:18:55 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:18:57 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:18:58 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:18:58 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:18:58 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:18:58 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:19:00 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.DozeModeNonMeteredTest#testBackgroundNetworkAccess_enabledButWhitelistedOnNotificationAction com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:19:01 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:19:02 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:19:03 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeNonMetered_enabledButWhitelistedOnNotificationAction, {})
+03-22 23:19:03 I/ConsoleReporter: [30/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDozeModeNonMetered_enabledButWhitelistedOnNotificationAction pass
+03-22 23:19:03 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataAndBatterySaverModes_meteredNetwork()
+03-22 23:19:03 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataAndBatterySaverModes_meteredNetwork)
+03-22 23:19:03 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:19:04 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:19:04 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:19:04 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:19:04 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:19:06 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:19:07 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:19:07 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:19:07 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:19:07 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:19:08 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.MixedModesTest#testDataAndBatterySaverModes_meteredNetwork com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:19:13 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:19:14 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:19:15 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataAndBatterySaverModes_meteredNetwork, {})
+03-22 23:19:15 I/ConsoleReporter: [31/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataAndBatterySaverModes_meteredNetwork pass
+03-22 23:19:15 D/DeviceTestCase: Running com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataAndBatterySaverModes_nonMeteredNetwork()
+03-22 23:19:15 D/ModuleListener: ModuleListener.testStarted(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataAndBatterySaverModes_nonMeteredNetwork)
+03-22 23:19:15 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:19:15 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:19:15 I/MigrationHelper: File CtsHostsideNetworkTestsApp.apk found
+03-22 23:19:15 D/CtsHostsideNetworkTestsApp.apk: Uploading CtsHostsideNetworkTestsApp.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:19:15 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:19:18 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:19:18 I/MigrationHelper: Looking for test file CtsHostsideNetworkTestsApp2.apk in dir /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases
+03-22 23:19:18 I/MigrationHelper: File CtsHostsideNetworkTestsApp2.apk found
+03-22 23:19:18 D/CtsHostsideNetworkTestsApp2.apk: Uploading CtsHostsideNetworkTestsApp2.apk onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:19:18 D/Device: Uploading file onto device 'chromeos2-row4-rack5-host4:22'
+03-22 23:19:20 I/RemoteAndroidTest: Running am instrument -w -r   -e class com.android.cts.net.hostside.MixedModesTest#testDataAndBatterySaverModes_nonMeteredNetwork com.android.cts.net.hostside/android.support.test.runner.AndroidJUnitRunner on google-reef-chromeos2-row4-rack5-host4:22
+03-22 23:19:25 D/TestDevice: Uninstalling com.android.cts.net.hostside
+03-22 23:19:26 D/TestDevice: Uninstalling com.android.cts.net.hostside.app2
+03-22 23:19:26 D/ModuleListener: ModuleListener.testEnded(com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataAndBatterySaverModes_nonMeteredNetwork, {})
+03-22 23:19:26 I/ConsoleReporter: [32/32 x86 CtsHostsideNetworkTests chromeos2-row4-rack5-host4:22] com.android.cts.net.HostsideRestrictBackgroundNetworkTests#testDataAndBatterySaverModes_nonMeteredNetwork pass
+03-22 23:19:26 D/ModuleListener: ModuleListener.testRunEnded(275561, {})
+03-22 23:19:26 I/ConsoleReporter: [chromeos2-row4-rack5-host4:22] x86 CtsHostsideNetworkTests completed in 4m 35s. 32 passed, 0 failed, 0 not executed
+03-22 23:19:26 W/CompatibilityTest: Inaccurate runtime hint for x86 CtsHostsideNetworkTests, expected 3m 56s was 5m 41s
+03-22 23:19:26 I/CompatibilityTest: Running system status checker after module execution: CtsHostsideNetworkTests
+03-22 23:19:27 I/MonitoringUtils: Connectivity: passed check.
+03-22 23:19:28 D/RunUtil: run interrupt allowed: false
+03-22 23:19:28 I/ResultReporter: Invocation finished in 6m 12s. PASSED: 33, FAILED: 2, NOT EXECUTED: 0, MODULES: 1 of 1
+03-22 23:19:29 I/ResultReporter: Test Result: /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/results/2017.03.22_23.13.15/test_result_failures.html
+03-22 23:19:29 I/ResultReporter: Full Result: /tmp/autotest-tradefed-install_qC2ZKG/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/results/2017.03.22_23.13.15.zip
+

@@ -1,0 +1,46 @@
+# Copyright (c) 2013 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'gwendal'
+NAME = 'memory_qual'
+TIME = 'LENGTHY'
+TEST_CATEGORY = 'General'
+TEST_CLASS = 'suite'
+TEST_TYPE = 'Server'
+
+DOC = """
+This dynamic suite runs the memory qualification tests.
+
+@param build: The name of the image to test.
+          Ex: x86-mario-release/R17-1412.33.0-a1-b29
+@param board: The board to test on. Ex: x86-mario
+@param pool: The pool of machines to utilize for scheduling. If pool=None
+             board is used.
+@param check_hosts: require appropriate live hosts to exist in the lab.
+@param SKIP_IMAGE: (optional) If present and True, don't re-image devices.
+@param file_bugs: If True your suite will file bugs on failures.
+"""
+
+import common
+from autotest_lib.server.cros import provision
+from autotest_lib.server.cros.dynamic_suite import dynamic_suite
+from autotest_lib.client.common_lib import utils
+
+args_dict['add_experimental'] = True
+args_dict['version_prefix'] = provision.CROS_VERSION_PREFIX
+args_dict['timeout_mins'] = 40320 # entire suite timeout after 28 days
+args_dict['max_runtime_mins'] = 40320 # one test timeout after 28 days
+args_dict['name'] = NAME
+args_dict['job'] = job
+
+# Don't wait for results, just kick off child job.
+args_dict['wait_for_results'] = False
+
+# Retrieve bug_id, part_id for the avl process.
+avl_keyval = dict()
+avl_keyval['bug_id'] = args_dict.get("bug_id", "")
+avl_keyval['part_id'] = args_dict.get("part_id", "")
+utils.write_keyval(job.resultdir, avl_keyval)
+
+dynamic_suite.reimage_and_run(**args_dict)

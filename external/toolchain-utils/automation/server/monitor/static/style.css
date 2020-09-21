@@ -1,0 +1,101 @@
+* { font-family: sans-serif; }
+
+.left { text-align: left; }
+.right { text-align: right; }
+
+.code { font-family: monospace; text-align: left; }
+.line1 { background-color: Gainsboro; }
+.line2 { background-color: WhiteSmoke; }
+
+.title { margin-bottom: 0.25em; }
+
+.success { background-color: LightGreen; }
+.failure { background-color: LightPink; }
+
+pre.code { margin: 0px; }
+
+div.header p.title {
+  border: 1px solid black;
+  font-size: 32px;
+  font-style: bold;
+  background-color: LightBlue;
+  text-align: center;
+  margin: 0px;
+  padding: 10px;
+  font-weight: bold;
+}
+
+div.links {
+  background-color: Azure;
+  margin-top: 2px;
+  padding: 8px 4px 8px 4px;
+  border: solid 1px;
+}
+
+div.content {
+  margin-top: 2px;
+  padding: 8px;
+  border: solid 1px;
+}
+
+div.content p.title {
+  font-size: 28px;
+  text-align: left;
+  margin: 0px;
+  margin-bottom: 8px;
+  padding: 12px;
+  font-weight: bold;
+}
+
+table { border-collapse: collapse; }
+td, th { text-align: center; }
+
+table.list td, th { padding: 3px 8px 2px 8px; border:1px solid black; }
+table.list td { font-family: monospace; }
+table.list th { background-color: LightGray; }
+
+table.attributes td { text-align: left; }
+table.attributes > tbody > tr > td:first-child { font-family: sans-serif; }
+
+table.raw { border-style: none; }
+table.raw td {
+  padding: 0em 0.5em 0em 0.5em;
+  border-style: none;
+  vertical-align: top;
+  text-align: right;
+  font-family: monospace;
+}
+table.raw > tbody > tr > td:first-child { border-left: 0px; }
+table.raw > tbody > tr > td { border-left: 1px solid; }
+
+a.button {
+  background-color: PeachPuff;
+  text-decoration: underline;
+  text-align: center;
+  color: Black;
+  padding: 4px;
+  border: solid 1px;
+}
+
+a.small {
+  padding: 2px 4px 2px 4px;
+  font-size: small;
+  border-color: Gray;
+  background-color: PapayaWhip;
+}
+
+a.button:hover { background-color: LightYellow; }
+a.button:active { background-color: Yellow; }
+
+a.column {
+  border-style: none;
+  display: block;
+  margin: -3px -8px -2px -8px;
+}
+
+div.warning {
+  background-color: MistyRose;
+  border: 1px solid Crimson;
+  padding: 0.5em;
+  font-size: x-large;
+}

@@ -1,0 +1,101 @@
+runtime, crypto/x509: add -target flag.
+
+--- src/crypto/x509/x509_test.go
++++ src/crypto/x509/x509_test.go
+@@ -19,6 +19,7 @@ import (
+ 	"encoding/hex"
+ 	"encoding/pem"
+ 	"fmt"
++	"flag"
+ 	"internal/testenv"
+ 	"math/big"
+ 	"net"
+@@ -28,6 +29,8 @@ import (
+ 	"time"
+ )
+ 
++var target = flag.String("target", "", "if non empty, use 'go_target' to compile test files and 'go_target_exec' to run the binaries")
++
+ func TestParsePKCS1PrivateKey(t *testing.T) {
+ 	block, _ := pem.Decode([]byte(pemPrivateKey))
+ 	priv, err := ParsePKCS1PrivateKey(block.Bytes)
+@@ -862,7 +865,13 @@ func TestParsePEMCRL(t *testing.T) {
+ func TestImports(t *testing.T) {
+ 	testenv.MustHaveGoRun(t)
+ 
+-	if err := exec.Command("go", "run", "x509_test_import.go").Run(); err != nil {
++	var cmd *exec.Cmd
++	if *target == "" {
++		cmd = exec.Command("go", "run", "x509_test_import.go")
++	} else {
++		cmd = exec.Command("go_"+*target, "run", "-exec", "go_"+*target+"_exec", "x509_test_import.go")
++	}
++	if err := cmd.Run(); err != nil {
+ 		t.Errorf("failed to run x509_test_import.go: %s", err)
+ 	}
+ }
+--- src/runtime/crash_test.go
++++ src/runtime/crash_test.go
+@@ -5,6 +5,7 @@
+ package runtime_test
+ 
+ import (
++	"flag"
+ 	"fmt"
+ 	"internal/testenv"
+ 	"io/ioutil"
+@@ -18,6 +19,25 @@ import (
+ 	"testing"
+ )
+ 
++var target = flag.String("target", "", "if non empty, use 'go_target' to compile test files and 'go_target_exec' to run the binaries")
++
++func goCmd() string {
++	if *target != "" {
++		return "go_" + *target
++	}
++	return "go"
++}
++
++func goExecCmd(name string, arg ...string) *exec.Cmd {
++	var cmd []string
++	if *target != "" {
++		cmd = append(cmd, "go_"+*target+"_exec")
++	}
++	cmd = append(cmd, name)
++	cmd = append(cmd, arg...)
++	return exec.Command(cmd[0], cmd[1:]...)
++}
++
+ var toRemove []string
+ 
+ func TestMain(m *testing.M) {
+@@ -65,7 +85,7 @@ func runTestProg(t *testing.T, binary, name string) string {
+ 	if err != nil {
+ 		t.Fatal(err)
+ 	}
+-	got, _ := testEnv(exec.Command(exe, name)).CombinedOutput()
++	got, _ := testEnv(goExecCmd(exe, name)).CombinedOutput()
+ 	return string(got)
+ }
+ 
+@@ -92,7 +112,7 @@ func buildTestProg(t *testing.T, binary string) (string, error) {
+ 	}
+ 
+ 	exe := filepath.Join(testprog.dir, binary+".exe")
+-	cmd := exec.Command("go", "build", "-o", exe)
++	cmd := exec.Command(goCmd(), "build", "-o", exe)
+ 	cmd.Dir = "testdata/" + binary
+ 	out, err := testEnv(cmd).CombinedOutput()
+ 	if err != nil {
+--- src/runtime/crash_unix_test.go
++++ src/runtime/crash_unix_test.go
+@@ -157,7 +157,7 @@ func TestSignalExitStatus(t *testing.T) {
+ 	if err != nil {
+ 		t.Fatal(err)
+ 	}
+-	err = testEnv(exec.Command(exe, "SignalExitStatus")).Run()
++	err = testEnv(goExecCmd(exe, "SignalExitStatus")).Run()
+ 	if err == nil {
+ 		t.Error("test program succeeded unexpectedly")
+ 	} else if ee, ok := err.(*exec.ExitError); !ok {

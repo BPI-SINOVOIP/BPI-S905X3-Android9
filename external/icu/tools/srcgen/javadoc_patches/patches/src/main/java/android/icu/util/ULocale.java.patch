@@ -1,0 +1,44 @@
+--- android_icu4j/src/main/java/android/icu/util/ULocale.java	2017-08-25 08:53:43.925865632 +0100
++++ android_icu4j/src/main/java/android/icu/util/ULocale.java	2017-08-25 08:54:12.513921316 +0100
+@@ -91,19 +91,6 @@
+  * to canonical form, or the <code>canonicalInstance</code> factory method
+  * can be called.
+  *
+- * <p>This class provides selectors {@link #VALID_LOCALE} and {@link
+- * #ACTUAL_LOCALE} intended for use in methods named
+- * <tt>getLocale()</tt>.  These methods exist in several ICU classes,
+- * including {@link android.icu.util.Calendar}, {@link
+- * android.icu.util.Currency}, {@link android.icu.text.UFormat},
+- * {@link android.icu.text.BreakIterator},
+- * {@link android.icu.text.Collator},
+- * {@link android.icu.text.DateFormatSymbols}, and {@link
+- * android.icu.text.DecimalFormatSymbols} and their subclasses, if
+- * any. Once an object of one of these classes has been created,
+- * <tt>getLocale()</tt> may be called on it to determine the valid and
+- * actual locale arrived at during the object's construction.
+- *
+  * <p>Note: The <i>actual</i> locale is returned correctly, but the <i>valid</i>
+  * locale is not, in most cases.
+  *
+@@ -569,21 +556,6 @@
+      * <p>
+      * The default ULocale is synchronized to the default Java Locale. This method checks
+      * the current default Java Locale and returns an equivalent ULocale.
+-     * <p>
+-     * <b>Note:</b> Before Java 7, the {@link java.util.Locale} was not able to represent a
+-     * locale's script. Therefore, the script field in the default ULocale is always empty unless
+-     * a ULocale with non-empty script is explicitly set by {@link #setDefault(ULocale)}
+-     * on Java 6 or older systems.
+-     * <p>
+-     * <b>Note for ICU 49 or later:</b> Some JRE implementations allow users to override the default
+-     * {@link java.util.Locale} using system properties - <code>user.language</code>,
+-     * <code>user.country</code> and <code>user.variant</code>. In addition to these system
+-     * properties, some Java 7 implementations support <code>user.script</code> for overriding the
+-     * default Locale's script.
+-     * ICU 49 and later versions use the <code>user.script</code> system property on Java 6
+-     * or older systems supporting other <code>user.*</code> system properties to initialize
+-     * the default ULocale. The <code>user.script</code> override for default ULocale is not
+-     * used on Java 7, or if the current Java default Locale is changed after start up.
+      *
+      * @return the default ULocale.
+      */

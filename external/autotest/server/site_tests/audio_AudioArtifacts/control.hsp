@@ -1,0 +1,38 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.client.cros.audio import audio_test_data
+from autotest_lib.client.cros.chameleon import chameleon_audio_ids
+from autotest_lib.server import utils
+
+AUTHOR = "chromeos-chameleon"
+NAME = "audio_AudioArtifacts.hsp"
+PURPOSE = "Remotely controlled bluetooth HSP audio artifacts test."
+CRITERIA = "This test will fail if the recorded audio contains artifacts"
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "audio"
+TEST_TYPE = "server"
+ATTRIBUTES = "suite:chameleon_audio_nightly, suite:chameleon_audio"
+DEPENDENCIES = "chameleon, audio_board, test_bluetooth"
+JOB_RETRIES = 2
+
+DOC = """
+This test remotely tests bluetooth HSP audio artifacts against DUT.
+"""
+
+args_dict = utils.args_to_dict(args)
+chameleon_args = hosts.CrosHost.get_chameleon_arguments(args_dict)
+
+def run(machine):
+    host = hosts.create_host(machine, chameleon_args=chameleon_args)
+    job.run_test("audio_AudioArtifacts", host=host, tag="hsp",
+                 golden_file=audio_test_data.SIMPLE_FREQUENCY_SPEAKER_TEST_FILE,
+                 source_id=chameleon_audio_ids.CrosIds.BLUETOOTH_HEADPHONE,
+                 sink_id=chameleon_audio_ids.PeripheralIds.BLUETOOTH_DATA_RX,
+                 recorder_id=chameleon_audio_ids.ChameleonIds.LINEIN,
+                 switch_hsp=True
+                )
+
+parallel_simple(run, machines)

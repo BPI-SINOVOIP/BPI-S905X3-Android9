@@ -1,0 +1,5 @@
+cc_library_static {
+    name: "libclangCodeGen",
+    defaults: ["clang-defaults"],
+    srcs: ["*.cpp"],
+}

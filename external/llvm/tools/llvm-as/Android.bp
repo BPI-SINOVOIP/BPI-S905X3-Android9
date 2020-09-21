@@ -1,0 +1,12 @@
+cc_binary_host {
+    name: "llvm-as",
+    defaults: ["llvm-defaults"],
+    srcs: ["llvm-as.cpp"],
+    static_libs: [
+        "libLLVMAsmParser",
+        "libLLVMBitWriter",
+        "libLLVMAnalysis",
+        "libLLVMCore",
+        "libLLVMSupport",
+    ],
+}

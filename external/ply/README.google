@@ -1,0 +1,10 @@
+URL: https://github.com/dabeaz/ply
+License: BSD
+License File: README.md
+Owners: egranata
+
+Description:
+A tool to generate parsers and lexers in Python (similar to lex/yacc for C)
+
+Local Modifications:
+Added this README.google file

@@ -1,0 +1,17 @@
+name: "ply"
+description:
+    ""
+
+third_party {
+  url {
+    type: HOMEPAGE
+    value: "https://github.com/dabeaz/ply.git"
+  }
+  url {
+    type: GIT
+    value: "https://github.com/dabeaz/ply.git"
+  }
+  version: "3.10"
+  last_upgrade_date { year: 2017 month: 11 day: 15 }
+  license_type: PERMISSIVE
+}

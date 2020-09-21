@@ -1,0 +1,37 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "Chrome OS Team, chromeos-video@google.com"
+NAME = "video_VDASanity"
+PURPOSE = "Run VDA unittest with a list of short videos for sanity testing."
+CRITERIA = """
+The test fails if the kernel crashes or video_decode_accelerator_unittest
+fails. If VDA notifies an error, VDA unittest will still pass because input
+may be unsupported or corrupted videos.
+"""
+ATTRIBUTES = "suite:bvt-perbuild"
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "video"
+TEST_TYPE = "client"
+DEPENDENCIES='hw_video_acc_vp9'
+BUG_TEMPLATE = {
+    'labels': ['OS-Chrome', 'VideoTestFailure'],
+    'cc': ['chromeos-video-test-failures@google.com'],
+}
+
+DOC= """
+This autotest should run very fast. To ensure that, rendering of VDA
+unittest is off and the test videos should be as short as possible.
+"""
+
+# A list of test cases. Each entry consists of the following parts:
+#   [download_path, width, height, frame_num, fragment_num, MediaCodecProfile]
+test_cases = [
+    ['video_VDASanity/bear_profile1.vp9', 320, 180, 30, 30, 12],
+    ['video_VDASanity/bear_profile2.vp9', 320, 180, 30, 30, 12],
+    ['video_VDASanity/bear_profile3.vp9', 320, 180, 30, 30, 12],
+]
+
+job.run_test('video_VDASanity', test_cases=test_cases, tag='vp9')

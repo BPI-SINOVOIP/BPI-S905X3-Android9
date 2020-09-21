@@ -1,0 +1,22 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'krishnargv'
+NAME = 'policy_NotificationsBlockedForUrls.NotSet_Show'
+ATTRIBUTES = 'suite:regression, suite:policy'
+TIME = 'SHORT'
+TEST_CATEGORY = 'General'
+TEST_CLASS = 'enterprise'
+TEST_TYPE = 'client'
+
+DOC = '''
+Verify effects of NotificationsBlockedForUrls policy.
+
+This test case verifies the behavior and appearance of Chrome OS when the
+NotificationsBlockedForUrls user policy is not set, and
+DefaultNotificationsSetting=1 (Allow Notifications).
+
+'''
+
+job.run_test('policy_NotificationsBlockedForUrls', case='NotSet_Show')

@@ -1,0 +1,21 @@
+# Copyright (c) 2018 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'pstew, quiche, wiley, briannorris'
+NAME = 'network_WlanDriver.bvt'
+ATTRIBUTES = 'suite:bvt-perbuild'
+TIME = 'SHORT'
+TEST_TYPE = 'client'
+
+DOC = """
+Ensure we detected a wlan device and that it has the correct associated kernel
+driver and revision.  This test will fail if we find that mlan0/wlan0 has an
+odd driver release, or if it is missing entirely.
+
+This version may forgive certain devices that are known to be permanently
+flaky, for expediency.
+"""
+
+
+job.run_test('network_WlanDriver', forgive_flaky=True)

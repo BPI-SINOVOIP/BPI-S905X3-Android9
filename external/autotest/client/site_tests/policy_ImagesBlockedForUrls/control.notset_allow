@@ -1,0 +1,25 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'scunningham'
+NAME = 'policy_ImagesBlockedForUrls.notset_allow'
+ATTRIBUTES = 'suite:bvt-perbuild, suite:policy'
+TIME = 'SHORT'
+TEST_CATEGORY = 'General'
+TEST_CLASS = 'enterprise'
+TEST_TYPE = 'client'
+
+DOC = '''
+Verify effects of ImagesBlockedForUrls policy.
+
+This test case verifies the behavior of Chrome OS when ImagesBlockedForUrls
+user policy is not set to any URL pattern, and DefaultImagesSetting policy
+is set to 1 or undefined (allow by default).
+
+The test case shall pass iff the browser allows images for every test page.
+It shall fail if the browser blocks images on any test page.
+
+'''
+
+job.run_test('policy_ImagesBlockedForUrls', case='NotSet_Allow')

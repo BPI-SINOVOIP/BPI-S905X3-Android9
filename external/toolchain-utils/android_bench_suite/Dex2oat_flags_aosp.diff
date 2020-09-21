@@ -1,0 +1,13 @@
+diff --git a/compiler/Android.bp b/compiler/Android.bp
+index a1269dcaf..a9b62b474 100644
+--- a/compiler/Android.bp
++++ b/compiler/Android.bp
+@@ -215,6 +215,8 @@ art_cc_defaults {
+     shared: {
+         shared_libs: ["libcrypto"],
+     },
++    cflags: [CFLAGS_FOR_BENCH_SUITE],
++    ldflags: [LDFLAGS_FOR_BENCH_SUITE],
+ }
+ 
+ gensrcs {

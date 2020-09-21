@@ -1,0 +1,287 @@
+/*
+ * Copyright (C) 2017 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+syntax = "proto3";
+
+package nugget.app.keymaster;
+
+/*
+ * Minimal type definitions required for building protos.  Sourced from:
+ *     ::android::hardware::keymaster::V3_0
+ */
+enum TagType {
+  TAG_TYPE_INVALID = 0x0;  /* 0 << 16 */
+  ENUM = 0x10000;          /* 1 << 16 */
+  ENUM_REP = 0x20000;      /* 2 << 16 */
+  UINT = 0x30000;          /* 3 << 16 */
+  UINT_REP = 0x40000;      /* 4 << 16 */
+  ULONG = 0x50000;         /* 5 << 16 */
+  DATE = 0x60000;          /* 6 << 16 */
+  BOOL = 0x70000;          /* 7 << 16 */
+  /*  BIGNUM = 0x80000;         8 << 16 */  /* Unused. */
+  BYTES = 0x90000;         /* 9 << 16 */
+  ULONG_REP = 0xA0000;     /* 10 << 16 */
+};
+
+enum Tag {
+  TAG_INVALID = 0; // (TagType:INVALID | 0)
+  PURPOSE = 0x20001; // (TagType:ENUM_REP | 1)
+  ALGORITHM = 0x10002; // (TagType:ENUM | 2)
+  KEY_SIZE = 0x30003; // (TagType:UINT | 3)
+  BLOCK_MODE = 0x20004; // (TagType:ENUM_REP | 4)
+  DIGEST = 0x20005; // (TagType:ENUM_REP | 5)
+  PADDING = 0x20006; // (TagType:ENUM_REP | 6)
+  CALLER_NONCE = 0x70007; // (TagType:BOOL | 7)
+  MIN_MAC_LENGTH = 0x30008; // (TagType:UINT | 8)
+  /* RESERVED: KDF = 0x20009; // (TagType:ENUM_REP | 9) */
+  EC_CURVE = 0x1000a; // (TagType:ENUM | 10)
+  RSA_PUBLIC_EXPONENT = 0x500c8; // (TagType:ULONG | 200)
+  /* RESERVED: ECIES_SINGLE_HASH_MODE = 0x700c9; // (TagType:BOOL | 201) */
+  INCLUDE_UNIQUE_ID = 0x700ca; // (TagType:BOOL | 202)
+  BLOB_USAGE_REQUIREMENTS = 0x1012d; // (TagType:ENUM | 301)
+  BOOTLOADER_ONLY = 0x7012e; // (TagType:BOOL | 302)
+  ROLLBACK_RESISTANCE = 0x7012f; // (TagType:BOOL | 303)
+  HARDWARE_TYPE = 0x10130; // TagType:ENUM | 304,
+  ACTIVE_DATETIME = 0x60190; // (TagType:DATE | 400)
+  ORIGINATION_EXPIRE_DATETIME = 0x60191; // (TagType:DATE | 401)
+  USAGE_EXPIRE_DATETIME = 0x60192; // (TagType:DATE | 402)
+  MIN_SECONDS_BETWEEN_OPS = 0x30193; // (TagType:UINT | 403)
+  MAX_USES_PER_BOOT = 0x30194; // (TagType:UINT | 404)
+  /* RESERVED: ALL_USERS = 0x701f4; // (TagType:BOOL | 500) */
+  /* RESERVED: USER_ID = 0x301f5; // (TagType:UINT | 501) */
+  USER_SECURE_ID = 0xa01f6; // (TagType:ULONG_REP | 502)
+  NO_AUTH_REQUIRED = 0x701f7; // (TagType:BOOL | 503)
+  USER_AUTH_TYPE = 0x101f8; // (TagType:ENUM | 504)
+  AUTH_TIMEOUT = 0x301f9; // (TagType:UINT | 505)
+  ALLOW_WHILE_ON_BODY = 0x701fa; // (TagType:BOOL | 506)
+  TRUSTED_USER_PRESENCE_REQUIRED = 0x701fb; // (TagType:BOOL | 507)
+  /* RESERVED: ALL_APPLICATIONS = 0x70258; // (TagType:BOOL | 600) */
+  APPLICATION_ID = 0x90259; // (TagType:BYTES | 601)
+  /* RESERVED: EXPORTABLE = 0x7025a; // (TagType:BOOL | 602) */
+  APPLICATION_DATA = 0x902bc; // (TagType:BYTES | 700)
+  CREATION_DATETIME = 0x602bd; // (TagType:DATE | 701)
+  ORIGIN = 0x102be; // (TagType:ENUM | 702)
+  /* RESERVED: ROLLBACK_RESISTANT = 0x702bf; // (TagType:BOOL | 703) */
+  ROOT_OF_TRUST = 0x902c0; // (TagType:BYTES | 704)
+  OS_VERSION = 0x302c1; // (TagType:UINT | 705)
+  OS_PATCHLEVEL = 0x302c2; // (TagType:UINT | 706)
+  UNIQUE_ID = 0x902c3; // (TagType:BYTES | 707)
+  ATTESTATION_CHALLENGE = 0x902c4; // (TagType:BYTES | 708)
+  ATTESTATION_APPLICATION_ID = 0x902c5; // (TagType:BYTES | 709)
+  ATTESTATION_ID_BRAND = 0x902c6; // (TagType:BYTES | 710)
+  ATTESTATION_ID_DEVICE = 0x902c7; // (TagType:BYTES | 711)
+  ATTESTATION_ID_PRODUCT = 0x902c8; // (TagType:BYTES | 712)
+  ATTESTATION_ID_SERIAL = 0x902c9; // (TagType:BYTES | 713)
+  ATTESTATION_ID_IMEI = 0x902ca; // (TagType:BYTES | 714)
+  ATTESTATION_ID_MEID = 0x902cb; // (TagType:BYTES | 715)
+  ATTESTATION_ID_MANUFACTURER = 0x902cc; // (TagType:BYTES | 716)
+  ATTESTATION_ID_MODEL = 0x902cd; // (TagType:BYTES | 717)
+  VENDOR_PATCHLEVEL = 0x302ce; // (TagType:UINT | 718)
+  BOOT_PATCHLEVEL = 0x302cf; // (TagType:UINT | 719)
+  ASSOCIATED_DATA = 0x903e8; // (TagType:BYTES | 1000)
+  NONCE = 0x903e9; // (TagType:BYTES | 1001)
+  /* RESERVED: AUTH_TOKEN = 0x903ea; // (TagType:BYTES | 1002) */
+  MAC_LENGTH = 0x303eb; // (TagType:UINT | 1003)
+  RESET_SINCE_ID_ROTATION = 0x703ec; // (TagType:BOOL | 1004)
+};
+
+enum Algorithm {
+  RSA = 0;
+  EC = 1;
+  AES = 2;
+  DES = 3;
+  HMAC = 4;
+  ALGORITHM_MAX = 5;
+};
+
+enum BlockMode {
+  ECB = 0;
+  CBC = 1;
+  CTR = 2;
+  GCM = 3;
+  BLOCK_MODE_MAX = 4;
+};
+
+enum PaddingMode {
+  PADDING_NONE = 0;
+  PADDING_RSA_OAEP = 1;
+  PADDING_RSA_PSS = 2;
+  PADDING_RSA_PKCS1_1_5_ENCRYPT = 3;
+  PADDING_RSA_PKCS1_1_5_SIGN = 4;
+  PADDING_PKCS7 = 5;
+  PADDING_MODE_MAX = 6;
+};
+
+enum Digest {
+  DIGEST_NONE = 0;
+  DIGEST_MD5 = 1;
+  DIGEST_SHA1 = 2;
+  DIGEST_SHA_2_224 = 3;
+  DIGEST_SHA_2_256 = 4;
+  DIGEST_SHA_2_384 = 5;
+  DIGEST_SHA_2_512 = 6;
+  DIGEST_MAX = 7;
+};
+
+enum EcCurve {
+  P_224 = 0;
+  P_256 = 1;
+  P_384 = 2;
+  P_521 = 3;
+  EC_CURVE_MAX = 4;
+};
+
+enum KeyOrigin {
+  GENERATED = 0;
+  DERIVED = 1;
+  IMPORTED = 2;
+  UNKNOWN = 3;
+  SECURELY_IMPORTED = 4;
+  KEY_ORIGIN_MAX = 5;
+};
+
+enum KeyBlobUsageRequirements {
+  STANDALONE = 0;
+  REQUIRES_FILE_SYSTEM = 1;
+  KEY_USAGE_MAX = 2;
+};
+
+enum KeyPurpose {
+  ENCRYPT = 0;
+  DECRYPT = 1;
+  SIGN = 2;
+  VERIFY = 3;
+  /* RESERVED: DERIVE_KEY = 4; */
+  WRAP_KEY = 5;
+  PURPOSE_MAX = 6;
+};
+
+enum ErrorCode {
+  OK = 0;
+  ROOT_OF_TRUST_ALREADY_SET = 1;
+  UNSUPPORTED_PURPOSE = 2;
+  INCOMPATIBLE_PURPOSE = 3;
+  UNSUPPORTED_ALGORITHM = 4;
+  INCOMPATIBLE_ALGORITHM = 5;
+  UNSUPPORTED_KEY_SIZE = 6;
+  UNSUPPORTED_BLOCK_MODE = 7;
+  INCOMPATIBLE_BLOCK_MODE = 8;
+  UNSUPPORTED_MAC_LENGTH = 9;
+  UNSUPPORTED_PADDING_MODE = 10;
+  INCOMPATIBLE_PADDING_MODE = 11;
+  UNSUPPORTED_DIGEST = 12;
+  INCOMPATIBLE_DIGEST = 13;
+  INVALID_EXPIRATION_TIME = 14;
+  INVALID_USER_ID = 15;
+  INVALID_AUTHORIZATION_TIMEOUT = 16;
+  UNSUPPORTED_KEY_FORMAT = 17;
+  INCOMPATIBLE_KEY_FORMAT = 18;
+  UNSUPPORTED_KEY_ENCRYPTION_ALGORITHM = 19;
+  UNSUPPORTED_KEY_VERIFICATION_ALGORITHM = 20;
+  INVALID_INPUT_LENGTH = 21;
+  KEY_EXPORT_OPTIONS_INVALID = 22;
+  DELEGATION_NOT_ALLOWED = 23;
+  KEY_NOT_YET_VALID = 24;
+  KEY_EXPIRED = 25;
+  KEY_USER_NOT_AUTHENTICATED = 26;
+  OUTPUT_PARAMETER_NULL = 27;
+  INVALID_OPERATION_HANDLE = 28;
+  INSUFFICIENT_BUFFER_SPACE = 29;
+  VERIFICATION_FAILED = 30;
+  TOO_MANY_OPERATIONS = 31;
+  UNEXPECTED_NULL_POINTER = 32;
+  INVALID_KEY_BLOB = 33;
+  IMPORTED_KEY_NOT_ENCRYPTED = 34;
+  IMPORTED_KEY_DECRYPTION_FAILED = 35;
+  IMPORTED_KEY_NOT_SIGNED = 36;
+  IMPORTED_KEY_VERIFICATION_FAILED = 37;
+  INVALID_ARGUMENT = 38;
+  UNSUPPORTED_TAG = 39;
+  INVALID_TAG = 40;
+  MEMORY_ALLOCATION_FAILED = 41;
+  IMPORT_PARAMETER_MISMATCH = 42;
+  SECURE_HW_ACCESS_DENIED = 43;
+  OPERATION_CANCELLED = 44;
+  CONCURRENT_ACCESS_CONFLICT = 45;
+  SECURE_HW_BUSY = 46;
+  SECURE_HW_COMMUNICATION_FAILED = 47;
+  UNSUPPORTED_EC_FIELD = 48;
+  MISSING_NONCE = 49;
+  INVALID_NONCE = 50;
+  MISSING_MAC_LENGTH = 51;
+  KEY_RATE_LIMIT_EXCEEDED = 52;
+  CALLER_NONCE_PROHIBITED = 53;
+  KEY_MAX_OPS_EXCEEDED = 54;
+  INVALID_MAC_LENGTH = 55;
+  MISSING_MIN_MAC_LENGTH = 56;
+  UNSUPPORTED_MIN_MAC_LENGTH = 57;
+  UNSUPPORTED_KDF = 58;
+  UNSUPPORTED_EC_CURVE = 59;
+  KEY_REQUIRES_UPGRADE = 60;
+  ATTESTATION_CHALLENGE_MISSING = 61;
+  KEYMASTER_NOT_CONFIGURED = 62;
+  ATTESTATION_APPLICATION_ID_MISSING = 63;
+  CANNOT_ATTEST_IDS = 64;
+  UNIMPLEMENTED = 65;
+  VERSION_MISMATCH = 66;
+  ROLLBACK_RESISTANCE_UNAVAILABLE = 67;
+  HARDWARE_TYPE_UNAVAILABLE = 68;
+  PROOF_OF_PRESENCE_REQUIRED = 69;
+  CONCURRENT_PROOF_OF_PRESENCE_REQUESTED = 70;
+  UNKNOWN_ERROR = 71;
+  INVALID_DEVICE_IDS = 72;                // Vendor specific.
+  PRODUCTION_MODE_PROVISIONING = 73;      // Vendor specific.
+};
+
+enum HardwareAuthenticatorType {
+  AUTH_NONE = 0;
+  AUTH_PASSWORD = 1; // (1 << 0)
+  AUTH_FINGERPRINT = 2; // (1 << 1)
+  AUTH_ANY = 3;
+  AUTH_MAX = 4;
+};
+
+enum SecurityLevel {
+  SOFTWARE = 0;
+  TRUSTED_ENVIRONMENT = 1;
+  STRONGBOX = 2;
+};
+
+enum KeyFormat {
+  X509 = 0;   /* for public key export */
+  PKCS8 = 1;  /* for asymmetric key pair import */
+  RAW = 3;    /* for symmetric key import and export*/
+}
+
+enum DTupError {
+  DTUP_OK = 0;
+  DTUP_NO_EVENT = 1;
+}
+
+/* matches Linux event device codes */
+enum DTupKeyEvent {
+    DTUP_RESERVED = 0;
+    DTUP_VOL_DOWN = 114;
+    DTUP_VOL_UP = 115;
+    DTUP_PWR = 116;
+}
+
+enum BootColor {
+    BOOT_VERIFIED_GREEN = 0;
+    BOOT_SELFSIGNED_YELLOW = 1;
+    BOOT_UNVERIFIED_ORANGE = 2;
+    BOOT_VERIFY_FAILED_RED = 3;
+}

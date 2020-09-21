@@ -1,0 +1,58 @@
+# By default, we're invoked without arguments.  This is how the cron
+# job does it, and means we should generate output and mail it to
+# the default mail alias.
+#
+# Invoking with arguments is for testing:  It allows running through
+# the full logic and output generation, without spamming the alert
+# aliases.
+
+OPTIONS=""
+if [ $# -eq 0 ]; then
+  # TODO(jrbarnette):  Really, this feels like a hack.  The cron job
+  # that invokes the inventory scripts is installed and enabled on
+  # both a primary and backup server, meaning the e-mail will be
+  # generated twice.  We don't want that, so unless this is the
+  # primary server, quash this job.
+  if ! cli/atest server list $(hostname) 2>&1 |
+      grep -q '^Status *: *primary'; then
+    exit 0
+  fi
+
+  POOL_INTEREST=(
+    chromeos-infra-eng@grotations.appspotmail.com
+    chromeos-build-alerts+dut-pool@google.com
+  )
+  MODEL_INTEREST=(
+    englab-sys-cros@google.com
+    chromeos-build-alerts+dut-pool@google.com
+  )
+else
+  MODEL_INTEREST=( "$@" )
+  POOL_INTEREST=( "$@" )
+  OPTIONS=--debug
+fi
+
+# Options to be used for different script invocations.  Inventory
+# runs are relatively expensive, so operations that happen rarely
+# also bundle operations that happen more frequently.
+#   + REPAIR_LOOP_DETECT happens with every run.  It looks for
+#     and reports DUTs that do no work other than to fail, then repair
+#     successfully.
+#   + MODEL_NOTIFY happens less often.  This adds a full model
+#     inventory count to REPAIR_LOOP_DETECT.
+#   + POOL_NOTIFY happens least often.  It adds per-pool inventory
+#     counts, as well as individual DUT repair recommendations to
+#     MODEL_NOTIFY.
+
+REPAIR_LOOP_DETECT=( --repair-loops )
+
+MODEL_NOTIFY=(
+  "${REPAIR_LOOP_DETECT[@]}"
+  --model-notify $(echo "${MODEL_INTEREST[@]}" | sed 's/ /,/g')
+)
+
+POOL_NOTIFY=(
+  "${MODEL_NOTIFY[@]}"
+  --recommend=40
+  --pool-notify $(echo "${POOL_INTEREST[@]}" | sed 's/ /,/g')
+)

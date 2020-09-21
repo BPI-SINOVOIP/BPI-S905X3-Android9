@@ -1,0 +1,81 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "mruthven"
+NAME = "firmware_Cr50Update"
+PURPOSE = "Verify Cr50 update"
+ATTRIBUTES = "suite:cr50_stress_flaky"
+TIME = "SHORT"
+TEST_TYPE = "server"
+DEPENDENCIES = "servo"
+
+DOC = """
+This test verifies Cr50 update works or recovery from erased nvmem.
+
+To test nvmem recovery set test to "erase_nvmem" or use
+firmware_Cr50Update.erase_nvmem
+
+The test will rollback to the oldest Cr50 image and then verify each update to
+the next newest image runs successfully. If testing nvmem recovery, nvmem will
+be erased during the rollback from the dev image to the release image and
+any old release args  will be ignored for erase_nvmem tests.
+
+The old release needs to have a version lower than the release image. The
+release image needs to have a version lower than the dev image. The dev image
+has to be newer than all of the images including the original cr50 image on
+the dut to be able to guarantee that the original state can be restored.
+
+If no_release path or old_release_path are given, the test will use
+old_release_ver and release_ver to fetch the images from gs://.
+
+If a valid path is given the version will be ignored. For example
+release_path='/tmp/cr50.bin.prod' or release_ver='0.0.23/ZZAF:ffffffff:7f00'
+could be used. The test will attempt to get the cr50 image from
+/tmp/cr50.bin.prod first. If that doesn't exist then it will download the
+version .23 image stored in google cloud storage. The version string needs to
+contain the epoch, major, and minor versions separated by '.' and the image
+board id. The image board id is optional. The tests can be run against all
+versions since '0.0.13'.
+
+If dev_path is not specified, then the test will get the cr50 devids and
+attempt to get the debug image from gs://.
+
+After the test is complete the original Cr50 image will be reflashed onto the
+device.
+
+@param iterations: the number of iterations to run
+@param dev_path: the location of the dev image. Must be built with CR50_DEV=1
+@param release_path: the location of the release image
+@param release_ver: RW and BID version string used to fetch the image from gs
+@param old_release_path: the location of the old release image.
+@param old_release_ver: RW version string used to fetch the image from gs
+@param test: string representing the test type. use "erase_nvmem" if nvmem
+             should be erased before updating to the release image. This can be
+             used to verify that Cr50 can recovery from erased nvmem.
+"""
+
+from autotest_lib.client.common_lib import error
+from autotest_lib.server import utils
+
+args_dict = utils.args_to_dict(args)
+servo_args = hosts.CrosHost.get_servo_arguments(args_dict)
+
+iterations = int(args_dict.get("iterations", 1))
+old_release_path = args_dict.get("old_release_path", "")
+old_release_ver = args_dict.get("old_release_ver", "")
+release_path = args_dict.get("release_path", "")
+release_ver = args_dict.get("release_ver", "")
+dev_path = args_dict.get("dev_path", "")
+test = args_dict.get("test", "")
+
+def run(machine):
+    host = hosts.create_host(machine, servo_args=servo_args)
+
+    job.run_test("firmware_Cr50Update", host=host, cmdline_args=args,
+                 release_path=release_path, release_ver=release_ver,
+                 old_release_path=old_release_path,
+                 old_release_ver=old_release_ver, dev_path=dev_path,
+                 test=test, iterations=iterations)
+
+parallel_simple(run, machines)

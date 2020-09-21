@@ -1,0 +1,26 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+
+AUTHOR = 'ARC++ Team'
+NAME = 'cheets_GTS.tradefed-run-collect-tests-only'
+ATTRIBUTES = 'suite:gts'
+DEPENDENCIES = 'arc'
+JOB_RETRIES = 2
+TEST_TYPE = 'server'
+TIME = 'LENGTHY'
+PRIORITY = 70
+DOC = ('Run tradefed to collect all of the available GTS tests for this device.')
+
+def run_GTS(machine):
+    host = hosts.create_host(machine)
+    job.run_test(
+        'cheets_GTS',
+        host=host,
+        iterations=1,
+        tag='tradefed-run-collect-tests-only',
+        tradefed_args = ['run', 'commandAndExit', 'collect-tests-only'],
+        timeout=600)
+
+parallel_simple(run_GTS, machines)

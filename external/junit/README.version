@@ -1,0 +1,8 @@
+URL: https://github.com/junit-team/junit/archive/r4.12.tar.gz
+Version: 4.12
+BugComponent: 40416
+
+Local Changes:
+    Remove DisableOnDebug (new in 4.12) as it is not supported on Android
+    Remove support for stuck threads
+    Extra generic type information to aid certain javacs.

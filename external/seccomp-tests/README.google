@@ -1,0 +1,13 @@
+Name: Seccomp-BPF Kernel Test Suite
+URL: https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/tools/testing/selftests/seccomp
+License File: COPYING
+Description: Mirror of Linux kernel seccomp test suite, run in CTS.
+
+See README.md for information on how to update this repository.
+
+Local Modifications:
+- Remove usage of pthread_cancel()
+- Use __android_log_print() instead of fprintf()
+- Rename main() to seccomp_test_main()
+- Add get_seccomp_test_list()
+- Fix pthread_join bug (https://android-review.googlesource.com/#/c/349407)

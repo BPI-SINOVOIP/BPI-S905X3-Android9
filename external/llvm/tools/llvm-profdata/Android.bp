@@ -1,0 +1,15 @@
+//===---------------------------------------------------------------===
+// llvm-profdata command line tool
+//===---------------------------------------------------------------===
+
+cc_binary_host {
+    name: "llvm-profdata",
+    defaults: ["llvm-defaults"],
+    srcs: ["llvm-profdata.cpp"],
+    static_libs: [
+        "libLLVMObject",
+        "libLLVMProfileData",
+        "libLLVMCore",
+        "libLLVMSupport",
+    ],
+}

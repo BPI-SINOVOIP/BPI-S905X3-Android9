@@ -1,0 +1,30 @@
+# Copyright 2015 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'scunningham'
+NAME = 'policy_RestoreOnStartupURLs'
+TIME = 'SHORT'
+TEST_CATEGORY = 'General'
+TEST_CLASS = 'enterprise'
+TEST_TYPE = 'client'
+
+DOC = '''
+Verify effects of RestoreOnStartupURLs policy on client behavior.
+
+This test verifies the effect of the RestoreOnStartupURLs user policy on
+Chrome OS client behavior and appearance. It excercises a range of valid
+policy values across three test cases.
+
+A test case shall pass when a single browser tab is opened for only the URLs
+specified in the policy value, and in the order specified (left to right).
+A test case shall fail if the above behavior is not enforced.
+
+See accompanying README file for usage instructions and examples.
+
+'''
+
+args_dict = utils.args_to_dict(args)
+
+job.run_test('policy_RestoreOnStartupURLs', **args_dict)
+

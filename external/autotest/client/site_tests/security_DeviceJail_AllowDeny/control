@@ -1,0 +1,21 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "ejcaruso@chromium.org"
+NAME = "security_DeviceJail_AllowDeny"
+PURPOSE = "Verify that the device jail module is functioning."
+TIME = "SHORT"
+ATTRIBUTES = "suite:security"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "security"
+TEST_TYPE = "client"
+DOC = """
+This test is not applicable if the control devices for device jail are
+not present. This means the kernel must be 3.14 or later.
+The test will fail if the program is allowed to open the jail without
+permission from the server listening on /dev/jail-request, or is denied
+access when permission is granted.
+"""
+
+job.run_test('security_DeviceJail_AllowDeny')

@@ -1,0 +1,26 @@
+#!/bin/bash
+set -e -o pipefail
+
+# This script builds the go cross compilers for Android targets.
+#
+# Usage: build_go
+#
+# It assumes that the "arm-linux-androideabi" toolchain is already installed.
+# It assumes that the "aarch64-linux-android" toolchain is already installed.
+
+if [[ ! -e "make.bash" && -e "src/make.bash" ]]
+then
+	cd src
+fi
+
+# Build the Go toolchain for arm devices.
+GOOS="android" GOARCH="arm" CGO_ENABLED="1" \
+	CC_FOR_TARGET="arm-linux-androideabi-gcc" \
+	CXX_FOR_TARGET="arm-linux-androideabi-g++" \
+	./make.bash --no-clean
+
+# Build the Go toolchain for arm64 devices.
+GOOS="android" GOARCH="arm64" CGO_ENABLED="1" \
+	CC_FOR_TARGET="aarch64-linux-android-gcc" \
+	CXX_FOR_TARGET="aarch64-linux-android-g++" \
+	./make.bash --no-clean

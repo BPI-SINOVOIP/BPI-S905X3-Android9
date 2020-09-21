@@ -1,0 +1,38 @@
+{
+  "input": [
+    {
+      "type": "p4", 
+      "mappings": [
+        "//depot2/gcctools/chromeos/v14/crosperf/... crosperf/...", 
+        "//depot2/gcctools/chromeos/v14/utils/__init__.py utils/__init__.py", 
+        "//depot2/gcctools/chromeos/v14/utils/colortrans.py utils/colortrans.py", 
+        "//depot2/gcctools/chromeos/v14/utils/command_executer.py utils/command_executer.py", 
+        "//depot2/gcctools/chromeos/v14/utils/email_sender.py utils/email_sender.py", 
+        "//depot2/gcctools/chromeos/v14/utils/file_utils.py utils/file_utils.py", 
+        "//depot2/gcctools/chromeos/v14/utils/logger.py utils/logger.py", 
+        "//depot2/gcctools/chromeos/v14/utils/misc.py utils/misc.py", 
+        "//depot2/gcctools/chromeos/v14/utils/misc_test.py utils/misc_test.py", 
+        "//depot2/gcctools/chromeos/v14/utils/stats.py utils/stats.py", 
+        "//depot2/gcctools/chromeos/v14/utils/tabulator.py utils/tabulator.py", 
+        "//depot2/gcctools/chromeos/v14/utils/tabulator_test.py utils/tabulator_test.py", 
+        "//depot2/gcctools/chromeos/v14/utils/timeline.py utils/timeline.py", 
+        "//depot2/gcctools/chromeos/v14/utils/timeline_test.py utils/timeline_test.py", 
+        "//depot2/gcctools/chromeos/v14/image_chromeos.py image_chromeos.py", 
+        "//depot2/gcctools/chromeos/v14/lock_machine.py lock_machine.py", 
+        "//depot2/gcctools/chromeos/v14/README README"
+      ], 
+      "address": "perforce2:2666"
+    }
+  ], 
+  "output": [
+    {
+      "type": "git", 
+      "gerrit": true, 
+      "ignores": [
+        ".svn", 
+        ".git"
+      ], 
+      "address": "https://chromium.googlesource.com/chromiumos/third_party/toolchain-utils.git"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+[
+  {
+    "description": "VFAT filesystem",
+    "filesystem_type": "vfat",
+    "volume_name": "VFATNAME",
+    "expected_rename_status": 0,
+
+    "mkfs_options": [ "-n", "EMPTY2" ],
+    "mount_options": ["rw", "nodev", "noexec", "nosuid", "sync" ],
+    "expected_mount_status": 0,
+    "expected_mount_path": "/media/removable/EMPTY2"
+  }
+]

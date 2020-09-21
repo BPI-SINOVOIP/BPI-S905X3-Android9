@@ -1,0 +1,32 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "kerl@google.com, chromeos-meetings@google.com"
+NAME = "video_WebRtcResolutionSwitching.perf"
+PURPOSE = "Test WebRTC by frequently switching between different resolutions"
+CRITERIA = "Fails if any video element gets a lower resolution than requested"
+ATTRIBUTES = "suite:hotrod, suite:bluestreak, suite:bluestreak-perbuild"
+TIME = "MEDIUM"
+TEST_CATEGORY = "Performance"
+TEST_CLASS = "video"
+TEST_TYPE = "client"
+BUG_TEMPLATE = {
+    "labels": ["OS-Chrome"],
+    "components": ["OS>Kernel>Video"],
+}
+
+DOC = """
+This test starts 5 loopback peer connections, each with 4 streams with
+different resolutions. The test then switches randomly which of the streams are
+active for each connection, effectively flipping between different resolutions.
+
+The tests use a fake media stream - not a real camera.
+
+The test collects system metrics during the run. See go/cfm-perf-metrics
+for details about the metrics.
+"""
+
+job.run_test(
+        "video_WebRtcResolutionSwitching", mode = "performance", tag = "perf")
+

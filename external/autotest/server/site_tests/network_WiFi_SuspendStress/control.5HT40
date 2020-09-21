@@ -1,0 +1,38 @@
+# Copyright (c) 2015 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'krisr, tienchang, bmahadev'
+NAME = 'network_WiFi_SuspendStress.5HT40'
+TIME = 'MEDIUM'
+TEST_TYPE = 'Server'
+DEPENDENCIES = 'wificell'
+ATTRIBUTES = ('suite:wifi_matfunc, suite:wifi_matfunc_bcm4371,'
+              'suite:wifi_matfunc_noservo')
+
+DOC = """
+This test uses powerd_dbus to suspend and resume and checks that the
+wifi adapter is brought back up and connects to a 802.11n network on 5 GHz.
+"""
+
+from autotest_lib.client.common_lib.cros.network import xmlrpc_datatypes
+from autotest_lib.server.cros.network import hostap_config
+
+def run(machine):
+    host = hosts.create_host(machine)
+    caps = [hostap_config.HostapConfig.N_CAPABILITY_GREENFIELD,
+            hostap_config.HostapConfig.N_CAPABILITY_HT40_MINUS]
+    n = hostap_config.HostapConfig.MODE_11N_PURE
+    configurations = [(hostap_config.HostapConfig(frequency=5240,
+                                                  mode=n,
+                                                  n_capabilities=caps),
+                       xmlrpc_datatypes.AssociationParameters())]
+    job.run_test('network_WiFi_SuspendStress',
+                 host=host,
+                 tag=NAME.split('.')[1],
+                 suspends=5,
+                 raw_cmdline_args=args,
+                 additional_params=configurations)
+
+
+parallel_simple(run, machines)

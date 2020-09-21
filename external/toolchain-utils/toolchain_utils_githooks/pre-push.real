@@ -1,0 +1,71 @@
+#!/bin/bash
+#
+# Copyright (c) 2015 Google Inc.
+#
+# This is a pre-push hook that does the following before uploading a
+# CL for review:
+# 1) check that python sources have been formatted with pyformat.
+# 2) allows the user to run the unit tests.
+
+# This redirects stdin. Make sure to run after stdin has been read.
+run_UnitTests() {
+  save_dir=$(pwd)
+  status=0
+  valid=0
+
+  # Make sure we can read the stdin from terminal
+  exec < /dev/tty
+
+  while [[ $valid -eq 0 ]] ; do
+    read -p "Run unit tests? [y/n] " choice
+    case "$choice" in
+      n|N ) valid=1 ;;
+      y|Y ) valid=1; cd crosperf; ./run_tests.sh; status=$? ;
+        cd $save_dir;;
+      * ) echo "Must choose y or n."
+    esac
+  done
+  if [[ $status -ne 0 ]]; then
+    exit $status
+  fi
+}
+
+run_PyFormat() {
+  pyformat="./bin/tc_pyformat"
+  range=$1
+  files=$(git show --pretty="format:" --name-only $range)
+  for f in $files; do
+    [[ $f == *.py ]] || continue
+    # File could have been removed as part of the commit.
+    [[ -e $f ]] || continue
+    diffs=$($pyformat -d $f)
+    if [[ $? -ne 0 ]]; then
+      echo "Error: $pyformat $f returned with error code $?"
+      exit 1
+    fi
+    if [[ -n "$diffs" ]]; then
+      echo -e "Error: $f is not formatted correctly. Run $pyformat -i $f\n"
+      echo -e "diffs:\n$diffs\n"
+      exit 2
+    fi
+  done
+}
+
+z40=0000000000000000000000000000000000000000
+
+while IFS=' ' read local_ref local_sha remote_ref remote_sha; do
+  if [[ "$local_sha" != $z40 ]]; then
+    if [[ "$remote_sha" == $z40 ]]; then
+      # New branch, examine commit on top of branch.
+      range="$local_sha"
+    else
+      # Update to existing branch, examine new commits
+      range="$remote_sha..$local_sha"
+    fi
+    run_PyFormat $range
+  fi
+done
+
+run_UnitTests
+
+exit 0

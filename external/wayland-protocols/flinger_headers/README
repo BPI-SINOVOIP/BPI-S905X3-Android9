@@ -1,0 +1,5 @@
+These header files are extensions to inputflinger and surfaceflinger that are
+only used by ARC++.  They are too light to create a separate project for them, so
+put them under an isolated folder in external/wayland-protocols, because
+wayland stuff in vendor/google_arc implement them, and
+inputflinger/surfaceflinger can't depend on code under vendor/.

@@ -1,0 +1,41 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'tienchang'
+NAME = 'network_WiFi_ChaosConnectDisconnect.static'
+TIME = 'LONG'
+TEST_TYPE = 'server'
+ATTRIBUTES = 'suite:wifi_interop_static'
+DEPENDENCIES = 'casey_dut'
+
+DOC = """
+This script iterates through all of the access points configured as static, both
+open and wpa2psk. This test will run in Casey labs.
+"""
+
+from autotest_lib.server.cros.ap_configurators import ap_spec
+from autotest_lib.server.cros.chaos_lib import static_runner
+
+def run_chaos_static(machine):
+    host = hosts.create_host(machine)
+    # Test all static APs
+    ap_specs = [ap_spec.APSpec(security=ap_spec.SECURITY_TYPE_DISABLED,
+                               band=ap_spec.BAND_2GHZ,
+                               configurator_type=ap_spec.CONFIGURATOR_STATIC),
+                ap_spec.APSpec(security=ap_spec.SECURITY_TYPE_DISABLED,
+                               band=ap_spec.BAND_5GHZ,
+                               configurator_type=ap_spec.CONFIGURATOR_STATIC),
+                ap_spec.APSpec(security=ap_spec.SECURITY_TYPE_WPA2PSK,
+                               band=ap_spec.BAND_2GHZ,
+                               configurator_type=ap_spec.CONFIGURATOR_STATIC),
+                ap_spec.APSpec(security=ap_spec.SECURITY_TYPE_WPA2PSK,
+                               band=ap_spec.BAND_5GHZ,
+                               configurator_type=ap_spec.CONFIGURATOR_STATIC)]
+
+    for spec in ap_specs:
+        runner = static_runner.StaticRunner(
+                'network_WiFi_ChaosConnectDisconnect', host, spec)
+        runner.run(job)
+
+parallel_simple(run_chaos_static, machines)

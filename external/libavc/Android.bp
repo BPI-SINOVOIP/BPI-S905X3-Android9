@@ -1,0 +1,513 @@
+cc_library_static {
+    name: "libavcdec",
+    vendor_available: true,
+    shared_libs: ["liblog", "libcutils",],
+
+    cflags: [
+        "-fPIC",
+        "-O3",
+        "-Wall",
+        "-Werror",
+        "-Wno-unused-variable",
+    ],
+
+    export_include_dirs: [
+        "decoder",
+        "common",
+    ],
+
+    srcs: [
+        "common/ih264_buf_mgr.c",
+        "common/ih264_disp_mgr.c",
+        "common/ih264_inter_pred_filters.c",
+        "common/ih264_luma_intra_pred_filters.c",
+        "common/ih264_chroma_intra_pred_filters.c",
+        "common/ih264_padding.c",
+        "common/ih264_mem_fns.c",
+        "common/ih264_deblk_edge_filters.c",
+        "common/ih264_iquant_itrans_recon.c",
+        "common/ih264_ihadamard_scaling.c",
+        "common/ih264_weighted_pred.c",
+        "common/ithread.c",
+        "decoder/ih264d_cabac.c",
+        "decoder/ih264d_parse_mb_header.c",
+        "decoder/ih264d_parse_cabac.c",
+        "decoder/ih264d_process_intra_mb.c",
+        "decoder/ih264d_inter_pred.c",
+        "decoder/ih264d_parse_bslice.c",
+        "decoder/ih264d_parse_pslice.c",
+        "decoder/ih264d_parse_islice.c",
+        "decoder/ih264d_cabac_init_tables.c",
+        "decoder/ih264d_bitstrm.c",
+        "decoder/ih264d_compute_bs.c",
+        "decoder/ih264d_deblocking.c",
+        "decoder/ih264d_parse_headers.c",
+        "decoder/ih264d_mb_utils.c",
+        "decoder/ih264d_mvpred.c",
+        "decoder/ih264d_utils.c",
+        "decoder/ih264d_process_bslice.c",
+        "decoder/ih264d_process_pslice.c",
+        "decoder/ih264d_parse_slice.c",
+        "decoder/ih264d_quant_scaling.c",
+        "decoder/ih264d_parse_cavlc.c",
+        "decoder/ih264d_dpb_mgr.c",
+        "decoder/ih264d_nal.c",
+        "decoder/ih264d_sei.c",
+        "decoder/ih264d_tables.c",
+        "decoder/ih264d_vui.c",
+        "decoder/ih264d_format_conv.c",
+        "decoder/ih264d_thread_parse_decode.c",
+        "decoder/ih264d_api.c",
+        "decoder/ih264d_thread_compute_bs.c",
+        "decoder/ih264d_function_selector_generic.c",
+    ],
+
+    arch: {
+        arm: {
+            local_include_dirs: [
+                "decoder/arm",
+                "common/arm",
+            ],
+
+            srcs: [
+                "decoder/arm/ih264d_function_selector.c",
+                "common/arm/ih264_arm_memory_barrier.s",
+            ],
+
+            cflags: [
+                "-DARM",
+
+                // These will be overriden by armv7_a_neon
+                "-DDISABLE_NEON",
+                "-DDEFAULT_ARCH=D_ARCH_ARM_NONEON",
+            ],
+
+            neon: {
+                srcs: [
+                    "decoder/arm/ih264d_function_selector_a9q.c",
+                    "common/arm/ih264_intra_pred_chroma_a9q.s",
+                    "common/arm/ih264_intra_pred_luma_16x16_a9q.s",
+                    "common/arm/ih264_intra_pred_luma_4x4_a9q.s",
+                    "common/arm/ih264_intra_pred_luma_8x8_a9q.s",
+                    "common/arm/ih264_inter_pred_chroma_a9q.s",
+                    "common/arm/ih264_inter_pred_filters_luma_horz_a9q.s",
+                    "common/arm/ih264_inter_pred_filters_luma_vert_a9q.s",
+                    "common/arm/ih264_inter_pred_luma_copy_a9q.s",
+                    "common/arm/ih264_inter_pred_luma_horz_qpel_a9q.s",
+                    "common/arm/ih264_inter_pred_luma_vert_qpel_a9q.s",
+                    "common/arm/ih264_inter_pred_luma_horz_hpel_vert_hpel_a9q.s",
+                    "common/arm/ih264_inter_pred_luma_horz_qpel_vert_qpel_a9q.s",
+                    "common/arm/ih264_inter_pred_luma_horz_qpel_vert_hpel_a9q.s",
+                    "common/arm/ih264_inter_pred_luma_horz_hpel_vert_qpel_a9q.s",
+                    "common/arm/ih264_default_weighted_pred_a9q.s",
+                    "common/arm/ih264_weighted_pred_a9q.s",
+                    "common/arm/ih264_weighted_bi_pred_a9q.s",
+                    "common/arm/ih264_deblk_chroma_a9.s",
+                    "common/arm/ih264_deblk_luma_a9.s",
+                    "common/arm/ih264_padding_neon.s",
+                    "common/arm/ih264_iquant_itrans_recon_a9.s",
+                    "common/arm/ih264_iquant_itrans_recon_dc_a9.s",
+                    "common/arm/ih264_ihadamard_scaling_a9.s",
+                ],
+                cflags: [
+                    "-UDISABLE_NEON",
+                    "-UDEFAULT_ARCH",
+                    "-DDEFAULT_ARCH=D_ARCH_ARM_A9Q",
+                ],
+            },
+        },
+
+        arm64: {
+            cflags: [
+                "-DARMV8",
+                "-DARM",
+                "-DDEFAULT_ARCH=D_ARCH_ARMV8_GENERIC",
+            ],
+            local_include_dirs: [
+                "decoder/arm",
+                "common/armv8",
+            ],
+
+            srcs: [
+                "decoder/arm/ih264d_function_selector.c",
+                "decoder/arm/ih264d_function_selector_av8.c",
+                "common/armv8/ih264_intra_pred_chroma_av8.s",
+                "common/armv8/ih264_intra_pred_luma_16x16_av8.s",
+                "common/armv8/ih264_intra_pred_luma_4x4_av8.s",
+                "common/armv8/ih264_inter_pred_chroma_av8.s",
+                "common/armv8/ih264_inter_pred_filters_luma_horz_av8.s",
+                "common/armv8/ih264_inter_pred_filters_luma_vert_av8.s",
+                "common/armv8/ih264_inter_pred_luma_copy_av8.s",
+                "common/armv8/ih264_inter_pred_luma_horz_qpel_av8.s",
+                "common/armv8/ih264_inter_pred_luma_vert_qpel_av8.s",
+                "common/armv8/ih264_inter_pred_luma_horz_hpel_vert_hpel_av8.s",
+                "common/armv8/ih264_inter_pred_luma_horz_qpel_vert_qpel_av8.s",
+                "common/armv8/ih264_inter_pred_luma_horz_qpel_vert_hpel_av8.s",
+                "common/armv8/ih264_inter_pred_luma_horz_hpel_vert_qpel_av8.s",
+                "common/armv8/ih264_default_weighted_pred_av8.s",
+                "common/armv8/ih264_weighted_pred_av8.s",
+                "common/armv8/ih264_weighted_bi_pred_av8.s",
+                "common/armv8/ih264_deblk_chroma_av8.s",
+                "common/armv8/ih264_deblk_luma_av8.s",
+                "common/armv8/ih264_padding_neon_av8.s",
+                "common/armv8/ih264_iquant_itrans_recon_av8.s",
+                "common/armv8/ih264_iquant_itrans_recon_dc_av8.s",
+                "common/armv8/ih264_ihadamard_scaling_av8.s",
+                "common/armv8/ih264_intra_pred_luma_8x8_av8.s",
+            ],
+        },
+
+        mips: {
+            local_include_dirs: ["common/mips"],
+
+            srcs: ["decoder/mips/ih264d_function_selector.c"],
+        },
+
+        mips64: {
+            local_include_dirs: ["common/mips"],
+
+            srcs: ["decoder/mips/ih264d_function_selector.c"],
+        },
+
+        x86: {
+            cflags: [
+                "-DX86",
+                "-msse4.2",
+                "-DDEFAULT_ARCH=D_ARCH_X86_SSE42",
+            ],
+
+            local_include_dirs: [
+                "decoder/x86",
+                "common/x86",
+            ],
+
+            srcs: [
+                "decoder/x86/ih264d_function_selector.c",
+                "decoder/x86/ih264d_function_selector_sse42.c",
+                "decoder/x86/ih264d_function_selector_ssse3.c",
+                "common/x86/ih264_inter_pred_filters_ssse3.c",
+                "common/x86/ih264_deblk_luma_ssse3.c",
+                "common/x86/ih264_deblk_chroma_ssse3.c",
+                "common/x86/ih264_padding_ssse3.c",
+                "common/x86/ih264_mem_fns_ssse3.c",
+                "common/x86/ih264_iquant_itrans_recon_dc_ssse3.c",
+                "common/x86/ih264_iquant_itrans_recon_ssse3.c",
+                "common/x86/ih264_luma_intra_pred_filters_ssse3.c",
+                "common/x86/ih264_chroma_intra_pred_filters_ssse3.c",
+                "common/x86/ih264_iquant_itrans_recon_sse42.c",
+                "common/x86/ih264_weighted_pred_sse42.c",
+                "common/x86/ih264_ihadamard_scaling_sse42.c",
+            ],
+        },
+
+        x86_64: {
+            cflags: [
+                "-DX86",
+                "-msse4.2",
+                "-DDEFAULT_ARCH=D_ARCH_X86_SSE42",
+            ],
+
+            local_include_dirs: [
+                "decoder/x86",
+                "common/x86",
+            ],
+
+            srcs: [
+                "decoder/x86/ih264d_function_selector.c",
+                "decoder/x86/ih264d_function_selector_sse42.c",
+                "decoder/x86/ih264d_function_selector_ssse3.c",
+                "common/x86/ih264_inter_pred_filters_ssse3.c",
+                "common/x86/ih264_deblk_luma_ssse3.c",
+                "common/x86/ih264_deblk_chroma_ssse3.c",
+                "common/x86/ih264_padding_ssse3.c",
+                "common/x86/ih264_mem_fns_ssse3.c",
+                "common/x86/ih264_iquant_itrans_recon_dc_ssse3.c",
+                "common/x86/ih264_iquant_itrans_recon_ssse3.c",
+                "common/x86/ih264_luma_intra_pred_filters_ssse3.c",
+                "common/x86/ih264_chroma_intra_pred_filters_ssse3.c",
+                "common/x86/ih264_iquant_itrans_recon_sse42.c",
+                "common/x86/ih264_weighted_pred_sse42.c",
+                "common/x86/ih264_ihadamard_scaling_sse42.c",
+            ],
+        },
+    },
+
+    sanitize: {
+    	cfi: true,
+        diag: {
+            cfi: true,
+        },
+        blacklist: "cfi_blacklist.txt",
+    },
+}
+
+cc_library_static {
+    name: "libavcenc",
+    vendor_available: true,
+    shared_libs: ["liblog", "libcutils",],
+
+    cflags: [
+        "-DNDEBUG",
+        "-UHP_PL",
+        "-DN_MB_ENABLE",
+        "-fPIC",
+
+        "-O3",
+        "-Wall",
+        "-Werror",
+        "-Wno-error=constant-conversion",
+    ],
+
+    export_include_dirs: [
+        "encoder",
+        "common",
+    ],
+
+    srcs: [ //Rate Control
+        "common/ih264_resi_trans_quant.c",
+        "common/ih264_iquant_itrans_recon.c",
+        "common/ih264_ihadamard_scaling.c",
+        "common/ih264_inter_pred_filters.c",
+        "common/ih264_luma_intra_pred_filters.c",
+        "common/ih264_chroma_intra_pred_filters.c",
+        "common/ih264_padding.c",
+        "common/ih264_mem_fns.c",
+        "common/ih264_deblk_edge_filters.c",
+        "common/ih264_deblk_tables.c",
+        "common/ih264_cavlc_tables.c",
+        "common/ih264_cabac_tables.c",
+        "common/ih264_common_tables.c",
+        "common/ih264_trans_data.c",
+        "common/ih264_buf_mgr.c",
+        "common/ih264_dpb_mgr.c",
+        "common/ih264_list.c",
+        "common/ithread.c",
+        "encoder/ih264e_globals.c",
+        "encoder/ih264e_intra_modes_eval.c",
+        "encoder/ih264e_half_pel.c",
+        "encoder/ih264e_mc.c",
+        "encoder/ih264e_me.c",
+        "encoder/ih264e_rc_mem_interface.c",
+        "encoder/ih264e_time_stamp.c",
+        "encoder/ih264e_modify_frm_rate.c",
+        "encoder/ih264e_rate_control.c",
+        "encoder/ih264e_core_coding.c",
+        "encoder/ih264e_deblk.c",
+        "encoder/ih264e_api.c",
+        "encoder/ih264e_process.c",
+        "encoder/ih264e_encode.c",
+        "encoder/ih264e_utils.c",
+        "encoder/ih264e_version.c",
+        "encoder/ih264e_bitstream.c",
+        "encoder/ih264e_cavlc.c",
+        "encoder/ih264e_cabac_init.c",
+        "encoder/ih264e_cabac.c",
+        "encoder/ih264e_cabac_encode.c",
+        "encoder/ih264e_encode_header.c",
+        "encoder/ih264e_function_selector_generic.c",
+        "encoder/ih264e_fmt_conv.c",
+        "encoder/irc_rate_control_api.c",
+        "encoder/irc_bit_allocation.c",
+        "encoder/irc_cbr_buffer_control.c",
+        "encoder/irc_est_sad.c",
+        "encoder/irc_fixed_point_error_bits.c",
+        "encoder/irc_frame_info_collector.c",
+        "encoder/irc_mb_model_based.c",
+        "encoder/irc_picture_type.c",
+        "encoder/irc_rd_model.c",
+        "encoder/irc_vbr_storage_vbv.c",
+        "encoder/irc_vbr_str_prms.c",
+        "encoder/ime.c",
+        "encoder/ime_distortion_metrics.c",
+    ],
+
+    arch: {
+        arm: {
+            local_include_dirs: [
+                "encoder/arm",
+                "common/arm",
+            ],
+
+            srcs: [
+                "encoder/arm/ih264e_function_selector.c",
+                "common/arm/ih264_arm_memory_barrier.s",
+            ],
+
+            cflags: [
+                "-DARM",
+
+                // This will be overriden by armv7_a_neon
+                "-DDISABLE_NEON",
+            ],
+
+            neon: {
+                srcs: [
+                    "encoder/arm/ih264e_function_selector_a9q.c",
+                    "common/arm/ih264_resi_trans_quant_a9.s",
+                    "common/arm/ih264_iquant_itrans_recon_a9.s",
+                    "common/arm/ih264_iquant_itrans_recon_dc_a9.s",
+                    "common/arm/ih264_ihadamard_scaling_a9.s",
+                    "common/arm/ih264_deblk_chroma_a9.s",
+                    "common/arm/ih264_deblk_luma_a9.s",
+                    "common/arm/ih264_intra_pred_chroma_a9q.s",
+                    "common/arm/ih264_intra_pred_luma_16x16_a9q.s",
+                    "common/arm/ih264_intra_pred_luma_4x4_a9q.s",
+                    "common/arm/ih264_intra_pred_luma_8x8_a9q.s",
+                    "common/arm/ih264_inter_pred_chroma_a9q.s",
+                    "common/arm/ih264_inter_pred_filters_luma_horz_a9q.s",
+                    "common/arm/ih264_inter_pred_filters_luma_vert_a9q.s",
+                    "common/arm/ih264_inter_pred_luma_bilinear_a9q.s",
+                    "common/arm/ih264_inter_pred_luma_copy_a9q.s",
+                    "common/arm/ih264_padding_neon.s",
+                    "common/arm/ih264_mem_fns_neon.s",
+                    "encoder/arm/ih264e_evaluate_intra16x16_modes_a9q.s",
+                    "encoder/arm/ih264e_evaluate_intra4x4_modes_a9q.s",
+                    "encoder/arm/ih264e_evaluate_intra_chroma_modes_a9q.s",
+                    "encoder/arm/ih264e_half_pel.s",
+                    "encoder/arm/ih264e_fmt_conv.s",
+                    "encoder/arm/ime_distortion_metrics_a9q.s",
+                ],
+
+                cflags: [
+                    "-UDISABLE_NEON",
+                ],
+            },
+        },
+
+        arm64: {
+            cflags: [
+                "-DARMV8",
+                "-DARM",
+            ],
+
+            local_include_dirs: [
+                "encoder/arm",
+                "encoder/armv8",
+                "common/armv8",
+            ],
+
+            srcs: [
+                "encoder/arm/ih264e_function_selector.c",
+                "encoder/arm/ih264e_function_selector_av8.c",
+                "common/armv8/ih264_resi_trans_quant_av8.s",
+                "common/armv8/ih264_iquant_itrans_recon_av8.s",
+                "common/armv8/ih264_iquant_itrans_recon_dc_av8.s",
+                "common/armv8/ih264_ihadamard_scaling_av8.s",
+                "common/armv8/ih264_intra_pred_chroma_av8.s",
+                "common/armv8/ih264_intra_pred_luma_16x16_av8.s",
+                "common/armv8/ih264_intra_pred_luma_4x4_av8.s",
+                "common/armv8/ih264_intra_pred_luma_8x8_av8.s",
+                "common/armv8/ih264_inter_pred_luma_copy_av8.s",
+                "common/armv8/ih264_inter_pred_chroma_av8.s",
+                "common/armv8/ih264_inter_pred_filters_luma_horz_av8.s",
+                "common/armv8/ih264_inter_pred_filters_luma_vert_av8.s",
+                "common/armv8/ih264_padding_neon_av8.s",
+                "common/armv8/ih264_mem_fns_neon_av8.s",
+                "common/armv8/ih264_deblk_luma_av8.s",
+                "common/armv8/ih264_deblk_chroma_av8.s",
+                "encoder/armv8/ih264e_evaluate_intra16x16_modes_av8.s",
+                "encoder/armv8/ih264e_evaluate_intra_chroma_modes_av8.s",
+                "encoder/armv8/ih264e_half_pel_av8.s",
+                "encoder/armv8/ime_distortion_metrics_av8.s",
+            ],
+        },
+
+        mips: {
+            local_include_dirs: [
+                "common/mips",
+                "encoder/mips",
+            ],
+
+            srcs: ["encoder/mips/ih264e_function_selector.c"],
+        },
+
+        mips64: {
+            local_include_dirs: [
+                "common/mips",
+                "encoder/mips",
+            ],
+
+            srcs: ["encoder/mips/ih264e_function_selector.c"],
+        },
+
+        x86: {
+            cflags: [
+                "-DX86",
+                "-msse4.2",
+            ],
+
+            local_include_dirs: [
+                "encoder/x86",
+                "common/x86",
+            ],
+
+            srcs: [
+                "encoder/x86/ih264e_function_selector.c",
+                "encoder/x86/ih264e_function_selector_sse42.c",
+                "encoder/x86/ih264e_function_selector_ssse3.c",
+                "common/x86/ih264_iquant_itrans_recon_ssse3.c",
+                "common/x86/ih264_iquant_itrans_recon_dc_ssse3.c",
+                "common/x86/ih264_ihadamard_scaling_ssse3.c",
+                "common/x86/ih264_inter_pred_filters_ssse3.c",
+                "common/x86/ih264_mem_fns_ssse3.c",
+                "common/x86/ih264_padding_ssse3.c",
+                "common/x86/ih264_luma_intra_pred_filters_ssse3.c",
+                "common/x86/ih264_chroma_intra_pred_filters_ssse3.c",
+                "common/x86/ih264_deblk_chroma_ssse3.c",
+                "common/x86/ih264_deblk_luma_ssse3.c",
+                "common/x86/ih264_iquant_itrans_recon_sse42.c",
+                "common/x86/ih264_ihadamard_scaling_sse42.c",
+                "common/x86/ih264_resi_trans_quant_sse42.c",
+                "common/x86/ih264_weighted_pred_sse42.c",
+                "encoder/x86/ih264e_half_pel_ssse3.c",
+                "encoder/x86/ih264e_intra_modes_eval_ssse3.c",
+                "encoder/x86/ime_distortion_metrics_sse42.c",
+            ],
+        },
+
+        x86_64: {
+            cflags: [
+                "-DX86",
+                "-msse4.2",
+            ],
+
+            local_include_dirs: [
+                "encoder/x86",
+                "common/x86",
+            ],
+
+            srcs: [
+                "encoder/x86/ih264e_function_selector.c",
+                "encoder/x86/ih264e_function_selector_sse42.c",
+                "encoder/x86/ih264e_function_selector_ssse3.c",
+                "common/x86/ih264_iquant_itrans_recon_ssse3.c",
+                "common/x86/ih264_iquant_itrans_recon_dc_ssse3.c",
+                "common/x86/ih264_ihadamard_scaling_ssse3.c",
+                "common/x86/ih264_inter_pred_filters_ssse3.c",
+                "common/x86/ih264_mem_fns_ssse3.c",
+                "common/x86/ih264_padding_ssse3.c",
+                "common/x86/ih264_luma_intra_pred_filters_ssse3.c",
+                "common/x86/ih264_chroma_intra_pred_filters_ssse3.c",
+                "common/x86/ih264_deblk_chroma_ssse3.c",
+                "common/x86/ih264_deblk_luma_ssse3.c",
+                "common/x86/ih264_iquant_itrans_recon_sse42.c",
+                "common/x86/ih264_ihadamard_scaling_sse42.c",
+                "common/x86/ih264_resi_trans_quant_sse42.c",
+                "common/x86/ih264_weighted_pred_sse42.c",
+                "encoder/x86/ih264e_half_pel_ssse3.c",
+                "encoder/x86/ih264e_intra_modes_eval_ssse3.c",
+                "encoder/x86/ime_distortion_metrics_sse42.c",
+            ],
+        },
+    },
+
+    sanitize: {
+    	cfi: true,
+        diag: {
+            cfi: true,
+        },
+        blacklist: "cfi_blacklist.txt",
+    },
+}
+
+subdirs = ["test"]

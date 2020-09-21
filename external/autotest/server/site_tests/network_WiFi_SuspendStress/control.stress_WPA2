@@ -1,0 +1,42 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'krisr, tienchang, bmahadev'
+NAME = 'network_WiFi_SuspendStress.stress_WPA2'
+TIME = 'LONG'
+TEST_TYPE = 'Server'
+DEPENDENCIES = 'wificell'
+ATTRIBUTES = 'suite:wifi_stress'
+
+DOC = """
+This test uses powerd_dbus to suspend and resume and checks that the
+wifi adapter is brought back up and connects to a WPA2 network.
+"""
+
+from autotest_lib.client.common_lib.cros.network import xmlrpc_datatypes
+from autotest_lib.client.common_lib.cros.network import xmlrpc_datatypes
+from autotest_lib.client.common_lib.cros.network import xmlrpc_security_types
+from autotest_lib.server.cros.network import hostap_config
+
+def run(machine):
+    host = hosts.create_host(machine)
+    wpa_config = xmlrpc_security_types.WPAConfig(
+            psk='chromeos',
+            wpa_mode=xmlrpc_security_types.WPAConfig.MODE_PURE_WPA2,
+            wpa2_ciphers=[xmlrpc_security_types.WPAConfig.CIPHER_CCMP])
+    ap_config = hostap_config.HostapConfig(
+            frequency=2412,
+            mode=hostap_config.HostapConfig.MODE_11N_PURE,
+            security_config=wpa_config)
+    assoc_params = xmlrpc_datatypes.AssociationParameters()
+    assoc_params.security_config = wpa_config
+    configurations = [(ap_config, assoc_params)]
+    job.run_test('network_WiFi_SuspendStress',
+                 host=host,
+                 tag=NAME.split('.')[1],
+                 suspends=690,
+                 raw_cmdline_args=args,
+                 additional_params=configurations)
+
+parallel_simple(run, machines)

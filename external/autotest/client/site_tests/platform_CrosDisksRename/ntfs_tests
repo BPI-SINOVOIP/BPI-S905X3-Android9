@@ -1,0 +1,14 @@
+[
+  {
+    "description": "NTFS filesystem",
+    "filesystem_type": "ntfs",
+    "volume_name": "NTFS",
+    "expected_rename_status": 5,
+
+    "mkfs_options": [ "-f", "-L", "EMPTY3" ],
+    "mount_options": ["rw", "nodev", "noexec", "nosuid", "sync" ],
+    "mount_filesystem_type": "ntfs-3g",
+    "expected_mount_status": 0,
+    "expected_mount_path": "/media/removable/EMPTY3"
+  }
+]

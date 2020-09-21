@@ -1,0 +1,51 @@
+From bf824fdba34b5ea905c6541c9205fef3369cfa5d Mon Sep 17 00:00:00 2001
+From: Steve Muckle <smuckle@google.com>
+Date: Mon, 30 Oct 2017 10:43:28 -0700
+Subject: [PATCH] ANDROID: do not run update, periodic IRQ tests on Android
+
+Android does not require the update or periodic IRQs from the RTC, so do
+not test this.
+
+Bug: 31578457
+Test: run vts-kernel -m VtsKernelLinuxKselftestStaging
+Change-Id: I26a60224073724297763489a90dd163f5f769df8
+Signed-off-by: Steve Muckle <smuckle@google.com>
+---
+ tools/testing/selftests/timers/rtctest.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/tools/testing/selftests/timers/rtctest.c b/tools/testing/selftests/timers/rtctest.c
+index f61170f7b024..95f68ed9ceb1 100644
+--- a/tools/testing/selftests/timers/rtctest.c
++++ b/tools/testing/selftests/timers/rtctest.c
+@@ -122,6 +122,13 @@ int main(int argc, char **argv)
+ 
+ 	fprintf(stderr, "\n\t\t\tRTC Driver Test Example.\n\n");
+ 
++#ifdef __ANDROID__
++	/*
++	 * Android does not rely on update interrupts so do not test them.
++	 */
++	goto test_READ;
++#endif
++
+ 	/* Turn on update interrupts (one per second) */
+ 	retval = ioctl(fd, RTC_UIE_ON, 0);
+ 	if (retval == -1) {
+@@ -259,6 +266,13 @@ test_READ:
+ 		exit(errno);
+ 	}
+ 
++#ifdef __ANDROID__
++	/*
++	 * Android does not rely on periodic IRQs so do not test them.
++	 */
++	goto done;
++#endif
++
+ test_PIE:
+ 	/* Read periodic IRQ rate */
+ 	retval = ioctl(fd, RTC_IRQP_READ, &tmp);
+-- 
+2.16.0.rc1.238.g530d649a79-goog
+

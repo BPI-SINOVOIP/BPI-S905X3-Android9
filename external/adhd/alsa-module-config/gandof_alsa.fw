@@ -1,0 +1,9 @@
+[codec]
+0x10ec0283 0x10ec0283 0
+
+[model]
+alc283-dac-wcaps
+
+[hint]
+auto_mute = no
+auto_mic = no

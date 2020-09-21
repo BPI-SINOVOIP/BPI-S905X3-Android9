@@ -1,0 +1,2 @@
+This directory is intended to hold utility libraries for server-side operations
+that may be shared between server-side tests and other utilities.

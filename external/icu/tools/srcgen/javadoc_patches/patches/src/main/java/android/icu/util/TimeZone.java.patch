@@ -1,0 +1,52 @@
+--- android_icu4j/src/main/java/android/icu/util/TimeZone.java	2017-08-25 08:53:44.093865959 +0100
++++ android_icu4j/src/main/java/android/icu/util/TimeZone.java	2017-08-25 08:54:12.489921270 +0100
+@@ -83,32 +83,6 @@
+  * Time" and "China Standard Time"), and the Java platform can then only
+  * recognize one of them.
+  *
+- * <p><strong>Note:</strong> Starting from ICU4J 4.0, you can optionally choose
+- * JDK <code>TimeZone</code> as the time zone implementation.  The TimeZone factory
+- * method <code>getTimeZone</code> creates an instance of ICU's own <code>TimeZone</code>
+- * subclass by default.  If you want to use the JDK implementation always, you can
+- * set the default time zone implementation type by the new method
+- * <code>setDefaultTimeZoneType</code>.  Alternatively, you can change the initial
+- * default implementation type by setting a property below.
+- *
+- * <blockquote>
+- * <pre>
+- * #
+- * # The default TimeZone implementation type used by the ICU TimeZone
+- * # factory method. [ ICU | JDK ]
+- * #
+- * android.icu.util.TimeZone.DefaultTimeZoneType = ICU
+- * </pre>
+- * </blockquote>
+- *
+- * <p>This property is included in ICUConfig.properties in android.icu package.  When the
+- * <code>TimeZone</code> class is loaded, the initialization code checks if the property
+- * <code>android.icu.util.TimeZone.DefaultTimeZoneType=xxx</code> is defined by the system
+- * properties.  If not available, then it loads ICUConfig.properties to get the default
+- * time zone implementation type.  The property setting is only used for the initial
+- * default value and you can change the default type by calling
+- * <code>setDefaultTimeZoneType</code> at runtime.
+- *
+  * @see          Calendar
+  * @see          GregorianCalendar
+  * @see          SimpleTimeZone
+@@ -147,14 +121,12 @@
+ 
+     /**
+      * <strong>[icu]</strong> A time zone implementation type indicating ICU's own TimeZone used by
+-     * <code>getTimeZone</code>, <code>setDefaultTimeZoneType</code>
+-     * and <code>getDefaultTimeZoneType</code>.
++     * <code>getTimeZone</code>.
+      */
+     public static final int TIMEZONE_ICU = 0;
+     /**
+      * <strong>[icu]</strong> A time zone implementation type indicating the {@link java.util.TimeZone}
+-     * used by <code>getTimeZone</code>, <code>setDefaultTimeZoneType</code>
+-     * and <code>getDefaultTimeZoneType</code>.
++     * used by <code>getTimeZone</code>.
+      */
+     public static final int TIMEZONE_JDK = 1;
+ 

@@ -1,0 +1,13 @@
+--- android_icu4j/src/main/java/android/icu/text/UnicodeFilter.java	2017-08-25 08:53:49.789877053 +0100
++++ android_icu4j/src/main/java/android/icu/text/UnicodeFilter.java	2017-08-25 08:54:12.409921113 +0100
+@@ -12,10 +12,6 @@
+ /**
+  * <code>UnicodeFilter</code> defines a protocol for selecting a
+  * subset of the full range (U+0000 to U+FFFF) of Unicode characters.
+- * Currently, filters are used in conjunction with classes like
+- * {@link android.icu.text.Transliterator}
+- * to only process selected characters through a
+- * transformation.
+  */
+ @SuppressWarnings("javadoc")    // com.imb.icu.text.Transliterator is in another project
+ public abstract class UnicodeFilter implements UnicodeMatcher {

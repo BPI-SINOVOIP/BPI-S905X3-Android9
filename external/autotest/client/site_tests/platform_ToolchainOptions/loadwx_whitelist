@@ -1,0 +1,5 @@
+# LOAD section with no flags set at all.
+/opt/google/chrome/nacl_helper_bootstrap
+# --enable-glx-read-only-text is disabled in mesa for performance.
+/usr/lib/libGLESv2.so.2.0.0
+/usr/lib/libglapi.so.0.0.0

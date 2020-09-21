@@ -1,0 +1,319 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>lmfit: a self-contained C library for Levenberg-Marquardt least-squares minimization and curve fitting</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body>
+
+
+
+
+
+<link rel="stylesheet" href="podstyle.css" type="text/css" />
+
+<h1 id="NAME">NAME</h1>
+
+<p>lmmin - Levenberg-Marquardt least-squares minimization</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<p><b>#include &lt;lmmin.h</b>&gt;</p>
+
+<p><b>void lmmin( const int</b> <i>n_par</i><b>, double *</b><i>par</i><b>, const int</b> <i>m_dat</i><b>, const<span style="white-space: nowrap;"> </span>void *</b><i>data</i><b>, void *</b><i>evaluate</i><b>( const<span style="white-space: nowrap;"> </span>double *</b><i>par</i><b>, const int </b><i>m_dat</i><b>, const<span style="white-space: nowrap;"> </span>void *</b><i>data</i><b>, double *</b><i>fvec</i><b>, int *</b><i>userbreak</i><b>), const<span style="white-space: nowrap;"> </span>lm_control_struct *</b><i>control</i><b>, lm_status_struct *</b><i>status</i><b> );</b></p>
+
+<p><b>extern const lm_control_struct lm_control_double;</b></p>
+
+<p><b>extern const lm_control_struct lm_control_float;</b></p>
+
+<p><b>extern const char *lm_infmsg[];</b></p>
+
+<p><b>extern const char *lm_shortmsg[];</b></p>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><b>lmmin()</b> determines a vector <i>par</i> that minimizes the sum of squared elements of a vector <i>fvec</i> that is computed by a user-supplied function <i>evaluate</i>(). On success, <i>par</i> represents a local minimum, not necessarily a global one; it may depend on its starting value.</p>
+
+<p>For applications in curve fitting, the wrapper function <b>lmcurve(3)</b> offers a simplified API.</p>
+
+<p>The Levenberg-Marquardt minimization starts with a steepest-descent exploration of the parameter space, and achieves rapid convergence by crossing over into the Newton-Gauss method.</p>
+
+<p>Function arguments:</p>
+
+<dl>
+
+<dt id="n_par"><i>n_par</i></dt>
+<dd>
+
+<p>Number of free variables. Length of parameter vector <i>par</i>.</p>
+
+</dd>
+<dt id="par"><i>par</i></dt>
+<dd>
+
+<p>Parameter vector. On input, it must contain a reasonable guess. On output, it contains the solution found to minimize ||<i>fvec</i>||.</p>
+
+</dd>
+<dt id="m_dat"><i>m_dat</i></dt>
+<dd>
+
+<p>Length of vector <i>fvec</i>. Must statisfy <i>n_par</i> &lt;= <i>m_dat</i>.</p>
+
+</dd>
+<dt id="data"><i>data</i></dt>
+<dd>
+
+<p>This pointer is ignored by the fit algorithm, except for appearing as an argument in all calls to the user-supplied routine <i>evaluate</i>.</p>
+
+</dd>
+<dt id="evaluate"><i>evaluate</i></dt>
+<dd>
+
+<p>Pointer to a user-supplied function that computes <i>m_dat</i> elements of vector <i>fvec</i> for a given parameter vector <i>par</i>. If <i>evaluate</i> return with *<i>userbreak</i> set to a negative value, <b>lmmin()</b> will interrupt the fitting and terminate.</p>
+
+</dd>
+<dt id="control"><i>control</i></dt>
+<dd>
+
+<p>Parameter collection for tuning the fit procedure. In most cases, the default &amp;<i>lm_control_double</i> is adequate. If <i>f</i> is only computed with single-precision accuracy, <i>&amp;lm_control_float</i> should be used. See also below, NOTES on initializing parameter records.</p>
+
+<p><i>control</i> has the following members (for more details, see the source file <i>lmstruct.h</i>):</p>
+
+<dl>
+
+<dt id="double-control.ftol"><b>double</b> <i>control.ftol</i></dt>
+<dd>
+
+<p>Relative error desired in the sum of squares. Recommended setting: somewhat above machine precision; less if <i>fvec</i> is computed with reduced accuracy.</p>
+
+</dd>
+<dt id="double-control.xtol"><b>double</b> <i>control.xtol</i></dt>
+<dd>
+
+<p>Relative error between last two approximations. Recommended setting: as <i>ftol</i>.</p>
+
+</dd>
+<dt id="double-control.gtol"><b>double</b> <i>control.gtol</i></dt>
+<dd>
+
+<p>A measure for degeneracy. Recommended setting: as <i>ftol</i>.</p>
+
+</dd>
+<dt id="double-control.epsilon"><b>double</b> <i>control.epsilon</i></dt>
+<dd>
+
+<p>Step used to calculate the Jacobian. Recommended setting: as <i>ftol</i>, but definitely less than the accuracy of <i>fvec</i>.</p>
+
+</dd>
+<dt id="double-control.stepbound"><b>double</b> <i>control.stepbound</i></dt>
+<dd>
+
+<p>Initial bound to steps in the outer loop, generally between 0.01 and 100; recommended value is 100.</p>
+
+</dd>
+<dt id="int-control.patience"><b>int</b> <i>control.patience</i></dt>
+<dd>
+
+<p>Used to set the maximum number of function evaluations to patience*n_par.</p>
+
+</dd>
+<dt id="int-control.scale_diag"><b>int</b> <i>control.scale_diag</i></dt>
+<dd>
+
+<p>Logical switch (0 or 1). If 1, then scale parameters to their initial value. This is the recommended setting.</p>
+
+</dd>
+<dt id="FILE-control.msgfile"><b>FILE*</b> <i>control.msgfile</i></dt>
+<dd>
+
+<p>Progress messages will be written to this file. Typically <i>stdout</i> or <i>stderr</i>. The value <i>NULL</i> will be interpreted as <i>stdout</i>.</p>
+
+</dd>
+<dt id="int-control.verbosity"><b>int</b> <i>control.verbosity</i></dt>
+<dd>
+
+<p>If nonzero, some progress information from within the LM algorithm is written to control.stream.</p>
+
+</dd>
+<dt id="int-control.n_maxpri"><b>int</b> <i>control.n_maxpri</i></dt>
+<dd>
+
+<p>-1, or maximum number of parameters to print.</p>
+
+</dd>
+<dt id="int-control.m_maxpri"><b>int</b> <i>control.m_maxpri</i></dt>
+<dd>
+
+<p>-1, or maximum number of residuals to print.</p>
+
+</dd>
+</dl>
+
+</dd>
+<dt id="status"><i>status</i></dt>
+<dd>
+
+<p>A record used to return information about the minimization process:</p>
+
+<dl>
+
+<dt id="double-status.fnorm"><b>double</b> <i>status.fnorm</i></dt>
+<dd>
+
+<p>Norm of the vector <i>fvec</i>;</p>
+
+</dd>
+<dt id="int-status.nfev"><b>int</b> <i>status.nfev</i></dt>
+<dd>
+
+<p>Actual number of iterations;</p>
+
+</dd>
+<dt id="int-status.outcome"><b>int</b> <i>status.outcome</i></dt>
+<dd>
+
+<p>Status of minimization; for the corresponding text message, print <i>lm_infmsg</i><b>[</b><i>status.outcome</i><b>]</b>; for a short code, print <i>lm_shortmsg</i><b>[</b><i>status.outcome</i><b>]</b>.</p>
+
+</dd>
+<dt id="int-status.userbreak"><b>int</b> <i>status.userbreak</i></dt>
+<dd>
+
+<p>Set when termination has been forced by the user-supplied routine <i>evaluate</i>.</p>
+
+</dd>
+</dl>
+
+</dd>
+</dl>
+
+<h1 id="NOTES">NOTES</h1>
+
+<h2 id="Initializing-parameter-records">Initializing parameter records.</h2>
+
+<p>The parameter record <i>control</i> should always be initialized from supplied default records:</p>
+
+<pre><code>    lm_control_struct control = lm_control_double; /* or _float */</code></pre>
+
+<p>After this, parameters may be overwritten:</p>
+
+<pre><code>    control.patience = 500; /* allow more iterations */
+    control.verbosity = 15; /* for verbose monitoring */</code></pre>
+
+<p>An application written this way is guaranteed to work even if new parameters are added to <i>lm_control_struct</i>.</p>
+
+<p>Conversely, addition of parameters is not considered an API change; it may happen without increment of the major version number.</p>
+
+<h1 id="EXAMPLES">EXAMPLES</h1>
+
+<h2 id="Fitting-a-surface">Fitting a surface</h2>
+
+<p>Fit a data set y(t) by a function f(t;p) where t is a two-dimensional vector:</p>
+
+<pre><code>    #include &quot;lmmin.h&quot;
+    #include &lt;stdio.h&gt;
+
+    /* fit model: a plane p0 + p1*tx + p2*tz */
+    double f( double tx, double tz, const double *p )
+    {
+        return p[0] + p[1]*tx + p[2]*tz;
+    }
+
+    /* data structure to transmit data arays and fit model */
+    typedef struct {
+        double *tx, *tz;
+        double *y;
+        double (*f)( double tx, double tz, const double *p );
+    } data_struct;
+
+    /* function evaluation, determination of residues */
+    void evaluate_surface( const double *par, int m_dat,
+        const void *data, double *fvec, int *userbreak )
+    {
+        /* for readability, explicit type conversion */
+        data_struct *D;
+        D = (data_struct*)data;
+
+        int i;
+        for ( i = 0; i &lt; m_dat; i++ )
+        fvec[i] = D-&gt;y[i] - D-&gt;f( D-&gt;tx[i], D-&gt;tz[i], par );
+    }
+
+    int main()
+    {
+        /* parameter vector */
+        int n_par = 3; /* number of parameters in model function f */
+        double par[3] = { -1, 0, 1 }; /* arbitrary starting value */
+
+        /* data points */
+        int m_dat = 4;
+        double tx[4] = { -1, -1,  1,  1 };
+        double tz[4] = { -1,  1, -1,  1 };
+        double y[4]  = {  0,  1,  1,  2 };
+
+        data_struct data = { tx, tz, y, f };
+
+        /* auxiliary parameters */
+        lm_status_struct status;
+        lm_control_struct control = lm_control_double;
+        control.verbosity = 3;
+
+        /* perform the fit */
+        printf( &quot;Fitting:\n&quot; );
+        lmmin( n_par, par, m_dat, (const void*) &amp;data, evaluate_surface,
+               &amp;control, &amp;status );
+
+        /* print results */
+        printf( &quot;\nResults:\n&quot; );
+        printf( &quot;status after %d function evaluations:\n  %s\n&quot;,
+                status.nfev, lm_infmsg[status.outcome] );
+
+        printf(&quot;obtained parameters:\n&quot;);
+        int i;
+        for ( i=0; i&lt;n_par; ++i )
+        printf(&quot;  par[%i] = %12g\n&quot;, i, par[i]);
+        printf(&quot;obtained norm:\n  %12g\n&quot;, status.fnorm );
+
+        printf(&quot;fitting data as follows:\n&quot;);
+        double ff;
+        for ( i=0; i&lt;m_dat; ++i ){
+            ff = f(tx[i], tz[i], par);
+            printf( &quot;  t[%2d]=%12g,%12g y=%12g fit=%12g residue=%12g\n&quot;,
+                    i, tx[i], tz[i], y[i], ff, y[i] - ff );
+        }
+
+        return 0;
+    }</code></pre>
+
+<h2 id="More-examples">More examples</h2>
+
+<p>For more examples, see the homepage and directories demo/ and test/ in the source distribution.</p>
+
+<h1 id="COPYING">COPYING</h1>
+
+<p>Copyright (C): 1980-1999 University of Chicago 2004-2015 Joachim Wuttke, Forschungszentrum Juelich GmbH</p>
+
+<p>Software: FreeBSD License</p>
+
+<p>Documentation: Creative Commons Attribution Share Alike</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+
+
+<a href="http://apps.jcns.fz-juelich.de/man/lmcurve.html"><b>lmcurve</b>(3)</a>
+
+<p>Homepage: http://apps.jcns.fz-juelich.de/lmfit</p>
+
+<h1 id="BUGS">BUGS</h1>
+
+<p>Please send bug reports and suggestions to the author &lt;j.wuttke@fz-juelich.de&gt;.</p>
+
+
+</body>
+
+</html>
+
+

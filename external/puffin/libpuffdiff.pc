@@ -1,0 +1,6 @@
+# This file is for libpuffdiff in Chrome OS.
+
+Name: libpuffdiff
+Description: Puffin library for generating delta patches
+Version: 0.0.1
+Libs: -lpuffdiff

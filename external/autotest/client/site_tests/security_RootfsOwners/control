@@ -1,0 +1,22 @@
+# Copyright (c) 2010 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+TIME="SHORT"
+AUTHOR = "The Chromium OS Authors"
+DOC = """
+Ensures there are no files owned by chronos/chronos-access on the rootfs.
+"""
+NAME = "security_RootfsOwners"
+PURPOSE = """
+Ensures there are no files owned by chronos/chronos-access on the rootfs.
+"""
+CRITERIA = """
+Fail if there are any files owned by chronos/chronos-access on the rootfs.
+"""
+ATTRIBUTES = "suite:bvt-perbuild"
+TEST_CLASS = "security"
+TEST_CATEGORY = "Functional"
+TEST_TYPE = "client"
+
+job.run_test("security_RootfsOwners")

@@ -1,0 +1,19 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+TIME="SHORT"
+AUTHOR = "The Chromium OS Authors"
+DOC = """
+Tests features of libcontainer.
+"""
+NAME = "security_Libcontainer"
+PURPOSE = "Unit tests of libcontainer that must run outside of the chroot."
+CRITERIA = "Fail if libcontainer cannot correctly create containers."
+ATTRIBUTES = ""
+TEST_CLASS = "security"
+TEST_CATEGORY = "Functional"
+TEST_TYPE = "client"
+JOB_RETRIES = 2
+
+job.run_test("security_Libcontainer")

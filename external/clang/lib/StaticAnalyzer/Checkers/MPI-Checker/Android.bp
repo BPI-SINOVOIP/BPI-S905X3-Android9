@@ -1,0 +1,5 @@
+cc_library_static {
+    name: "libclangStaticAnalyzerMPIChecker",
+    defaults: ["clang-defaults"],
+    srcs: ["*.cpp"],
+}

@@ -1,0 +1,33 @@
+cc_library {
+    name: "libbrotli",
+    host_supported: true,
+    cflags: [
+        "-Werror",
+        "-O2",
+    ],
+    export_include_dirs: ["c/include"],
+    srcs: [
+        "c/common/*.c",
+        "c/dec/*.c",
+        "c/enc/*.c",
+    ],
+    target: {
+        linux_bionic: {
+            enabled: true,
+        },
+    },
+    stl: "none",
+}
+
+cc_binary {
+    name: "brotli",
+    host_supported: true,
+    cflags: ["-Werror"],
+    srcs: ["c/tools/brotli.c"],
+    target: {
+        linux_bionic: {
+            enabled: true,
+        },
+    },
+    shared_libs: ["libbrotli"],
+}

@@ -1,0 +1,22 @@
+# Copyright (c) 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "Chrome OS Team"
+NAME = "login_CryptohomeDataLeak"
+PURPOSE = "Verify decrypted user data is cleared once the session is over"
+CRITERIA = """
+This test will fail if user data is still visible after end of session.
+"""
+ATTRIBUTES = "suite:bvt-perbuild"
+TIME = "SHORT"
+TEST_CATEGORY = "Security"
+TEST_CLASS = "platform"
+TEST_TYPE = "client"
+
+DOC = """
+This test checks whether a user data file created during a session is
+visible once the session is logged out.
+"""
+
+job.run_test('login_CryptohomeDataLeak')

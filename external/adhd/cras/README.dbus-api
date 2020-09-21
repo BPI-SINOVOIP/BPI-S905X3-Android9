@@ -1,0 +1,219 @@
+CRAS dbus methods and signals.
+==============================
+
+Service		org.chromium.cras
+Interface	org.chromium.cras.Control
+Object Path	/org/chromium/cras
+
+Methods		void SetOutputVolume(int32 volume)
+
+			Sets the volume of the system.  Volume ranges from
+			0 to 100, and will be translated to dB based on the
+			output-specific volume curve.
+
+		void SetOutputNodeVolume(uint64 node_id, int32 volume)
+
+			Sets the volume of the given node.  Volume ranges from
+			0 to 100, and will be translated to dB based on the
+			output-specific volume curve.
+
+		void SwapLeftRight(uint64 node_id, boolean swap)
+
+			Swap the left and right channel of the given node.
+			Message will be dropped if this feature is not supported.
+
+		void SetOutputMute(boolean mute_on)
+
+			Sets the system output mute.
+
+		void SetOutputUserMute(boolean mute_on)
+
+			Sets the system output mute from user action.
+
+		void SetInputGain(int32 gain)
+
+			Sets the capture gain of the system. Gain is specified
+			in dBFS * 100.  For example 5dB of gain would be
+			specified with an argument of 500, while -10 would be
+			specified with -1000, and 11.5 maps to 1150.
+
+		void SetInputNodeGain(uint64 node_id, int32 gain)
+
+			Sets the capture gain of the node. Gain is specified
+			in dBFS * 100.  For example 5dB of gain would be
+			specified with an argument of 500, while -10 would be
+			specified with -1000, and 11.5 maps to 1150.
+
+		void SetInputMute(boolean mute_on)
+
+			Sets the capture mute state of the system.  Recordings
+			will be muted when this is set.
+
+		void GetVolumeState()
+
+			Returns the volume and capture gain as follows:
+				int32 output_volume (0-100)
+				boolean output_mute
+				int32 input_gain (in dBFS * 100)
+				boolean input_mute
+				boolean output_user_mute
+
+		{dict},{dict},... GetNodes()
+
+			Returns information about nodes. A node can be either
+			output or input but not both. An output node is
+			something like a speaker or a headphone, and an input
+			node is like a microphone.  The return value is a
+			sequence of dicts mapping from strings to variants
+			(e.g. signature "a{sv}a{sv}" for two nodes).  Each dict
+			contains information about a node.
+
+			Each dict contains the following properties:
+				boolean IsInput
+					false for output nodes, true for input
+					nodes.
+				uint64 Id
+					The id of this node. It is unique among
+					all nodes including both output and
+					input nodes.
+				string Type
+				        The type of this node. It can be one of
+				        following values:
+					/* for output nodes. */
+					"INTERNAL_SPEAKER","HEADPHONE", "HDMI",
+					/* for input nodes. */
+					"INTERNAL_MIC", "MIC",
+					/* for both output and input nodes. */
+					"USB", "BLUETOOTH", "UNKNOWN",
+				string Name
+					The name of this node. For example,
+					"Speaker" or "Internal Mic".
+				string DeviceName
+					The name of the device that this node
+					belongs to. For example,
+					"HDA Intel PCH: CA0132 Analog:0,0" or
+					"Creative SB Arena Headset".
+				uint64 StableDeviceId
+					The stable ID does not change due to
+					device plug/unplug or reboot.
+				uint64 StableDeviceIdNew
+					The new stable ID. Keeping both stable
+					ID and stable ID new is for backward
+					compatibility.
+				boolean Active
+					Whether this node is currently used
+					for output/input. There is one active
+					node for output and one active node for
+					input.
+				uint64 PluggedTime
+					The time that this device was plugged
+					in. This value is in microseconds.
+				string MicPositions
+					The string formed by floating numbers
+					describing the position of mic array.
+				string HotwordModels
+					A string of comma-separated hotword
+					language model locales supported by this
+					node. e.g. "en_au,en_gb,en_us"
+					The string is empty if the node type is
+					not HOTWORD.
+
+		void SetActiveOutputNode(uint64 node_id);
+
+			Requests the specified node to be used for
+			output. If node_id is 0 (which is not a valid
+			node id), cras will choose the active node
+			automatically.
+
+		void SetActiveInputNode(uint64 node_id);
+
+			Requests the specified node to be used for
+			input. If node_id is 0 (which is not a valid
+			node id), cras will choose the active node
+			automatically.
+
+		int32 GetNumberOfActiveStreams()
+
+			Returns the number of streams currently being
+			played or recorded.
+
+		int32 GetNumberOfActiveInputStreams()
+
+			Returns the number of streams currently using input hardware.
+
+		int32 GetNumberOfActiveOutputStreams()
+
+			Returns the number of streams currently using output hardware.
+
+		void SetGlobalOutputChannelRemix(int32 num_channels,
+						 array:double coefficient)
+
+			Sets the conversion matrix for global output channel
+			remixing. The coefficient array represents an N * N
+			conversion matrix M, where N is num_channels, with
+			M[i][j] = coefficient[i * N + j].
+			The remix is done by multiplying the conversion matrix
+			to each N-channel PCM data, i.e M * [L, R] = [L', R']
+			For example, coefficient [0.1, 0.9, 0.4, 0.6] will
+			result in:
+			L' = 0.1 * L + 0.9 * R
+			R' = 0.4 * L + 0.6 * R
+
+		int32 SetHotwordModel(uint64_t node_id, string model_name)
+
+			Set the hotword language model on the specified node.
+			The node must have type HOTWORD and the model_name must
+			be one of the supported locales returned by
+			GetNodes() HotwordModels string.
+			Returns 0 on success, or a negative errno on failure.
+
+Signals		OutputVolumeChanged(int32 volume)
+
+			Indicates that the output volume level has changed.
+
+		OutputMuteChanged(boolean muted, boolean user_muted)
+
+			Indicates that the output mute state has changed.  muted
+			is true if the system is muted by a system process, such
+			as suspend or device switch.  user_muted is set if the
+			system has been muted by user action such as the mute
+			key.
+
+		InputGainChanged(int32 gain)
+
+			Indicates what the system capture gain is now. gain
+			expressed in dBFS*100.
+
+		InputMuteChanged(boolean muted)
+
+			Indicates that the input mute state has changed.
+
+		NodesChanged()
+
+			Indicates that nodes are added/removed.
+
+		ActiveOutputNodeChanged(uint64 node_id)
+
+			Indicates that the active output node has changed.
+
+		ActiveInputNodeChanged(uint64 node_id)
+
+			Indicates that the active input node has changed.
+
+		OutputNodeVolumeChanged(uint64 node_id, int32 volume)
+
+			Indicates the volume of the given node.
+
+		NodeLeftRightSwappedChanged(uint64 node_id, boolean swapped)
+
+			Indicates the left and right channel swapping state of the
+			given node.
+
+		InputNodeGainChanged(uint64 node_id, int32 gain)
+
+			Indicates that the capture gain for the node is now gain
+			expressed in dBFS*100.
+
+		NumberOfActiveStreamsChanged(int32 num_active_streams)
+
+			Indicates the number of active streams has changed.

@@ -1,0 +1,14 @@
+URL: https://github.com/linkedin/dexmaker/
+Version: master (5fb49bba98647d7a0aeea0cbf91fd670c3ff552a)
+License: Apache 2.0
+Description:
+Dexmaker is a Java-language API for doing compile time or runtime code generation targeting the Dalvik VM. Unlike cglib or ASM, this library creates Dalvik .dex files instead of Java .class files.
+
+It has a small, close-to-the-metal API. This API mirrors the Dalvik bytecode specification giving you tight control over the bytecode emitted. Code is generated instruction-by-instruction; you bring your own abstract syntax tree if you need one. And since it uses Dalvik's dx tool as a backend, you get efficient register allocation and regular/wide instruction selection for free.
+
+It includes a stock code generator for class proxies. If you just want to do AOP or class mocking, you don't need to mess around with bytecodes.
+
+Local Modifications:
+        Allow to share classloader via dexmaker.share_classloader system property (I8c2490c3ec8e8582dc41c486f8f7a406bd635ebb)
+	Allow 'Q' until we can replace the version check with a number based check
+        Mark mocks as trusted (needs upstreaming)

@@ -1,0 +1,68 @@
+TX_RING support for TPACKET_V3 was added in this commit:
+
+commit 7f953ab2ba46e8649537942c0a64668ca2ce5cc5
+Author: Sowmini Varadhan <sowmini.varadhan@oracle.com>
+Date:   Tue Jan 3 06:31:47 2017 -0800
+
+    af_packet: TX_RING support for TPACKET_V3
+
+which first appeared in 4.11. Do not attempt to test TX_RING
+support for TPACKET_V3 on kernels earlier than this.
+
+diff --git a/tools/testing/selftests/net/psock_tpacket.c b/tools/testing/selftests/net/psock_tpacket.c
+index e795a41c4771..c50375f51b2e 100644
+--- a/tools/testing/selftests/net/psock_tpacket.c
++++ b/tools/testing/selftests/net/psock_tpacket.c
+@@ -42,6 +42,7 @@
+ #include <sys/stat.h>
+ #include <sys/socket.h>
+ #include <sys/mman.h>
++#include <sys/utsname.h>
+ #include <linux/if_packet.h>
+ #include <linux/filter.h>
+ #include <ctype.h>
+@@ -844,9 +845,34 @@ static int test_tpacket(int version, int type)
+ 	return 0;
+ }
+ 
++void get_kernel_version(int *version, int *patchlevel)
++{
++	int ret, sublevel;
++	struct utsname utsname;
++
++	ret = uname(&utsname);
++	if (ret) {
++		perror("uname");
++		exit(1);
++	}
++
++	ret = sscanf(utsname.release, "%d.%d.%d", version, patchlevel,
++		     &sublevel);
++	if (ret < 0) {
++		perror("sscanf");
++		exit(1);
++	} else if (ret != 3) {
++		printf("Malformed kernel version %s\n", &utsname.release);
++		exit(1);
++	}
++}
++
+ int main(void)
+ {
+ 	int ret = 0;
++	int version, patchlevel;
++
++	get_kernel_version(&version, &patchlevel);
+ 
+ 	ret |= test_tpacket(TPACKET_V1, PACKET_RX_RING);
+ 	ret |= test_tpacket(TPACKET_V1, PACKET_TX_RING);
+@@ -855,7 +881,8 @@ int main(void)
+ 	ret |= test_tpacket(TPACKET_V2, PACKET_TX_RING);
+ 
+ 	ret |= test_tpacket(TPACKET_V3, PACKET_RX_RING);
+-	ret |= test_tpacket(TPACKET_V3, PACKET_TX_RING);
++	if (version > 4 || (version == 4 && patchlevel >= 11))
++		ret |= test_tpacket(TPACKET_V3, PACKET_TX_RING);
+ 
+ 	if (ret)
+ 		return 1;

@@ -1,0 +1,13 @@
+This project only contains Rappor java client library.
+If you want to get the full source or other components, please visit Rappor github page:
+https://github.com/google/rappor
+
+Any Android specific modifications to upstream archive-patcher should be listed
+here:
+
+- Removed all non-java client library files.
+
+- Modified client/java/com/google/rappor/HmacDrbg.java, client/java/com/google/rappor/Encoder.java
+  to remove Guava, javax dependency.
+
+- Moved package from com.google.rappor.* to com.google.android.rappor.* to avoid source conflict with 3rd party library.

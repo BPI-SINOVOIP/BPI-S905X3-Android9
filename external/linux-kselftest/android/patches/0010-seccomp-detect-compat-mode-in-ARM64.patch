@@ -1,0 +1,45 @@
+From ce845e0a25d77c8cf0fae539d4596b83e65e3e70 Mon Sep 17 00:00:00 2001
+From: Steve Muckle <smuckle@google.com>
+Date: Tue, 24 Oct 2017 14:41:07 -0700
+Subject: [PATCH] seccomp: detect compat mode in ARM64
+
+Compat mode on ARM64 reports syscall numbering differently.
+
+Test: run vts-kernel -m VtsKernelLinuxKselftestStaging
+Bug: 33027081
+Change-Id: Ifc02bb48573b4a40f1857b41a7735a6e3d7a06e8
+Signed-off-by: Steve Muckle <smuckle@google.com>
+---
+ tools/testing/selftests/seccomp/seccomp_bpf.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/tools/testing/selftests/seccomp/seccomp_bpf.c b/tools/testing/selftests/seccomp/seccomp_bpf.c
+index 2c81f4b9965d..1975e7d42e37 100644
+--- a/tools/testing/selftests/seccomp/seccomp_bpf.c
++++ b/tools/testing/selftests/seccomp/seccomp_bpf.c
+@@ -2295,6 +2295,7 @@ TEST(syscall_restart)
+ 	};
+ #if defined(__arm__)
+ 	struct utsname utsbuf;
++	int arm_version;
+ #endif
+ 
+ 	ASSERT_EQ(0, pipe(pipefd));
+@@ -2404,12 +2405,12 @@ TEST(syscall_restart)
+ 	ret = get_syscall(_metadata, child_pid);
+ #if defined(__arm__)
+ 	/*
+-	 * FIXME:
+ 	 * - native ARM registers do NOT expose true syscall.
+ 	 * - compat ARM registers on ARM64 DO expose true syscall.
+ 	 */
+ 	ASSERT_EQ(0, uname(&utsbuf));
+-	if (strncmp(utsbuf.machine, "arm", 3) == 0) {
++	if (sscanf(utsbuf.machine, "armv%d", &arm_version) == 1 &&
++	    arm_version < 8) {
+ 		EXPECT_EQ(__NR_nanosleep, ret);
+ 	} else
+ #endif
+-- 
+2.16.0.rc1.238.g530d649a79-goog
+

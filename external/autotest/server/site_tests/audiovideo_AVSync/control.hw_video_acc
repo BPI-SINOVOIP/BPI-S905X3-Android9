@@ -1,0 +1,30 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+
+AUTHOR = "chromeos-chameleon"
+NAME = 'audiovideo_AVSync.hw_video_acc'
+PURPOSE = "Remotely controlled HDMI audio/video test."
+ATTRIBUTES = "suite:chameleon_audio_nightly, suite:chameleon_audio"
+TIME = 'SHORT'
+TEST_CATEGORY = 'Performance'
+TEST_CLASS = 'audiovideo'
+TEST_TYPE = 'server'
+DEPENDENCIES = 'chameleon:hdmi'
+JOB_RETRIES = 2
+
+DOC = """
+This test measure the audio/video synchronization quality while playing a
+1080p 60fps MP4 video (video: h264, audio: aac).
+"""
+
+args_dict = utils.args_to_dict(args)
+chameleon_args = hosts.CrosHost.get_chameleon_arguments(args_dict)
+
+def run(machine):
+    host = hosts.create_host(machine, chameleon_args=chameleon_args)
+    job.run_test("audiovideo_AVSync", host=host)
+
+parallel_simple(run, machines)

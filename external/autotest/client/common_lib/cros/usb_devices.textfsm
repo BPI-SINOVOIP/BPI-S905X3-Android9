@@ -1,0 +1,27 @@
+Value tbus ([0-9]+)
+Value tlev ([0-9]+)
+Value tprnt ([0-9]+)
+Value tport ([0-9]+)
+Value tcnt ([0-9]+)
+Value tdev ([0-9]+)
+Value dver ([0-9].[0-9]+)
+Value Required Vendor ([0-9a-fA-F]+)
+Value Required ProdID ([0-9A-Fa-f]+)
+Value Required prev ([0-9a-fA-Z.]+)
+Value Manufacturer (.+)
+Value Product (.+)
+Value serialnumber ([0-9a-fA-Z\:\-]+)
+Value cinterfaces (\d)
+Value List intindex ([0-9])
+Value List intdriver ([A-Za-z-\(\)]+)
+
+
+Start
+  ^USB-Device -> Continue.Record
+  ^T:\s+Bus=${tbus}\s+Lev=${tlev}\sPrnt=${tprnt}\s+Port=${tport}\sCnt=${tcnt}\sDev\#=\s+${tdev}
+  ^P:\s+Vendor=${Vendor}\s+ProdID=${ProdID}\sRev=${prev}
+  ^S:\s+Manufacturer=${Manufacturer}
+  ^S:\s+Product=${Product}
+  ^S:\s+SerialNumber=${serialnumber}
+  ^C:\s+\#Ifs=\s+${cinterfaces}
+  ^I:\s+If\#=\s+${intindex}.*Driver=${intdriver}

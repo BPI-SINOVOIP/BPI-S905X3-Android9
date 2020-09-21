@@ -1,0 +1,6 @@
+{
+    "run_oci_args": ["--cgroup_parent=chronos_containers"],
+    "program_argv": ["/usr/bin/hexdump", "-n1", "/dev/urandom"],
+    "expected_result": "",
+    "expected_stderr": "hexdump: /dev/urandom: Operation not permitted\nhexdump: all input file arguments failed"
+}

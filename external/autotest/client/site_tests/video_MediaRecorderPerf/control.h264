@@ -1,0 +1,33 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "Chrome OS Project, chromeos-video@google.com"
+NAME = "video_MediaRecorderPerf.h264"
+PURPOSE = """
+Measure frame processing time and CPU usage with SW and HW H.264 encode
+in MediaRecorder.
+"""
+CRITERIA = """
+This is a performance test and does not fail.
+"""
+TIME = "MEDIUM"
+ATTRIBUTES = "suite:crosbolt_perf_perbuild"
+TEST_CATEGORY = "Performance"
+TEST_CLASS = "video"
+TEST_TYPE = "client"
+DEPENDENCIES = "hw_video_acc_enc_h264"
+JOB_RETRIES = 2
+BUG_TEMPLATE = {
+    'labels': ['OS-Chrome', 'VideoTestFailure'],
+    'cc': ['chromeos-video-test-failures@google.com'],
+}
+
+DOC = """
+This test uses MediaRecorder to record videos with HW encode on and off,
+and report the frame processing time and CPU usages of both.
+"""
+
+job.run_test('video_MediaRecorderPerf', codec='h264', fps=30,
+    video_file='crowd720_25frames.y4m', tag='h264')
+

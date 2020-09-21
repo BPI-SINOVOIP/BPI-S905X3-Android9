@@ -1,0 +1,27 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "Chrome OS Project, chromeos-video@google.com"
+NAME = "video_MediaRecorderHWEncodeUsed.vp9"
+PURPOSE = "Verify that VP9 video encode acceleration is used in MediaRecorder"
+CRITERIA = """
+This test will fail if VEA is not used when MediaRecorder records a video.
+"""
+TIME = "SHORT"
+ATTRIBUTES = "suite:bvt-perbuild, suite:partners"
+TEST_CATEGORY = "General"
+TEST_CLASS = "video"
+TEST_TYPE = "client"
+DEPENDENCIES = "hw_video_acc_enc_vp9"
+JOB_RETRIES = 2
+BUG_TEMPLATE = {
+    'labels': ['OS-Chrome', 'VideoTestFailure'],
+}
+
+DOC = """
+This test verifies VP9 video encode acceleration is used when MediaRecorder
+records a video.
+"""
+
+job.run_test('video_MediaRecorderHWEncodeUsed', codec='vp9', tag='vp9')

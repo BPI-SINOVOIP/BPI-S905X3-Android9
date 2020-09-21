@@ -1,0 +1,67 @@
+#!/bin/bash
+
+[ -f testing.sh ] && . testing.sh
+
+#testing "name" "command" "result" "infile" "stdin"
+
+# TODO: Should also have device and socket files
+
+mkdir d
+touch f
+ln -s /dev/null L
+echo nonempty > s
+mkfifo p
+
+type_test()
+{
+  result=""
+  for i in d f L s p n
+  do
+    if test $* $i
+    then
+      result=$result$i
+    fi
+  done
+  printf "%s" $result
+}
+
+testing "-b" "type_test -b" "" "" ""
+testing "-c" "type_test -c" "L" "" ""
+testing "-d" "type_test -d" "d" "" ""
+testing "-f" "type_test -f" "fs" "" ""
+testing "-h" "type_test -h" "L" "" ""
+testing "-L" "type_test -L" "L" "" ""
+testing "-s" "type_test -s" "ds" "" ""
+testing "-S" "type_test -S" "" "" ""
+testing "-p" "type_test -p" "p" "" ""
+testing "-e" "type_test -e" "dfLsp" "" ""
+testing "! -e" "type_test ! -e" "n" "" ""
+
+rm f L s p
+rmdir d
+
+# TODO: Test rwx gu t
+
+testing "test" "test "" || test a && echo yes" "yes\n" "" ""
+testing "-n" "test -n "" || test -n a && echo yes" "yes\n" "" ""
+testing "-z" "test -n a || test -n "" && echo yes" "yes\n" "" ""
+testing "a = b" "test a = b || test "" = "" && echo yes" "yes\n" "" ""
+testing "a != b" "test "" != "" || test a = b && echo yes" "yes\n" "" ""
+
+arith_test()
+{
+  test -1 $1 1 && echo l
+  test 0 $1 0 && echo e
+  test -3 $1 -5 && echo g
+}
+
+testing "-eq" "arith_test -eq" "e\n" "" ""
+testing "-ne" "arith_test -ne" "l\ng\n" "" ""
+testing "-gt" "arith_test -gt" "g\n" "" ""
+testing "-ge" "arith_test -ge" "e\ng\n" "" ""
+testing "-lt" "arith_test -lt" "l\n" "" ""
+testing "-le" "arith_test -le" "l\ne\n" "" ""
+
+# test ! = -o a
+# test ! \( = -o a \)
+# test \( ! = \) -o a

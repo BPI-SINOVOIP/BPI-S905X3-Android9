@@ -1,0 +1,46 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+
+AUTHOR = 'rjahagir'
+NAME = 'bluetooth_AdapterPairing.mouse.suspend_resume'
+PURPOSE = 'Test adapter pairing and connecting to a bluetooth device after suspend/resume'
+CRITERIA = 'Adapter should work in correct states.'
+ATTRIBUTES = 'suite:bluetooth, suite:bluetooth_chameleon'
+TIME = 'SHORT'    # This test takes about 2 minutes.
+TEST_CATEGORY = 'Functional'
+TEST_CLASS = 'bluetooth'
+TEST_TYPE = 'server'
+DEPENDENCIES = 'bluetooth, chameleon:bt_hid'
+
+DOC = """
+Verify that the bluetooth adapter of the DUT could pair and connect
+to a bluetooth device.
+
+Specifically, the following subtests are executed in this autotest.
+    - test_reset_on_adapter
+    - test_pairable
+    - test_discover_device
+    - test_stop_discovery
+    - test_device_name
+    - test_device_class_of_service
+    - test_device_class_of_device
+    - test_pairing
+    - test_connection_by_adapter
+    - test_disconnection_by_adapter
+    - test_connection_by_device
+    - test_disconnection_by_device
+    - test_remove_pairing
+"""
+
+args_dict = utils.args_to_dict(args)
+chameleon_args = hosts.CrosHost.get_chameleon_arguments(args_dict)
+
+def run(machine):
+    host = hosts.create_host(machine, chameleon_args=chameleon_args)
+    job.run_test('bluetooth_AdapterPairing', host=host, device_type='MOUSE',
+                 num_iterations=1, min_pass_count=1, suspend_resume=True)
+
+parallel_simple(run, machines)

@@ -1,0 +1,33 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+
+AUTHOR = "mruthven"
+NAME = "firmware_Cr50InvalidateRW"
+PURPOSE = "Verify the inactive cr50 header is corrupted after login"
+ATTRIBUTES = "suite:cr50_stress_experimental"
+TIME = "MEDIUM"
+TEST_TYPE = "server"
+
+DOC = """
+Verify the inactive Cr50 header on the first login after cryptohome restarts.
+
+There are two special cases this test covers: logging in after the TPM owner is
+cleared and logging in as guest. After the tpm owner is cleared, corrupting the
+header will be done on the second login. During guest login the owner wont be
+cleared.
+"""
+
+args_dict = utils.args_to_dict(args)
+
+def run(machine):
+    host = hosts.create_host(machine)
+
+    num_iterations = int(args_dict.get("num_iterations", 1))
+
+    job.run_test("firmware_Cr50InvalidateRW", host=host,
+                 iterations=num_iterations)
+
+parallel_simple(run, machines)

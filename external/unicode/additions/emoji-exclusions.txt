@@ -1,0 +1,10 @@
+# © 2018 Unicode®, Inc.
+# Unicode and the Unicode Logo are registered trademarks of Unicode, Inc. in the U.S. and other countries.
+# For terms of use, see http://www.unicode.org/terms_of_use.html
+
+# Note: this file is not published by Unicode, but since its format follows Unicode's format, it's
+# basically derived from Unicode data files.
+
+# Should be an empty file, used for temporary non-final emoji font drops.
+# ex:
+#1F9B9 1F3FB                             ; Emoji_Modifier_Sequence   ; supervillain: light skin tone

@@ -1,0 +1,20 @@
+# Copyright (c) 2018 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "Intel"
+NAME = "bluetooth_TurnOnOffUI"
+PURPOSE = "To test the DUT state on BT turned on/off through UI"
+CRITERIA = "Fail if any hang or crash"
+ATTRIBUTES = "suite:bluetooth, suite:bluetooth_sanity"
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "Bluetooth"
+TEST_TYPE = "client"
+DOC = """
+Go to settings and turn on/off BT
+Command to execute is
+test_that -b $BOARD $DUT_IP $TEST
+"""
+
+job.run_test("bluetooth_TurnOnOffUI", iteration_count=30, tag="UI")

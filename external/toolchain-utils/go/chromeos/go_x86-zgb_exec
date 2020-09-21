@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Copy and remotely execute a binary on the x86-zgb device.
+#
+# For this to work, the corresponding entry must exist in
+# ~/.ssh/config and the device must already be setup for
+# password-less authentication. See setup instructions at
+# http://go/chromeos-toolchain-team/go-toolchain
+
+GOOS="linux" GOARCH="386" exec go_target_exec x86-zgb "$@"

@@ -1,0 +1,25 @@
+# This experiment just runs a short telemety autotest which measures
+# the performance of the page_cycler_v2.bloat test.
+#
+# You should replace all the placeholders, marked by angle-brackets, with the
+# appropriate actual values.
+
+name: bloat_perf_example
+board: <your-board-goes-here>
+
+# Note:  You can specify multiple remotes, to run your tests in parallel on
+# multiple machines. e.g. "remote: test-machine-1.com test-machine2.come
+# test-machine3.com"
+remote: <your-remote-goes-here>
+
+perf_args: record -e cycles
+
+benchmark: page_cycler_v2.bloat {
+	suite: telemetry_Crosperf
+	iterations:1
+}
+
+# Replace the chromeos image below with the actual path to your test image.
+test_image {
+  chromeos_image:<path-to-your-chroot>/src/build/images/<board>/test-image/chromiumos_test_image.bin
+}

@@ -1,0 +1,35 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "kerl@google.com, chromeos-meetings@google.com"
+NAME = "video_WebRtcResolutionSwitching"
+PURPOSE = "Stress WebRTC by frequently switching between different resolutions"
+CRITERIA = "Fails if any video element gets a lower resolution than requested"
+ATTRIBUTES = ("suite:hotrod, suite:bluestreak, suite:bluestreak-release, "
+        "suite:bluestreak-perbuild")
+TIME = "SHORT"
+TEST_CATEGORY = "Stress"
+TEST_CLASS = "video"
+TEST_TYPE = "client"
+BUG_TEMPLATE = {
+    "labels": ["OS-Chrome"],
+    "components": ["OS>Kernel>Video"],
+}
+
+DOC = """
+This test starts 5 loopback peer connections, each with 4 streams with
+different resolutions. The test then switches randomly which of the streams are
+active for each connection, effectively flipping between different resolutions.
+
+If any of the video elements gets a resolution that is lower than the lowest we
+request, the test fails.
+
+The tests use a fake media stream - not a real camera.
+
+This test acts as a stress test and ensures that we do not encounter issues
+such as https://crbug.com/758850 again.
+"""
+
+job.run_test("video_WebRtcResolutionSwitching")
+

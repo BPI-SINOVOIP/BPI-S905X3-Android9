@@ -1,0 +1,29 @@
+# Copyright 2015 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "Chrome OS Team"
+NAME = "graphics_PowerConsumption"
+TIME = "MEDIUM"
+TEST_CATEGORY = "Performance"
+TEST_CLASS = "graphics"
+ATTRIBUTES = "suite:bvt-perbuild"
+TEST_TYPE = "server"
+DEPENDENCIES = "rpm, power:battery"
+BUG_TEMPLATE = {
+    "labels": ["OS-Chrome"],
+    "components": ["OS>Kernel>Graphics"],
+}
+
+DOC = """
+The test outputs the power consumption for WebGL Aquarium gfx demo.
+"""
+
+
+def run(machine):
+    host = hosts.create_host(machine)
+    job.run_test("graphics_PowerConsumption", host=host,
+                 client_test='graphics_WebGLAquarium')
+
+
+parallel_simple(run, machines)

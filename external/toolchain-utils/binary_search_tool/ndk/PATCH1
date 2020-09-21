@@ -1,0 +1,40 @@
+From 93395bf49f856abac5ab06d4bcaa7cdbf76a77fc Mon Sep 17 00:00:00 2001
+From: Cassidy Burden <cburden@google.com>
+Date: Tue, 9 Aug 2016 09:38:41 -0700
+Subject: [PATCH] FOR BINARY SEARCH TOOL: Add arm7 target
+
+Add arm7 target to build.gradle file. This is so the bisection tool only
+has to triage the object files generated for our specific device.
+Without this target we would have to binary search across object files
+meant for x86 targets (that we can't even test on our ARM device).
+---
+ Teapot/app/build.gradle | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/Teapot/app/build.gradle b/Teapot/app/build.gradle
+index 78cf54d..c322114 100644
+--- a/Teapot/app/build.gradle
++++ b/Teapot/app/build.gradle
+@@ -29,7 +29,7 @@ model {
+             cppFlags.addAll(['-I' + "${ndkDir}/sources/android/cpufeatures",
+                              '-I' + file('src/main/jni/ndk_helper')])
+             cppFlags.addAll(['-std=c++11', '-Wall',
+-                             '-fno-exceptions', '-fno-rtti'])
++                             '-fno-exceptions', '-fno-rtti', '-gsplit-dwarf'])
+             ldLibs.addAll(['android', 'log', 'EGL', 'GLESv2','atomic'])
+         }
+         sources {
+@@ -51,5 +51,10 @@ model {
+                 proguardFiles.add(file('proguard-rules.txt'))
+             }
+         }
++	productFlavors{
++            create("arm7") {
++                ndk.abiFilters.add("armeabi-v7a")
++            }
++	}
+     }
+ }
+-- 
+2.8.0.rc3.226.g39d4020
+

@@ -1,0 +1,21 @@
+language: java
+
+jdk:
+  - oraclejdk8
+
+# use travis-ci docker based infrastructure
+sudo: false
+
+# https://github.com/travis-ci/travis-ci/issues/3259#issuecomment-130860338
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+
+cache:
+  directories:
+    - $HOME/.m2
+
+install: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+
+script: mvn test -B

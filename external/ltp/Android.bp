@@ -1,0 +1,96 @@
+//
+// Copyright (C) 2016 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+// Include the generated rules
+build = ["gen.bp"]
+
+genrule {
+    name: "ltp_syscalls_h",
+    tool_files: ["include/lapi/syscalls/regen.sh"],
+    cmd: "$(location) $(genDir)/lapi/syscalls.h",
+    srcs: ["include/lapi/syscalls/*.in"],
+    out: ["lapi/syscalls.h"],
+}
+
+cc_defaults {
+    name: "ltp_defaults",
+
+    cflags: [
+        // Hacks for bionic compatibility
+        "-include bionic-compat.h",
+
+        "-Wall",
+        "-Werror",
+        // Keep some warnings to check later
+        "-Wno-error=absolute-value",
+        "-Wno-error=undefined-internal",
+        "-Wno-error=uninitialized",
+        "-Wno-error=user-defined-warnings",
+        // Silence noisy warnings
+        "-Wno-constant-conversion",
+        "-Wno-deprecated",
+        "-Wno-duplicate-decl-specifier",
+        "-Wno-empty-body",
+        "-Wno-format",
+        "-Wno-gnu-designator",
+	"-Wno-implicit-function-declaration",
+	"-Wno-incompatible-pointer-types-discards-qualifiers",
+        "-Wno-knr-promoted-parameter",
+        "-Wno-macro-redefined",
+	"-Wno-missing-braces",
+        "-Wno-missing-field-initializers",
+        "-Wno-parentheses-equality",
+        "-Wno-pointer-arith",
+        "-Wno-pointer-sign",
+        "-Wno-sign-compare",
+        "-Wno-tautological-compare",
+        "-Wno-unneeded-internal-declaration",
+        "-Wno-unused-function",
+        "-Wno-unused-parameter",
+        "-Wno-unused-variable",
+    ],
+
+    local_include_dirs: [
+        "android/include",
+        "include",
+    ],
+
+    target: {
+        // bionic has broken signal handling for signum > 32 on 32-bit ARM and x86
+        // (for ABI reasons this can't be fixed)
+        android_arm: {
+            cflags: ["-DNUMSIGS=32"],
+        },
+        android_x86: {
+            cflags: ["-DNUMSIGS=32"],
+        },
+    },
+
+    generated_headers: ["ltp_syscalls_h"],
+
+    static_libs: ["libcap"],
+
+    // TODO: recover libaio when the external project created
+    shared_libs: ["libselinux"],
+}
+
+cc_defaults {
+    name: "ltp_test_defaults",
+    defaults: ["ltp_defaults"],
+    gtest: false,
+    no_named_install_directory: true,
+    relative_install_path: "ltp/testcases/bin",
+}

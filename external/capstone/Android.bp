@@ -1,0 +1,70 @@
+
+arm_flags = ["-DCAPSTONE_HAS_ARM"]
+arm_srcs = [
+    "arch/ARM/ARMDisassembler.c",
+    "arch/ARM/ARMInstPrinter.c",
+    "arch/ARM/ARMMapping.c",
+    "arch/ARM/ARMModule.c",
+]
+
+arm64_flags = ["-DCAPSTONE_HAS_ARM64"]
+arm64_srcs = [
+    "arch/AArch64/AArch64BaseInfo.c",
+    "arch/AArch64/AArch64Disassembler.c",
+    "arch/AArch64/AArch64InstPrinter.c",
+    "arch/AArch64/AArch64Mapping.c",
+    "arch/AArch64/AArch64Module.c",
+]
+
+x86_flags = ["-DCAPSTONE_HAS_X86"]
+x86_srcs = [
+    "arch/X86/X86DisassemblerDecoder.c",
+    "arch/X86/X86Disassembler.c",
+    "arch/X86/X86IntelInstPrinter.c",
+    "arch/X86/X86ATTInstPrinter.c",
+    "arch/X86/X86Mapping.c",
+    "arch/X86/X86Module.c",
+]
+
+cc_defaults {
+    name: "capstone-defaults",
+    srcs: [
+        "cs.c",
+        "utils.c",
+        "SStream.c",
+        "MCInstrDesc.c",
+        "MCRegisterInfo.c",
+        "MCInst.c",
+    ],
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wno-error=unused-parameter",
+        "-DCAPSTONE_USE_SYS_DYN_MEM",
+    ],
+    export_include_dirs: [".", "include"],
+    clang: true,
+    arch: {
+        arm: {
+            cflags: arm_flags,
+            srcs: arm_srcs,
+        },
+        x86: {
+            cflags: arm_flags + arm64_flags + x86_flags,
+            srcs: arm_srcs + arm64_srcs + x86_srcs,
+        },
+        arm64: {
+            cflags: arm_flags + arm64_flags,
+            srcs: arm_srcs + arm64_srcs
+        }
+    }
+}
+
+// For the host and device platform
+// =====================================================
+
+cc_library {
+    name: "libcapstone",
+    host_supported: true,
+    defaults: ["capstone-defaults"],
+}

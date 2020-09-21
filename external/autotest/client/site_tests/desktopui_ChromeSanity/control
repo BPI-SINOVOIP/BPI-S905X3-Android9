@@ -1,0 +1,37 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "derat, chromeos-ui"
+NAME = "desktopui_ChromeSanity"
+ATTRIBUTES = "suite:bvt-perbuild"
+TIME = "SHORT"
+TEST_CATEGORY = "General"
+TEST_CLASS = "desktopui"
+TEST_TYPE = "client"
+JOB_RETRIES = 0
+
+DOC = """
+Test that Chrome is at least marginally usable.
+
+Uses Telemetry to log in, load a simple HTML page, and log out. Along the way,
+tests that session_manager emits the expected SessionStateChanged D-Bus signal
+about the session starting and that the user's encrypted home directory is
+mounted.
+
+A failure can indicate several things:
+
+- Telemetry-to-Chrome communication isn't working (is Chrome crashing?).
+- Chrome and session_manager aren't coordinating login properly.
+- Chrome is internally broken and can't load web pages.
+- Chrome and cryptohome aren't coordinating user home dir mounting properly.
+
+That's a fairly broad range of causes. They're all covered here with the intent
+of providing a single fast-running, minimally-flaky test that can be used to
+validate new versions of Chrome before integrating them into Chrome OS.
+
+The info log provides high-level information about what the test is doing and
+can hopefully be used to narrow down the location of failure.
+"""
+
+job.run_test('desktopui_ChromeSanity')

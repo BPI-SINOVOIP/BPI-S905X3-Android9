@@ -1,0 +1,36 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "Chrome OS Team"
+NAME = "bvt-installer"
+PURPOSE = "Build verification of ChromeOS pieces related to Installer."
+
+TIME = "MEDIUM"
+TEST_CATEGORY = "General"
+TEST_CLASS = "suite"
+TEST_TYPE = "Server"
+
+DOC = """
+This suite is used for testing pieces in ChromeOS that would be covered by
+the Internals>Installer component (e.g Powerwash). It is run on
+the canary and release builders, but not the CQ or PFQ's. These tests are
+being split from bvt-inline as their average runtime is not acceptable for
+that suite.
+
+@param build: The name of the image to test.
+              Ex: veyron_minnie-release/R60-9575.0.0
+@param board: The board to test on. Ex: veyron_minnie
+@param pool: The pool of machines to utilize for scheduling.
+"""
+
+import common
+from autotest_lib.server.cros import provision
+from autotest_lib.server.cros.dynamic_suite import dynamic_suite
+
+args_dict['max_runtime_mins'] = 60
+args_dict['name'] = 'bvt-installer'
+args_dict['job'] = job
+args_dict['version_prefix'] = provision.CROS_VERSION_PREFIX
+
+dynamic_suite.reimage_and_run(**args_dict)

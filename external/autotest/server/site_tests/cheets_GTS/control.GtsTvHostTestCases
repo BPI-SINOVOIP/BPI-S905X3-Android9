@@ -1,0 +1,29 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+# This file has been automatically generated. Do not edit!
+
+AUTHOR = 'ARC++ Team'
+NAME = 'cheets_GTS.GtsTvHostTestCases'
+ATTRIBUTES = 'suite:gts'
+DEPENDENCIES = 'arc'
+JOB_RETRIES = 2
+TEST_TYPE = 'server'
+TIME = 'LENGTHY'
+
+DOC = ('Run package GtsTvHostTestCases of the '
+       'Android Google Test Suite (GTS) in the ARC++ container.')
+
+def run_GTS(machine):
+    host = hosts.create_host(machine)
+    job.run_test(
+        'cheets_GTS',
+        host=host,
+        iterations=1,
+        tag='GtsTvHostTestCases',
+        target_package='GtsTvHostTestCases',
+
+        timeout=3600)
+
+parallel_simple(run_GTS, machines)

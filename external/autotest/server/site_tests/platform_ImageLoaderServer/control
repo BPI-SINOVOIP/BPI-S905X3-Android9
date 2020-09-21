@@ -1,0 +1,23 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "kerrnel@chromium.org, ejcaruso@chromium.org"
+NAME = "platform_ImageLoaderServer"
+TIME = "SHORT"
+TEST_CATEGORY = "General"
+TEST_CLASS = "platform"
+TEST_TYPE = "server"
+ATTRIBUTES = "suite:bvt-perbuild"
+
+DOC = """
+This test runs ImageLoader through its various dbus and command line
+interfaces. This is the server side autotest which downloads the correct
+components from Google Storage and loads them onto the DUT.
+"""
+
+def run(machine):
+    host = hosts.create_host(machine)
+    job.run_test('platform_ImageLoaderServer', host=host)
+
+parallel_simple(run, machines)

@@ -1,0 +1,24 @@
+#!/bin/bash -ux
+
+cd /usr/local/google/home/yuhenglong/Desktop/spec2006/cpu2006-redhat-ia32/
+cd benchspec/CPU2006/471.omnetpp/run/build_base_test$1.0000
+
+(time ./omnetpp$1 ../../data/train/input/omnetpp.ini) 1>log-file 2>time.txt
+
+state=$?
+
+if [ $state -eq 0 ];then
+  diff ../../data/train/output/omnetpp.sca.result omnetpp.sca
+  state=$?
+  if [ $state -eq 0 ];then
+    time=$(cat time.txt | grep real | cut -f2 -s | cut -d 's' -f 1)
+    time=$(echo $time | awk -Fm '{ print ($1 * 60) + $2 }')
+    echo $time
+  else
+    echo "error"
+  fi
+else
+  echo "error"
+fi
+
+return $state

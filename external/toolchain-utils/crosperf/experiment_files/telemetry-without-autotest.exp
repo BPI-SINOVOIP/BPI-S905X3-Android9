@@ -1,0 +1,31 @@
+# This example experiment file shows how to run a Telemetry test
+# directly, bypassing autotest.  This runs the "run_measurement"
+# script.  You need to supply both the name of the Telemetry test and
+# the page_set (via the test_args argument).
+#
+# You should replace all the placeholders, marked by angle-brackets,
+# with the appropriate actual values.
+
+name: telemetry_without_autotest_example
+board: <your-board-goes-here>
+
+# Note:  You can specify multiple remotes, to run your tests in parallel on
+# multiple machines. e.g. "remote: test-machine-1.com test-machine2.come
+# test-machine3.com"
+remote: <your-remote-goes-here>
+
+# Replace "page_cycler_dhtml" below with the name of the Telemetry test
+# that you want run_measurement to run.  Also replace the page set below
+# (in the test_args field) with the appropriate page set for your test.
+# N.B.  The key to running telemetry without autotest is the 'suite' field.
+# Make sure your suite is 'telemtry', NOT 'telemetry_Crosperf'.
+benchmark: page_cycler_dhtml {
+    suite: telemetry 
+    iterations: 1
+    test_args: ./page_sets/page_cycler/dhtml.json
+}
+
+# Replace the chromeos image below with the actual path to your test image.
+test_image {
+  chromeos_image:<path-to-your-chroot>/src/build/images/<board>/test-image/chromiumos_test_image.bin
+}

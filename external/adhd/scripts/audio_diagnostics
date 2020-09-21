@@ -1,0 +1,54 @@
+#!/bin/sh
+#
+# Copyright (c) 2013 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+#
+# Collect information about the audio system from top to bottom.
+
+dump_cards() {
+    for card in ${@}
+    do
+        echo '=== amixer -c' $card scontents '==='
+        amixer -c $card scontents
+        echo '=== amixer -c' $card contents '==='
+        amixer -c $card contents
+    done
+}
+
+echo '=== cras_test_client --dump_server_info ==='
+cras_test_client --dump_server_info
+
+echo '=== cras_test_client --dump_audio_thread ==='
+cras_test_client --dump_audio_thread
+
+echo '=== aplay -l ==='
+aplay -l
+echo '=== arecord -l ==='
+arecord -l
+
+output_cards=$(aplay -l | egrep ^card | sed 's/card \([0-9]\+\).*/\1/' | sort -u)
+dump_cards $output_cards
+
+input_cards=$(arecord -l | egrep ^card | sed 's/card \([0-9]\+\).*/\1/' | sort -u)
+dump_cards $input_cards
+
+# HDA codec for codecs on x86.
+codecs=$(find /proc/asound -mindepth 2 -maxdepth 2 -path '*card*/codec#*')
+for codec in $codecs
+do
+    echo '=== codec:' $codec '==='
+    cat $codec
+done
+
+# I2C dump for codecs on arm.
+# Find lines like "max98088.7-0010" and extract "7 0x0010" from it.
+if [ -e /sys/kernel/debug/asoc/codecs ]; then
+    sed_expr='s/^\([^.-]\+\)\.\([0-9]\+\)-\([0-9]\+\)$/\2 0x\3/p'
+    sed -n "$sed_expr" /sys/kernel/debug/asoc/codecs |
+    while read i2c_addr
+    do
+        echo '===' i2cdump -f -y $i2c_addr '==='
+        i2cdump -f -y $i2c_addr
+    done
+fi

@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package nugget.app.protoapi;
+
+//  Magic number used to identify the message type
+enum APImessageID {
+  AMID_RESERVED = 0;
+  API_REVISION_ONE = 1;
+  SEND_SEQUENCE = 2;
+  ECHO_THIS = 3;
+  NOTICE = 4;
+  CONTROL_REQUEST = 5;
+  TESTING_API_CALL = 6;
+  TESTING_API_RESPONSE = 7;
+}
+
+//   Success or Failure return for the call.  More failure types can be added
+//   to the enumeration as needed.
+enum APIcallResult {
+  SUCCESS = 0;
+  FAIL    = 1;
+}

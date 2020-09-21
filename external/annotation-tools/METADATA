@@ -1,0 +1,16 @@
+name: "annotation_tools"
+description:
+    "Annotation File Utilities, used for inserting external annotations to source files"
+
+third_party {
+  url {
+    type: HOMEPAGE
+    value: "https://github.com/typetools/annotation-tools"
+  }
+  url {
+    type: ARCHIVE
+    value: "https://checkerframework.org/annotation-file-utilities/annotation-tools-3.6.45.zip"
+  }
+  version: "3.6.45"
+  last_upgrade_date { year: 2017 month: 9 day: 28 }
+}

@@ -1,0 +1,13 @@
+# All these files are delivered as binaries in Chrome OS.
+# Flash player.
+/opt/google/chrome/libwidevinecdm.so
+/opt/google/chrome/pepper/libpepflashplayer.so
+# Intel's prebuilt hdcp driver binary.
+/usr/sbin/hdcpd
+# Prebuilt binaries installed by Intel Camera HAL on kabylake boards.
+/usr/lib64/libbroxton_ia_pal.so
+/usr/lib64/libia_ltm.so
+/usr/lib64/libSkyCamAIC.so
+/usr/lib64/libSkyCamAICKBL.so
+# Part of prebuilt driver binary used in Tegra boards.
+/usr/lib/libnvmmlite_video.so

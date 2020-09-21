@@ -1,0 +1,24 @@
+<!-- Copyright (c) 2013 The Chromium OS Authors. All rights reserved. -->
+<!-- Use of this source code is governed by a BSD-style license that can be -->
+<!-- found in the LICENSE file. -->
+
+<html>
+  <head>
+    <TITLE>Volume Tuning</TITLE>
+    <link rel="stylesheet" href="volume.css" type="text/css">
+    <script type="text/javascript" src="volume.js"></script>
+  </head>
+  <body>
+  <h1> Volume Tuning </h1>
+  <table id="minmax"></table>
+  <table id="fixes"> </table>
+  <canvas id="curve"> </canvas>
+  <hr>
+  <input type=button value='Download config' onclick="download_config()">
+  </input>
+  <div style="display:none">
+    <a id=save_config_anchor></a>
+  </div>
+  </body>
+</html>
+<html>

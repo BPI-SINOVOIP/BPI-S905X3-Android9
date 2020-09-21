@@ -1,0 +1,14 @@
+Steps for running release tests.
+
+* build a release ec.bin image
+* relax file system restrictions
+    adb root && adb disable-verity && adb reboot
+    && adb wait-for-device root && adb remount
+* update an Android device:
+    adb push ec.bin /data/local/tmp/ec.bin \
+        && adb exec-out '/vendor/bin/hw/citadel_updater -v --rw --ro \
+                /data/local/tmp/ec.bin' \
+        && adb exec-out '/vendor/bin/hw/citadel_updater \
+                --enable_ro --enable_rw --reboot ""' \
+        && adb shell rm /data/local/tmp/ec.bin
+* run release-tests.sh

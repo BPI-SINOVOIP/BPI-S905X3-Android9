@@ -1,0 +1,98 @@
+LIBZ {
+  global:
+    _dist_code; # var introduced-arm=9 introduced-arm64=21 introduced-mips=21 introduced-mips64=21 introduced-x86=21 introduced-x86_64=21
+    _length_code; # var introduced-arm=9 introduced-arm64=21 introduced-mips=21 introduced-mips64=21 introduced-x86=21 introduced-x86_64=21
+    _tr_align; # introduced-arm=9 introduced-arm64=21 introduced-mips=21 introduced-mips64=21 introduced-x86=21 introduced-x86_64=21
+    _tr_flush_bits; # introduced=21
+    _tr_flush_block; # introduced-arm=9 introduced-arm64=21 introduced-mips=21 introduced-mips64=21 introduced-x86=21 introduced-x86_64=21
+    _tr_init; # introduced-arm=9 introduced-arm64=21 introduced-mips=21 introduced-mips64=21 introduced-x86=21 introduced-x86_64=21
+    _tr_stored_block; # introduced-arm=9 introduced-arm64=21 introduced-mips=21 introduced-mips64=21 introduced-x86=21 introduced-x86_64=21
+    _tr_tally; # introduced-arm=9 introduced-arm64=21 introduced-mips=21 introduced-mips64=21 introduced-x86=21 introduced-x86_64=21
+    adler32;
+    adler32_combine;
+    adler32_combine64; # introduced-arm=21 introduced-arm64=21 introduced-mips=9 introduced-mips64=21 introduced-x86=9 introduced-x86_64=21
+    compress;
+    compress2;
+    compressBound;
+    crc32;
+    crc32_combine;
+    crc32_combine64; # introduced-arm=21 introduced-arm64=21 introduced-mips=9 introduced-mips64=21 introduced-x86=9 introduced-x86_64=21
+    deflate;
+    deflateBound;
+    deflateCopy;
+    deflateEnd;
+    deflateInit2_;
+    deflateInit_;
+    deflateParams;
+    deflatePending; # introduced=21
+    deflatePrime;
+    deflateReset;
+    deflateResetKeep; # introduced=21
+    deflateSetDictionary;
+    deflateSetHeader;
+    deflateTune;
+    deflate_copyright; # var
+    get_crc_table;
+    gz_error; # introduced=21
+    gzbuffer; # introduced-arm=21 introduced-arm64=21 introduced-mips=9 introduced-mips64=21 introduced-x86=9 introduced-x86_64=21
+    gzclearerr;
+    gzclose;
+    gzclose_r; # introduced-arm=21 introduced-arm64=21 introduced-mips=9 introduced-mips64=21 introduced-x86=9 introduced-x86_64=21
+    gzclose_w; # introduced-arm=21 introduced-arm64=21 introduced-mips=9 introduced-mips64=21 introduced-x86=9 introduced-x86_64=21
+    gzdirect;
+    gzdopen;
+    gzeof;
+    gzerror;
+    gzflush;
+    gzgetc;
+    gzgetc_; # introduced=21
+    gzgets;
+    gzoffset; # introduced-arm=21 introduced-arm64=21 introduced-mips=9 introduced-mips64=21 introduced-x86=9 introduced-x86_64=21
+    gzoffset64; # introduced-arm=21 introduced-arm64=21 introduced-mips=9 introduced-mips64=21 introduced-x86=9 introduced-x86_64=21
+    gzopen;
+    gzopen64; # introduced-arm=21 introduced-arm64=21 introduced-mips=9 introduced-mips64=21 introduced-x86=9 introduced-x86_64=21
+    gzprintf;
+    gzputc;
+    gzputs;
+    gzread;
+    gzrewind;
+    gzseek;
+    gzseek64; # introduced-arm=21 introduced-arm64=21 introduced-mips=9 introduced-mips64=21 introduced-x86=9 introduced-x86_64=21
+    gzsetparams;
+    gztell;
+    gztell64; # introduced-arm=21 introduced-arm64=21 introduced-mips=9 introduced-mips64=21 introduced-x86=9 introduced-x86_64=21
+    gzungetc;
+    gzvprintf; # introduced=21
+    gzwrite;
+    inflate;
+    inflateBack;
+    inflateBackEnd;
+    inflateBackInit_;
+    inflateCopy;
+    inflateEnd;
+    inflateGetDictionary; # introduced=21
+    inflateGetHeader;
+    inflateInit2_;
+    inflateInit_;
+    inflateMark; # introduced-arm=21 introduced-arm64=21 introduced-mips=9 introduced-mips64=21 introduced-x86=9 introduced-x86_64=21
+    inflatePrime;
+    inflateReset;
+    inflateReset2; # introduced-arm=21 introduced-arm64=21 introduced-mips=9 introduced-mips64=21 introduced-x86=9 introduced-x86_64=21
+    inflateResetKeep; # introduced=21
+    inflateSetDictionary;
+    inflateSync;
+    inflateSyncPoint;
+    inflateUndermine; # introduced-arm=21 introduced-arm64=21 introduced-mips=9 introduced-mips64=21 introduced-x86=9 introduced-x86_64=21
+    inflate_copyright; # var
+    inflate_fast; # introduced-arm=9 introduced-arm64=21 introduced-mips=21 introduced-mips64=21 introduced-x86=21 introduced-x86_64=21
+    inflate_table; # introduced-arm=9 introduced-arm64=21 introduced-mips=21 introduced-mips64=21 introduced-x86=21 introduced-x86_64=21
+    uncompress;
+    zError;
+    z_errmsg; # var
+    zcalloc; # introduced-arm=9 introduced-arm64=21 introduced-mips=21 introduced-mips64=21 introduced-x86=21 introduced-x86_64=21
+    zcfree; # introduced-arm=9 introduced-arm64=21 introduced-mips=21 introduced-mips64=21 introduced-x86=21 introduced-x86_64=21
+    zlibCompileFlags;
+    zlibVersion;
+  local:
+    *;
+};

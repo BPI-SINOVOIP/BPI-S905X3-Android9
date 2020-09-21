@@ -1,0 +1,25 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'scunningham'
+NAME = 'policy_URLWhitelist.multiplepages_allowed'
+ATTRIBUTES = 'suite:bvt-perbuild, suite:policy'
+TIME = 'SHORT'
+TEST_CATEGORY = 'General'
+TEST_CLASS = 'enterprise'
+TEST_TYPE = 'client'
+
+DOC = '''
+Verify effects of URLWhitelist policy.
+
+This test case verifies the behavior of Chrome OS when URLWhitelist
+user policy is set to multiple URL patterns.
+
+A test case shall pass iff only URLs that are in the URLWhitelist policy value
+are allowed, and all other URLs are blocked. The test case shall fail if the
+above behavior is not enforced.
+
+'''
+
+job.run_test('policy_URLWhitelist', case='MultiplePages_Allowed')

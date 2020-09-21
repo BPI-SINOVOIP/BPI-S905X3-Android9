@@ -1,0 +1,24 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "kathrelkeld"
+NAME = "touch_TouchscreenZoom"
+PURPOSE = "Test that touchscreen pinch zoom works as expected."
+CRITERIA = """
+This test will fail if, after playback of touch events, no zoom is detected
+or if zoom behaves irregularly.
+"""
+ATTRIBUTES = "suite:bvt-perbuild, suite:touch"
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "touch"
+TEST_TYPE = "client"
+DEPENDENCIES = "touchscreen"
+
+DOC = """
+Plays back touchscreen movements to zoom a page.  Checks the page width to
+determine whether zoom occurred and in which direction.
+"""
+
+job.run_test('touch_TouchscreenZoom')

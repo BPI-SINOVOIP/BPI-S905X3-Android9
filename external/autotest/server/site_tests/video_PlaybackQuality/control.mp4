@@ -1,0 +1,43 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+
+AUTHOR = 'chromeos-chameleon'
+NAME = 'video_PlaybackQuality.mp4'
+PURPOSE = 'Measure video playback quality and dropped frame count.'
+ATTRIBUTES = "suite:chameleon_dp, suite:chameleon_dp_hdmi, suite:chameleon_hdmi_perbuild, suite:chameleon_hdmi"
+TIME = 'MEDIUM'
+TEST_CATEGORY = 'Performance'
+TEST_CLASS = 'video'
+TEST_TYPE = 'server'
+DEPENDENCIES = 'chameleon'
+JOB_RETRIES = 2
+
+DOC = """
+This test measure video playback quality by playback mp4 video format file.
+It will measure the top/bottom/left/right color bars correction during the
+playback.
+"""
+
+VIDEO_URL = ('http://commondatastorage.googleapis.com/'
+        'chromiumos-test-assets-public/chameleon/'
+        'video_PlaybackQuality/'
+        'video_quality.mp4')
+VIDEO_DESCRIPTION = '1920_1080_60fps_mp4'
+
+TEST_REGIONS= [('Top', (0, 96, 1920, 32)),
+               ('Left', (96, 0, 32, 1080)),
+               ('Bottom', (0, 1080 - 96 - 32, 1920, 32)),
+               ('Right', (1920 - 96 - 32, 0, 32, 1080))]
+
+args_dict = utils.args_to_dict(args)
+chameleon_args = hosts.CrosHost.get_chameleon_arguments(args_dict)
+
+def run(machine):
+    host = hosts.create_host(machine, chameleon_args=chameleon_args)
+    job.run_test('video_PlaybackQuality', host=host, video_url=VIDEO_URL,
+                 test_regions=TEST_REGIONS, video_description=VIDEO_DESCRIPTION)
+
+parallel_simple(run, machines)

@@ -1,0 +1,47 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+from autotest_lib.client.common_lib.cros.cfm.usb import cfm_usb_devices
+
+AUTHOR = "denniswu@chromium.org"
+NAME = "enterprise_CFM_PTZStress.PTZPro2"
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "enterprise"
+TEST_TYPE = "server"
+ATTRIBUTES = "suite:hotrod"
+DEPENDENCIES = "meet_app, ptzpro2"
+JOB_RETRIES = 1
+
+DOC = """
+Test scenario:
+    1. Enroll the device and start a meeting.
+    2. During meeting PTZ the camera according to the control file.
+Verify the following functionalities:
+    1. Camera is enumerated.
+    2. Verify PTZ signals are sent to the camera.
+"""
+
+args_dict = utils.args_to_dict(args)
+
+test_config = {
+    'camera': cfm_usb_devices.PTZ_PRO_2_CAMERA,
+    'repeat': 10,
+    'motion_duration': 2,
+    'usb_trace_path': '/tmp/camera.mon.out'
+}
+
+ptz_motion_sequence = ['panLeft', 'panStop', 'tiltUp', 'tiltStop', 'zoomIn', 'resetPosition']
+
+servo_args = hosts.CrosHost.get_servo_arguments(args_dict)
+
+def run_test(machine):
+    host = hosts.create_host(machine, servo_args=None)
+    job.run_test('enterprise_CFM_PTZStress',
+        host=host,
+        test_config=test_config,
+        ptz_motion_sequence=ptz_motion_sequence)
+
+parallel_simple(run_test, machines)

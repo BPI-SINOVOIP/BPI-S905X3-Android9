@@ -1,0 +1,22 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'Chrome OS Project, ihf@chromium.org'
+NAME = 'desktopui_FlashSanityCheck.download-omaha-component'
+PURPOSE = 'Basic sanity check of Flash suppport in Chrome.'
+CRITERIA = 'This test will fail if the component cannot be downloaded.'
+# This test is run from component_UpdateFlash and should not be in a SUITE.
+TIME = 'SHORT'
+TEST_CATEGORY = 'Functional'
+TEST_CLASS = 'desktopui'
+TEST_TYPE = 'client'
+
+DOC = """
+This test logs in, opens a new window, and navigates to a .swf file on a
+locally-running webserver to validate that flash doesn't crash the browser.
+"""
+
+job.run_test('desktopui_FlashSanityCheck',
+             CU_action='download-omaha-component',
+             tag='download-omaha-component')

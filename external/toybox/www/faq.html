@@ -1,0 +1,176 @@
+<html><head><title>toybox news</title>
+<!--#include file="header.html" -->
+
+<ul>
+<li><h2><a href="#capitalize">Do you capitalize toybox?</a></h2></li>
+<li><h2><a href="#why_toybox">Why toybox? (What was wrong with busybox?)</a></h2></li>
+<li><h2><a href="#support_horizon">Why a 7 year support horizon?</a></h2></li>
+<li><h2><a href="#code">Where do I start understanding the toybox source code?</a></h2></li>
+</ul>
+
+<a name="capitalize" />
+<h2>Q: Do you capitalize toybox?</h2>
+
+<p>A: Only at the start of a sentence. The command name is all lower case so
+it seems silly to capitalize the project name, but not capitalizing the
+start of sentences is awkward, so... compromise. (It is _not_ "ToyBox".)</p>
+
+<a name="why_toybox" />
+<h2>Q: "Why is there toybox? What was wrong with busybox?"</h2>
+
+<p>A: Toybox started back in 2006 when I
+<a href=https://lwn.net/Articles/202106/>handed off BusyBox maintainership</a>
+and <a href=http://landley.net/notes-2006.html#28-09-2006>started over from
+scratch</a> on a new codebase after a
+<a href=http://lists.busybox.net/pipermail/busybox/2006-September/058617.html>protracted licensing argument</a> took all the fun out of working on BusyBox.</p>
+
+<p>Toybox was just a personal project until it got
+<a href=http://landley.net/notes-2011.html#13-11-2011>relaunched
+in November 2011</a> with a new goal to
+<a href=http://landley.net/aboriginal/about.html#selfhost>make Android
+self-hosting</a>. This involved me relicensing my own
+code, which <a href=https://lwn.net/Articles/478308/>made people who had
+never used or participated in the project loudly angry</a>. The switch came
+after a lot of thinking <a href=http://landley.net/talks/ohio-2013.txt>about
+licenses</a> and <a href=http://landley.net/notes-2011.html#21-03-2011>the
+transition to smartphones</a>, which led to a
+<a href=http://landley.net/talks/celf-2013.txt>2013</a>
+<a href=https://www.youtube.com/watch?v=SGmtP5Lg_t0>talk</a> laying
+out a strategy to make Android self-hosting using toybox. This helped
+<a href=https://code.google.com/p/android/issues/detail?id=76861>bring
+it to Android's attention</a>, and they
+<a href=https://lwn.net/Articles/629362/>merged it</a> into Android M.</p>
+
+<p>The answer to the second question is "licensing". BusyBox predates Android
+by almost a decade but Android still doesn't ship with it because GPLv3 came
+out around the same time Android did and caused many people to throw
+out the GPLv2 baby with the GPLv3 bathwater.
+Android <a href=https://source.android.com/source/licenses.html>explicitly
+discourages</a> use of GPL and LGPL licenses in its products, and has gradually
+reimplemented historical GPL components such as its bluetooth stack under the
+Apache license. Similarly, Apple froze xcode at the last GPLv2 releases
+(GCC 4.2.1 with binutils 2.17) for over 5 years while it sponsored the
+development of new projects (clang/llvm/lld) to replace them,
+implemented its SMB server from scratch to replace samba,
+<a href=http://meta.ath0.com/2012/02/05/apples-great-gpl-purge/>and so
+on</a>. Toybox itself exists because somebody with in a legacy position
+just wouldn't shut up about GPLv3, otherwise I would probably
+still happily be maintaining BusyBox. (For more on how I wound
+up working on busybox in the first place,
+<a href=http://landley.net/aboriginal/history.html>see here</a>.)</p>
+
+<h2><a name="support_horizon">Q: Why a 7 year support horizon?</a></h2>
+
+<p>A: Our <a href=http://lists.busybox.net/pipermail/busybox/2006-September/058440.html>longstanding rule of thumb</a> is to try to run and build on
+hardware and distributions released up to 7 years ago, and feel ok dropping
+support for stuff older than that. (This is a little longer than Ubuntu's
+Long Term Support, but not by much.)</p>
+
+<p>If a kernel or libc feature is less than 7 years old, I try to have a
+build-time configure test for it and let the functionality cleanly drop out.
+I also keep old Ubuntu images around in VMs and perform the occasional
+defconfig build there to see what breaks. (I'm not perfect about this,
+but I accept bug reports.)</p>
+
+<p>My original theory was "4 to 5 18-month cycles of moore's law should cover
+the vast majority of the installed base of PC hardware", loosely based on some
+research I did <a href=http://www.catb.org/esr/halloween/halloween9.html#id2867629>back in 2003</a>
+and <a href=http://catb.org/esr/writings/world-domination/world-domination-201.html#id248066>updated in 2006</a>
+which said that low end systems were 2 iterations of moore's
+law below the high end systems, and that another 2-3 iterations should cover
+the useful lifetime of most systems no longer being sold but still in use and
+potentially being upgraded to new software releases.</p>
+
+<p>It turns out <a href=http://landley.net/notes-2011.html#26-06-2011>I missed
+industry changes</a> in the 1990's that stretched the gap
+from low end to high end from 2 cycles to 4 cycles, and _that_ analysis
+ignored the switch from PC to smartphone cutting off the R&D air supply of the
+laptop market.  Meanwhile the Moore's Law s-curve started bending
+down in 2000 and these days is pretty flat because the drive for faster clock
+speeds <a href=http://www.anandtech.com/show/613>stumbled</a>
+then <a href=http://www.pcworld.com/article/118603/article.html>died</a>, and
+the subsequent drive to go wide maxed out around 4x SMP with ~2 megabyte
+caches for most applications. These days the switch from exponential to
+linear growth in hardware capabilities is
+<a href=https://www.cnet.com/news/end-of-moores-law-its-not-just-about-physics/>common</a>
+<a href=http://www.acm.org/articles/people-of-acm/2016/david-patterson>knowledge</a>.</p>
+
+<p>But the 7 year rule of thumb stuck around anyway: if a kernel or libc
+feature is less than 7 years old, I try to have a build-time configure test
+for it and let the functionality cleanly drop out. I also keep old Ubuntu
+images around in VMs and perform the occasional defconfig build there to
+see what breaks.</p>
+
+<h2><a name="code" />Where do I start understanding the source code?</h2>
+
+<p>Toybox is written in C. There are longer writeups of the
+<a href=design.html>design ideas</a> and a <a href=code.html>code walkthrough</a>,
+and the <a href=about.html>about page</a> summarizes what we're trying to
+accomplish, but here's a quick start:</p>
+
+<p>Toybox uses the standard three stage configure/make/install
+<a href=code.html#building>build</a>, in this case "<b>make defconfig;
+make; make install</b>". Type "<b>make help</b>" to
+see available make targets.</p>
+
+<p><b>The configure stage is copied from the Linux kernel</b> (in the "kconfig"
+directory), and saves your selections in the file ".config" at the top
+level. The "defconfig" target selects the
+maximum sane configuration (enabling all the commands and features that
+aren't unfinished, only intended as examples, debug code, etc) and is
+probably what you want. You can use "make menuconfig" to manually select
+specific commands to include, through an interactive menu (cursor up and
+down, enter to descend into a sub-menu, space to select an entry, ? to see
+an entry's help text, esc to exit). The menuconfig help text is the
+same as the command's --help output.</p>
+
+<p><b>The "make" stage creates a toybox binary</b> (which is stripped, look in
+generated/unstripped for the debug versions), and "install" adds a bunch of
+symlinks to toybox under the various command names. Toybox determines which
+command to run based on the filename, or you can use the "toybox" name in which case the first
+argument is the command to run (ala "toybox ls -l"). <b>You can also build
+individual commands as standalone executables</b>, ala "make sed cat ls".</p>
+
+<p><b>The main() function is in main.c at the top level</b>,
+along with setup plumbing and selecting which command to run this time.
+The function toybox_main() implements the "toybox" multiplexer command.</p>
+
+<p><b>The individual command implementations are under "toys"</b>, and are grouped
+into categories (mostly based on which standard they come from, posix, lsb,
+android...) The "pending" directory contains unfinished commands, and the
+"examples" directory contains examples. Commands in those two directories
+are _not_ selected by defconfig. (These days pending directory is mostly
+third party submissions that have not yet undergone proper code review.)</p>
+
+<p><b>Common infrastructure shared between commands is under "lib"</b>. Most
+commands call lib/args.c to parse their command line arguments before calling
+the command's own main() function, which uses the option string in
+the command's NEWTOY() macro. This is similar to the libc function getopt(),
+but more powerful, and is documented at the top of lib/args.c.</p>
+
+<p>Most of the actual <b>build/install infrastructure is shell scripts under
+"scripts"</b>. <b>These populate the "generated" directory</b> with headers
+created from other files, which are <a href=code.html#generated>described</a>
+in the code walkthrough. All the
+build's temporary files live under generated, including the .o files built
+from the .c files (in generated/obj). The "make clean" target deletes that
+directory. ("make distclean" also deletes your .config and deletes the
+kconfig binaries that process .config.)</p>
+
+<p>Each command's file contains all the information for that command, so
+<b>adding a command to toybox means adding a single file under "toys"</b>.
+Usually you <a href=code.html#adding>start a new command</a> by copying an
+existing command file to a new filename
+(toys/examples/hello.c, toys/examples/skeleton.c, toys/posix/cat.c,
+and toys/posix/true.c have all been used for this purpose) and then replacing
+all instances of its old name with the new name (which should match the
+new filename), and modifying the help text, argument string, and what the
+code does. You might have to "make distclean" before you new command
+shows up in defconfig or menuconfig.</p>
+
+<p><b>The toybox test suite lives in the "tests" directory</b>. From the top
+level you can "make tests" to test everything, or "make test_sed" test a
+single command's standalone version (which should behave identically)
+but that's why we test.</p>
+
+<!--#include file="footer.html" -->

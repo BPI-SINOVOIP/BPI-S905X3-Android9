@@ -1,0 +1,13 @@
+This directory contains the fonts from the Noto project, chosen for
+Android.
+
+The fonts for Chinese, Japanese, and Korean have a different copyright
+holder and upstream source, and are included in the 'cjk' subdirectory,
+separate from the rest of the fonts.
+
+The color emoji font also has a different upstream source, and is included
+in the 'emoji' subdirectory.
+
+The rest of the fonts are included in the 'other' subdirectory.
+
+See README.android files in each subdirectory for details.

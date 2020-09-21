@@ -1,0 +1,143 @@
+//
+// Copyright (C) 2015 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+//
+
+tsan_rtl_cflags = [
+    "-Wall",
+    "-Werror",
+]
+
+tsan_rtl_cppflags = [
+    "-std=c++11",
+    "-Wno-unused-parameter",
+    "-Wno-non-virtual-dtor",
+    "-fno-rtti",
+    "-fno-builtin",
+]
+
+cc_library_host_static {
+    name: "libtsan",
+
+    include_dirs: ["external/compiler-rt/lib"],
+    cflags: tsan_rtl_cflags,
+    cppflags: tsan_rtl_cppflags,
+    srcs: [
+        "rtl/*.cc",
+        "rtl/tsan_rtl_amd64.S",
+    ],
+    stl: "none",
+    sanitize: {
+        never: true,
+    },
+    compile_multilib: "64",
+    whole_static_libs: [
+        "libinterception",
+        "libsan",
+        "libubsan",
+    ],
+    target: {
+        darwin: {
+            enabled: false,
+        },
+    },
+}
+
+cc_library_host_static {
+    name: "libtsan_cxx",
+
+    include_dirs: ["external/compiler-rt/lib"],
+    cflags: tsan_rtl_cflags,
+    cppflags: tsan_rtl_cppflags,
+    srcs: ["rtl/tsan_new_delete.cc"],
+    stl: "none",
+    sanitize: {
+        never: true,
+    },
+    compile_multilib: "64",
+    whole_static_libs: ["libubsan_cxx"],
+    target: {
+        darwin: {
+            enabled: false,
+        },
+    },
+}
+
+cc_test_host {
+    name: "libtsan_unit_test",
+
+    include_dirs: ["external/compiler-rt/lib"],
+    local_include_dirs: ["rtl"],
+    cflags: tsan_rtl_cflags,
+    cppflags: tsan_rtl_cppflags,
+    srcs: [
+        "tests/unit/tsan_clock_test.cc",
+        "tests/unit/tsan_dense_alloc_test.cc",
+        "tests/unit/tsan_flags_test.cc",
+        "tests/unit/tsan_mman_test.cc",
+        "tests/unit/tsan_mutex_test.cc",
+        "tests/unit/tsan_mutexset_test.cc",
+        "tests/unit/tsan_shadow_test.cc",
+        "tests/unit/tsan_stack_test.cc",
+        "tests/unit/tsan_sync_test.cc",
+        "tests/unit/tsan_unit_test_main.cc",
+        "tests/unit/tsan_vector_test.cc",
+    ],
+    sanitize: {
+        never: true,
+    },
+    compile_multilib: "64",
+    static_libs: [
+        "libtsan",
+        "libubsan",
+    ],
+    target: {
+        darwin: {
+            enabled: false,
+        },
+    },
+}
+
+cc_test_host {
+    name: "libtsan_rtl_test",
+
+    include_dirs: ["external/compiler-rt/lib"],
+    local_include_dirs: ["rtl"],
+    cflags: tsan_rtl_cflags,
+    cppflags: tsan_rtl_cppflags,
+    srcs: [
+        "tests/rtl/tsan_bench.cc",
+        "tests/rtl/tsan_mop.cc",
+        "tests/rtl/tsan_mutex.cc",
+        "tests/rtl/tsan_posix.cc",
+        "tests/rtl/tsan_string.cc",
+        "tests/rtl/tsan_test_util_posix.cc",
+        "tests/rtl/tsan_test.cc",
+        "tests/rtl/tsan_thread.cc",
+    ],
+    sanitize: {
+        never: true,
+    },
+    compile_multilib: "64",
+    static_libs: [
+        "libtsan",
+        "libubsan",
+    ],
+    target: {
+        darwin: {
+            enabled: false,
+        },
+    },
+}

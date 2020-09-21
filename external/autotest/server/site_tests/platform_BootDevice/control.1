@@ -1,0 +1,21 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+NAME = "BootDevice1"
+AUTHOR = "Brillo Team"
+ATTRIBUTES = "suite:brillo-presubmit"
+TIME = "SHORT"
+TEST_CATEGORY = "functional"
+TEST_CLASS = "platform"
+TEST_TYPE = "server"
+
+DOC = """
+This test reboots the device reboots successfully.
+"""
+
+def run_bootdevice(machine):
+    host = hosts.create_host(machine)
+    job.run_test("platform_BootDevice", host=host)
+
+parallel_simple(run_bootdevice, machines)

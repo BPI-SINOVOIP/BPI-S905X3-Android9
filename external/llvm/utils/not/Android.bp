@@ -1,0 +1,13 @@
+//===---------------------------------------------------------------===
+// not command line tool
+//===---------------------------------------------------------------===
+
+cc_binary_host {
+    name: "not",
+    defaults: ["llvm-defaults"],
+    srcs: ["not.cpp"],
+    static_libs: [
+        "libLLVMCore",
+        "libLLVMSupport",
+    ],
+}

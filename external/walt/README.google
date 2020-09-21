@@ -1,0 +1,91 @@
+Overview
+========
+
+This project is included in the internal Android source tree to support
+automated latency testing with Salad Fingers, a robot designed and built by
+Steve Pfetsch (spfetsch@). The three main components we use and modify are:
+
+  - the android app (android/)
+  - the WALT device firmware (arduino/)
+  - the TCP-to-serial bridge (pywalt/)
+
+Salad Fingers uses a single Teensyduino running WALT firmware to test multiple
+devices without human intervention. The devices under test are connected to the
+same host as the Teensy. An end-to-end connection for a single device (only one
+device can use the WALT at a time) looks like this:
+
+    Device ------ Host ------ Teensy
+  (android/)    (pywalt/)   (arduino/)
+
+For the device to communicate with the host over TCP on a physical USB
+connection, a "reverse" port has to be set up with adb. For example:
+
+  $ adb reverse tcp:50007 tcp:45454
+
+Any traffic the device sends to 127.0.0.1:50007 will come into the host on port
+45454 and vice versa. Port 50007 is defined in the app source, but the device
+port can be selected arbitrarily.
+
+The TCP-to-serial bridge runs on the host and connects the app's TCP pipe to
+the Teensy's serial pipe. However, there are two special commands the app can
+send to the bridge to synchronize the clocks between the device and the Teensy:
+"bridge sync" and "bridge update".
+
+This setup requires some modifications from the original source, which are
+explained in the next section, but behaves very similarly to a direct, Teensy-
+to-device USB connection.
+
+
+Modifications
+=============
+
+- Clock synchronization
+  Despite the reliability and accuracy of NTP, device and host wall clocks can
+  become significantly out of sync, especially if a device loses Wi-Fi
+  connectivity. To avoid this problem and take advantage of the low-latency
+  connection between the host and device, the clocks are synchronized based on
+  the time difference between when the bridge zeroed the Teensy's clock and
+  when the reply to the "bridge sync" command was sent to the device. This
+  required parallel changes in pywalt/ and android/.
+
+- Automation intents
+  The test scripts which control the robot (Salad Fingers) on which the Teensy
+  is mounted require the ability to control certain aspects of the app running
+  on a device. These are defined in a separate RobotAutomationEvent interface.
+  This required changes to android/.
+
+- Reverse port support
+  The WaltTcpConnection class was originally intended to communicate over a
+  true network from a Chromebook to a dedicated bridge with a specific IP
+  address. This address was changed to localhost in android/.
+
+- Strict networking and request ordering
+  To prevent crashes due to network accesses performed on the main thread,
+  which is disallowed in strict mode, all such accesses were moved to a
+  dedicated network thread. As a side benefit, all requests sent to the bridge
+  now wait for a response before the next request is sent. This complies with
+  the serial nature of the device and guarantees correct ordering. This
+  required changes to android/.
+
+- Hardware-specific firmware
+  The Teensy on Salad Fingers uses sensors that are not bundled with the
+  standard WALT hardware, so new thresholds for accelerometer shocks and photo-
+  diode readings were required to achieve accurate results. This required
+  changes to arduino/.
+
+
+Usage
+=====
+
+This project is not intended to be automatically built. Instead, as needed, the
+app will be built manually and checked in as a prebuilt that PTS will pick up.
+The firmware cannot be built or loaded automatically, as it requires a modded
+version of the Arduino project for Teensy. The required software can be loaded
+on a laptop to flash the Teensy mounted on Salad Fingers.
+
+
+See Also
+========
+
+Project metadata: vendor/google_meta/platform/external/walt/
+PTS integration:  vendor/google_testing/pts/tests/salad_fingers/

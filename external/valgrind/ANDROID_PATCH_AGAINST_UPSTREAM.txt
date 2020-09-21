@@ -1,0 +1,157 @@
+Only in /huge-ssd/aosp-arm64/external/valgrind/: android
+Only in /huge-ssd/aosp-arm64/external/valgrind/: Android.build_all.mk
+Only in /huge-ssd/aosp-arm64/external/valgrind/: Android.build_host.mk
+Only in /huge-ssd/aosp-arm64/external/valgrind/: Android.build_one.mk
+Only in /huge-ssd/aosp-arm64/external/valgrind/: Android.clean.mk
+Only in /huge-ssd/aosp-arm64/external/valgrind/: Android.mk
+Only in /huge-ssd/aosp-arm64/external/valgrind/: ANDROID_PATCH_AGAINST_UPSTREAM.txt
+Only in /huge-ssd/aosp-arm64/external/valgrind/: Android.test.mk
+diff '--exclude=.git' -ru valgrind-3.13.0/config.h /huge-ssd/aosp-arm64/external/valgrind/config.h
+--- valgrind-3.13.0/config.h	2017-06-21 14:11:07.177545261 -0700
++++ /huge-ssd/aosp-arm64/external/valgrind/config.h	2017-06-21 14:07:44.786099941 -0700
+@@ -45,10 +45,14 @@
+ 
+ /* Define to 1 if index() and strlen() have been optimized heavily (x86 glibc
+    >= 2.12) */
++#ifndef __ANDROID__
+ #define GLIBC_MANDATORY_INDEX_AND_STRLEN_REDIRECT 1
++#endif
+ 
+ /* Define to 1 if strlen() has been optimized heavily (amd64 glibc >= 2.10) */
++#ifndef __ANDROID__
+ #define GLIBC_MANDATORY_STRLEN_REDIRECT 1
++#endif
+ 
+ /* Define to 1 if you have the <asm/unistd.h> header file. */
+ #define HAVE_ASM_UNISTD_H 1
+@@ -86,13 +90,15 @@
+ #define HAVE_CLOCK_MONOTONIC 1
+ 
+ /* Define to 1 if you have a dlinfo that can do RTLD_DI_TLS_MODID. */
++#ifndef __ANDROID__
+ #define HAVE_DLINFO_RTLD_DI_TLS_MODID 1
++#endif
+ 
+ /* Define to 1 if the system has the type `Elf32_Chdr'. */
+-/* #undef HAVE_ELF32_CHDR */
++//#define HAVE_ELF32_CHDR 1
+ 
+ /* Define to 1 if the system has the type `Elf64_Chdr'. */
+-/* #undef HAVE_ELF64_CHDR */
++//#define HAVE_ELF64_CHDR 1
+ 
+ /* Define to 1 if you have the <endian.h> header file. */
+ #define HAVE_ENDIAN_H 1
+@@ -170,7 +176,9 @@
+ /* #undef HAVE_PTHREAD_CREATE_GLIBC_2_0 */
+ 
+ /* Define to 1 if you have the `PTHREAD_MUTEX_ADAPTIVE_NP' constant. */
++#ifndef __ANDROID__
+ #define HAVE_PTHREAD_MUTEX_ADAPTIVE_NP 1
++#endif
+ 
+ /* Define to 1 if you have the `PTHREAD_MUTEX_ERRORCHECK_NP' constant. */
+ #define HAVE_PTHREAD_MUTEX_ERRORCHECK_NP 1
+@@ -182,7 +190,9 @@
+ #define HAVE_PTHREAD_MUTEX_TIMEDLOCK 1
+ 
+ /* Define to 1 if pthread_mutex_t has a member __data.__kind. */
++#ifndef __ANDROID__
+ #define HAVE_PTHREAD_MUTEX_T__DATA__KIND 1
++#endif
+ 
+ /* Define to 1 if pthread_mutex_t has a member called __m_kind. */
+ /* #undef HAVE_PTHREAD_MUTEX_T__M_KIND */
+@@ -219,7 +229,9 @@
+ #define HAVE_SEMTIMEDOP 1
+ 
+ /* Define to 1 if libstd++ supports annotating shared pointers */
++#ifndef __ANDROID__
+ #define HAVE_SHARED_POINTER_ANNOTATION 1
++#endif
+ 
+ /* Define to 1 if you have the `signalfd' function. */
+ #define HAVE_SIGNALFD 1
+@@ -456,7 +468,11 @@
+ #define VERSION "3.13.0"
+ 
+ /* Temporary files directory */
++#ifdef __ANDROID__
++#define VG_TMPDIR "/data/local/tmp"
++#else
+ #define VG_TMPDIR "/tmp"
++#endif
+ 
+ /* Define to `int' if <sys/types.h> doesn't define. */
+ /* #undef gid_t */
+diff '--exclude=.git' -ru valgrind-3.13.0/coregrind/m_coredump/coredump-elf.c /huge-ssd/aosp-arm64/external/valgrind/coregrind/m_coredump/coredump-elf.c
+--- valgrind-3.13.0/coregrind/m_coredump/coredump-elf.c	2017-05-31 08:14:48.000000000 -0700
++++ /huge-ssd/aosp-arm64/external/valgrind/coregrind/m_coredump/coredump-elf.c	2017-06-21 14:08:45.497933443 -0700
+@@ -135,6 +135,7 @@
+    phdr->p_align = VKI_PAGE_SIZE;
+ }
+ 
++#if 0 /* We've had Elf32_Nhdr since at least froyo! */
+ #if defined(VGPV_arm_linux_android) || defined(VGPV_x86_linux_android) \
+     || defined(VGPV_mips32_linux_android)
+ /* Android's libc doesn't provide a definition for this.  Hence: */
+@@ -146,6 +147,7 @@
+    }
+    Elf32_Nhdr;
+ #endif
++#endif
+ 
+ struct note {
+    struct note *next;
+diff '--exclude=.git' -ru valgrind-3.13.0/coregrind/vgdb.c /huge-ssd/aosp-arm64/external/valgrind/coregrind/vgdb.c
+--- valgrind-3.13.0/coregrind/vgdb.c	2017-05-31 08:14:29.000000000 -0700
++++ /huge-ssd/aosp-arm64/external/valgrind/coregrind/vgdb.c	2017-06-21 14:17:48.668450889 -0700
+@@ -682,10 +682,7 @@
+       sigpipe++;
+    } else if (signum == SIGALRM) {
+       sigalrm++;
+-#if defined(VGPV_arm_linux_android) \
+-    || defined(VGPV_x86_linux_android) \
+-    || defined(VGPV_mips32_linux_android) \
+-    || defined(VGPV_arm64_linux_android)
++#if defined(__BIONIC__)
+       /* Android has no pthread_cancel. As it also does not have
+          an invoker implementation, there is no need for cleanup action.
+          So, we just do nothing. */
+diff '--exclude=.git' -ru valgrind-3.13.0/coregrind/vg_preloaded.c /huge-ssd/aosp-arm64/external/valgrind/coregrind/vg_preloaded.c
+--- valgrind-3.13.0/coregrind/vg_preloaded.c	2017-05-31 08:14:39.000000000 -0700
++++ /huge-ssd/aosp-arm64/external/valgrind/coregrind/vg_preloaded.c	2017-06-21 14:21:53.515782606 -0700
+@@ -58,10 +58,11 @@
+ void VG_NOTIFY_ON_LOAD(freeres)(Vg_FreeresToRun to_run)
+ {
+ #  if !defined(__UCLIBC__) && !defined(MUSL_LIBC) \
++      && !defined(VGPV_amd64_linux_android) \
+       && !defined(VGPV_arm_linux_android) \
+       && !defined(VGPV_x86_linux_android) \
+       && !defined(VGPV_mips32_linux_android) \
+-      && !defined(VGPV_arm64_linux_android)
++      && !defined(VGPV_arm64_linux_android) \
+ 
+    /* g++ mangled __gnu_cxx::__freeres yields -> _ZN9__gnu_cxx9__freeresEv */
+    extern void _ZN9__gnu_cxx9__freeresEv(void) __attribute__((weak));
+diff '--exclude=.git' -ru valgrind-3.13.0/include/pub_tool_libcsetjmp.h /huge-ssd/aosp-arm64/external/valgrind/include/pub_tool_libcsetjmp.h
+--- valgrind-3.13.0/include/pub_tool_libcsetjmp.h	2017-05-31 08:14:14.000000000 -0700
++++ /huge-ssd/aosp-arm64/external/valgrind/include/pub_tool_libcsetjmp.h	2017-06-21 14:27:04.766932185 -0700
+@@ -128,6 +128,14 @@
+ __attribute__((noreturn))
+ void  VG_MINIMAL_LONGJMP(VG_MINIMAL_JMP_BUF(_env));
+ 
++#elif defined(VGPV_arm64_linux_android)
++
++/* Android clang/llvm has no __builtin_{setjmp,longjmp} for aarch64. */
++/* Use the same setjmp/longjmp functions for both gcc and clang.     */
++#define VG_MINIMAL_JMP_BUF(_name) jmp_buf _name
++#define VG_MINIMAL_SETJMP(_env)   ((UWord)(setjmp((_env))))
++#define VG_MINIMAL_LONGJMP(_env)  longjmp((_env),1)
++
+ #else
+ 
+ /* The default implementation. */
+Only in /huge-ssd/aosp-arm64/external/valgrind/: runtests-arm64.sh
+Only in /huge-ssd/aosp-arm64/external/valgrind/: runtests-arm.sh
+Only in /huge-ssd/aosp-arm64/external/valgrind/: runtest.sh

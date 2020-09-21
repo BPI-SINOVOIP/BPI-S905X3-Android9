@@ -1,0 +1,31 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'lgoodby'
+NAME = 'autotest_SyncCount'
+SYNC_COUNT = 2
+TIME = 'MEDIUM'
+TEST_TYPE = 'Server'
+ATTRIBUTES = 'suite:push_to_prod, suite:bvt-perbuild'
+
+DOC = """
+Tests that SYNC_COUNT schedules 2 hosts.
+"""
+
+from autotest_lib.server import utils as server_utils
+
+
+def run(ntuple):
+  job.run_test('autotest_SyncCount', ntuple=ntuple)
+
+ntuples, failures = server_utils.form_ntuples_from_machines(
+    machines, SYNC_COUNT)
+
+for failure in failures:
+  job.record('FAIL', None, str(failure))
+
+# Use log=False in parallel_simple to avoid an exception in setting up
+# the incremental parser when SYNC_COUNT > 1.
+
+job.parallel_simple(run, ntuples, log=False)

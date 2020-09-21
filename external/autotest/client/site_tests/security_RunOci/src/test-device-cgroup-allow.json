@@ -1,0 +1,6 @@
+{
+    "run_oci_args": ["--cgroup_parent=chronos_containers"],
+    "program_argv": ["/usr/bin/hexdump", "-n16", "/dev/zero"],
+    "expected_result": "0000000 0000 0000 0000 0000 0000 0000 0000 0000\n0000010",
+    "expected_stderr": ""
+}

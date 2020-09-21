@@ -1,0 +1,9 @@
+#!/bin/bash
+#
+# Copyright (c) 2016 Google Inc.
+#
+
+# Just execute our custom pre-push script.
+# Do this trick so that this file does not need to be updated each time
+# we modify our pre-push script
+exec ./toolchain_utils_githooks/pre-push.real "$@"

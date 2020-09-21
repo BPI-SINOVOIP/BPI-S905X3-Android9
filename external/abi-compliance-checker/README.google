@@ -1,0 +1,12 @@
+URL: https://github.com/lvc/abi-compliance-checker/
+Version: 1.99.26
+License: GPL2.0, LGPL2.0
+License File: LICENSE
+
+Description:
+This tool compares the ABI-dumps of two C/C++ libraries(shared/static) and
+generates a compatibility report specifying any breakages in ABI compliance.
+
+Local Modifications:
+Add command-line options to specify paths to c++filt, objdump, readelf. Makefile
+will be removed. abi-compliance-checker.pl needs +x permissions.

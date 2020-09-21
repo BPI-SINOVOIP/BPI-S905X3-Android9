@@ -1,0 +1,18 @@
+#
+# NOTE! Please use 'git ls-files -i --exclude-standard'
+# command after changing this file, to see if there are
+# any tracked files which get ignored after the change.
+#
+
+# Ignore object files and backup files
+*.o
+*.so
+*~
+
+# Executables
+/bsdiff
+/bspatch
+/bsdiff_unittest
+
+# Generated dependencies
+/.deps

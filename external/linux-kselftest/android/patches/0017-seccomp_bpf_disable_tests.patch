@@ -1,0 +1,126 @@
+diff --git a/tools/testing/selftests/seccomp/seccomp_bpf.c b/tools/testing/selftests/seccomp/seccomp_bpf.c
+index 34d9582aefb4..843ba80c401b 100644
+--- a/tools/testing/selftests/seccomp/seccomp_bpf.c
++++ b/tools/testing/selftests/seccomp/seccomp_bpf.c
+@@ -12,12 +12,14 @@
+  * we need to use the kernel's siginfo.h file and trick glibc
+  * into accepting it.
+  */
++#if defined(__GLIBC_PREREQ)
+ #if !__GLIBC_PREREQ(2, 26)
+ # include <asm/siginfo.h>
+ # define __have_siginfo_t 1
+ # define __have_sigval_t 1
+ # define __have_sigevent_t 1
+ #endif
++#endif
+ 
+ #include <errno.h>
+ #include <linux/filter.h>
+@@ -404,6 +406,7 @@ TEST(empty_prog)
+ 	EXPECT_EQ(EINVAL, errno);
+ }
+ 
++#if 0
+ TEST(log_all)
+ {
+ 	struct sock_filter filter[] = {
+@@ -425,6 +428,7 @@ TEST(log_all)
+ 	/* getppid() should succeed and be logged (no check for logging) */
+ 	EXPECT_EQ(parent, syscall(__NR_getppid));
+ }
++#endif
+ 
+ TEST_SIGNAL(unknown_ret_is_kill_inside, SIGSYS)
+ {
+@@ -677,6 +681,7 @@ void kill_thread_or_group(struct __test_metadata *_metadata, bool kill_process)
+ 	exit(42);
+ }
+ 
++#if 0
+ TEST(KILL_thread)
+ {
+ 	int status;
+@@ -695,6 +700,7 @@ TEST(KILL_thread)
+ 	ASSERT_TRUE(WIFEXITED(status));
+ 	ASSERT_EQ(42, WEXITSTATUS(status));
+ }
++#endif
+ 
+ TEST(KILL_process)
+ {
+@@ -1242,6 +1248,7 @@ TEST_F(precedence, trace_is_fourth_in_any_order)
+ 	EXPECT_EQ(-1, syscall(__NR_getpid));
+ }
+ 
++#if 0
+ TEST_F(precedence, log_is_fifth)
+ {
+ 	pid_t mypid, parent;
+@@ -1281,6 +1288,7 @@ TEST_F(precedence, log_is_fifth_in_any_order)
+ 	/* Should also work just fine */
+ 	EXPECT_EQ(mypid, syscall(__NR_getpid));
+ }
++#endif
+ 
+ #ifndef PTRACE_O_TRACESECCOMP
+ #define PTRACE_O_TRACESECCOMP	0x00000080
+@@ -1717,8 +1725,10 @@ void tracer_ptrace(struct __test_metadata *_metadata, pid_t tracee,
+ 
+ 	if (nr == __NR_getpid)
+ 		change_syscall(_metadata, tracee, __NR_getppid);
++#ifdef __NR_open
+ 	if (nr == __NR_open)
+ 		change_syscall(_metadata, tracee, -1);
++#endif
+ }
+ 
+ FIXTURE_DATA(TRACE_syscall) {
+@@ -1784,6 +1794,7 @@ TEST_F(TRACE_syscall, ptrace_syscall_redirected)
+ 	EXPECT_NE(self->mypid, syscall(__NR_getpid));
+ }
+ 
++#ifdef __NR_open
+ TEST_F(TRACE_syscall, ptrace_syscall_dropped)
+ {
+ 	/* Swap SECCOMP_RET_TRACE tracer for PTRACE_SYSCALL tracer. */
+@@ -1794,6 +1805,7 @@ TEST_F(TRACE_syscall, ptrace_syscall_dropped)
+ 	/* Tracer should skip the open syscall, resulting in EPERM. */
+ 	EXPECT_SYSCALL_RETURN(EPERM, syscall(__NR_open));
+ }
++#endif
+ 
+ TEST_F(TRACE_syscall, syscall_allowed)
+ {
+@@ -2059,6 +2071,7 @@ TEST(seccomp_syscall_mode_lock)
+ 	}
+ }
+ 
++#if 0
+ /*
+  * Test detection of known and unknown filter flags. Userspace needs to be able
+  * to check if a filter flag is supported by the current kernel and a good way
+@@ -2119,6 +2132,7 @@ TEST(detect_seccomp_filter_flags)
+ 		       flag);
+ 	}
+ }
++#endif
+ 
+ TEST(TSYNC_first)
+ {
+@@ -2759,6 +2773,7 @@ TEST(syscall_restart)
+ 		_metadata->passed = 0;
+ }
+ 
++#if 0
+ TEST_SIGNAL(filter_flag_log, SIGSYS)
+ {
+ 	struct sock_filter allow_filter[] = {
+@@ -2851,6 +2866,7 @@ TEST(get_action_avail)
+ 	EXPECT_EQ(ret, -1);
+ 	EXPECT_EQ(errno, EOPNOTSUPP);
+ }
++#endif
+ 
+ /*
+  * TODO:

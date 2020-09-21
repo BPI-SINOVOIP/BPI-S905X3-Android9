@@ -1,0 +1,30 @@
+# Copyright (c) 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "Chrome OS Team"
+NAME = "power_SuspendStress.4hours"
+ATTRIBUTES = "suite:jailed_build"
+PURPOSE = "Run repeated iterations of suspend/resume to find rare errors."
+TIME = "MEDIUM"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "power"
+TEST_TYPE = "client"
+
+DOC = """
+Runs four hours of bare suspend/resume cycles without additional workload.
+Follows this by a few short checks to make sure the system is still in a good
+state (work in progress, feel free to add some more).
+"""
+
+# In 4 hours of runs, we need to make sure the DUT can keep the autoserv SSH
+# connection alive a few times. Increase the time "awake" to 0 to 8 seconds,
+# to occasionally leave more time for some network traffic.
+# Tested with the current default autoserv connection parameters:
+# ServerAliveInterval=900 ServerAliveCountMax=3
+job.run_test('power_SuspendStress', duration=14400, tag='bare', max_resume_window=8)
+
+job.run_test('hardware_EC', tag='power_SuspendStress')
+job.run_test('login_LoginSuccess', tag='power_SuspendStress')
+job.run_test('hardware_TPMCheck', tag='power_SuspendStress')
+job.run_test('audio_Aplay', tag='power_SuspendStress')

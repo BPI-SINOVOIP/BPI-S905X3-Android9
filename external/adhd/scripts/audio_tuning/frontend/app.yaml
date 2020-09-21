@@ -1,0 +1,30 @@
+application: audio-tuning
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /(.*\.css)
+  mime_type: text/css
+  static_files: \1
+  upload: (.*\.css)
+
+- url: /(.*\.html)
+  mime_type: text/html
+  static_files: \1
+  upload: (.*\.html)
+
+- url: /(.*\.js)
+  mime_type: text/javascript
+  static_files: \1
+  upload: (.*\.js)
+
+- url: /(LICENSE)
+  mime_type: text/plain
+  static_files: \1
+  upload: (LICENSE)
+
+- url: /
+  static_files: audio.html
+  upload: audio.html

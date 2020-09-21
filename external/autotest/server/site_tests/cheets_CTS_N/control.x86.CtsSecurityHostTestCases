@@ -1,0 +1,35 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+# This file has been automatically generated. Do not edit!
+
+AUTHOR = 'ARC++ Team'
+NAME = 'cheets_CTS_N.x86.CtsSecurityHostTestCases'
+ATTRIBUTES = 'suite:cts_N'
+DEPENDENCIES = 'arc, cts_abi_x86'
+JOB_RETRIES = 2
+TEST_TYPE = 'server'
+TIME = 'LONG'
+MAX_RESULT_SIZE_KB = 307200
+
+DOC = ('Run module CtsSecurityHostTestCases of the '
+       'Android Compatibility Test Suite (CTS) using x86 ABI in the ARC++ container.')
+
+def run_CTS(machine):
+    host = hosts.create_host(machine)
+    job.run_test(
+        'cheets_CTS_N',
+        host=host,
+        iterations=1,
+        max_retry=10,
+        needs_push_media=False,
+        tag='CtsSecurityHostTestCases',
+        target_module='CtsSecurityHostTestCases',
+        bundle='x86',
+        warn_on_test_retry=False,
+        retry_manual_tests=True,
+        precondition_commands=['echo 3 > /proc/sys/kernel/perf_event_paranoid'],
+        timeout=5400)
+
+parallel_simple(run_CTS, machines)

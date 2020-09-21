@@ -1,0 +1,28 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+
+AUTHOR = 'ejcaruso, snanda'
+NAME = 'network_WiFi_RandomMACAddress'
+TIME = 'SHORT'
+TEST_TYPE = 'Server'
+DEPENDENCIES = 'wificell, packet_capture'
+ATTRIBUTES = 'suite:wifi_matfunc, suite:wifi_matfunc_noservo'
+
+DOC = """
+This test verifies that MAC address randomization can be
+turned on and that scans launched with the feature do not use
+the hardware MAC address.
+"""
+
+args_dict = utils.args_to_dict(args)
+
+def run(machine):
+    host = hosts.create_host(machine)
+    job.run_test('network_WiFi_RandomMACAddress',
+                 host=host,
+                 raw_cmdline_args=args)
+
+parallel_simple(run, machines)

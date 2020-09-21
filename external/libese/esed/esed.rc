@@ -1,0 +1,16 @@
+service vendor.esed /vendor/bin/esed
+    class hal
+    user ese
+    group ese
+
+on post-fs-data
+    mkdir /data/vendor/ese 0761 ese ese
+    restorecon /data/vendor/ese
+    start vendor.ese_load
+
+service vendor.ese_load /vendor/bin/ese_load force
+    disabled
+    oneshot
+    user ese
+    group ese
+    ioprio idle 0

@@ -1,0 +1,7 @@
+(1) checkout updated LTP tree under external/ltp
+(2) run the gen_android_build.sh script
+        android/tools/gen_android_build.sh
+(3) remove libutil dependency from ltp_cve-2014-0196 in gen.bp
+    delete this line:
+    shared_libs: ["libutil"],
+(4) commit changes to gen.bp, android/Android.ltp.mk, android/ltp_package_list.mk

@@ -1,0 +1,433 @@
+/*
+ * Copyright (C) 2017 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+syntax = "proto3";
+
+package nugget.app.keymaster;
+
+import "nugget/app/keymaster/keymaster_defs.proto";
+import "nugget/app/keymaster/keymaster_types.proto";
+import "nugget/protobuf/options.proto";
+
+/*
+ * Keymaster service methods.
+ *
+ * TODO: some methods may be implemented in the host side HAL implementation.
+ */
+service Keymaster {
+  option (nugget.protobuf.app_id) = "KEYMASTER";
+  option (nugget.protobuf.app_name) = "Keymaster";
+  option (nugget.protobuf.app_version) = 1;
+  /*
+   * Both request and response buffers are sized such
+   * that a key-blob may be fully contained.
+   *
+   * TODO: revisit this choice in the event that memory
+   * is running out.  Supporting smaller buffers will
+   * require that the keymaster app switch from the
+   * transport API to the datagram API.
+   */
+  option (nugget.protobuf.request_buffer_size) = 3072;
+  option (nugget.protobuf.response_buffer_size) = 2048;
+
+  /*
+   * KM3 methods, from:
+   *     ::android::hardware::keymaster::V3_0::IKeymasterDevice
+   */
+  rpc AddRngEntropy (AddRngEntropyRequest) returns (AddRngEntropyResponse);
+  rpc GenerateKey (GenerateKeyRequest) returns (GenerateKeyResponse);
+  rpc GetKeyCharacteristics (GetKeyCharacteristicsRequest) returns (GetKeyCharacteristicsResponse);
+  rpc ImportKey (ImportKeyRequest) returns (ImportKeyResponse);
+  rpc ExportKey (ExportKeyRequest) returns (ExportKeyResponse);
+  rpc StartAttestKey (StartAttestKeyRequest) returns (StartAttestKeyResponse);
+  rpc UpgradeKey (UpgradeKeyRequest) returns (UpgradeKeyResponse);
+  rpc DeleteKey (DeleteKeyRequest) returns (DeleteKeyResponse);
+  rpc DeleteAllKeys (DeleteAllKeysRequest) returns (DeleteAllKeysResponse);
+  rpc DestroyAttestationIds (DestroyAttestationIdsRequest) returns (DestroyAttestationIdsResponse);
+  rpc BeginOperation (BeginOperationRequest) returns (BeginOperationResponse);
+  rpc UpdateOperation (UpdateOperationRequest) returns (UpdateOperationResponse);
+  rpc FinishOperation (FinishOperationRequest) returns (FinishOperationResponse);
+  rpc AbortOperation (AbortOperationRequest) returns (AbortOperationResponse);
+
+  /*
+   * KM4 methods.
+   */
+  rpc ImportWrappedKey (ImportWrappedKeyRequest) returns (ImportKeyResponse);
+
+  /*
+   * Vendor specific methods (bootloader, manufacturing, status,
+   * factory reset, upgrade).
+   */
+  // Only callable by the Bootloader.
+  rpc SetRootOfTrust (SetRootOfTrustRequest) returns (SetRootOfTrustResponse);
+  // Only callable by the Bootloader.
+  rpc SetBootState (SetBootStateRequest) returns (SetBootStateResponse);
+  // Only callable at the Device Factory.
+  rpc ProvisionDeviceIds (ProvisionDeviceIdsRequest) returns (ProvisionDeviceIdsResponse);
+  // Only callable at the Device Factory.
+  rpc ReadTeeBatchCertificate (ReadTeeBatchCertificateRequest) returns (ReadTeeBatchCertificateResponse);
+
+  /*
+   * More KM4 methods.
+   */
+  rpc GetHmacSharingParameters (GetHmacSharingParametersRequest) returns (GetHmacSharingParametersResponse);
+  rpc ComputeSharedHmac (ComputeSharedHmacRequest) returns (ComputeSharedHmacResponse);
+
+  /*
+   * DTup input session methods.
+   */
+  rpc HandshakeDTup (DTupHandshakeRequest) returns (DTupHandshakeResponse);
+  rpc FetchDTupInputEvent (DTupFetchInputEventRequest) returns (DTupFetchInputEventResponse);
+
+  /*
+   * More vendor specific methods.
+   */
+  // Only callable once per boot.
+  rpc SetSystemVersionInfo (SetSystemVersionInfoRequest) returns (SetSystemVersionInfoResponse);
+  rpc GetBootInfo (GetBootInfoRequest) returns (GetBootInfoResponse);
+
+  /*
+   * Called during provisioning by the CitadelProvision tool.
+   */
+  rpc ProvisionPresharedSecret (ProvisionPresharedSecretRequest) returns (ProvisionPresharedSecretResponse);
+
+  /*
+   * Additional attestation methods.
+   */
+  rpc ContinueAttestKey(ContinueAttestKeyRequest) returns (ContinueAttestKeyResponse);
+  rpc FinishAttestKey(FinishAttestKeyRequest) returns (FinishAttestKeyResponse);
+
+  // These are implemented with a enum, so new RPCs must be appended, and
+  // deprecated RPCs need placeholders.
+}
+
+/*
+ *  KM3 messages.
+ */
+
+// AddEntropy
+message AddRngEntropyRequest {
+  bytes data = 1;
+}
+message AddRngEntropyResponse {
+  ErrorCode error_code = 1;
+}
+
+// GenerateKey
+message GenerateKeyRequest {
+  KeyParameters params = 1;
+}
+message GenerateKeyResponse {
+  ErrorCode error_code = 1;
+  KeyBlob blob = 2;
+  KeyCharacteristics characteristics = 3;
+}
+
+// GetKeyCharacteristics
+message GetKeyCharacteristicsRequest {
+  KeyBlob blob = 1;
+  bytes client_id = 2;
+  bytes app_data = 3;
+}
+message GetKeyCharacteristicsResponse {
+  ErrorCode error_code = 1;
+  KeyCharacteristics characteristics = 2;
+}
+
+// ImportKey
+message ImportKeyRequest {
+  KeyParameters params = 1;
+  RSAKey rsa = 2;
+  ECKey ec = 3;
+  SymmetricKey symmetric_key = 4;
+};
+message ImportKeyResponse {
+  ErrorCode error_code = 1;
+  KeyBlob blob = 2;
+  KeyCharacteristics characteristics = 3;
+};
+
+// ExportKey
+message ExportKeyRequest {
+  KeyFormat format = 1;
+  KeyBlob blob = 2;
+  bytes client_id = 3;
+  bytes app_data = 4;
+};
+message ExportKeyResponse {
+  ErrorCode error_code = 1;
+  Algorithm algorithm = 2;
+  RSAKey rsa = 3;
+  ECKey ec = 4;
+};
+
+// StartAttestKey
+message StartAttestKeyRequest {
+  KeyBlob blob = 1;
+  KeyParameters params = 2;
+  uint32 attestation_app_id_len = 3;
+  AttestationSelector selector = 4;
+  bytes not_before = 5;      // strftime('%y%m%d%H%M%SZ') [13 octects]
+  bytes not_after = 6;       // strftime('%y%m%d%H%M%SZ') [13 octects]
+}
+message StartAttestKeyResponse {
+  ErrorCode error_code = 1;
+  OperationHandle handle = 2;
+  bytes certificate_prologue = 3;
+}
+
+// ContinueAttestKeyRequest
+message ContinueAttestKeyRequest {
+  OperationHandle handle = 1;
+  bytes attestation_app_id = 2;
+}
+message  ContinueAttestKeyResponse {
+  ErrorCode error_code = 1;
+  bytes certificate_body = 2;
+}
+
+// FinishAttestKeyRequest
+message FinishAttestKeyRequest {
+  OperationHandle handle = 1;
+}
+message  FinishAttestKeyResponse {
+  ErrorCode error_code = 1;
+  bytes certificate_epilogue = 2;
+}
+
+// UpgradeKey
+message UpgradeKeyRequest {
+  KeyBlob blob = 1;
+  KeyParameters params = 2;
+}
+message UpgradeKeyResponse {
+  ErrorCode error_code = 1;
+  KeyBlob blob = 2;
+}
+
+// DeleteKey
+message DeleteKeyRequest {
+  KeyBlob blob = 1;
+}
+message DeleteKeyResponse {
+  ErrorCode error_code = 1;
+}
+
+// DeleteAllKeys
+message DeleteAllKeysRequest {}
+message DeleteAllKeysResponse {
+  ErrorCode error_code = 1;
+}
+
+// DestroyAttestationIds
+message DestroyAttestationIdsRequest {}
+message DestroyAttestationIdsResponse {
+  ErrorCode error_code = 1;
+}
+
+// BeginOperation
+message BeginOperationRequest {
+  KeyPurpose purpose = 1;
+  KeyBlob blob = 2;
+  KeyParameters params = 3;
+  HardwareAuthToken auth_token = 4;
+}
+message BeginOperationResponse {
+  ErrorCode error_code = 1;
+  KeyParameters params = 2;
+  OperationHandle handle = 3;
+  Algorithm algorithm = 4;
+  uint32 key_bits = 5;
+}
+
+// UpdateOperation
+message UpdateOperationRequest {
+  OperationHandle handle = 1;
+  KeyParameters params = 2;
+  bytes input = 3;
+  HardwareAuthToken auth_token = 4;
+  VerificationToken verification_token = 5;
+}
+message UpdateOperationResponse {
+  ErrorCode error_code = 1;
+  uint32 consumed = 2;
+  KeyParameters params = 3;
+  bytes output = 4;
+}
+
+// FinishOperation
+message FinishOperationRequest {
+  OperationHandle handle = 1;
+  KeyParameters params = 2;
+  bytes input = 3;
+  bytes signature = 4;
+  HardwareAuthToken auth_token = 5;
+  VerificationToken verification_token = 6;
+};
+message FinishOperationResponse {
+  ErrorCode error_code = 1;
+  KeyParameters params = 2;
+  bytes output = 3;
+};
+
+// AbortOperation
+message AbortOperationRequest {
+  OperationHandle handle = 1;
+};
+message AbortOperationResponse {
+  ErrorCode error_code = 1;
+};
+
+/*
+ * KM4 messages.
+ */
+
+// ImportWrappedKey
+message ImportWrappedKeyRequest {
+  uint32 key_format = 1;
+  KeyParameters params = 2;
+  bytes rsa_envelope = 3;
+  bytes initialization_vector = 4;   // Fixed sized array.
+  bytes encrypted_import_key = 5;
+  bytes aad = 6;
+  bytes gcm_tag = 7;                 // Fixed sized array.
+  KeyBlob wrapping_key_blob = 8;
+  bytes masking_key = 9;             // Fixed sized array.
+}
+// ImportWrappedKey returns a ImportKeyResponse.
+
+// GetHmacSharingParametersRequest
+message GetHmacSharingParametersRequest {
+}
+message GetHmacSharingParametersResponse {
+  ErrorCode error_code = 1;
+  HmacSharingParameters hmac_sharing_params = 2;
+}
+
+// ComputeSharedHmacRequest
+message ComputeSharedHmacRequest {
+  repeated HmacSharingParameters hmac_sharing_params = 1;
+}
+message ComputeSharedHmacResponse {
+  ErrorCode error_code = 1;
+  bytes sharing_check = 2;
+}
+
+/*
+ * Vendor HAL.
+ */
+
+// SetRootOfTrustRequest
+// Only callable by the Bootloader.
+message SetRootOfTrustRequest {
+  bytes digest = 1;                  // This is a SHA256 digest.
+}
+message SetRootOfTrustResponse {
+  // Specified in keymaster_defs.proto:ErrorCode
+  ErrorCode error_code = 1;
+}
+
+// SetBootStateRequest
+// Only callable by the Bootloader.
+message SetBootStateRequest {
+  bool is_unlocked = 1;
+  bytes public_key = 2;              // This is a SHA256 digest.
+  BootColor color = 3;
+  uint32 system_version = 4;
+  uint32 system_security_level = 5;
+  bytes boot_hash = 6;               // This is a SHA256 digest.
+}
+message SetBootStateResponse {
+  // Specified in keymaster_defs.proto:ErrorCode
+  ErrorCode error_code = 1;
+}
+
+// ProvisionDeviceIds
+// Only callable at the Device Factory
+message ProvisionDeviceIdsRequest {
+  bytes product_brand = 1;
+  bytes product_device = 2;
+  bytes product_name = 3;
+  bytes serialno = 4;
+  bytes product_manufacturer = 5;
+  bytes product_model = 6;
+  bytes imei = 7;
+  bytes meid = 8;
+}
+message ProvisionDeviceIdsResponse {
+  // Specified in keymaster_defs.proto:ErrorCode
+  ErrorCode error_code = 1;
+}
+
+// ReadTeeBatchCertificate
+// Only callable at the Device Factory
+message ReadTeeBatchCertificateRequest {
+  Algorithm algorithm = 1;
+}
+message ReadTeeBatchCertificateResponse {
+  ErrorCode error_code = 1;
+  RSAKey rsa = 2;   // rsa or ec set based on request algorithm selector.
+  ECKey ec = 3;
+  bytes batch_cert = 4;
+}
+
+message DTupHandshakeRequest {
+  bytes nonce_client = 1;
+}
+
+message DTupHandshakeResponse {
+  DTupError error_code = 1;
+  bytes nonce_citadel = 2;
+  bytes signature = 3;
+}
+
+message DTupFetchInputEventRequest {}
+
+message DTupFetchInputEventResponse {
+  DTupError error_code = 1;
+  DTupKeyEvent event = 2;
+  bytes signature = 3;
+}
+
+message SetSystemVersionInfoRequest {
+  uint32 system_version = 1;  // getprop "ro.build.version.release"
+  uint32 system_security_level = 2; // getprop "ro.build.version.security_patch"
+  uint32 vendor_security_level = 3; // getprop "ro.vendor.build.security_patch"
+}
+
+message SetSystemVersionInfoResponse {
+  // Specified in keymaster_defs.proto:ErrorCode
+  ErrorCode error_code = 1;
+}
+
+message GetBootInfoRequest {}
+
+message GetBootInfoResponse {
+  ErrorCode error_code = 1;
+  bool is_unlocked = 2;
+  BootColor boot_color = 3;
+  bytes boot_key = 4;               // This is a SHA256 digest.
+  bytes boot_hash = 5;              // This is a SHA256 digest.
+}
+
+message ProvisionPresharedSecretRequest {
+  bytes preshared_secret = 1;
+  bool get_status = 2;
+}
+message ProvisionPresharedSecretResponse {
+  ErrorCode error_code = 1;
+  PresharedSecretStatus status = 2;
+}

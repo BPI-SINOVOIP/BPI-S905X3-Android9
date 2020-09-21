@@ -1,0 +1,4 @@
+URL: http://llvm.org/git/libunwind.git
+Version: 7a61b66a65505b63781e5c538c3ea1253e1a717d
+BugComponent: 117395
+Owners: danalbert, srhines, android-llvm

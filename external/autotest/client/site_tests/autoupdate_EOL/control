@@ -1,0 +1,19 @@
+# Copyright 2018 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "dhaddock, Chromium OS"
+NAME = "autoupdate_EOL"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "platform"
+TEST_TYPE = "client"
+ATTRIBUTES = "suite:bvt-perbuild"
+PURPOSE = "Tests End of Life (EOL) / Autoupdate Expiration (AUE)"
+TIME = "SHORT"
+
+DOC = """
+This test will check that the DUT behaves correctly in an end of life scenario.
+
+"""
+
+job.run_test('autoupdate_EOL')

@@ -1,0 +1,38 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+
+AUTHOR = "harpreet"
+NAME = "enterprise_CFM_USBPeripheralHotplugStress.jabra410mic"
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "enterprise"
+TEST_TYPE = "server"
+ATTRIBUTES = "suite:hotrod"
+DEPENDENCIES = "servo, jabra410_hotplug_stress"
+JOB_RETRIES = 3
+
+DOC = """
+This test clears the TPM, enrolls the device into hotrod kiosk mode before
+stress testing the hotplugging and unplugging of USB peripherals. With each
+hotplug / unplug it verifies that the hotrod app appropriately detects the
+peripherals using app api's.
+"""
+
+args_dict = utils.args_to_dict(args)
+servo_args = hosts.CrosHost.get_servo_arguments(args_dict)
+
+def run_test(machine):
+    host = hosts.create_host(machine, servo_args=servo_args)
+    repeat = int(args_dict.get('repeat', 5))
+    peripheral_whitelist_dict = {'Microphone': 'Jabra SPEAK 410'}
+    job.run_test('enterprise_CFM_USBPeripheralHotplugStress',
+                 host=host,
+                 repeat=repeat,
+                 peripheral_whitelist_dict=peripheral_whitelist_dict,
+                 tag="jabra410mic")
+
+
+parallel_simple(run_test, machines)

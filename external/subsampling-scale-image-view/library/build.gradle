@@ -1,0 +1,37 @@
+apply plugin: 'com.android.library'
+
+group = 'com.davemorrissey.labs'
+archivesBaseName = 'subsampling-scale-image-view'
+version = '3.9.0'
+
+android {
+    compileSdkVersion 27
+
+    defaultConfig {
+        consumerProguardFiles 'proguard-rules.txt'
+    }
+}
+
+configurations {
+    javadocs
+}
+
+dependencies {
+    javadocs 'com.android.support:support-annotations:27.0.2'
+    javadocs 'com.android.support:exifinterface:27.0.2'
+    implementation 'com.android.support:support-annotations:27.0.2'
+    implementation 'com.android.support:exifinterface:27.0.2'
+}
+
+task javadoc(type: Javadoc) {
+    failOnError false
+    source = android.sourceSets.main.java.sourceFiles
+    destinationDir = rootProject.file("docs/javadoc")
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    classpath += configurations.compile
+    classpath += configurations.javadocs
+    options.noTimestamp = true
+    options.links = ['https://developer.android.com/reference/']
+}
+
+apply from: rootProject.file('release.gradle')

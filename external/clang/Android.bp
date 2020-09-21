@@ -1,0 +1,253 @@
+cc_defaults {
+    name: "clang-defaults",
+    defaults: [
+        "llvm-defaults",
+    ],
+
+    header_libs: ["clang-headers"],
+
+    cflags: [
+        "-pedantic",
+        "-Wno-cast-qual",
+        "-Wno-long-long",
+        "-Wno-unused-private-field",
+    ],
+
+    include_dirs: [
+        "external/clang/include",
+        "external/clang/lib/CodeGen",
+    ],
+
+    tidy_checks: [
+        "-google-runtime-member-string-references",
+    ],
+
+    target: {
+        windows: {
+            enabled: true,
+            cflags: [
+                // This triggers an assertion on cross Windows builds.
+                "-Wno-error=uninitialized",
+            ],
+        },
+        not_windows: {
+            cflags: [
+                "-Wno-unused-lambda-capture",
+            ],
+        },
+    },
+
+}
+
+clang_generated_headers = [
+    "clang-gen-options",
+    "clang-gen-attributes",
+    "clang-gen-checkers",
+    "clang-gen-comment-commands",
+    "clang-gen-comment-html-named-character-references",
+    "clang-gen-html-tags",
+    "clang-gen-comment-nodes",
+    "clang-gen-diagnostics",
+    "clang-gen-declnodes",
+    "clang-gen-statnodes",
+    "clang-gen-arm-neon",
+    "clang-version",
+    "llvm-gen-attributes",
+    "llvm-gen-intrinsics",
+]
+
+cc_library_headers {
+    name: "clang-headers",
+    vendor_available: true,
+    host_supported: true,
+    generated_headers: clang_generated_headers,
+    export_include_dirs: ["include"],
+    export_generated_headers: clang_generated_headers,
+    target: {
+        windows: {
+            enabled: true,
+        },
+    },
+}
+
+llvm_tblgen {
+    name: "clang-gen-options",
+    in: "include/clang/Driver/Options.td",
+    outs: ["clang/Driver/Options.inc"],
+}
+
+clang_tblgen {
+    name: "clang-gen-attributes",
+    in: "include/clang/Basic/Attr.td",
+    outs: [
+        "clang/AST/AttrDump.inc",
+        "clang/AST/AttrImpl.inc",
+        "clang/AST/Attrs.inc",
+        "clang/AST/AttrVisitor.inc",
+        "clang/Basic/AttrHasAttributeImpl.inc",
+        "clang/Basic/AttrList.inc",
+        "clang/Parse/AttrParserStringSwitches.inc",
+        "clang/Sema/AttrParsedAttrImpl.inc",
+        "clang/Sema/AttrParsedAttrKinds.inc",
+        "clang/Sema/AttrParsedAttrList.inc",
+        "clang/Sema/AttrSpellingListIndex.inc",
+        "clang/Sema/AttrTemplateInstantiate.inc",
+        "clang/Serialization/AttrPCHRead.inc",
+        "clang/Serialization/AttrPCHWrite.inc",
+    ],
+}
+
+clang_tblgen {
+    name: "clang-gen-checkers",
+    in: "include/clang/StaticAnalyzer/Checkers/Checkers.td",
+    outs: ["clang/StaticAnalyzer/Checkers/Checkers.inc"],
+}
+
+clang_tblgen {
+    name: "clang-gen-comment-commands",
+    in: "include/clang/AST/CommentCommands.td",
+    outs: [
+        "clang/AST/CommentCommandInfo.inc",
+        "clang/AST/CommentCommandList.inc",
+    ],
+}
+
+clang_tblgen {
+    name: "clang-gen-comment-html-named-character-references",
+    in: "include/clang/AST/CommentHTMLNamedCharacterReferences.td",
+    outs: ["clang/AST/CommentHTMLNamedCharacterReferences.inc"],
+}
+
+clang_tblgen {
+    name: "clang-gen-html-tags",
+    in: "include/clang/AST/CommentHTMLTags.td",
+    outs: [
+        "clang/AST/CommentHTMLTagsProperties.inc",
+        "clang/AST/CommentHTMLTags.inc",
+    ],
+}
+
+clang_tblgen {
+    name: "clang-gen-comment-nodes",
+    in: "include/clang/Basic/CommentNodes.td",
+    outs: ["clang/AST/CommentNodes.inc"],
+}
+
+clang_tblgen {
+    name: "clang-gen-diagnostics",
+    in: "include/clang/Basic/Diagnostic.td",
+    outs: [
+        "clang/Basic/DiagnosticAnalysisKinds.inc",
+        "clang/Basic/DiagnosticASTKinds.inc",
+        "clang/Basic/DiagnosticCommentKinds.inc",
+        "clang/Basic/DiagnosticCommonKinds.inc",
+        "clang/Basic/DiagnosticDriverKinds.inc",
+        "clang/Basic/DiagnosticFrontendKinds.inc",
+        "clang/Basic/DiagnosticLexKinds.inc",
+        "clang/Basic/DiagnosticParseKinds.inc",
+        "clang/Basic/DiagnosticSemaKinds.inc",
+        "clang/Basic/DiagnosticSerializationKinds.inc",
+        "clang/Basic/DiagnosticGroups.inc",
+        "clang/Basic/DiagnosticIndexName.inc",
+    ],
+}
+
+clang_tblgen {
+    name: "clang-gen-declnodes",
+    in: "include/clang/Basic/DeclNodes.td",
+    outs: ["clang/AST/DeclNodes.inc"],
+}
+
+clang_tblgen {
+    name: "clang-gen-statnodes",
+    in: "include/clang/Basic/StmtNodes.td",
+    outs: ["clang/AST/StmtNodes.inc"],
+}
+
+clang_tblgen {
+    name: "clang-gen-arm-neon",
+    in: "include/clang/Basic/arm_neon.td",
+    outs: [
+        "clang/Basic/arm_neon.inc",
+        "clang/Basic/arm_neon.h",
+    ],
+}
+
+genrule {
+    name: "clang-version",
+    cmd: "$(location) $(in) > $(out)",
+    tool_files: [
+        "clang-version-inc.py",
+        "version.py",
+    ],
+    srcs: [
+        "include/clang/Basic/Version.inc.in",
+    ],
+    out: ["clang/Basic/Version.inc"],
+}
+
+cc_library_shared {
+    name: "libclang_android",
+    defaults: [
+        "clang-defaults",
+        "force_build_llvm_components",
+    ],
+
+    host_supported: true,
+
+    whole_static_libs: [
+        "libclangAnalysis",
+        "libclangAST",
+        "libclangASTMatchers",
+        "libclangBasic",
+        "libclangCodeGen",
+        "libclangDriver",
+        "libclangEdit",
+        "libclangFormat",
+        "libclangFrontend",
+        "libclangIndex",
+        "libclangLex",
+        "libclangLibclang",
+        "libclangParse",
+        "libclangRewrite",
+        "libclangRewriteFrontend",
+        "libclangSema",
+        "libclangSerialization",
+        "libclangTooling",
+        "libclangToolingCore",
+    ],
+
+    export_shared_lib_headers: ["libLLVM_android"],
+    shared_libs: ["libLLVM_android"],
+    export_header_lib_headers: ["clang-headers"],
+
+    target: {
+        windows: {
+            host_ldlibs: [
+                "-limagehlp",
+                "-lpsapi",
+                "-lversion",
+            ],
+        },
+        not_windows: {
+            shared_libs: ["libc++"],
+        },
+    },
+
+    product_variables: {
+        unbundled_build: {
+            // Don't build the library in unbundled branches.
+            enabled: false,
+        },
+    },
+}
+
+subdirs = [
+    "lib",
+    "soong",
+    "utils/TableGen",
+    "tools/clang-check",
+    "tools/clang-format",
+    "tools/driver",
+    "tools/libclang",
+]

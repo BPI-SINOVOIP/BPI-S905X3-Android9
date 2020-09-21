@@ -1,0 +1,34 @@
+#!/bin/bash
+set -e -o pipefail
+
+# This script copies a locally built GOROOT to a remote device.
+#
+# Usage: push_goroot <target>...
+#
+# This script can work with both ChromeOS/Android devices.
+#
+# It uses "target_tmpdir" to figure out where to copy GOROOT on the device.
+# It uses "target_sh" to remotely execute commands on the device.
+# It uses "target_cp" to transfer files to the device.
+
+goroot="$(target_tmpdir)/go"
+for target in "$@"
+do
+	echo -n "pushing to ${target} ... "
+	target_sh ${target} "rm -rf ${goroot}"
+	target_sh ${target} "mkdir -p ${goroot}/pkg"
+
+	pkgdir="$(go_${target} env GOOS)_$(go_${target} env GOARCH)"
+	if [[ -d "pkg/${pkgdir}_shared" ]]
+	then
+		target_cp "pkg/${pkgdir}_shared" ${target}:${goroot}/pkg
+		target_sh ${target} "ln -s ${pkgdir}_shared ${goroot}/pkg/${pkgdir}"
+	else
+		target_cp "pkg/${pkgdir}" ${target}:${goroot}/pkg
+	fi
+
+	target_cp "src" ${target}:${goroot}
+	target_cp "lib" ${target}:${goroot}
+	target_cp "test" ${target}:${goroot}
+	echo "done"
+done

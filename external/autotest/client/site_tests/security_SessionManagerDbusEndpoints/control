@@ -1,0 +1,25 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+TIME="SHORT"
+AUTHOR = "The Chromium OS Authors"
+DOC = """
+Tests that SessionManager D-Bus endpoints cannot be abused.
+"""
+NAME = "security_SessionManagerDbusEndpoints"
+PURPOSE = """
+Validates that EnableChromeTesting is root only, and that RestartJob will not
+launch arbitrary processes.
+"""
+CRITERIA = """
+Fails if EnableChromeTesting can be called as user 'chronos', or if RestartJob
+allows executing an arbitrary binary.
+"""
+ATTRIBUTES = "suite:bvt-perbuild"
+TEST_CATEGORY = "Security"
+TEST_CLASS = "security"
+TEST_TYPE = "client"
+JOB_RETRIES = 2
+
+job.run_test("security_SessionManagerDbusEndpoints")

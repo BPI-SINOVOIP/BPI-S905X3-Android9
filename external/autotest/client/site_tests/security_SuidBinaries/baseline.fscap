@@ -1,0 +1,11 @@
+/bin/arping = cap_net_raw+ep
+/bin/ping = cap_net_raw+ep
+/bin/ping6 = cap_net_raw+ep
+/sbin/unix_chkpwd = cap_dac_override+ep
+/usr/bin/fusermount = cap_sys_admin+ep
+/usr/sbin/hostapd = cap_net_admin,cap_net_raw+ei
+/usr/sbin/dnsmasq = cap_net_bind_service,cap_net_admin,cap_net_raw+ei
+/opt/google/containers/android/rootfs/root/system/bin/logd = cap_setgid,cap_audit_control+ep
+/opt/google/containers/android/rootfs/root/system/bin/run-as = cap_setgid,cap_setuid+ep
+/opt/google/containers/android/rootfs/root/system/bin/surfaceflinger = cap_sys_nice+ep
+/opt/google/containers/android/rootfs/root/system/bin/webview_zygote32 = cap_setgid,cap_setuid,cap_setpcap+ep

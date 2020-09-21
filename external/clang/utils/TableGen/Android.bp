@@ -1,0 +1,23 @@
+cc_binary_host {
+    name: "clang-tblgen",
+    defaults: ["llvm-defaults"],
+    srcs: ["*.cpp"],
+
+    static_libs: [
+        "libLLVMTableGen",
+        "libLLVMSupport",
+    ],
+
+    tidy_checks: [
+        "-google-runtime-member-string-references",
+    ],
+    target: {
+        windows: {
+            host_ldlibs: [
+                "-limagehlp",
+                "-lpsapi",
+                "-lversion",
+            ],
+        },
+    },
+}

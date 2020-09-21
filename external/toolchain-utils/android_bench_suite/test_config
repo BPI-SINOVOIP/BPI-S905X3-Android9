@@ -1,0 +1,57 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+[Hwui_Test]
+bench = Hwui
+compiler =
+build_os =
+llvm_version =
+cflags =
+ldflags =
+iterations = 1
+
+[Skia_Test]
+bench = Skia
+compiler =
+build_os =
+llvm_version =
+cflags =
+ldflags =
+iterations = 1
+
+[Synthmark_Test]
+bench = Synthmark
+compiler =
+build_os =
+llvm_version =
+cflags =
+ldflags =
+iterations = 1
+
+[Binder_Test]
+bench = Binder
+compiler =
+build_os =
+llvm_version =
+cflags =
+ldflags =
+iterations = 1
+
+[Panorama_Test]
+bench = Panorama
+compiler =
+build_os =
+llvm_version =
+cflags =
+ldflags =
+iterations = 1
+
+[Dex2oat_Test]
+bench = Dex2oat
+compiler =
+build_os =
+llvm_version =
+cflags =
+ldflags =
+iterations = 1

@@ -1,0 +1,21 @@
+commit 837af03fa24ed02eb448c9a738d2264071a10b9f
+Author: Po-Hsien Wang <pwang@chromium.org>
+Date:   Tue Sep 19 13:29:09 2017 -0700
+
+    Report text url name along with data
+
+    These name will be used to match with the waived_list in
+    graphics_WebGLPerformance
+
+diff --git a/index.html b/index.html
+index 0d0891b..8a244c7 100644
+--- a/index.html
++++ b/index.html
+@@ -86,6 +86,7 @@
+ 
+   function messageListener(e) {
+     if (e.data.testDescription) {
++      e.data.url = testPageURLs[currentPageIndex]
+       testsRun.push(e.data);
+       if (e.data.testResult) {
+         sumOfResults += e.data.testResult;

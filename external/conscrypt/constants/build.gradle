@@ -1,0 +1,81 @@
+description = 'Conscrypt: Constants'
+
+ext {
+    genDir = "${project.buildDir}/generated-sources"
+}
+
+// Needs to be binary-compatible with Android minSdkVersion.
+sourceCompatibility = androidMinJavaVersion
+targetCompatibility = androidMinJavaVersion
+
+sourceSets.main {
+    java {
+        srcDirs = [
+            "${genDir}"
+        ]
+    }
+}
+
+dependencies {
+    compile files("${genDir}") {
+        builtBy 'runGen'
+    }
+}
+
+// Generate sources JAR
+artifacts {
+    archives sourcesJar
+}
+
+model {
+    components {
+        // Builds exe/ which generates the content of NativeConstants.java
+        gen(NativeExecutableSpec) {
+            sources {
+                cpp {
+                    // Sources assumed to be in src/gen/cpp by default.
+                    exportedHeaders {
+                        srcDirs "${boringsslIncludeDir}"
+                        include "**/*.cc"
+                    }
+                }
+            }
+
+            binaries.all {
+                if (toolChain in VisualCpp) {
+                    cppCompiler.define "WIN32_LEAN_AND_MEAN"
+                }
+            }
+        }
+    }
+
+    tasks {
+        // Runs generateNativeConstants to create build/NativeConstants.java
+        runGen(Exec) {
+            def gen = $.binaries.get("genExecutable")
+
+            dependsOn gen
+            File genDir = new File("${genDir}/org/conscrypt")
+
+            executable gen.executable.file
+
+            doFirst {
+                genDir.mkdirs()
+                standardOutput = new FileOutputStream(new File(genDir, "NativeConstants.java"))
+            }
+            doLast {
+                if (standardOutput != null) {
+                    standardOutput.close();
+                }
+            }
+        }
+    }
+}
+
+
+// Don't include this artifact in the distribution.
+tasks.install.enabled = false
+tasks.uploadArchives.enabled = false;
+
+// Disable the javadoc task.
+tasks.withType(Javadoc).all { enabled = false }

@@ -1,0 +1,607 @@
+# setup (you can ignore this)
+# ###########################
+
+# a bit of setup to allow overriding rpc_interace with an RPC proxy
+# (to use RPC, we would say
+#   import rpc_client_lib
+#   rpc_interface = rpc_client_lib.get_proxy(
+#                             'http://hostname:8000/afe/server/noauth/rpc/')
+# )
+>>> if 'rpc_interface' not in globals():
+...   from autotest_lib.frontend.afe import rpc_interface, models
+...   from autotest_lib.frontend import thread_local
+...   # set up a user for us to "login" as
+...   user = models.User(login='debug_user')
+...   user.access_level = 100
+...   user.save()
+...   thread_local.set_user(user)
+...   user2 = models.User(login='showard')
+...   user2.access_level = 1
+...   user2.save()
+...
+>>> from autotest_lib.frontend.afe import model_logic
+
+# get directory of this test file; we'll need it later
+>>> import common
+>>> from autotest_lib.frontend.afe import test
+>>> import os, datetime
+>>> test_path = os.path.join(os.path.dirname(test.__file__),
+...                                          'doctests')
+>>> test_path = os.path.abspath(test_path)
+
+# disable logging
+>>> from autotest_lib.client.common_lib import logging_manager
+>>> logging_manager.logger.setLevel(100)
+
+>>> drone_set = models.DroneSet.default_drone_set_name()
+>>> if drone_set:
+...     _ = models.DroneSet.objects.create(name=drone_set)
+
+# mock up tko rpc_interface
+>>> from autotest_lib.client.common_lib.test_utils import mock
+>>> mock.mock_god().stub_function_to_return(rpc_interface.tko_rpc_interface,
+...                                         'get_status_counts',
+...                                         None)
+
+# basic interface test
+######################
+
+# echo a comment
+>>> rpc_interface.echo('test string to echo')
+'test string to echo'
+
+# basic object management
+# #######################
+
+# create a label
+>>> rpc_interface.add_label(name='test_label')
+1
+
+# we can modify the label by referencing its ID...
+>>> rpc_interface.modify_label(1, kernel_config='/my/kernel/config')
+
+# ...or by referencing it's name
+>>> rpc_interface.modify_label('test_label', platform=True)
+
+# we use get_labels to retrieve object data
+>>> data = rpc_interface.get_labels(name='test_label')
+>>> data == [{'id': 1,
+...           'name': 'test_label',
+...           'platform': 1,
+...           'kernel_config': '/my/kernel/config',
+...           'only_if_needed' : False,
+...           'invalid': 0,
+...           'atomic_group': None}]
+True
+
+# get_labels return multiple matches as lists of dictionaries
+>>> rpc_interface.add_label(name='label1', platform=False)
+2
+>>> rpc_interface.add_label(name='label2', platform=True)
+3
+>>> rpc_interface.add_label(name='label3', platform=False)
+4
+>>> data = rpc_interface.get_labels(platform=False)
+>>> data == [{'id': 2, 'name': 'label1', 'platform': 0, 'kernel_config': '',
+...           'only_if_needed': False, 'invalid': 0, 'atomic_group': None},
+...          {'id': 4, 'name': 'label3', 'platform': 0, 'kernel_config': '',
+...           'only_if_needed': False, 'invalid': 0, 'atomic_group': None}]
+True
+
+# delete_label takes an ID or a name as well
+>>> rpc_interface.delete_label(3)
+>>> rpc_interface.get_labels(name='label2')
+[]
+>>> rpc_interface.delete_label('test_label')
+>>> rpc_interface.delete_label('label1')
+>>> rpc_interface.delete_label('label3')
+>>> rpc_interface.get_labels()
+[]
+
+# all the add*, modify*, delete*, and get* methods work the same way
+# hosts...
+>>> rpc_interface.add_host(hostname='ipaj1', locked=True, lock_reason='Locked device on creation')
+1
+>>> data = rpc_interface.get_hosts()
+
+# delete the lock_time field, since that can't be reliably checked
+>>> del data[0]['lock_time']
+>>> data == [{'id': 1,
+...           'hostname': 'ipaj1',
+...           'locked': 1,
+...           'synch_id': None,
+...           'status': 'Ready',
+...           'labels': [],
+...           'acls': ['Everyone'],
+...           'platform': None,
+...           'attributes': {},
+...           'invalid': 0,
+...           'protection': 'No protection',
+...           'locked_by': 'debug_user',
+...           'dirty': True,
+...           'leased': 1,
+...           'shard': None,
+...           'lock_reason': 'Locked device on creation'}]
+True
+>>> rpc_interface.modify_host(id='ipaj1', status='Hello')
+Traceback (most recent call last):
+ValidationError: {'status': 'Host status can not be modified by the frontend.'}
+>>> rpc_interface.modify_host(id='ipaj1', hostname='ipaj1000')
+>>> rpc_interface.modify_hosts(
+...     host_filter_data={'hostname': 'ipaj1000'},
+...     update_data={'locked': False})
+>>> data = rpc_interface.get_hosts()
+>>> bool(data[0]['locked'])
+False
+
+# test already locked/unlocked failures
+>>> rpc_interface.modify_host(id='ipaj1000', locked=False)
+Traceback (most recent call last):
+ValidationError: {'locked': u'Host ipaj1000 already unlocked.'}
+>>> rpc_interface.modify_host(id='ipaj1000', locked=True, lock_reason='Locking a locked device')
+>>> try:
+...     rpc_interface.modify_host(id='ipaj1000', locked=True)
+... except model_logic.ValidationError, err:
+...     pass
+>>> assert ('locked' in err.message_dict
+...         and err.message_dict['locked'].startswith('Host ipaj1000 already locked'))
+>>> rpc_interface.delete_host(id='ipaj1000')
+>>> rpc_interface.get_hosts() == []
+True
+
+# tests...
+>>> rpc_interface.get_tests() == []
+True
+
+# profilers...
+>>> rpc_interface.add_profiler(name='oprofile')
+1
+>>> rpc_interface.modify_profiler('oprofile', description='Oh profile!')
+>>> data = rpc_interface.get_profilers()
+>>> data == [{'id': 1,
+...           'name': 'oprofile',
+...           'description': 'Oh profile!'}]
+True
+>>> rpc_interface.delete_profiler('oprofile')
+>>> rpc_interface.get_profilers() == []
+True
+
+
+# users...
+>>> data = rpc_interface.get_users(login='showard')
+>>> data == [{'id': 2,
+...           'login': 'showard',
+...           'access_level': 1,
+...           'reboot_before': 'If dirty',
+...           'reboot_after': 'Never',
+...           'drone_set': None,
+...           'show_experimental': False}]
+True
+
+# acl groups...
+# 1 ACL group already exists, named "Everyone" (ID 1)
+>>> rpc_interface.add_acl_group(name='my_group')
+2
+>>> rpc_interface.modify_acl_group('my_group', description='my new acl group')
+>>> data = rpc_interface.get_acl_groups(name='my_group')
+>>> data == [{'id': 2,
+...           'name': 'my_group',
+...           'description': 'my new acl group',
+...           'users': ['debug_user'],
+...           'hosts': []}]
+True
+>>> rpc_interface.delete_acl_group('my_group')
+>>> data = rpc_interface.get_acl_groups()
+>>> data == [{'id': 1,
+...           'name': 'Everyone',
+...           'description': '',
+...           'users': ['debug_user', 'showard'],
+...           'hosts': []}]
+True
+
+
+# managing many-to-many relationships
+# ###################################
+
+# first, create some hosts and labels to play around with
+>>> rpc_interface.add_host(hostname='host1')
+2
+>>> rpc_interface.add_host(hostname='host2')
+3
+>>> rpc_interface.add_label(name='label1')
+2
+>>> rpc_interface.add_label(name='label2', platform=True)
+3
+
+# add hosts to labels
+>>> rpc_interface.host_add_labels(id='host1', labels=['label1'])
+>>> rpc_interface.host_add_labels(id='host2', labels=['label1', 'label2'])
+
+# check labels for hosts
+>>> data = rpc_interface.get_hosts(hostname='host1')
+>>> data[0]['labels']
+[u'label1']
+>>> data = rpc_interface.get_hosts(hostname='host2')
+>>> data[0]['labels']
+[u'label1', u'label2']
+>>> data[0]['platform']
+u'label2'
+
+# check host lists for labels -- use double underscore to specify fields of
+# related objects
+>>> data = rpc_interface.get_hosts(labels__name='label1')
+>>> [host['hostname'] for host in data]
+[u'host1', u'host2']
+>>> data = rpc_interface.get_hosts(labels__name='label2')
+>>> [host['hostname'] for host in data]
+[u'host2']
+
+# remove a host from a label
+>>> rpc_interface.host_remove_labels(id='host2', labels=['label2'])
+>>> data = rpc_interface.get_hosts(hostname='host1')
+>>> data[0]['labels']
+[u'label1']
+>>> rpc_interface.get_hosts(labels__name='label2')
+[]
+
+# Cleanup
+>>> rpc_interface.host_remove_labels(id='host2', labels=['label1'])
+>>> rpc_interface.host_remove_labels(id='host1', labels=['label1'])
+
+
+# Other interface for new CLI
+# add hosts to labels
+>>> rpc_interface.label_add_hosts(id='label1', hosts=['host1'])
+>>> rpc_interface.label_add_hosts(id='label2', hosts=['host1', 'host2'])
+
+# check labels for hosts
+>>> data = rpc_interface.get_hosts(hostname='host1')
+>>> data[0]['labels']
+[u'label1', u'label2']
+>>> data = rpc_interface.get_hosts(hostname='host2')
+>>> data[0]['labels']
+[u'label2']
+>>> data[0]['platform']
+u'label2'
+
+# check host lists for labels -- use double underscore to specify fields of
+# related objects
+>>> data = rpc_interface.get_hosts(labels__name='label1')
+>>> [host['hostname'] for host in data]
+[u'host1']
+>>> data = rpc_interface.get_hosts(labels__name='label2')
+>>> [host['hostname'] for host in data]
+[u'host1', u'host2']
+
+# remove a host from a label
+>>> rpc_interface.label_remove_hosts(id='label2', hosts=['host2'])
+>>> data = rpc_interface.get_hosts(hostname='host1')
+>>> data[0]['labels']
+[u'label1', u'label2']
+>>> data = rpc_interface.get_hosts(labels__name='label2')
+>>> [host['hostname'] for host in data]
+[u'host1']
+
+# Remove multiple hosts from a label
+>>> rpc_interface.label_add_hosts(id='label2', hosts=['host2'])
+>>> data = rpc_interface.get_hosts(labels__name='label2')
+>>> [host['hostname'] for host in data]
+[u'host1', u'host2']
+>>> rpc_interface.label_remove_hosts(id='label2', hosts=['host2', 'host1'])
+>>> rpc_interface.get_hosts(labels__name='label2')
+[]
+
+
+# ACL group relationships work similarly
+# note that all users are a member of 'Everyone' by default, and that hosts are
+# automatically made a member of 'Everyone' only when they are a member of no
+# other group
+>>> data = rpc_interface.get_acl_groups(hosts__hostname='host1')
+>>> [acl_group['name'] for acl_group in data]
+[u'Everyone']
+
+>>> rpc_interface.add_acl_group(name='my_group')
+2
+
+>>> rpc_interface.acl_group_add_users('my_group', ['showard'])
+>>> rpc_interface.acl_group_add_hosts('my_group', ['host1'])
+>>> data = rpc_interface.get_acl_groups(name='my_group')
+>>> data[0]['users']
+[u'debug_user', u'showard']
+>>> data[0]['hosts']
+[u'host1']
+>>> data = rpc_interface.get_acl_groups(users__login='showard')
+>>> [acl_group['name'] for acl_group in data]
+[u'Everyone', u'my_group']
+
+# note host has been automatically removed from 'Everyone'
+>>> data = rpc_interface.get_acl_groups(hosts__hostname='host1')
+>>> [acl_group['name'] for acl_group in data]
+[u'my_group']
+
+>>> rpc_interface.acl_group_remove_users('my_group', ['showard'])
+>>> rpc_interface.acl_group_remove_hosts('my_group', ['host1'])
+>>> data = rpc_interface.get_acl_groups(name='my_group')
+>>> data[0]['users'], data[0]['hosts']
+([u'debug_user'], [])
+>>> data = rpc_interface.get_acl_groups(users__login='showard')
+>>> [acl_group['name'] for acl_group in data]
+[u'Everyone']
+
+# note host has been automatically added back to 'Everyone'
+>>> data = rpc_interface.get_acl_groups(hosts__hostname='host1')
+>>> [acl_group['name'] for acl_group in data]
+[u'Everyone']
+
+
+# host attributes
+
+>>> rpc_interface.set_host_attribute('color', 'red', hostname='host1')
+>>> data = rpc_interface.get_hosts(hostname='host1')
+>>> data[0]['attributes']
+{u'color': u'red'}
+
+>>> rpc_interface.set_host_attribute('color', None, hostname='host1')
+>>> data = rpc_interface.get_hosts(hostname='host1')
+>>> data[0]['attributes']
+{}
+
+
+# host bulk modify
+##################
+
+>>> rpc_interface.modify_hosts(
+...     host_filter_data={'hostname__in': ['host1', 'host2']},
+...     update_data={'locked': True, 'lock_reason': 'Locked for testing'})
+>>> data = rpc_interface.get_hosts(hostname__in=['host1', 'host2'])
+
+>>> data[0]['locked']
+True
+>>> data[1]['locked']
+True
+
+>>> rpc_interface.modify_hosts(
+...     host_filter_data={'id': 2},
+...     update_data={'locked': False})
+>>> data = rpc_interface.get_hosts(hostname__in=['host1', 'host2'])
+
+>>> data[0]['locked']
+False
+>>> data[1]['locked']
+True
+
+
+# job management
+# ############
+
+# note that job functions require job IDs to identify jobs, since job names are
+# not unique
+
+# add some entries to play with
+>>> rpc_interface.add_label(name='my_label', kernel_config='my_kernel_config')
+5
+>>> rpc_interface.add_host(hostname='my_label_host1')
+4
+>>> rpc_interface.add_host(hostname='my_label_host2')
+5
+>>> rpc_interface.label_add_hosts(id='my_label', hosts=['my_label_host1', 'my_label_host2'])
+
+# generate a control file from existing body text.
+>>> cf_info_pi = rpc_interface.generate_control_file(
+...     client_control_file='print "Hi"\n')
+>>> print cf_info_pi['control_file'] #doctest: +NORMALIZE_WHITESPACE
+def step_init():
+    job.next_step('step0')
+def step0():
+    print "Hi"
+    return locals()
+
+# create a job to run on host1, host2, and any two machines in my_label
+>>> rpc_interface.create_job(name='my_job',
+...                          priority=10,
+...                          control_file=cf_info_pi['control_file'],
+...                          control_type='Client',
+...                          hosts=['host1', 'host2'],
+...                          meta_hosts=['my_label', 'my_label'])
+1
+
+# get job info - this does not include status info for particular hosts
+>>> data = rpc_interface.get_jobs()
+>>> data = data[0]
+>>> data['id'], data['owner'], data['name'], data['priority']
+(1, u'debug_user', u'my_job', 10)
+>>> data['control_file'] == cf_info_pi['control_file']
+True
+>>> data['control_type']
+'Client'
+
+>>> today = datetime.date.today()
+>>> data['created_on'].startswith(
+...         '%d-%02d-%02d' % (today.year, today.month, today.day))
+True
+
+# get_num_jobs - useful when dealing with large numbers of jobs
+>>> rpc_interface.get_num_jobs(name='my_job')
+1
+
+# check host queue entries for a job
+>>> data = rpc_interface.get_host_queue_entries(job=1)
+>>> len(data)
+4
+
+# get rid of created_on, it's nondeterministic
+>>> data[0]['job']['created_on'] = data[2]['job']['created_on'] = None
+
+# get_host_queue_entries returns full info about the job within each queue entry
+>>> job = data[0]['job']
+>>> job == {'control_file': cf_info_pi['control_file'], # the control file we used
+...         'control_type': 'Client',
+...         'created_on': None,
+...         'id': 1,
+...         'name': 'my_job',
+...         'owner': 'debug_user',
+...         'priority': 10,
+...         'synch_count': 0,
+...         'timeout': 24,
+...         'timeout_mins': 1440,
+...         'max_runtime_mins': 1440,
+...         'max_runtime_hrs' : 72,
+...         'run_verify': False,
+...         'run_reset': True,
+...         'email_list': '',
+...         'reboot_before': 'If dirty',
+...         'reboot_after': 'Never',
+...         'parse_failed_repair': True,
+...         'drone_set': drone_set,
+...         'parameterized_job': None,
+...         'test_retry': 0,
+...         'parent_job': None,
+...         'shard': None,
+...         'require_ssp': None}
+True
+
+# get_host_queue_entries returns a lot of data, so let's only check a couple
+>>> data[0] == (
+... {'active': 0,
+...  'complete': 0,
+...  'host': {'hostname': 'host1', # full host info here
+...           'id': 2,
+...           'invalid': 0,
+...           'locked': 0,
+...           'status': 'Ready',
+...           'synch_id': None,
+...           'protection': 'No protection',
+...           'locked_by': None,
+...           'lock_time': None,
+...           'lock_reason': 'Locked for testing',
+...           'dirty': True,
+...           'leased': 1,
+...           'shard': None},
+...  'id': 1,
+...  'job': job, # full job info here
+...  'meta_host': None,
+...  'status': 'Queued',
+...  'deleted': 0,
+...  'execution_subdir': '',
+...  'atomic_group': None,
+...  'aborted': False,
+...  'started_on': None,
+...  'finished_on': None,
+...  'full_status': 'Queued'})
+True
+>>> data[2] == (
+... {'active': 0,
+...  'complete': 0,
+...  'host': None,
+...  'id': 3,
+...  'job': job,
+...  'meta_host': 'my_label',
+...  'status': 'Queued',
+...  'deleted': 0,
+...  'execution_subdir': '',
+...  'atomic_group': None,
+...  'aborted': False,
+...  'started_on': None,
+...  'finished_on': None,
+...  'full_status': 'Queued'})
+True
+>>> rpc_interface.get_num_host_queue_entries(job=1)
+4
+>>> rpc_interface.get_hqe_percentage_complete(job=1)
+0.0
+
+# get_jobs_summary adds status counts to the rest of the get_jobs info
+>>> data = rpc_interface.get_jobs_summary()
+>>> counts = data[0]['status_counts']
+>>> counts
+{u'Queued': 4}
+
+# abort the job
+>>> data = rpc_interface.abort_host_queue_entries(job__id=1)
+>>> data = rpc_interface.get_jobs_summary(id=1)
+>>> data[0]['status_counts']
+{u'Aborted (Queued)': 4}
+
+# Remove the two hosts in my_label
+>>> rpc_interface.delete_host(id='my_label_host1')
+>>> rpc_interface.delete_host(id='my_label_host2')
+
+
+# extra querying parameters
+# #########################
+
+# get_* methods can take query_start and query_limit arguments to implement
+# paging and a sort_by argument to specify the sort column
+>>> data = rpc_interface.get_hosts(query_limit=1)
+>>> [host['hostname'] for host in data]
+[u'host1']
+>>> data = rpc_interface.get_hosts(query_start=1, query_limit=1)
+>>> [host['hostname'] for host in data]
+[u'host2']
+
+# sort_by = ['-hostname'] indicates sorting in descending order by hostname
+>>> data = rpc_interface.get_hosts(sort_by=['-hostname'])
+>>> [host['hostname'] for host in data]
+[u'host2', u'host1']
+
+
+# cloning a job
+# #############
+
+>>> job_id = rpc_interface.create_job(name='my_job_to_clone',
+...                                   priority=50,
+...                                   control_file=cf_info_pi['control_file'],
+...                                   control_type='Client',
+...                                   hosts=['host2'],
+...                                   synch_count=1)
+>>> info = rpc_interface.get_info_for_clone(job_id, False)
+>>> info['meta_host_counts']
+{}
+>>> info['job']['dependencies']
+[]
+>>> info['job']['priority']
+50
+
+
+# advanced usage
+# ##############
+
+# synch_count
+>>> job_id = rpc_interface.create_job(name='my_job',
+...                          priority=10,
+...                          control_file=cf_info_pi['control_file'],
+...                          control_type='Server',
+...                          synch_count=2,
+...                          hosts=['host1', 'host2'])
+
+>>> data = rpc_interface.get_jobs(id=job_id)
+>>> data[0]['synch_count']
+2
+
+# get hosts ACL'd to a user
+>>> hosts = rpc_interface.get_hosts(aclgroup__users__login='debug_user')
+>>> sorted([host['hostname'] for host in hosts])
+[u'host1', u'host2']
+
+>>> rpc_interface.add_acl_group(name='mygroup')
+3
+>>> rpc_interface.acl_group_add_users('mygroup', ['debug_user'])
+>>> rpc_interface.acl_group_add_hosts('mygroup', ['host1'])
+>>> data = rpc_interface.get_acl_groups(name='Everyone')[0]
+>>> data['users'], data['hosts']
+([u'debug_user', u'showard'], [u'host2'])
+>>> data = rpc_interface.get_acl_groups(name='mygroup')[0]
+>>> data['users'], data['hosts']
+([u'debug_user'], [u'host1'])
+
+>>> hosts = rpc_interface.get_hosts(aclgroup__users__login='debug_user')
+>>> sorted([host['hostname'] for host in hosts])
+[u'host1', u'host2']
+>>> hosts = rpc_interface.get_hosts(aclgroup__users__login='showard')
+>>> [host['hostname'] for host in hosts]
+[u'host2']
+
+>>> rpc_interface.delete_acl_group('mygroup')
+>>> data = rpc_interface.get_acl_groups(name='Everyone')[0]
+>>> sorted(data['hosts'])
+[u'host1', u'host2']

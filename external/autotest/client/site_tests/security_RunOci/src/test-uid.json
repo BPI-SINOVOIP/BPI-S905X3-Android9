@@ -1,0 +1,5 @@
+{
+    "run_oci_args": ["--cgroup_parent=chronos_containers"],
+    "program_argv": ["/usr/bin/id", "-u"],
+    "expected_result": "0"
+}

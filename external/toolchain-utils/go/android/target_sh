@@ -1,0 +1,13 @@
+#!/bin/bash
+set -e -o pipefail
+
+# Run a command on the target Android device.
+#
+# Usage: target_sh <cmd> <args>...
+
+target="$1"
+shift
+
+exitcode="$(target_tmpdir)/exitcode"
+adb_${target} shell "$*; echo -n \$? > ${exitcode}" | sed -e 's:\r$::' -u
+exit $(adb_${target} shell "cat ${exitcode}")

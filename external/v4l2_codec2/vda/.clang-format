@@ -1,0 +1,4 @@
+# The codes in this directory are ported from Chromium Project.
+# Therefore, they are obviously based on Chromium coding style
+# and shouldn't be formatted by Android Coding Style
+BasedOnStyle: None

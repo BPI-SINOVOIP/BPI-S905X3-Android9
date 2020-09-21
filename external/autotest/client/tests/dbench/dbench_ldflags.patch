@@ -1,0 +1,27 @@
+--- old/Makefile.in	2016-06-09 16:03:03.113454462 -0700
++++ new/Makefile.in	2016-06-09 16:03:38.713684070 -0700
+@@ -13,6 +13,7 @@
+ 
+ CC=@CC@
+ CFLAGS=@CFLAGS@ -I. -DVERSION=\"$(VERSION)\" -DDATADIR=\"$(datadir)\"
++LDFLAGS=@LDFLAGS@
+ EXEEXT=@EXEEXT@
+ 
+ DB_OBJS = fileio.o util.o dbench.o child.o system.o snprintf.o
+@@ -22,13 +23,13 @@
+ all: dbench tbench tbench_srv
+ 
+ dbench: $(DB_OBJS)
+-	$(CC) -lpthread -o $@ $(DB_OBJS) $(LIBS)
++	$(CC) -lpthread -o $@ $(DB_OBJS) $(LIBS) $(LDFLAGS)
+ 
+ tbench: $(TB_OBJS)
+-	$(CC) -lpthread -o $@ $(TB_OBJS) $(LIBS)
++	$(CC) -lpthread -o $@ $(TB_OBJS) $(LIBS) $(LDFLAGS)
+ 
+ tbench_srv: $(SRV_OBJS)
+-	$(CC) -o $@ $(SRV_OBJS) $(LIBS)
++	$(CC) -o $@ $(SRV_OBJS) $(LIBS) $(LDFLAGS)
+ 
+ # Careful here: don't install client.txt over itself.
+ install: all

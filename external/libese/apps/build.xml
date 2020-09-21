@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (C) 2017 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<!-- Ant XML for out of band building all applets using shared exports. -->
+<project basedir="." default="sample_apps" name="libese sample applet build scripts">
+
+<!-- Project-wide properties -->
+<!-- TODO: move to file="build.properties" -->
+<property name="build" location="${basedir}/build"/>
+<property name="prereqs.dir" location="${basedir}/prereqs"/>
+<property name="out" location="${basedir}/out"/>
+
+<property name="api.root" location="${build}/jcop/targetpack"/>
+<property name="api.dir" location="${api.root}/apis/jcopx-4.0-R2"/>
+
+<property name="api.name" value="com.nxp.id.jcop.eclipse.targetpacks1_4.10.0.1.jar"/>
+<property name="ls.name" value="ls_library_v02.00.jar"/>
+<property name="ls.dir" location="${build}/loaderservice"/>
+
+<property name="prereqs.manual" value="${ls.name},${api.name}"/>
+
+<target name="check-checksum">
+    <checksum file="${tocheck}" algorithm="SHA-512" fileext=".SHA-512" pattern="{0} {1}"
+        verifyProperty="checksum_verifies"/>
+    <fail message="Checksum mismatch on ${tocheck}">
+        <condition>
+            <not>
+                <istrue value="${checksum_verifies}" />
+            </not>
+        </condition>
+    </fail>
+</target>
+
+<target name="download_prereqs">
+    <!-- Grab the awesome ant helper. -->
+    <get src="https://github.com/martinpaljak/ant-javacard/releases/download/v1.7/ant-javacard.jar" dest="${prereqs.dir}" skipexisting="true"/>
+
+    <!-- Grab the sdk. -->
+    <get src="https://github.com/martinpaljak/oracle_javacard_sdks/archive/master.zip"
+         dest="${prereqs.dir}/javacard_sdks.zip" skipexisting="true"/>
+</target>
+
+<target name="checksum_prereqs" depends="download_prereqs">
+    <checksum algorithm="SHA-512" fileext=".SHA-512" pattern="{0} {1}">
+        <fileset dir="${prereqs.dir}">
+           <exclude name="*.SHA-512"/>
+        </fileset>
+    </checksum>
+</target>
+
+<target name="validate_prereqs" depends="download_prereqs,manual_prereqs">
+  <checksum algorithm="SHA-512" fileext=".SHA-512" pattern="{0} {1}"
+            verifyProperty="checksum_verifies">
+      <fileset dir="${prereqs.dir}">
+           <exclude name="*.SHA-512"/>
+      </fileset>
+  </checksum>
+  <fail message="Checksum mismatch on ${tocheck}">
+      <condition>
+            <not>
+                <istrue value="${checksum_verifies}" />
+            </not>
+        </condition>
+    </fail>
+</target>
+
+<target name="manual_prereqs">
+    <fail message="Required files are missing from ${prereqs.dir}: ${prereqs.manual}.">
+        <condition>
+            <not>
+                <resourcecount count="2">
+                    <fileset id="fs" dir="${prereqs.dir}" includes="${prereqs.manual}"/>
+                </resourcecount>
+            </not>
+        </condition>
+    </fail>
+</target>
+
+<target name="paths">
+    <delete dir="${build}"/>
+    <mkdir dir="${out}"/>
+</target>
+
+<target name="common_dependencies" depends="paths,validate_prereqs">
+    <!-- Install the ant-javacard taskdef -->
+    <taskdef name="javacard" classname="pro.javacard.ant.JavaCard" classpath="${prereqs.dir}/ant-javacard.jar"/>
+    <!-- Explode the loaderservice jar and place it in the expected location. -->
+    <unzip src="${prereqs.dir}/${ls.name}" dest="${ls.dir}" />
+    <copy file="${prereqs.dir}/${ls.name}" todir="${ls.dir}"/>
+
+    <!-- Expand the required APIs into their root. -->
+    <unzip src="${prereqs.dir}/${api.name}" dest="${api.root}" />
+
+    <!-- Select and extract the JavaCard SDK. -->
+    <unzip src="${prereqs.dir}/javacard_sdks.zip" dest="${build}/" stripAbsolutePathSpec="true">
+      <patternset>
+        <include name="**/jc303_kit/**"/>
+      </patternset>
+      <cutdirsmapper dirs="1" />
+    </unzip>
+</target>
+
+<target name="shared_interfaces" depends="common_dependencies">
+<javacard jckit="${build}/jc303_kit">
+  <!-- CallbackInterface -->
+  <cap aid="A0000004765049584C475343000000"
+       package="com.android.verifiedboot.globalstate.callback"
+       version="0.1"
+       output="${out}/globalstate-callback.cap"
+       sources="boot/card/src/com/android/verifiedboot/globalstate/callback"
+       export="${build}/export/callback">
+       <import exps="${build}/export/callback"/>
+  </cap>
+  <!-- OwnerInterface -->
+  <cap aid="A0000004765049584C47534F000000"
+       package="com.android.verifiedboot.globalstate.owner"
+       version="0.1"
+       output="${out}/globalstate-owner.cap"
+       sources="boot/card/src/com/android/verifiedboot/globalstate/owner"
+       export="${build}/export/owner">
+       <import exps="${build}/export/owner"/>
+  </cap>
+</javacard>
+</target>
+
+<target name="avb_storage" depends="shared_interfaces">
+    <!-- Remove the duplicate .exps -->
+    <delete>
+        <fileset dir="${api.dir}" includes="*.exp"/>
+    </delete>
+    <javacard jckit="${build}/jc303_kit">
+      <!-- Base version (Version + .1) for displacing a preinstalled package on early cards. -->
+      <cap aid="A0000004765049584C424F4F540000"
+           package="com.android.verifiedboot.storage"
+           version="3.1"
+           output="${out}/avb_storage_clobber.cap"
+           sources="boot/card/src/com/android/verifiedboot"
+           export="${build}/export/avb_storage">
+        <!-- Use supplied exp and build interface jar from the eclipse plugin targetpack. -->
+        <import exps="${api.dir}" jar="${api.dir}/api-jcopx-4.0-R2.jar"/>
+        <!-- Requires ls_library to be on the device already. -->
+        <import exps="${ls.dir}" jar="${ls.dir}/${ls.name}"/>
+        <!-- Grab the other interfaces from export/ -->
+        <import exps="${build}/export/owner" jar="${build}/export/owner/owner.jar" />
+        <import exps="${build}/export/callback" jar="${build}/export/callback/callback.jar" />
+        <!-- 14th byte must be in sync with above
+             15th byte is 01 for the ELM.
+             16th byte is 01 for the applet.
+          -->
+        <applet class="com.android.verifiedboot.storage.Storage"
+                aid="A0000004765049584C424F4F54000101"/>
+        <import exps="${build}/export/avb_storage"/>
+      </cap>
+      <!-- 14th byte is the version. Increment on each release. -->
+      <cap aid="A0000004765049584C424F4F540300"
+           package="com.android.verifiedboot.storage"
+           version="3.0"
+           output="${out}/avb_storage.cap"
+           sources="boot/card/src/com/android/verifiedboot"
+           export="${build}/export/avb_storage">
+        <!-- Use supplied exp and build interface jar from the eclipse plugin targetpack. -->
+        <import exps="${api.dir}" jar="${api.dir}/api-jcopx-4.0-R2.jar"/>
+        <!-- Requires ls_library to be on the device already. -->
+        <import exps="${ls.dir}" jar="${ls.dir}/${ls.name}"/>
+        <!-- Grab the other interfaces from export/ -->
+        <import exps="${build}/export/owner" jar="${build}/export/owner/owner.jar" />
+        <import exps="${build}/export/callback" jar="${build}/export/callback/callback.jar" />
+        <!-- 14th byte must be in sync with above
+             15th byte is 01 for the ELM.
+             16th byte is 01 for the applet.
+          -->
+        <applet class="com.android.verifiedboot.storage.Storage"
+                aid="A0000004765049584C424F4F54030101"/>
+        <import exps="${build}/export/avb_storage"/>
+      </cap>
+    </javacard>
+</target>
+
+<target name="weaver" depends="shared_interfaces">
+    <!-- Remove the duplicate .exps -->
+    <delete>
+        <fileset dir="${api.dir}" includes="*.exp"/>
+    </delete>
+    <javacard jckit="${build}/jc303_kit">
+      <!-- Comm applet -->
+      <cap aid="A000000476575652434F4D4D300100"
+           package="com.android.weaver"
+           version="1.0"
+           output="${out}/weaver_comm.cap"
+           sources="weaver/card/src/com/android/weaver"
+           export="${build}/export/comm">
+        <applet class="com.android.weaver.Weaver"
+                aid="A000000476575652434F4D4D30010101"/>
+        <import exps="${build}/export/comm" />
+        <!-- Use supplied exp and build interface jar from the eclipse plugin targetpack. -->
+        <import exps="${api.dir}" jar="${api.dir}/api-jcopx-4.0-R2.jar"/>
+      </cap>
+      <!-- Core applet -->
+      <cap aid="A000000476575652434f5245300100"
+           package="com.android.weaver.core"
+           version="1.0"
+          output="${out}/weaver_core.cap"
+          sources="weaver/card/src/com/android/weaver/core"
+          export="${build}/export/core">
+        <applet class="com.android.weaver.core.WeaverCore"
+                aid="A000000476575652434F524530010101"/>
+        <import exps="${build}/export/comm" jar="${build}/export/comm/weaver.jar" />
+        <!-- Use supplied exp and build interface jar from the eclipse plugin targetpack. -->
+        <import exps="${api.dir}" jar="${api.dir}/api-jcopx-4.0-R2.jar"/>
+      </cap>
+    </javacard>
+</target>
+
+<target name="sample_apps" depends="weaver,avb_storage">
+</target>
+
+</project>
+
+
+

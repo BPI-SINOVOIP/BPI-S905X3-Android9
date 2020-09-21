@@ -1,0 +1,1 @@
+../../libusb/hotplug.h

@@ -1,0 +1,15 @@
+// Copyright 2013 The Android Open Source Project
+
+cc_test_host {
+    name: "constrainedcrypto_rsa_test",
+    srcs: ["rsa_test.c"],
+    static_libs: ["libconstrainedcrypto"],
+    cflags: ["-Wall", "-Werror"],
+}
+
+cc_test_host {
+    name: "constrainedcrypto_ecdsa_test",
+    srcs: ["ecdsa_test.c"],
+    static_libs: ["libconstrainedcrypto"],
+    cflags: ["-Wall", "-Werror"],
+}

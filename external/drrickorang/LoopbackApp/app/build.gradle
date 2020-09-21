@@ -1,0 +1,37 @@
+apply plugin: 'com.android.model.application'
+
+model {
+    android {
+        compileSdkVersion = 23
+        buildToolsVersion = "25.0"
+
+        defaultConfig.with {
+            applicationId = "org.drrickorang.loopback"
+            minSdkVersion.apiLevel = 11
+            targetSdkVersion.apiLevel = 23
+        }
+        ndk {
+            moduleName "loopback"
+            cppFlags.addAll "-I${project.rootDir}/app/src/main/jni".toString(), "-g"
+            CFlags.addAll "-I${project.rootDir}/app/src/main/jni".toString()
+
+            ldLibs.addAll "OpenSLES", "log"
+        }
+        buildTypes {
+            release {
+                minifyEnabled false
+                proguardFiles.add file('proguard.cfg')
+            }
+            debug {
+                ndk {
+                    debuggable true
+                }
+            }
+        }    }
+
+
+}
+
+dependencies {
+    compile 'com.android.support:appcompat-v7:23.0.1'
+}

@@ -1,0 +1,26 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'krishnargv'
+NAME = 'policy_DisableScreenshots'
+TIME = 'SHORT'
+TEST_CATEGORY = 'General'
+TEST_CLASS = 'enterprise'
+TEST_TYPE = 'client'
+
+DOC = '''
+Verify effect of DisableScreenshots policy on Chrome OS behavior.
+
+This test verifies the effect of the DisableScreenshots user policy on
+Chrome OS client behavior. It exercises all valid policy values across two
+test cases: 'DisableScreenshot_Block', 'NotSet_Allow'.
+
+This default control file allows CloudDPC E2E tests to run any test case
+defined in this test via command-line.
+
+'''
+
+args_dict = utils.args_to_dict(args)
+
+job.run_test('policy_DisableScreenshots', **args_dict)

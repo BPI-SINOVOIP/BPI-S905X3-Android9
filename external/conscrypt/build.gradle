@@ -1,0 +1,279 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        jcenter()
+        maven {
+            url 'https://plugins.gradle.org/m2/'
+        }
+    }
+    dependencies {
+        // Add dependency for build script,
+        // so we can access Git from our
+        // build script.
+        classpath 'org.ajoberstar:grgit:1.1.0'
+        classpath 'net.ltgt.gradle:gradle-errorprone-plugin:0.0.10'
+    }
+}
+
+subprojects {
+    def androidProject = ((project.name == 'conscrypt-android')
+            || (project.name == 'conscrypt-android-platform')
+            || (project.name == 'conscrypt-benchmark-android')
+            || (project.name == 'conscrypt-benchmark-caliper'))
+    if (!androidProject) {
+        apply plugin: 'java'
+        apply plugin: 'cpp'
+
+        model {
+            toolChains {
+                visualCpp(VisualCpp) {
+                    // Temporary hack for https://github.com/gradle/gradle/issues/929
+                    installDir "file:///C:/Program%20Files%20(x86)/Microsoft%20Visual%20Studio%2014.0"
+                    windowsSdkDir "file:///C:/Program%20Files%20(x86)/Windows%20Kits/8.1"
+                }
+                // Prefer Clang over Gcc (order here matters!)
+                clang(Clang)
+                gcc(Gcc)
+            }
+        }
+    }
+    apply plugin: "maven"
+    apply plugin: "signing"
+    apply plugin: "idea"
+    apply plugin: "jacoco"
+    apply plugin: "net.ltgt.errorprone"
+
+    group = "org.conscrypt"
+    description = 'Conscrypt is an alternate Java Security Provider that uses BoringSSL'
+    version = "1.1.0-SNAPSHOT"
+
+    ext {
+        os = org.gradle.internal.os.OperatingSystem.current();
+        if (os.isLinux()) {
+            osName = "linux"
+        } else if (os.isMacOsX()) {
+            osName = "osx"
+        } else if (os.isWindows()) {
+            osName = "windows"
+        } else {
+            throw new GradleException("Unsupported os: " + os.name)
+        }
+
+        boringsslHome = "$System.env.BORINGSSL_HOME"
+        boringsslIncludeDir = normalizePath("$boringsslHome/include")
+        boringssl32BuildDir = normalizePath("$boringsslHome/build32")
+        boringssl64BuildDir = normalizePath("$boringsslHome/build64")
+        jdkHome = "$System.env.JAVA_HOME"
+        jdkIncludeDir = normalizePath("$jdkHome/include")
+        // Needs to be binary compatible with androidMinSdkVersion
+        androidMinJavaVersion = JavaVersion.VERSION_1_7
+
+        build32Bit = file("$boringssl32BuildDir").exists()
+        build64Bit = file("$boringssl64BuildDir").exists()
+
+        // Ensure the environment is configured properly.
+        assert file("$boringsslHome").exists()
+        assert file("$boringsslIncludeDir").exists()
+        assert build32Bit || build64Bit
+        assert file("$jdkHome").exists()
+        assert file("$jdkIncludeDir").exists()
+
+        // Get the commit hash for BoringSSL.
+        boringSslGit = org.ajoberstar.grgit.Grgit.open(file("$boringsslHome"))
+        boringSslVersion = boringSslGit.head().id
+
+        // Allow the java executable to be specified via env/property for each architecture.
+        javaExecutable32 = System.getProperty('javaExecutable32', System.env.CONSCRYPT_JAVA_EXECUTABLE_32)
+        javaExecutable64 = System.getProperty('javaExecutable64', System.env.CONSCRYPT_JAVA_EXECUTABLE_64)
+
+        jmhVersion = '1.19'
+        libraries = [
+                android_tools: 'com.android.tools.build:gradle:2.3.3',
+                roboelectric: 'org.robolectric:android-all:7.1.0_r7-robolectric-0',
+
+                // Test dependencies.
+                bouncycastle_apis: 'org.bouncycastle:bcpkix-jdk15on:1.56',
+                bouncycastle_provider: 'org.bouncycastle:bcprov-jdk15on:1.56',
+                junit  : 'junit:junit:4.12',
+                mockito: 'org.mockito:mockito-core:1.9.5',
+                truth  : 'com.google.truth:truth:0.28',
+
+                // Benchmark dependencies
+                jmh_core: "org.openjdk.jmh:jmh-core:${jmhVersion}",
+                jmh_generator_annprocess: "org.openjdk.jmh:jmh-generator-annprocess:${jmhVersion}",
+                jmh_generator_asm: "org.openjdk.jmh:jmh-generator-asm:${jmhVersion}",
+                jmh_generator_bytecode: "org.openjdk.jmh:jmh-generator-bytecode:${jmhVersion}",
+                jmh_generator_reflection: "org.openjdk.jmh:jmh-generator-reflection:${jmhVersion}",
+                netty_handler: 'io.netty:netty-handler:4.1.8.Final',
+                netty_tcnative: 'io.netty:netty-tcnative-boringssl-static:1.1.33.Fork26',
+        ]
+
+        signJar = { jarPath ->
+            if (rootProject.hasProperty('signingKeystore') && rootProject.hasProperty('signingPassword')) {
+                def command = 'jarsigner -keystore ' + rootProject.signingKeystore +
+                        ' -storepass ' + rootProject.signingPassword +
+                        ' ' + jarPath + ' signingcert'
+                def process = command.execute()
+                process.waitFor()
+                if (process.exitValue()) {
+                    throw new GradleException('Jar signing failed for ' + jarPath + ': ' + process.text)
+                }
+            }
+        }
+    }
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        jcenter()
+    }
+
+    signing {
+        required false
+        sign configurations.archives
+    }
+
+    signArchives.doFirst {
+        configurations.archives.allArtifacts.each {
+            if (it.type == 'jar' && it.classifier != 'sources' && it.classifier != 'javadoc') {
+                signJar(it.file.absolutePath)
+            }
+        }
+    }
+
+    if (!androidProject) {
+        sourceCompatibility = JavaVersion.VERSION_1_6
+        targetCompatibility = JavaVersion.VERSION_1_6
+
+        [compileJava, compileTestJava].each() {
+            it.options.compilerArgs += ["-Xlint:all", "-Xlint:-options", '-Xmaxwarns', '9999999']
+            it.options.encoding = "UTF-8"
+            if (rootProject.hasProperty('failOnWarnings') && rootProject.failOnWarnings.toBoolean()) {
+                it.options.compilerArgs += ["-Werror"]
+            }
+        }
+
+        compileTestJava {
+            // serialVersionUID is basically guaranteed to be useless in our tests
+            options.compilerArgs += ["-Xlint:-serial"]
+        }
+
+        jar.manifest {
+            attributes('Implementation-Title': name,
+                    'Implementation-Version': version,
+                    'Built-By': System.getProperty('user.name'),
+                    'Built-JDK': System.getProperty('java.version'),
+                    'Source-Compatibility': sourceCompatibility,
+                    'Target-Compatibility': targetCompatibility)
+        }
+
+        javadoc.options {
+            encoding = 'UTF-8'
+            links 'https://docs.oracle.com/javase/8/docs/api/'
+        }
+
+        // Disable JavaDoc doclint on Java 8. It's annoying.
+        if (JavaVersion.current().isJava8Compatible()) {
+            allprojects {
+                tasks.withType(Javadoc) {
+                    options.addStringOption('Xdoclint:none', '-quiet')
+                }
+            }
+        }
+
+        task javadocJar(type: Jar) {
+            classifier = 'javadoc'
+            from javadoc
+        }
+
+        task sourcesJar(type: Jar) {
+            classifier = 'sources'
+            from sourceSets.main.allSource
+        }
+
+        artifacts {
+            archives sourcesJar
+            archives javadocJar
+        }
+
+        uploadArchives.repositories.mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+            String stagingUrl
+            if (rootProject.hasProperty('repositoryId')) {
+                stagingUrl = 'https://oss.sonatype.org/service/local/staging/deployByRepositoryId/' +
+                        rootProject.repositoryId
+            } else {
+                stagingUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+            }
+            def configureAuth = {
+                if (rootProject.hasProperty('ossrhUsername') && rootProject.hasProperty('ossrhPassword')) {
+                    authentication(userName: rootProject.ossrhUsername, password: rootProject.ossrhPassword)
+                }
+            }
+            repository(url: stagingUrl, configureAuth)
+            snapshotRepository(url: 'https://oss.sonatype.org/content/repositories/snapshots/', configureAuth)
+        }
+
+        [
+                install.repositories.mavenInstaller,
+                uploadArchives.repositories.mavenDeployer,
+        ]*.pom*.whenConfigured { pom ->
+            pom.project {
+                name "$project.group:$project.name"
+                description project.description
+                url 'https://conscrypt.org/'
+
+                scm {
+                    connection 'scm:git:https://github.com/google/conscrypt.git'
+                    developerConnection 'scm:git:git@github.com:google/conscrypt.git'
+                    url 'https://github.com/google/conscrypt'
+                }
+
+                licenses {
+                    license {
+                        name 'Apache 2'
+                        url 'https://www.apache.org/licenses/LICENSE-2.0'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id "conscrypt"
+                        name "Conscrypt Contributors"
+                        email "conscrypt@googlegroups.com"
+                        url "https://conscrypt.org/"
+                        organization = "Google, Inc."
+                        organizationUrl "https://www.google.com"
+                    }
+                }
+            }
+        }
+
+        // At a test failure, log the stack trace to the console so that we don't
+        // have to open the HTML in a browser.
+        test {
+            testLogging {
+                exceptionFormat = 'full'
+                showExceptions true
+                showCauses true
+                showStackTraces true
+                showStandardStreams = true
+            }
+            // Enable logging for all conscrypt classes while running tests.
+            systemProperty 'java.util.logging.config.file', "${rootDir}/test_logging.properties"
+            maxHeapSize = '1500m'
+
+            // Override the default executable if manually specified
+            if (build64Bit && javaExecutable64 != null) {
+                executable javaExecutable64
+            } else if (build32Bit && javaExecutable32 != null) {
+                executable javaExecutable32
+            }
+        }
+    }
+}
+
+static String normalizePath(path) {
+    new File(path.toString()).absolutePath
+}

@@ -1,0 +1,58 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "ihf@chromium.org"
+NAME = "cts_N"
+PURPOSE = "Special suite for final CTS qualification of ARC++ on stable."
+CRITERIA = "All tests with SUITE=cts_N must pass."
+
+TIME = "LONG"
+TEST_CATEGORY = "General"
+TEST_CLASS = "suite"
+TEST_TYPE = "Server"
+
+DOC = """
+ChromeOS ARC++ tests.
+
+@param build: The name of the image to test.
+              Ex: x86-mario-release/R17-1412.33.0-a1-b29
+@param board: The board to test on. Ex: x86-mario
+@param pool: The pool of machines to utilize for scheduling. If pool=None
+             board is used.
+@param check_hosts: require appropriate live hosts to exist in the lab.
+@param SKIP_IMAGE: (optional) If present and True, don't re-image devices.
+"""
+
+import common
+from autotest_lib.server.cros import provision
+from autotest_lib.server.cros.dynamic_suite import dynamic_suite
+
+
+def predicate(test):
+  if not hasattr(test, 'suite') or not hasattr(test, 'name'):
+    return False
+  if not test.suite == NAME:
+    return False
+  # Strip off the cheets_CTS_N. from the test name before comparing to args
+  name = test.name[test.name.find('.') + 1:]
+  # TODO(crbug.com/758427): suite_args needed to support being run by old Autotest
+  try:
+    if suite_args and name not in suite_args:
+      return False
+  except NameError:
+    pass
+  if 'tests' in args_dict and name not in args_dict['tests']:
+    return False
+  return True
+
+args_dict['name'] = NAME
+args_dict['job'] = job
+args_dict['file_bugs'] = False
+args_dict['max_runtime_mins'] = 5040  # 5040 min = 3.5 days
+args_dict['timeout_mins'] = 5040  # Bump default 1 day to half a week as well.
+args_dict['add_experimental'] = True
+args_dict['version_prefix'] = provision.CROS_VERSION_PREFIX
+args_dict['predicate'] = predicate
+dynamic_suite.reimage_and_run(**args_dict)
+

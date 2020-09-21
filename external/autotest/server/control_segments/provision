@@ -1,0 +1,113 @@
+# Copyright (c) 2013 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import datetime
+import re
+
+from autotest_lib.client.bin import sysinfo
+from autotest_lib.client.cros import constants
+from autotest_lib.server import utils
+from autotest_lib.server.cros import provision
+
+try:
+    from chromite.lib import metrics
+except ImportError:
+    metrics = utils.metrics_mock
+
+
+LABEL_REGEX = r',.*:'
+_LABEL_UPDATE_DURATION_METRIC = metrics.SecondsDistribution(
+        'chromeos/autotest/provision/label_update_durations')
+
+# job_labels should be a string like "name:setting,name:setting"
+# However setting might also contain ',' therefore we need more advanced logic
+# than split.
+# non-provisionable labels are currently skipped, so they're safe to pass in.
+job_labels = locals().get('job_labels') or ','.join(args)
+labels_list = []
+while job_labels:
+    # Split based off of a comma followed by colon regex.
+    split = re.split(LABEL_REGEX, job_labels)
+    # First value found is a proper key value pair.
+    labels_list.append(split[0].strip())
+    # Remove this key value pair.
+    job_labels = job_labels[len(split[0]):]
+    # If a comma remains at the start of the remaining labels, remove it.
+    # This should happen on every loop except the last one.
+    if job_labels.startswith(','):
+        job_labels = job_labels.lstrip(',')
+
+
+def provision_machine(machine):
+    """
+    Run the appropriate provisioning tests to make the machine's labels match
+    those given in job_labels.
+    """
+    job.record('START', None, 'provision')
+    host = hosts.create_target_machine(machine, try_lab_servo=True)
+    try:
+        job.sysinfo.add_logdir(
+                sysinfo.logdir(constants.AUTOUPDATE_PRESERVE_LOG))
+        provision.run_special_task_actions(job, host, labels_list,
+                                           provision.Provision)
+        host.verify()
+
+        # Let's update the labels on the host and track how long it takes.
+        # Don't fail while updating the labels, provision is flaky enough by
+        # itself.
+        label_update_success = True
+        start_time = datetime.datetime.now()
+        try:
+            host.update_labels()
+        except Exception:
+            logging.exception('Exception while updating labels.')
+            label_update_success = False
+
+        end_time = datetime.datetime.now()
+        duration = (end_time - start_time).total_seconds()
+
+        fields = {'success': label_update_success,
+                  # TODO(kevcheng): Need a better way of classifying testbeds.
+                  'board': (host.get_board()
+                            if not utils.machine_is_testbed(machine)
+                            else host.get_platform())}
+        _LABEL_UPDATE_DURATION_METRIC.add(duration, fields=fields)
+    except Exception:
+        logging.exception('Provision failed due to Exception.')
+        job.record('END FAIL', None, 'provision')
+        # Raising a blank exception is done here because any message we can
+        # give here would be less useful than whatever the failing test left as
+        # its own exception message.
+        #
+        # The gory details of how raising a blank exception accomplishes this
+        # is as follows:
+        #
+        # The scheduler only looks at the return code of autoserv to see if
+        # the special task failed.  Therefore we need python to exit because
+        # of an unhandled exception or because someone called sys.exit(1).
+        #
+        # We can't call sys.exit, since there's post-job-running logic (like
+        # cleanup) that we'd be skipping out on.  So therefore, we need to
+        # raise an exception.  However, if we raise an exception, this
+        # exception ends up triggering server_job to write an INFO line with
+        # job_abort_reason equal to str(e), which the tko parser then picks
+        # up as the reason field for the job when the status.log we generate is
+        # parsed as the job's results.
+        #
+        # So therefore, we raise a blank exception, which then generates an
+        # empty job_abort_reason which the tko parser ignores just inserts as
+        # a SERVER_JOB failure with no reason, which we then ignore at suite
+        # results reporting time.
+        raise Exception('')
+    else:
+        # If we finish successfully, nothing in autotest ever looks at the
+        # status.log, so it's purely for human consumption and tracability.
+        hostname = utils.get_hostname_from_machine(machine)
+        job.record('END GOOD', None, 'provision',
+                   '%s provisioned successfully' % hostname)
+
+
+job.parallel_simple(provision_machine, machines)
+
+# vim: set syntax=python :

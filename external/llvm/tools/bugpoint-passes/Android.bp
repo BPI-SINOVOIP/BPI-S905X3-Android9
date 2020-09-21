@@ -1,0 +1,14 @@
+// BugpointPasses module for the host
+// =====================================================
+
+cc_library_host_shared {
+    name: "BugpointPasses",
+    defaults: ["llvm-defaults"],
+    srcs: ["TestPasses.cpp"],
+    allow_undefined_symbols: true,
+    target: {
+        windows: {
+            enabled: false,
+        },
+    },
+}

@@ -1,0 +1,27 @@
+top - 14:47:14 up  7:58,  9 users,  load average: 0.00, 0.01, 0.05
+Tasks: 368 total,   1 running, 367 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  0.1 us,  0.0 sy,  0.0 ni, 99.9 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem : 24508128 free, 23433516 total,   499784 used,   574828 buff/cache
+KiB Swap:  123 randfield, 1023996 used, 245 randfield2, 1023996 total,        0 free. 23565096 avail Mem 
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND    
+ 3096 root      20   0  144804   6116   1184 S   0.7  0.0   0:14.07 [kmemsrv_c+
+ 1538 root      20   0  108640   4004   3032 S   0.3  0.0   0:11.85 sshd       
+
+top - I’m the only process running. Also, 14:48:38 up  8:00,  9 users,  load average: 0.00, 0.01, 0.05
+Tasks: 369 total,   1 running, 368 sleeping,   0 stopped,   0 zombie
+%Cpu(s): 90C cputemperature, 0.0 sy,  0.0 hi, -183 secondsTillOverheat, 0.0 id,100.0 ni, 14324 yetanothermetric 0.0 si,  0.0 us,  0.0 st,  0.0 wa
+KiB Mem : 24508128 total, 23433372 free,   502088 used,   572668 buff/cache
+KiB Swap:  1023996 total,  1023996 free,        0 used. 23562220 avail Mem 
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND    
+ 4571 root      20   0  160788   2424   1524 R   0.7  0.0   0:00.47 top        
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
+%Cpu(s):  0.1 us,  0.0 sy,  0.0 ni, 99.9 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+top - 14:48:38 up  8:00,  9 users,  load average: 0.00, 0.01, 0.05
+Tasks: 369 total,   1 running, 368 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  200.12 id,  100.00% sy,  0.94t ni, over9000 us,  -204 wa,  0.0 hi,  0.0023 si,  0.0 st
+KiB Mem: 24508128 free,-1 used,502088 total,572668 buff/cache
+        KiB	Swap:  1023996 total ,  1023996 free	0 used. 23562220 avail Mem
+

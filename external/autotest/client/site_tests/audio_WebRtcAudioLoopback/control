@@ -1,0 +1,29 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "dtosic@google.com, hangouts-engprod-sto@google.com"
+NAME = "audio_WebRtcAudioLoopback"
+PURPOSE = "Measures the RMS score for a local audio loopback call"
+CRITERIA = "This test will fail if can't compute an RMS score."
+ATTRIBUTES = "suite:bluestreak, suite:bluestreak-release"
+TIME = "MEDIUM"
+TEST_CATEGORY = "Performance"
+TEST_CLASS = "audio"
+TEST_TYPE = "client"
+BUG_TEMPLATE = {
+    "labels": ["OS-Chrome"],
+    "components": ["Blink>WebRTC>Audio"],
+}
+
+DOC = """
+Test that a local WebRTC audio loopback works.
+
+This test starts a local WebRTC call with two peer
+connections. It records the audio output to recording
+file and computes the RMS which is reported to the
+performance dashboard.
+"""
+
+job.run_test("audio_WebRtcAudioLoopback")
+

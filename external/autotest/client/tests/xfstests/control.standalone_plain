@@ -1,0 +1,29 @@
+TIME="LONG"
+AUTHOR = "Cleber Rosa <cleber@redhat.com>"
+NAME = 'xfsFilesystemTestSuiteStandaloneExt4Plain'
+TEST_CLASS = 'kernel'
+TEST_CATEGORY = 'Functional'
+TEST_TYPE = 'client'
+DOC = """
+xfstests in autotest
+--------------------
+
+This is a wrapper for running xfstests inside autotest.
+
+The control file creates the files (1GB), mount with a loopback device.
+
+"""
+from autotest_lib.client.bin import xfstest_util
+
+xfs_env = xfstest_util.xfstests_env()
+xfs_env.setup_partitions(job, fs_types=['ext4'])
+
+#
+# Finally, run the tests
+#
+try:
+    for fs_type in xfs_env.fs_types:
+        result = job.run_test_detail('xfstests', group='auto')
+
+finally:
+    xfs_env.unmount_partitions()

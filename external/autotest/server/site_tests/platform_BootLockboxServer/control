@@ -1,0 +1,32 @@
+# Copyright 2018 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'apronin'
+NAME = 'platform_BootLockboxServer'
+PURPOSE = 'Tests the boot lockbox mechanism.'
+CRITERIA = 'Fails if the lockbox mechanism does not function as expected.'
+TIME = 'SHORT'
+TEST_CATEGORY = 'Functional'
+TEST_CLASS = 'platform'
+TEST_TYPE = 'server'
+ATTRIBUTES = "suite:bvt-perbuild"
+
+DOC = """
+This test verifies that boot lockbox mechanism is functional. It tests that
+lockbox data can be signed and verified before finalization, but after
+finalization it can only be verified.
+The client-side platform_BootLockbox test requires that it is run when the
+boot lockbox is not locked yet, i.e. before any user has logged in. So, this
+server-side test reboots the DUT and calls platform_BootLockbox right after
+that.
+"""
+
+def run(machine):
+    client = hosts.create_host(machine)
+    client_at = autotest.Autotest(client)
+
+    client.reboot()
+    client_at.run_test('platform_BootLockbox')
+
+parallel_simple(run, machines)

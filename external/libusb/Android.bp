@@ -1,0 +1,95 @@
+cc_library {
+    name: "libusb",
+    host_supported: true,
+    vendor_available: true,
+
+    srcs: [
+        "libusb/core.c",
+        "libusb/descriptor.c",
+        "libusb/hotplug.c",
+        "libusb/io.c",
+        "libusb/sync.c",
+        "libusb/strerror.c",
+    ],
+
+    local_include_dirs: [
+        "libusb",
+        "libusb/os",
+    ],
+
+    cflags: [
+        "-Wall",
+        "-Wno-error=sign-compare",
+        "-Wno-error=switch",
+    ],
+
+    target: {
+        linux: {
+            srcs: [
+                "libusb/os/linux_usbfs.c",
+                "libusb/os/poll_posix.c",
+                "libusb/os/threads_posix.c",
+                "libusb/os/linux_netlink.c",
+            ],
+        },
+
+        android: {
+            local_include_dirs: [
+                "android",
+            ],
+
+            cflags: ["-Werror"],
+        },
+
+        darwin: {
+            srcs: [
+                "libusb/os/darwin_usb.c",
+                "libusb/os/poll_posix.c",
+                "libusb/os/threads_posix.c",
+            ],
+
+            local_include_dirs: [
+                "darwin",
+            ],
+
+            host_ldlibs: [
+                "-framework CoreFoundation",
+                "-framework IOKit",
+                "-lobjc"
+            ],
+
+            cflags: [
+                "-Wno-unused-parameter",
+                "-Wno-deprecated-declarations"
+            ],
+        },
+
+        linux_glibc: {
+            local_include_dirs: [
+                "linux",
+            ],
+
+            cflags: ["-Werror"],
+        },
+
+        windows: {
+            srcs: [
+                "libusb/os/poll_windows.c",
+                "libusb/os/threads_windows.c",
+                "libusb/os/windows_nt_common.c",
+                "libusb/os/windows_winusb.c",
+            ],
+
+            local_include_dirs: [
+                "windows",
+            ],
+
+            cflags: ["-Werror"],
+            enabled: true,
+        },
+    },
+
+    shared_libs: ["liblog"],
+    export_include_dirs: ["include"],
+}
+

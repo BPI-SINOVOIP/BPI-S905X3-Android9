@@ -1,0 +1,28 @@
+# Copyright 2018 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "Katherine Threlkeld <kathrelkeld@chromium.org>"
+NAME = "ent-nightly"
+PURPOSE = "Lower priority Enterprise related tests."
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "suite"
+TEST_TYPE = "Server"
+
+DOC = """
+This suite runs Enterprise tests which should run on nightly, across
+a subset of boards.
+"""
+
+import common
+from autotest_lib.server.cros import provision
+from autotest_lib.server.cros.dynamic_suite import dynamic_suite
+
+args_dict['name'] = 'ent-nightly'
+args_dict['add_experimental'] = True
+args_dict['max_runtime_mins'] = 60
+args_dict['version_prefix'] = provision.CROS_VERSION_PREFIX
+args_dict['job'] = job
+
+dynamic_suite.reimage_and_run(**args_dict)

@@ -1,0 +1,150 @@
+/*
+ * Copyright 2016 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.google.turbine.binder.lookup;
+
+import static com.google.common.collect.Iterables.getLast;
+
+import com.google.common.base.Joiner;
+import com.google.common.base.Supplier;
+import com.google.common.base.Suppliers;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.turbine.binder.sym.ClassSymbol;
+import com.google.turbine.diag.SourceFile;
+import com.google.turbine.diag.TurbineError;
+import com.google.turbine.diag.TurbineError.ErrorKind;
+import com.google.turbine.tree.Tree;
+import com.google.turbine.tree.Tree.ImportDecl;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * A scope that provides entries for the single-type imports in a compilation unit.
+ *
+ * <p>Import resolution is lazy; imports are not evaluated until the first request for a matching
+ * simple name.
+ *
+ * <p>Static imports of types, and on-demand imports of types (static or otherwise), are not
+ * supported.
+ */
+public class ImportIndex implements ImportScope {
+
+  /**
+   * A map from simple names of imported symbols to an {@link ImportScope} for a named (possibly
+   * static) import; e.g. {@code `Map` -> ImportScope(`import java.util.Map;`)}.
+   */
+  private final Map<String, Supplier<ImportScope>> thunks;
+
+  public ImportIndex(ImmutableMap<String, Supplier<ImportScope>> thunks) {
+    this.thunks = thunks;
+  }
+
+  /** Creates an import index for the given top-level environment. */
+  public static ImportIndex create(
+      SourceFile source,
+      CanonicalSymbolResolver resolve,
+      final TopLevelIndex cpi,
+      ImmutableList<ImportDecl> imports) {
+    Map<String, Supplier<ImportScope>> thunks = new HashMap<>();
+    for (final Tree.ImportDecl i : imports) {
+      if (i.stat() || i.wild()) {
+        continue;
+      }
+      thunks.put(
+          getLast(i.type()),
+          Suppliers.memoize(
+              new Supplier<ImportScope>() {
+                @Override
+                public ImportScope get() {
+                  return namedImport(source, cpi, i, resolve);
+                }
+              }));
+    }
+    // Process static imports as a separate pass. If a static and non-static named import share a
+    // simple name the non-static import wins.
+    for (final Tree.ImportDecl i : imports) {
+      if (!i.stat() || i.wild()) {
+        continue;
+      }
+      String last = getLast(i.type());
+      if (thunks.containsKey(last)) {
+        continue;
+      }
+      thunks.put(
+          last,
+          Suppliers.memoize(
+              new Supplier<ImportScope>() {
+                @Override
+                public ImportScope get() {
+                  return staticNamedImport(source, cpi, i);
+                }
+              }));
+    }
+    return new ImportIndex(ImmutableMap.copyOf(thunks));
+  }
+
+  /** Fully resolve the canonical name of a non-static named import. */
+  private static ImportScope namedImport(
+      SourceFile source, TopLevelIndex cpi, ImportDecl i, CanonicalSymbolResolver resolve) {
+    LookupResult result = cpi.lookup(new LookupKey(i.type()));
+    if (result == null) {
+      throw TurbineError.format(
+          source, i.position(), ErrorKind.SYMBOL_NOT_FOUND, Joiner.on('.').join(i.type()));
+    }
+    ClassSymbol sym = resolve.resolve(source, i.position(), result);
+    return new ImportScope() {
+      @Override
+      public LookupResult lookup(LookupKey lookupKey, ResolveFunction unused) {
+        return new LookupResult(sym, lookupKey);
+      }
+    };
+  }
+
+  /**
+   * Resolve the base class symbol of a possibly non-canonical static named import. For example,
+   * {@code import static java.util.HashMap.Entry;} is a non-canonical import for {@code
+   * java.util.Map.Entry}. We cannot resolve {@code Entry} as a member of {@code HashMap} until the
+   * hierarchy analysis is complete, so for now we resolve the base {@code java.util.HashMap} and
+   * defer the rest.
+   */
+  private static ImportScope staticNamedImport(SourceFile source, TopLevelIndex cpi, ImportDecl i) {
+    LookupResult base = cpi.lookup(new LookupKey(i.type()));
+    if (base == null) {
+      return null;
+    }
+    return new ImportScope() {
+      @Override
+      public LookupResult lookup(LookupKey lookupKey, ResolveFunction resolve) {
+        ClassSymbol result = resolve.resolve(source, i.position(), base);
+        return new LookupResult(result, lookupKey);
+      }
+    };
+  }
+
+  @Override
+  public LookupResult lookup(LookupKey lookup, ResolveFunction resolve) {
+    Supplier<ImportScope> thunk = thunks.get(lookup.first());
+    if (thunk == null) {
+      return null;
+    }
+    ImportScope scope = thunk.get();
+    if (scope == null) {
+      return null;
+    }
+    return scope.lookup(lookup, resolve);
+  }
+}

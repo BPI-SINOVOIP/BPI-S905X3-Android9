@@ -1,0 +1,12 @@
+Harfbuzz
+
+HOW TO UPDATE
+* Check out external/harfbuzz to <checkout_dir>
+  ex: git clone https://android.googlesource.com/platform/external/harfbuzz_ng
+* Locate the commit you'd like to move.
+  ex: for 1.7.4: https://github.com/harfbuzz/harfbuzz/commit/007a2a4317227b8fb4c764c590203c85fc3da5fd
+* In <checkout_dir>, run git merge <commit_sha>
+  i.e. git merge 007a2a4317227b8fb4c764c590203c85fc3da5fd
+* Upload the changes.
+  ex: git push origin HEAD:refs/for/master
+* Gerrit will run the text related tests.

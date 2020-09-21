@@ -1,0 +1,17 @@
+python_library_host {
+    name: "mojom_third_party",
+    srcs: [
+        "jinja2/**/*.py",
+        "markupsafe/**/*.py",
+        "ply/**/*.py",
+    ],
+    libs: ["mojom_third_party_devil"],
+    version: {
+        py2: {
+            enabled: true,
+        },
+        py3: {
+            enabled: false,
+        },
+    },
+}

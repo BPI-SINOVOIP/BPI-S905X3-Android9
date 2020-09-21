@@ -1,0 +1,20 @@
+# Copyright (c) 2013 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'pstew, quiche, wiley'
+NAME = 'network_WlanDriver'
+ATTRIBUTES = ('suite:network_nightly, suite:wifi_matfunc,'
+              'suite:wifi_matfunc_noservo, suite:bvt-perbuild,'
+              'suite:wificell-pre-cq')
+TIME = 'SHORT'
+TEST_TYPE = 'client'
+
+DOC = """
+Ensure we detected a wlan device and that it has the correct associated kernel
+driver and revision.  This test will fail if we find that mlan0/wlan0 has an
+odd driver release, or if it is missing entirely.
+"""
+
+
+job.run_test('network_WlanDriver')

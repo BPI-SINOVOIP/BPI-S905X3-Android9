@@ -1,0 +1,61 @@
+syntax = "proto2";
+
+// The types of message notification sent from Moblab.
+enum MessageType {
+  MSG_UNKNOWN = 0;
+  MSG_MOBLAB_HEARTBEAT = 1;
+  MSG_MOBLAB_REMOTE_EVENT = 2;
+  MSG_MOBLAB_ALERT = 3;
+}
+
+// The common pubsub notification attribute names.
+enum MessageAttribute {
+  ATTR_INVALID = 0;
+  ATTR_MESSAGE_TYPE = 1;
+  ATTR_MESSAGE_VERSION = 2;
+  ATTR_MOBLAB_MAC_ADDRESS = 3;
+  ATTR_MOBLAB_ID = 4;
+}
+
+// Timestamp is not defined in proto2. We need to define it by ourselves.
+// It represents a point in time independent of any time zone
+// or calendar, represented as seconds and fractions of seconds at
+// nanosecond resolution.
+// Clone from https://github.com/google/protobuf/blob/master/src/google/protobuf/timestamp.proto.
+message Timestamp {
+  optional int64 seconds = 1;
+  // Non-negative fractions of a second at nanosecond resolution.
+  optional int64 nanos = 2 [default = 0];
+}
+
+message Heartbeat {
+  optional Timestamp timestamp = 1;
+}
+
+// The remote event notification message.
+message RemoteEventMessage {
+  // EventType is an enumeration of event types sent to cloud console.
+  // Any new event type should be added here.
+  enum Type {
+    EVENT_UNKNOWN = 0;
+    EVENT_MOBLAB_BOOT_COMPLETE = 1;
+  }
+
+  optional Type type = 1 [default = EVENT_UNKNOWN];
+  optional string data = 2;
+}
+
+// Moblab alerts
+message Alert {
+  enum AlertLevel {
+    ALERT_UNSPECIFIED = 0;
+    ALERT_CRITICAL = 1;
+    ALERT_MAJOR = 2;
+    ALERT_MINOR = 3;
+  }
+  optional AlertLevel level = 1;
+  optional string data = 2;
+  optional Timestamp timestamp = 3;
+  optional string source_application = 4;
+  optional string source_component = 5;
+}

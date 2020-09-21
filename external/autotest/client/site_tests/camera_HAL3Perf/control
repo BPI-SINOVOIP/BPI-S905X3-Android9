@@ -1,0 +1,27 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "Chrome OS Team, chromeos-video@google.com"
+NAME = "camera_HAL3Perf"
+PURPOSE = "Monitor the performance of the camera HAL3."
+CRITERIA = """
+The test fails if the arc_camera3_test fails or crashes.
+"""
+ATTRIBUTES = "suite:crosbolt_perf_nightly"
+TIME = "SHORT"
+TEST_CATEGORY = "Performance"
+TEST_CLASS = "video"
+TEST_TYPE = "client"
+DEPENDENCIES='arc'
+BUG_TEMPLATE = {
+    'labels': ['OS-Chrome', 'VideoTestFailure'],
+    'cc': ['chromeos-video-test-failures@google.com'],
+}
+
+DOC = """
+This test utilizes the arc_camera3_test to measure the performance of the
+camera HAL3.
+"""
+
+job.run_test('camera_HAL3Perf')

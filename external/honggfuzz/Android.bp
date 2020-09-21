@@ -1,0 +1,105 @@
+
+subdirs = [
+    "third_party/android/libBlocksRuntime",
+]
+
+cc_defaults {
+    name: "honggfuzz-defaults",
+    cflags: [
+        "-D_GNU_SOURCE",
+        "-fblocks",
+        "-Wall",
+        "-Wno-initializer-overrides",
+        "-Werror",
+        "-Wframe-larger-than=131072",
+        "-D__HF_USES_CAPSTONE__",
+        "-D_HF_ARCH_LINUX",
+    ],
+    c_std: "c11",
+    clang: true,
+}
+
+cc_library_headers {
+    name: "honggfuzz_libcommon_headers",
+    export_include_dirs: ["libcommon"],
+}
+
+cc_library {
+    name: "honggfuzz_libcommon",
+
+    defaults: ["honggfuzz-defaults"],
+
+    header_libs: ["honggfuzz_libcommon_headers"],
+    export_header_lib_headers: ["honggfuzz_libcommon_headers"],
+    srcs: [
+        "libcommon/files.c",
+        "libcommon/log.c",
+        "libcommon/ns.c",
+        "libcommon/util.c",
+    ],
+
+
+    static_libs: [
+        "libBlocksRuntime", // -fblocks
+    ],
+}
+
+cc_library_headers {
+    name: "honggfuzz_libhfuzz_headers",
+    export_include_dirs: ["libhfuzz"],
+}
+
+cc_library {
+    name: "honggfuzz_libhfuzz",
+    defaults: ["honggfuzz-defaults"],
+
+    header_libs: ["honggfuzz_libhfuzz_headers"],
+    export_header_lib_headers: ["honggfuzz_libhfuzz_headers"],
+
+    whole_static_libs: [
+        "honggfuzz_libcommon",
+        "libBlocksRuntime", // -fblocks
+    ],
+
+    srcs: [
+        "libhfuzz/instrument.c",
+        "libhfuzz/linux.c",
+        "libhfuzz/memorycmp.c",
+        "libhfuzz/persistent.c",
+    ],
+}
+
+
+
+cc_binary {
+    name: "honggfuzz",
+    defaults: ["honggfuzz-defaults"],
+
+    whole_static_libs: [
+        "honggfuzz_libcommon",
+        "libcapstone",
+        "libBlocksRuntime", // -fblocks
+
+        "libunwind",
+        "liblzma", // needed for libunwind
+    ],
+
+    srcs: [
+        "cmdline.c",
+        "display.c",
+        "fuzz.c",
+        "honggfuzz.c",
+        "input.c",
+        "mangle.c",
+        "report.c",
+        "sancov.c",
+        "sanitizers.c",
+        "subproc.c",
+        "linux/arch.c",
+        "linux/trace.c",
+        "linux/perf.c",
+        "linux/unwind.c",
+        "linux/pt.c",
+    ],
+}
+

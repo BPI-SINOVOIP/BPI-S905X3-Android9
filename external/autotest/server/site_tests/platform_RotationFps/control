@@ -1,0 +1,32 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+
+AUTHOR = "chromeos-chameleon"
+NAME = "platform_RotationFps"
+PURPOSE = "Remotely controlled screen rotation test."
+CRITERIA = "This test will fail if slow fps while changing screen rotation."
+ATTRIBUTES = "suite:crosbolt_arc_perf_nightly"
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "platform"
+TEST_TYPE = "server"
+DEPENDENCIES = 'chameleon, servo'
+JOB_RETRIES = 2
+
+DOC = """
+This test remotely tests screen rotation function and benchmarks the fps.
+"""
+
+args_dict = utils.args_to_dict(args)
+chameleon_args = hosts.CrosHost.get_chameleon_arguments(args_dict)
+servo_args = hosts.CrosHost.get_servo_arguments(args_dict)
+
+def run(machine):
+    host = hosts.create_host(machine, chameleon_args=chameleon_args,
+                             servo_args=servo_args)
+    job.run_test("platform_RotationFps", host=host)
+
+parallel_simple(run, machines)

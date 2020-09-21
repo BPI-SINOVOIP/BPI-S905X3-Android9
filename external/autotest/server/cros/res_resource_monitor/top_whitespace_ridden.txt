@@ -1,0 +1,75 @@
+top -	14:47:14				up  7:58,  9 users,  load average: 0.00, 0.01, 0.05
+Tasks: 368 total,   1 running, 367 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  				0.1 us,                  0.0 sy, 	  	 0.0 ni ,	 99.9    		id ,  0.0 		wa  ,  				0.0 hi ,	  0.0 si, 	 0.0            	st
+		 KiB    	Mem      :   	 24508128   	 total  ,	 23433516 free         ,      	   499784        	 used,   574828 buff/cache
+KiB       	 Swap    : 	  1023996  	total ,   1023996  	free,        0 used. 23565096 avail Mem 
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND    
+ 3096 root      20   0  144804   6116   1184 S   0.7  0.0   0:14.07 [kmemsrv_c+
+ 1538 root      20   0  108640   4004   3032 S   0.3  0.0   0:11.85 sshd       
+ 1542 root      20   0  260928  20956  20148 S   0.3  0.1   0:07.44 rsyslogd   
+ 1688 root      20   0  162136   2584   1180 S   0.3  0.0   0:00.77 sshd       
+ 4571 root      20   0  160788   2424   1524 R   0.3  0.0   0:00.16 top        
+    1 root      20   0  192720   5820   2428 S   0.0  0.0   0:04.07 systemd    
+    2 root      20   0       0      0      0 S   0.0  0.0   0:00.01 kthreadd   
+    3 root      20   0       0      0      0 S   0.0  0.0   0:00.01 ksoftirqd/0
+    5 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 kworker/0:+
+
+	       top	     -       		14:48:38 	    	up  8:00,  9 users,  load average: 0.00, 0.01, 0.05
+Tasks: 369 total,   1 running, 368 sleeping,   0 stopped,   0 zombie
+      %Cpu(s) :          	  0.0            us      ,        	  0.0          sy,  	     0.0        	 ni ,        100.0  	id  ,  	  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+ 			KiB 	 Mem	 : 	24508128 	total 	,	 23433372 free      ,   502088 used   ,   572668 buff/cache
+   	 	 KiB Swap:  1023996 total,  1023996 free,        0 used. 23562220 avail Mem 
+
+  PID			 USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND    
+
+	       4571 	 	 root      20   0  160788   2424   1524 R   0.7  0.0   0:00.47 top        
+
+
+	   10 root      20   0       0      0      0 S   0.3  0.0   0:07.82 	rcu_sched  		
+ 1544 root                20   0  227196  11908   6524 S   0.3  0.0   0:11.05 snmpd      
+ 3096 root      20   0  144804   6116   1184 S   0.3  0.0   0:14.11 [kmemsrv_c+	
+    1 root   		   20          0 	 192720   5820   2428 S   0.0  0.0   0:04.07	 systemd    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					
+
+
+
+
+
+
+
+
+
+	
+	
+	       top	     -       		14:48:38 	    	up  8:00,  9 users,  load average: 0.00, 0.01, 0.05
+Tasks: 369 total,   1 running, 368 sleeping,   0 stopped,   0 zombie
+      %Cpu(s) :          	  0.0            us      ,        	  0.0          sy,  	     0.0        	 ni ,        100.0  	id  ,  	  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+ 			KiB 	 Mem	 : 	24508128 	total 	,	 23433372 free      ,   502088 used   ,   572668 buff/cache
+   	 	 KiB Swap:  1023996 total,  1023996 free,        0 used. 23562220 avail Mem 
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND    
+ 4571 root      20   0  160788   2424   1524 R   0.7  0.0   0:00.47 top        
+   10 root      20   0       0      0      0 S   0.3  0.0   0:07.82 rcu_sched  
+ 1544 root      20   0  227196  11908   6524 S   0.3  0.0   0:11.05 snmpd      
+ 3096 root      20   0  144804   6116   1184 S   0.3  0.0   0:14.11 [kmemsrv_c+
+    1 root      20   0  192720   5820   2428 S   0.0  0.0   0:04.07 systemd    

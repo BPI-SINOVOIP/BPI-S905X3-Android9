@@ -1,0 +1,134 @@
+// Copyright (C) 2011 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+java_library_static {
+    name: "dexmaker",
+
+    // Include all the java files.
+    srcs: ["dexmaker/src/main/java/**/*.java"],
+
+    static_libs: [
+        "dexmaker-dx-target",
+        "dexmaker-dex-target",
+    ],
+
+    sdk_version: "10",
+}
+
+// Build Dexmaker's MockMaker, a plugin to Mockito
+java_library_static {
+    name: "dexmaker-mockmaker",
+    sdk_version: "10",
+    srcs: ["dexmaker-mockito/src/main/java/**/*.java"],
+    java_resource_dirs: ["dexmaker-mockito/src/main/resources"],
+    libs: [
+        "dexmaker",
+        "mockito-api",
+    ],
+}
+
+// Build dispatcher for Dexmaker's inline MockMaker
+java_library_static {
+    name: "dexmaker-inline-mockmaker-dispatcher",
+    sdk_version: "current",
+    srcs: ["dexmaker-mockito-inline-dispatcher/src/main/java/**/*.java"],
+}
+
+// Defaults for agent code.
+cc_defaults {
+    name: "dexmaker_agent_defaults",
+
+    // Compile with the NDK, so that the agent can be used in apps.
+    sdk_version: "current",
+    stl: "libc++_static",
+
+    host_supported: false,
+    device_supported: true,
+
+    rtti: true,
+
+    cflags: [
+        "-std=c++11",
+        "-Wall",
+        "-Werror",
+        "-Wno-unused-parameter",
+        "-Wno-shift-count-overflow",
+        "-Wno-error=non-virtual-dtor",
+        "-Wno-sign-compare",
+        "-Wno-switch",
+        "-Wno-missing-braces",
+    ],
+
+    static_libs: [
+        "slicer_ndk",
+    ],
+
+    shared_libs: [
+        "libz",
+    ],
+
+    // As an NDK-based library we cannot depend on libopenjdkjvmti_headers.
+    include_dirs: [
+        "art/openjdkjvmti/include",
+        // TODO Remove once upstream has updated to new slicer.
+        "tools/dexter/slicer/export/slicer",
+    ],
+}
+
+// Build agent for Dexmaker's inline MockMaker
+cc_library_shared {
+    name: "libdexmakerjvmtiagent",
+    defaults: [
+        "dexmaker_agent_defaults",
+    ],
+    srcs: ["dexmaker-mockito-inline/src/main/jni/**/*.cc"],
+}
+
+// Build agent for Dexmaker's inline tests
+cc_library_shared {
+    name: "libmultiplejvmtiagentsinterferenceagent",
+    defaults: [
+        "dexmaker_agent_defaults",
+    ],
+    srcs: ["dexmaker-mockito-inline-tests/src/main/jni/**/*.cc"],
+}
+
+// Build Dexmaker's inline MockMaker, a plugin to Mockito
+java_library_static {
+    name: "dexmaker-inline-mockmaker",
+    sdk_version: "current",
+    srcs: ["dexmaker-mockito-inline/src/main/java/**/*.java"],
+    java_resource_dirs: ["dexmaker-mockito-inline/src/main/resources"],
+    libs: [
+        "dexmaker",
+        "mockito-api",
+    ],
+    required: ["libdexmakerjvmtiagent"],
+
+    errorprone: {
+        javacflags: [
+            "-Xep:CollectionIncompatibleType:WARN"
+        ],
+    }
+}
+
+java_import {
+    name: "dexmaker-dx-target",
+    jars: ["lib/dalvik-dx-1.jar"],
+}
+
+java_import {
+    name: "dexmaker-dex-target",
+    jars: ["lib/libcore-dex-2.jar"],
+}

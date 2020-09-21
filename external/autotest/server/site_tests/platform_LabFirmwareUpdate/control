@@ -1,0 +1,27 @@
+# Copyright (c) 2014 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "Chrome OS Team"
+NAME = "platform_LabFirmwareUpdate"
+PURPOSE = "Compare  shellball firmware version to installed version, run chromeos-firmwareupdate if different ."
+CRITERIA = "Update device firmware to match shellball."
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "firmware"
+TEST_TYPE = "server"
+ATTRIBUTES = "suite:faft_flashrom"
+DEPENDENCIES = "lab_fw_update"
+
+DOC = """
+This test compares the installed BIOS and EC versions to those in the
+shallball.  If they are not the same, execute chromeos-firmwareupdate.
+Device needs to have software write protect disable.
+"""
+
+def run(machine):
+    host = hosts.create_host(machine)
+
+    job.run_test('platform_LabFirmwareUpdate', host=host)
+
+parallel_simple(run, machines)

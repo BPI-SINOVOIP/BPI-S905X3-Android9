@@ -1,0 +1,28 @@
+#!/bin/bash
+set -e -o pipefail
+
+# Copy a file or directory to the target ChromeOS device.
+#
+# Usage: target_cp <src> <target>:<dest>
+
+src="$1"
+shift
+
+targetdest="$1"
+shift
+
+target="${targetdest%:*}"
+dest="${targetdest#*:}"
+
+if [[ -z "${src}" || -z "${target}" || -z "${dest}" || "${targetdest}" != "${target}:${dest}" || -n "$*" ]]
+then
+	echo "Usage: target_cp <src> <target>:<dest>"
+	exit 1
+fi
+
+if [[ -d ${src} ]]
+then
+	scp -rq ${src} ${target}:${dest}
+else
+	scp -q ${src} ${target}:${dest}
+fi

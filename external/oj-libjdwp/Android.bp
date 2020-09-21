@@ -1,0 +1,126 @@
+java_binary_host {
+    name: "jdwpgen",
+    srcs: ["make/src/classes/build/tools/jdwpgen/*.java"],
+    wrapper: "etc/jdwpgen.sh",
+    manifest: "etc/manifest.txt",
+    java_version: "1.8",
+}
+
+genrule {
+    name: "jdwp_generated_headers",
+    tools: ["jdwpgen"],
+    cmd: "$(location jdwpgen) $(in) -include $(out)",
+    srcs: ["make/data/jdwp/jdwp.spec"],
+    out: ["JDWPCommands.h"],
+}
+
+cc_defaults {
+    name: "upstream-jdwp-defaults",
+    host_supported: true,
+    device_supported: true,
+    cflags: [
+        // Every supported android platform is little-endian.
+        "-D_LITTLE_ENDIAN",
+        "-Wall",
+        "-Werror",
+        "-Wno-unused-parameter",
+    ],
+    notice: "LICENSE",
+    target: {
+        darwin: {
+            enabled: false,
+        },
+    },
+}
+
+cc_library_headers {
+    name: "javavm_headers",
+    export_include_dirs: [
+        "src/share/javavm/export",
+        "src/solaris/javavm/export",
+    ],
+    host_supported: true,
+    device_supported: true,
+}
+
+cc_library_headers {
+    name: "libnpt_headers",
+    export_include_dirs: [
+        "src/share/npt",
+        "src/solaris/npt",
+    ],
+    defaults: ["upstream-jdwp-defaults"],
+}
+
+cc_library {
+    name: "libnpt",
+    srcs: [
+        "src/share/npt/*.c",
+        "src/solaris/npt/*.c",
+    ],
+    header_libs: [
+        "javavm_headers",
+        "libnpt_headers",
+    ],
+    defaults: ["upstream-jdwp-defaults"],
+}
+
+cc_library_headers {
+    name: "libjdwp_headers",
+    export_include_dirs: [
+        "src/share/back",
+        "src/share/back/export",
+        "src/solaris/back",
+    ],
+    generated_headers: ["jdwp_generated_headers"],
+    export_generated_headers: ["jdwp_generated_headers"],
+    defaults: ["upstream-jdwp-defaults"],
+}
+
+cc_library {
+    name: "libjdwp",
+    srcs: [
+        "src/share/back/*.c",
+        "src/solaris/back/*.c",
+    ],
+    cflags: [
+        "-DLINUX",
+        "-DJDWP_LOGGING",
+        "-Wno-switch",
+        "-Wno-logical-op-parentheses",
+        "-Wno-logical-not-parentheses",
+        "-Wno-sometimes-uninitialized",
+        "-Wno-self-assign",
+        "-Wno-unused-variable",
+        "-Wno-unused-function",
+    ],
+    header_libs: [
+        "javavm_headers",
+        "libjdwp_headers",
+        "libnpt_headers",
+    ],
+    required: [
+        "libnpt",
+        "libdt_socket",
+    ],
+    defaults: ["upstream-jdwp-defaults"],
+}
+
+cc_library {
+    name: "libdt_socket",
+    srcs: [
+        "src/share/transport/socket/*.c",
+        "src/solaris/transport/socket/*.c",
+    ],
+    local_include_dirs: [
+        "src/share/transport/socket",
+        "src/solaris/transport/socket",
+    ],
+    header_libs: [
+        "javavm_headers",
+        "libjdwp_headers",
+        "libnpt_headers",
+    ],
+    required: ["libnpt"],
+    defaults: ["upstream-jdwp-defaults"],
+}

@@ -1,0 +1,30 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+
+AUTHOR = "porce@chromium.org"
+NAME = "enterprise_CFM_HuddlyUpdater"
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "enterprise"
+TEST_TYPE = "server"
+# TODO(crbug/763474) Disabled since it is currently failing constantly.
+# ATTRIBUTES = "suite:bluestreak"
+JOB_RETRIES = 3
+DEPENDENCIES = "huddly"
+
+DOC = """
+This test performs the firmware update of HuddlyGo camera.
+"""
+
+args_dict = utils.args_to_dict(args)
+servo_args = None
+
+def run_test(machine):
+    host = hosts.create_host(machine, servo_args=servo_args)
+    job.run_test(NAME, host=host)
+
+
+parallel_simple(run_test, machines)

@@ -1,0 +1,28 @@
+This patch deletes redeclarations of standard library functions. This is needed
+for clang-style FORTIFY, as it will emit errors when it sees these
+redeclarations.
+
+diff --git iozone3_347/src/current/fileop.c iozone3_347/src/current/fileop.c
+index 57ddf68..779f24c 100644
+--- iozone3_347/src/current/fileop.c
++++ iozone3_347/src/current/fileop.c
+@@ -116,7 +116,6 @@ void file_unlink(int);
+ void file_read(int);
+ void splash(void);
+ void usage(void);
+-void bzero();
+ void clear_stats();
+ int validate(char *, int , char );
+ 
+diff --git iozone3_347/src/current/iozone.c iozone3_347/src/current/iozone.c
+index 1b291b8..6c7d3ac 100644
+--- iozone3_347/src/current/iozone.c
++++ iozone3_347/src/current/iozone.c
+@@ -988,7 +988,6 @@ int sp_start_master_listen();
+ #ifdef HAVE_ANSIC_C
+ #if defined (HAVE_PREAD) && defined(_LARGEFILE64_SOURCE)
+ ssize_t pwrite64(); 
+-ssize_t pread64(); 
+ #endif
+ #if !defined(linux)
+ char *getenv();

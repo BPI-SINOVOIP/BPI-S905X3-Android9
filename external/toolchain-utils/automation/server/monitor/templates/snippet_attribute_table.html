@@ -1,0 +1,36 @@
+<table class="list attributes">
+  <tbody>
+    <tr>
+      <th>Attribute</th>
+      <th>Value</th>
+    </tr>
+    {% for name, value in attributes.text %}
+    <tr>
+      <td>{{ name }}</td>
+      <td>{{ value }}</td>
+    </tr>
+    {% endfor %}
+
+    {% for name, links in attributes.link %}
+    <tr>
+      <td>{{ name }}</td>
+      <td>
+        {% if links %}
+        {% for link in links %}
+        <a class="button small" href="{{ link.href }}">{{ link.name }}</a>
+        {% endfor %}
+        {% else %}
+        None
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+
+    {% for name, code in attributes.code %}
+    <tr>
+      <td>{{ name }}</td>
+      <td>{% include "snippet_code.html" %}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

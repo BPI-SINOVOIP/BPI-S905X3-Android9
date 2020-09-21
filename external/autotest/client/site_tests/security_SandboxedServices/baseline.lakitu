@@ -1,0 +1,32 @@
+exe,euser,egroup,pidns,caps,nonewprivs,filter
+
+# See the baseline file for docs.
+
+cloud-init,root,root,No,No,No,No
+device_policy_m,root,root,No,No,No,No
+first-boot,root,root,No,No,No,No
+onboot,root,root,No,No,No,No
+systemd-journal,root,root,No,No,No,No
+systemd-logind,root,root,No,No,No,No
+systemd,root,root,No,No,No,No
+systemd-udevd,root,root,No,No,No,No
+
+# TODO: These processes do not really need to run as root. Figure out a way to
+# run them unprivileged/sandboxed.
+curl,root,root,No,No,No,No
+wait_for_user_d,root,root,No,No,No,No
+get_metadata_va,root,root,No,No,No,No
+install_custom_,root,root,No,No,No,No
+konlet-startup,root,root,No,No,No,No
+
+# Docker daemon processes.
+dockerd,root,root,No,No,No,No
+docker-containe,root,root,No,No,No,No
+
+# Processes that used by GCP compute image packages.
+google_ip_forwa,root,root,No,No,No,No
+google_accounts,root,root,No,No,No,No
+google_clock_sk,root,root,No,No,No,No
+google_metadata,root,root,No,No,No,No
+google_instance,root,root,No,No,No,No
+google_network_,root,root,No,No,No,No

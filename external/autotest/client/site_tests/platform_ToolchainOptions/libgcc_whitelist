@@ -1,0 +1,18 @@
+/opt/google/chrome/nacl_helper
+# These files are delivered as binaries in Chrome OS.
+# Files from flash player.
+/opt/google/chrome/libwidevinecdm.so
+/opt/google/chrome/pepper/libpepflashplayer.so
+# Hdcp driver binary from Intel.
+/usr/sbin/hdcpd
+# Prebuilt binaries installed by Intel Camera HAL on kabylake boards.
+/usr/lib64/libia_ltm.so
+/usr/lib64/libSkyCamAIC.so
+/usr/lib64/libSkyCamAICKBL.so
+# Remove these after perf is built with clang (https://crbug.com/797835).
+/usr/bin/perf
+/usr/bin/trace
+# Remove these after crosvm is built with compiler-rt.
+# https://crbug.com/814480.
+/usr/bin/crosvm
+/usr/lib64/libqcow_utils.so

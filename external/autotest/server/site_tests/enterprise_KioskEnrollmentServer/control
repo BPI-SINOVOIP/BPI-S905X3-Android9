@@ -1,0 +1,26 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "harpreet"
+NAME = "enterprise_KioskEnrollmentServer"
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "enterprise"
+TEST_TYPE = "server"
+ATTRIBUTES = "suite:enterprise"
+DEPENDENCIES = "chromesign"
+
+DOC = """
+This test clears the TPM if necessary, kicks off a client side test that enrolls
+a device in enterprise and clears the TPM again. Every time the TPM is cleared,
+the system is rebooted.
+"""
+
+
+def run_test(machine):
+    host = hosts.create_host(machine)
+    job.run_test('enterprise_KioskEnrollmentServer', host=host)
+
+
+parallel_simple(run_test, machines)

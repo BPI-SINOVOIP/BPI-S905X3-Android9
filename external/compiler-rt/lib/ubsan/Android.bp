@@ -1,0 +1,215 @@
+//
+// Copyright (C) 2015 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+//
+
+ubsan_rtl_files = [
+    "ubsan_diag.cc",
+    "ubsan_init.cc",
+    "ubsan_flags.cc",
+    "ubsan_handlers.cc",
+    "ubsan_value.cc",
+]
+
+ubsan_cxx_rtl_files = [
+    "ubsan_handlers_cxx.cc",
+    "ubsan_type_hash.cc",
+    "ubsan_type_hash_itanium.cc",
+    "ubsan_type_hash_win.cc",
+]
+
+ubsan_rtl_cflags = [
+    "-Wall",
+    "-Werror",
+]
+
+ubsan_rtl_cppflags = [
+    "-fvisibility=hidden",
+    "-fno-exceptions",
+    "-std=c++11",
+    "-Wno-unused-parameter",
+    "-Wno-non-virtual-dtor",
+    "-DUBSAN_CAN_USE_CXXABI",
+]
+
+ubsan_rtl_c_includes = ["external/compiler-rt/lib"]
+
+cc_library_static {
+    name: "libubsan",
+    host_supported: true,
+
+    include_dirs: ubsan_rtl_c_includes,
+    cflags: ubsan_rtl_cflags,
+    cppflags: ubsan_rtl_cppflags,
+    srcs: ubsan_rtl_files,
+    sdk_version: "19",
+    stl: "none",
+    sanitize: {
+        never: true,
+    },
+    compile_multilib: "both",
+    target: {
+        host: {
+            cflags: ["-fno-rtti"],
+        },
+    },
+}
+
+cc_library_static {
+    name: "libubsan_cxx",
+    host_supported: true,
+
+    include_dirs: ubsan_rtl_c_includes,
+    cflags: ubsan_rtl_cflags,
+    cppflags: ubsan_rtl_cppflags,
+    rtti: true,
+    srcs: ubsan_cxx_rtl_files,
+    sdk_version: "19",
+    sanitize: {
+        never: true,
+    },
+    compile_multilib: "both",
+}
+
+cc_defaults {
+    name: "libclang_rt_ubsan_defaults",
+
+    include_dirs: [
+        "external/compiler-rt/lib",
+        "external/compiler-rt/include",
+    ],
+    static_libs: [
+        "libsan",
+    ],
+    whole_static_libs: [
+        "libubsan",
+        "libubsan_cxx",
+    ],
+    shared_libs: [
+        "liblog",
+        "libdl",
+    ],
+    sanitize: {
+        never: true,
+    },
+    // _cxx bits (vptr-sanitizer and cfi) need dynamic_cast<>
+    stl: "c++_static",
+    sdk_version: "19",
+    enabled: false,
+}
+
+// Disable libubsan_standalone prebuilts in aosp/master until soong has a build
+// option to pick a prebuilt or compile/build a module.
+//
+// cc_library_shared {
+//     name: "libclang_rt.ubsan_standalone-arm-android",
+//     defaults: ["libclang_rt_ubsan_defaults"],
+//     arch: {
+//         arm: {
+//             enabled: true,
+//         },
+//     },
+// }
+//
+// cc_library_shared {
+//     name: "libclang_rt.ubsan_standalone-aarch64-android",
+//     defaults: ["libclang_rt_ubsan_defaults"],
+//     arch: {
+//         arm64: {
+//             enabled: true,
+//         },
+//     },
+// }
+//
+// cc_library_shared {
+//     name: "libclang_rt.ubsan_standalone-i686-android",
+//     defaults: ["libclang_rt_ubsan_defaults"],
+//     arch: {
+//         x86: {
+//             enabled: true,
+//         },
+//     },
+// }
+//
+// cc_library_shared {
+//     name: "libclang_rt.ubsan_standalone-x86_64-android",
+//     defaults: ["libclang_rt_ubsan_defaults"],
+//     arch: {
+//         x86_64: {
+//             enabled: true,
+//         },
+//     },
+// }
+//
+// cc_library_shared {
+//     name: "libclang_rt.ubsan_standalone-mips-android",
+//     defaults: ["libclang_rt_ubsan_defaults"],
+//     arch: {
+//         mips: {
+//             enabled: true,
+//         },
+//     },
+// }
+//
+// cc_library_shared {
+//     name: "libclang_rt.ubsan_standalone-mips64-android",
+//     defaults: ["libclang_rt_ubsan_defaults"],
+//     arch: {
+//         mips64: {
+//             enabled: true,
+//         },
+//     },
+// }
+
+//###############################################################################
+// Host modules
+
+cc_library_host_static {
+    name: "libubsan_standalone",
+
+    include_dirs: ubsan_rtl_c_includes,
+    cflags: ubsan_rtl_cflags,
+    cppflags: ubsan_rtl_cppflags + ["-fno-rtti"],
+    srcs: ubsan_rtl_files,
+    whole_static_libs: ["libsan"],
+    stl: "none",
+    sanitize: {
+        never: true,
+    },
+    compile_multilib: "both",
+    target: {
+        darwin: {
+            enabled: false,
+        },
+    },
+}
+
+cc_library_host_static {
+    name: "libubsan_standalone_cxx",
+
+    include_dirs: ubsan_rtl_c_includes,
+    cflags: ubsan_rtl_cflags,
+    cppflags: ubsan_rtl_cppflags,
+    srcs: ubsan_cxx_rtl_files,
+    sanitize: {
+        never: true,
+    },
+    compile_multilib: "both",
+    target: {
+        darwin: {
+            enabled: false,
+        },
+    },
+}

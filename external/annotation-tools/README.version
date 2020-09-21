@@ -1,0 +1,11 @@
+URL: https://github.com/typetools/annotation-tools
+Version: 3.6.45
+License: MIT
+Description: Annotation File Utilities, used for inserting external annotations to source files
+
+Local Modifications:
+    Check-in annotation-file-utilities/annotation-file-utilities.jar from
+    https://checkerframework.org/annotation-file-utilities/annotation-tools-3.6.45.zip
+    Remove annotation-file-utilities/annotation-file-utilities.jar from .gitignore yet.
+
+

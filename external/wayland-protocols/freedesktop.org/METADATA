@@ -1,0 +1,17 @@
+name: "wayland-protocol"
+description:
+    "wayland-protocols contains Wayland protocols that adds functionality not"
+    "available in the Wayland core protocol. Such protocols either adds"
+    "completely new functionality, or extends the functionality of some other"
+    "protocol either in Wayland core, or some other protocol in"
+    "wayland-protocols."
+
+third_party {
+  url {
+    type: GIT
+    value: "git://anon.freedesktop.org/wayland/wayland-protocols"
+  }
+  version: "1.11"
+  last_upgrade_date { year: 2017 month: 11 day: 29 }
+  license_type: NOTICE
+}

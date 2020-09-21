@@ -1,0 +1,711 @@
+test: add runtarget action.
+
+--- test/fixedbugs/bug248.go
++++ test/fixedbugs/bug248.go
+@@ -1,5 +1,5 @@
+ // +build !nacl,!plan9,!windows
+-// run
++// runtarget
+ 
+ // Copyright 2009 The Go Authors. All rights reserved.
+ // Use of this source code is governed by a BSD-style
+@@ -8,13 +8,32 @@
+ package main
+ 
+ import (
++	"flag"
+ 	"fmt"
+ 	"os"
+ 	"os/exec"
+ 	"path/filepath"
+ )
+ 
++var target = flag.String("target", "", "if non empty, use 'go_target' to compile test files and 'go_target_exec' to run the binaries")
++
++func goCmd() string {
++	if *target != "" {
++		return "go_" + *target
++	}
++	return "go"
++}
++
++func goRun(cmd ...string) {
++	if *target == "" {
++		run(cmd[0], cmd[1:]...)
++	} else {
++		run("go_"+*target+"_exec", cmd...)
++	}
++}
++
+ func main() {
++	flag.Parse()
+ 	// TODO: If we get rid of errchk, re-enable this test on Windows.
+ 	errchk, err := filepath.Abs("errchk")
+ 	check(err)
+@@ -22,12 +41,12 @@ func main() {
+ 	err = os.Chdir(filepath.Join("fixedbugs", "bug248.dir"))
+ 	check(err)
+ 
+-	run("go", "tool", "compile", "bug0.go")
+-	run("go", "tool", "compile", "bug1.go")
+-	run("go", "tool", "compile", "bug2.go")
+-	run(errchk, "go", "tool", "compile", "-e", "bug3.go")
+-	run("go", "tool", "link", "bug2.o")
+-	run(fmt.Sprintf(".%ca.out", filepath.Separator))
++	run(goCmd(), "tool", "compile", "bug0.go")
++	run(goCmd(), "tool", "compile", "bug1.go")
++	run(goCmd(), "tool", "compile", "bug2.go")
++	run(errchk, goCmd(), "tool", "compile", "-e", "bug3.go")
++	run(goCmd(), "tool", "link", "bug2.o")
++	goRun(fmt.Sprintf(".%ca.out", filepath.Separator))
+ 
+ 	os.Remove("bug0.o")
+ 	os.Remove("bug1.o")
+--- test/fixedbugs/bug302.go
++++ test/fixedbugs/bug302.go
+@@ -1,5 +1,5 @@
+ // +build !nacl
+-// run
++// runtarget
+ 
+ // Copyright 2010 The Go Authors.  All rights reserved.
+ // Use of this source code is governed by a BSD-style
+@@ -8,16 +8,27 @@
+ package main
+ 
+ import (
++	"flag"
+ 	"fmt"
+ 	"os"
+ 	"os/exec"
+ 	"path/filepath"
+ )
+ 
++var target = flag.String("target", "", "if non empty, use 'go_target' to compile test files and 'go_target_exec' to run the binaries")
++
++func goCmd() string {
++	if *target != "" {
++		return "go_" + *target
++	}
++	return "go"
++}
++
+ func main() {
+-	run("go", "tool", "compile", filepath.Join("fixedbugs", "bug302.dir", "p.go"))
+-	run("go", "tool", "pack", "grc", "pp.a", "p.o")
+-	run("go", "tool", "compile", "-I", ".", filepath.Join("fixedbugs", "bug302.dir", "main.go"))
++	flag.Parse()
++	run(goCmd(), "tool", "compile", filepath.Join("fixedbugs", "bug302.dir", "p.go"))
++	run(goCmd(), "tool", "pack", "grc", "pp.a", "p.o")
++	run(goCmd(), "tool", "compile", "-I", ".", filepath.Join("fixedbugs", "bug302.dir", "main.go"))
+ 	os.Remove("p.o")
+ 	os.Remove("pp.a")
+ 	os.Remove("main.o")
+--- test/fixedbugs/bug345.go
++++ test/fixedbugs/bug345.go
+@@ -1,5 +1,5 @@
+ // +build !nacl,!plan9,!windows
+-// run
++// runtarget
+ 
+ // Copyright 2011 The Go Authors.  All rights reserved.
+ // Use of this source code is governed by a BSD-style
+@@ -8,13 +8,24 @@
+ package main
+ 
+ import (
++	"flag"
+ 	"fmt"
+ 	"os"
+ 	"os/exec"
+ 	"path/filepath"
+ )
+ 
++var target = flag.String("target", "", "if non empty, use 'go_target' to compile test files and 'go_target_exec' to run the binaries")
++
++func goCmd() string {
++	if *target != "" {
++		return "go_" + *target
++	}
++	return "go"
++}
++
+ func main() {
++	flag.Parse()
+ 	// TODO: If we get rid of errchk, re-enable this test on Plan 9 and Windows.
+ 	errchk, err := filepath.Abs("errchk")
+ 	check(err)
+@@ -22,8 +33,8 @@ func main() {
+ 	err = os.Chdir(filepath.Join(".", "fixedbugs", "bug345.dir"))
+ 	check(err)
+ 
+-	run("go", "tool", "compile", "io.go")
+-	run(errchk, "go", "tool", "compile", "-e", "main.go")
++	run(goCmd(), "tool", "compile", "io.go")
++	run(errchk, goCmd(), "tool", "compile", "-e", "main.go")
+ 	os.Remove("io.o")
+ }
+ 
+--- test/fixedbugs/bug369.go
++++ test/fixedbugs/bug369.go
+@@ -1,5 +1,5 @@
+ // +build !nacl,!windows
+-// run
++// runtarget
+ 
+ // Copyright 2011 The Go Authors.  All rights reserved.
+ // Use of this source code is governed by a BSD-style
+@@ -10,21 +10,40 @@
+ package main
+ 
+ import (
++	"flag"
+ 	"fmt"
+ 	"os"
+ 	"os/exec"
+ 	"path/filepath"
+ )
+ 
++var target = flag.String("target", "", "if non empty, use 'go_target' to compile test files and 'go_target_exec' to run the binaries")
++
++func goCmd() string {
++	if *target != "" {
++		return "go_" + *target
++	}
++	return "go"
++}
++
++func goRun(cmd ...string) {
++	if *target == "" {
++		run(cmd[0], cmd[1:]...)
++	} else {
++		run("go_"+*target+"_exec", cmd...)
++	}
++}
++
+ func main() {
++	flag.Parse()
+ 	err := os.Chdir(filepath.Join(".", "fixedbugs", "bug369.dir"))
+ 	check(err)
+ 
+-	run("go", "tool", "compile", "-N", "-o", "slow.o", "pkg.go")
+-	run("go", "tool", "compile", "-o", "fast.o", "pkg.go")
+-	run("go", "tool", "compile", "-o", "main.o", "main.go")
+-	run("go", "tool", "link", "-o", "a.exe", "main.o")
+-	run("." + string(filepath.Separator) + "a.exe")
++	run(goCmd(), "tool", "compile", "-N", "-o", "slow.o", "pkg.go")
++	run(goCmd(), "tool", "compile", "-o", "fast.o", "pkg.go")
++	run(goCmd(), "tool", "compile", "-o", "main.o", "main.go")
++	run(goCmd(), "tool", "link", "-o", "a.exe", "main.o")
++	goRun("." + string(filepath.Separator) + "a.exe")
+ 
+ 	os.Remove("slow.o")
+ 	os.Remove("fast.o")
+--- test/fixedbugs/bug429_run.go
++++ test/fixedbugs/bug429_run.go
+@@ -1,5 +1,5 @@
+ // +build !nacl
+-// run
++// runtarget
+ 
+ // Copyright 2014 The Go Authors. All rights reserved.
+ // Use of this source code is governed by a BSD-style
+@@ -10,6 +10,7 @@
+ package main
+ 
+ import (
++	"flag"
+ 	"fmt"
+ 	"os"
+ 	"os/exec"
+@@ -17,8 +18,27 @@ import (
+ 	"strings"
+ )
+ 
++var target = flag.String("target", "", "if non empty, use 'go_target' to compile test files and 'go_target_exec' to run the binaries")
++
++func goCmd() string {
++	if *target != "" {
++		return "go_" + *target
++	}
++	return "go"
++}
++
++func goRun(args ...string) *exec.Cmd {
++	cmd := []string{"run"}
++	if *target != "" {
++		cmd = append(cmd, "-exec", "go_"+*target+"_exec")
++	}
++	cmd = append(cmd, args...)
++	return exec.Command(goCmd(), cmd...)
++}
++
+ func main() {
+-	cmd := exec.Command("go", "run", filepath.Join("fixedbugs", "bug429.go"))
++	flag.Parse()
++	cmd := goRun(filepath.Join("fixedbugs", "bug429.go"))
+ 	out, err := cmd.CombinedOutput()
+ 	if err == nil {
+ 		fmt.Println("expected deadlock")
+--- test/fixedbugs/issue10607.go
++++ test/fixedbugs/issue10607.go
+@@ -1,5 +1,5 @@
+ // +build linux,!ppc64,!ppc64le,!mips64,!mips64le android
+-// run
++// runtarget
+ 
+ // Copyright 2015 The Go Authors. All rights reserved.
+ // Use of this source code is governed by a BSD-style
+@@ -11,19 +11,39 @@
+ package main
+ 
+ import (
++	"flag"
+ 	"fmt"
+ 	"os"
+ 	"os/exec"
+ 	"path/filepath"
+ )
+ 
++var target = flag.String("target", "", "if non empty, use 'go_target' to compile test files and 'go_target_exec' to run the binaries")
++
++func goCmd() string {
++	if *target != "" {
++		return "go_" + *target
++	}
++	return "go"
++}
++
++func goRun(args ...string) *exec.Cmd {
++	cmd := []string{"run"}
++	if *target != "" {
++		cmd = append(cmd, "-exec", "go_"+*target+"_exec")
++	}
++	cmd = append(cmd, args...)
++	return exec.Command(goCmd(), cmd...)
++}
++
+ func main() {
++	flag.Parse()
+ 	test("internal")
+ 	test("external")
+ }
+ 
+ func test(linkmode string) {
+-	out, err := exec.Command("go", "run", "-ldflags", "-B=0x12345678 -linkmode="+linkmode, filepath.Join("fixedbugs", "issue10607a.go")).CombinedOutput()
++	out, err := goRun("-ldflags", "-B=0x12345678 -linkmode="+linkmode, filepath.Join("fixedbugs", "issue10607a.go")).CombinedOutput()
+ 	if err != nil {
+ 		fmt.Printf("BUG: linkmode=%s %v\n%s\n", linkmode, err, out)
+ 		os.Exit(1)
+--- test/fixedbugs/issue11771.go
++++ test/fixedbugs/issue11771.go
+@@ -1,5 +1,5 @@
+ // +build !nacl
+-// run
++// runtarget
+ 
+ // Copyright 2015 The Go Authors.  All rights reserved.
+ // Use of this source code is governed by a BSD-style
+@@ -11,6 +11,7 @@ package main
+ 
+ import (
+ 	"bytes"
++	"flag"
+ 	"fmt"
+ 	"io/ioutil"
+ 	"log"
+@@ -20,7 +21,17 @@ import (
+ 	"runtime"
+ )
+ 
++var target = flag.String("target", "", "if non empty, use 'go_target' to compile test files and 'go_target_exec' to run the binaries")
++
++func goCmd() string {
++	if *target != "" {
++		return "go_" + *target
++	}
++	return "go"
++}
++
+ func main() {
++	flag.Parse()
+ 	if runtime.Compiler != "gc" {
+ 		return
+ 	}
+@@ -52,7 +63,7 @@ func x() {
+ 		log.Fatal(err)
+ 	}
+ 
+-	cmd := exec.Command("go", "tool", "compile", "x.go")
++	cmd := exec.Command(goCmd(), "tool", "compile", "x.go")
+ 	cmd.Dir = dir
+ 	output, err := cmd.CombinedOutput()
+ 	if err == nil {
+--- test/fixedbugs/issue9355.go
++++ test/fixedbugs/issue9355.go
+@@ -1,4 +1,4 @@
+-// run
++// runtarget
+ 
+ // Copyright 2014 The Go Authors.  All rights reserved.
+ // Use of this source code is governed by a BSD-style
+@@ -7,6 +7,7 @@
+ package main
+ 
+ import (
++	"flag"
+ 	"fmt"
+ 	"os"
+ 	"os/exec"
+@@ -15,7 +16,17 @@ import (
+ 	"runtime"
+ )
+ 
++var target = flag.String("target", "", "if non empty, use 'go_target' to compile test files and 'go_target_exec' to run the binaries")
++
++func goCmd() string {
++	if *target != "" {
++		return "go_" + *target
++	}
++	return "go"
++}
++
+ func main() {
++	flag.Parse()
+ 	if runtime.Compiler != "gc" || runtime.GOOS == "nacl" {
+ 		return
+ 	}
+@@ -23,7 +34,7 @@ func main() {
+ 	err := os.Chdir(filepath.Join("fixedbugs", "issue9355.dir"))
+ 	check(err)
+ 
+-	out := run("go", "tool", "compile", "-S", "a.go")
++	out := run(goCmd(), "tool", "compile", "-S", "a.go")
+ 	os.Remove("a.o")
+ 
+ 	// 6g/8g print the offset as dec, but 5g/9g print the offset as hex.
+--- test/fixedbugs/issue9862_run.go
++++ test/fixedbugs/issue9862_run.go
+@@ -1,5 +1,5 @@
+ // +build !nacl
+-// run
++// runtarget
+ 
+ // Copyright 2015 The Go Authors. All rights reserved.
+ // Use of this source code is governed by a BSD-style
+@@ -10,12 +10,32 @@
+ package main
+ 
+ import (
++	"flag"
+ 	"os/exec"
+ 	"strings"
+ )
+ 
++var target = flag.String("target", "", "if non empty, use 'go_target' to compile test files and 'go_target_exec' to run the binaries")
++
++func goCmd() string {
++	if *target != "" {
++		return "go_" + *target
++	}
++	return "go"
++}
++
++func goRun(args ...string) *exec.Cmd {
++	cmd := []string{"run"}
++	if *target != "" {
++		cmd = append(cmd, "-exec", "go_"+*target+"_exec")
++	}
++	cmd = append(cmd, args...)
++	return exec.Command(goCmd(), cmd...)
++}
++
+ func main() {
+-	out, err := exec.Command("go", "run", "fixedbugs/issue9862.go").CombinedOutput()
++	flag.Parse()
++	out, err := goRun("fixedbugs/issue9862.go").CombinedOutput()
+ 	outstr := string(out)
+ 	if err == nil {
+ 		println("go run issue9862.go succeeded, should have failed\n", outstr)
+--- test/linkmain_run.go
++++ test/linkmain_run.go
+@@ -1,5 +1,5 @@
+ // +build !nacl
+-// run
++// runtarget
+ 
+ // Copyright 2014 The Go Authors. All rights reserved.
+ // Use of this source code is governed by a BSD-style
+@@ -10,12 +10,22 @@
+ package main
+ 
+ import (
++	"flag"
+ 	"fmt"
+ 	"os"
+ 	"os/exec"
+ 	"strings"
+ )
+ 
++var target = flag.String("target", "", "if non empty, use 'go_target' to compile test files and 'go_target_exec' to run the binaries")
++
++func goCmd() string {
++	if *target != "" {
++		return "go_" + *target
++	}
++	return "go"
++}
++
+ func cleanup() {
+ 	os.Remove("linkmain.o")
+ 	os.Remove("linkmain.a")
+@@ -51,16 +61,18 @@ func runFail(cmdline string) {
+ }
+ 
+ func main() {
++	flag.Parse()
++
+ 	// helloworld.go is package main
+-	run("go tool compile -o linkmain.o helloworld.go")
+-	run("go tool compile -pack -o linkmain.a helloworld.go")
+-	run("go tool link -o linkmain.exe linkmain.o")
+-	run("go tool link -o linkmain.exe linkmain.a")
++	run(goCmd() + " tool compile -o linkmain.o helloworld.go")
++	run(goCmd() + " tool compile -pack -o linkmain.a helloworld.go")
++	run(goCmd() + " tool link -o linkmain.exe linkmain.o")
++	run(goCmd() + " tool link -o linkmain.exe linkmain.a")
+ 
+ 	// linkmain.go is not
+-	run("go tool compile -o linkmain1.o linkmain.go")
+-	run("go tool compile -pack -o linkmain1.a linkmain.go")
+-	runFail("go tool link -o linkmain.exe linkmain1.o")
+-	runFail("go tool link -o linkmain.exe linkmain1.a")
++	run(goCmd() + " tool compile -o linkmain1.o linkmain.go")
++	run(goCmd() + " tool compile -pack -o linkmain1.a linkmain.go")
++	runFail(goCmd() + " tool link -o linkmain.exe linkmain1.o")
++	runFail(goCmd() + " tool link -o linkmain.exe linkmain1.a")
+ 	cleanup()
+ }
+--- test/linkx_run.go
++++ test/linkx_run.go
+@@ -1,5 +1,5 @@
+ // +build !nacl
+-// run
++// runtarget
+ 
+ // Copyright 2014 The Go Authors. All rights reserved.
+ // Use of this source code is governed by a BSD-style
+@@ -11,20 +11,40 @@ package main
+ 
+ import (
+ 	"bytes"
++	"flag"
+ 	"fmt"
+ 	"os"
+ 	"os/exec"
+ 	"strings"
+ )
+ 
++var target = flag.String("target", "", "if non empty, use 'go_target' to compile test files and 'go_target_exec' to run the binaries")
++
++func goCmd() string {
++	if *target != "" {
++		return "go_" + *target
++	}
++	return "go"
++}
++
++func goRun(args ...string) *exec.Cmd {
++	cmd := []string{"run"}
++	if *target != "" {
++		cmd = append(cmd, "-exec", "go_"+*target+"_exec")
++	}
++	cmd = append(cmd, args...)
++	return exec.Command(goCmd(), cmd...)
++}
++
+ func main() {
++	flag.Parse()
+ 	test(" ") // old deprecated syntax
+ 	test("=") // new syntax
+ }
+ 
+ func test(sep string) {
+ 	// Successful run
+-	cmd := exec.Command("go", "run", "-ldflags=-X main.tbd"+sep+"hello -X main.overwrite"+sep+"trumped -X main.nosuchsymbol"+sep+"neverseen", "linkx.go")
++	cmd := goRun("-ldflags=-X main.tbd"+sep+"hello -X main.overwrite"+sep+"trumped -X main.nosuchsymbol"+sep+"neverseen", "linkx.go")
+ 	var out, errbuf bytes.Buffer
+ 	cmd.Stdout = &out
+ 	cmd.Stderr = &errbuf
+@@ -44,7 +64,7 @@ func test(sep string) {
+ 	}
+ 
+ 	// Issue 8810
+-	cmd = exec.Command("go", "run", "-ldflags=-X main.tbd", "linkx.go")
++	cmd = goRun("-ldflags=-X main.tbd", "linkx.go")
+ 	_, err = cmd.CombinedOutput()
+ 	if err == nil {
+ 		fmt.Println("-X linker flag should not accept keys without values")
+@@ -52,7 +72,7 @@ func test(sep string) {
+ 	}
+ 
+ 	// Issue 9621
+-	cmd = exec.Command("go", "run", "-ldflags=-X main.b=false -X main.x=42", "linkx.go")
++	cmd = goRun("-ldflags=-X main.b=false -X main.x=42", "linkx.go")
+ 	outx, err := cmd.CombinedOutput()
+ 	if err == nil {
+ 		fmt.Println("-X linker flag should not overwrite non-strings")
+--- test/nosplit.go
++++ test/nosplit.go
+@@ -1,5 +1,5 @@
+ // +build !nacl
+-// run
++// runtarget
+ 
+ // Copyright 2014 The Go Authors.  All rights reserved.
+ // Use of this source code is governed by a BSD-style
+@@ -9,6 +9,7 @@ package main
+ 
+ import (
+ 	"bytes"
++	"flag"
+ 	"fmt"
+ 	"io/ioutil"
+ 	"log"
+@@ -16,11 +17,28 @@ import (
+ 	"os/exec"
+ 	"path/filepath"
+ 	"regexp"
+-	"runtime"
+ 	"strconv"
+ 	"strings"
+ )
+ 
++var target = flag.String("target", "", "if non empty, use 'go_target' to compile test files and 'go_target_exec' to run the binaries")
++
++func goCmd() string {
++	if *target != "" {
++		return "go_" + *target
++	}
++	return "go"
++}
++
++func goArch() string {
++	goarch, err := exec.Command(goCmd(), "env", "GOARCH").Output()
++	if err != nil {
++		bug()
++		fmt.Printf("running go env GOARCH: %v\n", err)
++	}
++	return strings.TrimSpace(string(goarch))
++}
++
+ var tests = `
+ # These are test cases for the linker analysis that detects chains of
+ # nosplit functions that would cause a stack overflow.
+@@ -193,12 +211,13 @@ var (
+ )
+ 
+ func main() {
+-	goarch := os.Getenv("GOARCH")
++	flag.Parse()
++	goarch := goArch()
+ 	if goarch == "" {
+-		goarch = runtime.GOARCH
++		return
+ 	}
+ 
+-	version, err := exec.Command("go", "tool", "compile", "-V").Output()
++	version, err := exec.Command(goCmd(), "tool", "compile", "-V").Output()
+ 	if err != nil {
+ 		bug()
+ 		fmt.Printf("running go tool compile -V: %v\n", err)
+@@ -338,7 +357,7 @@ TestCases:
+ 			log.Fatal(err)
+ 		}
+ 
+-		cmd := exec.Command("go", "build")
++		cmd := exec.Command(goCmd(), "build")
+ 		cmd.Dir = dir
+ 		output, err := cmd.CombinedOutput()
+ 		if err == nil {
+--- test/run.go
++++ test/run.go
+@@ -220,6 +220,16 @@ func goRun(runcmd runCmd, goname string, args ...string) (out []byte, err error)
+ 	return runcmd(cmd...)
+ }
+ 
++func goRunTarget(runcmd runCmd, goname string, args ...string) (out []byte, err error) {
++	cmd := []string{"go_local", "run"}
++	cmd = append(cmd, goname)
++	if *target != "" {
++		cmd = append(cmd, "-target", *target)
++	}
++	cmd = append(cmd, args...)
++	return runcmd(cmd...)
++}
++
+ // skipError describes why a test was skipped.
+ type skipError string
+ 
+@@ -469,7 +479,7 @@ func (t *test) run() {
+ 	case "cmpout":
+ 		action = "run" // the run case already looks for <dir>/<test>.out files
+ 		fallthrough
+-	case "compile", "compiledir", "build", "run", "runoutput", "rundir":
++	case "compile", "compiledir", "build", "run", "runtarget", "runoutput", "rundir":
+ 		t.action = action
+ 	case "errorcheck", "errorcheckdir", "errorcheckoutput":
+ 		t.action = action
+@@ -653,6 +663,17 @@ func (t *test) run() {
+ 			t.err = fmt.Errorf("incorrect output\n%s", out)
+ 		}
+ 
++	case "runtarget":
++		useTmp = false
++		out, err := goRunTarget(runcmd, t.goFileName(), args...)
++		if err != nil {
++			t.err = err
++			return
++		}
++		if strings.Replace(string(out), "\r\n", "\n", -1) != t.expectedOutput() {
++			t.err = fmt.Errorf("incorrect output\n%s", out)
++		}
++
+ 	case "runoutput":
+ 		rungatec <- true
+ 		defer func() {
+--- test/sinit_run.go
++++ test/sinit_run.go
+@@ -1,5 +1,5 @@
+ // +build !nacl
+-// run
++// runtarget
+ 
+ // Copyright 2014 The Go Authors. All rights reserved.
+ // Use of this source code is governed by a BSD-style
+@@ -11,13 +11,24 @@ package main
+ 
+ import (
+ 	"bytes"
++	"flag"
+ 	"fmt"
+ 	"os"
+ 	"os/exec"
+ )
+ 
++var target = flag.String("target", "", "if non empty, use 'go_target' to compile test files and 'go_target_exec' to run the binaries")
++
++func goCmd() string {
++	if *target != "" {
++		return "go_" + *target
++	}
++	return "go"
++}
++
+ func main() {
+-	cmd := exec.Command("go", "tool", "compile", "-S", "sinit.go")
++	flag.Parse()
++	cmd := exec.Command(goCmd(), "tool", "compile", "-S", "sinit.go")
+ 	out, err := cmd.CombinedOutput()
+ 	if err != nil {
+ 		fmt.Println(string(out))

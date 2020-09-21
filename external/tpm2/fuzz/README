@@ -1,0 +1,56 @@
+This directory contains source code and build scripts for coverage-guided
+fuzzers.
+
+Detailed instructions are available at:
+
+  https://github.com/google/oss-fuzz/blob/master/docs/
+
+Quick start:
+
+  Build a container
+
+    $ docker build -t ossfuzz/tpm2 -f fuzz/Dockerfile .
+
+  Build fuzzers
+
+    $ docker run -ti --rm -v $(pwd):/src/tpm2 -v /tmp/fuzzers:/out \
+                 ossfuzz/tpm2
+
+  Look in /tmp/fuzzers to see the executables. Run them like so:
+
+    $ docker run -ti -v $(pwd)/fuzz/corpus-execute-command:/corpus \
+                 -v /tmp/fuzzers:/out ossfuzz/libfuzzer-runner \
+                 /out/tpm2_execute_command_fuzzer /corpus -runs=100
+
+To reproduce a crash under gdb:
+
+  Build a container
+
+    $ docker build -t ossfuzz/tpm2 -f fuzz/Dockerfile .
+
+  Build fuzzers
+
+    $ docker run -ti --rm -v $(pwd):/src/tpm2 -v /tmp/fuzzers:/out \
+                 ossfuzz/tpm2
+    or
+
+    $ docker run -ti --rm -v $(pwd):/src/tpm2 -v /tmp/fuzzers:/out \
+                -e FUZZING_ENGINE=libfuzzer \
+                -e SANITIZER=<address/memory/undefined> \
+                ossfuzz/tpm2
+
+  Get a shell in the container
+
+    $ docker run -ti --privileged \
+                 -v <crash_testcase>:/testcase \
+                 -v /tmp/fuzzers:/out \
+                 -v $(pwd):/src/tpm2 \
+                 -t ossfuzz/libfuzzer-runner
+
+  In the container
+
+     # gdb /out/tpm2_execute_command_fuzzer
+
+  In gdb
+
+     (gdb) r /testcase

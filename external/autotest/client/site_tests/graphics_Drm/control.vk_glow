@@ -1,0 +1,25 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+NAME = 'graphics_Drm.vk_glow'
+AUTHOR = 'chromeos-gfx'
+PURPOSE = 'Uses drm-tests to sanity check DRM graphics output'
+CRITERIA = """
+Runs drm-tests. All tests must run without error.
+"""
+ATTRIBUTES = ''
+TIME='FAST'
+TEST_CATEGORY = 'Functional'
+TEST_CLASS = "gl"
+TEST_TYPE = 'client'
+BUG_TEMPLATE = {
+    'components': ['OS>Kernel>Graphics'],
+}
+
+DOC = """
+Runs vk_glow.
+"""
+
+job.run_test('graphics_Drm', tag='vk_glow',
+                             tests=['vk_glow'])

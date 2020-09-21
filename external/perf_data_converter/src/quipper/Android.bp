@@ -1,0 +1,246 @@
+//
+// Copyright (C) 2018 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+cc_defaults {
+    name: "libquipper_defaults",
+
+    cflags: [
+        "-Wno-unused",
+        "-Wno-unused-parameter",
+        "-Wno-missing-field-initializers",
+        "-O3",
+        "-g",
+    ],
+
+    srcs: [
+        "address_mapper.cc",
+        "binary_data_utils.cc",
+        "buffer_reader.cc",
+        "buffer_writer.cc",
+        "data_reader.cc",
+        "data_writer.cc",
+        "dso_android.cc",               // Android-modified, rely on simpleperf/LLVM.
+        "file_reader.cc",
+        "file_utils.cc",
+        "huge_page_deducer.cc",
+        "androidbase/base/logging.cc",
+        "perf_option_parser.cc",
+        "perf_data_utils.cc",
+        "perf_parser.cc",
+        "perf_protobuf_io.cc",
+        "perf_reader.cc",
+        "perf_recorder.cc",
+        "perf_serializer.cc",
+        "perf_stat_parser.cc",
+        "run_command.cc",
+        "sample_info_reader.cc",
+        "scoped_temp_path.cc",
+        "string_utils.cc",
+        // Protos.
+        "perf_data.proto",
+        "perf_stat.proto",
+    ],
+    local_include_dirs: [
+        "compat/non_cros",
+        "androidbase",
+    ],
+    static_libs: [
+        "libbase",
+        "libsimpleperf_elf_read",
+    ],
+    whole_static_libs: [
+        "libcrypto",  // For MD5.
+    ],
+
+    export_include_dirs: [
+        ".",
+        "androidbase",
+    ],
+    proto: {
+        canonical_path_from_root: true,
+        export_proto_headers: true,
+    },
+
+    target: {
+        darwin: {
+            enabled: false,
+        },
+    },
+}
+
+cc_library_static {
+    name: "libquipper",
+    defaults: [ "libquipper_defaults" ],
+    host_supported: true,
+
+    proto: {
+        type: "lite",
+        canonical_path_from_root: false,
+    },
+    static_libs: [
+        "libprotobuf-cpp-lite",
+    ],
+}
+
+cc_library_static {
+    name: "libquipper-full",
+    defaults: [ "libquipper_defaults" ],
+    host_supported: true,
+
+    srcs: [
+        "conversion_utils.cc",
+    ],
+
+    proto: {
+        type: "full",
+    },
+    shared_libs: [
+        "libprotobuf-cpp-full",
+    ],
+}
+
+cc_defaults {
+    name: "quipper_test_defaults",
+    host_supported: true,
+    srcs: [
+        // Independent test infra.
+        "perf_test_files.cc",
+        "test_perf_data.cc",
+        "test_runner.cc",
+    ],
+    local_include_dirs: [
+        "compat/non_cros",
+    ],
+    cflags: [
+        "-Wno-ignored-qualifiers",
+        "-Wno-missing-field-initializers",
+        "-Wno-sign-compare",
+        "-Wno-unused",
+        "-Wno-unused-parameter",
+    ],
+    static_libs: [
+        "libsimpleperf_elf_read",
+    ],
+    target: {
+        darwin: {
+            enabled: false,
+        },
+        windows: {
+            enabled: false,
+        }
+    },
+}
+
+cc_defaults {
+    name: "quipper_android_test_defaults",
+    defaults: ["quipper_test_defaults"],
+    srcs: [
+        // Independent tests.
+        "address_mapper_test.cc",
+        "binary_data_utils_test.cc",
+        "buffer_reader_test.cc",
+        "buffer_writer_test.cc",
+        "file_reader_test.cc",
+        "perf_data_utils_test.cc",
+        "perf_option_parser_test.cc",
+        "perf_stat_parser_test.cc",
+        "run_command_test.cc",
+        "sample_info_reader_test.cc",
+        "scoped_temp_path_test.cc",
+    ],
+}
+
+cc_test {
+    name: "quipper_unit_tests",
+    defaults: [ "quipper_android_test_defaults" ],
+    host_supported: true,
+
+    static_libs: [
+        "libbase",
+        "liblog",
+        "libprotobuf-cpp-lite",
+        "libquipper",
+    ],
+}
+
+cc_test {
+    name: "quipper-full_unit_tests",
+    defaults: [ "quipper_android_test_defaults" ],
+    host_supported: true,
+
+    srcs: [
+        "test_utils.cc",
+
+        "conversion_utils_test.cc",
+        "perf_reader_test.cc",
+        "perf_serializer_test.cc",
+    ],
+
+    static_libs: [
+        "libquipper-full",
+        "libutils",
+    ],
+    shared_libs: [
+        "libbase",
+        "libprotobuf-cpp-full",
+    ],
+
+    target: {
+        // Required for LLVM in libsimpleperf_elf_read.
+        linux_glibc: {
+            host_ldlibs: [
+                "-lncurses",
+            ],
+        },
+    },
+}
+
+cc_test {
+    name: "quipper_libelf_test",
+    defaults: [ "quipper_test_defaults" ],
+    device_supported: false,
+    enabled: false,
+
+    srcs: [
+        "dso_test_utils.cc",
+        "test_utils.cc",
+
+        "dso_test.cc",
+        "perf_parser_test.cc",
+    ],
+
+    static_libs: [
+        "libcap",           // For cap_get_proc etc.
+        "libelf",           // For gelf.h, elf_version, ...
+        "libquipper-full",
+        "libutils",
+        "libz",             // For libelf.
+    ],
+    shared_libs: [
+        "libbase",
+        "libprotobuf-cpp-full",
+    ],
+
+    target: {
+        // Required for LLVM in libsimpleperf_elf_read.
+        linux_glibc: {
+            host_ldlibs: [
+                "-lncurses",
+            ],
+        },
+    },
+}
+

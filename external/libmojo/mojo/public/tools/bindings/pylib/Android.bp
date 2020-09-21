@@ -1,0 +1,12 @@
+python_library_host {
+    name: "mojom_bindings_pylib",
+    srcs: ["**/*.py"],
+    version: {
+        py2: {
+            enabled: true,
+        },
+        py3: {
+            enabled: false,
+        },
+    },
+}

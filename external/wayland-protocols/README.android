@@ -1,0 +1,53 @@
+These instructions are for the Android external/wayland-protcools repository.
+
+## Updating from upstream
+
+### Update the freedesktop.org/ directory
+
+  1. Checkout the upstream sources to a working directory if you haven't
+     already with
+     `git clone git://anongit.freedesktop.org/wayland/wayland-protocols`,
+     or otherwise pull down the latest changes if you have a checkout.
+  2. Sync to the desired release tag (`git tag -l` to view them)
+     `git checkout $TAG`
+  3. The freedesktop.org/ directory here should be a simple copy of this
+     checkout. A tool such as `meld` can be used to view and apply the
+     differences.
+     `meld freedesktop.org/ /path/to/freedesktop.org/wayland-protocols/`
+  4. Note that we add NOTICE, MODULE_LICENSE_MIT and METADATA files as part of
+     our policies around open source code. Leave these alone unless there is
+     a reason to change them.
+       * NOTICE should duplicate COPYING from upstream.
+       * MODULE_LICENSE_MIT should match the source code license.
+       * METADATA should indicate the version of the upstream source used, and
+         should be updated to match.
+
+### Update the chromium.org/ directory
+
+  1. Checkout Chromium sources if you haven't already with
+     `git clone https://chromium.googlesource.com/chromium/src.git`, or
+     otherwise pull down the latest changes. This is a large checkout
+     unfortunately, even though we only want a small subset of it.
+  2. Sync to the desired release tag, or just use master if you would like.
+  3. The chromium.org/ directory should ba a **PARTIAL** copy of
+     src/third_party/wayland-protocols from your checkout. In particular these
+     should match:
+       * chromium.org/unstable/ and src/third_party/wayland-protocols/unstable/
+       * chromium.org/LICENSE and src/third_party/wayland-protocols/LICENSE
+       * chromium.org/README.chromium and src/third_party/wayland-protocols/README.chromium
+     We **do not** need:
+       * src/third_party/wayland-protocols/include/ and
+         src/third_party/wayland-protocols/protocol both contain source code
+         generated from the protocol files, which is not needed here.
+       * src/third_party/wayland-protocols/src (if you have it) is itself a clone
+         of a version of the freedesktop.org upstream sources.
+       * src/third_party/wayland-protocols/OWNERS causes trouble with Android
+         Gerrit.
+       * src/third_party/wayland-protocols/BUILD.gn.
+  4. Note that we add NOTICE, MODULE_LICENSE_MIT and METADATA files as part of
+     our policies around open source code. Leave these alone unless there is
+     a reason to change them.
+       * NOTICE should duplicate LICENSE from upstream.
+       * MODULE_LICENSE_MIT should match the source code license.
+       * METADATA should indicate the version of the upstream source used, and
+         should be updated to match.

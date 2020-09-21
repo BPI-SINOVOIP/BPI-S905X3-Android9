@@ -1,0 +1,8 @@
+x86-alex  : chromeos2-row9-rack10-host1.cros  chromeos2-row9-rack10-host3.cros  chromeos2-row9-rack10-host5.cros
+lumpy     : chromeos2-row9-rack9-host9.cros   chromeos2-row9-rack9-host11.cros  chromeos2-row9-rack9-host13.cros
+parrot    : chromeos2-row9-rack9-host15.cros  chromeos2-row9-rack9-host17.cros  chromeos2-row9-rack9-host19.cros
+daisy     : chromeos2-row9-rack9-host3.cros   chromeos2-row9-rack9-host5.cros   chromeos2-row9-rack9-host7.cros
+peach_pit : chromeos2-row9-rack10-host13.cros chromeos2-row9-rack10-host15.cros chromeos2-row9-rack10-host17.cros
+peppy     : chromeos2-row9-rack10-host19.cros chromeos2-row9-rack10-host21.cros chromeos2-row9-rack9-host1.cros
+squawks   : chromeos2-row9-rack10-host7.cros  chromeos2-row9-rack10-host9.cros  chromeos2-row9-rack10-host11.cros
+elm       : chromeos2-row9-rack8-host19.cros  chromeos2-row9-rack8-host21.cros

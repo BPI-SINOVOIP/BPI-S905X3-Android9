@@ -1,0 +1,20 @@
+name: "capstone"
+description:
+    "Capstone is a disassembly framework with the target of becoming the "
+    "ultimate disasm engine for binary analysis and reversing in the security "
+    "community. "
+    ""
+
+third_party {
+  url {
+    type: HOMEPAGE
+    value: "https://github.com/aquynh/capstone"
+  }
+  url {
+    type: GIT
+    value: "https://github.com/aquynh/capstone"
+  }
+  version: "3.0.5-rc3"
+  last_upgrade_date { year: 2017 month: 8 day: 25 }
+  license_type: NOTICE
+}

@@ -1,0 +1,30 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "mruthven"
+NAME = "firmware_ClearTPMOwnerAndReset"
+PURPOSE = "Verify normal boot after clearing the tpm owner and rebooting the ec"
+TIME = "SHORT"
+TEST_TYPE = "server"
+DEPENDENCIES = "servo"
+
+DOC = """
+This test verifies the device doesn't get into a bad state when the EC is reset
+after the tpm owner has been cleared.
+"""
+
+from autotest_lib.server import utils
+
+args_dict = utils.args_to_dict(args)
+servo_args = hosts.CrosHost.get_servo_arguments(args_dict)
+
+iterations = int(args_dict.get("iterations", 1))
+
+def run(machine):
+    host = hosts.create_host(machine, servo_args=servo_args)
+
+    job.run_test("firmware_ClearTPMOwnerAndReset", host=host, cmdline_args=args,
+                 iterations=iterations)
+
+parallel_simple(run, machines)

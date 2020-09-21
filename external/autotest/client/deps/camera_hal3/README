@@ -1,0 +1,6 @@
+# Copyright (c) 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+This deps installs the binary arc_camera3_test into the target. Tests that depend
+on arc_camera3_test should add this as a dep in the setup.

@@ -1,0 +1,23 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'sadmac'
+NAME = 'brillo_ADBFileTransfer.1000iters'
+TIME = 'LENGTHY'
+TEST_CATEGORY = 'Functional'
+TEST_TYPE = 'Server'
+ATTRIBUTES = 'suite:brillo-pts'
+
+DOC = """
+Tests whether ADB can handle large/long file transfers reliably
+in quick succession.
+"""
+
+def run(machine):
+    job.run_test('brillo_ADBFileTransfer',
+                 tag=NAME.split('.', 1)[1],
+                 host=hosts.create_host(machine),
+                 iterations=1000)
+
+parallel_simple(run, machines)

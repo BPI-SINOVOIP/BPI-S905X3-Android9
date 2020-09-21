@@ -1,0 +1,45 @@
+#!/bin/bash
+set -e -o pipefail
+
+# This script builds the go cross compilers for ChromeOS targets.
+#
+# Usage: build_go
+#
+# It assumes that the "x86_64-cros-linux-gnu" toolchain is already installed.
+# It assumes that the "i686-pc-linux-gnu" toolchain is already installed.
+# It assumes that the "armv7a-cros-linux-gnueabi" toolchain is already installed.
+
+if [[ ! -e "make.bash" && -e "src/make.bash" ]]
+then
+	cd src
+fi
+
+# Build the Go toolchain for amd64 targets.
+GOOS="linux" GOARCH="amd64" CGO_ENABLED="1" \
+	CC_FOR_TARGET="x86_64-cros-linux-gnu-gcc" \
+	CXX_FOR_TARGET="x86_64-cros-linux-gnu-g++" \
+	./make.bash --no-clean
+GOOS="linux" GOARCH="amd64" CGO_ENABLED="1" \
+	CC="x86_64-cros-linux-gnu-gcc" \
+	CXX="x86_64-cros-linux-gnu-g++" \
+	../bin/go install -v -buildmode=pie std
+
+# Build the Go toolchain for 386 targets.
+GOOS="linux" GOARCH="386" CGO_ENABLED="1" \
+	CC_FOR_TARGET="i686-pc-linux-gnu-gcc" \
+	CXX_FOR_TARGET="i686-pc-linux-gnu-g++" \
+	./make.bash --no-clean
+GOOS="linux" GOARCH="386" CGO_ENABLED="1" \
+	CC="i686-pc-linux-gnu-gcc" \
+	CXX="i686-pc-linux-gnu-g++" \
+	../bin/go install -v -buildmode=pie std
+
+# Build the Go toolchain for arm targets.
+GOOS="linux" GOARCH="arm" CGO_ENABLED="1" \
+	CC_FOR_TARGET="armv7a-cros-linux-gnueabi-gcc" \
+	CXX_FOR_TARGET="armv7a-cros-linux-gnueabi-g++" \
+	./make.bash --no-clean
+GOOS="linux" GOARCH="arm" CGO_ENABLED="1" \
+	CC="armv7a-cros-linux-gnueabi-gcc" \
+	CXX="armv7a-cros-linux-gnueabi-g++" \
+	../bin/go install -v -buildmode=pie std

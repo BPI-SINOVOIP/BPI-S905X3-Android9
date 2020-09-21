@@ -1,0 +1,18 @@
+URL: https://github.com/googlei18n/noto-fonts
+Version: Various
+License: OFL 1.1
+License File: NOTICE
+
+Description:
+Noto fonts, for supporting several languages and scripts.
+
+Local Modifications:
+This directory tracks the upstream result of running 'make android',
+which compresses the unhinted fonts (and in case of Malayalam and
+Tamil UI fonts, scales the fonts down by 90%). It does not include any
+of the tools.
+
+We also include two subsetted copies of NotoSansSymbols, which are
+built into different font profiles.
+
+Not all the files are included in the Android build.

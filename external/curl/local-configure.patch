@@ -1,0 +1,92 @@
+diff --git a/lib/curl_config.h b/lib/curl_config.h
+index f9aef69e2..f5ba92735 100644
+--- a/lib/curl_config.h
++++ b/lib/curl_config.h
+@@ -143,7 +143,10 @@
+ /* #undef HAVE_BUILTIN_AVAILABLE */
+ 
+ /* Define to 1 if you have the clock_gettime function and monotonic timer. */
++#if !defined(__APPLE__)
++/* CLOCK_MONOTONIC is not defined in mac when building for the host. */
+ #define HAVE_CLOCK_GETTIME_MONOTONIC 1
++#endif
+ 
+ /* Define to 1 if you have the closesocket function. */
+ /* #undef HAVE_CLOSESOCKET */
+@@ -454,10 +457,14 @@
+ #define HAVE_MEMORY_H 1
+ 
+ /* Define to 1 if you have the memrchr function or macro. */
++#if !defined(__APPLE__)
+ #define HAVE_MEMRCHR 1
++#endif
+ 
+ /* Define to 1 if you have the MSG_NOSIGNAL flag. */
++#if !defined(__APPLE__)
+ #define HAVE_MSG_NOSIGNAL 1
++#endif
+ 
+ /* Define to 1 if you have the <netdb.h> header file. */
+ #define HAVE_NETDB_H 1
+@@ -808,9 +815,6 @@
+ /* Define absolute filename for winbind's ntlm_auth helper. */
+ /* #undef NTLM_WB_FILE */
+ 
+-/* cpu-machine-OS */
+-#define OS "arm-unknown-linux-androideabi"
+-
+ /* Name of package */
+ #define PACKAGE "curl"
+ 
+@@ -848,7 +852,7 @@
+ #define RECV_TYPE_ARG4 int
+ 
+ /* Define to the function return type for recv. */
+-#define RECV_TYPE_RETV int
++#define RECV_TYPE_RETV ssize_t
+ 
+ /* Define as the return type of signal handlers (`int' or `void'). */
+ #define RETSIGTYPE void
+@@ -866,7 +870,7 @@
+ #define SELECT_TYPE_ARG5 struct timeval *
+ 
+ /* Define to the function return type for select. */
+-#define SELECT_TYPE_RETV int
++#define SELECT_TYPE_RETV ssize_t
+ 
+ /* Define to the type qualifier of arg 2 for send. */
+ #define SEND_QUAL_ARG2 const
+@@ -884,7 +888,7 @@
+ #define SEND_TYPE_ARG4 int
+ 
+ /* Define to the function return type for send. */
+-#define SEND_TYPE_RETV int
++#define SEND_TYPE_RETV ssize_t
+ 
+ /* The size of `curl_off_t', as computed by sizeof. */
+ #define SIZEOF_CURL_OFF_T 8
+@@ -892,24 +896,9 @@
+ /* The size of `int', as computed by sizeof. */
+ #define SIZEOF_INT 4
+ 
+-/* The size of `long', as computed by sizeof. */
+-#define SIZEOF_LONG 4
+-
+-/* The size of `long long', as computed by sizeof. */
+-/* #undef SIZEOF_LONG_LONG */
+-
+-/* The size of `off_t', as computed by sizeof. */
+-#define SIZEOF_OFF_T 8
+-
+ /* The size of `short', as computed by sizeof. */
+ #define SIZEOF_SHORT 2
+ 
+-/* The size of `size_t', as computed by sizeof. */
+-#define SIZEOF_SIZE_T 4
+-
+-/* The size of `time_t', as computed by sizeof. */
+-#define SIZEOF_TIME_T 4
+-
+ /* Define to 1 if you have the ANSI C header files. */
+ #define STDC_HEADERS 1
+ 

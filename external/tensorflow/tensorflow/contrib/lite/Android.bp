@@ -1,0 +1,84 @@
+// Copyright (C) 2017 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+cc_defaults {
+    name: "tflite_defaults",
+    header_libs: [
+        "tensorflow_headers",
+    ],
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wextra",
+        "-Wno-unused-parameter",
+    ],
+}
+
+cc_library_static {
+    name: "libtflite_context",
+    defaults: ["tflite_defaults"],
+    srcs: ["context.c"],
+    cflags: [
+        "-Wno-typedef-redefinition",
+    ],
+}
+
+cc_library_static {
+    name: "libtflite_framework",
+    defaults: ["tflite_defaults"],
+    rtti: true,
+    srcs: [
+        "allocation.cc",
+        "arena_planner.cc",
+        "error_reporter.cc",
+	"graph_info.cc",
+        "interpreter.cc",
+        "model.cc",
+        "nnapi_delegate.cc",
+        "optional_debug_tools.cc",
+        "simple_memory_arena.cc",
+        "string_util.cc",
+        "kernels/gemm_support.cc",
+    ],
+    header_libs: [
+        "flatbuffer_headers",
+        "gemmlowp_headers",
+    ],
+    cflags: [
+        "-Wno-extern-c-compat",
+        "-Wno-mismatched-tags",
+        "-Wno-sign-compare",
+        "-Wno-unused-lambda-capture",
+    ],
+}
+
+cc_library_shared {
+    name: "libtflite",
+    defaults: ["tflite_defaults"],
+    shared_libs: [
+        "libtextclassifier_hash",
+    ],
+    whole_static_libs: [
+        "libtflite_context",
+        "libtflite_framework",
+        "libtflite_kernels",
+    ],
+    stl: "libc++_static",
+}
+
+build = [
+    "tflite_static.bp",
+]
+
+subdirs = ["kernels"]

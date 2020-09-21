@@ -1,0 +1,25 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'scunningham'
+NAME = 'policy_EditBookmarksEnabled.true_enable'
+# TODO: enable this test once crbug.com/739500 is fixed
+# ATTRIBUTES = 'suite:bvt-perbuild, suite:policy'
+TIME = 'SHORT'
+TEST_CATEGORY = 'General'
+TEST_CLASS = 'enterprise'
+TEST_TYPE = 'client'
+
+DOC = '''
+Verify effects of EditBookmarksEnabled policy on client behavior & appearance.
+
+This test case verifies the behavior and appearance of Chrome OS when the
+EditBookmarksEnabled user policy is set to true.
+
+The test case shall pass if the Manage Bookmarks page allows the user to add a
+new bookmark. It shall fail if that behavior is not enforced.
+
+'''
+
+job.run_test('policy_EditBookmarksEnabled', case='True_Enable')

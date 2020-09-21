@@ -1,0 +1,17 @@
+Some changes to kselftest are required to compile it for Android. Those which
+have been made but not yet submitted upstream and merged back to this
+repository are kept here to make future merges easier.
+
+In cases where a commit touched both kselftest files and Android-specific
+files, the full commit is reproduced here. In rebasing these commits during a
+merge only the changes in the kselftest files should be re-applied.
+
+Upstream Merge Procedure:
+- Do a git merge of the upstream tag with the "ours" policy, dropping all
+  upstream changes. Do not commit yet.
+- Delete tools/testing/selftests and replace it with a copy from the upstream
+  kernel at the same tag as used above.
+- Apply the patches from this directory, making changes as required.
+- Test on all supported kernel versions, ensuring that any tests currently
+  enabled in VTS do not generate new failures.
+- Commit the merge.

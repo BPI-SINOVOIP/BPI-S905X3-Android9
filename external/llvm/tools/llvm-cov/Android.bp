@@ -1,0 +1,19 @@
+//===---------------------------------------------------------------===
+// llvm-cov command line tool
+//===---------------------------------------------------------------===
+
+cc_binary_host {
+    name: "llvm-cov",
+    defaults: ["llvm-defaults"],
+    srcs: ["*.cpp"],
+    static_libs: [
+        "libLLVMObject",
+        "libLLVMProfileDataCoverage",
+        "libLLVMProfileData",
+        "libLLVMMC",
+        "libLLVMMCParser",
+        "libLLVMBitReader",
+        "libLLVMCore",
+        "libLLVMSupport",
+    ],
+}

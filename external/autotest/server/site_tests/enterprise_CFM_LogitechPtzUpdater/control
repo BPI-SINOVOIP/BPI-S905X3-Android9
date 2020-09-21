@@ -1,0 +1,30 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+
+AUTHOR = "frankhu@chromium.org"
+NAME = "enterprise_CFM_LogitechPtzUpdater"
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "enterprise"
+ATTRIBUTES = "suite:bluestreak"
+TEST_TYPE = "server"
+JOB_RETRIES = 3
+DEPENDENCIES = "ptzpro2"
+
+DOC = """
+This test first flash the older version Logitech Ptz Pro 2 firmware to the
+Camera and then power cycle the corresponding usb port. This should triger the
+udev rule to invoke the Logitech FW updater to flash the latest FW to Ptz Pro 2.
+This is validated by running the updater again and checking the log.
+"""
+
+args_dict = utils.args_to_dict(args)
+
+def run_test(machine):
+    host = hosts.create_host(machine, servo_args=None)
+    job.run_test(NAME, host=host)
+
+parallel_simple(run_test, machines)

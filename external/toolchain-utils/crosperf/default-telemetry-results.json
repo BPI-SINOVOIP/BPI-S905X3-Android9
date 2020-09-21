@@ -1,0 +1,174 @@
+{
+  "peacekeeper.html": [
+    "Total__Score", 
+    "workerContrast01__Score", 
+    "workerContrast02__Score"
+  ], 
+  "page_cycler_v2.intl_hi_ru": [
+    "cold_times__page_load_time", 
+    "warm_times__page_load_time",
+    "pcv1-warm@@timeToOnload_avg__summary",
+    "pcv1-cold@@timeToOnload_avg__summary"
+  ], 
+  "smoothness.tough_webgl_cases": [
+    "percentage_smooth__percentage_smooth", 
+    "percentage_smooth__summary"
+  ], 
+  "page_cycler_v2.intl_es_fr_pt-BR": [
+    "cold_times__page_load_time", 
+    "warm_times__page_load_time",
+    "pcv1-warm@@timeToOnload_avg__summary",
+    "pcv1-cold@@timeToOnload_avg__summary"
+  ], 
+  "dromaeo.jslibeventjquery": [
+    "jslib_event_jquery__jslib_event_jquery"
+  ], 
+  "browsermark": [
+    "Score__Score"
+  ], 
+  "smoothness.top_25": [
+    "frame_times__frame_times", 
+    "mean_frame_time__mean_frame_time"
+  ], 
+  "page_cycler_v2.morejs": [
+    "warm_times__page_load_time", 
+    "cold_times__page_load_time",
+    "pcv1-warm@@timeToOnload_avg__summary",
+    "pcv1-cold@@timeToOnload_avg__summary"
+  ], 
+  "page_cycler_v2.dhtml": [
+    "warm_times__page_load_time", 
+    "cold_times__page_load_time",
+    "pcv1-warm@@timeToOnload_avg__summary",
+    "pcv1-cold@@timeToOnload_avg__summary"
+  ], 
+  "page_cycler_v2.bloat": [
+    "warm_times__page_load_time", 
+    "cold_times__page_load_time",
+    "pcv1-warm@@timeToOnload_avg__summary",
+    "pcv1-cold@@timeToOnload_avg__summary"
+  ], 
+  "dromaeo.jslibstyleprototype": [
+    "jslib_style_prototype__jslib_style_prototype"
+  ], 
+  "dromaeo.jslibstylejquery": [
+    "jslib_style_jquery__jslib_style_jquery"
+  ], 
+  "dromaeo.jslibeventprototype": [
+    "jslib_event_prototype__jslib_event_prototype"
+  ], 
+  "page_cycler_v2.moz": [
+    "warm_times__page_load_time", 
+    "cold_times__page_load_time",
+    "pcv1-warm@@timeToOnload_avg__summary",
+    "pcv1-cold@@timeToOnload_avg__summary"
+  ], 
+  "speedometer": [
+    "Total__Total", 
+    "Total__summary"
+  ], 
+  "octane": [
+    "Total__Score"
+  ], 
+  "jsgamebench": [
+    "Score__Score"
+  ], 
+  "page_cycler_v2.indexed_db.basic_insert": [
+    "warm_times__page_load_time", 
+    "cold_times__page_load_time",
+    "pcv1-warm@@timeToOnload_avg__summary",
+    "pcv1-cold@@timeToOnload_avg__summary"
+  ], 
+  "spaceport": [
+    "Score__Score"
+  ], 
+  "dromaeo.jslibtraverseprototype": [
+    "jslib_traverse_prototype__jslib_traverse_prototype"
+  ], 
+  "page_cycler_v2.netsim.top_10": [
+    "cold_times__page_load_time", 
+    "warm_times__page_load_time",
+    "pcv1-warm@@timeToOnload_avg__summary",
+    "pcv1-cold@@timeToOnload_avg__summary"
+  ], 
+  "robohornet_pro": [
+    "Total__Total",
+    "Total__summary"
+  ], 
+  "dromaeo.domcoreattr": [
+    "dom_attr__dom_attr", 
+    "dom__summary"
+  ], 
+  "dromaeo.jslibattrprototype": [
+    "jslib_attr_prototype__jslib_attr_prototype"
+  ], 
+  "sunspider": [
+    "Total__Total",
+    "Total__summary"
+  ], 
+  "dromaeo.jslibattrjquery": [
+    "jslib_attr_jquery__jslib_attr_jquery"
+  ], 
+  "page_cycler_v2.typical_25": [
+    "warm_times-page_load_time__warm_times-page_load_time", 
+    "cold_times-page_load_time__cold_times-page_load_time",
+    "pcv1-warm@@timeToOnload_avg__summary",
+    "pcv1-cold@@timeToOnload_avg__summary"
+  ], 
+  "dromaeo.domcoretraverse": [
+    "dom_traverse__dom_traverse",
+    "dom__summary"
+  ], 
+  "dromaeo.domcoremodify": [
+    "dom_modify__dom_modify", 
+    "dom__summary"
+  ], 
+  "page_cycler_v2.intl_ar_fa_he": [
+    "warm_times__page_load_time", 
+    "cold_times__page_load_time",
+    "pcv1-warm@@timeToOnload_avg__summary",
+    "pcv1-cold@@timeToOnload_avg__summary"
+  ], 
+  "page_cycler_v2.intl_ja_zh": [
+    "warm_times__page_load_time", 
+    "cold_times__page_load_time",
+    "pcv1-warm@@timeToOnload_avg__summary",
+    "pcv1-cold@@timeToOnload_avg__summary"
+  ], 
+  "graphics_WebGLAquarium": [
+    "avg_fps_1000_fishes",
+    "avg_fps_1000_fishes__summary"
+  ], 
+  "page_cycler_v2.intl_ko_th_vi": [
+    "warm_times__page_load_time", 
+    "cold_times__page_load_time",
+    "pcv1-warm@@timeToOnload_avg__summary",
+    "pcv1-cold@@timeToOnload_avg__summary"
+  ], 
+  "canvasmark": [
+    "Score__Score"
+  ], 
+  "dromaeo.domcorequery": [
+    "dom_query__dom_query",
+    "dom__summary"
+  ], 
+  "dromaeo.jslibtraversejquery": [
+    "jslib_traverse_jquery__jslib_traverse_jquery"
+  ], 
+  "dromaeo.jslibmodifyprototype": [
+    "jslib_modify_prototype__jslib_modify_prototype"
+  ], 
+  "page_cycler_v2.tough_layout_cases": [
+    "warm_times__page_load_time", 
+    "cold_times__page_load_time",
+    "pcv1-warm@@timeToOnload_avg__summary",
+    "pcv1-cold@@timeToOnload_avg__summary"
+  ], 
+  "kraken": [
+    "Total__Total", 
+    "Total__summary"
+  ], 
+  "dromaeo.jslibmodifyjquery": [
+    "jslib_modify_jquery__jslib_modify_jquery"
+  ]
+}

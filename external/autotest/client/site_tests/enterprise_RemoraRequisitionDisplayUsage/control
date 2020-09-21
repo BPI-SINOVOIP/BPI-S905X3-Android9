@@ -1,0 +1,22 @@
+# Copyright 2018 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "felixe"
+NAME = "enterprise_RemoraRequisitionDisplayUsage"
+TIME = "SHORT"
+TEST_CATEGORY = "Enterprise"
+TEST_CLASS = "enterprise"
+TEST_TYPE = "client"
+DEPENDENCIES='mimo'
+ATTRIBUTES="suite:bluestreak"
+
+DOC = """
+This test verifies that the Chrome enrollment window is shown on the correct
+display in the Remora case.
+
+When there's a Mimo display present during OOBE it should be used to display
+the OOBE window.
+"""
+
+job.run_test('enterprise_RemoraRequisitionDisplayUsage')

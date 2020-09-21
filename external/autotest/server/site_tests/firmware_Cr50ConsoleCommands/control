@@ -1,0 +1,29 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+
+AUTHOR = "mruthven"
+NAME = "firmware_Cr50ConsoleCommands"
+PURPOSE = "Verify Cr50 console output"
+ATTRIBUTES = "suite:cr50_stress_experimental"
+TIME = "SHORT"
+TEST_TYPE = "server"
+DEPENDENCIES = "servo"
+
+DOC = """
+This test verifies only expected console commands are in the Cr50 image and
+that gpiocfg and pinmux have the right settings.
+"""
+
+args_dict = utils.args_to_dict(args)
+servo_args = hosts.CrosHost.get_servo_arguments(args_dict)
+
+def run(machine):
+    host = hosts.create_host(machine, servo_args=servo_args)
+
+    job.run_test("firmware_Cr50ConsoleCommands", host=host,
+                 cmdline_args=args)
+
+parallel_simple(run, machines)

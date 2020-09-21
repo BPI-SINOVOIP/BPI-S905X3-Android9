@@ -1,0 +1,31 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+[Suite_Environment]
+
+# Please indicate the android source type: internal or aosp
+
+android_type = aosp
+
+# This is basically the root of your android sources.
+
+android_home = /work/android/aosp
+
+# This is the directory where you want to put the logs and results to.
+# Please create a directory first before specify it.
+
+bench_suite_dir = /work/android/bench_suite_dir
+
+# Crosperf is a toolchain utility to help generating html report of the test.
+# Please specify the path to it here.
+
+toolchain_utils = /chromium_source/src/third_party/toolchain-utils/crosperf
+
+# Product_combo and product is the type of image you want to build.
+# The product_combo list can be found with 'lunch' instruction.
+# The product is usually the middle part of the combo name, also can be found in
+# $ANDROID_HOME/out/target/product/
+
+product_combo = aosp_bullhead-userdebug
+product = bullhead

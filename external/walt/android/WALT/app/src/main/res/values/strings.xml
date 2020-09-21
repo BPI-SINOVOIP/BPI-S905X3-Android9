@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">WALT</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_crash_log">Crash Log</string>
+    <string name="protocol_version_mismatch">WALT reports protocol version %1$s, which is not
+        supported. Please program WALT to a firmware with protocol version %2$s. To do this
+        from the app, choose "Update WALT Firmware" from the "Diagnostics" menu.</string>
+    <string name="audio_mode">Audio Testing Mode</string>
+    <string name="screen_response_mode">Screen Testing Mode</string>
+    <string name="about_description">WALT is designed to measure the latency of physical sensors
+        and outputs on phones and computers. It can currently perform the following measurements:
+        tap latency, drag latency (scroll), screen draw latency, audio output/microphone
+        latencies, and MIDI input/output latencies.
+    </string>
+    <string name="disclaimer">DISCLAIMER: This is not an official Google product.</string>
+    <string name="more_info">A WALT device is required to run the latency tests. For more information, visit github.com/google/walt</string>
+    <string name="privacy_policy">Privacy policy:\ngithub.com/google/walt/blob/master/docs/PrivacyPolicy.md</string>
+    <string name="preference_screen_blinks" translatable="false">pref_screen_blinks</string>
+    <string name="preference_audio_in_reps" translatable="false">pref_audio_in_reps</string>
+    <string name="preference_audio_in_threshold" translatable="false">pref_audio_in_threshold</string>
+    <string name="preference_audio_out_reps" translatable="false">pref_audio_out_reps</string>
+    <string name="preference_midi_in_reps" translatable="false">pref_midi_in_reps</string>
+    <string name="preference_midi_out_reps" translatable="false">pref_midi_out_reps</string>
+    <string name="preference_auto_increase_brightness">auto_increase_brightness</string>
+    <string name="preference_show_tap_histogram">pref_show_tap_histogram</string>
+    <string name="preference_show_blink_histogram">pref_show_blink_histogram</string>
+    <string name="preference_systrace">pref_systrace</string>
+    <string name="preference_screen_fullscreen">pref_screen_fullscreen</string>
+    <string name="preference_log_url">pref_log_url</string>
+    <string name="preference_auto_upload_log">pref_auto_upload_log</string>
+    <string-array name="audio_mode_array">
+        <item>Continuous Playback Latency</item>
+        <item>Continuous Recording Latency</item>
+        <item>Cold Playback Latency</item>
+        <item>Cold Recording Latency</item>
+        <item>Display Recorded Waveform</item>
+    </string-array>
+    <string-array name="screen_response_mode_array">
+        <item>Blink Latency</item>
+        <item>Brightness Curve</item>
+        <item>Fast Path Graphics</item>
+    </string-array>
+
+</resources>

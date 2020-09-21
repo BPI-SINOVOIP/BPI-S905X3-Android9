@@ -1,0 +1,23 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "Chrome OS Team"
+NAME = "dummy_PassServer.ssp"
+PURPOSE = "Demonstrate success methods of autotests."
+CRITERIA = "This test will always succeed when running in a container."
+ATTRIBUTES = "suite:push_to_prod, suite:dummy_server"
+TIME = "SHORT"
+TEST_CATEGORY = "General"
+TEST_CLASS = "dummy"
+TEST_TYPE = "server"
+
+DOC = """
+This is a helper test that will succeed and force to use server-side packaging.
+"""
+
+def run(machine):
+    job.run_test('dummy_PassServer', host=hosts.create_host(machine),
+                 force_ssp=True)
+
+parallel_simple(run, machines)

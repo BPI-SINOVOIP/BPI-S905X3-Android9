@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Invoke the Go cross compiler for panther.
+# Uses ../go_target to add PIE flags.
+#
+# This is just an example for an amd64 board.
+
+GOOS="linux" GOARCH="amd64" CGO_ENABLED="1" \
+	CC="x86_64-cros-linux-gnu-gcc" \
+	CXX="x86_64-cros-linux-gnu-g++" \
+	exec go_target "$@"

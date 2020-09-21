@@ -1,0 +1,5 @@
+cc_library_static {
+    name: "libclangParse",
+    defaults: ["clang-defaults"],
+    srcs: ["*.cpp"],
+}

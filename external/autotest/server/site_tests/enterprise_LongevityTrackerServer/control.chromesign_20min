@@ -1,0 +1,43 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "krishnargv"
+NAME = "enterprise_LongevityTrackerServer.chromesign_20min"
+PURPOSE = "Tracks Chrome OS performance over a 20min period."
+TIME = "LONG"
+TEST_CATEGORY = "Performance"
+TEST_CLASS = "performance"
+TEST_TYPE = "server"
+ATTRIBUTES = "suite:longevity"
+DEPENDENCIES = "chromesign"
+JOB_RETRIES = 3
+
+DOC = """
+This test enrolls ChromeOS device into kiosk mode and captures device resource
+data including cpu and memory usage, and temperature data after the kiosk app
+auto launches. This test runs for 20 minutes, the perf metrics are captured every 60 seconds.
+"""
+
+
+def run_test(machine):
+    host = hosts.create_host(machine)
+    # Kiosk app attributes include app name, extension id and extension page
+    # See README.txt for perf_params format
+    perf_params = {
+        'perf_capture_iterations': 1,
+        'perf_capture_duration': 1200,
+        'sample_interval': 60,
+        'metric_interval': 300,
+        'test_type': 'single_sample',
+        'kiosk_app_attributes': ('chromesign:'
+                            'odjaaghiehpobimgdjjfofmablbaleem:'
+                            'viewer.html')
+    }
+
+    job.run_test('enterprise_LongevityTrackerServer',
+            host=host,
+            perf_params=perf_params,
+            tag='chromesign_20min')
+
+parallel_simple(run_test, machines)

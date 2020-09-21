@@ -1,0 +1,20 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "ejcaruso@chromium.org"
+NAME = "security_DeviceJail_Detach"
+PURPOSE = "Verify that the device jail module is functioning."
+TIME = "SHORT"
+ATTRIBUTES = "suite:security"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "security"
+TEST_TYPE = "client"
+DOC = """
+This test is not applicable if the control devices for device jail are
+not present. This means the kernel must be 3.14 or later.
+The test will fail if we are given a detached device but the kernel
+drivers are still connected while it is open.
+"""
+
+job.run_test('security_DeviceJail_Detach')

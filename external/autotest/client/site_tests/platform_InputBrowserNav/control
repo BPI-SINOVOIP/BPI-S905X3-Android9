@@ -1,0 +1,20 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "rjahagir"
+NAME = "platform_InputBrowserNav"
+PURPOSE = """Verify that functional keys F1, F2, F3 can navigate back,
+forward, and refresh browser pages."""
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "platform"
+TEST_TYPE = "client"
+#ATTRIBUTES = "suite:bvt-perbuild"
+
+DOC = """
+Go forward, backward, and refresh webpage in browser using keyboard shortcut.
+The test will fail if the URL on the tab is incorrect.
+"""
+
+job.run_test("platform_InputBrowserNav")

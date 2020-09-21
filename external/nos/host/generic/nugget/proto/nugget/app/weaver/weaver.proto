@@ -1,0 +1,81 @@
+/*
+ * Copyright (C) 2017 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+syntax = "proto3";
+
+package nugget.app.weaver;
+
+import "nugget/protobuf/options.proto";
+
+// Weaver is the app used to implement Android's Weaver HAL.
+//
+// The documentation for the HAL applies to this implementation.
+service Weaver {
+  option (nugget.protobuf.app_id) = "WEAVER";
+  option (nugget.protobuf.app_name) = "Weaver";
+  option (nugget.protobuf.app_version) = 1;
+  option (nugget.protobuf.request_buffer_size) = 64;
+  option (nugget.protobuf.response_buffer_size) = 64;
+
+  // RPCs for the Weaver HAL
+  rpc GetConfig (GetConfigRequest) returns (GetConfigResponse);
+  rpc Write (WriteRequest) returns (WriteResponse);
+  rpc Read (ReadRequest) returns (ReadResponse);
+
+  // To support credential FRP, the key should remain to allow the credential to
+  // be verified but the secret value is not required so it is safest to zero it
+  // out so it doesn't leak.
+  rpc EraseValue (EraseValueRequest) returns (EraseValueResponse);
+}
+
+// GetConfig
+message GetConfigRequest {}
+message GetConfigResponse {
+  uint32 number_of_slots = 1;
+  uint32 key_size = 2;
+  uint32 value_size = 3;
+}
+
+// Write
+message WriteRequest {
+  uint32 slot = 1;
+  bytes key = 2;
+  bytes value = 3;
+}
+message WriteResponse {}
+
+// Read
+message ReadRequest {
+  uint32 slot = 1;
+  bytes key = 2;
+}
+message ReadResponse {
+  enum Error {
+    NONE = 0;
+    WRONG_KEY = 1;
+    THROTTLE = 2;
+  }
+
+  Error error = 1;
+  uint32 throttle_msec = 2;
+  bytes value = 3;
+}
+
+// EraseValue
+message EraseValueRequest {
+  uint32 slot = 1;
+}
+message EraseValueResponse {}

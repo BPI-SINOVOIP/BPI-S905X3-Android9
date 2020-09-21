@@ -1,0 +1,18 @@
+name: "nos-tests"
+description:
+    "nos-tests contains tests directed at Citadel.  Tests run "
+    "over the transport implemented in platform/external/libnos."
+
+third_party {
+  url {
+    type: HOMEPAGE
+    value: "https://nugget-os.googlesource.com/test/system-test-harness"
+  }
+  url {
+    type: GIT
+    value: "https://nugget-os.googlesource.com/test/system-test-harness"
+  }
+  version: "31bf2ad576d4da371eaa7213662b236e4d266709"
+  last_upgrade_date { year: 2017 month: 10 day: 30 }
+  license_type: NOTICE
+}

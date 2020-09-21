@@ -1,0 +1,12 @@
+URL: https://github.com/mockito/mockito
+Version: v2.16.0
+License: Apache 2.0
+Description: Mockito is a mocking framework with a clean and simple API.
+
+For Android, we need to combine Mockito with a MockMaker provided by the
+Dexmaker module.
+
+The source can be updated using the update_source.sh script.
+
+Local Modifications:
+        None

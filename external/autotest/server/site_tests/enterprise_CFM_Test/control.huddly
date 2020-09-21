@@ -1,0 +1,252 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+
+AUTHOR = "mzhuo@chromium.org"
+NAME = "enterprise_CFM_Test.huddly"
+TIME = "LONG"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "enterprise"
+TEST_TYPE = "server"
+DEPENDENCIES = ""
+JOB_RETRIES = 1
+
+DOC = """
+This test verifies peripherals for Bluestreak.
+Tests and verifications can be selected in control file.
+action_list defines the list of all available tests, which are keys for dict
+action_list, value for the key defines how many times this test will be run
+in one loop.
+
+verification_list defineds the list of all available verifications,
+which are keys for dict verification_list. True means this verification specified
+by this key will be performed.
+
+Testing flow can be set in control file.
+test_flow_control defines:
+1. runtestonly, if True, no cleartmp and enrollment are done before test,
+                and no cleartpm is done after test.  Before running test on CfM
+                we assume the CfM is enrolled,
+                else, cleartpm and enrollment will be done before test,
+                and cleartmp is done afterwards.
+2. setupcleanup, (TODO)if True, before exit from test cleanup is done,
+                 else, no cleanup before exit.
+                 This provides way to keep setup stays in original status when test
+                 is aborted.
+3. abort_on_failure: if True, test is aborted if test fails or verification fails,
+                     else, test continutes.
+4. random_mode: if True, sequence of multiple test in one loop is randomized everytime.
+                else, sequence is same for all loops.
+5. recovery_on_fatal_failure: if True, reboot CfM when fatal failure occurs,
+                              else, no reboot.
+6. skipcfmc: All working CfM should have speaker, camera connected.
+             For Bluestreak in addition to speaker/camera, Mimo should be connected.
+             If True script checks the above statement before starting test,
+             else, no check will be done before test starts.
+7. debug: If True, script prints more informations, for example, cli output, name of
+          test and verification. This is intend to give user more output for information
+          purpose. This is different from logging.debug which is turned on by "--debug"
+          when  kickstarting script,
+          else, less output.
+8. report: If True, after each loop script prints out summary for test and verification.
+
+Dict error_key_words provides the list of error logs which script checks and verify.
+If script finds any of them in the log, script claims test failure. This list can be
+updated on the fly. Dict has keys, the value for each key is the list which contains
+the list of error log script looks for when scanning log files.
+
+How to run it:
+1. Run cros_sdk
+2. Go to ~/chromiumos/src/third_party/autotest/files/server/site_tests/enterprise_CFM_Test
+3. Edit control file. Replace meeting_code working for CfM to be tested.
+4. Update test_config, action_config, verification_config, test_flow_control ane etc properly.
+5. Issue command line to kickstart autotest:
+test_that --autotest_dir ~/trunk/src/third_party/autotest/files/ --board=guado
+100.123.174.2 enterprise_CFM_Test.demo
+
+"""
+
+args_dict = utils.args_to_dict(args)
+
+error_key_words = {'usb': [
+                   'Setup ERROR: setup context command',
+                   'URB transfer length is wrong',
+                   'device descriptor read',
+                   'unable to enumerate USB device',
+                   'hub_port_status failed',
+                   'cannot reset port',
+                   'nonzero write bulk status received',
+                   'Device not responding to setup address',
+                   'device not accepting address',
+                   'Set SEL for device-initiated U2 failed',
+                   'Set SEL for device-initiated U1 failed',
+                   'Disable of device-initiated U1 failed',
+                   'Disable of device-initiated U2 failed',
+                   'usb_set_interface failed',
+                   'MIMO has wedged; issuing hub reset'
+                  ],
+                   'kernel': [
+                   'ERROR Transfer event TRB DMA ptr',
+                   'crashes with segfault',
+                   'segfault at',
+                   'cut here',
+                   'end trace',
+                   'Failed to resubmit video URB',
+                   'go2001_watchdog:',
+                   'go2001_ctx_error_locked:'
+                  ],
+                   'video': [
+                   'uvcvideo: Failed to query',
+                   'VIDIOC_DQBUF failed',
+                   'uvcvideo: Non-zero status'
+                   'uvcvideo: Failed to set UVC commit control',
+                   'uvcvideo: UVC non compliance',
+                   'Failed to resubmit video URB',
+                   'No streaming interface found',
+                   'Dequeued v4l2 buffer contains corrupted data'
+                  ],
+                   'audio': [
+                   'hw_params: Input/output error: rate:',
+                   'Init device retry failed',
+                   'Init Hangouts Meet speakermic: USB Audio',
+                   'usb_set_interface failed',
+                   'hw_params: Input/output error: rate:',
+                   'Init device retry failed',
+                  ],
+                   'chrome': [
+                   '#No match for getting seqNum',
+                   'Cannot get RenderProcess',
+                   'segfault at',
+                   'ERR crash_reporter',
+                   'Watchdog resetting firmware',
+                   'Failed to create scanout buffer',
+                   'Failed to enable controller',
+                   'Failed to configure: device',
+                   'Failed to export buffer to dma_buf',
+                   'Failed to take control of the display',
+                   'WARNING: texture bound to texture unit 0 is not renderable',
+                   'Failed to modeset controller'
+                  ],
+                   'atrus': [
+                   '#Internal TrueVoice parameters',
+                   'write: Connection timed out',
+                   'Error: report failed',
+                   'write: Broken pipe',
+                   'protocol error'
+                  ],
+                   'usb_stability': [
+                   '#autotest',
+                   'USB disconnect',
+                   'New USB device found',
+                  ]
+}
+
+
+# !!! Please change meeting code working for CfM.
+# !!! If meeting_code for different domain is used, meeting might be timeout.
+# vol_change_mode: if set to 1, make one call to set voluem to target volume,
+#                  else, make multiple calls to update volume until volume
+#                  equals to target volume.
+test_config = {
+               'gpio_list': ['218','219', '209'],
+               'gpiopause': 8,
+               'puts': "2bd9:0011",
+               'is_meeting': 1,
+               'meeting_code': 'otg-dkps-ovj', # this works for crosprq4.com
+               'repeat': 200,
+               'reboot_timeout': 30,
+               'loop_timeout': 60,
+               'action_timeout': 10,
+               'min_timeout': 5,
+               'debug_timeout': 9999,
+               'vol_change_step': 6,
+               'vol_change_mode': 1,
+               'reboot_after_min_meets': 5,
+               'gpio_after_min_meets': 10
+}
+
+#action_config['meeting_test'] should be 0, 1.
+#  0: no meeting test to be done
+#  1: In each loop first CfM joins meeting, after all tests are done,
+#     CfM leaves meeting.
+#the value of 'mute_unmute_camera_test', 'mute_unmute_mic_test' and
+#'speaker_volume_test" and etc is number of test for each key to be done in
+#one meeting.
+action_config = {
+                 'meeting_test': 1,
+                 'mute_unmute_camera_test': 3,
+                 'mute_unmute_mic_test': 0,
+                 'speaker_volume_test': 0,
+                 'gpio_test': 1,
+                 'reboot_test': 1,
+                 'reset_usb_test': 0,
+                 'flap_monitor_test': 0
+}
+
+
+verification_config = {
+                      'check_usb_enumeration':True,
+                      'check_usb_inf_init': True,
+                      'check_v4l2_interface': True,
+                      'check_audio_card':  False,
+                      'check_cras_speaker': False,
+                      'check_cras_mic': False,
+                      'check_cras_pspeaker': False,
+                      'check_cras_pmic': False,
+                      'check_cras_speaker_vol': False,
+                      'check_cras_mic_mute': False,
+                      'check_prefer_camera': False,
+                      'check_camera_mute': False,
+                      'check_audio_stream': False,
+                      'check_video_stream': True,
+                      'check_hotrod_speaker': False,
+                      'check_hotrod_mic': False,
+                      'check_hotrod_camera': False,
+                      'check_hotrod_pspeaker': False,
+                      'check_hotrod_pmic': False,
+                      'check_hotrod_pcamera': False,
+                      'check_hotrod_speaker_vol': False,
+                      'check_hotrod_mic_state': False,
+                      'check_hotrod_camera_state': False,
+                      'check_usb_errorlog': True,
+                      'check_kernel_errorlog': True,
+                      'check_video_errorlog': True,
+                      'check_audio_errorlog': True,
+                      'check_chrome_errorlog': True,
+                      'check_atrus_errorlog': False,
+                      'check_usb_stability': True,
+                      'check_process_crash': False,
+                      'check_kernel_panic': False
+}
+
+
+test_flow_control = {
+                     'runtestonly': True,
+                     'setupcleanup': True,
+                     'abort_on_failure': True,
+                     'random_mode': True,
+                     'recovery_on_fatal_failure': False,
+                     'skipcfmc': True,
+                     'debug': True,
+                     'report': True
+}
+
+
+servo_args = hosts.CrosHost.get_servo_arguments(args_dict)
+
+
+def run_test(machine):
+    host = hosts.create_host(machine, servo_args=None)
+    run_test_only = test_flow_control['runtestonly']
+    job.run_test('enterprise_CFM_Test', host=host,
+                  run_test_only=run_test_only,
+                  test_config=test_config, action_config=action_config,
+                  verification_config=verification_config,
+                  error_key_words=error_key_words,
+                  test_flow_control=test_flow_control,
+                  tag='huddly')
+
+
+parallel_simple(run_test, machines)

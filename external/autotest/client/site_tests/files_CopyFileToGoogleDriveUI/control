@@ -1,0 +1,21 @@
+# Copyright 2018 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'Intel'
+NAME = "files_CopyFileToGoogleDriveUI"
+ATTRIBUTES = "suite:files"
+PURPOSE = "To test the copy operations to Google Drive"
+CRITERIA = """
+Fail if copy and sync in Google drive is not successful
+"""
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "Files"
+TEST_TYPE = "client"
+DOC = """
+Copy file to Google drive and will check the sync.
+We need real username and password to sync the copied file.
+"""
+
+job.run_test('files_CopyFileToGoogleDriveUI')

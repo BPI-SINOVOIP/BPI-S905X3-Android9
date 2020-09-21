@@ -1,0 +1,33 @@
+# Copyright 2018 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "dhaddock, Chromium OS"
+NAME = "autoupdate_P2P.too_many_attempts.delta"
+PURPOSE = "Test autoupdate via peer to peer(P2P)."
+TIME = "MEDIUM"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "platform"
+TEST_TYPE = "server"
+ATTRIBUTES = "suite:bvt-perbuild"
+SYNC_COUNT = 2
+DOC = """
+This tests autoupdate between two devices via peer to peer is disabled when
+they have tried more than 10 times.
+
+"""
+
+from autotest_lib.server import utils as server_utils
+
+def run(ntuple):
+    host_list = []
+    for machine in ntuple:
+        host_list.append(hosts.create_host(machine))
+    job.run_test('autoupdate_P2P', hosts=host_list, too_many_attempts=True)
+
+ntuples, failures = server_utils.form_ntuples_from_machines(machines,
+                                                            SYNC_COUNT)
+
+# Use log=False in parallel_simple to avoid an exception in setting up
+# the incremental parser when SYNC_COUNT > 1.
+job.parallel_simple(run, ntuples, log=False)

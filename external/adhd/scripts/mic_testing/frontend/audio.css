@@ -1,0 +1,107 @@
+/*
+ * Copyright (c) 2014 The Chromium OS Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file.
+ */
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style-type: none;
+}
+
+.tab-page {
+  display: table;
+  table-layout: fixed;
+  text-align: center;
+  width: 100%;
+}
+
+.tab-page li {
+  display: table-cell;
+  padding-right: 1px;
+  height: auto;
+  vertical-align: bottom;
+}
+
+.tab-page a {
+  font-size: x-large;
+  font-weight: bold;
+  display: block;
+  min-height: 100%;
+  padding: 4px 10px;
+  background-color: #FFFFFF;
+  color: black;
+  border-radius: 6px 6px 0 0;
+  border: 1px solid black;
+}
+
+.tab-page li.selected a {
+  font-size: x-large;
+  font-weight: bold;
+  display: block;
+  min-height: 100%;
+  padding: 4px 10px;
+  background-color: #FFFFFF;
+  color: black;
+  border-radius: 6px 6px 0 0;
+  border: 1px solid black;
+  border-bottom: none;
+}
+
+body {
+  text-align: center;
+}
+
+td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.btn-on-text {
+  display: none;
+}
+
+.btn-off-text {
+  display: none;
+}
+
+.btn-on .btn-on-text {
+  display: block;
+  font-size: large;
+}
+
+.btn-off .btn-off-text {
+  display: block;
+  font-size: large;
+}
+
+.tonegen-vol-cell input {
+  width: 20px;
+  height: 120px;
+  -webkit-appearance: slider-vertical;
+}
+
+.tonegen-vol-cell {
+  width: 15%;
+}
+
+.tonegen-main-cell {
+  width: 80%;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.sweep_tone {
+  display: block;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.canvas_detail {
+  vertical-align:top;
+  display: none;
+}

@@ -1,0 +1,43 @@
+diff --git a/libs/binder/Android.bp b/libs/binder/Android.bp
+index f7347aef1..a539fac47 100644
+--- a/libs/binder/Android.bp
++++ b/libs/binder/Android.bp
+@@ -52,10 +52,12 @@ cc_library {
+         "-Wall",
+         "-Wextra",
+         "-Werror",
++	CFLAGS_FOR_BENCH_SUITE
+     ],
++    ldflags: [LDFLAGS_FOR_BENCH_SUITE],
+     product_variables: {
+         binder32bit: {
+-            cflags: ["-DBINDER_IPC_32BIT=1"],
++            cflags: ["-DBINDER_IPC_32BIT=1",],
+         },
+     },
+ 
+@@ -76,4 +78,22 @@ cc_library {
+     },
+ }
+ 
+-subdirs = ["tests"]
++cc_test {
++    name: "binderThroughputTest",
++    srcs: ["tests/binderThroughputTest.cpp"],
++    shared_libs: [
++        "libbinder",
++        "libutils",
++    ],
++    clang: true,
++    cflags: [
++        "-g",
++        "-Wall",
++        "-Werror",
++        "-Wno-missing-field-initializers",
++        "-Wno-sign-compare",
++	 "-O3",
++        CFLAGS_FOR_BENCH_SUITE
++    ],
++    ldflags: [LDFLAGS_FOR_BENCH_SUITE],
++}
++

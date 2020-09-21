@@ -1,0 +1,20 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+#
+
+AUTHOR = "ARC Team"
+ATTRIBUTES = "suite:bvt-perbuild"
+NAME = "cheets_StartAndroid.stress.8"
+TIME = "LONG"
+TEST_CATEGORY = "Stress"
+TEST_CLASS = "login"
+TEST_TYPE = "client"
+
+DOC = """
+This sharded test verifies reliable and repeated login to Chrome and start of
+the Android container. If this test is flaky every Android based test will be
+flaky as well.
+"""
+
+job.run_test('cheets_StartAndroid', count=10, tag='stress')

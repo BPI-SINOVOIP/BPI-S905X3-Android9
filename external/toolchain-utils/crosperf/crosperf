@@ -1,0 +1,2 @@
+#!/bin/bash
+PYTHONPATH=$(dirname $0)/..:$PYTHONPATH exec python $(dirname $0)/crosperf.py "$@"

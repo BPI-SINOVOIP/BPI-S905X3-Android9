@@ -1,0 +1,17 @@
+name: "cn-cbor"
+description:
+    "cn-cbor: A constrained node implementation of CBOR in C"
+
+third_party {
+  url {
+    type: HOMEPAGE
+    value: "https://github.com/cabo/cn-cbor"
+  }
+  url {
+    type: GIT
+    value: "https://github.com/cabo/cn-cbor.git"
+  }
+  version: "2f9c3b1931eb012909e74f3b628e6a31fd446ad1"
+  last_upgrade_date { year: 2017 month: 11 day: 8 }
+  license_type: NOTICE
+}

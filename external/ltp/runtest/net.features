@@ -1,0 +1,52 @@
+#
+# Stress tests for various network features
+#
+
+busy_poll01 busy_poll01.sh
+busy_poll01_ipv6 busy_poll01.sh -6
+
+busy_poll02 busy_poll02.sh
+busy_poll02_ipv6 busy_poll02.sh -6
+
+busy_poll03 busy_poll03.sh
+busy_poll03_ipv6 busy_poll03.sh -6
+
+dccp01 dccp01.sh
+dccp01_ipv6 dccp01.sh -6
+
+sctp01 sctp01.sh
+sctp01_ipv6 sctp01.sh -6
+
+tcp_fastopen tcp_fastopen_run.sh
+tcp_fastopen6 tcp_fastopen_run.sh -6
+
+vxlan01 vxlan01.sh
+vxlan02 vxlan02.sh
+vxlan02_ipv6 vxlan02.sh -6
+
+vxlan_multi_03 vxlan03.sh -d multi
+vxlan_uni_03 vxlan03.sh -d uni
+
+vxlan_ipv6_multi_03 vxlan03.sh -6 -d multi
+vxlan_ipv6_uni_03 vxlan03.sh -6 -d uni
+
+vlan01 vlan01.sh
+vlan02 vlan02.sh
+vlan03 vlan03.sh
+
+macvlan01 macvlan01.sh
+macvtap01 macvtap01.sh
+
+macsec01 macsec01.sh
+macsec02 macsec02.sh
+
+ipvlan01 ipvlan01.sh
+
+gre_ipv4_01 gre01.sh
+gre_ipv6_01 gre01.sh -6
+
+dctcp_ipv4_01 dctcp01.sh
+dctcp_ipv6_01 dctcp01.sh -6
+
+geneve01 geneve01.sh
+geneve01_ipv6 geneve01.sh -6

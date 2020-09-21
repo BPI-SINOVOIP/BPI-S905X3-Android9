@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>MediaStream Recorder Cros Test (w/ MediaSource)</title>
+</head>
+<body>
+  <div>MediaRecorder HW-encode-used test.</div>
+  <video id="video" autoplay></video>
+</body>
+<script>
+
+'use strict';
+
+var testProgress = 0;
+
+const DEFAULT_CONSTRAINTS = {audio: true, video: true};
+
+function createAndStartMediaRecorder(stream, mimeType) {
+  return new Promise(function(resolve, reject) {
+    document.getElementById('video').src = URL.createObjectURL(stream);
+    var recorder = new MediaRecorder(stream, {'mimeType' : mimeType});
+    console.log('Recorder object created.');
+    recorder.start(1);
+    resolve(recorder);
+  });
+}
+
+// Creates a MediaRecorder and starts recording. Caller can check
+// the generated histograms to verify whether HW encode is used.
+function startRecording(codec) {
+  var mimeType = 'video/webm; codecs=' + codec;
+  var videoSize = 0;
+  var emptyBlobs = 0;
+  var timeStamps = [];
+  // This records from a fake media device.
+  navigator.mediaDevices.getUserMedia(DEFAULT_CONSTRAINTS)
+      .then(function(stream) {
+        return createAndStartMediaRecorder(stream, mimeType);
+      })
+      .then(function(recorder) {
+        recorder.ondataavailable = function(event) {
+          if (event.data.size > 0)
+            testProgress = 1;
+        };
+      });
+}
+
+</script>
+</body>
+</html>

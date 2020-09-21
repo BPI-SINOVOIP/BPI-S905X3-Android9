@@ -1,0 +1,13 @@
+[run]
+omit =
+    # Travis specific path
+    /home/travis/virtualenv/python*
+    # Python specific path
+    /usr/local/lib/python2.7/*
+    # Scapy specific paths
+    test/*
+    bin/*
+    scapy/tools/*
+    # Libraries
+    scapy/modules/six.py
+    scapy/modules/winpcapy.py

@@ -1,0 +1,4 @@
+# See corresponding .suid file for context.
+/opt/google/containers/android/rootfs/root/system/xbin/librank
+/opt/google/containers/android/rootfs/root/system/xbin/procmem
+/opt/google/containers/android/rootfs/root/system/xbin/procrank

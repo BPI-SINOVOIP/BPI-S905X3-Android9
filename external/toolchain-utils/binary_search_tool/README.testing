@@ -1,0 +1,80 @@
+This file explains how to set up and run the various kinds of bisection tests.
+
+The bisection tool comes with several sets of tests which you should
+run after updating any of the bisection tool scripts OR after updating
+the Android compiler wrapper (to make sure the wrapper will still work
+correctly with bisection).
+
+Before you start.
+----------------
+
+Before you can run the tests, your PYTHONPATH environment variable
+must be correct.  This means that it must include both the
+toolchain-utils directory and the binary_search_tool directory.  The
+easiest way to set it is:
+
+$ cd toolchain-utils
+$ export PYTHONPATH=`pwd`:${PYTHONPATH}
+$ cd binary_search_tool
+$ export PYTHONPATH=`pwd`:${PYTHONPATH}
+
+
+Running the unittests.
+----------------------
+
+To run the basic unit tests:
+
+$ cd toolchain-utils/binary_search_tool/test
+$ ./binary_search_tool_tester.py
+
+Running the bisection tests, testing the compiler wrapper.
+----------------------------------------------------------
+
+If you want to run the bisection tests, and test the compiler wrapper
+(to make sure the POPULATE_GOOD and POPULATE_BAD stages are still
+working properly) you can do the following.
+
+If you are testing with the ANDROID COMPILER WRAPPER, you need to to some
+preliminary setup:
+
+Set up the compiler wrapper to replace GCC:
+
+    $ cd <android-root/prebuilts/clang/host/linux-x86/clang-368880/bin
+    $ cp clang gcc
+    $ whereis gcc
+    gcc: /usr/bin/gcc /usr/lib/gcc /usr/bin/X11/gcc /usr/share/man/man1/gcc.1.gz
+    $ cd /usr/bin
+    $ ls -l gcc
+    lrwxrwxrwx 1 root root 7 Feb  3 17:00 gcc -> gcc-4.8*
+    $ sudo mv gcc gcc.real
+    $ sudo ln -s <android-root>/prebuilts/clang/host/linux-x86/clang-3688880/bin/gcc gcc
+
+Move to the correct directory, then run the test script:
+
+    $ cd toolchain-utils/binary_search_tool
+    $ ./run_bisect_test.py
+
+
+If you are testing with the CHROMEOS COMPILER WRAPPER, you MUST run the
+tests from INSIDE your CHROOT (but you don't need to do any special setup):
+
+    $ cd <path-to-chromeos-root>
+    $ cros_sdk
+    $ cd ~/trunk/src/third_party/toolchain-utils
+
+    Set up your PYTHONPATH:
+
+    $ export PYTHONPATH=`pwd`:${PYTHONPATH}
+    $ cd binary_search_tool
+    $ export PYTHONPATH=`pwd`:${PYTHONPATH}
+
+    Run the test script:
+
+    $ ./run_bisect_test.py
+
+
+Running the bisection tests, without testing the compiler wrapper.
+------------------------------------------------------------------
+
+$ cd toolchain-utils/binary_search_tool
+$ ./full_bisect_test/run-test-nowrapper.sh

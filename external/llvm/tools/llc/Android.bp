@@ -1,0 +1,105 @@
+//===---------------------------------------------------------------===
+// llc command line tool (common)
+//===---------------------------------------------------------------===
+
+llvm_llc_mips_STATIC_LIBRARIES = [
+    "libLLVMMipsAsmParser",
+    "libLLVMMipsInfo",
+    "libLLVMMipsCodeGen",
+    "libLLVMMipsDesc",
+    "libLLVMMipsAsmPrinter",
+]
+
+llvm_llc_x86_STATIC_LIBRARIES = [
+    "libLLVMX86Info",
+    "libLLVMX86AsmParser",
+    "libLLVMX86CodeGen",
+    "libLLVMX86Disassembler",
+    "libLLVMX86Desc",
+    "libLLVMX86AsmPrinter",
+    "libLLVMX86Utils",
+]
+
+llvm_llc_arm_STATIC_LIBRARIES = [
+    "libLLVMARMCodeGen",
+    "libLLVMARMDisassembler",
+    "libLLVMARMAsmParser",
+    "libLLVMARMAsmPrinter",
+    "libLLVMARMDesc",
+    "libLLVMARMInfo",
+]
+
+llvm_llc_aarch64_STATIC_LIBRARIES = [
+    "libLLVMAArch64Info",
+    "libLLVMAArch64AsmParser",
+    "libLLVMAArch64CodeGen",
+    "libLLVMAArch64Disassembler",
+    "libLLVMAArch64Desc",
+    "libLLVMAArch64AsmPrinter",
+    "libLLVMAArch64Utils",
+]
+
+//===---------------------------------------------------------------===
+// llc command line tool
+//===---------------------------------------------------------------===
+
+cc_binary_host {
+    name: "llc",
+    defaults: ["llvm-defaults"],
+    srcs: ["llc.cpp"],
+    static_libs: [
+        "libLLVMGlobalISel",
+        "libLLVMAsmPrinter",
+        "libLLVMDebugInfoCodeView",
+        "libLLVMIRReader",
+        "libLLVMAsmParser",
+        "libLLVMBitReader",
+        "libLLVMBitWriter",
+        "libLLVMSelectionDAG",
+        "libLLVMInstCombine",
+        "libLLVMCodeGen",
+        "libLLVMProfileData",
+        "libLLVMInstrumentation",
+        "libLLVMObject",
+        "libLLVMipo",
+        "libLLVMLinker",
+        "libLLVMMCDisassembler",
+        "libLLVMMC",
+        "libLLVMMIRParser",
+        "libLLVMMCParser",
+        "libLLVMScalarOpts",
+        "libLLVMTransformUtils",
+        "libLLVMVectorize",
+        "libLLVMAnalysis",
+        "libLLVMTarget",
+        "libLLVMCore",
+        "libLLVMSupport",
+        "libLLVMObject",
+    ],
+    target: {
+        host: {
+            static_libs: llvm_llc_arm_STATIC_LIBRARIES +
+                llvm_llc_mips_STATIC_LIBRARIES +
+                llvm_llc_x86_STATIC_LIBRARIES +
+                llvm_llc_aarch64_STATIC_LIBRARIES,
+        },
+        android_arm: {
+            static_libs: llvm_llc_arm_STATIC_LIBRARIES,
+        },
+        android_arm64: {
+            static_libs: llvm_llc_aarch64_STATIC_LIBRARIES + llvm_llc_arm_STATIC_LIBRARIES,
+        },
+        android_mips: {
+            static_libs: llvm_llc_mips_STATIC_LIBRARIES,
+        },
+        android_mips64: {
+            static_libs: llvm_llc_mips_STATIC_LIBRARIES,
+        },
+        android_x86: {
+            static_libs: llvm_llc_x86_STATIC_LIBRARIES,
+        },
+        android_x86_64: {
+            static_libs: llvm_llc_x86_STATIC_LIBRARIES,
+        },
+    },
+}

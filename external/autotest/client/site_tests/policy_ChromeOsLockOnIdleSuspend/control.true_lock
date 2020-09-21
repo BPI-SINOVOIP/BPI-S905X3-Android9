@@ -1,0 +1,27 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'scunningham'
+NAME = 'policy_ChromeOsLockOnIdleSuspend.true_lock'
+# TODO(krishnargv): Uncomment ATTRIBUTES line to add case to suite:regression
+# when crbug.com/666430 is fixed.
+# ATTRIBUTES = 'suite:regression, suite:policy'
+TIME = 'SHORT'
+TEST_CATEGORY = 'Functional'
+TEST_CLASS = 'enterprise'
+TEST_TYPE = 'client'
+
+DOC = '''
+Verify effects of ChromeOsLockOnIdleSuspend policy.
+
+This test case verifies the behavior and appearance of Chrome OS when the
+ChromeOsLockOnIdleSuspend user policy is set True.
+
+The test case shall pass if the 'Require password to wake from sleep' check
+box is checked and uneditable, and the Screen Lock is displayed when the
+device goes to sleep. It shall fail if this behavior is not enforced.
+
+'''
+
+job.run_test('policy_ChromeOsLockOnIdleSuspend', case='True_Lock')

@@ -1,0 +1,30 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+NAME = "kernel_CheckArmErrata"
+AUTHOR = "The Chromium OS Authors"
+PURPOSE = "Check that ARM errata was applied"
+CRITERIA = """
+    Fails if we detect that we're on a CPU that should have an erratum
+    fix applied but we can detect that the erratum wasn't applied.
+    Tests here are focused on errata that are quick to check for.  This
+    test can also fail if we don't detect the needed kernel infrastructure
+    for testing for the errata.
+"""
+TIME = "SHORT"
+ATTRIBUTES = "suite:kernel_daily_regression"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "kernel"
+TEST_TYPE = "client"
+
+DOC = """
+    This test will look at /proc/cpuinfo and determine if we're on a CPU
+    with known errata.  It will then attempt to confirm (perhaps by using
+    /sys/kernel/debug/arm_coprocessor_debug) that the errata fixes are present.
+
+    If we detect that we're not on an ARM board or if we're running on an ARM
+    core that we know of no errata for, this test will pass.
+"""
+
+job.run_test("kernel_CheckArmErrata")

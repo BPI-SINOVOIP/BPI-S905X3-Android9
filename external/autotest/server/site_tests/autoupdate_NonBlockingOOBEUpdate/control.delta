@@ -1,0 +1,31 @@
+# Copyright 2018 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "dhaddock, Chromium OS"
+NAME = "autoupdate_NonBlockingOOBEUpdate.delta"
+PURPOSE = "Test non-forced update at OOBE."
+TIME = "MEDIUM"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "platform"
+TEST_TYPE = "server"
+ATTRIBUTES = "suite:bvt-perbuild"
+DOC = """
+This tests an update is available at OOBE but there is no deadline set.
+
+Kick it off locally using this command:
+
+test_that <hostname>.cros autoupdate_NonBlockingOOBEUpdate.delta --args="job_repo_url='http://<IP>:<port>/static/<board>-release/RXX-XXXX.X.X/autotest/packages'"
+
+"""
+
+from autotest_lib.client.common_lib import utils
+
+args_dict = utils.args_to_dict(args)
+
+def run(machine):
+    host = hosts.create_host(machine)
+    job.run_test('autoupdate_NonBlockingOOBEUpdate', host=host,
+                 full_payload=False, **args_dict)
+
+job.parallel_simple(run, machines)

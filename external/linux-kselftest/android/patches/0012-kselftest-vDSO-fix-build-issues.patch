@@ -1,0 +1,39 @@
+From 460c35540cb41d20e6c9383e35321995cbd645ca Mon Sep 17 00:00:00 2001
+From: Steve Muckle <smuckle@google.com>
+Date: Tue, 31 Oct 2017 13:50:22 -0700
+Subject: [PATCH] kselftest: vDSO: fix build issues
+
+Fix a couple build issues in vdso_test.
+
+Change-Id: Ia3f3e5b7da0632f6a23da721eb601fa5431405a3
+Signed-off-by: Steve Muckle <smuckle@google.com>
+---
+ tools/testing/selftests/vDSO/parse_vdso.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/tools/testing/selftests/vDSO/parse_vdso.c b/tools/testing/selftests/vDSO/parse_vdso.c
+index 1dbb4b87268f..0dcbdcf5ec6b 100644
+--- a/tools/testing/selftests/vDSO/parse_vdso.c
++++ b/tools/testing/selftests/vDSO/parse_vdso.c
+@@ -78,13 +78,16 @@ static struct vdso_info
+ } vdso_info;
+ 
+ /* Straight from the ELF specification. */
+-static unsigned long elf_hash(const unsigned char *name)
++static unsigned long elf_hash(const char *s_name)
+ {
+ 	unsigned long h = 0, g;
++	const unsigned char *name = (const unsigned char *)s_name;
++
+ 	while (*name)
+ 	{
+ 		h = (h << 4) + *name++;
+-		if (g = h & 0xf0000000)
++		g = h & 0xf0000000;
++		if (g)
+ 			h ^= g >> 24;
+ 		h &= ~g;
+ 	}
+-- 
+2.16.0.rc1.238.g530d649a79-goog
+

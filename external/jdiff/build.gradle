@@ -1,0 +1,75 @@
+/*
+ * Copyright (C) 2017 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import javax.tools.ToolProvider
+
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'com.android'
+version = '1.1.0'
+
+/*
+ * With the build server you are given two env variables:
+ * 1. The OUT_DIR is a temporary directory you can use to put things during the build.
+ * 2. The DIST_DIR is where you want to save things from the build.
+ *
+ * The build server will copy the contents of DIST_DIR to somewhere and make it available.
+ */
+if (System.env.DIST_DIR != null && System.env.OUT_DIR != null) {
+    buildDir = file("${System.env.OUT_DIR}/gradle/external/jdiff/build").getCanonicalFile()
+    ext.distDir = file(System.env.DIST_DIR).getCanonicalFile()
+
+    // The distDir is conveniently named after the build ID.
+    version = "${version}.${ext.distDir.name}"
+} else {
+    buildDir = file('../../out/host/gradle/external/jdiff/build')
+    ext.distDir = file('../../out/dist')
+
+    // Local builds are not public release candidates.
+    version = "${version}-SNAPSHOT"
+}
+
+dependencies {
+    // tools.jar required for com.sun.javadoc
+    compile files(((URLClassLoader) ToolProvider.getSystemToolClassLoader()).getURLs())
+}
+
+sourceSets {
+    main {
+        java.srcDirs = ['src']
+    }
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri("${buildDir}/repo"))
+        }
+    }
+}
+
+task dist(type: Zip, dependsOn: uploadArchives)  {
+    group = BasePlugin.BUILD_GROUP
+    description 'Builds distribution artifacts.'
+
+    from uploadArchives.artifacts
+    destinationDir distDir
+
+    doLast {
+        logger.lifecycle "Compressed maven artifacts to ${archivePath}"
+    }
+}

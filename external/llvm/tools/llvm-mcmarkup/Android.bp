@@ -1,0 +1,13 @@
+//===---------------------------------------------------------------===
+// llvm-mcmarkup command line tool
+//===---------------------------------------------------------------===
+
+cc_binary_host {
+    name: "llvm-mcmarkup",
+    defaults: ["llvm-defaults"],
+    srcs: ["llvm-mcmarkup.cpp"],
+    static_libs: [
+        "libLLVMCore",
+        "libLLVMSupport",
+    ],
+}

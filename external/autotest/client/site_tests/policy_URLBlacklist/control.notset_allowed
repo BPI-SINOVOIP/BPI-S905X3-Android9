@@ -1,0 +1,24 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'scunningham'
+NAME = 'policy_URLBlacklist.notset_allowed'
+ATTRIBUTES = 'suite:bvt-perbuild, suite:policy'
+TIME = 'SHORT'
+TEST_CATEGORY = 'General'
+TEST_CLASS = 'enterprise'
+TEST_TYPE = 'client'
+
+DOC = '''
+Verify effects of URLBlacklist policy.
+
+This test case verifies the behavior of Chrome OS when URLBlacklist
+user policy is not set to any URL pattern.
+
+The test case shall pass iff the browser allows every test page. It shall fail
+if the browser blocks any test page.
+
+'''
+
+job.run_test('policy_URLBlacklist', case='NotSet_Allowed')

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head><title>getUserMedia sanity test</title></head>
+<body>
+  <video id="localVideo" width="1280" height="720" autoplay muted></video>
+<script>
+
+var testStatus = 'running';
+
+function getStatus() {
+  return testStatus;
+}
+
+function runTest() {
+  var test = new SanityTest();
+  test.start();
+}
+
+function SanityTest() {
+  this.localVideo = document.getElementById("localVideo");
+}
+
+SanityTest.prototype = {
+  start: function() {
+    this.localVideo.addEventListener('play',
+        this.onVideoPlaying.bind(this), false);
+    navigator.getUserMedia = navigator.getUserMedia ||
+        navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+    navigator.getUserMedia({audio: true, video: true},
+        this.gotLocalStream.bind(this),
+        this.gotUserMediaError.bind(this));
+  },
+
+  gotLocalStream: function(stream) {
+    console.log('Attaching video stream to video tag, waiting for onplay()');
+    this.localVideo.src = window.URL.createObjectURL(stream);
+  },
+
+  gotUserMediaError: function(error) {
+    console.error('navigator.getUserMedia error: ', error);
+    testStatus = 'navigator.getUserMedia error: ' + error.toString();
+  },
+
+  onVideoPlaying: function() {
+    testStatus = 'ok-video-playing';
+  }
+}
+
+window.onload = runTest;
+window.onerror = function (message, filename, lineno, colno, error) {
+  console.log("Something went wrong, here is the stack trace --> %s",
+      error.stack);
+  testStatus = 'exception-in-test-page: ' + error.stack
+};
+</script>
+</body>
+</html>

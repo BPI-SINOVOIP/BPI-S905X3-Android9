@@ -1,0 +1,99 @@
+--- android_icu4j/src/main/java/android/icu/text/DecimalFormatSymbols.java	2017-10-13 00:22:50.443313485 -0700
++++ android_icu4j/src/main/java/android/icu/text/DecimalFormatSymbols.java	2017-10-13 00:23:10.931536336 -0700
+@@ -202,7 +202,6 @@
+     /**
+      * Returns the character used for zero. Different for Arabic, etc.
+      * @return the character
+-     * @apiNote <strong>Discouraged:</strong> ICU 58 use {@link #getDigitStrings()} instead.
+      */
+     public char getZeroDigit() {
+         return zeroDigit;
+@@ -211,8 +210,6 @@
+     /**
+      * Returns the array of characters used as digits, in order from 0 through 9
+      * @return The array
+-     * @see #getDigitStrings()
+-     * @apiNote <strong>Discouraged:</strong> ICU 58 use {@link #getDigitStrings()} instead.
+      */
+     public char[] getDigits() {
+         return digits.clone();
+@@ -225,7 +222,6 @@
+      * digit 9 by incrementing code point one by one.
+      *
+      * @param zeroDigit the zero character.
+-     * @apiNote <strong>Discouraged:</strong> ICU 58 use {@link #setDigitStrings(String[])} instead.
+      */
+     public void setZeroDigit(char zeroDigit) {
+         this.zeroDigit = zeroDigit;
+@@ -385,7 +381,6 @@
+     /**
+      * Returns the character used for grouping separator. Different for French, etc.
+      * @return the thousands character
+-     * @apiNote <strong>Discouraged:</strong> ICU 58 use {@link #getGroupingSeparatorString()} instead.
+      */
+     public char getGroupingSeparator() {
+         return groupingSeparator;
+@@ -394,7 +389,6 @@
+     /**
+      * Sets the character used for grouping separator. Different for French, etc.
+      * @param groupingSeparator the thousands character
+-     * @see #setGroupingSeparatorString(String)
+      */
+     public void setGroupingSeparator(char groupingSeparator) {
+         this.groupingSeparator = groupingSeparator;
+@@ -437,7 +431,6 @@
+     /**
+      * Returns the character used for decimal sign. Different for French, etc.
+      * @return the decimal character
+-     * @apiNote <strong>Discouraged:</strong> ICU 58 use {@link #getDecimalSeparatorString()} instead.
+      */
+     public char getDecimalSeparator() {
+         return decimalSeparator;
+@@ -488,7 +481,6 @@
+     /**
+      * Returns the character used for mille percent sign. Different for Arabic, etc.
+      * @return the mille percent character
+-     * @apiNote <strong>Discouraged:</strong> ICU 58 use {@link #getPerMillString()} instead.
+      */
+     public char getPerMill() {
+         return perMill;
+@@ -539,7 +531,6 @@
+     /**
+      * Returns the character used for percent sign. Different for Arabic, etc.
+      * @return the percent character
+-     * @apiNote <strong>Discouraged:</strong> ICU 58 use {@link #getPercentString()} instead.
+      */
+     public char getPercent() {
+         return percent;
+@@ -665,7 +656,6 @@
+      * negative format is specified, one is formed by prefixing
+      * minusSign to the positive format.
+      * @return the minus sign character
+-     * @apiNote <strong>Discouraged:</strong> ICU 58 use {@link #getMinusSignString()} instead.
+      */
+     public char getMinusSign() {
+         return minusSign;
+@@ -722,7 +712,6 @@
+      * @see #setPlusSign
+      * @see #setMinusSign
+      * @see #getMinusSign
+-     * @apiNote <strong>Discouraged:</strong> ICU 58 use {@link #getPlusSignString()} instead.
+      */
+     public char getPlusSign() {
+         return plusSign;
+@@ -842,7 +831,6 @@
+     /**
+      * Returns the monetary decimal separator.
+      * @return the monetary decimal separator character
+-     * @apiNote <strong>Discouraged:</strong> ICU 58 use {@link #getMonetaryDecimalSeparatorString()} instead.
+      */
+     public char getMonetaryDecimalSeparator() {
+         return monetarySeparator;
+@@ -893,7 +881,6 @@
+     /**
+      * <strong>[icu]</strong> Returns the monetary grouping separator.
+      * @return the monetary grouping separator character
+-     * @apiNote <strong>Discouraged:</strong> ICU 58 use {@link #getMonetaryGroupingSeparatorString()} instead.
+      */
+     public char getMonetaryGroupingSeparator() {
+         return monetaryGroupingSeparator;

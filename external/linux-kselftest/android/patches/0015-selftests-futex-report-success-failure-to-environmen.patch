@@ -1,0 +1,114 @@
+From 5c9ad29f58246b95fd5f1940e6b03ac485cc5168 Mon Sep 17 00:00:00 2001
+From: Steve Muckle <smuckle@google.com>
+Date: Tue, 7 Nov 2017 16:01:53 -0800
+Subject: [PATCH] selftests/futex: report success/failure to environment
+
+Report whether or not any tests failed to the caller of the run.sh
+script.
+
+Bug: 31590178
+Test: run vts-kernel -m VtsKernelLinuxKselftestStaging
+Change-Id: Ie948c608e8f9df4e5fb71bf51dbcbebd905b8b22
+Signed-off-by: Steve Muckle <smuckle@google.com>
+---
+ tools/testing/selftests/futex/functional/run.sh | 63 +++++++++++++++----------
+ 1 file changed, 37 insertions(+), 26 deletions(-)
+
+diff --git a/tools/testing/selftests/futex/functional/run.sh b/tools/testing/selftests/futex/functional/run.sh
+index 7ff002eed624..ec6b279e2ccd 100755
+--- a/tools/testing/selftests/futex/functional/run.sh
++++ b/tools/testing/selftests/futex/functional/run.sh
+@@ -22,6 +22,14 @@
+ #
+ ###############################################################################
+ 
++run_test()
++{
++	$@
++	if [ $? -ne 0 ]; then
++		rc=1
++	fi
++}
++
+ # Test for a color capable console
+ if [ -z "$USE_COLOR" ]; then
+     tput setf 7 || tput setaf 7
+@@ -34,46 +42,49 @@ if [ "$USE_COLOR" -eq 1 ]; then
+     COLOR="-c"
+ fi
+ 
++rc=0
+ 
+ echo
+ # requeue pi testing
+ # without timeouts
+-./futex_requeue_pi $COLOR
+-./futex_requeue_pi $COLOR -b
+-./futex_requeue_pi $COLOR -b -l
+-./futex_requeue_pi $COLOR -b -o
+-./futex_requeue_pi $COLOR -l
+-./futex_requeue_pi $COLOR -o
++run_test ./futex_requeue_pi $COLOR
++run_test ./futex_requeue_pi $COLOR -b
++run_test ./futex_requeue_pi $COLOR -b -l
++run_test ./futex_requeue_pi $COLOR -b -o
++run_test ./futex_requeue_pi $COLOR -l
++run_test ./futex_requeue_pi $COLOR -o
+ # with timeouts
+-./futex_requeue_pi $COLOR -b -l -t 5000
+-./futex_requeue_pi $COLOR -l -t 5000
+-./futex_requeue_pi $COLOR -b -l -t 500000
+-./futex_requeue_pi $COLOR -l -t 500000
+-./futex_requeue_pi $COLOR -b -t 5000
+-./futex_requeue_pi $COLOR -t 5000
+-./futex_requeue_pi $COLOR -b -t 500000
+-./futex_requeue_pi $COLOR -t 500000
+-./futex_requeue_pi $COLOR -b -o -t 5000
+-./futex_requeue_pi $COLOR -l -t 5000
+-./futex_requeue_pi $COLOR -b -o -t 500000
+-./futex_requeue_pi $COLOR -l -t 500000
++run_test ./futex_requeue_pi $COLOR -b -l -t 5000
++run_test ./futex_requeue_pi $COLOR -l -t 5000
++run_test ./futex_requeue_pi $COLOR -b -l -t 500000
++run_test ./futex_requeue_pi $COLOR -l -t 500000
++run_test ./futex_requeue_pi $COLOR -b -t 5000
++run_test ./futex_requeue_pi $COLOR -t 5000
++run_test ./futex_requeue_pi $COLOR -b -t 500000
++run_test ./futex_requeue_pi $COLOR -t 500000
++run_test ./futex_requeue_pi $COLOR -b -o -t 5000
++run_test ./futex_requeue_pi $COLOR -l -t 5000
++run_test ./futex_requeue_pi $COLOR -b -o -t 500000
++run_test ./futex_requeue_pi $COLOR -l -t 500000
+ # with long timeout
+-./futex_requeue_pi $COLOR -b -l -t 2000000000
+-./futex_requeue_pi $COLOR -l -t 2000000000
++run_test ./futex_requeue_pi $COLOR -b -l -t 2000000000
++run_test ./futex_requeue_pi $COLOR -l -t 2000000000
+ 
+ 
+ echo
+-./futex_requeue_pi_mismatched_ops $COLOR
++run_test ./futex_requeue_pi_mismatched_ops $COLOR
+ 
+ echo
+-./futex_requeue_pi_signal_restart $COLOR
++run_test ./futex_requeue_pi_signal_restart $COLOR
+ 
+ echo
+-./futex_wait_timeout $COLOR
++run_test ./futex_wait_timeout $COLOR
+ 
+ echo
+-./futex_wait_wouldblock $COLOR
++run_test ./futex_wait_wouldblock $COLOR
+ 
+ echo
+-./futex_wait_uninitialized_heap $COLOR
+-./futex_wait_private_mapped_file $COLOR
++run_test ./futex_wait_uninitialized_heap $COLOR
++run_test ./futex_wait_private_mapped_file $COLOR
++
++exit $rc
+-- 
+2.16.0.rc1.238.g530d649a79-goog
+

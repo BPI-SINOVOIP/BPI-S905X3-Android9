@@ -1,0 +1,60 @@
+//===---------------------------------------------------------------===
+// llvm-objdump command line tool
+//===---------------------------------------------------------------===
+
+cc_binary_host {
+    name: "llvm-objdump",
+    defaults: ["llvm-defaults"],
+    srcs: [
+        "llvm-objdump.cpp",
+        "COFFDump.cpp",
+        "ELFDump.cpp",
+        "MachODump.cpp",
+    ],
+    static_libs: [
+        "libLLVMDebugInfoDWARF",
+        "libLLVMDebugInfoPDB",
+        "libLLVMARMAsmParser",
+        "libLLVMARMInfo",
+        "libLLVMARMDesc",
+        "libLLVMARMAsmPrinter",
+        "libLLVMARMDisassembler",
+        "libLLVMAArch64Info",
+        "libLLVMAArch64AsmParser",
+        "libLLVMAArch64Desc",
+        "libLLVMAArch64AsmPrinter",
+        "libLLVMAArch64Utils",
+        "libLLVMAArch64Disassembler",
+        "libLLVMMipsInfo",
+        "libLLVMMipsAsmParser",
+        "libLLVMMipsDesc",
+        "libLLVMMipsAsmPrinter",
+        "libLLVMMipsDisassembler",
+        "libLLVMX86Info",
+        "libLLVMX86Desc",
+        "libLLVMX86AsmParser",
+        "libLLVMX86CodeGen",
+        "libLLVMX86AsmPrinter",
+        "libLLVMX86Utils",
+        "libLLVMX86Disassembler",
+        "libLLVMAsmPrinter",
+        "libLLVMCodeGen",
+        "libLLVMTransformUtils",
+        "libLLVMTarget",
+        "libLLVMAnalysis",
+        "libLLVMObject",
+        "libLLVMMCParser",
+        "libLLVMMC",
+        "libLLVMMCDisassembler",
+        "libLLVMBitReader",
+        "libLLVMCore",
+        "libLLVMAsmParser",
+        "libLLVMSupport",
+    ],
+
+    // b/31938382, clang-tidy segmentation fault on MachODump.cpp.
+    tidy_checks: [
+        "-readability-*",
+        "-google-readability-*",
+    ],
+}

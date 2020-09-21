@@ -1,0 +1,31 @@
+# This example experiment file showings how to specify an external
+# chrome source tree (rather than using the one inside the chroot).
+# The Telemetry tests will be run from the external Chrome source
+# tree.
+#
+# You should replace all the placeholders, marked by angle-brackets,
+# with the appropriate actual values.
+
+name: telemetry_crosperf_external_src_example
+
+board: <your-board-goes-here>
+
+# Note:  You can specify multiple remotes, to run your tests in parallel on
+# multiple machines. e.g. "remote: test-machine-1.com test-machine2.come
+# test-machine3.com"
+remote: <your-remote-goes-here>
+
+benchmark: octane {
+    suite: telemetry_Crosperf
+    iterations: 1
+}
+
+# Replace the chromeos image below with the actual path to your test imnage.
+test_image {
+  chromeos_image:<path-to-your-chroot>/src/build/images/<board>/test-image/chromiumos_test_image.bin
+  # Replace '/usr/local/google/chrome-top' with the path to the
+  # top of your Chrome source tree. From that directory
+  # "./src/tools/perf/run_benchmark" should be a valid file path.
+  chrome_src:/usr/local/google/chrome-top
+}
+

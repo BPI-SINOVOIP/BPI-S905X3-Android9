@@ -1,0 +1,55 @@
+=pod
+
+=begin html
+
+<link rel="stylesheet" href="podstyle.css" type="text/css" />
+
+=end html
+
+=head1 NAME
+
+lmfit - Levenberg-Marquardt least-squares minimization
+
+
+=head1 DESCRIPTION
+
+B<lmfit> is a C library for Levenberg-Marquardt least-squares minimization and curve fitting. It is mature code, based on decades-old algorithms from the FORTRAN library MINPACK.
+
+For fitting a data set {(x_i,y_i)|i=0,1,..} by a parametric curve f(x,t), see B<lmcurve>(3).
+
+For generic minimization of the Eucledian norm of parametric vector, see B<lmmin>(3).
+
+For an example how to use B<lmmin>, see the source files I<lmcurve.h> and I<lmcurve.c>. Do not patch these files; copy and modify them to create your own, differently named version of I<lmcurve_data_struct>, I<lmcurve_evaluate>, and I<lmcurve>.
+
+=head1 COPYING
+
+Copyright (C):
+   1980-1999 University of Chicago
+   2004-2015 Joachim Wuttke, Forschungszentrum Juelich GmbH
+
+Software: FreeBSD License
+
+Documentation: Creative Commons Attribution Share Alike
+
+
+=head1 SEE ALSO
+
+=begin html
+
+<a href="http://apps.jcns.fz-juelich.de/man/lmcurve.html"><b>lmcurve</b>(3)</a>,
+<a href="http://apps.jcns.fz-juelich.de/man/lmmin.html"><b>lmmin</b>(3)</a>
+
+=end html
+
+=begin man
+
+\fBlmcurve\fR(3), \fBlmmin\fR(3)
+.PP
+
+=end man
+
+Homepage: http://apps.jcns.fz-juelich.de/lmfit
+
+=head1 BUGS
+
+Please send bug reports and suggestions to the author <j.wuttke@fz-juelich.de>.

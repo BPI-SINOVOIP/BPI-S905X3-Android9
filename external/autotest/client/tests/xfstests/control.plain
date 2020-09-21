@@ -1,0 +1,61 @@
+TIME="LONG"
+AUTHOR = "Cleber Rosa <cleber@redhat.com>"
+NAME = 'xfsFilesystemTestSuiteExt4Plain'
+TEST_CLASS = 'kernel'
+TEST_CATEGORY = 'Functional'
+TEST_TYPE = 'client'
+DOC = """
+xfstests in autotest
+--------------------
+
+This is a wrapper for running xfstests inside autotest.
+
+The control file creates the files (1GB), mount with a loopback device.
+TODO(gwendal): currently the lists of xfstests tests is hardcoded.
+A better solution would be to specify the class of tests to run and
+reimplement the class parsing in python.
+
+"""
+from autotest_lib.client.bin import xfstest_util
+
+xfs_env = xfstest_util.xfstests_env()
+xfs_env.setup_partitions(job, fs_types=['ext4'])
+
+#
+# Adapt to the list of tests you want to run
+#
+TEST_RANGE = {}
+TEST_RANGE['generic'] = ['%03i' % t for t in range(0, 360)]
+# Remove 347: crbug:616822
+TEST_RANGE['generic'].remove('347')
+TEST_RANGE['ext4'] = ['%03i' % t for t in range(0, 20)]
+TEST_RANGE['ext4'].append('271')
+TEST_RANGE['ext4'].extend(['%03i' % t for t in range(300, 310)])
+TEST_RANGE['shared'] = ['001', '002', '003', '006', '032', '051', '272',
+                        '289', '298']
+
+# Fail to produce results, autotest hangs:
+TEST_RANGE['ext4'].remove('307')
+TEST_RANGE['generic'].remove('013')
+TEST_RANGE['generic'].remove('070')
+TEST_RANGE['generic'].remove('083')
+TEST_RANGE['generic'].remove('224')
+
+# Removed: SCRATCH_MNT/file-1073745920-falloc:
+# Start block 31042 not multiple of sunit 4
+TEST_RANGE['generic'].remove('223')
+
+#
+# Finally, run the tests
+#
+try:
+    for fs_type in xfs_env.fs_types:
+        for test_dir in [fs_type, 'generic', 'shared']:
+            for test in TEST_RANGE[test_dir]:
+                tag = '%s.%s' % (test_dir, test)
+                result = job.run_test_detail('xfstests', test_dir=test_dir,
+                                             test_number=test, tag=tag)
+
+finally:
+    # Unmount the partition created
+    xfs_env.unmount_partitions()

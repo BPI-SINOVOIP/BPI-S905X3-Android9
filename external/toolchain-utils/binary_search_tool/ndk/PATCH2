@@ -1,0 +1,34 @@
+From 960134fb87a194595f2a0a36290be7961e12b946 Mon Sep 17 00:00:00 2001
+From: Cassidy Burden <cburden@google.com>
+Date: Tue, 9 Aug 2016 09:46:27 -0700
+Subject: [PATCH] FOR BISECTION TOOL: Insert error
+
+Insert error into code that will cause crash. This is the "compiler
+error" that we will be triaging. We will be pretending the compiler
+mistakenly inserted a nullptr where it shouldn't have.
+
+This error causes the app to immediately crash upon starting. This makes
+it very easy to automatically test the app through adb. Not all compiler
+problems will be this easy to test, and may require manual testing from
+you (the user). See android/interactive_test.sh for an example on
+manual testing from the user.
+---
+ Teapot/app/src/main/jni/TeapotRenderer.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Teapot/app/src/main/jni/TeapotRenderer.cpp b/Teapot/app/src/main/jni/TeapotRenderer.cpp
+index 7cafdb3..75cadbf 100644
+--- a/Teapot/app/src/main/jni/TeapotRenderer.cpp
++++ b/Teapot/app/src/main/jni/TeapotRenderer.cpp
+@@ -58,7 +58,7 @@ void TeapotRenderer::Init() {
+   num_vertices_ = sizeof(teapotPositions) / sizeof(teapotPositions[0]) / 3;
+   int32_t stride = sizeof(TEAPOT_VERTEX);
+   int32_t index = 0;
+-  TEAPOT_VERTEX* p = new TEAPOT_VERTEX[num_vertices_];
++  TEAPOT_VERTEX* p = nullptr; //new TEAPOT_VERTEX[num_vertices_];
+   for (int32_t i = 0; i < num_vertices_; ++i) {
+     p[i].pos[0] = teapotPositions[index];
+     p[i].pos[1] = teapotPositions[index + 1];
+-- 
+2.8.0.rc3.226.g39d4020
+

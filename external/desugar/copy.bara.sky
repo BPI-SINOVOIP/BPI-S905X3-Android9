@@ -1,0 +1,40 @@
+# Copybara project config for importing desugar tool from bazel
+import_url = "rpc://github.googlesource.com/bazelbuild/bazel"
+
+core.workflow(
+    name = "default",
+    origin = git.origin(
+        url = import_url,
+        ref = "master",
+    ),
+    origin_files = glob(
+        include = [
+            "src/tools/android/java/com/google/devtools/build/android/desugar/**",
+            "src/test/java/com/google/devtools/build/android/desugar/**",
+            "src/tools/android/java/com/google/devtools/build/android/Converters.java",
+            "src/main/java/com/google/devtools/common/options/**",
+        ],
+        exclude = [
+            "**/BUILD*",
+        ],
+    ),
+    destination = git.gerrit_destination(
+        url = "sso://android/platform/external/desugar",
+        fetch = "upstream-master",
+        push_to_refs_for = "upstream-master",
+    ),
+    authoring = authoring.pass_thru("Bazel Team <no-reply@google.com>"),
+    mode = "ITERATIVE",
+    transformations = [
+        core.verify_match(
+            regex = "Licensed under the Apache License, Version 2.0",
+            paths = glob(["**"], exclude = [
+                "src/test/java/com/google/devtools/build/android/desugar/**.txt",
+                "src/test/java/com/google/devtools/build/android/desugar/**.jar"
+                ]),
+        ),
+        core.move("src/tools/android", ""),
+        core.move("src/main", ""),
+        core.move("src/test/", "test"),
+    ],
+)

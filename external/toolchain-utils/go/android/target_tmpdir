@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Temporary directory to be used on Android devices.
+
+echo "/data/local/tmp"

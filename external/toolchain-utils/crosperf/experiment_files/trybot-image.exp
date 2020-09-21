@@ -1,0 +1,33 @@
+# This example experiment shows how to run a basic test, using a
+# (previously made) trybot image.
+
+#
+# You should replace all the placeholders, marked by angle-brackets,
+# with the appropriate actual values.
+
+name: trybot_example
+board: <your-board-goes-here>
+
+# Note:  You can specify multiple remotes, to run your tests in parallel on
+# multiple machines. e.g. "remote: test-machine-1.com test-machine2.come
+# test-machine3.com"
+remote: <your-remote-goes-here>
+
+
+benchmark: canvasmark {
+  suite:telemetry_Crosperf
+  iterations: 1
+}
+
+
+# Replace <path-to-your-chroot-goes-here> with the actual directory path
+# to the top of your ChromimumOS chroot.
+trybot_image {
+  chromeos_root:<path-to-your-chroot-goes-here>
+  # Replace "trybot-lumpy-paladin/R34-5417.0.0-b1506" with the name of the
+  # trybot image that you wish to use.  You can find this by going to the
+  # trybot build log, going to the 'Report' stage, and looking for 'Build
+  # Artifacts' at the bottom. You can extract the trybot image name from that.
+  build:trybot-lumpy-paladin/R34-5417.0.0-b1506
+}
+

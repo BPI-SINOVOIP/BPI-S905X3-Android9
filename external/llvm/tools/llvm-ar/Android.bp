@@ -1,0 +1,20 @@
+//===---------------------------------------------------------------===
+// llvm-ar command line tool
+//===---------------------------------------------------------------===
+
+/*
+// This module is disabled while switching the name of libLLVM for the target
+// (and host renderscript tools) to libLLVM_android.so.  This tool need not be
+// built in Android build system as we move to the toolchain branch.  Leaving
+// the file here for posterity.
+cc_binary_host {
+    name: "llvm-ar",
+    defaults: ["llvm-defaults"],
+    srcs: ["llvm-ar.cpp"],
+    shared_libs: ["libLLVM"],
+    symlinks: [
+        "llvm-lib",
+        "llvm-ranlib",
+    ],
+}
+*/

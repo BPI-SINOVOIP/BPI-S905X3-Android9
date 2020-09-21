@@ -1,0 +1,75 @@
+#!/bin/bash
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+#
+# Starts a python interpreter in virtualenv.
+#
+# This script will set up a virtualenv when it has not been created yet and
+# executes the Python interpreter.
+#
+# The canonical version of this script is in infra_virtualenv repository.
+# See infra_virtualenv/README.md about how to adopt virtualenv to your project.
+
+set -eu
+
+# Change this constant to the path(s) to infra_virtualenv directory when you
+# copy this script to other repos.
+# A path can be a relative path from this script, or an absolute path. If this
+# array contains multiple paths, they are searched in the listed order.
+readonly -a infra_virtualenv_paths=(
+    "../../../../../../infra_virtualenv"
+    "/opt/infra_virtualenv"
+    ~chromeos-test/chromiumos/infra_virtualenv
+)
+
+readonly bin_dir="$(readlink -e -- "$(dirname -- "$0")")"
+if [[ ! -d "${bin_dir}" ]]; then
+    echo "python_venv: Cannot locate python_env!" >&2
+    exit 1
+fi
+
+realpath() {
+    pushd "${bin_dir}" > /dev/null 2>&1
+    readlink -e -- "$1"
+    popd > /dev/null 2>&1
+}
+
+find_create_venv() {
+    local p
+    for p in "${infra_virtualenv_paths[@]}"; do
+        local create_venv=$(realpath "${p}/bin/create_venv")
+        if [[ -f "${create_venv}" ]]; then
+            echo "${create_venv}"
+            break
+        fi
+    done
+}
+
+readonly create_venv=$(find_create_venv)
+if [[ ! -f "${create_venv}" ]]; then
+    cat <<EOF >&2
+python_venv: create_venv script could not be located
+python_venv: Possible causes: python_venv configured incorrectly or
+python_venv: incomplete repo checkout
+EOF
+    exit 1
+fi
+
+readonly extra_imports_dir=$(realpath ../venv)
+if [[ ! -d "${extra_imports_dir}" ]]; then
+    cat <<EOF >&2
+python_venv: ${bin_dir}/../venv does not exist
+python_venv: See infra_virtualenv/README.md for details
+EOF
+    exit 1
+fi
+
+readonly venv_dir=$("${create_venv}" "${extra_imports_dir}/requirements.txt")
+if [[ ! -d "${venv_dir}" ]]; then
+    echo "ERROR: Failed to set up a virtualenv." >&2
+    exit 1
+fi
+
+export PYTHONPATH="${extra_imports_dir}"
+exec "${venv_dir}/bin/python" "$@"

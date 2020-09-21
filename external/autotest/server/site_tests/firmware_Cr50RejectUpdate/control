@@ -1,0 +1,25 @@
+# Copyright 2018 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+
+AUTHOR = "mruthven"
+NAME = "firmware_Cr50RejectUpdate"
+PURPOSE = "Verify cr50 update rejection"
+ATTRIBUTES = "suite:cr50_stress_experimental"
+TIME = "SHORT"
+TEST_TYPE = "server"
+DEPENDENCIES = "servo"
+
+DOC = """Verify cr50 rejects images before trying to update."""
+
+args_dict = utils.args_to_dict(args)
+servo_args = hosts.CrosHost.get_servo_arguments(args_dict)
+
+def run(machine):
+    host = hosts.create_host(machine, servo_args=servo_args)
+
+    job.run_test("firmware_Cr50RejectUpdate", host=host, cmdline_args=args)
+
+parallel_simple(run, machines)

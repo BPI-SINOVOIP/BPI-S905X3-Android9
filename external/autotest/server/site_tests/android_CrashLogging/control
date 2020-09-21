@@ -1,0 +1,18 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'bryanlew'
+NAME = 'android_CrashLogging'
+TIME = 'FAST'
+TEST_TYPE = 'Server'
+DEPENDENCIES = 'os:android'
+
+DOC = """
+Check that Android non-Java crash logs are being generated.
+"""
+
+def run(machine):
+    job.run_test('android_CrashLogging', host=hosts.create_host(machine))
+
+parallel_simple(run, machines)

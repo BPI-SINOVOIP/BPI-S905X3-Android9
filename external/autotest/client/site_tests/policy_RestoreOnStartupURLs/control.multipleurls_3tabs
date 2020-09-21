@@ -1,0 +1,25 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'scunningham'
+NAME = 'policy_RestoreOnStartupURLs.multipleurls_3tabs'
+ATTRIBUTES = 'suite:bvt-perbuild, suite:policy'
+TIME = 'SHORT'
+TEST_CATEGORY = 'General'
+TEST_CLASS = 'enterprise'
+TEST_TYPE = 'client'
+
+DOC = '''
+Verify effects of RestoreOnStartupURLs policy on client behavior & appearance.
+
+This test case verifies the behavior and appearance of Chrome OS when the
+RestoreOnStartupURLs user policy specifies multiple URLs.
+
+The test case shall pass when one browser tab is opened only for each of the
+URLs specified in the policy value, and in the order specified (left to
+right). It shall fail if the above behavior is not enforced.
+
+'''
+
+job.run_test('policy_RestoreOnStartupURLs', case='MultipleUrls_3Tabs')

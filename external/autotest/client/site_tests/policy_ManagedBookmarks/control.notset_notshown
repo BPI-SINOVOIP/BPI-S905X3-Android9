@@ -1,0 +1,26 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'scunningham'
+NAME = 'policy_ManagedBookmarks.notset_notshown'
+# TODO: enable this test once crbug.com/739500 is fixed
+# ATTRIBUTES = 'suite:bvt-perbuild, suite:policy'
+TIME = 'SHORT'
+TEST_CATEGORY = 'General'
+TEST_CLASS = 'enterprise'
+TEST_TYPE = 'client'
+
+DOC = '''
+Verify effects of ManagedBookmarks policy on client behavior & appearance.
+
+This test case verifies the behavior and appearance of Chrome OS when the
+ManagedBookmarks user policy is not set.
+
+The test case shall pass if the Manage Bookmarks page does not contain the
+domain-named bookmarks folder. A test case shall fail if the above behavior
+is not enforced.
+
+'''
+
+job.run_test('policy_ManagedBookmarks', case='NotSet_NotShown')

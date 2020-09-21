@@ -1,0 +1,138 @@
+package annotator.find;
+
+import java.util.List;
+
+import annotations.el.BoundLocation;
+
+import com.sun.source.tree.ClassTree;
+import com.sun.source.tree.MethodTree;
+import com.sun.source.tree.Tree;
+import com.sun.source.tree.TypeParameterTree;
+import com.sun.source.util.TreePath;
+import com.sun.tools.javac.code.Type;
+import com.sun.tools.javac.tree.JCTree.JCExpression;
+
+public class BoundLocationCriterion implements Criterion {
+
+  private Criterion parentCriterion;
+  private final int boundIndex;
+  private final int paramIndex;
+
+
+  public BoundLocationCriterion(BoundLocation boundLoc) {
+    this(boundLoc.boundIndex, boundLoc.paramIndex);
+  }
+
+  private BoundLocationCriterion(int boundIndex, int paramIndex) {
+    this.boundIndex = boundIndex;
+    this.paramIndex = paramIndex;
+
+    if (boundIndex != -1) {
+      this.parentCriterion = new BoundLocationCriterion(-1, paramIndex);
+    } else if (paramIndex != -1) {
+      this.parentCriterion = null;
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean isSatisfiedBy(TreePath path, Tree leaf) {
+    assert path == null || path.getLeaf() == leaf;
+    return isSatisfiedBy(path);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean isSatisfiedBy(TreePath path) {
+    if (path == null) {
+      return false;
+    }
+
+    Tree leaf = path.getLeaf();
+
+    // System.out.printf("BoundLocationCriterion.isSatisfiedBy(%s):%n  leaf=%s (%s)%n", path, leaf, leaf.getClass());
+
+    TreePath parentPath = path.getParentPath();
+    if (parentPath == null) {
+      return false;
+    }
+
+    Tree parent = parentPath.getLeaf();
+    if (parent == null) {
+      return false;
+    }
+
+    boolean returnValue = false;
+
+    // System.out.printf("BoundLocationCriterion.isSatisfiedBy(%s):%n  leaf=%s (%s)%n  parent=%s (%s)%n", path, leaf, leaf.getClass(), parent, parent.getClass());
+
+    // if boundIndex is not null, need to check that this is right bound
+    // in parent
+    if (boundIndex != -1) {
+      if (parent instanceof TypeParameterTree) {
+        List<? extends Tree> bounds = ((TypeParameterTree) parent).getBounds();
+        int ix = boundIndex;
+        if (!bounds.isEmpty() && isInterface((JCExpression) bounds.get(0))) {
+          --ix;
+        }
+        if (ix < 0 || ix < bounds.size() && bounds.get(ix) == leaf) {
+          returnValue = parentCriterion.isSatisfiedBy(parentPath);
+        }
+      } else if (boundIndex == 0 && leaf instanceof TypeParameterTree) {
+        List<? extends Tree> bounds = ((TypeParameterTree) leaf).getBounds();
+        if (bounds.isEmpty() || isInterface((JCExpression) bounds.get(0))) {
+          // If the bound is implicit (i.e., a missing "extends Object"),
+          // then permit the match here.
+          returnValue = parentCriterion.isSatisfiedBy(path);
+        } else {
+          Type type = ((JCExpression) bounds.get(0)).type;
+          if (type != null && type.tsym != null && type.tsym.isInterface()) {
+            returnValue = parentCriterion.isSatisfiedBy(parentPath);
+          }
+        }
+      }
+    } else if (paramIndex != -1) {
+      // if paramIndex is not null, need to ensure this present
+      // typeparameter tree represents the correct parameter
+      if (parent instanceof MethodTree || parent instanceof ClassTree) {
+        List<? extends TypeParameterTree> params = null;
+
+        if (parent instanceof MethodTree) {
+          params = ((MethodTree) parent).getTypeParameters();
+        } else if (parent instanceof ClassTree) {
+          params = ((ClassTree) parent).getTypeParameters();
+        }
+
+        if (paramIndex < params.size()) {
+          if (params.get(paramIndex) == leaf) {
+            returnValue = true;
+          }
+        }
+      }
+    }
+
+    if (!returnValue) {
+      return this.isSatisfiedBy(parentPath);
+    } else {
+      return true;
+    }
+  }
+
+  private boolean isInterface(JCExpression bound) {
+    Type type = bound.type;
+    return type != null && type.tsym != null && type.tsym.isInterface();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Kind getKind() {
+    return Kind.BOUND_LOCATION;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public String toString() {
+    return "BoundCriterion: at param index: " + paramIndex +
+      " at bound index: " + boundIndex;
+  }
+}

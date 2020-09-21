@@ -1,0 +1,11 @@
+build = ["Android.sources.bp"]
+
+cc_library_shared {
+    name: "libdrm_freedreno",
+    defaults: [
+        "libdrm_defaults",
+        "libdrm_freedreno_sources",
+    ],
+    vendor: true,
+    shared_libs: ["libdrm"],
+}

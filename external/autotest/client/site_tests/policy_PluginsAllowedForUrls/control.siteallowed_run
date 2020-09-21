@@ -1,0 +1,23 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'scunningham'
+NAME = 'policy_PluginsAllowedForUrls.siteallowed_run'
+# TODO crbug.com/712394: reenable this test
+# ATTRIBUTES = 'suite:regression, suite:policy'
+TIME = 'SHORT'
+TEST_CATEGORY = 'General'
+TEST_CLASS = 'enterprise'
+TEST_TYPE = 'client'
+
+DOC = '''
+Verify effects of PluginsAllowedForUrls policy.
+
+This test case verifies the behavior and appearance of Chrome OS when user
+policy PluginsAllowedForUrls contains URLs with one whose domain matches
+the page that uses a plugin, and DefaultPluginsSetting=2 (Block Plugins).
+
+'''
+
+job.run_test('policy_PluginsAllowedForUrls', case='SiteAllowed_Run')

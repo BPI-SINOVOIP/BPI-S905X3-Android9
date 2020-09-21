@@ -1,0 +1,88 @@
+/* Copyright (c) 2013 The Chromium OS Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file.
+ */
+
+body {
+    font-family: sans-serif;
+    text-align: center;
+}
+
+#audio_source_url {
+    border: 1px solid rgb(144,184,222);
+    font-size: large;
+}
+
+.nbox
+{
+    border: 1px solid rgb(144,184,222);
+    text-align:right;
+    position:relative;
+    padding: 2px;
+}
+
+.nslider
+{
+    width: 175px;
+    margin-left: 6px;
+}
+
+.drc_data
+{
+    border: solid 1px gray;
+    border-radius: 5px;
+    display: inline-block;
+    padding: 10px;
+    margin: 6px;
+    width: 370px;
+}
+
+.eq_data {
+    border: solid 1px black;
+    display: inline-block;
+    padding: 10px;
+    margin: 6px;
+}
+
+.drc_curve {
+    border: 1px solid blue;
+    width: 240px;
+    height: 180px;
+}
+
+.eq_curve {
+    border: 1px solid blue;
+    width: 960px;
+    height: 270px;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.eq_curve_parent {
+    width: 960px;
+    height: 270px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.enable_check {
+    float: right;
+    margin: -6px -6px;
+}
+
+.eq_table {
+    display: inline-block;
+    margin-right: 6px;
+}
+
+#config_file {
+    border: 1px solid rgb(144,184,222);
+    padding: 2px;
+}
+
+.biquad_type_select {
+    background: transparent;
+    border: 1px solid rgb(144,184,222);
+    padding: 2px;
+}

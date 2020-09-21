@@ -1,0 +1,13 @@
+# Base description of a unix machine. This includes remote execution logic
+# through SSH
+
+load_base_board_description "unix"
+
+# Set hostname and username. # Make sure SSH keys are set up prior to run.
+set_board_info hostname $env(DEJAGNU_HOSTNAME)
+set_board_info username root
+
+set_board_info shell_prompt "dejagnu>"
+set chromeos_ssh_opts "-t -o StrictHostKeyChecking=no -o UserKnownHostsFile=/tmp/chromeos-toolchain/known_hosts -o ControlPath=/tmp/chromeos-toolchain/%r@%h:%p -i /tmp/chromeos-toolchain/private_key"
+set_board_info rsh_prog "alarm 40 /usr/bin/ssh ${chromeos_ssh_opts}"
+set_board_info rcp_prog "alarm 40 /usr/bin/scp ${chromeos_ssh_opts}"

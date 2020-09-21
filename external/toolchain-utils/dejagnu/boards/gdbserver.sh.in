@@ -1,0 +1,12 @@
+#!/bin/bash
+
+REMOTE_SSH_FLAGS="-i __tmp_testing_rsa__ -o StrictHostKeyChecking=no -o CheckHostIP=no -o BatchMode=yes  -o ControlMaster=auto -o ControlPath=__tmp_dir__/%r@%h:%p"
+FLAGS_remote=__board_hostname__
+
+gdbserver_cmd="/usr/local/bin/gdbserver $1 $2 $3"
+ssh_cmd="nohup ${gdbserver_cmd} "
+
+echo "Executing: ssh  ${RSA_FILE} ${REMOTE_SSH_FLAGS} root@${FLAGS_remote} \"${ssh_cmd}\"" >&2
+
+ssh ${REMOTE_SSH_FLAGS} root@${FLAGS_remote} "killall -9 gdbserver; ${ssh_cmd}"
+

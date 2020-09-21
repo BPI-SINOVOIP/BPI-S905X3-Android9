@@ -1,0 +1,41 @@
+# This example experiment file shows how to run a basic test, using
+# official images.
+#
+# You should replace all the placeholders, marked by angle-brackets,
+# with the appropriate actual values.
+
+name: official_image_example
+
+board: <your-board-goes-here>
+
+# Note:  You can specify multiple remotes, to run your tests in parallel on
+# multiple machines. e.g. "remote: test-machine-1.com test-machine2.come
+# test-machine3.com"
+remote: <your-remote-goes-here>
+
+benchmark: canvasmark {
+  suite:telemetry_Crosperf
+  iterations: 1
+}
+
+
+# Replace <path-to-your-chroot-goes-here> with the actual directory path
+# to the top of your ChromimumOS chroot.
+first_official_image {
+  chromeos_root:<path-to-your-chroot-goes-here>
+  # Replace "latest-official" with the appropriate xbuddy version alias
+  # for the official image you want to use (see
+  # http://www.chromium.org/chromium-os/how-tos-and-troubleshooting/using-the-dev-server/xbuddy-for-devserver#TOC-XBuddy-Paths
+  # for xbuddy syntax).  
+  build: latest-official
+}
+
+second_official_image {
+  # Replace <path-to-your-chroot-goes-here> with actual path.
+  chromeos_root:<path-to-your-chroot-goes-here>
+  # Replace "lumpy-release/R35-5672.0.0" with the official image you want
+  # to use.
+  build:lumpy-release/R35-5672.0.0
+}
+
+

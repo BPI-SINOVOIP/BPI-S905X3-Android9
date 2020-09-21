@@ -1,0 +1,15 @@
+cc_binary_host {
+    name: "llvm-split",
+    defaults: ["llvm-defaults"],
+    srcs: ["llvm-split.cpp"],
+    static_libs: [
+        "libLLVMIRReader",
+        "libLLVMBitReader",
+        "libLLVMBitWriter",
+        "libLLVMTransformUtils",
+        "libLLVMAnalysis",
+        "libLLVMCore",
+        "libLLVMAsmParser",
+        "libLLVMSupport",
+    ],
+}

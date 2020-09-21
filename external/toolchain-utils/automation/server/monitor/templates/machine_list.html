@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p class="title">Machines</p>
+
+<table class="list">
+<tbody>
+<tr>
+  <th>Hostname</th>
+  <th>Label</th>
+  <th>CPU</th>
+  <th>Cores</th>
+  <th>Operating System</th>
+  <th>Jobs Running</th>
+  <th>Locked</th>
+</tr>
+{% for machine in machines %}
+<tr>
+  <td>
+    <a class="button column" href="/machine/{{ machine.hostname }}">
+      {{ machine.hostname }}
+    </a>
+  </td>
+  <td>{{ machine.label }}</td>
+  <td>{{ machine.cpu }}</td>
+  <td>{{ machine.cores }}</td>
+  <td>{{ machine.os }}</td>
+  <td>{{ machine.uses }}</td>
+  {% if machine.locked %}
+  <td class="failure">Yes</td>
+  {% else %}
+  <td class="success">No</td>
+  {% endif %}
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+{% endblock %}

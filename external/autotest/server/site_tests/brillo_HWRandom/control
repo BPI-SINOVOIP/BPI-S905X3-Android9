@@ -1,0 +1,21 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'dkrahn'
+NAME = 'brillo_HWRandom'
+# It may take a long time to collect the random data on some boards.
+TIME = 'LONG'
+TEST_CATEGORY = 'Functional'
+TEST_TYPE = 'Server'
+
+DOC = """
+Tests that /dev/hw_random is present and passes basic statistical tests. This
+test requires that the 'dieharder' package is installed on the server.
+"""
+
+def run(machine):
+    job.run_test('brillo_HWRandom', host=hosts.create_host(machine))
+
+
+parallel_simple(run, machines)

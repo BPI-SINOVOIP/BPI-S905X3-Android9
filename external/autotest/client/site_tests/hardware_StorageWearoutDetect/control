@@ -1,0 +1,25 @@
+# Copyright (c) 2014 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+NAME = 'hardware_StorageWearoutDetect'
+AUTHOR = 'puthik'
+PURPOSE = 'Detect wear out status of storage device'
+TIME = 'FAST'
+TEST_CLASS = 'hardware'
+TEST_TYPE = 'client'
+# This test measures the hardware health of individual DUTs. If it fails the DUT
+# needs to be replaced. This test should not run in bvt-cq which will cause
+# flakes due to random machine allocation when a DUT nears end of life (and slow
+# bug filing/DUT replacement in lab).
+ATTRIBUTES = "suite:bvt-perbuild"
+JOB_RETRIES = 2
+
+DOC = """
+This test check wear out status for storage device available in SMART for SSD
+and in ext_csd for eMMC version 5.0 or later. For previous version of eMMC,
+it will be treat as data not available. The test will be failed if there is
+SMART value is failing or eMMC wear out is in 90-100% band or higher.
+"""
+
+job.run_test('hardware_StorageWearoutDetect')

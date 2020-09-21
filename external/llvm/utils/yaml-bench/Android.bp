@@ -1,0 +1,9 @@
+// yaml-bench executable for the host
+// =====================================================
+
+cc_binary_host {
+    name: "yaml-bench",
+    defaults: ["llvm-defaults"],
+    srcs: ["YAMLBench.cpp"],
+    static_libs: ["libLLVMSupport"],
+}

@@ -1,0 +1,28 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+
+AUTHOR = "egemih@chromium.org"
+NAME = "enterprise_CFM_HuddlyMonitor"
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "enterprise"
+TEST_TYPE = "server"
+# TODO(egemih): enable once crbug.com/781734 is fixed.
+# ATTRIBUTES = "suite:bluestreak"
+JOB_RETRIES = 3
+
+DOC = """
+This test performs Huddly error detection and subsequent revival.
+"""
+
+args_dict = utils.args_to_dict(args)
+
+def run_test(machine):
+    host = hosts.create_host(machine)
+    job.run_test(NAME, host=host)
+
+
+parallel_simple(run_test, machines)

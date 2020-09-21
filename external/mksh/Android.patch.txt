@@ -1,0 +1,48 @@
+--- mksh-R56b/funcs.c	2017-05-05 15:53:55.000000000 -0700
++++ src/funcs.c	2017-09-22 16:19:44.327000462 -0700
+@@ -103,7 +103,9 @@
+ 	{Tsgbreak, c_brkcont},
+ 	{T__builtin, c_builtin},
+ 	{Tbuiltin, c_builtin},
++#if !defined(__ANDROID__)
+ 	{Tbcat, c_cat},
++#endif
+ 	{Tcd, c_cd},
+ 	/* dash compatibility hack */
+ 	{"chdir", c_cd},
+@@ -126,7 +128,9 @@
+ 	{"pwd", c_pwd},
+ 	{Tread, c_read},
+ 	{Tdsgreadonly, c_typeset},
++#if !defined(__ANDROID__)
+ 	{"!realpath", c_realpath},
++#endif
+ 	{"~rename", c_rename},
+ 	{"*=return", c_exitreturn},
+ 	{Tsgset, c_set},
+@@ -160,8 +164,10 @@
+ 	{"~printf", c_printf},
+ #endif
+ #if HAVE_SELECT
++#if !defined(__ANDROID__)
+ 	{"sleep", c_sleep},
+ #endif
++#endif
+ #ifdef __MirBSD__
+ 	/* alias to "true" for historical reasons */
+ 	{"domainname", c_true},
+--- mksh-R56b/main.c	2017-04-28 04:14:14.000000000 -0700
++++ src/main.c	2017-09-22 15:58:14.134149037 -0700
+@@ -410,6 +410,12 @@
+ 		}
+ 	}
+ 
++	/* override default PATH regardless of environment */
++#ifdef MKSH_DEFPATH_OVERRIDE
++	vp = global(TPATH);
++	setstr(vp, MKSH_DEFPATH_OVERRIDE, KSH_RETURN_ERROR);
++#endif
++
+ 	/* for security */
+ 	typeset(TinitIFS, 0, 0, 0, 0);
+ 

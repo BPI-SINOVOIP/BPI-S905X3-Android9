@@ -1,0 +1,44 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+
+AUTHOR = "mzhuo@chromium.org"
+NAME = "enterprise_CFM_USBPeripheralRebootStress"
+TIME = "LONG"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "enterprise"
+TEST_TYPE = "server"
+ATTRIBUTES = "suite:hotrod"
+JOB_RETRIES = 1
+
+DOC = """
+This test initially checks the number of USB devices connected to CFM.
+Verify Hotrod can detect speaker, mic and camera. If not, test is aborted.
+After that the test will run number of loops where it does:
+1. Join a hangout session
+2. leave hangout session
+3. Check number of USBPeripheral devices and compare it to the initial ones. If
+   difference is detected test will report failure.
+4. Repeat 1, 2 and 3 for random times
+4. Reboot CfM
+4. Check number of USBPeripheral devices and compare it to the initial ones. If
+   difference is detected test will report failure.
+5. Verify Hotrod can detect speaker, mic and camera. If any of these missing
+   test will report failure.
+"""
+
+args_dict = utils.args_to_dict(args)
+servo_args = hosts.CrosHost.get_servo_arguments(args_dict)
+
+def run_test(machine):
+    repeat = int(args_dict.get('repeat', 30))
+    hangout = args_dict.get('hangout', 'cfm-usb-test')
+    host = hosts.create_host(machine, servo_args=servo_args)
+    job.run_test('enterprise_CFM_USBPeripheralRebootStress',
+                 host=host,
+                 hangout=hangout,
+                 reboot_cycles=repeat)
+
+parallel_simple(run_test, machines)

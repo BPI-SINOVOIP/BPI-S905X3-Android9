@@ -1,0 +1,17 @@
+libconstrainedcrypto provides a random set of basic crypto algorithms
+originating from Google-internal code.
+
+This is *NOT* a general purpose crypto library. Our goal is to standardize on
+only one native crypto library for the Android platform, and that library is
+BoringSSL. Wherever possible, you should prefer BoringSSL's libcrypto over
+libconstrainedcrypto. In particular, all code running in Android user space
+should use BoringSSL.
+
+There a few rare exceptions where BoringSSL is can't be used yet (such as
+bare-bones bootloaders etc.). There is a plan to reduce BoringSSL' libcrypto's
+dependency footprint to make libcrypto usable in these environments as well
+though.
+
+A number of projects still rely on libconstrainedcrypto (formerly known as
+libmincrypt) due to historic reasons, the goal is to clean these up and switch
+them over to BoringSSL wherever possible.

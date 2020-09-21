@@ -1,0 +1,4 @@
+This directory contains NIST CAVP (Cryptographic Algorithm
+Validation Program) test vector files.
+
+AES-GCM: http://csrc.nist.gov/groups/STM/cavp/documents/mac/gcmtestvectors.zip

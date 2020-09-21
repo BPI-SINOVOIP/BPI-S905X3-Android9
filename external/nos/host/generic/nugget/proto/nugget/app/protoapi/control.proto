@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package nugget.app.protoapi;
+
+enum NoticeCode {
+  NO_ERROR = 0;
+  PING = 1;
+  PONG = 2;
+  MESSAGE_LOST = 3;
+  GENERIC_ERROR = 4;
+  UNRECOGNIZED_MESSAGE = 5;
+  DECODE_ERROR = 6;
+  ENCODE_ERROR = 7;
+}
+
+message Notice {
+  NoticeCode notice_code = 1;
+  string notice_message = 2;
+}
+
+enum ControlRequestType {
+  CRT_RESERVED = 0;
+  REVERT_TO_CONSOLE = 1;
+}
+
+message ControlRequest {
+  ControlRequestType type = 1;
+}

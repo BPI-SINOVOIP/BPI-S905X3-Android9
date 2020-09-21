@@ -1,0 +1,19 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'ralphnathan'
+NAME = 'brillo_KernelHeadsetTest'
+TIME = 'SHORT'
+TEST_CATEGORY = 'Functional'
+TEST_TYPE = 'Server'
+ATTRIBUTES = ''
+
+DOC = """
+Tests whether a Brillo device has support for headsets.
+"""
+
+def run(machine):
+    job.run_test(NAME, host=hosts.create_host(machine))
+
+parallel_simple(run, machines)

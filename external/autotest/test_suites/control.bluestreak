@@ -1,0 +1,40 @@
+# Copyright (c) 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "harpreet@chromium.org"
+NAME = "bluestreak"
+PURPOSE = "Automated testing of bluestrea/cfm."
+
+TIME = "LONG"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "suite"
+TEST_TYPE = "server"
+
+DOC = """
+This suite runs a set of bluestreak/cfm tests on various CFM devices in the lab.
+"""
+
+import common
+from autotest_lib.server.cros import provision
+from autotest_lib.server.cros.dynamic_suite import dynamic_suite
+
+# Values specified in this bug template will override default values when
+# filing bugs on tests that are a part of this suite. If left unspecified
+# the bug filer will fallback to it's defaults.
+_BUG_TEMPLATE = {
+    'labels': ['Proj-Hotrod', 'Hotrod-Auto-Bug'],
+    'owner': 'chromeos-meetings@google.com',
+    'status': None,
+    'summary': None,
+    'title': None,
+    'cc': ['chromeos-meetings@google.com']
+}
+
+args_dict['name'] = NAME
+args_dict['add_experimental'] = True
+args_dict['bug_template'] = _BUG_TEMPLATE
+args_dict['version_prefix'] = provision.CROS_VERSION_PREFIX
+args_dict['job'] = job
+
+dynamic_suite.reimage_and_run(**args_dict)

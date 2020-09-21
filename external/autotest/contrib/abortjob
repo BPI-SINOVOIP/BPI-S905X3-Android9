@@ -1,0 +1,16 @@
+#!/usr/bin/env python2
+# A utility script used to abort jobs.
+#
+# Usage:
+#   ./abort_job job_id1 job_id2 ...
+
+import sys
+
+import common
+
+from autotest_lib.server.cros.dynamic_suite import frontend_wrappers
+
+afe = frontend_wrappers.RetryingAFE(timeout_min=5, delay_sec=10)
+jobs_to_abort = sys.argv[1:]
+afe.abort_jobs(jobs_to_abort)
+print 'jobs aborted: %s' % jobs_to_abort

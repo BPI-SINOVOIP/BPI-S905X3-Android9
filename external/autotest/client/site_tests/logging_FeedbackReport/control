@@ -1,0 +1,18 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "rjahagir"
+NAME = "logging_FeedbackReport"
+PURPOSE = "Verify that feedback app is present after pressing shift+alt+i"
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "logging"
+TEST_TYPE = "client"
+ATTRIBUTES = "suite:bvt-perbuild, suite:usb_detect"
+
+DOC = """
+Open feedback report and verify UI is correct
+"""
+
+job.run_test("logging_FeedbackReport")

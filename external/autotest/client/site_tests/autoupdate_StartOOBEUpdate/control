@@ -1,0 +1,24 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "dhaddock, Chromium OS"
+NAME = "autoupdate_StartOOBEUpdate"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "platform"
+TEST_TYPE = "client"
+PURPOSE = "Start a forced autoupdate at OOBE."
+TIME = "SHORT"
+
+DOC = """
+This test will start a forced autoupdate at OOBE.
+It will create a custom lsb-release file listing the devserver that we will
+use for the update. Then move through OOBE to the update screen. Once the
+update starts, the test will return.
+
+This test will be used with the companion server side test
+autoupdate_ForcedOOBEUpdate. The server side test will be responsible for
+starting this test and deciding on the final result.
+"""
+
+job.run_test('autoupdate_StartOOBEUpdate')

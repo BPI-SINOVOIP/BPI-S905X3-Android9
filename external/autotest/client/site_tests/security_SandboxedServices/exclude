@@ -1,0 +1,53 @@
+agetty
+autotest
+autotestd
+autotestd_monit
+check_ethernet.
+chrome
+chrome-sandbox
+endpoint
+flock
+grep
+init
+logger
+login
+nacl_helper
+nacl_helper_boo
+nacl_helper_non
+ping
+ply-image
+ps
+sleep
+sshd
+sudo
+tail
+x11vnc
+
+# TODO: We should use a diff name to check against here (i.e. the script).
+bash
+dash
+python
+python2
+python2.7
+python3
+python3.4
+python3.5
+python3.6
+python3.7
+sh
+
+# This script gets launched from time to time based on hardware events.
+laptop_mode
+
+# The minijail daemon itself isn't useful to track as it just launches other
+# daemons.  Plus, it usually runs as root so it can drop privs for daemons.
+minijail0
+minijail-init
+
+# When systemd starts an additional serial-getty, the process name is initially
+# '(agetty)', and it takes some time until the name changes to 'agetty'.
+(agetty)
+
+# Test images sometimes end up with an 'adb' process. https://crbug.com/792541.
+# Exclude for now, should eventually move to the baseline.
+adb

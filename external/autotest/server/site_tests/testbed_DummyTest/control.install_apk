@@ -1,0 +1,23 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'dshi'
+NAME = 'testbed_DummyTest.install_apk'
+TIME = 'SHORT'
+TEST_TYPE = 'Server'
+# All android tests do not support server-side packaging.
+REQUIRE_SSP = False
+ATTRIBUTES = "suite:testbed_push"
+
+DOC = """
+A dummy test to verify testbed can run basic provision and adb command to
+connected Android devices, and install apk to the devices.
+"""
+
+def run(machine):
+    job.run_test('testbed_DummyTest',
+                 testbed=hosts.create_target_machine(machine),
+                 test_apk_install=True)
+
+parallel_simple(run, machines)

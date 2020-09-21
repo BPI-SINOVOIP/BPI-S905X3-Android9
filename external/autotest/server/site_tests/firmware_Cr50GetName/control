@@ -1,0 +1,35 @@
+# Copyright 2018 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+
+AUTHOR = "mruthven"
+NAME = "firmware_Cr50GetName"
+PURPOSE = "Verify cr50-get-name"
+ATTRIBUTES = "suite:cr50_stress_flaky"
+TIME = "MEDIUM"
+TEST_TYPE = "server"
+DEPENDENCIES = "servo"
+
+DOC = """
+Verify cr50-get-name.sh returns the right cr50 image based on the board id.
+phase.
+
+@param iterations: Number of times to run the test
+@param dev_path: local path for the dev image
+"""
+
+args_dict = utils.args_to_dict(args)
+servo_args = hosts.CrosHost.get_servo_arguments(args_dict)
+
+def run(machine):
+    host = hosts.create_host(machine, servo_args=servo_args)
+
+    iterations = int(args_dict.get("iterations", 1))
+    dev_path = args_dict.get("dev_path", "")
+
+    job.run_test("firmware_Cr50GetName", host=host, cmdline_args=args,
+                 iterations=iterations, dev_path=dev_path)
+
+parallel_simple(run, machines)

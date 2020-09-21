@@ -1,0 +1,34 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+
+AUTHOR = "Chrome OS Team"
+NAME = "firmware_ConsecutiveLidSwitch.100"
+PURPOSE = "Servo based consecutive lid switch test"
+CRITERIA = "This test will fail if DUT fails to suspend/resume"
+ATTRIBUTES = "suite:faft_stress"
+TIME = "SHORT"
+TEST_CATEGORY = "Stress"
+TEST_CLASS = "firmware"
+TEST_TYPE = "server"
+
+DOC = """
+This test is intended to be run with many iterations to ensure that closing
+DUT lid triggers suspend and opening lid wakes it up.
+
+The iteration should be specified by the parameter -a "faft_iterations=10".
+"""
+
+args_dict = utils.args_to_dict(args)
+servo_args = hosts.CrosHost.get_servo_arguments(args_dict)
+
+args.append('faft_iterations=100')
+
+def run_consecutive_lid_switch(machine):
+    host = hosts.create_host(machine, servo_args=servo_args)
+    job.run_test("firmware_ConsecutiveLidSwitch",
+                 host=host, cmdline_args=args, disable_sysinfo=True)
+
+parallel_simple(run_consecutive_lid_switch, machines)

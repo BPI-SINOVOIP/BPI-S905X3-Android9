@@ -1,0 +1,29 @@
+# crbug.com/570550
+/opt/google/chrome/nacl_helper_nonsfi
+/sbin/insmod.static
+/usr/bin/cvt
+/usr/bin/gtf
+# crbug.com/341095
+/usr/bin/intel-virtual-output
+/usr/bin/synclient
+/usr/bin/syndaemon
+# crbug.com/682434
+/usr/lib64/conntrack-tools/ct_helper_amanda.so
+/usr/lib64/conntrack-tools/ct_helper_dhcpv6.so
+/usr/lib64/conntrack-tools/ct_helper_ftp.so
+/usr/lib64/conntrack-tools/ct_helper_mdns.so
+/usr/lib64/conntrack-tools/ct_helper_rpc.so
+/usr/lib64/conntrack-tools/ct_helper_sane.so
+/usr/lib64/conntrack-tools/ct_helper_ssdp.so
+/usr/lib64/conntrack-tools/ct_helper_tftp.so
+/usr/lib64/conntrack-tools/ct_helper_tns.so
+/usr/lib/conntrack-tools/ct_helper_amanda.so
+/usr/lib/conntrack-tools/ct_helper_ftp.so
+/usr/lib/conntrack-tools/ct_helper_mdns.so
+/usr/lib/conntrack-tools/ct_helper_dhcpv6.so
+/usr/lib/conntrack-tools/ct_helper_tftp.so
+/usr/lib/conntrack-tools/ct_helper_tns.so
+/usr/lib/conntrack-tools/ct_helper_rpc.so
+/usr/lib/conntrack-tools/ct_helper_sane.so
+/usr/lib/conntrack-tools/ct_helper_ssdp.so
+/usr/sbin/nfct

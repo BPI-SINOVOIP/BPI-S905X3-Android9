@@ -1,0 +1,32 @@
+--- android_icu4j/src/main/java/android/icu/text/Normalizer.java	2017-08-25 08:53:52.925883161 +0100
++++ android_icu4j/src/main/java/android/icu/text/Normalizer.java	2017-08-25 08:54:12.365921029 +0100
+@@ -1177,9 +1177,6 @@
+      *
+      *
+      * @return &lt;0 or 0 or &gt;0 as usual for string comparisons
+-     *
+-     * @see #normalize
+-     * @see #FCD
+      */
+     public static int compare(char[] s1, int s1Start, int s1Limit,
+                               char[] s2, int s2Start, int s2Limit,
+@@ -1237,9 +1234,6 @@
+      *     If set, then the following case folding options are used.
+      *
+      * @return &lt;0 or 0 or &gt;0 as usual for string comparisons
+-     *
+-     * @see #normalize
+-     * @see #FCD
+      */
+     public static int compare(String s1, String s2, int options) {
+         return internalCompare(s1, s2, options);
+@@ -1273,9 +1267,6 @@
+      *     If set, then the following case folding options are used.
+      *
+      * @return &lt;0 or 0 or &gt;0 as usual for string comparisons
+-     *
+-     * @see #normalize
+-     * @see #FCD
+      */
+     public static int compare(char[] s1, char[] s2, int options) {
+         return internalCompare(CharBuffer.wrap(s1), CharBuffer.wrap(s2), options);

@@ -1,0 +1,23 @@
+# Copyright (c) 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+TIME="SHORT"
+AUTHOR = "The Chromium OS Authors"
+DOC = """
+Tests some basic functionality of the CUPS daemon and the Upstart jobs that it
+relies on for socket-activation.
+"""
+NAME = "platform_CUPSDaemon"
+PURPOSE = "Test that CUPS daemon will launch on demand."
+CRITERIA = """
+Fail if Upstart won't launch CUPS properly or doesn't clean up its sockets
+correctly.
+"""
+ATTRIBUTES = "suite:bvt-cq, suite:smoke"
+TEST_CLASS = "platform"
+TEST_CATEGORY = "Functional"
+TEST_TYPE = "client"
+JOB_RETRIES = 2
+
+job.run_test("platform_CUPSDaemon")

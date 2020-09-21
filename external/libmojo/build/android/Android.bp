@@ -1,0 +1,13 @@
+python_library_host {
+    name: "mojom_build_android",
+    srcs: ["pylib/**/*.py"],
+    libs: ["mojom_build_android_gyp"],
+    version: {
+        py2: {
+            enabled: true,
+        },
+        py3: {
+            enabled: false,
+        },
+    },
+}

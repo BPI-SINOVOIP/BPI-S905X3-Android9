@@ -1,0 +1,72 @@
+diff --git a/libs/hwui/Android.bp b/libs/hwui/Android.bp
+index 303d05f084a..946aa9bb754 100644
+--- a/libs/hwui/Android.bp
++++ b/libs/hwui/Android.bp
+@@ -17,6 +17,7 @@ cc_defaults {
+         "-Wunreachable-code",
+         "-Werror",
+         "-fvisibility=hidden",
++	CFLAGS_FOR_BENCH_SUITE
+ 
+         // GCC false-positives on this warning, and since we -Werror that's
+         // a problem
+@@ -30,6 +31,8 @@ cc_defaults {
+         //"-DANDROID_ENABLE_LINEAR_BLENDING",
+     ],
+ 
++    ldflags: [LDFLAGS_FOR_BENCH_SUITE],
++
+     include_dirs: [
+         "external/skia/include/private",
+         "external/skia/src/core",
+@@ -231,6 +234,9 @@ cc_defaults {
+         export_proto_headers: true,
+     },
+ 
++    cflags: [CFLAGS_FOR_BENCH_SUITE],
++    ldflags: [LDFLAGS_FOR_BENCH_SUITE],
++
+     export_include_dirs: ["."],
+     export_shared_lib_headers: ["libRScpp"],
+ }
+@@ -240,7 +246,7 @@ cc_library {
+     defaults: [
+         "libhwui_defaults",
+ 
+-        // Enables fine-grained GLES error checking
++	// Enables fine-grained GLES error checking
+         // If enabled, every GLES call is wrapped & error checked
+         // Has moderate overhead
+         "hwui_enable_opengl_validation",
+@@ -257,7 +263,8 @@ cc_library_static {
+         "libhwui_defaults",
+         "hwui_debug",
+     ],
+-    cflags: ["-DHWUI_NULL_GPU"],
++    cflags: ["-DHWUI_NULL_GPU", CFLAGS_FOR_BENCH_SUITE],
++    ldflags: [LDFLAGS_FOR_BENCH_SUITE],
+     srcs: [
+         "debug/nullegl.cpp",
+     ],
+@@ -354,6 +361,9 @@ cc_benchmark {
+     whole_static_libs: ["libhwui"],
+     shared_libs: ["libmemunreachable"],
+ 
++    cflags: [CFLAGS_FOR_BENCH_SUITE],
++    ldflags: [LDFLAGS_FOR_BENCH_SUITE],
++
+     srcs: [
+         "tests/macrobench/TestSceneRunner.cpp",
+         "tests/macrobench/main.cpp",
+@@ -371,8 +381,11 @@ cc_benchmark {
+     cflags: [
+         "-include debug/wrap_gles.h",
+         "-DHWUI_NULL_GPU",
++	CFLAGS_FOR_BENCH_SUITE
+     ],
+ 
++    ldflags: [LDFLAGS_FOR_BENCH_SUITE],
++
+     whole_static_libs: ["libhwui_static_debug"],
+     shared_libs: ["libmemunreachable"],
+ 

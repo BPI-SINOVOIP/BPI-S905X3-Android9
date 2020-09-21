@@ -1,0 +1,16 @@
+AUTHOR = "Jeremy Orlow <jorlow@google.com>"
+NAME = "ReInstallMachine"
+TIME = "MEDIUM"
+TEST_CLASS = "Kernel"
+TEST_CATEGORY = "Utility"
+TEST_TYPE = "server"
+RUN_VERIFY = False
+DOC = """\
+This will re-install a machine, using the code in
+afe_utils.machine_install_and_update_labels()."""
+
+def run(machine):
+    host = hosts.create_host(machine)
+    job.run_test('reinstall', host=host, disable_sysinfo=True)
+
+job.parallel_simple(run, machines)

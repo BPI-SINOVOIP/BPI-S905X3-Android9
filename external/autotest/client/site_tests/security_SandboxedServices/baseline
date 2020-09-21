@@ -1,0 +1,102 @@
+exe,euser,egroup,pidns,caps,nonewprivs,filter
+
+# This is a comma separated file listing services that run on the device and the
+# expected security features that are enabled for it.
+#
+# Note: If you add a new service and it's being rejected because it's running as
+# root, do not just whitelist it here.  Services should rarely be running under
+# the root account.  Spend the time to improve the security of the system early
+# rather than trying to retrofit it later (especially in response to an attack).
+#
+# The fields:
+# exe: The name of the process in /proc/PID/comm (Note the 15 char limit).
+# euser: The user the account runs under (e.g. "syslog").
+# egroup: The group the account runs under (e.g. "syslog").
+# pidns: Whether the process runs in a unique pid namespace (Yes|No).
+# caps: Whether the process runs with restricted capabilities (Yes|No).
+# nonewprivs: Whether the process runs with no_new_privs set (minijail's -n).
+# filter: Whether the process runs with a seccomp filter (Yes|No).
+#
+# exe,euser,egroup are mandatory checks.  All the other fields are opt-in.  That
+# is to say, a "No" setting means the check is skipped, while a "Yes" setting
+# enforces the permission setting.
+
+# Since udev creates device nodes and changes owners/perms, it needs to run as
+# root.  TODO: We should namespace it.
+udevd,root,root,No,No,No,No
+
+# Frecon needs to run as root and in the original namespace because it might
+# launch new shells via login.  Would be nice if it integrated things.
+frecon,root,root,No,No,No,No
+
+session_manager,root,root,No,No,No,No
+rsyslogd,syslog,syslog,No,Yes,No,No
+dbus-daemon,messagebus,messagebus,No,Yes,No,No
+wpa_supplicant,wpa,wpa,No,Yes,Yes,No
+shill,root,root,No,No,No,No
+chapsd,chaps,chronos-access,No,Yes,Yes,No
+cryptohomed,root,root,No,No,No,No
+powerd,power,power,No,Yes,No,No
+ModemManager,modem,modem,No,Yes,Yes,No
+dhcpcd,dhcp,dhcp,No,Yes,No,No
+metrics_daemon,root,root,No,No,No,No
+disks,cros-disks,cros-disks,No,Yes,Yes,No
+update_engine,root,root,No,No,No,No
+bluetoothd,bluetooth,bluetooth,No,Yes,Yes,No
+debugd,root,root,No,No,No,No
+cras,cras,cras,No,Yes,Yes,No
+tcsd,tss,root,No,Yes,No,No
+cromo,cromo,cromo,No,No,No,No
+wimax-manager,root,root,No,No,No,No
+mtpd,mtp,mtp,No,Yes,Yes,Yes
+tlsdated,tlsdate,tlsdate,No,Yes,No,No
+tlsdated-setter,root,root,No,No,Yes,Yes
+lid_touchpad_he,root,root,No,No,No,No
+thermal.sh,root,root,No,No,No,No
+daisydog,watchdog,watchdog,Yes,Yes,Yes,No
+permission_brok,devbroker,root,No,Yes,Yes,No
+netfilter-queue,nfqueue,nfqueue,No,Yes,No,Yes
+anomaly_collect,root,root,No,No,No,No
+attestationd,attestation,attestation,No,No,No,No
+periodic_schedu,root,root,No,No,No,No
+esif_ufd,root,root,No,No,No,No
+easy_unlock,easy-unlock,easy-unlock,No,No,No,No
+sslh-fork,sslh,sslh,Yes,Yes,No,Yes
+upstart-socket-,root,root,No,No,No,No
+timberslide,root,root,No,No,No,No
+firewalld,firewall,firewall,Yes,Yes,Yes,No
+conntrackd,nfqueue,nfqueue,No,Yes,Yes,Yes
+avahi-daemon,avahi,avahi,No,Yes,No,No
+upstart-udev-br,root,root,No,No,No,No
+midis,midis,midis,Yes,Yes,Yes,Yes
+
+# ARC-related services running on Chrome OS.
+# exe,euser,egroup,pidns,caps,nonewprivs,filter
+arc_camera_serv,arc-camera,arc-camera,No,Yes,No,No
+arc_camera3_ser,arc-camera,arc-camera,Yes,Yes,Yes,Yes
+arc_camera_algo,arc-camera,arc-camera,Yes,Yes,Yes,Yes
+arc-networkd,root,root,No,No,No,No
+arc-obb-mounter,root,root,Yes,No,No,No
+arc-oemcrypto,arc-oemcrypto,arc-oemcrypto,Yes,Yes,Yes,Yes
+
+# Broadcomm Bluetooth firmware patch downloader runs on some veyron boards.
+brcm_patchram_p,root,root,No,No,No,No
+
+# tpm_managerd and trunks run on all TPM2 boards, such as reef.
+tpm_managerd,root,root,No,No,No,No
+trunksd,trunks,trunks,No,Yes,Yes,Yes
+
+# ARC container.
+# root inside the ARC container.
+app_process,android-root,android-root,Yes,No,No,No
+debuggerd,android-root,android-root,Yes,No,No,No
+debuggerd:sig,android-root,android-root,Yes,No,No,No
+healthd,android-root,android-root,Yes,No,No,No
+vold,android-root,android-root,Yes,No,No,No
+
+# Non-root inside the ARC container.
+boot_latch,656360,656360,Yes,Yes,No,No
+bugreportd,657360,656367,Yes,Yes,No,No
+logd,656396,656396,Yes,Yes,No,No
+servicemanager,656360,656360,Yes,Yes,No,No
+surfaceflinger,656360,656363,Yes,Yes,No,No

@@ -1,0 +1,54 @@
+<!-- Copyright (c) 2013 The Chromium OS Authors. All rights reserved. -->
+<!-- Use of this source code is governed by a BSD-style license that can be -->
+<!-- found in the LICENSE file. -->
+
+<html>
+  <head>
+    <TITLE>Audio Tuning</TITLE>
+    <link rel="stylesheet" href="audio.css" type="text/css">
+    <script type="text/javascript" src="audio.js"></script>
+    <script type="text/javascript" src="setup_credential.js"></script>
+    <script type="text/javascript" src="google_drive_picker.js"></script>
+    <script src="https://apis.google.com/js/client.js?onload=onGoogleClientApiLoad"></script>
+  </head>
+  <h1> Audio Source </h1>
+  URL: <input size=100 id="audio_source_url" list=samples autofocus=autofocus
+	      onchange="audio_source_set(this.value)"> </input>
+  <!-- Put your audio clip list here
+  <select id=samples onchange="audio_source_select(this)">
+    <option value="http://www.example.com/audio/clip1.wav">clip1</option>
+    <option value="http://www.example.com/audio/clip2.ogg">clip2</option>
+  </select>
+  -->
+  <input type=button value='Local Audio File' onclick="load_audio()"> </input>
+  <input type=button id='google_drive_pick_file' value='Select File from Google Drive' disable> </input>
+  <p></p>
+  <span id=audio_player_container>
+    <audio controls="controls" id="audio_player" loop=loop
+	   oncanplay="audio_source_canplay()"> </audio>
+  </span>
+  <span id=audio_loading style='visibility:hidden;color:#e59700'>Loading...</span>
+  <span id="global_section">
+  </span>
+
+  <input type=button value='Save Config' onclick="save_config()" id=save_config disabled> </input>
+  <input type=button value='Load Config' onclick="load_config()"> </input>
+  <div style="display:none">
+    <input type=file id=config_file onchange="config_file_changed()">
+    <input type=file id=audio_file onchange="audio_file_changed()">
+    <a id=save_config_anchor></a>
+  </div>
+
+  <h1> DRC </h1>
+  <div id="drc_section">
+  </div>
+  <h1> EQ Left </h1>
+  <div id="eq_left_section">
+  </div>
+  <h1> EQ Right </h1>
+  <div id="eq_right_section">
+  </div>
+  <body>
+  </body>
+</html>
+<html>

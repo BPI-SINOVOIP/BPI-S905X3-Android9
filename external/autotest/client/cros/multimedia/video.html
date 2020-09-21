@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style>
+    #video {
+      min-width: 100%;
+      max-width: 100%;
+      min-height: 100%;
+      max-height: 100%;
+    }
+    </style>
+  </head>
+
+  <body style="margin: 0px;">
+    <video id='video' name='media'>
+      <source src='test.mp4' type='video/mp4'>
+    </video>
+  </body>
+
+  <script type="text/javascript">
+    var can_play = false;
+    var script_ready = false;
+    var finished_seeking = false;
+    var error_status = false;
+
+    (function() {
+      video.addEventListener('canplay', function(event) {
+        can_play = true;
+      }, false);
+    })();
+
+    (function() {
+      video.addEventListener('error', function(event) {
+        error_status = true;
+      }, false);
+    })();
+
+    (function() {
+      video.addEventListener('seeked', function(event) {
+        finished_seeking = true;
+      }, false);
+    })();
+
+    (function() {
+      video.addEventListener('seeking', function(event) {
+        finished_seeking = false;
+      }, false);
+    })();
+
+    function loadVideoSource(video_source_path) {
+      video.src = video_source_path;
+      return true;
+    }
+
+    function canplay() {
+      return can_play;
+    }
+
+    function finishedSeeking() {
+      return finished_seeking;
+    }
+
+    function play() {
+      video.play();
+    }
+
+    function pause() {
+      video.pause();
+    }
+
+    function currentTime()  {
+      return video.currentTime;
+    }
+
+    function errorDetected() {
+      return error_status;
+    }
+
+    function setControls() {
+      video.setAttribute("controls", "true");
+    }
+    script_ready = true;
+  </script>
+
+</html>

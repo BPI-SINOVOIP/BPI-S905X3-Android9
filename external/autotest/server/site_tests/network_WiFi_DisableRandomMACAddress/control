@@ -1,0 +1,24 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'ejcaruso, snanda'
+NAME = 'network_WiFi_DisableRandomMACAddress'
+TIME = 'SHORT'
+TEST_TYPE = 'Server'
+DEPENDENCIES = 'wificell, packet_capture'
+ATTRIBUTES = 'suite:wifi_matfunc, suite:wifi_matfunc_noservo'
+
+DOC = """
+This test verifies that MAC address randomization can be
+turned on and then off, and that scans launched afterwards
+don't continue to randomize the MAC address.
+"""
+
+def run(machine):
+    host = hosts.create_host(machine)
+    job.run_test('network_WiFi_DisableRandomMACAddress',
+                 host=host,
+                 raw_cmdline_args=args)
+
+parallel_simple(run, machines)

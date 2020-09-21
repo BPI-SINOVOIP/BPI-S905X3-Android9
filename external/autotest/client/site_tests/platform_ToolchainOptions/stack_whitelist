@@ -1,0 +1,6 @@
+# Whitelist of ELF files with an executable stack. Hint: this file should
+# have nothing listed. :)
+#
+# FIXME: Remove this once the bug is fixed.
+# https://crbug.com/659234
+/opt/google/containers/android/rootfs/root/vendor/bin/houdini

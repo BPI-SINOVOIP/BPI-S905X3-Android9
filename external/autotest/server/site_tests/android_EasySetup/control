@@ -1,0 +1,23 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'bpeake'
+NAME = 'android_EasySetup'
+TIME = 'SHORT'
+TEST_TYPE = 'Server'
+
+DOC = """
+Sets up a phone how the user wants.
+
+"""
+
+import common
+from autotest_lib.server import utils
+
+def run(machine):
+    job.run_test('android_EasySetup',
+                 testbed=hosts.create_testbed(machine))
+
+
+parallel_simple(run, machines)

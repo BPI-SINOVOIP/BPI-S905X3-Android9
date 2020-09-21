@@ -1,0 +1,31 @@
+From 860cea0bba7f78cf4cbb78251849e6ef159e6914 Mon Sep 17 00:00:00 2001
+From: Steve Muckle <smuckle@google.com>
+Date: Mon, 9 Oct 2017 15:06:34 -0700
+Subject: [PATCH] selftests/exec: use /system/bin/sh
+
+The Android shell is located at /system/bin/sh.
+
+Bug: 67016227
+Test: run vts-kernel -m VtsKernelLinuxKselftestStaging
+Change-Id: I1b33f382325011f507c7a0bb2120e5ff70c2534c
+Signed-off-by: Steve Muckle <smuckle@google.com>
+---
+ tools/testing/selftests/exec/execveat.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tools/testing/selftests/exec/execveat.c b/tools/testing/selftests/exec/execveat.c
+index 67cd4597db2b..1d1f28894199 100644
+--- a/tools/testing/selftests/exec/execveat.c
++++ b/tools/testing/selftests/exec/execveat.c
+@@ -372,7 +372,7 @@ static int run_tests(void)
+ static void prerequisites(void)
+ {
+ 	int fd;
+-	const char *script = "#!/bin/sh\nexit $*\n";
++	const char *script = "#!/system/bin/sh\nexit $*\n";
+ 
+ 	/* Create ephemeral copies of files */
+ 	exe_cp("execveat", "execveat.ephemeral");
+-- 
+2.16.0.rc1.238.g530d649a79-goog
+

@@ -1,0 +1,35 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+
+AUTHOR = "denniswu@chromium.org"
+NAME = "enterprise_CFM_RebootStress.partners"
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "enterprise"
+TEST_TYPE = "server"
+ATTRIBUTES = "suite:bluestreak-partners"
+JOB_RETRIES = 3
+
+DOC = """
+This test clears the TPM, enrolls the device into CFM, launches the Hangout app
+and stress tests by rebooting the device multiple times using Chrome runtime
+restart() API. It clears the TPM at the end of the test run to reset the device.
+This test bypasses servo check and is used by third party vendor PAL Acoustics.
+"""
+
+args_dict = utils.args_to_dict(args)
+
+
+def run_test(machine):
+    host = hosts.create_host(machine, servo_args=None)
+    job.run_test('enterprise_CFM_RebootStress',
+                 host=host,
+                 reboot_cycles=100,
+                 is_meeting=False,
+                 tag='partners')
+
+
+parallel_simple(run_test, machines)

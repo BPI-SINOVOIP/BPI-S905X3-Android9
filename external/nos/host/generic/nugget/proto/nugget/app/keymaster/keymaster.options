@@ -1,0 +1,17 @@
+nugget.app.keymaster.ImportWrappedKeyRequest.initialization_vector max_size:12
+nugget.app.keymaster.ImportWrappedKeyRequest.gcm_tag max_size:16
+nugget.app.keymaster.ImportWrappedKeyRequest.masking_key max_size:32
+nugget.app.keymaster.SetRootOfTrustRequest.digest max_size:32
+nugget.app.keymaster.SetBootStateRequest.public_key max_size:32
+nugget.app.keymaster.SetBootStateRequest.boot_hash max_size:32
+nugget.app.keymaster.ComputeSharedHmacRequest.hmac_sharing_params max_count:3
+nugget.app.keymaster.ComputeSharedHmacResponse.sharing_check max_size:32
+nugget.app.keymaster.DTupHandshakeRequest.nonce_client max_size:32
+nugget.app.keymaster.DTupHandshakeResponse.nonce_citadel max_size:32
+nugget.app.keymaster.DTupHandshakeResponse.signature max_size:32
+nugget.app.keymaster.DTupFetchInputEventResponse.signature max_size:32
+nugget.app.keymaster.GetBootInfoResponse.boot_key max_size:32
+nugget.app.keymaster.GetBootInfoResponse.boot_hash max_size:32
+nugget.app.keymaster.ProvisionPresharedSecretRequest.preshared_secret max_size:32
+nugget.app.keymaster.StartAttestKeyRequest.not_before max_size:13
+nugget.app.keymaster.StartAttestKeyRequest.not_after max_size:13

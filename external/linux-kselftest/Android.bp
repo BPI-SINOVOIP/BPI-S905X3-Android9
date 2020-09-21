@@ -1,0 +1,406 @@
+//
+// Copyright (C) 2016 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+cc_defaults {
+    name: "kselftest_defaults",
+    cflags: [
+        // Hacks for bionic compatibility
+        "-include bionic-compat.h",
+
+        "-Wall",
+
+        // Silence noisy warnings
+        "-Wno-deprecated",
+        "-Wno-format",
+        "-Wno-gnu-designator",
+        "-Wno-macro-redefined",
+        "-Wno-missing-field-initializers",
+        "-Wno-parentheses-equality",
+        "-Wno-pointer-arith",
+        "-Wno-sign-compare",
+        "-Wno-unused-parameter",
+        "-Wno-shift-negative-value",
+        "-Wno-switch",
+        "-Wno-absolute-value",
+        "-Wno-non-literal-null-conversion",
+        "-Wno-unused-variable",
+        "-Wno-unused-parameter",
+        "-Wno-empty-body",
+        "-Wno-literal-conversion",
+        "-Werror",
+    ],
+
+    local_include_dirs: ["android/include"],
+    gtest: false,
+    no_named_install_directory: true,
+
+    test_per_src: true,
+    arch: {
+        mips: {
+            enabled: false,
+        },
+        mips64: {
+            enabled: false,
+        },
+    },
+}
+
+// breakpoints test
+cc_test {
+    name: "kselftest_breakpoints_tests",
+    relative_install_path: "linux-kselftest/breakpoints",
+    srcs: [
+        "tools/testing/selftests/breakpoints/step_after_suspend_test.c",
+    ],
+    defaults: ["kselftest_defaults"],
+    arch: {
+        arm: {
+            enabled: false,
+        },
+        arm64: {
+            srcs: [
+                "tools/testing/selftests/breakpoints/breakpoint_test_arm64.c",
+            ],
+        },
+        x86: {
+            srcs: [
+                "tools/testing/selftests/breakpoints/breakpoint_test.c",
+            ],
+        },
+    },
+}
+
+// capabilities test
+cc_test {
+    name: "kselftest_capabilities_test",
+    relative_install_path: "linux-kselftest/capabilities",
+    srcs: [
+        "tools/testing/selftests/capabilities/test_execve.c",
+        "tools/testing/selftests/capabilities/validate_cap.c",
+    ],
+    defaults: ["kselftest_defaults"],
+    static_libs: ["libcap-ng"],
+}
+
+// Efivarfs test
+cc_test {
+    name: "kselftest_efivarfs_tests",
+    relative_install_path: "linux-kselftest/efivarfs",
+    srcs: [
+        "tools/testing/selftests/efivarfs/open-unlink.c",
+        "tools/testing/selftests/efivarfs/create-read.c",
+    ],
+    defaults: ["kselftest_defaults"],
+}
+
+// Exec test
+cc_test {
+    name: "kselftest_exec_test",
+    relative_install_path: "linux-kselftest/exec",
+    srcs: [
+        "tools/testing/selftests/exec/execveat.c",
+    ],
+    defaults: ["kselftest_defaults"],
+}
+
+// Futex test
+cc_test {
+    name: "kselftest_futex_tests",
+    relative_install_path: "linux-kselftest/futex/functional",
+    srcs: [
+        "tools/testing/selftests/futex/functional/futex_requeue_pi.c",
+        "tools/testing/selftests/futex/functional/futex_requeue_pi_mismatched_ops.c",
+        "tools/testing/selftests/futex/functional/futex_requeue_pi_signal_restart.c",
+        "tools/testing/selftests/futex/functional/futex_wait_private_mapped_file.c",
+        "tools/testing/selftests/futex/functional/futex_wait_timeout.c",
+        "tools/testing/selftests/futex/functional/futex_wait_uninitialized_heap.c",
+        "tools/testing/selftests/futex/functional/futex_wait_wouldblock.c",
+    ],
+    local_include_dirs: [
+        "tools/testing/selftests/futex/include",
+        "tools/testing/selftests",
+    ],
+    cflags: [
+        "-D_GNU_SOURCE",
+        "-pthread",
+    ],
+    defaults: ["kselftest_defaults"],
+}
+
+// intel_pstate test
+cc_test {
+    name: "kselftest_intel_pstate_tests",
+    relative_install_path: "linux-kselftest/intel_pstate",
+    srcs: [
+        "tools/testing/selftests/intel_pstate/aperf.c",
+        "tools/testing/selftests/intel_pstate/msr.c",
+    ],
+    cflags: [
+        "-D_GNU_SOURCE",
+    ],
+    defaults: ["kselftest_defaults"],
+    // TODO: test_data: intel_pstate/run.sh
+}
+
+// Kcmp test
+cc_test {
+    name: "kselftest_kcmp_tests",
+    relative_install_path: "linux-kselftest/kcmp",
+    srcs: ["tools/testing/selftests/kcmp/kcmp_test.c"],
+    defaults: ["kselftest_defaults"],
+}
+
+// media_tests test
+cc_test {
+    name: "kselftest_media_tests",
+    relative_install_path: "linux-kselftest/media_tests",
+    srcs: [
+        "tools/testing/selftests/media_tests/media_device_test.c",
+        "tools/testing/selftests/media_tests/media_device_open.c",
+        "tools/testing/selftests/media_tests/video_device_test.c",
+    ],
+    defaults: ["kselftest_defaults"],
+}
+
+// Membarrier test
+cc_test {
+    name: "kselftest_membarrier_tests",
+    relative_install_path: "linux-kselftest/membarrier",
+    srcs: ["tools/testing/selftests/membarrier/membarrier_test.c"],
+    defaults: ["kselftest_defaults"],
+}
+
+// Mount test
+cc_test {
+    name: "kselftest_mount_tests",
+    relative_install_path: "linux-kselftest/mount",
+    srcs: ["tools/testing/selftests/mount/unprivileged-remount-test.c"],
+    defaults: ["kselftest_defaults"],
+}
+
+// Net test
+cc_test {
+    name: "kselftest_net_tests",
+    relative_install_path: "linux-kselftest/net",
+    srcs: [
+        "tools/testing/selftests/net/socket.c",
+        "tools/testing/selftests/net/psock_fanout.c",
+        "tools/testing/selftests/net/psock_tpacket.c",
+        "tools/testing/selftests/net/reuseport_dualstack.c",
+        "tools/testing/selftests/net/reuseaddr_conflict.c",
+    ],
+    defaults: ["kselftest_defaults"],
+    // TODO: test_data: net/test_bpf.sh
+}
+
+// Ptrace test
+cc_test {
+    name: "kselftest_ptrace_tests",
+    relative_install_path: "linux-kselftest/ptrace",
+    srcs: ["tools/testing/selftests/ptrace/peeksiginfo.c"],
+    defaults: ["kselftest_defaults"],
+}
+
+// seccomp test
+cc_test {
+    name: "kselftest_seccomp_tests",
+    relative_install_path: "linux-kselftest/seccomp",
+    srcs: ["tools/testing/selftests/seccomp/seccomp_bpf.c"],
+    defaults: ["kselftest_defaults"],
+}
+
+// size test
+cc_test {
+    name: "kselftest_size_test",
+    relative_install_path: "linux-kselftest/size",
+    srcs: ["tools/testing/selftests/size/get_size.c"],
+    defaults: ["kselftest_defaults"],
+    nocrt: true,
+}
+
+// splice test
+cc_test {
+    name: "kselftest_splice_test",
+    relative_install_path: "linux-kselftest/splice",
+    srcs: ["tools/testing/selftests/splice/default_file_splice_read.c"],
+    defaults: ["kselftest_defaults"],
+}
+
+// Timer test
+cc_test {
+    name: "kselftest_timer_tests",
+    relative_install_path: "linux-kselftest/timers",
+    srcs: [
+        "tools/testing/selftests/timers/adjtick.c",
+        "tools/testing/selftests/timers/alarmtimer-suspend.c",
+        "tools/testing/selftests/timers/change_skew.c",
+        "tools/testing/selftests/timers/clocksource-switch.c",
+        "tools/testing/selftests/timers/freq-step.c",
+        "tools/testing/selftests/timers/inconsistency-check.c",
+        "tools/testing/selftests/timers/leap-a-day.c",
+        "tools/testing/selftests/timers/leapcrash.c",
+        "tools/testing/selftests/timers/nanosleep.c",
+        "tools/testing/selftests/timers/nsleep-lat.c",
+        "tools/testing/selftests/timers/posix_timers.c",
+        "tools/testing/selftests/timers/raw_skew.c",
+        "tools/testing/selftests/timers/rtctest.c",
+        "tools/testing/selftests/timers/rtctest_setdate.c",
+        "tools/testing/selftests/timers/set-2038.c",
+        "tools/testing/selftests/timers/set-tai.c",
+        "tools/testing/selftests/timers/set-timer-lat.c",
+        "tools/testing/selftests/timers/set-tz.c",
+        "tools/testing/selftests/timers/skew_consistency.c",
+        "tools/testing/selftests/timers/threadtest.c",
+        "tools/testing/selftests/timers/valid-adjtimex.c",
+    ],
+    cflags: [
+        "-O3",
+        "-DKTEST",
+    ],
+    defaults: ["kselftest_defaults"],
+}
+
+// vdso test
+cc_test {
+    name: "kselftest_vdso_test",
+    relative_install_path: "linux-kselftest/vDSO",
+    srcs: [
+        "tools/testing/selftests/vDSO/parse_vdso.c",
+        "tools/testing/selftests/vDSO/vdso_test.c",
+    ],
+    defaults: ["kselftest_defaults"],
+    test_per_src: false,
+}
+
+// Vm test
+cc_test {
+    name: "kselftest_vm_tests",
+    relative_install_path: "linux-kselftest/vm",
+    srcs: [
+        "tools/testing/selftests/vm/compaction_test.c",
+        "tools/testing/selftests/vm/hugepage-mmap.c",
+        "tools/testing/selftests/vm/hugepage-shm.c",
+        "tools/testing/selftests/vm/map_hugetlb.c",
+        "tools/testing/selftests/vm/mlock-random-test.c",
+        "tools/testing/selftests/vm/mlock2-tests.c",
+        "tools/testing/selftests/vm/on-fault-limit.c",
+        "tools/testing/selftests/vm/thuge-gen.c",
+        "tools/testing/selftests/vm/transhuge-stress.c",
+    ],
+    defaults: ["kselftest_defaults"],
+    static_libs: ["libcap"],
+}
+
+cc_test {
+    name: "kselftest_vm64_tests",
+    relative_install_path: "linux-kselftest/vm",
+    srcs: [
+        "tools/testing/selftests/vm/virtual_address_range.c",
+    ],
+    defaults: ["kselftest_defaults"],
+    enabled: false,
+    arch: {
+        arm64: {
+            enabled: true,
+            cflags: ["-D__aarch64__"],
+        }
+    }
+}
+
+// x86 test
+cc_test {
+    name: "kselftest_x86_tests",
+    relative_install_path: "linux-kselftest/x86",
+    srcs: [
+        "tools/testing/selftests/x86/single_step_syscall.c",
+        "tools/testing/selftests/x86/syscall_nt.c",
+        "tools/testing/selftests/x86/test_mremap_vdso.c",
+        "tools/testing/selftests/x86/check_initial_reg_state.c",
+        "tools/testing/selftests/x86/ldt_gdt.c"
+    ],
+    arch: {
+        arm: {
+            enabled: false,
+        },
+        arm64: {
+            enabled: false,
+        },
+        x86: {
+            srcs: [
+                "tools/testing/selftests/x86/sysret_ss_attrs.c",
+                //"tools/testing/selftests/x86/entry_from_vm86.c",
+                "tools/testing/selftests/x86/syscall_arg_fault.c",
+                "tools/testing/selftests/x86/unwind_vdso.c",
+                "tools/testing/selftests/x86/test_FCMOV.c",
+                "tools/testing/selftests/x86/test_FCOMI.c",
+                "tools/testing/selftests/x86/test_FISTTP.c",
+                "tools/testing/selftests/x86/vdso_restorer.c",
+            ],
+        },
+    },
+    cflags: [
+        "-O2",
+        "-std=gnu99",
+        "-pthread",
+    ],
+    defaults: ["kselftest_defaults"],
+}
+
+cc_test {
+    name: "kselftest_x86_ptrace_syscall",
+    stem: "ptrace_syscall",
+    relative_install_path: "linux-kselftest/x86",
+    srcs: [
+        "tools/testing/selftests/x86/ptrace_syscall.c",
+        "tools/testing/selftests/x86/raw_syscall_helper_32.S",
+    ],
+    cflags: [
+        "-O2",
+        "-std=gnu99",
+        "-pthread",
+    ],
+    test_per_src: false,
+    defaults: ["kselftest_defaults"],
+    enabled: false,
+    arch: {
+        x86: {
+            enabled: true,
+        },
+    },
+}
+
+cc_test {
+    name: "kselftest_x86_test_syscall_vdso",
+    stem: "test_syscall_vdso",
+    relative_install_path: "linux-kselftest/x86",
+    srcs: [
+        "tools/testing/selftests/x86/test_syscall_vdso.c",
+        "tools/testing/selftests/x86/thunks_32.S",
+    ],
+    cflags: [
+        "-O2",
+        "-std=gnu99",
+        "-pthread",
+    ],
+    test_per_src: false,
+    defaults: ["kselftest_defaults"],
+    enabled: false,
+    arch: {
+        x86: {
+            enabled: true,
+        },
+    },
+}

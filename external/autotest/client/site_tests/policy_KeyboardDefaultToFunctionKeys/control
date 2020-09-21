@@ -1,0 +1,24 @@
+# Copyright 2018 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'timkovich'
+NAME = 'policy_KeyboardDefaultFunctionKeys'
+TIME = 'SHORT'
+TEST_CATEGORY = 'General'
+TEST_CLASS = 'enterprise'
+TEST_TYPE = 'client'
+
+DOC = '''
+Verify effect of 'KeyboardDefaultFunctionKeys' policy on Chrome OS behavior.
+
+This test verifies the effect of the KeyboardDefaultFunctionKeys user policy on
+Chrome OS client behavior. It exercises all valid policy values across 3
+test cases: 'true', 'false', and 'notset'. The behavior of 'false' and 'notset'
+should be equivalent.
+
+'''
+
+args_dict = utils.args_to_dict(args)
+
+job.run_test('policy_KeyboardDefaultFunctionKeys', **args_dict)

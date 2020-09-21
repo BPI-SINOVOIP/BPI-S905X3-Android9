@@ -1,0 +1,27 @@
+python_binary_host {
+    name: "mojom_bindings_generator",
+    main: "mojom_bindings_generator.py",
+    libs: [
+        "mojom_build_android",
+        "mojom_bindings_pylib",
+        "mojom_third_party",
+    ],
+    srcs: [
+        "generators/*.py",
+        "*.py",
+    ],
+    data: [
+        "generators/js_templates/*.tmpl",
+        "generators/java_templates/*.tmpl",
+        "generators/cpp_templates/*.tmpl",
+    ],
+    version: {
+        py2: {
+            enabled: true,
+        },
+        py3: {
+            enabled: false,
+        },
+    },
+}
+

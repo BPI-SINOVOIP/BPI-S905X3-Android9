@@ -1,0 +1,287 @@
+03-26 16:21:42 I/ModuleRepo: chromeos2-row8-rack4-host19:22 running 1 modules, expected to complete in 6m 38s
+03-26 16:21:42 I/CompatibilityTest: Starting 1 module on chromeos2-row8-rack4-host19:22
+03-26 16:21:42 D/ConfigurationFactory: Loading configuration 'system-status-checkers'
+03-26 16:21:42 D/ModuleDef: Preparer: LocationCheck
+03-26 16:21:42 I/PreconditionPreparer: Value true for option skip-media-download not applicable for class com.android.compatibility.common.tradefed.targetprep.LocationCheck
+03-26 16:21:42 I/PreconditionPreparer: Value true for option skip-media-download not applicable for class com.android.compatibility.common.tradefed.targetprep.LocationCheck
+03-26 16:21:43 I/CompatibilityTest: Running system status checker before module execution: CtsAppTestCases
+03-26 16:21:43 D/ModuleDef: Preparer: ApkInstaller
+03-26 16:21:43 D/TestAppInstallSetup: Installing apk from /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases/CtsSimpleApp.apk ...
+03-26 16:21:43 D/CtsSimpleApp.apk: Uploading CtsSimpleApp.apk onto device 'chromeos2-row8-rack4-host19:22'
+03-26 16:21:43 D/Device: Uploading file onto device 'chromeos2-row8-rack4-host19:22'
+03-26 16:21:44 D/RunUtil: Running command with timeout: 60000ms
+03-26 16:21:44 D/RunUtil: Running [aapt, dump, badging, /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases/CtsSimpleApp.apk]
+03-26 16:21:44 D/TestAppInstallSetup: Installing apk from /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases/CtsAppTestStubs.apk ...
+03-26 16:21:44 D/CtsAppTestStubs.apk: Uploading CtsAppTestStubs.apk onto device 'chromeos2-row8-rack4-host19:22'
+03-26 16:21:44 D/Device: Uploading file onto device 'chromeos2-row8-rack4-host19:22'
+03-26 16:21:47 D/RunUtil: Running command with timeout: 60000ms
+03-26 16:21:47 D/RunUtil: Running [aapt, dump, badging, /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases/CtsAppTestStubs.apk]
+03-26 16:21:47 D/TestAppInstallSetup: Installing apk from /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases/CtsAppTestCases.apk ...
+03-26 16:21:47 D/CtsAppTestCases.apk: Uploading CtsAppTestCases.apk onto device 'chromeos2-row8-rack4-host19:22'
+03-26 16:21:47 D/Device: Uploading file onto device 'chromeos2-row8-rack4-host19:22'
+03-26 16:21:49 D/RunUtil: Running command with timeout: 60000ms
+03-26 16:21:49 D/RunUtil: Running [aapt, dump, badging, /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases/CtsAppTestCases.apk]
+03-26 16:21:49 D/ModuleDef: Test: AndroidJUnitTest
+03-26 16:21:49 D/InstrumentationTest: Collecting test info for android.app.cts on device chromeos2-row8-rack4-host19:22
+03-26 16:21:49 I/RemoteAndroidTest: Running am instrument -w -r --abi x86  -e testFile /data/local/tmp/ajur/includes.txt -e debug false -e log true -e timeout_msec 300000 android.app.cts/android.support.test.runner.AndroidJUnitRunner on google-chromebook_11_model_3180-chromeos2-row8-rack4-host19:22
+03-26 16:21:50 I/RemoteAndroidTest: Running am instrument -w -r --abi x86  -e testFile /data/local/tmp/ajur/includes.txt -e debug false -e log false -e timeout_msec 300000 android.app.cts/android.support.test.runner.AndroidJUnitRunner on google-chromebook_11_model_3180-chromeos2-row8-rack4-host19:22
+03-26 16:21:51 D/ModuleListener: ModuleListener.testRunStarted(android.app.cts, 5)
+03-26 16:21:51 I/ConsoleReporter: [chromeos2-row8-rack4-host19:22] Starting x86 CtsAppTestCases with 5 tests
+03-26 16:21:51 D/ModuleListener: ModuleListener.testStarted(android.app.cts.LifecycleTest#testTabBasic)
+03-26 16:21:51 D/ModuleListener: ModuleListener.testEnded(android.app.cts.LifecycleTest#testTabBasic, {})
+03-26 16:21:51 I/ConsoleReporter: [1/5 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.LifecycleTest#testTabBasic pass
+03-26 16:21:51 D/ModuleListener: ModuleListener.testStarted(android.app.cts.SystemFeaturesTest#testCameraFeatures)
+03-26 16:21:51 D/ModuleListener: ModuleListener.testFailed(android.app.cts.SystemFeaturesTest#testCameraFeatures, junit.framework.AssertionFailedError: PackageManager#hasSystemFeature should NOT return true for android.hardware.camera.front
+at junit.framework.Assert.fail(Assert.java:50)
+at junit.framework.Assert.assertTrue(Assert.java:20)
+at junit.framework.Assert.assertFalse(Assert.java:34)
+at android.app.cts.SystemFeaturesTest.assertNotAvailable(SystemFeaturesTest.java:508)
+at android.app.cts.SystemFeaturesTest.testCameraFeatures(SystemFeaturesTest.java:122)
+at java.lang.reflect.Method.invoke(Native Method)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at junit.framework.TestCase.runBare(TestCase.java:134)
+at junit.framework.TestResult$1.protect(TestResult.java:115)
+at android.support.test.internal.runner.junit3.AndroidTestResult.runProtected(AndroidTestResult.java:77)
+at junit.framework.TestResult.run(TestResult.java:118)
+at android.support.test.internal.runner.junit3.AndroidTestResult.run(AndroidTestResult.java:55)
+at junit.framework.TestCase.run(TestCase.java:124)
+at android.support.test.internal.runner.junit3.NonLeakyTestSuite$NonLeakyTest.run(NonLeakyTestSuite.java:63)
+at android.support.test.internal.runner.junit3.AndroidTestSuite$1.run(AndroidTestSuite.java:97)
+at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:428)
+at java.util.concurrent.FutureTask.run(FutureTask.java:237)
+at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+at java.lang.Thread.run(Thread.java:761)
+)
+03-26 16:21:51 I/ConsoleReporter: [2/5 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.SystemFeaturesTest#testCameraFeatures fail: junit.framework.AssertionFailedError: PackageManager#hasSystemFeature should NOT return true for android.hardware.camera.front
+at junit.framework.Assert.fail(Assert.java:50)
+at junit.framework.Assert.assertTrue(Assert.java:20)
+at junit.framework.Assert.assertFalse(Assert.java:34)
+at android.app.cts.SystemFeaturesTest.assertNotAvailable(SystemFeaturesTest.java:508)
+at android.app.cts.SystemFeaturesTest.testCameraFeatures(SystemFeaturesTest.java:122)
+at java.lang.reflect.Method.invoke(Native Method)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at junit.framework.TestCase.runBare(TestCase.java:134)
+at junit.framework.TestResult$1.protect(TestResult.java:115)
+at android.support.test.internal.runner.junit3.AndroidTestResult.runProtected(AndroidTestResult.java:77)
+at junit.framework.TestResult.run(TestResult.java:118)
+at android.support.test.internal.runner.junit3.AndroidTestResult.run(AndroidTestResult.java:55)
+at junit.framework.TestCase.run(TestCase.java:124)
+at android.support.test.internal.runner.junit3.NonLeakyTestSuite$NonLeakyTest.run(NonLeakyTestSuite.java:63)
+at android.support.test.internal.runner.junit3.AndroidTestSuite$1.run(AndroidTestSuite.java:97)
+at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:428)
+at java.util.concurrent.FutureTask.run(FutureTask.java:237)
+at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+at java.lang.Thread.run(Thread.java:761)
+
+03-26 16:21:51 I/FailureListener: FailureListener.testFailed android.app.cts.SystemFeaturesTest#testCameraFeatures false true false
+03-26 16:21:53 D/FileUtil: Creating temp file at /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.26_16.21.05 with prefix "android.app.cts.SystemFeaturesTest#testCameraFeatures-logcat_" suffix ".zip"
+03-26 16:21:53 I/LogFileSaver: Saved log file /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.26_16.21.05/android.app.cts.SystemFeaturesTest#testCameraFeatures-logcat_8762735968762869316.zip
+03-26 16:21:53 I/ResultReporter: Saved logs for android.app.cts.SystemFeaturesTest#testCameraFeatures-logcat in /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.26_16.21.05/android.app.cts.SystemFeaturesTest#testCameraFeatures-logcat_8762735968762869316.zip
+03-26 16:21:53 D/FileUtil: Creating temp file at /tmp/3764431/cts/inv_4137984894364964943 with prefix "android.app.cts.SystemFeaturesTest#testCameraFeatures-logcat_" suffix ".zip"
+03-26 16:21:53 D/RunUtil: Running command with timeout: 10000ms
+03-26 16:21:53 D/RunUtil: Running [chmod]
+03-26 16:21:53 D/RunUtil: [chmod] command failed. return code 1
+03-26 16:21:53 D/FileUtil: Attempting to chmod /tmp/3764431/cts/inv_4137984894364964943/android.app.cts.SystemFeaturesTest#testCameraFeatures-logcat_6209762295598580632.zip to ug+rwx
+03-26 16:21:53 D/RunUtil: Running command with timeout: 10000ms
+03-26 16:21:53 D/RunUtil: Running [chmod, ug+rwx, /tmp/3764431/cts/inv_4137984894364964943/android.app.cts.SystemFeaturesTest#testCameraFeatures-logcat_6209762295598580632.zip]
+03-26 16:21:54 I/FileSystemLogSaver: Saved log file /tmp/3764431/cts/inv_4137984894364964943/android.app.cts.SystemFeaturesTest#testCameraFeatures-logcat_6209762295598580632.zip
+03-26 16:21:54 D/ModuleListener: ModuleListener.testEnded(android.app.cts.SystemFeaturesTest#testCameraFeatures, {})
+03-26 16:21:54 D/ModuleListener: ModuleListener.testStarted(android.app.cts.SystemFeaturesTest#testUsbAccessory)
+03-26 16:21:54 D/ModuleListener: ModuleListener.testFailed(android.app.cts.SystemFeaturesTest#testUsbAccessory, junit.framework.AssertionFailedError: PackageManager#hasSystemFeature should return true for android.hardware.usb.accessory
+at junit.framework.Assert.fail(Assert.java:50)
+at junit.framework.Assert.assertTrue(Assert.java:20)
+at android.app.cts.SystemFeaturesTest.assertAvailable(SystemFeaturesTest.java:501)
+at android.app.cts.SystemFeaturesTest.testUsbAccessory(SystemFeaturesTest.java:481)
+at java.lang.reflect.Method.invoke(Native Method)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at junit.framework.TestCase.runBare(TestCase.java:134)
+at junit.framework.TestResult$1.protect(TestResult.java:115)
+at android.support.test.internal.runner.junit3.AndroidTestResult.runProtected(AndroidTestResult.java:77)
+at junit.framework.TestResult.run(TestResult.java:118)
+at android.support.test.internal.runner.junit3.AndroidTestResult.run(AndroidTestResult.java:55)
+at junit.framework.TestCase.run(TestCase.java:124)
+at android.support.test.internal.runner.junit3.NonLeakyTestSuite$NonLeakyTest.run(NonLeakyTestSuite.java:63)
+at android.support.test.internal.runner.junit3.AndroidTestSuite$1.run(AndroidTestSuite.java:97)
+at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:428)
+at java.util.concurrent.FutureTask.run(FutureTask.java:237)
+at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+at java.lang.Thread.run(Thread.java:761)
+)
+03-26 16:21:54 I/ConsoleReporter: [3/5 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.SystemFeaturesTest#testUsbAccessory fail: junit.framework.AssertionFailedError: PackageManager#hasSystemFeature should return true for android.hardware.usb.accessory
+at junit.framework.Assert.fail(Assert.java:50)
+at junit.framework.Assert.assertTrue(Assert.java:20)
+at android.app.cts.SystemFeaturesTest.assertAvailable(SystemFeaturesTest.java:501)
+at android.app.cts.SystemFeaturesTest.testUsbAccessory(SystemFeaturesTest.java:481)
+at java.lang.reflect.Method.invoke(Native Method)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at junit.framework.TestCase.runBare(TestCase.java:134)
+at junit.framework.TestResult$1.protect(TestResult.java:115)
+at android.support.test.internal.runner.junit3.AndroidTestResult.runProtected(AndroidTestResult.java:77)
+at junit.framework.TestResult.run(TestResult.java:118)
+at android.support.test.internal.runner.junit3.AndroidTestResult.run(AndroidTestResult.java:55)
+at junit.framework.TestCase.run(TestCase.java:124)
+at android.support.test.internal.runner.junit3.NonLeakyTestSuite$NonLeakyTest.run(NonLeakyTestSuite.java:63)
+at android.support.test.internal.runner.junit3.AndroidTestSuite$1.run(AndroidTestSuite.java:97)
+at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:428)
+at java.util.concurrent.FutureTask.run(FutureTask.java:237)
+at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+at java.lang.Thread.run(Thread.java:761)
+
+03-26 16:21:54 I/FailureListener: FailureListener.testFailed android.app.cts.SystemFeaturesTest#testUsbAccessory false true false
+03-26 16:21:56 D/FileUtil: Creating temp file at /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.26_16.21.05 with prefix "android.app.cts.SystemFeaturesTest#testUsbAccessory-logcat_" suffix ".zip"
+03-26 16:21:56 I/LogFileSaver: Saved log file /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.26_16.21.05/android.app.cts.SystemFeaturesTest#testUsbAccessory-logcat_8167304123051235943.zip
+03-26 16:21:56 I/ResultReporter: Saved logs for android.app.cts.SystemFeaturesTest#testUsbAccessory-logcat in /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.26_16.21.05/android.app.cts.SystemFeaturesTest#testUsbAccessory-logcat_8167304123051235943.zip
+03-26 16:21:56 D/FileUtil: Creating temp file at /tmp/3764431/cts/inv_4137984894364964943 with prefix "android.app.cts.SystemFeaturesTest#testUsbAccessory-logcat_" suffix ".zip"
+03-26 16:21:56 D/RunUtil: Running command with timeout: 10000ms
+03-26 16:21:56 D/RunUtil: Running [chmod]
+03-26 16:21:56 D/RunUtil: [chmod] command failed. return code 1
+03-26 16:21:56 D/FileUtil: Attempting to chmod /tmp/3764431/cts/inv_4137984894364964943/android.app.cts.SystemFeaturesTest#testUsbAccessory-logcat_6713767646175932035.zip to ug+rwx
+03-26 16:21:56 D/RunUtil: Running command with timeout: 10000ms
+03-26 16:21:56 D/RunUtil: Running [chmod, ug+rwx, /tmp/3764431/cts/inv_4137984894364964943/android.app.cts.SystemFeaturesTest#testUsbAccessory-logcat_6713767646175932035.zip]
+03-26 16:21:56 I/FileSystemLogSaver: Saved log file /tmp/3764431/cts/inv_4137984894364964943/android.app.cts.SystemFeaturesTest#testUsbAccessory-logcat_6713767646175932035.zip
+03-26 16:21:56 D/ModuleListener: ModuleListener.testEnded(android.app.cts.SystemFeaturesTest#testUsbAccessory, {})
+03-26 16:21:56 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerTest#testTimeTrackingAPI_ChainedActivityExit)
+03-26 16:21:56 D/ModuleListener: ModuleListener.testFailed(android.app.cts.ActivityManagerTest#testTimeTrackingAPI_ChainedActivityExit, junit.framework.AssertionFailedError: expected:<3> but was:<1>
+at junit.framework.Assert.fail(Assert.java:50)
+at junit.framework.Assert.failNotEquals(Assert.java:287)
+at junit.framework.Assert.assertEquals(Assert.java:67)
+at junit.framework.Assert.assertEquals(Assert.java:199)
+at junit.framework.Assert.assertEquals(Assert.java:205)
+at android.app.cts.ActivityManagerTest.testTimeTrackingAPI_ChainedActivityExit(ActivityManagerTest.java:526)
+at java.lang.reflect.Method.invoke(Native Method)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at junit.framework.TestCase.runBare(TestCase.java:134)
+at junit.framework.TestResult$1.protect(TestResult.java:115)
+at android.support.test.internal.runner.junit3.AndroidTestResult.runProtected(AndroidTestResult.java:77)
+at junit.framework.TestResult.run(TestResult.java:118)
+at android.support.test.internal.runner.junit3.AndroidTestResult.run(AndroidTestResult.java:55)
+at junit.framework.TestCase.run(TestCase.java:124)
+at android.support.test.internal.runner.junit3.NonLeakyTestSuite$NonLeakyTest.run(NonLeakyTestSuite.java:63)
+at android.support.test.internal.runner.junit3.AndroidTestSuite$1.run(AndroidTestSuite.java:97)
+at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:428)
+at java.util.concurrent.FutureTask.run(FutureTask.java:237)
+at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+at java.lang.Thread.run(Thread.java:761)
+)
+03-26 16:21:56 I/ConsoleReporter: [4/5 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerTest#testTimeTrackingAPI_ChainedActivityExit fail: junit.framework.AssertionFailedError: expected:<3> but was:<1>
+at junit.framework.Assert.fail(Assert.java:50)
+at junit.framework.Assert.failNotEquals(Assert.java:287)
+at junit.framework.Assert.assertEquals(Assert.java:67)
+at junit.framework.Assert.assertEquals(Assert.java:199)
+at junit.framework.Assert.assertEquals(Assert.java:205)
+at android.app.cts.ActivityManagerTest.testTimeTrackingAPI_ChainedActivityExit(ActivityManagerTest.java:526)
+at java.lang.reflect.Method.invoke(Native Method)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at junit.framework.TestCase.runBare(TestCase.java:134)
+at junit.framework.TestResult$1.protect(TestResult.java:115)
+at android.support.test.internal.runner.junit3.AndroidTestResult.runProtected(AndroidTestResult.java:77)
+at junit.framework.TestResult.run(TestResult.java:118)
+at android.support.test.internal.runner.junit3.AndroidTestResult.run(AndroidTestResult.java:55)
+at junit.framework.TestCase.run(TestCase.java:124)
+at android.support.test.internal.runner.junit3.NonLeakyTestSuite$NonLeakyTest.run(NonLeakyTestSuite.java:63)
+at android.support.test.internal.runner.junit3.AndroidTestSuite$1.run(AndroidTestSuite.java:97)
+at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:428)
+at java.util.concurrent.FutureTask.run(FutureTask.java:237)
+at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+at java.lang.Thread.run(Thread.java:761)
+
+03-26 16:21:56 I/FailureListener: FailureListener.testFailed android.app.cts.ActivityManagerTest#testTimeTrackingAPI_ChainedActivityExit false true false
+03-26 16:21:58 D/FileUtil: Creating temp file at /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.26_16.21.05 with prefix "android.app.cts.ActivityManagerTest#testTimeTrackingAPI_ChainedActivityExit-logcat_" suffix ".zip"
+03-26 16:21:58 I/LogFileSaver: Saved log file /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.26_16.21.05/android.app.cts.ActivityManagerTest#testTimeTrackingAPI_ChainedActivityExit-logcat_6972528964795429366.zip
+03-26 16:21:58 I/ResultReporter: Saved logs for android.app.cts.ActivityManagerTest#testTimeTrackingAPI_ChainedActivityExit-logcat in /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.26_16.21.05/android.app.cts.ActivityManagerTest#testTimeTrackingAPI_ChainedActivityExit-logcat_6972528964795429366.zip
+03-26 16:21:58 D/FileUtil: Creating temp file at /tmp/3764431/cts/inv_4137984894364964943 with prefix "android.app.cts.ActivityManagerTest#testTimeTrackingAPI_ChainedActivityExit-logcat_" suffix ".zip"
+03-26 16:21:58 D/RunUtil: Running command with timeout: 10000ms
+03-26 16:21:58 D/RunUtil: Running [chmod]
+03-26 16:21:58 D/RunUtil: [chmod] command failed. return code 1
+03-26 16:21:58 D/FileUtil: Attempting to chmod /tmp/3764431/cts/inv_4137984894364964943/android.app.cts.ActivityManagerTest#testTimeTrackingAPI_ChainedActivityExit-logcat_969828295802539563.zip to ug+rwx
+03-26 16:21:58 D/RunUtil: Running command with timeout: 10000ms
+03-26 16:21:58 D/RunUtil: Running [chmod, ug+rwx, /tmp/3764431/cts/inv_4137984894364964943/android.app.cts.ActivityManagerTest#testTimeTrackingAPI_ChainedActivityExit-logcat_969828295802539563.zip]
+03-26 16:21:58 I/FileSystemLogSaver: Saved log file /tmp/3764431/cts/inv_4137984894364964943/android.app.cts.ActivityManagerTest#testTimeTrackingAPI_ChainedActivityExit-logcat_969828295802539563.zip
+03-26 16:21:58 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerTest#testTimeTrackingAPI_ChainedActivityExit, {})
+03-26 16:21:58 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerTest#testTimeTrackingAPI_SimpleStartExit)
+03-26 16:21:58 D/ModuleListener: ModuleListener.testFailed(android.app.cts.ActivityManagerTest#testTimeTrackingAPI_SimpleStartExit, junit.framework.AssertionFailedError: expected:<3> but was:<1>
+at junit.framework.Assert.fail(Assert.java:50)
+at junit.framework.Assert.failNotEquals(Assert.java:287)
+at junit.framework.Assert.assertEquals(Assert.java:67)
+at junit.framework.Assert.assertEquals(Assert.java:199)
+at junit.framework.Assert.assertEquals(Assert.java:205)
+at android.app.cts.ActivityManagerTest.testTimeTrackingAPI_SimpleStartExit(ActivityManagerTest.java:431)
+at java.lang.reflect.Method.invoke(Native Method)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at junit.framework.TestCase.runBare(TestCase.java:134)
+at junit.framework.TestResult$1.protect(TestResult.java:115)
+at android.support.test.internal.runner.junit3.AndroidTestResult.runProtected(AndroidTestResult.java:77)
+at junit.framework.TestResult.run(TestResult.java:118)
+at android.support.test.internal.runner.junit3.AndroidTestResult.run(AndroidTestResult.java:55)
+at junit.framework.TestCase.run(TestCase.java:124)
+at android.support.test.internal.runner.junit3.NonLeakyTestSuite$NonLeakyTest.run(NonLeakyTestSuite.java:63)
+at android.support.test.internal.runner.junit3.AndroidTestSuite$1.run(AndroidTestSuite.java:97)
+at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:428)
+at java.util.concurrent.FutureTask.run(FutureTask.java:237)
+at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+at java.lang.Thread.run(Thread.java:761)
+)
+03-26 16:21:58 I/ConsoleReporter: [5/5 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerTest#testTimeTrackingAPI_SimpleStartExit fail: junit.framework.AssertionFailedError: expected:<3> but was:<1>
+at junit.framework.Assert.fail(Assert.java:50)
+at junit.framework.Assert.failNotEquals(Assert.java:287)
+at junit.framework.Assert.assertEquals(Assert.java:67)
+at junit.framework.Assert.assertEquals(Assert.java:199)
+at junit.framework.Assert.assertEquals(Assert.java:205)
+at android.app.cts.ActivityManagerTest.testTimeTrackingAPI_SimpleStartExit(ActivityManagerTest.java:431)
+at java.lang.reflect.Method.invoke(Native Method)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at junit.framework.TestCase.runBare(TestCase.java:134)
+at junit.framework.TestResult$1.protect(TestResult.java:115)
+at android.support.test.internal.runner.junit3.AndroidTestResult.runProtected(AndroidTestResult.java:77)
+at junit.framework.TestResult.run(TestResult.java:118)
+at android.support.test.internal.runner.junit3.AndroidTestResult.run(AndroidTestResult.java:55)
+at junit.framework.TestCase.run(TestCase.java:124)
+at android.support.test.internal.runner.junit3.NonLeakyTestSuite$NonLeakyTest.run(NonLeakyTestSuite.java:63)
+at android.support.test.internal.runner.junit3.AndroidTestSuite$1.run(AndroidTestSuite.java:97)
+at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:428)
+at java.util.concurrent.FutureTask.run(FutureTask.java:237)
+at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+at java.lang.Thread.run(Thread.java:761)
+
+03-26 16:21:58 I/FailureListener: FailureListener.testFailed android.app.cts.ActivityManagerTest#testTimeTrackingAPI_SimpleStartExit false true false
+03-26 16:22:00 D/FileUtil: Creating temp file at /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.26_16.21.05 with prefix "android.app.cts.ActivityManagerTest#testTimeTrackingAPI_SimpleStartExit-logcat_" suffix ".zip"
+03-26 16:22:00 I/LogFileSaver: Saved log file /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.26_16.21.05/android.app.cts.ActivityManagerTest#testTimeTrackingAPI_SimpleStartExit-logcat_6981612307094436497.zip
+03-26 16:22:00 I/ResultReporter: Saved logs for android.app.cts.ActivityManagerTest#testTimeTrackingAPI_SimpleStartExit-logcat in /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.26_16.21.05/android.app.cts.ActivityManagerTest#testTimeTrackingAPI_SimpleStartExit-logcat_6981612307094436497.zip
+03-26 16:22:00 D/FileUtil: Creating temp file at /tmp/3764431/cts/inv_4137984894364964943 with prefix "android.app.cts.ActivityManagerTest#testTimeTrackingAPI_SimpleStartExit-logcat_" suffix ".zip"
+03-26 16:22:00 D/RunUtil: Running command with timeout: 10000ms
+03-26 16:22:00 D/RunUtil: Running [chmod]
+03-26 16:22:00 D/RunUtil: [chmod] command failed. return code 1
+03-26 16:22:00 D/FileUtil: Attempting to chmod /tmp/3764431/cts/inv_4137984894364964943/android.app.cts.ActivityManagerTest#testTimeTrackingAPI_SimpleStartExit-logcat_4933333784378096516.zip to ug+rwx
+03-26 16:22:00 D/RunUtil: Running command with timeout: 10000ms
+03-26 16:22:00 D/RunUtil: Running [chmod, ug+rwx, /tmp/3764431/cts/inv_4137984894364964943/android.app.cts.ActivityManagerTest#testTimeTrackingAPI_SimpleStartExit-logcat_4933333784378096516.zip]
+03-26 16:22:00 I/FileSystemLogSaver: Saved log file /tmp/3764431/cts/inv_4137984894364964943/android.app.cts.ActivityManagerTest#testTimeTrackingAPI_SimpleStartExit-logcat_4933333784378096516.zip
+03-26 16:22:00 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerTest#testTimeTrackingAPI_SimpleStartExit, {})
+03-26 16:22:00 D/ModuleListener: ModuleListener.testRunEnded(7317, {})
+03-26 16:22:00 I/ConsoleReporter: [chromeos2-row8-rack4-host19:22] x86 CtsAppTestCases completed in 7s. 1 passed, 4 failed, 0 not executed
+03-26 16:22:00 D/ModuleDef: Cleaner: ApkInstaller
+03-26 16:22:00 D/TestDevice: Uninstalling com.android.cts.launcherapps.simpleapp
+03-26 16:22:01 D/TestDevice: Uninstalling android.app.stubs
+03-26 16:22:03 D/TestDevice: Uninstalling android.app.cts
+03-26 16:22:04 W/CompatibilityTest: Inaccurate runtime hint for x86 CtsAppTestCases, expected 6m 38s was 20s
+03-26 16:22:04 I/CompatibilityTest: Running system status checker after module execution: CtsAppTestCases
+03-26 16:22:05 I/MonitoringUtils: Connectivity: passed check.
+03-26 16:22:05 D/RunUtil: run interrupt allowed: false
+03-26 16:22:05 I/ResultReporter: Invocation finished in 1m 0s. PASSED: 317, FAILED: 4, NOT EXECUTED: 0, MODULES: 1 of 1
+03-26 16:22:06 I/ResultReporter: Test Result: /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/results/2017.03.26_16.21.05/test_result_failures.html
+03-26 16:22:06 I/ResultReporter: Full Result: /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/results/2017.03.26_16.21.05.zip

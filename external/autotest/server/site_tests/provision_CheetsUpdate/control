@@ -1,0 +1,42 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'ARC Team'
+NAME = 'provision_CheetsUpdate'
+ATTRIBUTES = ''
+DEPENDENCIES = 'arc'
+TEST_TYPE = 'server'
+TIME = 'LENGTHY'
+
+DOC = """This test downloads and installs an Android test image on the DUT to
+prepare the DUT for Android PFQ tests.
+
+This test expects android build full name as a local env variable |value| or
+part of the test args.
+e.g.
+--args='value=git_nyc-arc/cheets_x86-user/3512523'
+--args='value=git_nyc-arc/cheets_arm-user/P3512523'
+
+This test expects test servers are equipped with ssh keys to talk to lab DUTs
+without entering password while copying Android test image on DUTs.
+"""
+
+from autotest_lib.client.common_lib import error, utils
+
+# Autoserv may inject a local variable called value to supply the desired
+# version. If it does not exist, check if it was supplied as a test arg.
+
+
+if not locals().get('value'):
+    args = utils.args_to_dict(args)
+    if not args.get('value'):
+        raise error.TestError('No provision value!')
+    value = args['value']
+
+
+def run(machine):
+    host = hosts.create_host(machine)
+    job.run_test('provision_CheetsUpdate', host=host, value=value)
+
+parallel_simple(run, machines)

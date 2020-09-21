@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">Job Group {{ group_id }}</h1>
+
+<h2 class="title">General information</h2>
+{% include "snippet_attribute_table.html" %}
+
+<h2 class="title">Job Listing</h2>
+<table class="list">
+  <tbody>
+    <tr>
+      <th>Job ID</th>
+      <th>Label</th>
+      <th>Turnaround Time</th>
+      <th>State</th>
+    </tr>
+    {% for job in job_list %}
+    <tr>
+      <td>
+        <a class="button column" href="/job/{{ job.id }}">{{ job.id }}</a>
+      </td>
+      <td>{{ job.label }}</td>
+      <td>{{ job.elapsed }}</td>
+      {% if job.status %}
+      <td class="{{ job.status }}">{{ job.state }}</td>
+      {% else %}
+      <td>{{ job.state }}</td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h2 class="title">Report</h2>
+{% if reports %}
+{% autoescape off %}
+{% for report in reports %}
+{{ report }}
+{% endfor %}
+{% endautoescape %}
+{% else %}
+<div class="warning">No reports found!</div>
+{% endif %}
+
+{% endblock %}

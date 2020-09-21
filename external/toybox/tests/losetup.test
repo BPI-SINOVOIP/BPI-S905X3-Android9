@@ -1,0 +1,25 @@
+#!/bin/bash
+
+[ -f testing.sh ] && . testing.sh
+
+if [ "$(id -u)" -ne 0 ]
+then
+  echo "$SHOWSKIP: losetup (not root)"
+  continue 2>/dev/null
+  exit
+fi
+
+#testing "name" "command" "result" "infile" "stdin"
+
+truncate -s 1M blah.img &&
+FILE="$(readlink -f blah.img)"
+DEV="$(printf '%04s' $(stat -t blah.img | awk '{print $7}'))"
+NODE="$(stat -t blah.img | awk '{print $8}')"
+
+losetup -f 
+losetup -f -s
+losetup -f file
+
+losetup -d
+
+rm blah.img

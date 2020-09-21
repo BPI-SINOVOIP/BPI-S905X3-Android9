@@ -1,0 +1,54 @@
+# This example experiment file shows how to invoke sets of tests (a
+# set is a group of tests that can be invoked by a single alias).
+# There are currently three sets defined for crosperf_Telemetry:
+# all_perfv2, all_pagecyclers, and all_toolchain_perf.
+#
+# You should replace all the placeholders, marked by angle-brackets,
+# with the appropriate actual values.
+
+
+name: telemetry_crosperf_suites_example
+board: <your-board-goes-here>
+
+# Note:  You can specify multiple remotes, to run your tests in parallel on
+# multiple machines. e.g. "remote: test-machine-1.com test-machine2.come
+# test-machine3.com"
+remote: <your-remote-goes-here>
+
+# The example below will run all the benchmarks in the perf_v2 suite.
+# The exact list of benchmarks that will be run can be seen in
+# crosperf/experiment_factory.py
+benchmark: all_perfv2 {
+  suite:telemetry_Crosperf
+  iterations: 2
+}
+
+# The example below will run all the Telemetry page_cycler benchmarks.
+# The exact list of benchmarks that will be run can be seen in
+# crosperf/experiment_factory.py
+benchmark: all_pagecyclers {
+  suite:telemetry_Crosperf
+  iterations: 1
+}
+
+# The example below will run all the Telemetry page_cycler benchmarks.
+# The exact list of benchmarks that will be run can be seen in
+# crosperf/experiment_factory.py
+benchmark: all_toolchain_perf {
+  suite:telemetry_Crosperf
+  iterations: 1
+}
+
+# Replace the chromeos image below with the actual path to your test image.
+test_image_1 {
+  chromeos_image:<path-to-your-chroot>/src/build/images/<board>/test-image/chromiumos_test_image.bin
+}
+
+# Replace the chromeos image below with the actual path to your second
+# test image (if desired).
+new_image {
+  chromeos_image:<path-to-your-other-chroot-goes-here>/src/build/images/<board-goes-here>/latest/chromiumos_test_image.bin
+}
+
+
+

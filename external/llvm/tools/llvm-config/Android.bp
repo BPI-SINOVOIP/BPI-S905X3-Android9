@@ -1,0 +1,23 @@
+//===---------------------------------------------------------------===
+// llvm-config command line tool
+//===---------------------------------------------------------------===
+
+cc_binary_host {
+    name: "llvm-config",
+    defaults: ["llvm-defaults"],
+    generated_headers: ["llvm-gen-config"],
+    srcs: ["llvm-config.cpp"],
+    static_libs: [
+        "libLLVMCore",
+        "libLLVMSupport",
+    ],
+}
+
+// Create BuildVariables.inc dynamically from BuildVariables.inc.in
+genrule {
+    name: "llvm-gen-config",
+    srcs: ["BuildVariables.inc.in"],
+    out: ["BuildVariables.inc"],
+    tool_files: ["BuildVariables.inc.in"],
+    cmd: "sed -e \"s#@ANDROID_BUILD_TOP@#$$PWD#\" < $(in) > $(out)",
+}

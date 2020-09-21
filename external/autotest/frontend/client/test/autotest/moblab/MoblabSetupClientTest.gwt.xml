@@ -1,0 +1,5 @@
+<module>
+    <inherits name='autotest.MoblabSetupClient'/>
+    <source path="wizard"/>
+    <source path="rpc"/>
+</module>

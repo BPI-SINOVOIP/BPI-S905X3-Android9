@@ -1,0 +1,27 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'scunningham'
+NAME = 'policy_ForceGoogleSafeSearch'
+TIME = 'SHORT'
+TEST_CATEGORY = 'General'
+TEST_CLASS = 'enterprise'
+TEST_TYPE = 'client'
+
+DOC = '''
+Verify effect of ForceGoogleSafeSearch policy on client behavior.
+
+This test verifies the effect of the ForceGoogleSafeSearch user policy on
+Chrome OS client behavior. The test exercises all valid policy values across
+three test cases: NotSet_NotSafe, False_NotSafe, and True_Safe.
+
+A test case shall pass if the omnibox search URL appends (or does not
+append) a safe search parameter when the policy is set true (or is set
+false or not set). It shall fail if this behavior is not enforced.
+
+'''
+
+args_dict = utils.args_to_dict(args)
+
+job.run_test('policy_ForceGoogleSafeSearch', **args_dict)

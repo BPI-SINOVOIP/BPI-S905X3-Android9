@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">Job {{ job_id }}</h1>
+
+<h2 class="title">General information</h2>
+{% include "snippet_attribute_table.html" %}
+
+<h2 class="title">Timeline of status events</h2>
+<table class="list">
+  <tbody>
+    <tr>
+      <th>Started</th>
+      <th>From State</th>
+      <th>To State</th>
+      <th>Elapsed</th>
+    </tr>
+    {% for entry in timeline %}
+    <tr>
+      <td>{{ entry.started }}</td>
+      <td>{{ entry.state_from }}</td>
+      <td>{{ entry.state_to }}</td>
+      <td>{{ entry.elapsed }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

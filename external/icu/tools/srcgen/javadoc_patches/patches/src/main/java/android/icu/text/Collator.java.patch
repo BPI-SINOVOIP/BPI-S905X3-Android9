@@ -1,0 +1,10 @@
+--- android_icu4j/src/main/java/android/icu/text/Collator.java	2017-08-25 08:53:42.293862454 +0100
++++ android_icu4j/src/main/java/android/icu/text/Collator.java	2017-08-25 08:54:12.293920887 +0100
+@@ -1228,7 +1228,6 @@
+      *         CollationKey is returned.
+      * @see CollationKey
+      * @see #compare(String, String)
+-     * @see #getRawCollationKey
+      */
+     public abstract CollationKey getCollationKey(String source);
+ 

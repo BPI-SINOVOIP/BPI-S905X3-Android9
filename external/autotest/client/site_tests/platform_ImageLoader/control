@@ -1,0 +1,16 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "kerrnel@chromium.org, ejcaruso@chromium.org"
+NAME = "platform_ImageLoader"
+TIME = "SHORT"
+TEST_CATEGORY = "General"
+TEST_CLASS = "platform"
+TEST_TYPE = "client"
+
+DOC = """
+This test runs ImageLoader through its various dbus and command line interfaces.
+"""
+
+job.run_test('platform_ImageLoader', named_arg='platform test')

@@ -1,0 +1,33 @@
+# Copyright 2015 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'scunningham'
+NAME = 'policy_EditBookmarksEnabled'
+TIME = 'SHORT'
+TEST_CATEGORY = 'General'
+TEST_CLASS = 'enterprise'
+TEST_TYPE = 'client'
+
+DOC = '''
+Verify effects of EditBookmarksEnabled policy.
+
+This test verifies the effect of the EditBookmarksEnabled user policy on
+Chrome OS client behavior and appearance. It exercises all valid policy
+values across three test cases: True_Enable, False_Disable, and
+NotSet_Enable.
+
+A test case shall pass if the Manage Bookmarks page allows (or forbids) the
+user to add a new bookmark when the policy is true/notset (or false). It shall
+fail if that behavior is not enforced.
+
+This control file allows CloudDPC E2E tests to run any test case defined in
+this test via command-line.
+
+See accompanying README file for additional usage instructions and examples.
+
+'''
+
+args_dict = utils.args_to_dict(args)
+
+job.run_test('policy_EditBookmarksEnabled', **args_dict)

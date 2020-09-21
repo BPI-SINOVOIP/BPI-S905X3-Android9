@@ -1,0 +1,35 @@
+// Copyright (c) 2011 The WebRTC project authors. All Rights Reserved.
+//
+// Use of this source code is governed by a BSD-style license
+// that can be found in the LICENSE file in the root of the source
+// tree. An additional intellectual property rights grant can be found
+// in the file PATENTS.  All contributing project authors may
+// be found in the AUTHORS file in the root of the source tree.
+
+cc_library_static {
+    name: "libwebrtc_resampler",
+    defaults: ["webrtc_flags"],
+
+    arch: {
+        x86: {
+            srcs: ["sinc_resampler_sse.cc"],
+        },
+        x86_64: {
+            srcs: ["sinc_resampler_sse.cc"],
+        },
+    },
+
+    srcs: [
+        "push_sinc_resampler.cc",
+        "resampler.cc",
+        "sinc_resampler.cc",
+    ],
+
+    local_include_dirs: ["include"],
+    static_libs: ["libwebrtc_spl"],
+}
+
+filegroup {
+    name: "webrtc_common_audio_resampler_push_resampler",
+    srcs: ["push_resampler.cc"],
+}

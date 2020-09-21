@@ -1,0 +1,24 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'wirebrand@chromium.org, mrhw-sto-team@google.com'
+NAME = 'enterprise_CFM_AtrusUpdaterStress'
+TIME = 'LONG'
+TEST_CATEGORY = 'Stress'
+TEST_CLASS = 'enterprise'
+# TODO(crbug/811694) Enable once dbus issue is fixed.
+#ATTRIBUTES = 'suite:bluestreak'
+TEST_TYPE = 'server'
+DEPENDENCIES = 'atrus'
+
+DOC = """
+This test repeatedly runs a firmware upgrade of the device. During the upgrade
+transfer of the binary, and writing of the binary to flash is validated.
+"""
+
+def run_test(machine):
+    host = hosts.create_host(machine, servo_args=None)
+    job.run_test(NAME, host=host, repeat=10)
+
+parallel_simple(run_test, machines)

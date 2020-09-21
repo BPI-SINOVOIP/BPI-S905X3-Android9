@@ -1,0 +1,24 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "cliffordcheng@google.com"
+NAME = "network_CastTDLS.receiver_1"
+PURPOSE = """
+  Verify TDLS is used during mirroring between TDLS enabled
+  ChromeOS device and Chromecast.
+"""
+CRITERIA = "Test will fail if the mirroring session is not using TDLS."
+TIME = "MEDIUM"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "network"
+TEST_TYPE = "client"
+ATTRIBUTES = "suite:wifi_tdls_cast"
+DOC = """
+  Test a mirroring session between a TDLS enabled ChromeOS device and
+  Chromecast. The test downloads Cast extension from Chrome Web Store,
+  then triggers a mirroring session. It checks the log on Chromecast
+  to ensure TDLS is setup correctly and is being used during the session.
+"""
+
+job.run_test('network_CastTDLS', device_ip='172.22.38.72')

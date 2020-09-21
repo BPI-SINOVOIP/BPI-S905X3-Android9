@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head><title>Loopback test</title></head>
+<body>
+  <video id="localVideo" autoplay muted></video>
+  <video id="remoteVideo" autoplay muted></video>
+<script src="blackframe.js"></script>
+<script src="munge_sdp.js"></script>
+<script src="ssim.js"></script>
+<script>
+
+var results = {};
+var testStatus = 'running';
+
+// Starts the test.
+function testWebRtcLoopbackCall(videoCodec) {
+  var test = new WebRtcLoopbackCallTest(videoCodec);
+  test.run();
+}
+
+// Returns the results to caller.
+function getResults() {
+  return results;
+}
+
+function setResults(stats) {
+  results = stats;
+}
+
+function getStatus() {
+  return testStatus;
+}
+
+// Calculates averages of array values.
+function average(array) {
+  var count = array.length;
+  var total = 0;
+  for (var i = 0; i < count; i++) {
+    total += parseInt(array[i]);
+  }
+  return Math.floor(total / count);
+}
+
+// Actual test object.
+function WebRtcLoopbackCallTest(videoCodec) {
+  this.videoCodec = videoCodec;
+  this.localStream = null;
+  this.remoteStream = null;
+  this.results = {cameraType: '', peerConnectionStats: [],
+      frameStats: {numBlackFrames: 0, numFrozenFrames:0, numFrames: 0}};
+
+  this.inFps = [];
+  this.outFps = [];
+  // Variables associated with nearly-frozen frames detection.
+  this.previousFrame = [];
+  this.identicalFrameSsimThreshold = 0.985;
+  this.frameComparator = new Ssim();
+
+  this.remoteVideo = document.getElementById("remoteVideo");
+  this.localVideo = document.getElementById("localVideo");
+}
+
+WebRtcLoopbackCallTest.prototype = {
+  collectAndAnalyzeStats: function() {
+    this.gatherStats(this.localPeerConnection, 100, 20000,
+        this.reportTestDone.bind(this));
+  },
+
+  setup: function() {
+    this.canvas = document.createElement('canvas');
+    this.context = this.canvas.getContext('2d');
+    this.remoteVideo.onloadedmetadata = this.collectAndAnalyzeStats.bind(this);
+    this.remoteVideo.addEventListener('play',
+        this.startCheckingVideoFrames.bind(this), false);
+  },
+
+  startCheckingVideoFrames: function() {
+    // TODO(phoglund): replace with MediaRecorder. setInterval isn't at all
+    // reliable, so the number of captured frames can probably vary wildly
+    // over the 20 second execution time.
+    this.videoFrameChecker = setInterval(this.checkVideoFrame.bind(this), 20);
+  },
+
+  run: function() {
+    this.setup();
+    this.triggerGetUserMedia();
+  },
+
+  triggerGetUserMedia: function() {
+    var constraints = {audio: false, video: true};
+    try {
+      navigator.getUserMedia = navigator.getUserMedia ||
+          navigator.webkitGetUserMedia;
+      navigator.getUserMedia(constraints, this.gotLocalStream.bind(this),
+          this.onGetUserMediaError.bind(this));
+    } catch (exception) {
+      this.reportError('getUserMedia exception: ' + exception.toString());
+    }
+  },
+
+  reportError: function(message) {
+    testStatus = message;
+  },
+
+  gotLocalStream: function(stream) {
+    this.localStream = stream;
+    var servers = null;
+
+    this.localPeerConnection = new webkitRTCPeerConnection(servers);
+    this.localPeerConnection.onicecandidate = this.gotLocalIceCandidate.bind(
+        this);
+
+    this.remotePeerConnection = new webkitRTCPeerConnection(servers);
+    this.remotePeerConnection.onicecandidate = this.gotRemoteIceCandidate.bind(
+        this);
+    this.remotePeerConnection.onaddstream = this.gotRemoteStream.bind(this);
+
+    this.localPeerConnection.addStream(this.localStream);
+    this.localPeerConnection.createOffer(this.gotOffer.bind(this),
+        function(error) {});
+    this.localVideo.src = URL.createObjectURL(stream);
+
+    this.results.cameraType = stream.getVideoTracks()[0].label;
+  },
+
+  onGetUserMediaError: function(error) {
+    this.reportError('getUserMedia failed: ' + error.toString());
+  },
+
+  gatherStats: function(peerConnection, interval, durationMs, callback) {
+    var startTime = new Date();
+    var pollFunction = setInterval(gatherOneReport.bind(this), interval);
+    function gatherOneReport() {
+      var elapsed = new Date() - startTime;
+      if (elapsed > durationMs) {
+        clearInterval(pollFunction);
+        callback();
+        return;
+      }
+      peerConnection.getStats(this.gotStats.bind(this));
+    }
+  },
+
+  getStatFromReport: function(data, name) {
+    if (data.type = 'ssrc' && data.stat(name)) {
+      return data.stat(name);
+    } else {
+      return null;
+    }
+  },
+
+  gotStats: function(response) {
+    var reports = response.result();
+    for (var i = 0; i < reports.length; ++i) {
+      var report = reports[i];
+      var incomingFps = this.getStatFromReport(report, 'googFrameRateInput');
+      if (incomingFps == null) {
+        // Skip on null.
+        continue;
+      }
+      var outgoingFps = this.getStatFromReport(report, 'googFrameRateSent');
+      // Save rates for later processing.
+      this.inFps.push(incomingFps)
+      this.outFps.push(outgoingFps);
+    }
+  },
+
+  reportTestDone: function() {
+    this.processStats();
+
+    clearInterval(this.videoFrameChecker);
+
+    setResults(this.results);
+
+    testStatus = 'ok-done';
+  },
+
+  processStats: function() {
+    if (this.inFps != [] && this.outFps != []) {
+      var minInFps = Math.min.apply(null, this.inFps);
+      var maxInFps = Math.max.apply(null, this.inFps);
+      var averageInFps = average(this.inFps);
+      var minOutFps = Math.min.apply(null, this.outFps);
+      var maxOutFps = Math.max.apply(null, this.outFps);
+      var averageOutFps = average(this.outFps);
+      this.results.peerConnectionStats = [minInFps, maxInFps, averageInFps,
+          minOutFps, maxOutFps, averageOutFps];
+    }
+  },
+
+  checkVideoFrame: function() {
+    this.context.drawImage(this.remoteVideo, 0, 0, this.canvas.width,
+      this.canvas.height);
+    var imageData = this.context.getImageData(0, 0, this.canvas.width,
+        this.canvas.height);
+
+      if (isBlackFrame(imageData.data, imageData.data.length)) {
+        this.results.frameStats.numBlackFrames++;
+      }
+
+      if (this.frameComparator.calculate(this.previousFrame, imageData.data) >
+        this.identicalFrameSsimThreshold) {
+        this.results.frameStats.numFrozenFrames++;
+      }
+
+      this.previousFrame = imageData.data;
+      this.results.frameStats.numFrames++;
+  },
+
+  isBlackFrame: function(data, length) {
+    var accumulatedLuma = 0;
+    for (var i = 4; i < length; i += 4) {
+      // Use Luma as in Rec. 709: Y′709 = 0.21R + 0.72G + 0.07B;
+      accumulatedLuma += (0.21 * data[i] +  0.72 * data[i + 1]
+          + 0.07 * data[i + 2]);
+      // Early termination if the average Luma so far is bright enough.
+      if (accumulatedLuma > (this.nonBlackPixelLumaThreshold * i / 4)) {
+        return false;
+      }
+    }
+    return true;
+  },
+
+  gotRemoteStream: function(event) {
+    this.remoteVideo.src = URL.createObjectURL(event.stream);
+  },
+
+  gotOffer: function(description) {
+    description.sdp =
+        setSdpDefaultVideoCodec(description.sdp, this.videoCodec);
+    this.localPeerConnection.setLocalDescription(description);
+    this.remotePeerConnection.setRemoteDescription(description);
+    this.remotePeerConnection.createAnswer(this.gotAnswer.bind(
+        this), function(error) {});
+  },
+
+  gotAnswer: function(description) {
+    var selectedCodec =
+        getSdpDefaultVideoCodec(description.sdp);
+    if (selectedCodec != this.videoCodec) {
+      this.reportError('Expected codec ' + this.videoCodec + ', but WebRTC ' +
+                       'selected ' + selectedCodec);
+    }
+    this.remotePeerConnection.setLocalDescription(description);
+    this.localPeerConnection.setRemoteDescription(description);
+  },
+
+  gotLocalIceCandidate: function(event) {
+    if (event.candidate)
+      this.remotePeerConnection.addIceCandidate(
+        new RTCIceCandidate(event.candidate));
+  },
+
+  gotRemoteIceCandidate: function(event) {
+    if (event.candidate)
+      this.localPeerConnection.addIceCandidate(
+        new RTCIceCandidate(event.candidate));
+  },
+}
+
+window.onerror = function (message, filename, lineno, colno, error) {
+  testStatus = 'exception-in-test-page: ' + error.stack;
+};
+
+// Used by munge_sdp.js.
+function failure(location, msg) {
+  testStatus = 'failed-to-munge: ' + msg + ' in ' + location;
+}
+</script>
+</body>
+</html>

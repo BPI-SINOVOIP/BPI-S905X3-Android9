@@ -1,0 +1,20 @@
+name: "gflags"
+description:
+    "The gflags package contains a C++ library that implements commandline "
+    "flags processing. It includes built-in support for standard types such as "
+    "string and the ability to define flags in the source file in which they "
+    "are used. Online documentation available at: "
+    "https://gflags.github.io/gflags/"
+
+third_party {
+  url {
+    type: HOMEPAGE
+    value: "https://github.com/gflags/gflags.git"
+  }
+  url {
+    type: GIT
+    value: "https://github.com/gflags/gflags.git"
+  }
+  version: "2.2.1"
+  last_upgrade_date { year: 2017 month: 10 day: 10 }
+}

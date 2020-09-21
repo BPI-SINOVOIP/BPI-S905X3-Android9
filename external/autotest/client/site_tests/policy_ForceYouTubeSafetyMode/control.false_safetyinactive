@@ -1,0 +1,24 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'scunningham'
+NAME = 'policy_ForceYouTubeSafetyMode.false_safetyinactive'
+ATTRIBUTES = 'suite:bvt-perbuild, suite:policy'
+TIME = 'SHORT'
+TEST_CATEGORY = 'General'
+TEST_CLASS = 'enterprise'
+TEST_TYPE = 'client'
+
+DOC = '''
+Verify effects of ForceYouTubeSafetyMode policy on client behavior & appearance.
+
+This test case verifies the behavior and appearance of Chrome OS when the
+ForceYouTubeSafetyMode user policy is set false.
+
+The test case shall pass when the YouTube.com page indicates that 'Restricted
+Mode' is Off. It shall fail if this behavior is not enforced.
+
+'''
+
+job.run_test('policy_ForceYouTubeSafetyMode', case='False_SafetyInactive')

@@ -1,0 +1,23 @@
+if-updown
+	Verify the IPv4/IPv6 connectivity is not broken when ip/ifconfig
+	command ups, then downs an interface many times
+
+if4-addr-change
+	Verify the IPv4 connectivity is not broken when ifconfig
+	command changes address many times
+
+if-addr-adddel
+	Verify the IPv4/IPv6 connectivity is not broken when ip/ifconfig adds,
+	then deletes an IPv4 alias many times
+
+if-addr-addlarge
+	Verify the IPv4/IPv6 connectivity is not broken when ip/ifconifg
+	creates many addresses.
+
+if-route-adddel
+	Verify the IPv4/IPv6 connectivity is not broken when the ip/route adds,
+	then and deletes an IPv4/IPv6 route many times
+
+if-mtu-change
+	Verify the IPv4/IPv6 connectivity is not broken when ip/ifconfig
+	changes MTU many times every 5 seconds

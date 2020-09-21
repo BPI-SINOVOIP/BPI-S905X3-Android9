@@ -1,0 +1,30 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+
+
+AUTHOR = 'rjahagir'
+NAME = 'bluetooth_AdapterReboot'
+PURPOSE = 'Test bluetooth adapter state with rebooting the DUT.'
+CRITERIA = 'Adapter should power on or off with correct parameters.'
+ATTRIBUTES = 'suite:bluetooth, suite:bluetooth_sanity'
+TIME = 'SHORT' # This takes about 5 minutes on cyan.
+TEST_CATEGORY = 'Functional'
+TEST_CLASS = 'bluetooth'
+TEST_TYPE = 'server'
+DEPENDENCIES = 'bluetooth'
+
+DOC = """
+This test case verifies that the Bluetooth adapter of the DUT can
+behave normally when subjected to rebooting the DUT.
+"""
+
+args_dict = utils.args_to_dict(args)
+
+def run(machine):
+    host = hosts.create_host(machine)
+    job.run_test('bluetooth_AdapterReboot', host=host)
+
+parallel_simple(run, machines)

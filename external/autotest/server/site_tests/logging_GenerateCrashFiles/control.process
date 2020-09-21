@@ -1,0 +1,28 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "Chromium OS Team"
+NAME = "logging_GenerateCrashFiles.PROCESS"
+PURPOSE = "Verify that process crash files are generated."
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "logging"
+TEST_TYPE = "server"
+ATTRIBUTES = "suite:usb_detect,suite:manual_platform_suite"
+
+DOC = """
+Crash process and confirm log files are generated.
+"""
+
+def run(machine):
+    host = hosts.create_host(machine)
+    crash_cmd = "killall -w -s SEGV /usr/bin/powerd"
+    crash_files = ["core", "dmp", "meta", "log"]
+    prefix = "powerd"
+    job.run_test("logging_GenerateCrashFiles", host=host,
+                 crash_cmd=crash_cmd, crash_files=crash_files,
+                 prefix=prefix, tag="PROCESS")
+
+parallel_simple(run, machines)
+

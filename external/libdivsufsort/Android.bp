@@ -1,0 +1,54 @@
+//
+// Copyright (C) 2015 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+cc_defaults {
+    name: "libdivsufsort_defaults",
+    host_supported: true,
+    srcs: [
+        "lib/divsufsort.c",
+        "lib/sssort.c",
+        "lib/trsort.c",
+        "lib/utils.c",
+    ],
+    local_include_dirs: ["include"],
+    export_include_dirs: ["android_include"],
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wextra",
+        "-DHAVE_CONFIG_H=1",
+    ],
+}
+
+// libdivsufsort defines two different libraries compiled from the same
+// codebase. The libraries export different symbols and differ on the integer
+// type used in the suffix array index. "libdivsufsort" uses 32-bit integers
+// allowing input sizes up to 2GiB, while "libdivsufsort64" uses 64-bit integers
+// allowing larger input sizes (8 EiB) but also requiring twice as much memory
+// for the smaller inputs.
+
+// libdivsufsort using 32-bit integers for the suffix array.
+cc_library_static {
+    name: "libdivsufsort",
+    defaults: ["libdivsufsort_defaults"],
+}
+
+// libdivsufsort using 64-bit integers for the suffix array.
+cc_library_static {
+    name: "libdivsufsort64",
+    defaults: ["libdivsufsort_defaults"],
+    cflags: ["-DBUILD_DIVSUFSORT64"],
+}

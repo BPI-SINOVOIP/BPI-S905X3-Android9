@@ -1,0 +1,43 @@
+{
+    "manifest_version": 2,
+    "compatible_hw": [
+        {
+            "pids": [
+                16,
+                17
+            ],
+            "vid": 11225,
+            "hwrevs": [
+                6
+            ]
+        }
+    ],
+    "files": [
+        {
+            "type": "mv2_app",
+            "version": {
+                "numerical": [
+                    0,
+                    5,
+                    2
+                ],
+                "git-descr": "huddly-0.5.2-release"
+            },
+            "name": "bin/huddly.bin",
+            "sha256": "7ab084861bee29b713a76290a897255463fdfd8673b7fddf0f26a9d5e9614ba3"
+        },
+        {
+            "type": "mv2_boot",
+            "version": {
+                "numerical": [
+                    0,
+                    2,
+                    2
+                ],
+                "git-descr": "huddly-bootloader-0.2.2-release"
+            },
+            "name": "bin/huddly_boot.bin",
+            "sha256": "d1163c7505e5a222c648b40a1eb4b5549dd352de96fc64ffcbee48fc1e206555"
+        }
+    ]
+}

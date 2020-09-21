@@ -1,0 +1,20 @@
+{
+  "input": [
+    {
+      "type": "git", 
+      "branch": "202befe3cb3ad0eec07eaaf3f0706e42926b6bbb", 
+      "address": "git://sourceware.org/git/gdb.git"
+    }
+  ], 
+  "output": [
+    {
+      "type": "git", 
+      "ignores": [
+        ".svn", 
+        ".git"
+      ], 
+      "branch": "chromeos_master", 
+      "address": "https://chromium.googlesource.com/chromiumos/third_party/gdb.git"
+    }
+  ]
+}

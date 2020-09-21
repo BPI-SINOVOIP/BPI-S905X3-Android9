@@ -1,0 +1,8 @@
+test skipped from this build includes:
+
+1) Tests specified in tools/disabled_tests.txt
+2) Any tests with build failure and filtered by tools/filter_success_build.py
+3) "net.ipv6_lib" related tests are removed from $(LTP_ROOT)/scenario_groups/default (see $(LTP_ROOT)/scenario_groups/default_original)
+
+4) all ltp prebuild compiled succesfully. ltp library cpu_set still yields errors, so it is disabled, and every testcase that requires cpu_set is also disabled (currently they are not listed on disabled_tests.txt)
+5) ltp prebuild tcp4-uni-basic02 is temporally disabled because of build error on ab#35

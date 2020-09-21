@@ -1,0 +1,32 @@
+# Copyright (c) 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+
+AUTHOR = "kalin"
+NAME = "platform_SuspendResumeTiming"
+PURPOSE = "Servo based suspend-resume timing check test"
+CRITERIA = "This test will fail if time to suspend or resume is too long."
+TIME = "LONG"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "platform"
+TEST_TYPE = "server"
+ATTRIBUTES = "suite:usb_detect"
+DEPENDENCIES = "servo, usb_detect"
+
+DOC = """
+This test measures the time to suspend and resume
+for the case of disconnected USB hub with peripherals
+by servo.
+"""
+
+args_dict = utils.args_to_dict(args)
+servo_args = hosts.CrosHost.get_servo_arguments(args_dict)
+
+def run(machine):
+    host = hosts.create_host(machine, servo_args=servo_args)
+    job.run_test("platform_SuspendResumeTiming", host=host,
+                 plug_usb=False, disable_sysinfo=True)
+
+parallel_simple(run, machines)

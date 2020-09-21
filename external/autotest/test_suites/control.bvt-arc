@@ -1,0 +1,65 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "Chrome OS Team"
+NAME = "bvt-arc"
+PURPOSE = "Test basic functionality of ARC."
+
+TIME = "SHORT"
+TEST_CATEGORY = "General"
+TEST_CLASS = "suite"
+TEST_TYPE = "Server"
+
+DOC = """
+This is the portion of the Build Verification Test suite required
+for devices supporting ARC.  Tests in this suite must pass in the
+CQ, and in the Chrome and Android PFQs.  Test failures prevent code
+from being included in the tree or in canary builds:
+  * Failures in the canary turn the tree red, block lower priority
+    tests for the build, and generally mean that QA cannot further
+    evaluate the build's fitness for release.
+  * Chrome OS CLs must pass these tests in the Commit Queue prior to
+    being accepted into the tree.
+  * A new Chrome or Android build must pass these tests prior to the
+    build being included in a Chrome OS canary build.
+
+Requirements for a test to be in this suite:
+ 1. The test should be SHORT or MEDIUM, and should not require any
+    specialized lab resources.
+ 2. A test failure should indicate one or more of the following
+    impacts is possible:
+     * The failure may prevent discovery of other ARC bugs.
+     * The failure may block ordinary development tasks for ARC.
+ 3. A test failure must reliably indicate a bug in the product, and
+    not a bug in the test.
+
+@param build: The name of the image to test.
+              Ex: veyron_minnie-release/R60-9575.0.0
+@param board: The board to test on. Ex: veyron_minnie
+@param pool: The pool of machines to utilize for scheduling.
+"""
+
+import common
+from autotest_lib.server.cros import provision
+from autotest_lib.server.cros.dynamic_suite import dynamic_suite
+
+
+# Values specified in this bug template will override default values when
+# filing bugs on tests that are a part of this suite. If left unspecified
+# the bug filer will fallback to its defaults.
+_BUG_TEMPLATE = {
+    'labels': ['bvt'],
+    'owner': '',
+    'status': None,
+    'summary': None,
+    'title': None,
+}
+
+args_dict['max_runtime_mins'] = 60
+args_dict['name'] = 'bvt-arc'
+args_dict['job'] = job
+args_dict['version_prefix'] = provision.CROS_VERSION_PREFIX
+args_dict['bug_template'] = _BUG_TEMPLATE
+
+dynamic_suite.reimage_and_run(**args_dict)

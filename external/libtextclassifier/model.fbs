@@ -1,0 +1,577 @@
+//
+// Copyright (C) 2017 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+file_identifier "TC2 ";
+
+// The possible model modes, represents a bit field.
+namespace libtextclassifier2;
+enum ModeFlag : int {
+  NONE = 0,
+  ANNOTATION = 1,
+  CLASSIFICATION = 2,
+  ANNOTATION_AND_CLASSIFICATION = 3,
+  SELECTION = 4,
+  ANNOTATION_AND_SELECTION = 5,
+  CLASSIFICATION_AND_SELECTION = 6,
+  ALL = 7,
+}
+
+namespace libtextclassifier2;
+enum DatetimeExtractorType : int {
+  UNKNOWN_DATETIME_EXTRACTOR_TYPE = 0,
+  AM = 1,
+  PM = 2,
+  JANUARY = 3,
+  FEBRUARY = 4,
+  MARCH = 5,
+  APRIL = 6,
+  MAY = 7,
+  JUNE = 8,
+  JULY = 9,
+  AUGUST = 10,
+  SEPTEMBER = 11,
+  OCTOBER = 12,
+  NOVEMBER = 13,
+  DECEMBER = 14,
+  NEXT = 15,
+  NEXT_OR_SAME = 16,
+  LAST = 17,
+  NOW = 18,
+  TOMORROW = 19,
+  YESTERDAY = 20,
+  PAST = 21,
+  FUTURE = 22,
+  DAY = 23,
+  WEEK = 24,
+  MONTH = 25,
+  YEAR = 26,
+  MONDAY = 27,
+  TUESDAY = 28,
+  WEDNESDAY = 29,
+  THURSDAY = 30,
+  FRIDAY = 31,
+  SATURDAY = 32,
+  SUNDAY = 33,
+  DAYS = 34,
+  WEEKS = 35,
+  MONTHS = 36,
+  HOURS = 37,
+  MINUTES = 38,
+  SECONDS = 39,
+  YEARS = 40,
+  DIGITS = 41,
+  SIGNEDDIGITS = 42,
+  ZERO = 43,
+  ONE = 44,
+  TWO = 45,
+  THREE = 46,
+  FOUR = 47,
+  FIVE = 48,
+  SIX = 49,
+  SEVEN = 50,
+  EIGHT = 51,
+  NINE = 52,
+  TEN = 53,
+  ELEVEN = 54,
+  TWELVE = 55,
+  THIRTEEN = 56,
+  FOURTEEN = 57,
+  FIFTEEN = 58,
+  SIXTEEN = 59,
+  SEVENTEEN = 60,
+  EIGHTEEN = 61,
+  NINETEEN = 62,
+  TWENTY = 63,
+  THIRTY = 64,
+  FORTY = 65,
+  FIFTY = 66,
+  SIXTY = 67,
+  SEVENTY = 68,
+  EIGHTY = 69,
+  NINETY = 70,
+  HUNDRED = 71,
+  THOUSAND = 72,
+}
+
+namespace libtextclassifier2;
+enum DatetimeGroupType : int {
+  GROUP_UNKNOWN = 0,
+  GROUP_UNUSED = 1,
+  GROUP_YEAR = 2,
+  GROUP_MONTH = 3,
+  GROUP_DAY = 4,
+  GROUP_HOUR = 5,
+  GROUP_MINUTE = 6,
+  GROUP_SECOND = 7,
+  GROUP_AMPM = 8,
+  GROUP_RELATIONDISTANCE = 9,
+  GROUP_RELATION = 10,
+  GROUP_RELATIONTYPE = 11,
+
+  // Dummy groups serve just as an inflator of the selection. E.g. we might want
+  // to select more text than was contained in an envelope of all extractor
+  // spans.
+  GROUP_DUMMY1 = 12,
+
+  GROUP_DUMMY2 = 13,
+}
+
+namespace libtextclassifier2;
+table CompressedBuffer {
+  buffer:[ubyte];
+  uncompressed_size:int;
+}
+
+// Options for the model that predicts text selection.
+namespace libtextclassifier2;
+table SelectionModelOptions {
+  // If true, before the selection is returned, the unpaired brackets contained
+  // in the predicted selection are stripped from the both selection ends.
+  // The bracket codepoints are defined in the Unicode standard:
+  // http://www.unicode.org/Public/UNIDATA/BidiBrackets.txt
+  strip_unpaired_brackets:bool = 1;
+
+  // Number of hypothetical click positions on either side of the actual click
+  // to consider in order to enforce symmetry.
+  symmetry_context_size:int;
+
+  // Number of examples to bundle in one batch for inference.
+  batch_size:int = 1024;
+
+  // Whether to always classify a suggested selection or only on demand.
+  always_classify_suggested_selection:bool = 0;
+}
+
+// Options for the model that classifies a text selection.
+namespace libtextclassifier2;
+table ClassificationModelOptions {
+  // Limits for phone numbers.
+  phone_min_num_digits:int = 7;
+
+  phone_max_num_digits:int = 15;
+
+  // Limits for addresses.
+  address_min_num_tokens:int;
+
+  // Maximum number of tokens to attempt a classification (-1 is unlimited).
+  max_num_tokens:int = -1;
+}
+
+// List of regular expression matchers to check.
+namespace libtextclassifier2.RegexModel_;
+table Pattern {
+  // The name of the collection of a match.
+  collection_name:string;
+
+  // The pattern to check.
+  // Can specify a single capturing group used as match boundaries.
+  pattern:string;
+
+  // The modes for which to apply the patterns.
+  enabled_modes:libtextclassifier2.ModeFlag = ALL;
+
+  // The final score to assign to the results of this pattern.
+  target_classification_score:float = 1;
+
+  // Priority score used for conflict resolution with the other models.
+  priority_score:float = 0;
+
+  // If true, will use an approximate matching implementation implemented
+  // using Find() instead of the true Match(). This approximate matching will
+  // use the first Find() result and then check that it spans the whole input.
+  use_approximate_matching:bool = 0;
+
+  compressed_pattern:libtextclassifier2.CompressedBuffer;
+}
+
+namespace libtextclassifier2;
+table RegexModel {
+  patterns:[libtextclassifier2.RegexModel_.Pattern];
+}
+
+// List of regex patterns.
+namespace libtextclassifier2.DatetimeModelPattern_;
+table Regex {
+  pattern:string;
+
+  // The ith entry specifies the type of the ith capturing group.
+  // This is used to decide how the matched content has to be parsed.
+  groups:[libtextclassifier2.DatetimeGroupType];
+
+  compressed_pattern:libtextclassifier2.CompressedBuffer;
+}
+
+namespace libtextclassifier2;
+table DatetimeModelPattern {
+  regexes:[libtextclassifier2.DatetimeModelPattern_.Regex];
+
+  // List of locale indices in DatetimeModel that represent the locales that
+  // these patterns should be used for. If empty, can be used for all locales.
+  locales:[int];
+
+  // The final score to assign to the results of this pattern.
+  target_classification_score:float = 1;
+
+  // Priority score used for conflict resulution with the other models.
+  priority_score:float = 0;
+
+  // The modes for which to apply the patterns.
+  enabled_modes:libtextclassifier2.ModeFlag = ALL;
+}
+
+namespace libtextclassifier2;
+table DatetimeModelExtractor {
+  extractor:libtextclassifier2.DatetimeExtractorType;
+  pattern:string;
+  locales:[int];
+  compressed_pattern:libtextclassifier2.CompressedBuffer;
+}
+
+namespace libtextclassifier2;
+table DatetimeModel {
+  // List of BCP 47 locale strings representing all locales supported by the
+  // model. The individual patterns refer back to them using an index.
+  locales:[string];
+
+  patterns:[libtextclassifier2.DatetimeModelPattern];
+  extractors:[libtextclassifier2.DatetimeModelExtractor];
+
+  // If true, will use the extractors for determining the match location as
+  // opposed to using the location where the global pattern matched.
+  use_extractors_for_locating:bool = 1;
+
+  // List of locale ids, rules of whose are always run, after the requested
+  // ones.
+  default_locales:[int];
+}
+
+namespace libtextclassifier2.DatetimeModelLibrary_;
+table Item {
+  key:string;
+  value:libtextclassifier2.DatetimeModel;
+}
+
+// A set of named DateTime models.
+namespace libtextclassifier2;
+table DatetimeModelLibrary {
+  models:[libtextclassifier2.DatetimeModelLibrary_.Item];
+}
+
+// Options controlling the output of the Tensorflow Lite models.
+namespace libtextclassifier2;
+table ModelTriggeringOptions {
+  // Lower bound threshold for filtering annotation model outputs.
+  min_annotate_confidence:float = 0;
+
+  // The modes for which to enable the models.
+  enabled_modes:libtextclassifier2.ModeFlag = ALL;
+}
+
+// Options controlling the output of the classifier.
+namespace libtextclassifier2;
+table OutputOptions {
+  // Lists of collection names that will be filtered out at the output:
+  // - For annotation, the spans of given collection are simply dropped.
+  // - For classification, the result is mapped to the class "other".
+  // - For selection, the spans of given class are returned as
+  // single-selection.
+  filtered_collections_annotation:[string];
+
+  filtered_collections_classification:[string];
+  filtered_collections_selection:[string];
+}
+
+namespace libtextclassifier2;
+table Model {
+  // Comma-separated list of locales supported by the model as BCP 47 tags.
+  locales:string;
+
+  version:int;
+
+  // A name for the model that can be used for e.g. logging.
+  name:string;
+
+  selection_feature_options:libtextclassifier2.FeatureProcessorOptions;
+  classification_feature_options:libtextclassifier2.FeatureProcessorOptions;
+
+  // Tensorflow Lite models.
+  selection_model:[ubyte] (force_align: 16);
+
+  classification_model:[ubyte] (force_align: 16);
+  embedding_model:[ubyte] (force_align: 16);
+
+  // Options for the different models.
+  selection_options:libtextclassifier2.SelectionModelOptions;
+
+  classification_options:libtextclassifier2.ClassificationModelOptions;
+  regex_model:libtextclassifier2.RegexModel;
+  datetime_model:libtextclassifier2.DatetimeModel;
+
+  // Options controlling the output of the models.
+  triggering_options:libtextclassifier2.ModelTriggeringOptions;
+
+  // Global switch that controls if SuggestSelection(), ClassifyText() and
+  // Annotate() will run. If a mode is disabled it returns empty/no-op results.
+  enabled_modes:libtextclassifier2.ModeFlag = ALL;
+
+  // If true, will snap the selections that consist only of whitespaces to the
+  // containing suggested span. Otherwise, no suggestion is proposed, since the
+  // selections are not part of any token.
+  snap_whitespace_selections:bool = 1;
+
+  // Global configuration for the output of SuggestSelection(), ClassifyText()
+  // and Annotate().
+  output_options:libtextclassifier2.OutputOptions;
+}
+
+// Role of the codepoints in the range.
+namespace libtextclassifier2.TokenizationCodepointRange_;
+enum Role : int {
+  // Concatenates the codepoint to the current run of codepoints.
+  DEFAULT_ROLE = 0,
+
+  // Splits a run of codepoints before the current codepoint.
+  SPLIT_BEFORE = 1,
+
+  // Splits a run of codepoints after the current codepoint.
+  SPLIT_AFTER = 2,
+
+  // Each codepoint will be a separate token. Good e.g. for Chinese
+  // characters.
+  TOKEN_SEPARATOR = 3,
+
+  // Discards the codepoint.
+  DISCARD_CODEPOINT = 4,
+
+  // Common values:
+  // Splits on the characters and discards them. Good e.g. for the space
+  // character.
+  WHITESPACE_SEPARATOR = 7,
+}
+
+// Represents a codepoint range [start, end) with its role for tokenization.
+namespace libtextclassifier2;
+table TokenizationCodepointRange {
+  start:int;
+  end:int;
+  role:libtextclassifier2.TokenizationCodepointRange_.Role;
+
+  // Integer identifier of the script this range denotes. Negative values are
+  // reserved for Tokenizer's internal use.
+  script_id:int;
+}
+
+// Method for selecting the center token.
+namespace libtextclassifier2.FeatureProcessorOptions_;
+enum CenterTokenSelectionMethod : int {
+  DEFAULT_CENTER_TOKEN_METHOD = 0,
+
+  // Use click indices to determine the center token.
+  CENTER_TOKEN_FROM_CLICK = 1,
+
+  // Use selection indices to get a token range, and select the middle of it
+  // as the center token.
+  CENTER_TOKEN_MIDDLE_OF_SELECTION = 2,
+}
+
+// Controls the type of tokenization the model will use for the input text.
+namespace libtextclassifier2.FeatureProcessorOptions_;
+enum TokenizationType : int {
+  INVALID_TOKENIZATION_TYPE = 0,
+
+  // Use the internal tokenizer for tokenization.
+  INTERNAL_TOKENIZER = 1,
+
+  // Use ICU for tokenization.
+  ICU = 2,
+
+  // First apply ICU tokenization. Then identify stretches of tokens
+  // consisting only of codepoints in internal_tokenizer_codepoint_ranges
+  // and re-tokenize them using the internal tokenizer.
+  MIXED = 3,
+}
+
+// Range of codepoints start - end, where end is exclusive.
+namespace libtextclassifier2.FeatureProcessorOptions_;
+table CodepointRange {
+  start:int;
+  end:int;
+}
+
+// Bounds-sensitive feature extraction configuration.
+namespace libtextclassifier2.FeatureProcessorOptions_;
+table BoundsSensitiveFeatures {
+  // Enables the extraction of bounds-sensitive features, instead of the click
+  // context features.
+  enabled:bool;
+
+  // The numbers of tokens to extract in specific locations relative to the
+  // bounds.
+  // Immediately before the span.
+  num_tokens_before:int;
+
+  // Inside the span, aligned with the beginning.
+  num_tokens_inside_left:int;
+
+  // Inside the span, aligned with the end.
+  num_tokens_inside_right:int;
+
+  // Immediately after the span.
+  num_tokens_after:int;
+
+  // If true, also extracts the tokens of the entire span and adds up their
+  // features forming one "token" to include in the extracted features.
+  include_inside_bag:bool;
+
+  // If true, includes the selection length (in the number of tokens) as a
+  // feature.
+  include_inside_length:bool;
+
+  // If true, for selection, single token spans are not run through the model
+  // and their score is assumed to be zero.
+  score_single_token_spans_as_zero:bool;
+}
+
+namespace libtextclassifier2.FeatureProcessorOptions_;
+table AlternativeCollectionMapEntry {
+  key:string;
+  value:string;
+}
+
+namespace libtextclassifier2;
+table FeatureProcessorOptions {
+  // Number of buckets used for hashing charactergrams.
+  num_buckets:int = -1;
+
+  // Size of the embedding.
+  embedding_size:int = -1;
+
+  // Number of bits for quantization for embeddings.
+  embedding_quantization_bits:int = 8;
+
+  // Context size defines the number of words to the left and to the right of
+  // the selected word to be used as context. For example, if context size is
+  // N, then we take N words to the left and N words to the right of the
+  // selected word as its context.
+  context_size:int = -1;
+
+  // Maximum number of words of the context to select in total.
+  max_selection_span:int = -1;
+
+  // Orders of charactergrams to extract. E.g., 2 means character bigrams, 3
+  // character trigrams etc.
+  chargram_orders:[int];
+
+  // Maximum length of a word, in codepoints.
+  max_word_length:int = 20;
+
+  // If true, will use the unicode-aware functionality for extracting features.
+  unicode_aware_features:bool = 0;
+
+  // Whether to extract the token case feature.
+  extract_case_feature:bool = 0;
+
+  // Whether to extract the selection mask feature.
+  extract_selection_mask_feature:bool = 0;
+
+  // List of regexps to run over each token. For each regexp, if there is a
+  // match, a dense feature of 1.0 is emitted. Otherwise -1.0 is used.
+  regexp_feature:[string];
+
+  // Whether to remap all digits to a single number.
+  remap_digits:bool = 0;
+
+  // Whether to lower-case each token before generating hashgrams.
+  lowercase_tokens:bool;
+
+  // If true, the selection classifier output will contain only the selections
+  // that are feasible (e.g., those that are shorter than max_selection_span),
+  // if false, the output will be a complete cross-product of possible
+  // selections to the left and possible selections to the right, including the
+  // infeasible ones.
+  // NOTE: Exists mainly for compatibility with older models that were trained
+  // with the non-reduced output space.
+  selection_reduced_output_space:bool = 1;
+
+  // Collection names.
+  collections:[string];
+
+  // An index of collection in collections to be used if a collection name can't
+  // be mapped to an id.
+  default_collection:int = -1;
+
+  // If true, will split the input by lines, and only use the line that contains
+  // the clicked token.
+  only_use_line_with_click:bool = 0;
+
+  // If true, will split tokens that contain the selection boundary, at the
+  // position of the boundary.
+  // E.g. "foo{bar}@google.com" -> "foo", "bar", "@google.com"
+  split_tokens_on_selection_boundaries:bool = 0;
+
+  // Codepoint ranges that determine how different codepoints are tokenized.
+  // The ranges must not overlap.
+  tokenization_codepoint_config:[libtextclassifier2.TokenizationCodepointRange];
+
+  center_token_selection_method:libtextclassifier2.FeatureProcessorOptions_.CenterTokenSelectionMethod;
+
+  // If true, span boundaries will be snapped to containing tokens and not
+  // required to exactly match token boundaries.
+  snap_label_span_boundaries_to_containing_tokens:bool;
+
+  // A set of codepoint ranges supported by the model.
+  supported_codepoint_ranges:[libtextclassifier2.FeatureProcessorOptions_.CodepointRange];
+
+  // A set of codepoint ranges to use in the mixed tokenization mode to identify
+  // stretches of tokens to re-tokenize using the internal tokenizer.
+  internal_tokenizer_codepoint_ranges:[libtextclassifier2.FeatureProcessorOptions_.CodepointRange];
+
+  // Minimum ratio of supported codepoints in the input context. If the ratio
+  // is lower than this, the feature computation will fail.
+  min_supported_codepoint_ratio:float = 0;
+
+  // Used for versioning the format of features the model expects.
+  // - feature_version == 0:
+  // For each token the features consist of:
+  // - chargram embeddings
+  // - dense features
+  // Chargram embeddings for tokens are concatenated first together,
+  // and at the end, the dense features for the tokens are concatenated
+  // to it. So the resulting feature vector has two regions.
+  feature_version:int = 0;
+
+  tokenization_type:libtextclassifier2.FeatureProcessorOptions_.TokenizationType = INTERNAL_TOKENIZER;
+  icu_preserve_whitespace_tokens:bool = 0;
+
+  // List of codepoints that will be stripped from beginning and end of
+  // predicted spans.
+  ignored_span_boundary_codepoints:[int];
+
+  bounds_sensitive_features:libtextclassifier2.FeatureProcessorOptions_.BoundsSensitiveFeatures;
+
+  // List of allowed charactergrams. The extracted charactergrams are filtered
+  // using this list, and charactergrams that are not present are interpreted as
+  // out-of-vocabulary.
+  // If no allowed_chargrams are specified, all charactergrams are allowed.
+  // The field is typed as bytes type to allow non-UTF8 chargrams.
+  allowed_chargrams:[string];
+
+  // If true, tokens will be also split when the codepoint's script_id changes
+  // as defined in TokenizationCodepointRange.
+  tokenize_on_script_change:bool = 0;
+}
+
+root_type libtextclassifier2.Model;

@@ -1,0 +1,20 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "rjahagir"
+NAME = "platform_InputVolume"
+PURPOSE = """Verify that functional keys F8, F9, F10 can mute, increase, and
+decrease volume."""
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "platform"
+TEST_TYPE = "client"
+ATTRIBUTES = "suite:bvt-perbuild"
+
+DOC = """
+Increase, decrease, and mute the volume using keyboard shortcuts.
+The test will fail if the internal speaker volume does not change.
+"""
+
+job.run_test("platform_InputVolume")

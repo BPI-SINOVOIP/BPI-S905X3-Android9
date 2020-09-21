@@ -1,0 +1,32 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'scunningham'
+NAME = 'policy_PowerManagementIdleSettings'
+TIME = 'SHORT'
+TEST_CATEGORY = 'Functional'
+TEST_CLASS = 'enterprise'
+TEST_TYPE = 'client'
+
+DOC = '''
+Verify effects of PowerManagementIdleSettings policy on client behavior.
+
+This test verifies the effect of the PowerManagementIdleSettings user policy
+on Chrome OS client behavior. It exercises a range of valid values for the
+IdleAction property using three test cases: NotSet_Sleep, DoNothing_Continue,
+and Logout_EndSession.
+
+The test shall pass if the device correctly changes the screen brightness
+(dim and off) after the specified delay times, and performs the specified
+IdleAction after the Idle time has elapsed. The test shall fail if any of the
+above behaviors are not enforced.
+
+This control file allows CloudDPC E2E tests to run any test case defined in
+this test via command-line.
+
+'''
+
+args_dict = utils.args_to_dict(args)
+
+job.run_test('policy_PowerManagementIdleSettings', **args_dict)

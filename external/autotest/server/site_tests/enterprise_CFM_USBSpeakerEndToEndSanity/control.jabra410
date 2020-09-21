@@ -1,0 +1,37 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+from autotest_lib.client.common_lib.cros.cfm.usb import cfm_usb_devices
+
+AUTHOR = "harpreet@chromium.org"
+NAME = "enterprise_CFM_USBSpeakerEndToEndSanity.jabra410"
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "enterprise"
+TEST_TYPE = "server"
+ATTRIBUTES = "suite:hotrod"
+DEPENDENCIES = "jabra410, motor-control-board"
+JOB_RETRIES = 3
+
+DOC = """
+This test clears the TPM and enables the appropriate usb port on the servo
+before kicking off a client side test that enrolls the device into CFM. Once
+the device in enrolled, a different client test is kicked off to change the
+hangouts volume using hotrod kiosk app JS hooks. These changes are then
+validated against the cras_test_client output to make sure the volume matches.
+"""
+
+args_dict = utils.args_to_dict(args)
+servo_args = hosts.CrosHost.get_servo_arguments(args_dict)
+chameleon_args = hosts.CrosHost.get_chameleon_arguments(args_dict)
+
+def run_test(machine):
+    host = hosts.create_host(machine, servo_args=servo_args,
+                             chameleon_args=chameleon_args)
+    job.run_test('enterprise_CFM_USBSpeakerEndToEndSanity', host=host,
+                 usb_speaker=cfm_usb_devices.JABRA_SPEAK_410, tag="jabra410")
+
+
+parallel_simple(run_test, machines)

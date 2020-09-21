@@ -1,0 +1,109 @@
+/*
+ * Copyright (C) 2017 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+syntax = "proto3";
+
+package nugget.app.keymaster;
+
+import "nugget/app/keymaster/keymaster_defs.proto";
+
+message KeyParameter {
+  Tag tag = 1;      /* Possible values defined here
+                     * ::android::hardware::keymaster::V3_0::Tag
+                     */
+  uint32 integer = 2;
+  uint64 long_integer = 3;
+  bytes blob = 4;
+}
+
+message KeyParameters {
+  repeated KeyParameter params = 1;
+}
+
+message KeyBlob {
+  bytes blob = 1;
+}
+
+message OperationHandle {
+  uint64 handle = 1;
+}
+
+message Certificate {
+  bytes data = 1;
+}
+
+message CertificateChain {
+  repeated Certificate certificates = 1;
+}
+
+message KeyCharacteristics {
+  KeyParameters software_enforced = 1;
+  KeyParameters tee_enforced = 2;
+}
+
+message HmacSharingParameters {
+  bytes seed = 1;
+  bytes nonce = 2;
+}
+
+message HardwareAuthToken {
+  uint64 challenge = 1;
+  uint64 user_id = 2;
+  uint64 authenticator_id = 3;
+  HardwareAuthenticatorType authenticator_type = 4;
+  uint64 timestamp = 5;
+  bytes mac = 6;
+}
+
+message VerificationToken {
+  uint64 challenge = 1;
+  uint64 timestamp = 2;
+  KeyParameters params_verified = 3;
+  SecurityLevel security_level = 4;
+  bytes mac = 5;
+}
+
+/*
+ * Internal types.
+ */
+message RSAKey {
+  uint32 e = 1;
+  bytes d = 2;
+  bytes n = 3;
+}
+
+message ECKey {
+  /* TODO: should this be EcCurve. */
+  uint32 curve_id = 1;
+  bytes d = 2;
+  bytes x = 3;
+  bytes y = 4;
+}
+
+message SymmetricKey {
+  bytes material = 1;
+}
+
+enum PresharedSecretStatus {
+  NOT_SET = 0;
+  ALREADY_SET = 1;
+}
+
+enum AttestationSelector {
+  ATTEST_TEST = 0;
+  ATTEST_BATCH = 1;
+  ATTEST_INDIVIDUAL = 2;
+}

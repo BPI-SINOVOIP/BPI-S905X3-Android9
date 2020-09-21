@@ -1,0 +1,36 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+from autotest_lib.server.cros.bluetooth import advertisements_data
+
+
+AUTHOR = 'rjahagir'
+NAME = 'bluetooth_AdapterSuspendResume'
+PURPOSE = 'Test bluetooth adapter state with suspending and resuming DUT.'
+CRITERIA = 'Adapter should power on or off with correct parameters.'
+ATTRIBUTES = 'suite:bluetooth, suite:bluetooth_sanity'
+TIME = 'SHORT'
+TEST_CATEGORY = 'Functional'
+TEST_CLASS = 'bluetooth'
+TEST_TYPE = 'server'
+DEPENDENCIES = 'bluetooth'
+
+DOC = """
+This test case verifies that the Bluetooth adapter of the DUT can
+behave normally when subjected to suspending and resuming the DUT.
+
+This autotest include the following test cases:
+     self.test_case_adapter_on_SR()
+     self.test_case_adapter_off_SR()
+"""
+
+args_dict = utils.args_to_dict(args)
+
+def run(machine):
+    host = hosts.create_host(machine)
+    job.run_test('bluetooth_AdapterSuspendResume',
+                 host=host)
+
+parallel_simple(run, machines)

@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package nugget.app.protoapi;
+
+import "nugget/app/protoapi/header.proto";
+
+enum DiagnosticAction {
+  DISABLE     = 0;
+  ENABLE      = 1;
+  DISABLE_ALL = 2;
+  ENABLE_ALL  = 3;
+}
+
+message DiagnosticResults {
+  uint32 pass_count = 1;
+  uint32 fail_count = 2;
+  uint32 runtime_shortest = 3;
+  uint32 runtime_longest = 4;
+  uint32 runtime_average = 5;
+}
+
+message DiagnosticTest {
+  uint32 iterations_requested = 1;
+  DiagnosticResults diagnostic_results = 2;
+}
+
+message DiagnosticSet {
+  DiagnosticTest stress_test = 1;
+  DiagnosticTest aes_tests = 2;
+  DiagnosticTest aes_performance = 3;
+  DiagnosticTest ana_batmon = 4;
+  //  TODO (skeys) add remaining applicable tests here
+}
+
+message DiagnosticActions {
+  DiagnosticAction diagnostic_action = 1;
+  DiagnosticSet diagnostic_set = 2;
+}
+
+message APICall {
+  APImessageID api_message_id = 1;  // Same as 32-bit PDU header (redundant)
+  APIcallResult api_call_result = 2;
+  DiagnosticActions diagnostic_actions = 3;
+}

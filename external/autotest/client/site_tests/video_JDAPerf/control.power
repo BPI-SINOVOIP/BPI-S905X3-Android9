@@ -1,0 +1,28 @@
+# Copyright 2018 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "Chrome OS Team, chromeos-video@google.com"
+NAME = "video_JDAPerf.power"
+PURPOSE = "Test the power consumption of jpeg decoding"
+CRITERIA = """
+The test outputs the power consumption of jpeg decoding.
+"""
+ATTRIBUTES = "suite:crosbolt_perf_perbuild"
+TIME = "MEDIUM"
+TEST_CATEGORY = "Performance"
+TEST_CLASS = "video"
+TEST_TYPE = "client"
+DEPENDENCIES = "hw_jpeg_acc_dec"
+BUG_TEMPLATE = {
+    'labels': ['OS-Chrome', 'VideoTestFailure'],
+    'cc': ['chromeos-video-test-failures@google.com'],
+}
+
+DOC = """
+This test measures the power consumption of
+jpeg decoding for hardware decode and software decode.
+"""
+
+
+job.run_test('video_JDAPerf', power_test=True)

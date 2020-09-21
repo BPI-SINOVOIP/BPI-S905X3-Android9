@@ -1,0 +1,17 @@
+name: "vogar"
+description:
+    "The vogar tool. Originally maintained in googlecode.com "
+    "(http://vogar.googlecode.com/) but now mastered in Android."
+
+third_party {
+  url {
+    type: HOMEPAGE
+    value: "http://vogar.googlecode.com/"
+  }
+  url {
+    type: SVN
+    value: "http://vogar.googlecode.com/svn/trunk"
+  }
+  version: ""
+  last_upgrade_date { year: 2017 month: 11 day: 17 }
+}

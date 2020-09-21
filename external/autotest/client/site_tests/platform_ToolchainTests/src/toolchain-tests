@@ -1,0 +1,32 @@
+#!/bin/bash -e
+# Copyright 2018 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+base=$(dirname "$(readlink -m "$0")")
+log=$(mktemp)
+
+echo "FORTIFY..."
+# We run these tests under `script` because each FORTIFY failure, which these
+# cause *a lot* of, will complain directly to /dev/tty. For hosts, these
+# messages can easily drown out any other script output.
+if ! script -q -e -c "${base}/fortify-runtime-tests" "${log}" >/dev/null; then
+  echo "${test} failed; see logs in ${log}."
+  if grep -q '!!! Timeout reached' "${log}"; then
+    echo "Looks like the test program timed out."
+  else
+    # Try to find and pretty-print the failure message(s).
+    # The /Failures/ part of the script can't be a simple address range: if
+    # we're printing _FORTIFY_SOURCE=1 errors, we might pick up the ":::
+    # _FORTIFY_SOURCE=2 :::" header twice.
+    sed -ne '/^:::/p' \
+      -e '/^Failure(s): /{ p; :again; n; p; /^\s/b again; }' \
+      "${log}"
+  fi
+
+  echo "FAIL"
+  exit 1
+fi
+
+rm -f "${log}"
+echo "PASS"

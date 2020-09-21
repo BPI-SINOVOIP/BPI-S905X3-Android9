@@ -1,0 +1,21 @@
+# Copyright (c) 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+TIME="SHORT"
+AUTHOR = "The Chromium OS Authors"
+DOC = """
+Tests the crosvm tool.
+"""
+NAME = "vm_CrosVmStart"
+PURPOSE = "Regression and integration tests of crosvm."
+CRITERIA = """
+Fail the VM fails to start or run a command.
+"""
+ATTRIBUTES = "suite:bvt-cq"
+TEST_CLASS = "security"
+TEST_CATEGORY = "Functional"
+TEST_TYPE = "client"
+JOB_RETRIES = 2
+
+job.run_test("vm_CrosVmStart")

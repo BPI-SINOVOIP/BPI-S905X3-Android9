@@ -1,0 +1,5 @@
+{
+    "run_oci_args": ["--cgroup_parent=chronos_containers", "--bind_mount=/bin:/var/log"],
+    "program_argv": ["/bin/ls", "/var/log/bash"],
+    "expected_result": "/var/log/bash"
+}

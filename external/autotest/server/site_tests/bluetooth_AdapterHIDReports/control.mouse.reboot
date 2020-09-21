@@ -1,0 +1,52 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+
+AUTHOR = 'rjahagir'
+NAME = 'bluetooth_AdapterHIDReports.mouse.reboot'
+PURPOSE = ('Test bluetooth adapter receiving reports from '
+           'bluetooth HID devices after a reboot.')
+CRITERIA = 'Adapter should receive HID events correctly.'
+ATTRIBUTES = 'suite:bluetooth, suite:bluetooth_chameleon'
+TIME = 'SHORT' # This test takes about 3 minutes
+TEST_CATEGORY = 'Functional'
+TEST_CLASS = 'bluetooth'
+TEST_TYPE = 'server'
+DEPENDENCIES = 'bluetooth, chameleon:bt_hid'
+
+DOC = """
+Verify that the bluetooth adapter of the DUT could receive HID reports
+sent from a connected bluetooth device correctly before and after a
+reboot.
+
+Specifically, the following subtests are executed in this autotest.
+    - test_reset_on_adapter
+    - test_pairable
+    - test_discover_device
+    - test_pairing
+    - test_device_is_paired
+    - test_connection_by_device
+    - test_device_name
+    - test_mouse_left_click
+    - test_mouse_right_click
+    - test_mouse_move_in_x
+    - test_mouse_move_in_y
+    - test_mouse_move_in_xy
+    - test_mouse_scroll_down
+    - test_mouse_scroll_up
+    - test_mouse_click_and_drag
+    - test_disconnection_by_adapter
+    - test_remove_pairing
+"""
+
+args_dict = utils.args_to_dict(args)
+chameleon_args = hosts.CrosHost.get_chameleon_arguments(args_dict)
+
+def run(machine):
+    host = hosts.create_host(machine, chameleon_args=chameleon_args)
+    job.run_test('bluetooth_AdapterHIDReports', host=host, device_type='MOUSE',
+                 num_iterations=1, min_pass_count=1, reboot=True)
+
+parallel_simple(run, machines)

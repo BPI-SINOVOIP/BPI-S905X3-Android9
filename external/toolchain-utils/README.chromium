@@ -1,0 +1,17 @@
+Name: toolchain-utils
+Short Name: toolchain-utils
+URL: https://chromium.googlesource.com/chromiumos/third_party/toolchain-utils
+License: BSD
+License File: LICENSE
+Security Critical: no
+
+Description:
+This contains scripts used to help maintain the toolchain.  These
+include tools for downloading and building Chromium OS; building
+custom versions of the toolchain inside Chromium OS; launching
+performance tests, analyzing the results and generating reports;
+running toolchain regression tests; and using binary search to isolate
+toolchain issues.
+
+NOTE:  These tools are strictly for Chromium developers; none of them
+ship on the final product (devices that run Chromium OS).

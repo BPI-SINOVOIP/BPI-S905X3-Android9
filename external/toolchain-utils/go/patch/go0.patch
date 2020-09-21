@@ -1,0 +1,33 @@
+testenv: look for "go" executable in path.
+
+--- src/go/build/deps_test.go
++++ src/go/build/deps_test.go
+@@ -168,7 +168,7 @@ var pkgDeps = map[string][]string{
+ 	"testing":          {"L2", "flag", "fmt", "os", "runtime/debug", "runtime/pprof", "runtime/trace", "time"},
+ 	"testing/iotest":   {"L2", "log"},
+ 	"testing/quick":    {"L2", "flag", "fmt", "reflect"},
+-	"internal/testenv": {"L2", "os", "testing"},
++	"internal/testenv": {"L2", "os", "os/exec", "testing"},
+ 
+ 	// L4 is defined as L3+fmt+log+time, because in general once
+ 	// you're using L3 packages, use of fmt, log, or time is not a big deal.
+--- src/internal/testenv/testenv.go
++++ src/internal/testenv/testenv.go
+@@ -12,6 +12,7 @@ package testenv
+ 
+ import (
+ 	"os"
++	"os/exec"
+ 	"runtime"
+ 	"strings"
+ 	"testing"
+@@ -36,6 +37,9 @@ func HasGoBuild() bool {
+ 			return false
+ 		}
+ 	}
++	if _, err := exec.LookPath("go"); err != nil {
++		return false
++	}
+ 	return true
+ }
+ 

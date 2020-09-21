@@ -1,0 +1,5 @@
+cc_library_static {
+    name: "libclangAnalysis",
+    defaults: ["clang-defaults"],
+    srcs: ["*.cpp"],
+}

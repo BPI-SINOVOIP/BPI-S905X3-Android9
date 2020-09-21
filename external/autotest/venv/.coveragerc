@@ -1,0 +1,11 @@
+[run]
+branch = True
+
+[report]
+exclude_lines =
+  pragma: no cover
+  raise NotImplementedError
+  if __name__ == .__main__.:
+  def main\(args\):
+show_missing = True
+skip_covered = True

@@ -1,0 +1,115 @@
+cc_defaults {
+    name: "puffin_defaults",
+    host_supported: true,
+    shared_libs: [
+        "libbrillo",
+        "libchrome",
+        "libprotobuf-cpp-lite",
+    ],
+    static_libs: [
+        "libbrotli",
+        "libbz",
+    ],
+    export_include_dirs: ["src/include"],
+    cflags: [
+        "-DUSE_BRILLO=1",
+        "-D_FILE_OFFSET_BITS=64",
+        "-DZLIB_CONST",
+        "-Wall",
+        "-Werror",
+        "-Wextra",
+    ],
+    target: {
+        darwin: {
+            enabled: false,
+        },
+    },
+}
+
+cc_library_static {
+    name: "libpuffpatch",
+    defaults: ["puffin_defaults"],
+    srcs: [
+        "puffin/src/puffin.proto",
+        "src/bit_reader.cc",
+        "src/bit_writer.cc",
+        "src/huffer.cc",
+        "src/huffman_table.cc",
+        "src/puff_reader.cc",
+        "src/puff_writer.cc",
+        "src/puffer.cc",
+        "src/puffin_stream.cc",
+        "src/puffpatch.cc",
+    ],
+    static_libs: [
+        "libbspatch",
+    ],
+    proto: {
+        type: "lite",
+        export_proto_headers: true,
+    },
+}
+
+cc_library_static {
+    name: "libpuffdiff",
+    defaults: ["puffin_defaults"],
+    srcs: [
+        "src/file_stream.cc",
+        "src/memory_stream.cc",
+        "src/puffdiff.cc",
+        "src/utils.cc",
+    ],
+    static_libs: [
+        "libbsdiff",
+        "libpuffpatch",
+        "libz",
+    ],
+}
+
+cc_binary {
+    name: "puffin",
+    defaults: ["puffin_defaults"],
+    srcs: [
+        "src/extent_stream.cc",
+        "src/main.cc",
+    ],
+    static_libs: [
+        "libbsdiff",
+        "libbspatch",
+        "libdivsufsort",
+        "libdivsufsort64",
+        "libpuffdiff",
+        "libpuffpatch",
+        "libz",
+    ],
+}
+
+cc_test {
+    name: "puffin_unittest",
+    defaults: ["puffin_defaults"],
+    test_suites: ["device-tests"],
+    cflags: ["-Wno-sign-compare"],
+    srcs: [
+        "src/bit_io_unittest.cc",
+        "src/extent_stream.cc",
+        "src/patching_unittest.cc",
+        "src/puff_io_unittest.cc",
+        "src/puffin_unittest.cc",
+        "src/sample_generator.cc",
+        "src/stream_unittest.cc",
+        "src/testrunner.cc",
+        "src/unittest_common.cc",
+        "src/utils_unittest.cc",
+    ],
+    shared_libs: [
+        "libz",
+    ],
+    static_libs: [
+        "libbsdiff",
+        "libbspatch",
+        "libdivsufsort",
+        "libdivsufsort64",
+        "libpuffdiff",
+        "libpuffpatch",
+    ],
+}

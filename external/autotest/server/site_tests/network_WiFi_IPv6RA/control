@@ -1,0 +1,25 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'bmahadev, lorenzo'
+NAME = 'network_WiFi_IPv6RA'
+TIME = 'SHORT'
+TEST_TYPE = 'Server'
+DEPENDENCIES = 'androidwificell'
+ATTRIBUTES = ('suite:android_wifi_connect')
+
+DOC = """
+This test verifies Android Packet Filtering feature for ipv6 by generating and
+sending both duplicate and different RA packets in ICMPv6 format and fetching
+network metric for icmp6InType134.
+"""
+
+
+def run(machine):
+    host = hosts.create_host(machine)
+    job.run_test('network_WiFi_IPv6RA',
+                 host=host,
+                 raw_cmdline_args=args)
+
+parallel_simple(run, machines)

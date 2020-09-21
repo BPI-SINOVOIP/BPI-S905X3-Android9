@@ -1,0 +1,4 @@
+hostname,label,cpu,cores,os,username
+"chrotomation.mtv.corp.google.com","pc-workstation","core2duo",8,"linux","mobiletc-prebuild"
+"chromeos-test1.mtv.corp.google.com","cr48","atom",1,"chromeos","chromeos"
+"chromeos-test2.mtv.corp.google.com","cr48","atom",1,"chromeos","chromeos"

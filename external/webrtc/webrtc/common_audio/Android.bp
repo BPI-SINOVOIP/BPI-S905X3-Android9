@@ -1,0 +1,47 @@
+// Copyright (c) 2015 The WebRTC project authors. All Rights Reserved.
+//
+// Use of this source code is governed by a BSD-style license
+// that can be found in the LICENSE file in the root of the source
+// tree. An additional intellectual property rights grant can be found
+// in the file PATENTS.  All contributing project authors may
+// be found in the AUTHORS file in the root of the source tree.
+
+subdirs = ["*"]
+
+cc_library_static {
+    name: "libwebrtc_common",
+    defaults: ["webrtc_flags"],
+
+    srcs: [
+        "audio_converter.cc",
+        "audio_util.cc",
+        "blocker.cc",
+        "channel_buffer.cc",
+        "fft4g.c",
+        "fir_filter.cc",
+        "lapped_transform.cc",
+        "real_fourier_ooura.cc",
+        "real_fourier.cc",
+        "ring_buffer.c",
+        "audio_ring_buffer.cc",
+        "sparse_fir_filter.cc",
+        "window_generator.cc",
+    ],
+
+    arch: {
+        x86: {
+            srcs: ["fir_filter_sse.cc"],
+        },
+        x86_64: {
+            srcs: ["fir_filter_sse.cc"],
+        },
+    },
+}
+
+filegroup {
+    name: "webrtc_common_audio_wav",
+    srcs: [
+        "wav_file.cc",
+        "wav_header.cc",
+    ],
+}

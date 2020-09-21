@@ -1,0 +1,2 @@
+Main-Class: org.jacoco.cli.internal.Main
+

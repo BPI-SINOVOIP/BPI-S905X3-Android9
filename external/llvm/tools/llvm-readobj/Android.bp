@@ -1,0 +1,22 @@
+//===---------------------------------------------------------------===
+// llvm-readobj command line tool
+//===---------------------------------------------------------------===
+
+cc_binary_host {
+    name: "llvm-readobj",
+    defaults: ["llvm-defaults"],
+    srcs: ["*.cpp"],
+    static_libs: [
+        "libLLVMARMInfo",
+        "libLLVMAArch64Info",
+        "libLLVMMipsInfo",
+        "libLLVMX86Info",
+        "libLLVMDebugInfoCodeView",
+        "libLLVMObject",
+        "libLLVMBitReader",
+        "libLLVMMC",
+        "libLLVMMCParser",
+        "libLLVMCore",
+        "libLLVMSupport",
+    ],
+}

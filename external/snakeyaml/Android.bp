@@ -1,0 +1,64 @@
+// Copyright (C) 2016 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+//
+// Build support for snakeyaml within the Android Open Source Project
+// See https://source.android.com/source/building.html for more information
+//
+
+// List of all files that need to be patched (see src/patches/android)
+snakeyaml_need_patch_src_files = [
+    "src/main/java/org/yaml/snakeyaml/extensions/compactnotation/CompactConstructor.java",
+    "src/main/java/org/yaml/snakeyaml/constructor/Constructor.java",
+    "src/main/java/org/yaml/snakeyaml/introspector/PropertyUtils.java",
+    "src/main/java/org/yaml/snakeyaml/representer/Representer.java",
+]
+
+genrule {
+    name: "snakeyaml_patched_src_files",
+    srcs: snakeyaml_need_patch_src_files,
+    tool_files: [
+        "patch-android-src",
+        "src/patches/android/*.patch",
+    ],
+    tools: [
+        "soong_zip",
+    ],
+    cmd: "for src in $(in); do " +
+        "   $(location patch-android-src) external/snakeyaml/ $${src} $(genDir)/$${src}; " +
+        " done && " +
+        " $(location soong_zip) -o $(out) -C $(genDir) -D $(genDir)",
+    out: ["snakeyaml_patched_src_files.srcjar"],
+}
+
+java_library {
+    name: "snakeyaml",
+    host_supported: true,
+    hostdex: true,
+    sdk_version: "core_current",
+
+    srcs: ["src/main/**/*.java"],
+    target: {
+        android: {
+            exclude_srcs: snakeyaml_need_patch_src_files + [
+                // List of all files that are unsupported on android (see pom.xml)
+                "src/main/java/org/yaml/snakeyaml/introspector/MethodProperty.java",
+            ],
+            srcs: [":snakeyaml_patched_src_files"],
+        },
+    },
+}
+
+// TODO: Consider adding tests.

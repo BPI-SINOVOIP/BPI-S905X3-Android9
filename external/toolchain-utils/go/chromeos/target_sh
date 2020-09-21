@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e -o pipefail
+
+# Run a command on the target ChromeOS device.
+#
+# Usage: target_sh <cmd> <args>...
+
+target="$1"
+shift
+
+ssh ${target} "$*"

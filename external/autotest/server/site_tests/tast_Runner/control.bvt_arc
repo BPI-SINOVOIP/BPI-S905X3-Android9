@@ -1,0 +1,33 @@
+# Copyright 2018 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'Chromium OS team'
+NAME = 'tast_Runner.bvt_arc'
+TIME = 'MEDIUM'
+TEST_TYPE = 'Server'
+ATTRIBUTES = 'suite:bvt-perbuild'
+DEPENDENCIES = 'arc'
+
+# Disable server-side packaging, which incurs additional setup overhead and
+# causes tests to run within containers that don't automatically have access to
+# the required Tast-related files in /opt/infra-tools.
+REQUIRE_SSP = False
+
+DOC = '''
+Run the Tast ARC-specific BVT suite.
+
+Tast is an integration-testing framework analagous to the test-running portion
+of Autotest. See https://chromium.googlesource.com/chromiumos/platform/tast/ for
+more information.
+
+This test runs Tast-based ARC-specific BVT tests against a remote DUT and
+reports failure if any tests (that haven't been marked flaky) fail.
+'''
+
+def run(machine):
+    job.run_test('tast_Runner',
+                 host=hosts.create_host(machine),
+                 test_exprs=['(bvt && arc)'])
+
+parallel_simple(run, machines)

@@ -1,0 +1,4 @@
+# List of tests which cannot (currently) be built for Android/bionic.
+# Every test case that requires this lib will also need be disabled
+
+cpu_set

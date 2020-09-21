@@ -1,0 +1,25 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'ihf@chromium.org'
+NAME = 'component_UpdateFlash'
+PURPOSE = 'Verify the Adobe Flash binary can be updated via component update.'
+CRITERIA = 'Fail if a new binary cannot be downloaded and launched'
+TIME = 'MEDIUM'
+TEST_CATEGORY = 'Functional'
+TEST_CLASS = 'platform'
+TEST_TYPE = 'server'
+ATTRIBUTES = 'suite:bvt-perbuild'
+
+
+DOC = """
+This test downloads a Flash binary from Omaha, reboots the DUT, launches Chrome
+and verifies that Flash starts.
+"""
+
+def run(machine):
+    host = hosts.create_host(machine)
+    job.run_test('component_UpdateFlash', host=host)
+
+parallel_simple(run, machines)

@@ -1,0 +1,44 @@
+from autotest_lib.server import utils
+from autotest_lib.server.cros import provision
+
+try:
+    from chromite.lib import metrics
+except ImportError:
+    metrics = utils.metrics_mock
+
+
+DURATION_METRIC = 'chromeos/autotest/autoserv/verify_duration'
+
+
+# A string of the form 'label1,label2:value,label3'.
+job_labels = locals().get('job_labels') or ','.join(args)
+labels_list = [l.strip() for l in job_labels.split(',') if l]
+
+
+def verify(machine):
+    print 'Initializing host %s' % machine
+    job.record('START', None, 'verify')
+    target = hosts.create_target_machine(machine,
+                                         try_lab_servo=True)
+    hostname = utils.get_hostname_from_machine(machine)
+    try:
+        with metrics.SecondsTimer(DURATION_METRIC,
+                                  fields={'dut_host_name': hostname}):
+            target.verify()
+            provision.run_special_task_actions(job, target, labels_list,
+                                               provision.Verify)
+    except Exception:
+        logging.exception('Verify failed due to Exception.')
+        job.record('END FAIL', None, 'verify')
+        # See the provision control segment for the explanation of why we're
+        # doing this.
+        raise Exception('')
+    else:
+        hostname = utils.get_hostname_from_machine(machine)
+        job.record('END GOOD', None, 'verify',
+                   '%s verified successfully' % hostname)
+
+
+job.parallel_simple(verify, machines)
+
+# vim: set syntax=python :

@@ -1,0 +1,36 @@
+#!/bin/bash
+# Usage: tc_pyformat <list of pyformat options> file1.py file2.py ...
+#
+# Most common option is -i, which makes formatting changes in place.
+set -u
+
+PF=pyformat
+PF_OPTIONS="--yapf --force_quote_type=single"
+PF_USER_OPTIONS=""
+
+if [[ -z "$(type -t ${PF})" ]]; then
+  echo "Error: ${PF} not in your path."
+  exit 1
+fi
+
+while [[ "$1" == -* ]]; do
+  PF_USER_OPTIONS+=" $1"
+  shift
+done
+
+FILES=$*
+PF_OPTIONS+=${PF_USER_OPTIONS}
+
+for f in ${FILES}; do
+  if [[ $f != *.py ]]; then
+    echo "Error: File $f is not a python file"
+    exit 2
+  elif [[ -x $f ]]; then
+    ${PF} ${PF_OPTIONS} $f
+  elif [[ -f $f ]]; then
+    ${PF} --remove_shebang ${PF_OPTIONS} $f
+  else
+    echo "Error: File $f does not exist"
+    exit 2
+  fi
+done

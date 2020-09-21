@@ -1,0 +1,32 @@
+name: "external/oj-libjdwp"
+description:
+    "The portions of the openjdk required to build and use the libjdwp agent. "
+    " "
+    "This includes only the following files and directories: "
+    " "
+    "ASSEMBLY_EXCEPTION "
+    "LICENSE "
+    "README "
+    "make/data/jdwp/jdwp.spec "
+    "make/src/classes/build/tools/jdwpgen/ "
+    "src/share/back/ "
+    "src/solaris/back/ "
+    "src/share/javavm/export/ "
+    "src/solaris/javavm/export/ "
+    "src/share/npt/ "
+    "src/solaris/npt/ "
+    "src/share/transport/socket/ "
+    "src/solaris/transport/socket/"
+third_party {
+  url {
+    type: HOMEPAGE
+    value: "http://openjdk.java.net/"
+  }
+  url {
+    type: HG
+    value: "http://hg.openjdk.java.net/jdk8u/jdk8u/jdk"
+  }
+  version: "jdk8u144-b01"
+  last_upgrade_date { year: 2017 month: 10 day: 4 }
+  license_type: RESTRICTED
+}

@@ -1,0 +1,21 @@
+Three tests of round-trip conversions will be performed.
+One test of illegal UTF-32 will be peroformed.
+Two illegal result messages are expected; one in test 02A; one in test 03A.
+These are for tests of Surrogate conversion.
+
+Begin Test01
+******** Test01 succeeded without error. ********
+
+Begin Test02
+Test02A for 55296, input 0000d800, output 0000,0000, result 3
+!!! Test02A: note expected illegal result for 0x0000D800
+******** Test02 succeeded without error. ********
+
+Begin Test03
+sourceIllegal	Test03A for 55296 (0xd800); output ; result 3
+!!! Test03A: note expected illegal result for 0x0000D800
+******** Test03 succeeded without error. ********
+
+Begin Test04
+******** Test04 succeeded without error. ********
+

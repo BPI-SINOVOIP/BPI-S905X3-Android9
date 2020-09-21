@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Invoke the Go cross compiler for shamu.
+# Uses ../go_target to add PIE flags.
+#
+# This is just an example for an arm device.
+
+GOOS="android" GOARCH="arm" CGO_ENABLED="1" \
+	CC="arm-linux-androideabi-gcc" \
+	CXX="arm-linux-androideabi-g++" \
+	exec go_target "$@"

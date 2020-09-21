@@ -1,0 +1,13 @@
+[0530/130919:INFO:main.cc(78)] Starting Huddly Package Updater ..
+[0530/130919:INFO:main.cc(81)] Show info..
+[0530/130919:INFO:firmware.cc(171)]
+Firmware package:
+  dir:           /lib/firmware/huddly/
+  bootloader:    0.2.1
+  app:           0.5.1
+  hw_rev:        6
+[0530/130920:INFO:minicam_device.cc(142)]
+Camera Peripheral:
+  bootloader:  0.2.1
+  app:         0.5.1
+  hw_rev:      6

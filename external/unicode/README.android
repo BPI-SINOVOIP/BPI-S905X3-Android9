@@ -1,0 +1,12 @@
+URL: http://www.unicode.org/Public/10.0.0/ucd/
+URL: http://www.unicode.org/Public/emoji/11.0/
+Version: Unicode 10.0.0 beta and emoji 11.0
+License: Unicode
+License File: NOTICE
+
+Description:
+A selection of data files from Unicode.
+
+Local Modifications:
+An additions directory has been added for sequences that we need to support
+in addition to what's specified by Unicode.

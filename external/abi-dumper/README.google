@@ -1,0 +1,15 @@
+URL: https://github.com/lvc/abi-dumper/archive/0.99.18.tar.gz
+Version: 0.99.18
+License: GPL2.0, LGPL2.0
+License File: LICENSE
+
+Description:
+This tool produces an ABI dump of a C/C++ library. This ABI dump can be used by
+abi-compliance-checker in order to check ABI compliance with another version of
+the library.
+
+Local Modifications:
+Add command-line options to specify paths to objdump, g++ and readelf. Also,
+modify abi-dumper.pl to parse readelf's output instead of eu-readelf. eu-readelf
+is not available as a prebuilt whereas readelf is. Modifications to enable usage
+of custom vtable dumepr. Give +x permissions to abi-dumper.pl .

@@ -1,0 +1,36 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'scunningham'
+NAME = 'policy_ChromeOsLockOnIdleSuspend'
+TIME = 'SHORT'
+TEST_CATEGORY = 'Functional'
+TEST_CLASS = 'enterprise'
+TEST_TYPE = 'client'
+
+DOC = '''
+Verify effects of ChromeOsLockOnIdleSuspend policy on client behavior.
+
+This test verifies the effect of the ChromeOsLockOnIdleSuspend user policy on
+Chrome OS client behavior and appearance. It exercises all valid policy values
+with three test cases: True_Lock, False_Unlock, and NotSet_Lock.
+
+The test shall pass if the 'Require password to wake from sleep' check box:
+1) is checked when ChromeOsLockOnIdleSuspend policy is set true,
+2) is unchecked when set false,
+3) is editable when ChromeOsLockOnIdleSuspend not set,
+4) is uneditable when set True or False;
+and if the device, after it goes to sleep:
+1) displays the lock screen when ChromeOsLockOnIdleSuspend is set True,
+2) does not display the lock screen when set False or Not set.
+The test shall fail if any of the above behaviors are not enforced.
+
+This control file allows CloudDPC E2E tests to run any test case defined in
+this test via command-line.
+
+'''
+
+args_dict = utils.args_to_dict(args)
+
+job.run_test('policy_ChromeOsLockOnIdleSuspend', **args_dict)

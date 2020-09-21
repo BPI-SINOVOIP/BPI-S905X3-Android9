@@ -1,0 +1,139 @@
+all: disable some tests that take a long time or allocate a lot of memory.
+
+--- src/encoding/gob/encoder_test.go
++++ src/encoding/gob/encoder_test.go
+@@ -1003,10 +1003,7 @@ func TestBadData(t *testing.T) {
+ 
+ // TestHugeWriteFails tests that enormous messages trigger an error.
+ func TestHugeWriteFails(t *testing.T) {
+-	if testing.Short() {
+-		// Requires allocating a monster, so don't do this from all.bash.
+-		t.Skip("skipping huge allocation in short mode")
+-	}
++	t.Skip("skipping test due to huge memory requirement")
+ 	huge := make([]byte, tooBig)
+ 	huge[0] = 7 // Make sure it's not all zeros.
+ 	buf := new(bytes.Buffer)
+--- src/math/big/float_test.go
++++ src/math/big/float_test.go
+@@ -1428,10 +1428,7 @@ func TestFloatQuo(t *testing.T) {
+ // TestFloatQuoSmoke tests all divisions x/y for values x, y in the range [-n, +n];
+ // it serves as a smoke test for basic correctness of division.
+ func TestFloatQuoSmoke(t *testing.T) {
+-	n := 1000
+-	if testing.Short() {
+-		n = 10
+-	}
++	n := 10
+ 
+ 	const dprec = 3         // max. precision variation
+ 	const prec = 10 + dprec // enough bits to hold n precisely
+--- src/math/big/rat_test.go
++++ src/math/big/rat_test.go
+@@ -430,10 +430,7 @@ func TestFloat64Distribution(t *testing.T) {
+ 		9,
+ 		11,
+ 	}
+-	var winc, einc = uint64(1), 1 // soak test (~75s on x86-64)
+-	if testing.Short() {
+-		winc, einc = 10, 500 // quick test (~12ms on x86-64)
+-	}
++	var winc, einc = uint64(10), 500
+ 
+ 	for _, sign := range "+-" {
+ 		for _, a := range add {
+--- src/math/big/ratconv_test.go
++++ src/math/big/ratconv_test.go
+@@ -344,9 +344,7 @@ func isFinite(f float64) bool {
+ func TestFloat32SpecialCases(t *testing.T) {
+ 	for _, input := range float64inputs {
+ 		if strings.HasPrefix(input, "long:") {
+-			if testing.Short() {
+-				continue
+-			}
++			continue
+ 			input = input[len("long:"):]
+ 		}
+ 
+@@ -400,9 +398,7 @@ func TestFloat32SpecialCases(t *testing.T) {
+ func TestFloat64SpecialCases(t *testing.T) {
+ 	for _, input := range float64inputs {
+ 		if strings.HasPrefix(input, "long:") {
+-			if testing.Short() {
+-				continue
+-			}
++			continue
+ 			input = input[len("long:"):]
+ 		}
+ 
+--- src/net/dial_test.go
++++ src/net/dial_test.go
+@@ -77,10 +77,7 @@ func TestSelfConnect(t *testing.T) {
+ 	l.Close()
+ 
+ 	// Try to connect to that address repeatedly.
+-	n := 100000
+-	if testing.Short() {
+-		n = 1000
+-	}
++	n := 1000
+ 	switch runtime.GOOS {
+ 	case "darwin", "dragonfly", "freebsd", "netbsd", "openbsd", "plan9", "solaris", "windows":
+ 		// Non-Linux systems take a long time to figure
+--- src/runtime/fastlog2_test.go
++++ src/runtime/fastlog2_test.go
+@@ -16,11 +16,7 @@ func TestFastLog2(t *testing.T) {
+ 	const randomBitCount = 26
+ 	var e float64
+ 
+-	inc := 1
+-	if testing.Short() {
+-		// Check 1K total values, down from 64M.
+-		inc = 1 << 16
+-	}
++	inc := 1 << 16
+ 	for i := 1; i < 1<<randomBitCount; i += inc {
+ 		l, fl := math.Log2(float64(i)), runtime.Fastlog2(float64(i))
+ 		d := l - fl
+--- src/runtime/hash_test.go
++++ src/runtime/hash_test.go
+@@ -126,9 +126,7 @@ func TestSmhasherZeros(t *testing.T) {
+ 
+ // Strings with up to two nonzero bytes all have distinct hashes.
+ func TestSmhasherTwoNonzero(t *testing.T) {
+-	if testing.Short() {
+-		t.Skip("Skipping in short mode")
+-	}
++	t.Skip("skipping test due to huge memory requirement")
+ 	h := newHashSet()
+ 	for n := 2; n <= 16; n++ {
+ 		twoNonZero(h, n)
+@@ -229,9 +227,7 @@ func setbits(h *HashSet, b []byte, i int, k int) {
+ // Test all possible combinations of n blocks from the set s.
+ // "permutation" is a bad name here, but it is what Smhasher uses.
+ func TestSmhasherPermutation(t *testing.T) {
+-	if testing.Short() {
+-		t.Skip("Skipping in short mode")
+-	}
++	t.Skip("skipping test due to huge memory requirement")
+ 	permutation(t, []uint32{0, 1, 2, 3, 4, 5, 6, 7}, 8)
+ 	permutation(t, []uint32{0, 1 << 29, 2 << 29, 3 << 29, 4 << 29, 5 << 29, 6 << 29, 7 << 29}, 8)
+ 	permutation(t, []uint32{0, 1}, 20)
+--- src/runtime/pprof/pprof_test.go
++++ src/runtime/pprof/pprof_test.go
+@@ -257,14 +257,7 @@ func profileOk(t *testing.T, need []string, prof bytes.Buffer, duration time.Dur
+ func TestCPUProfileWithFork(t *testing.T) {
+ 	testenv.MustHaveExec(t)
+ 
+-	heap := 1 << 30
+-	if runtime.GOOS == "android" {
+-		// Use smaller size for Android to avoid crash.
+-		heap = 100 << 20
+-	}
+-	if testing.Short() {
+-		heap = 100 << 20
+-	}
++	heap := 100 << 20
+ 	// This makes fork slower.
+ 	garbage := make([]byte, heap)
+ 	// Need to touch the slice, otherwise it won't be paged in.

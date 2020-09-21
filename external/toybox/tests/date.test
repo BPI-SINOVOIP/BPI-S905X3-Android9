@@ -1,0 +1,34 @@
+#!/bin/bash
+
+[ -f testing.sh ] && . testing.sh
+
+#testing "name" "command" "result" "infile" "stdin"
+
+# Test Unix date parsing.
+testing "-d @0" "TZ=UTC date -d @0 2>&1" "Thu Jan  1 00:00:00 GMT 1970\n" "" ""
+testing "-d @0x123" "TZ=UTC date -d @0x123 2>&1" "date: bad date '@0x123'\n" "" ""
+
+# Test basic date parsing.
+# Note that toybox's -d format is not the same as coreutils'.
+testing "-d 06021234" "TZ=UTC date -d 06021234 2>&1" "Sun Jun  2 12:34:00 UTC 1900\n" "" ""
+testing "-d 060212341982" "TZ=UTC date -d 060212341982 2>&1" "Sun Jun  2 12:34:00 UTC 1982\n" "" ""
+testing "-d 123" "TZ=UTC date -d 123 2>&1" "date: bad date '123'\n" "" ""
+
+# Test parsing 2- and 4-digit years.
+testing "-d 1110143115.30" "TZ=UTC date -d 1110143115.30 2>&1" "Sun Nov 10 14:31:30 UTC 1915\n" "" ""
+testing "-d 111014312015.30" "TZ=UTC date -d 111014312015.30 2>&1" "Sun Nov 10 14:31:30 UTC 2015\n" "" ""
+
+# Accidentally given a Unix time, we should trivially reject that.
+testing "Unix time missing @" "TZ=UTC date 1438053157 2>/dev/null || echo no" \
+  "no\n" "" ""
+
+# Test the %N extension to srtftime(3) format strings.
+testing "%N" "touch -d 2012-01-23T12:34:56.123456789 f && date -r f +%Y%m%d-%H%M%S.%N" "20120123-123456.123456789\n" "" ""
+testing "%1N" "touch -d 2012-01-23T12:34:56.123456789 f && date -r f +%Y%m%d-%H%M%S.%1N" "20120123-123456.1\n" "" ""
+testing "%2N" "touch -d 2012-01-23T12:34:56.123456789 f && date -r f +%Y%m%d-%H%M%S.%2N" "20120123-123456.12\n" "" ""
+testing "%8N" "touch -d 2012-01-23T12:34:56.123456789 f && date -r f +%Y%m%d-%H%M%S.%8N" "20120123-123456.12345678\n" "" ""
+testing "%9N" "touch -d 2012-01-23T12:34:56.123456789 f && date -r f +%Y%m%d-%H%M%S.%9N" "20120123-123456.123456789\n" "" ""
+testing "%%N" "touch -d 2012-01-23T12:34:56.123456789 f && date -r f +%Y%m%d-%H%M%S.%%N" "20120123-123456.%N\n" "" ""
+testing "trailing %" "touch -d 2012-01-23T12:34:56.123456789 f && date -r f +%Y%m%d-%H%M%S.%" "20120123-123456.%\n" "" ""
+testing "just %" "touch -d 2012-01-23T12:34:56.123456789 f && date -r f +%" "%\n" "" ""
+rm -f f

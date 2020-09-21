@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Invoke the Go cross compiler for volantis.
+# Uses ../go_target to add PIE flags.
+#
+# This is just an example for an arm64 device.
+
+GOOS="android" GOARCH="arm64" CGO_ENABLED="1" \
+	CC="aarch64-linux-android-gcc" \
+	CXX="aarch64-linux-android-g++" \
+	exec go_target "$@"

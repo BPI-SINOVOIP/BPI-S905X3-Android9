@@ -1,0 +1,6 @@
+URL: https://chromium.googlesource.com/webm/libvpx.git/+archive/v1.7.0.tar.gz
+Version: v1.7.0
+BugComponent: 42195
+Owners: johannkoenig
+Local Modifications:
+  Add visibility="protected" attribute for global variables referenced in asm files.

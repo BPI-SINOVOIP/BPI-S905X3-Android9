@@ -1,0 +1,61 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "dhaddock, Chromium OS"
+NAME = "autoupdate_ForcedOOBEUpdate.full"
+PURPOSE = "Test forced update at OOBE."
+TIME = "MEDIUM"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "platform"
+TEST_TYPE = "server"
+ATTRIBUTES = "suite:bvt-perbuild"
+DOC = """
+This tests the forced autoupdate flow at OOBE.
+
+Debugging steps:
+This test cannot be debugged locally easily because
+1. Using a devserver on your workstation is blocked by SNAX
+2. The test relies on reading a job_repo_url which is only set by runs
+initiated in the lab.
+
+You will need to use a lab DUT and a lab devserver but kick it off from your
+workstation. You can start by going to cautotest and locking a DUT.
+
+You will need to pass a job_repo_url param to test_that.
+
+The test needs to be able to ssh into devservers. To ssh into lab devservers
+you need to download the chromium key file from:
+chromeos_internal//chromeos-admin/puppet/modules/users/files/chromeos-test/
+ssh/chromium
+
+Save the file to ~/.ssh/ and run chmod 600 on it.
+Then add these lines to your ~/.ssh/config
+
+Host <devserver hostname>
+  GSSAPITrustDns no
+  GSSAPIDelegateCredentials no
+  GSSAPIAuthentication no
+  ForwardAgent no
+  ForwardX11 no
+  PreferredAuthentications publickey
+  StrictHostKeyChecking no
+  User chromeos-test
+  IdentityFile %d/.ssh/chromium
+
+Check that you can now ssh into a lab devserver without a password.
+Copy the ssh files to your chroot's .ssh folder to ssh from there.
+
+test_that <hostname>.cros autoupdate_ForcedOOBEUpdate --args="job_repo_url='http://<IP>:<port>/static/<board>-release/RXX-XXXX.X.X/autotest/packages'"
+"""
+
+from autotest_lib.client.common_lib import utils
+
+args_dict = utils.args_to_dict(args)
+
+def run(machine):
+    host = hosts.create_host(machine)
+    job.run_test('autoupdate_ForcedOOBEUpdate', host=host, full_payload=True,
+                 **args_dict)
+
+job.parallel_simple(run, machines)

@@ -1,0 +1,30 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'scunningham'
+NAME = 'longevity_Tracker.riseplayer'
+PURPOSE = 'Tracks Chrome OS performance over long periods.'
+TIME = 'LONG'
+TEST_CATEGORY = 'Performance'
+TEST_CLASS = 'performance'
+TEST_TYPE = 'client'
+DEPENDENCIES = 'riseplayer'
+
+DOC = '''
+This script tracks performance of Chrome OS running the specified Kiosk App.
+It captures device resource data, including cpu and memory usage, and device
+temperature in the background with the specified Kiosk App running in the
+foreground. The script presumes the device is running the desired Chrome OS
+version, is enrolled, and the target App is launched and signed in.
+
+The script cycle shall terminate itself after the set duration, or soon after
+a longevity_terminate flag file is seen in the /tmp/ directory.
+'''
+
+kiosk_app_attributes = (
+    'riseplayer:mfpgpdablffhbfofnhlpgmokokbahooi:index.html')
+
+job.run_test('longevity_Tracker',
+             kiosk_app_attributes=kiosk_app_attributes,
+             tag='riseplayer')

@@ -1,0 +1,14 @@
+cc_library_static {
+    name: "libogg",
+
+    srcs: [
+        "src/bitwise.c",
+        "src/framing.c",
+    ],
+
+    cflags: ["-Wall", "-Werror"],
+
+    export_include_dirs: ["include"],
+
+    sdk_version: "14",
+}

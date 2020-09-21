@@ -1,0 +1,21 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'The Chromium OS Authors'
+NAME = 'audio_Aconnect'
+ATTRIBUTES = "suite:audio"
+PURPOSE = 'Test that the MIDI seq kernel interface is accessible.'
+CRITERIA = """
+Fails if /dev/snd/seq is inaccessible.
+"""
+TIME='SHORT'
+TEST_CATEGORY = 'Functional'
+TEST_CLASS = "audio"
+TEST_TYPE = 'client'
+
+DOC = """
+Check that aconnect can open and read information from /dev/snd/seq.
+"""
+
+job.run_test('audio_Aconnect')

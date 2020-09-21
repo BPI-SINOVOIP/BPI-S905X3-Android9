@@ -1,0 +1,24 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "malmnas@google.com, chromeos-meetings@google.com"
+NAME = "cfm_AutotestSmokeTest"
+PURPOSE = ("Smoke test used for tracking the stability of the Autotest "
+        "framework.")
+CRITERIA = "Fails if the Autotest framework doesn't work as expected."
+ATTRIBUTES = ("suite:hotrod, suite:bluestreak, suite:bluestreak-release, "
+        "suite:bluestreak-perbuild, suite:bluestreak-pre-cq")
+TIME = "MEDIUM"
+TEST_CATEGORY = "Functional"
+TEST_TYPE = "client"
+BUG_TEMPLATE = {
+    "labels": ["OS-Chrome"],
+}
+
+DOC = """
+This test tracks the stability of the Auotest framework. The test opens a
+web browser and verifies that nothing crashes.
+"""
+
+job.run_test("cfm_AutotestSmokeTest")

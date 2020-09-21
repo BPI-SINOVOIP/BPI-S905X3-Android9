@@ -1,0 +1,27 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "achuith@chromium.org"
+NAME = "telemetry_UnitTestsServer_guest"
+PURPOSE = "Run the Telemetry unit tests as guest (incognito)."
+ATTRIBUTES = "suite:telemetry_unit_server"
+TIME = "LONG"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "desktopui"
+TEST_TYPE = "server"
+
+DOC = """
+Verifies that all Telemetry unit tests pass when run as guest (incognito).
+"""
+
+def run_client(machine):
+    host = hosts.create_host(machine)
+    host.log_kernel()
+    job.run_test('telemetry_UnitTestsServer',  host=host,
+                 use_packaging=use_packaging,
+                 browser_type='system-guest', tag='guest',
+                 unit_tests=['BrowserTest'], perf_tests=[])
+
+
+job.parallel_simple(run_client, machines)

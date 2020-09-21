@@ -1,0 +1,18 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "helenzhang"
+NAME = "platform_InputScreenshot"
+PURPOSE = "Verify that screenshot file is present after pressing ctrl+f5."
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "platform"
+TEST_TYPE = "client"
+ATTRIBUTES = "suite:bvt-perbuild"
+
+DOC = """
+Press Ctrl+F5 to create a screenshot file and verify it is present.
+"""
+
+job.run_test("platform_InputScreenshot")

@@ -1,0 +1,27 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'scunningham'
+NAME = 'policy_CookiesBlockedForUrls.multipleurls_block'
+ATTRIBUTES = 'suite:bvt-perbuild, suite:policy'
+TIME = 'SHORT'
+TEST_CATEGORY = 'General'
+TEST_CLASS = 'enterprise'
+TEST_TYPE = 'client'
+
+DOC = '''
+Verify effects of CookiesBlockedForUrls policy.
+
+This test case verifies the behavior of Chrome OS when CookiesBlockedForUrls
+user policy is set to multiple URL patterns, and DefaultCookiesSetting policy
+is set to 1 (allow by default).
+
+The test case shall pass iff the browser blocks cookies for any test page with
+an URL that matches any of the URL patterns specified in CookiesBlockedForUrls,
+and allows cookies on any page with an URL that does not match. It shall fail
+if the browser does not enforce this behavior.
+
+'''
+
+job.run_test('policy_CookiesBlockedForUrls', case='MultipleUrls_Block')

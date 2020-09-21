@@ -1,0 +1,10 @@
+<table class="raw">
+<tbody>
+{% for num, line in code %}
+<tr class="{% cycle 'line1' 'line2' %}">
+  <td>{{ num }}</td>
+  <td><pre class="code">{{ line|wordwrap:120 }}</pre></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>

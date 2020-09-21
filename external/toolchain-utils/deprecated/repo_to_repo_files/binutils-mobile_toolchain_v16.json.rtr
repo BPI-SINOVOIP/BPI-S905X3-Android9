@@ -1,0 +1,23 @@
+{
+  "input": [
+    {
+      "type": "p4", 
+      "mappings": [
+        "//depot2/branches/mobile_toolchain_v16_release_branch/gcctools/google_vendor_src_branch/binutils/binutils-2.22/... ..."
+      ], 
+      "address": "perforce2:2666"
+    }
+  ], 
+  "output": [
+    {
+      "gerrit": true, 
+      "type": "git", 
+      "branch": "mobile_toolchain_v16_release_branch", 
+      "ignores": [
+        ".svn", 
+        ".git"
+      ], 
+      "address": "https://chromium.googlesource.com/chromiumos/third_party/binutils.git"
+    }
+  ]
+}

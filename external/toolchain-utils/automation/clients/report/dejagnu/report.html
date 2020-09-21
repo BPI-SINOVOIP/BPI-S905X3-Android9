@@ -1,0 +1,94 @@
+<link type="text/css" rel="Stylesheet"
+href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css"/>
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+  google.load("visualization", "1.1", {packages: ["corechart", "table"]});
+  google.load("jquery", "1.6.2");
+  google.load("jqueryui", "1.8.16");
+
+  function drawChart(name, label, table) {
+    var data = google.visualization.arrayToDataTable(table);
+    var chart = new google.visualization.PieChart(
+        document.getElementById(name));
+
+    chart.draw(data,
+        {title: label, pieSliceText: "value", width: 800, height: 400});
+  }
+
+  function drawTable(name, table) {
+    var data = google.visualization.arrayToDataTable(table);
+    var table = new google.visualization.Table(
+        document.getElementById(name));
+
+    table.draw(data, {
+        showRowNumber: false, allowHtml: true, sortColumn: 0});
+  }
+
+  google.setOnLoadCallback(function () {
+    $( "#testruns" ).tabs();
+
+    {% for test_run in test_runs %}
+      $( "#testrun{{ test_run.id }}" ).tabs();
+
+      {% for result_type, group in test_run.groups.items %}
+      $( "#testrun{{ test_run.id }}-{{ result_type }}-tables" ).accordion({
+        autoHeight: false, collapsible: true, active: false });
+
+      drawChart(
+        "testrun{{ test_run.id }}-{{ result_type }}-chart",
+        "DejaGNU test {{ result_type }} summary for {{ test_run.name }}",
+        [
+          ["Result", "Count"],
+          {% for result, count in group.summary %}
+          ["{{ result }}", {{ count }}],{% endfor %}
+        ]);
+
+        {% for description, test_list in group.tests %}
+        {% if test_list %}
+        drawTable(
+          "testrun{{ test_run.id }}-{{ result_type }}-table-{{ forloop.counter }}",
+          [
+            ["Test", "Variant"],
+            {% for test, variant in test_list  %}
+            ["{{ test }}", "{{ variant }}"],{% endfor %}
+          ]);
+        {% endif %}
+        {% endfor %}
+      {% endfor %}
+    {% endfor %}
+    });
+</script>
+
+<div id="testruns">
+  <ul>
+  {% for test_run in test_runs %}
+    <li><a href="#testrun{{ test_run.id }}">{{ test_run.name }}</a></li>
+  {% endfor %}
+  </ul>
+
+  {% for test_run in test_runs %}
+  <div id="testrun{{ test_run.id }}" style="padding: 0px">
+    <ul>
+    {% for result_type, group in test_run.groups.items %}
+    <li>
+    <a href="#testrun{{ test_run.id }}-{{ forloop.counter }}">{{ result_type }}</a>
+    </li>
+    {% endfor %}
+    </ul>
+    {% for result_type, group in test_run.groups.items %}
+    <div id="testrun{{ test_run.id }}-{{ forloop.counter }}">
+      <div id="testrun{{ test_run.id }}-{{ result_type }}-chart" style="text-align: center"></div>
+      <div id="testrun{{ test_run.id }}-{{ result_type }}-tables">
+      {% for description, test_list in group.tests %}
+      {% if test_list %}
+        <h3><a href="#">{{ description }}</a></h3>
+        <div id="testrun{{ test_run.id }}-{{ result_type }}-table-{{ forloop.counter }}"></div>
+      {% endif %}
+      {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+{% endfor %}
+</div>

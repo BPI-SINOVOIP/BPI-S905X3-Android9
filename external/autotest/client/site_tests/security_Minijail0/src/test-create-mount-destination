@@ -1,0 +1,14 @@
+#!/bin/sh
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+# args: -v -C / -k tmpfs,%T,tmpfs -b /dev/null,%T/test_null
+
+SRCDIR="$(dirname "$0")"
+
+. "${SRCDIR}"/common.sh
+
+# Check that the "test_null" bind mount has been created.
+grep "test_null" /proc/mounts || die "test_null not mounted"
+exit 0
+

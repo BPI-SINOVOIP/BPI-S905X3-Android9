@@ -1,0 +1,5 @@
+exe,euser,egroup,pidns,caps,filter
+
+# See the baseline file for docs.
+
+ch7036_monitor,root,root,No,No,No

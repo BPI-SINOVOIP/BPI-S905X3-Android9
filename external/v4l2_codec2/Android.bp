@@ -1,0 +1,32 @@
+cc_library_shared {
+    name: "libv4l2_codec2_arcva_factory",
+    vendor_available: true,
+    product_variables: {
+        arc: {
+            srcs: ["C2ArcVideoAcceleratorFactory.cpp"],
+
+            shared_libs: [
+                "libarcbridge",
+                "libarcbridgeservice",
+                "libarcvideobridge",
+                "libbinder",
+                "libchrome",
+                "liblog",
+                "libmojo",
+                "libutils",
+            ],
+
+            // -Wno-unused-parameter is needed for libchrome/base codes
+            cflags: [
+                "-Wall",
+                "-Werror",
+                "-Wno-unused-parameter",
+                "-std=c++14",
+            ],
+        },
+    },
+    clang: true,
+    export_include_dirs: [
+        "include",
+    ],
+}

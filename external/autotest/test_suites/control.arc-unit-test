@@ -1,0 +1,32 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "Chrome OS Team"
+NAME = "arc-unit-test"
+PURPOSE = "Run the unit test of ARC++."
+
+TIME = "SHORT"
+TEST_CATEGORY = "General"
+TEST_CLASS = "suite"
+TEST_TYPE = "Server"
+
+DOC = """
+This tests suite is a suite for unit tests of ARC++.
+
+@param build: The name of the image to test.
+              Ex: veyron_minnie-release/R60-9575.0.0
+@param board: The board to test on. Ex: veyron_minnie
+@param pool: The pool of machines to utilize for scheduling.
+"""
+
+import common
+from autotest_lib.server.cros import provision
+from autotest_lib.server.cros.dynamic_suite import dynamic_suite
+
+args_dict['max_runtime_mins'] = 30
+args_dict['name'] = NAME
+args_dict['job'] = job
+args_dict['version_prefix'] = provision.CROS_VERSION_PREFIX
+
+dynamic_suite.reimage_and_run(**args_dict)

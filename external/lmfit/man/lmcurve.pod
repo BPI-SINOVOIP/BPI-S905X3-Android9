@@ -1,0 +1,181 @@
+=pod
+
+=begin html
+
+<link rel="stylesheet" href="podstyle.css" type="text/css" />
+
+=end html
+
+=head1 NAME
+
+lmcurve - Levenberg-Marquardt least-squares fit of a curve (t,y)
+
+
+=head1 SYNOPSIS
+
+B<#include <lmcurve.h>>
+
+B<void lmcurve( const int> I<n_par>B<, double *>I<par>B<, const int> I<m_dat>B<,
+              constS< >double *>I<t>B<, constS< >double *>I<y>B<,
+              double (*>I<f>B<)( const double >I<ti>B<, const double *>I<par>B< ),
+              constS< >lm_control_struct *>I<control>B<,
+              lm_status_struct *>I<status>B<);>
+
+B<void lmcurve_tyd(
+              const int> I<n_par>B<, double *>I<par>B<, const int> I<m_dat>B<,
+              constS< >double *>I<t>B<, constS< >double *>I<y>B<, constS< >double *>I<dy>B<,
+              double (*>I<f>B<)( const double >I<ti>B<, const double *>I<par>B< ),
+              constS< >lm_control_struct *>I<control>B<,
+              lm_status_struct *>I<status>B<);>
+
+B<extern const lm_control_struct lm_control_double;>
+
+B<extern const lm_control_struct lm_control_float;>
+
+B<extern const char *lm_infmsg[];>
+
+B<extern const char *lm_shortmsg[];>
+
+=head1 DESCRIPTION
+
+B<lmcurve()> and B<lmcurve_tyd()> wrap the more generic minimization function B<lmmin()>, for use in curve fitting.
+
+B<lmcurve()> determines a vector I<par> that minimizes the sum of squared elements of a residue vector I<r>[i] := I<y>[i] - I<f>(I<t>[i];I<par>). Typically, B<lmcurve()> is used to approximate a data set I<t>,I<y> by a parametric function I<f>(I<ti>;I<par>). On success, I<par> represents a local minimum, not necessarily a global one; it may depend on its starting value.
+
+B<lmcurve_tyd()> does the same for a data set I<t>,I<y>,I<dy>, where I<dy> represents the standard deviation of empirical data I<y>. Residues are computed as I<r>[i] := (I<y>[i] - I<f>(I<t>[i];I<par>))/I<dy>[i]. Users must ensure that all I<dy>[i] are positive.
+
+
+Function arguments:
+
+=over
+
+=item I<n_par>
+
+Number of free variables.
+Length of parameter vector I<par>.
+
+=item I<par>
+
+Parameter vector.
+On input, it must contain a reasonable guess.
+On output, it contains the solution found to minimize ||I<r>||.
+
+=item I<m_dat>
+
+Number of data points.
+Length of vectors I<t> and I<y>.
+Must statisfy I<n_par> <= I<m_dat>.
+
+=item I<t>
+
+Array of length I<m_dat>.
+Contains the abcissae (time, or "x") for which function I<f> will be evaluated.
+
+=item I<y>
+
+Array of length I<m_dat>.
+Contains the ordinate values that shall be fitted.
+
+=item I<dy>
+
+Only in B<lmcurve_tyd()>.
+Array of length I<m_dat>.
+Contains the standard deviations of the values I<y>.
+
+=item I<f>
+
+A user-supplied parametric function I<f>(ti;I<par>).
+
+=item I<control>
+
+Parameter collection for tuning the fit procedure.
+In most cases, the default &I<lm_control_double> is adequate.
+If I<f> is only computed with single-precision accuracy,
+I<&lm_control_float> should be used.
+Parameters are explained in B<lmmin(3)>.
+
+=item I<status>
+
+A record used to return information about the minimization process:
+For details, see B<lmmin(3)>.
+
+=back
+
+=head1 EXAMPLE
+
+Fit a data set y(x) by a curve f(x;p):
+
+    #include "lmcurve.h"
+    #include <stdio.h>
+
+    /* model function: a parabola */
+
+    double f( double t, const double *p )
+    {
+        return p[0] + p[1]*t + p[2]*t*t;
+    }
+
+    int main()
+    {
+        int n = 3; /* number of parameters in model function f */
+        double par[3] = { 100, 0, -10 }; /* really bad starting value */
+
+        /* data points: a slightly distorted standard parabola */
+        int m = 9;
+        int i;
+        double t[9] = { -4., -3., -2., -1.,  0., 1.,  2.,  3.,  4. };
+        double y[9] = { 16.6, 9.9, 4.4, 1.1, 0., 1.1, 4.2, 9.3, 16.4 };
+
+        lm_control_struct control = lm_control_double;
+        lm_status_struct status;
+        control.verbosity = 7;
+
+        printf( "Fitting ...\n" );
+        lmcurve( n, par, m, t, y, f, &control, &status );
+
+        printf( "Results:\n" );
+        printf( "status after %d function evaluations:\n  %s\n",
+                status.nfev, lm_infmsg[status.outcome] );
+
+        printf("obtained parameters:\n");
+        for ( i = 0; i < n; ++i)
+            printf("  par[%i] = %12g\n", i, par[i]);
+        printf("obtained norm:\n  %12g\n", status.fnorm );
+
+        printf("fitting data as follows:\n");
+        for ( i = 0; i < m; ++i)
+            printf( "  t[%2d]=%4g y=%6g fit=%10g residue=%12g\n",
+                    i, t[i], y[i], f(t[i],par), y[i] - f(t[i],par) );
+
+        return 0;
+    }
+
+=head1 COPYING
+
+Copyright (C) 2009-2015 Joachim Wuttke, Forschungszentrum Juelich GmbH
+
+Software: FreeBSD License
+
+Documentation: Creative Commons Attribution Share Alike
+
+
+=head1 SEE ALSO
+
+=begin html
+
+<a href="http://apps.jcns.fz-juelich.de/man/lmmin.html"><b>lmmin</b>(3)</a>
+
+=end html
+
+=begin man
+
+\fBlmmin\fR(3)
+.PP
+
+=end man
+
+Homepage: http://apps.jcns.fz-juelich.de/lmfit
+
+=head1 BUGS
+
+Please send bug reports and suggestions to the author <j.wuttke@fz-juelich.de>.

@@ -1,0 +1,37 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "kerl@google.com, chromeos-meetings@google.com"
+NAME = "video_WebRtcMainFeedSwitching.perf"
+PURPOSE = """Measure performance when srcObject of video tags are frequently
+swapped"""
+CRITERIA = "Fails if Chrome crashes"
+ATTRIBUTES = "suite:hotrod, suite:bluestreak, suite:bluestreak-perbuild"
+TIME = "MEDIUM"
+TEST_CATEGORY = "Performance"
+TEST_CLASS = "video"
+TEST_TYPE = "client"
+BUG_TEMPLATE = {
+    "labels": ["OS-Chrome"],
+    "components": ["OS>Kernel>Video"],
+}
+
+DOC = """
+This test starts 5 high resolution (1280x720) loopback peer connections. Four
+of the video elements are styled to be small, thumbnail sized (182x136) and one
+is in its native size.  This is intended to simulate a video conference with
+one main feed and several smaller feeds.
+
+The test then frequently swaps the sourceObject of the main feed with a
+randomly chosen smaller feed.
+
+The tests use a fake media stream - not a real camera.
+
+The test collects system metrics during the run. See go/cfm-perf-metrics
+for details about the metrics.
+"""
+
+job.run_test(
+        "video_WebRtcMainFeedSwitching", mode = "performance", tag = "perf")
+

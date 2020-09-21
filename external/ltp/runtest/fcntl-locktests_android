@@ -1,0 +1,1 @@
+FCNTL_LOCKTESTS locktests -n 100 -f $TMP/fcntl_locktest_testfile

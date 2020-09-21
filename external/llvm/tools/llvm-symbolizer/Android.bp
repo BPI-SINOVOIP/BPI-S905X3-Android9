@@ -1,0 +1,24 @@
+cc_binary {
+    name: "llvm-symbolizer",
+    defaults: ["llvm-defaults"],
+    srcs:  ["llvm-symbolizer.cpp"],
+    target: {
+        host: {
+            static_libs: [
+                "libLLVMSymbolize",
+                "libLLVMDebugInfoDWARF",
+                "libLLVMDebugInfoPDB",
+                "libLLVMDebugInfoCodeView",
+                "libLLVMObject",
+                "libLLVMBitReader",
+                "libLLVMMC",
+                "libLLVMMCParser",
+                "libLLVMCore",
+                "libLLVMSupport",
+            ],
+        },
+        android: {
+            shared_libs: ["libLLVM_android"],
+        },
+    },
+}

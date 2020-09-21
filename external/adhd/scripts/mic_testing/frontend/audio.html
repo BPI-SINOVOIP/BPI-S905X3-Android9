@@ -1,0 +1,184 @@
+<!-- Copyright (c) 2014 The Chromium OS Authors. All rights reserved. -->
+<!-- Use of this source code is governed by a BSD-style license that can be -->
+<!-- found in the LICENSE file. -->
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Audio Quality Test</title>
+    <script type="text/javascript" src="audio.js"></script>
+    <script type="text/javascript" src="source.js"></script>
+    <script type="text/javascript" src="recorder.js"></script>
+    <script type="text/javascript" src="analysis.js"></script>
+    <link rel="stylesheet" type="text/css" href="audio.css">
+  </head>
+  <body>
+    <ul class="tab-page">
+      <li id="play_tab" onclick="switchTab('play_tab')" class="selected"><a>Play</a></li>
+      <li id="record_tab" onclick="switchTab('record_tab')"><a>Record</a></li>
+    </ul>
+    <div id="play_div">
+      <h1>Audio Source</h1>
+      <input type="radio" name="audio_source" value="sine"
+          onclick="setupSourceLayer('sine')"> Sine Tone
+      <input type="radio" name="audio_source" value="sweep"
+          onclick="setupSourceLayer('sweep')" checked> Sweep Tone
+      <input type="radio" name="audio_source" value="file"
+          onclick="setupSourceLayer('file')"> Load from file
+      <br>
+      <br>
+      <div id="source_layer" align="center">
+        <div id="source_tone">
+          <table style="width: 50%;">
+            <tr>
+              <td class="tonegen-main-cell">
+                <table style="width: 100%;">
+                  <tr>
+                    <td width="50%">Frequency: (20 Hz ~ SampleRate / 2)</td>
+                    <td width="30%">Duration</td>
+                    <td class="sweep_tone">Log</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input type="text" id="freq_start" size=5 maxlength=5 value=1000> Hz
+                      <div class="sweep_tone">
+                        <input type="text" id="freq_end" size=5 maxlength=5 value=1000> Hz
+                      </div>
+                    </td>
+                    <td>
+                      <input type="text" id="tone_sec" size=5 maxlength=5 value=3> Seconds
+                    </td>
+                    <td class="sweep_tone">
+                      <input type="checkbox" id="sweep_log">
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td class="tonegen-vol-cell">
+                <input type="range" min="0" max="20" value="20" id="left_gain"
+                    onchange="gainChanged();"/>
+                <input type="range" min="0" max="20" value="20" id="right_gain"
+                    onchange="gainChanged();"/>
+                <br>
+                <div id="gain_label">
+                  L(20) / R(20)
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div id="source_file">
+          <input type="button" value="Local Audio File" onclick="loadAudioFile()"
+              style="font-size: large;">
+          <br><br>
+          <div style="display:none">
+            <input type=file id=audio_file onchange="changeAudioFile()">
+          </div>
+        </div>
+      </div>
+      <hr>
+      <input type="checkbox" id="append_tone" checked> Append 1K Hz start tone and end tone
+      <br><br>
+      <button id="play_audio" class="btn-off" onclick="playAudioFile()">
+        <div>
+          <span class="btn-off-text">Play</span>
+          <span class="btn-on-text">Stop Play</span>
+        </div>
+      </button>
+    </div>
+    <div id="record_div" style="display: none;">
+      <h1> Record Samples </h1>
+      <input type="radio" name="record_source" value="audio_source"
+          onclick="setupRecordSource('audio')">
+      Play Audio Source
+      <input type="radio" name="record_source" value="microphone" checked
+          onclick="setupRecordSource('microphone')">
+      Microphone
+      <br><br>
+      <input type="checkbox" id="detect_tone" checked> Detect 1K Hz start tone and end tone
+      <input type="checkbox" id="auto_stop" checked> Auto stop when detected 1K Hz end tone
+      <br><br>
+      <button id="record_btn" class="btn-off" onclick="recordButtonClicked()">
+        <div>
+          <span class="btn-off-text">Start Record</span>
+          <span class="btn-on-text">Stop Record</span>
+        </div>
+      </button>
+      <br><hr>
+      <table align="center">
+        <tr>
+          <td>
+            <div style="overflow:auto; max-height: 250px;">
+              <table id="record_list" align="center">
+              </table>
+            </div>
+          </td>
+        </tr>
+      </table>
+
+    </div>
+
+    <h1> Frequency Response </h1>
+    <table align="center">
+      <tr>
+        <td width=800>
+          <div id="curve_section">
+            <canvas id='fr_canvas' width=800 height=300>
+          </div>
+        </td>
+        <td width=400 height=300 class="canvas_detail">
+          <div id="curve_list" style="overflow:auto; max-height:300px;">
+            <table id="curve_table" width=100% height=100%>
+              <tr>
+                <td colspan=1>
+                  <input type="button" value="Load File" onClick="loadButtonClicked();">
+                  <div style="display:none">
+                    <input type=file id=sample_file onchange="loadSampleFile()">
+                  </div>
+                </td>
+                <td colspan=4>
+                  <select id="noctaves">
+                    <option value="3">1/3</option>
+                    <option value="4">1/4</option>
+                    <option value="5" selected>1/5</option>
+                    <option value="6">1/6</option>
+                    <option value="7">1/7</option>
+                    <option value="8">1/8</option>
+                    <option value="9">1/9</option>
+                    <option value="10">1/10</option>
+                  </select> Octaves
+                  <a id='export_csv'>
+                    <input type="button" value="Export CSV" onClick="exportCSV();">
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td>Show</td>
+                <td>File name</td>
+                <td width=50>Left</td>
+                <td width=50>Right</td>
+                <td>Remove</td>
+              </tr>
+            </table>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <div id="debug" style="display:none;">
+      <h1>Debug</h1>
+      <a id='export_freq'>
+        <input type="button" value="Export Freq" onClick="exportFreq();">
+      </a>
+      <a id='export_buffer'>
+        <input type="button" value="Export Buffer">
+      </a>
+    </div>
+
+    <div id="log" style="display:none;">
+      <h1>Log</h1>
+      <pre id="log"></pre>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,14 @@
+//===---------------------------------------------------------------===
+// llvm-bcanalyzer command line tool
+//===---------------------------------------------------------------===
+
+cc_binary_host {
+    name: "llvm-bcanalyzer",
+    defaults: ["llvm-defaults"],
+    srcs: ["llvm-bcanalyzer.cpp"],
+    static_libs: [
+        "libLLVMBitReader",
+        "libLLVMCore",
+        "libLLVMSupport",
+    ],
+}

@@ -1,0 +1,111 @@
+#!/bin/sh
+# Copyright (c) 2015 Oracle and/or its affiliates. All Rights Reserved.
+# Copyright (c) International Business Machines  Corp., 2005
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of
+# the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it would be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+# Author: Mitsuru Chinen <mitch@jp.ibm.com>
+
+TST_TOTAL=2
+
+TST_CLEANUP="netstress_cleanup"
+
+. test_net_stress.sh
+
+CHECK_INTERVAL=${CHECK_INTERVAL:-$(($ROUTE_TOTAL / 20))}
+
+test_body()
+{
+	local cmd_type=$1
+
+	case $cmd_type in
+	rt_cmd) local cmd_name='route' ;;
+	ip_cmd) local cmd_name='ip' ;;
+	*) tst_brkm TBROK "Unknown test parameter '$cmd_type'"
+	esac
+
+	local iface=$(tst_iface)
+	local inet="inet$TST_IPV6"
+	local opt_rt=
+	if [ "$TST_IPV6" ]; then
+		opt_rt="/64"
+	else
+		case $cmd_type in
+		rt_cmd) ;;
+		ip_cmd) opt_rt='/32' ;;
+		esac
+	fi
+
+	tst_resm TINFO "'$cmd_name' add IPv$ipver $ROUTE_TOTAL routes"
+
+	if ! restore_ipaddr; then
+		tst_resm TBROK "Failed to set default IP addresses"
+		return
+	fi
+
+	local x=1
+	local y=1
+	local cnt=1
+
+	[ "$TST_IPV6" ] && local xymax=65535 || xymax=254
+
+	if [ $ROUTE_TOTAL -gt $((xymax * xymax)) ]; then
+		tst_resm TWARN "set ROUTE_TOTAL to $xymax * $xymax"
+		ROUTE_TOTAL=$((xymax * xymax))
+	fi
+
+	while [ $cnt -le $ROUTE_TOTAL ]; do
+		make_background_tcp_traffic
+
+		if [ "$TST_IPV6" ]; then
+			local hex_x=$(printf '%x' $x)
+			local hex_y=$(printf '%x' $y)
+			local new_rt=${IPV6_NET32_UNUSED}:$hex_x:$hex_y::
+		else
+			local new_rt=${IPV4_NET16_UNUSED}.$x.$y
+		fi
+
+		case $cmd_type in
+		rt_cmd) route -A $inet add ${new_rt}${opt_rt} dev $iface ;;
+		ip_cmd) ip route add ${new_rt}${opt_rt} dev $iface ;;
+		esac
+		if [ $? -ne 0 ]; then
+			tst_resm TFAIL "Can't add route $new_rt to $iface"
+			return
+		fi
+
+		check_connectivity_interval $cnt || return
+
+		cnt=$(($cnt + 1))
+		y=$(($y + 1))
+		if [ $y -gt $xymax ]; then
+			y=1
+			x=$(($x + 1))
+			if [ $x -gt $xymax ]; then
+				tst_brkm TBROK "Too large $ROUTE_TOTAL"
+			fi
+		fi
+	done
+
+	tst_resm TPASS "Test is finished correctly"
+}
+
+netstress_setup
+
+tst_check_cmds route
+
+test_body 'rt_cmd'
+test_body 'ip_cmd'
+
+tst_exit

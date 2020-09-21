@@ -1,0 +1,33 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+
+AUTHOR = "mruthven"
+NAME = "firmware_Cr50DeepSleepStress.reboot"
+PURPOSE = "Verify deep sleep"
+ATTRIBUTES = "suite:cr50_stress_experimental"
+TIME = "LONG"
+TEST_TYPE = "server"
+DEPENDENCIES = "servo"
+
+DOC = """
+Cr50 should enter deep sleep every time the system goes into S5. Run
+power_SuspendStress and verify the deep sleep count matches the number of
+suspend iterations.
+"""
+
+args_dict = utils.args_to_dict(args)
+servo_args = hosts.CrosHost.get_servo_arguments(args_dict)
+
+def run(machine):
+    host = hosts.create_host(machine, servo_args=servo_args)
+
+    suspend_count = int(args_dict.get("suspend_count", 100))
+    reset_type = args_dict.get("reset_type", "reboot")
+
+    job.run_test("firmware_Cr50DeepSleepStress", host=host, cmdline_args=args,
+                 suspend_count=suspend_count, reset_type=reset_type)
+
+parallel_simple(run, machines)

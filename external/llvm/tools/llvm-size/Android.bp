@@ -1,0 +1,17 @@
+//===---------------------------------------------------------------===
+// llvm-size command line tool
+//===---------------------------------------------------------------===
+
+cc_binary_host {
+    name: "llvm-size",
+    defaults: ["llvm-defaults"],
+    srcs: ["llvm-size.cpp"],
+    static_libs: [
+        "libLLVMObject",
+        "libLLVMMC",
+        "libLLVMMCParser",
+        "libLLVMBitReader",
+        "libLLVMCore",
+        "libLLVMSupport",
+    ],
+}

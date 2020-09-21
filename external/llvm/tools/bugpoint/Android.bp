@@ -1,0 +1,41 @@
+//===---------------------------------------------------------------===
+// bugpoint command line tool
+//===---------------------------------------------------------------===
+
+
+cc_binary_host {
+    name: "bugpoint",
+    defaults: ["llvm-defaults"],
+    srcs: ["*.cpp"],
+    static_libs: [
+        "libLLVMBitWriter",
+        "libLLVMCodeGen",
+        "libLLVMipo",
+        "libLLVMIRReader",
+        "libLLVMBitReader",
+        "libLLVMAsmParser",
+        "libLLVMInstCombine",
+        "libLLVMInstrumentation",
+        "libLLVMLinker",
+        "libLLVMTransformObjCARC",
+        "libLLVMObject",
+        "libLLVMScalarOpts",
+        "libLLVMTransformUtils",
+        "libLLVMAnalysis",
+        "libLLVMTarget",
+        "libLLVMCore",
+        "libLLVMMC",
+        "libLLVMMCParser",
+        "libLLVMProfileData",
+        "libLLVMVectorize",
+        "libLLVMSupport",
+    ],
+    target: {
+        darwin: {
+            ldflags: ["-Wl,-export_dynamic"],
+        },
+        linux: {
+            ldflags: ["-Wl,--export-dynamic"],
+        },
+    },
+}

@@ -1,0 +1,97 @@
+
+.dut_info_table {
+  padding: 5px;
+  background-color:  white;
+  border-spacing: 0;
+  border-collapse: collapse;
+  border-bottom: thin solid black;
+}
+
+.dut_manage_column_label_c {
+  color: black;
+  border-bottom: thin solid #111111;
+  text-align: center;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 10px;
+}
+
+.dut_manage_column_label_l {
+  color: black;
+  border-bottom: thin solid #111111;
+  text-align: left;
+  padding-left: 5px;
+}
+
+.ip_cell,
+.mac_cell,
+.selection_cell,
+.labels_cell {
+  border-width: 0px 0px 0px 0px;
+  border-style: solid;
+  border-color: black;
+}
+
+.ip_cell,
+.mac_cell,
+.selection_cell {
+  text-align:center;
+}
+
+.labels_cell {
+  text-align:left;
+}
+
+
+.dut_manage_action_row {
+  padding: 5px;
+  text-align: center;
+}
+
+.dut_manage_action_row {
+  padding: 5px;
+  text-align: center;
+}
+
+.dut_manage_action_row_item {
+  padding-left: 20px;
+}
+
+.run_suite_selector {
+  align-content: center;
+  min-width: 300px;
+  height: 35px;
+}
+
+.run_suite_test_args {
+  align-content: center;
+  margin-bottom: 2px;
+  min-width: 450px;
+  height: 100px;
+}
+
+.run_suite_avl_args {
+  align-content: center;
+  margin-bottom: 2px;
+  min-width: 300px;
+  height: 35px;
+}
+
+.run_suite_label {
+  padding: 10px;
+  margin: auto;
+  min-width: 220px;
+  text-align: right;
+}
+
+.run_suite_textbox {
+  padding: 1px;
+}
+
+.run_suite_button {
+  padding: 1px;
+}
+
+.run_suite_spacer {
+  min-width: 5px;
+}

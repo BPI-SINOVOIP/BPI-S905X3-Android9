@@ -1,0 +1,27 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "skau@chromium.org"
+NAME = "platform_DebugDaemonCupsAddPrinters"
+PURPOSE = "Verify that debugd's Cups* functions behave properly."
+
+ATTRIBUTES = "suite:bvt-cq"
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "platform"
+TEST_TYPE = "client"
+JOB_RETRIES = 2
+
+CRITERIA = """
+This test fails if the incorrect error is reported for a Cups
+autoconfiguration failure.
+"""
+
+DOC = """
+Exercises the debugd CupsAddAutoConfiguredPrinter method.
+
+Verifies that the error code is correct for an unreachable printer.
+"""
+
+job.run_test('platform_DebugDaemonCupsAddPrinters')

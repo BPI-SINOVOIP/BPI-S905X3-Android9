@@ -1,0 +1,20 @@
+name: "jFormatString"
+description:
+    "jFormatString for Findbugs"
+
+third_party {
+  url {
+    type: HOMEPAGE
+    value: "https://code.google.com/p/findbugs/"
+  }
+  url {
+    type: ARCHIVE
+    value: "http://repo1.maven.org/maven2/com/google/code/findbugs/jFormatString/3.0.0/jFormatString-3.0.0.jar"
+  }
+  url {
+    type: ARCHIVE
+    value: "https://storage.googleapis.com/google-code-archive-source/v2/code.google.com/j-format-string/source-archive.zip"
+  }
+  version: "3.0.0"
+  last_upgrade_date { year: 2017 month: 8 day: 16 }
+}

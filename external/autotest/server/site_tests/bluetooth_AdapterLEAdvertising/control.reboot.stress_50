@@ -1,0 +1,70 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+from autotest_lib.server.cros.bluetooth import advertisements_data
+
+
+AUTHOR = 'rjahagir'
+NAME = 'bluetooth_AdapterLEAdvertising.reboot.stress_50'
+PURPOSE = 'Test bluetooth adapter advertising.'
+CRITERIA = 'Adapter should advertise with correct parameters.'
+ATTRIBUTES = 'suite:bluetooth, suite:bluetooth_stress'
+TIME = 'SHORT'  # Takes approximately 4 hours on elm
+TEST_CATEGORY = 'Functional'
+TEST_CLASS = 'bluetooth'
+TEST_TYPE = 'server'
+DEPENDENCIES = 'bluetooth'
+
+DOC = """
+This test case verifies that the Bluetooth adapter of the DUT can
+behave as a Bluetooth low-energy device and register advertisement
+with data and parameters while suspending and resuming correctly.
+
+This autotest include the following test cases:
+     self.test_case_SI200_RA3_CD_PC_CD_UA3()
+     self.test_case_RA3_CD_SI200_CD_PC_CD_UA3()
+     self.test_case_RA1_CD_SI200_CD_PC_CD_UA1()
+
+Specifically, the subtests included in this autotest verify the
+following operations and parameters.
+    - test_register_advertisement
+      * A single advertisement is registered successfully.
+      * The advertising min/max intervals are set correctly.
+        . The intervals are set to specified values.
+        . The intervals are set to default values after reset.
+      * The manufacturer id is set correctly.
+      * The service UUIDs are set correctly.
+      * The service data is set correctly.
+      * Advertising is enabled consequently.
+    - test_set_advertising_intervals
+      * The new advertising intervals are set correctly.
+    - test_reset_advertising
+      * The single advertisement instance is removed.
+      * Advertising is disabled consequently.
+
+Mnemonics of the test cases:
+    CD: check advertising duration and intervals
+    RA: register advertisements
+    UA: unregister advertisements
+    SI: set advertising intervals
+    RS: reset advertising
+    FRA: fail to register extra advertisements when max ones have
+         been registered.
+    FSI: fail to set advertising intervals beyond legitimate range
+         of [20 ms, 10,240 ms].
+    PC: power cycle the bluetooth adapter (controller).
+    SR: suspend and resume the DUT (chromebook)
+
+"""
+
+args_dict = utils.args_to_dict(args)
+
+def run(machine):
+    host = hosts.create_host(machine)
+    job.run_test('bluetooth_AdapterLEAdvertising', host=host,
+                 advertisements=advertisements_data.ADVERTISEMENTS,
+                 test_type='reboot', num_iterations=50)
+
+parallel_simple(run, machines)

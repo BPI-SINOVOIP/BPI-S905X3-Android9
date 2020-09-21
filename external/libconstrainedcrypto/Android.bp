@@ -1,0 +1,25 @@
+// Copyright 2008 The Android Open Source Project
+//
+
+subdirs = [
+    "test",
+]
+
+cc_library_static {
+    name: "libconstrainedcrypto",
+    host_supported: true,
+    srcs: [
+        "dsa_sig.c",
+        "p256.c",
+        "p256_ec.c",
+        "p256_ecdsa.c",
+        "rsa.c",
+        "sha.c",
+        "sha256.c",
+    ],
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+    export_include_dirs: ["include"],
+}

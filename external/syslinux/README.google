@@ -1,0 +1,11 @@
+URL: https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
+License: GPL version 2
+License File: LICENSE
+
+Description:
+Syslinux provides a lightweight bootloader for Linux ext2/ext3/ext4 or btrfs
+filesystems (EXTLINUX).
+
+Local Modifications:
+Added gptlinux, an installer that operates on gpt-based disk images rather than
+mounted filesystems.

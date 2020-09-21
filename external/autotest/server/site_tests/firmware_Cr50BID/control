@@ -1,0 +1,60 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+
+AUTHOR = "mruthven"
+NAME = "firmware_Cr50BID"
+PURPOSE = "Verify cr50 response to board id"
+ATTRIBUTES = "suite:cr50_stress_flaky"
+TIME = "LONG"
+TEST_TYPE = "server"
+DEPENDENCIES = "servo"
+
+DOC = """
+Verify cr50 board id behavior on a board id locked image.
+
+Check that cr50 will not accept mismatched board ids when it is running a board
+id locked image.
+
+Set the board id on a non board id locked image and verify cr50 will rollback
+when it is updated to a mismatched board id image.
+
+All of the path args are optional. If they are given, then the test will use
+the local images to run the test. If they aren't, the test will download the
+needed cr50 images.
+
+The board id locked test image will be found using the given bid_path or
+downloaded from google storage using the information in bid, bid_mask, and
+bid_flags. If these aren't given the debug image with TEST:0xffff:0xff00 will
+be used.
+
+@param iterations: Number of times to run the test
+@param dev_path: local path for the dev image
+@param bid_path: local path for the board id locked image. If this is given, the
+                 board id, mask and flags will be gotten from the image. Bid,
+                 bid_mask, and bid_flags will be ignored.
+@param release_ver: The version string. ${rw_ver}/${image_bid}. This is needed
+                    to run the test with a released board id locked image.
+@param test_subset: a ',' separated string with the index of each test case to
+                    run.
+"""
+
+args_dict = utils.args_to_dict(args)
+servo_args = hosts.CrosHost.get_servo_arguments(args_dict)
+
+def run(machine):
+    host = hosts.create_host(machine, servo_args=servo_args)
+
+    iterations = int(args_dict.get("iterations", 1))
+    dev_path = args_dict.get("dev_path", "")
+    bid_path = args_dict.get("bid_path", "")
+    release_ver = args_dict.get("release_ver", "")
+    test_subset = args_dict.get("test_subset", "")
+
+    job.run_test("firmware_Cr50BID", host=host, cmdline_args=args,
+                 iterations=iterations, dev_path=dev_path, bid_path=bid_path,
+                 release_ver=release_ver, test_subset=test_subset)
+
+parallel_simple(run, machines)

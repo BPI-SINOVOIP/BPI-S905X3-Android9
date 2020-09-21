@@ -1,0 +1,11 @@
+apply plugin: 'java'
+
+sourceSets {
+    main {
+        java.srcDirs = ['shared/src/main/java', 'applier/src/main/java']
+    }
+    test {
+        java.srcDirs = ['shared/src/test/java', 'applier/src/test/java']
+    }
+}
+

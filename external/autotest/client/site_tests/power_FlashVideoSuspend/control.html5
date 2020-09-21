@@ -1,0 +1,28 @@
+# Copyright 2015 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "Chrome OS Team"
+NAME = "power_FlashVideoSuspend"
+ATTRIBUTES = "suite:bvt-perbuild"
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "power"
+TEST_TYPE = "client"
+
+# This test has no actual dependency on servo.  However, a common
+# failure mode when there's a bug is that the DUT goes offline, and
+# must be power cycled.  Servo can do that automatically, so we
+# restrict testing to devices that have a servo, to avoid needing
+# manual repair.
+DEPENDENCIES = "servo"
+
+DOC = """
+Suspends the system with a Youtube video playing in HTML5 mode.
+
+Checks that video is playing when DUT is resumed.
+"""
+
+video_url = "http://www.youtube.com/embed/Lv-sY_z8MNs?enablejsapi=1"
+job.add_sysinfo_logfile('/sys/kernel/debug/suspend_stats', on_every_test=True)
+job.run_test('power_FlashVideoSuspend', video_url = video_url)

@@ -1,0 +1,19 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'wiley'
+NAME = 'brillo_CameraSanity'
+TIME = 'FAST'
+TEST_TYPE = 'Server'
+ATTRIBUTES = 'suite:brillo-bvt, suite:brillo-pts, suite:brillo-smoke'
+DEPENDENCIES = 'camera-hal'
+
+DOC = """
+Test the most basic camera functionality on a Brillo DUT.
+"""
+
+def run(machine):
+    job.run_test('brillo_CameraSanity', host=hosts.create_host(machine))
+
+parallel_simple(run, machines)

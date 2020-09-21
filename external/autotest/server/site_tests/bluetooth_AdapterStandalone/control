@@ -1,0 +1,46 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+
+AUTHOR = 'chromeos-chameleon'
+NAME = 'bluetooth_AdapterStandalone'
+PURPOSE = 'Test bluetooth adapter standalone without connection.'
+CRITERIA = 'Adapter should work in correct states.'
+ATTRIBUTES = 'suite:bluetooth, suite:bluetooth_sanity'
+TIME = 'SHORT'
+TEST_CATEGORY = 'Functional'
+TEST_CLASS = 'bluetooth'
+TEST_TYPE = 'server'
+DEPENDENCIES = 'bluetooth'
+
+DOC = """
+Verify that the bluetooth adapter of the DUT works properly standalone
+without connecting to other devices.
+
+Specifically, the following subtests are executed in this autotest.
+    - test_start_bluetoothd
+    - test_stop_bluetoothd
+    - test_adapter_work_state
+    - test_power_on_adapter
+    - test_power_off_adapter
+    - test_reset_on_adapter
+    - test_reset_off_adapter
+    - test_UUIDs
+    - test_start_discovery
+    - test_stop_discovery
+    - test_discoverable
+    - test_nondiscoverable
+    - test_pairable
+    - test_nonpairable
+"""
+
+args_dict = utils.args_to_dict(args)
+chameleon_args = hosts.CrosHost.get_chameleon_arguments(args_dict)
+
+def run(machine):
+    host = hosts.create_host(machine, chameleon_args=chameleon_args)
+    job.run_test('bluetooth_AdapterStandalone', host=host)
+
+parallel_simple(run, machines)

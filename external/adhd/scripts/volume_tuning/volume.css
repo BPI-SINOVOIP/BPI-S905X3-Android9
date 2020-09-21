@@ -1,0 +1,30 @@
+/* Copyright (c) 2013 The Chromium OS Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file.
+ */
+
+body {
+    font-family: sans-serif;
+    text-align: center;
+}
+
+.box
+{
+    border: 1px solid rgb(144,184,222);
+    text-align:right;
+    position:relative;
+    padding: 2px;
+}
+
+table {
+    display: inline-block;
+    background-color: #d8e6f8;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+canvas {
+    display: inline-block;
+    vertical-align: top;
+    padding-left: 20px;
+}

@@ -1,0 +1,31 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+
+AUTHOR = "mruthven"
+NAME = "firmware_Cr50USB"
+PURPOSE = "Verify Cr50 to AP USB connection"
+TIME = "MEDIUM"
+TEST_TYPE = "server"
+DEPENDENCIES = "servo"
+
+DOC = """
+This test runs 'usb_updater -f' many times to verify the cr50 to ap usb
+connection is reliable.
+"""
+
+args_dict = utils.args_to_dict(args)
+servo_args = hosts.CrosHost.get_servo_arguments(args_dict)
+
+def run(machine):
+    host = hosts.create_host(machine, servo_args=servo_args)
+
+    num_iterations = int(args_dict.get("num_iterations", 100))
+    exit_condition = args_dict.get("exit_condition", "")
+
+    job.run_test("firmware_Cr50USB", host=host, cmdline_args=args,
+                 num_iterations=num_iterations, exit_condition=exit_condition)
+
+parallel_simple(run, machines)

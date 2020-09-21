@@ -1,0 +1,24 @@
+# Copyright 2015 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'krishnargv'
+NAME = 'policy_ProxySettings.notset_usenoproxy'
+ATTRIBUTES = 'suite:bvt-perbuild, suite:policy'
+TIME = 'SHORT'
+TEST_CATEGORY = 'General'
+TEST_CLASS = 'enterprise'
+TEST_TYPE = 'client'
+
+DOC = '''
+Verify effects of policy_ProxySettings policy on client behavior.
+
+This test verifies the effect of the ProxySettings user policy on Chrome OS
+client behavior.
+
+The test case shall pass if Chrome OS does not use a proxy. It fails if a
+proxy is used.
+
+'''
+
+job.run_test('policy_ProxySettings', case='NotSet_UseNoProxy')

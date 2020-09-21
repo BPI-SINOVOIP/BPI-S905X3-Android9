@@ -1,0 +1,86 @@
+#
+# The following prevents a system from having installed and loaded on apache
+# both mod_python and mod_wsgi
+#
+<IfModule mod_wsgi.c>
+   <IfModule mod_python.c>
+      ERROR__EITHER_MOD_WSGI_XOR_MOD_PYTHON_SHOULD_BE_ACTIVE
+   </IfModule>
+</IfModule>
+
+#
+# Django, when running under mod_python, requires the prefork MPM, so just
+# fail with this bogus directive if it's not loaded. For more info see:
+# https://github.com/autotest/autotest/wiki/AutotestServerInstall
+#
+<IfModule !prefork.c>
+    <IfModule mod_python.c>
+       ERROR__DJANGO_REQUIRES_THE_PREFORK_MPM
+    </IfModule>
+</IfModule>
+
+RewriteEngine On
+
+# Block all access to the django admin pages. The django admin module that we
+# have is known to leak memory. A simple webcrawler can get to these from our
+# AFE landing page and bring down cautotest by causing OOM.
+RewriteRule ^/admin/.* - [R=404]
+RewriteRule ^/afe/server/admin/.* - [R=404]
+RewriteRule ^/afe/server/admin - [R=404]
+
+#
+# Configuration for mod_wsgi
+#
+<IfModule mod_wsgi.c>
+
+    RewriteCond /usr/local/autotest/frontend/frontend.wsgi -f
+    RewriteRule ^/(afe|new_tko)/server(.*) /usr/local/autotest/frontend/frontend.wsgi [H=wsgi-script]
+
+    RewriteCond /usr/lib/python2.7/site-packages/autotest/frontend/frontend.wsgi -f
+    RewriteRule ^/(afe|new_tko)/server(.*) /usr/lib/python2.7/site-packages/autotest/frontend/frontend.wsgi [H=wsgi-script]
+
+    RewriteCond /usr/lib/python2.6/site-packages/autotest/frontend/frontend.wsgi -f
+    RewriteRule ^/(afe|new_tko)/server(.*) /usr/lib/python2.6/site-packages/autotest/frontend/frontend.wsgi [H=wsgi-script]
+
+    RewriteCond /usr/lib/python2.5/site-packages/autotest/frontend/frontend.wsgi -f
+    RewriteRule ^/(afe|new_tko)/server(.*) /usr/lib/python2.5/site-packages/autotest/frontend/frontend.wsgi [H=wsgi-script]
+
+    RewriteCond /usr/lib/python2.4/site-packages/autotest/frontend/frontend.wsgi -f
+    RewriteRule ^/(afe|new_tko)/server(.*) /usr/lib/python2.4/site-packages/autotest/frontend/frontend.wsgi [H=wsgi-script]
+
+    <LocationMatch "/(afe|new_tko)/server(.*)">
+       Options +ExecCGI
+    </LocationMatch>
+
+    WSGISocketPrefix /run/wsgi
+    # Note: this maximum-requests argument is required because of a memory leak in the django admin pages.
+    # The WSGIDaemonProcess directive prevents mpm_prefork from recycling the
+    # memory that Django uses, as it is tied up in the daemon. We can prevent
+    # the autotest memory leak from biting us by setting maximum-requests,
+    # which will recycle each daemon process after it gets a certain number of
+    # web requests.
+    <IfDefine !MOBLAB_INSTANCE>
+      # Moblab runs its own WSGI with different settings due to different memory
+      # limitations.
+      WSGIDaemonProcess autotestapache processes=65 threads=1 maximum-requests=200
+    </IfDefine>
+    WSGIProcessGroup autotestapache
+    WSGIPassAuthorization On
+</IfModule>
+
+#
+# Configuration for mod_python
+#
+<IfModule mod_python.c>
+    <Location ~ "/(afe|new_tko)/server">
+        SetHandler python-program
+        PythonHandler django.core.handlers.modpython
+        SetEnv DJANGO_SETTINGS_MODULE frontend.settings
+        PythonDebug On
+        # Force our own site-packages to be loaded by mod_python prior to
+        # mod_python's system python site-packages directory.
+        # This way our code can depend on library versions other than
+        # those available as packages on various OS distributions.
+        PythonPath "['/usr/local/autotest/site-packages', '/usr/local/autotest', '/usr/lib/python2.7/site-packages/autotest', '/usr/lib/python2.6/site-packages/autotest', '/usr/lib/python2.5/site-packages/autotest', '/usr/lib/python2.4/site-packages/autotest'] + sys.path"
+    </Location>
+</IfModule>

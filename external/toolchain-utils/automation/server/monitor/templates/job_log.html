@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">Job {{ job_id }}</h1>
+
+<h2 class="title">Command output:</h2>
+
+<table class="raw">
+<tbody>
+{% for datetime, stream, line in log_lines %}
+<tr class="{% cycle 'line1' 'line2' %}">
+  <td>{{ datetime }}</td>
+  <td>{{ stream }}</td>
+  <td><pre class="code">{{ line|wordwrap:80 }}</pre></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+{% endblock %}

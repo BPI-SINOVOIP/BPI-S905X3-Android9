@@ -1,0 +1,43 @@
+cc_library {
+    name: "libtinyxml2",
+    host_supported: true,
+    vendor_available: true,
+    vndk: {
+        enabled: true,
+    },
+
+    srcs: ["tinyxml2.cpp"],
+
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+
+    shared_libs: ["liblog"],
+
+    target: {
+        android: {
+            cflags: [
+                // LOG_TO_ANDROID_LOGCAT
+                "-DDEBUG",
+                "-DANDROID_NDK",
+            ],
+        },
+    },
+
+    export_include_dirs: ["."],
+}
+
+cc_test {
+    name: "tinyxml2-tests",
+    srcs: ["xmltest.cpp"],
+    shared_libs: ["libtinyxml2"],
+    // "resources/*" doesn't work: http://b/71906438
+    data: [
+        "resources/dream.xml",
+        "resources/empty.xml",
+        "resources/out/readme.txt",
+        "resources/utf8testverify.xml",
+        "resources/utf8test.xml",
+    ],
+}

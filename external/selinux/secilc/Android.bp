@@ -1,0 +1,14 @@
+common_CFLAGS = [
+    "-Wall",
+    "-Werror",
+    "-Wshadow",
+]
+
+cc_binary {
+    name: "secilc",
+    host_supported: true,
+    cflags: common_CFLAGS,
+    srcs: ["secilc.c"],
+    static_libs: ["libsepol"],
+    stl: "none",
+}

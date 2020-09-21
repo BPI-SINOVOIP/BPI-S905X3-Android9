@@ -1,0 +1,20 @@
+from autotest_lib.client.common_lib import utils
+
+AUTHOR = "shapiroc@chromium.org"
+NAME = "platform_ActivateDate"
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "platform"
+TEST_TYPE = "server"
+ATTRIBUTES = "suite:regression"
+
+DOC = """
+This test verifies that activate_date, which is only run once ever on the
+platform, executes correctly and sets the activation date correctly.
+"""
+
+def run_test(machine):
+    host = hosts.create_host(machine)
+    job.run_test("platform_ActivateDate", host=host)
+
+parallel_simple(run_test, machines)

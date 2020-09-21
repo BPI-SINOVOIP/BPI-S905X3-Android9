@@ -1,0 +1,29 @@
+{
+	"run_oci_args": ["--cgroup_parent=chronos_containers"],
+	"program_argv": ["/bin/ls", "/dev/null_test"],
+	"expected_result": "/dev/null_test",
+	"overrides": {
+		"mounts": [
+			{
+				"source": "tmpfs",
+				"destination": "/dev",
+				"type": "tmpfs",
+				"options": [
+					"noexec",
+					"nosuid"
+				]
+			}
+		],
+		"linux.devices": [
+			{
+				"path" : "/dev/null_test",
+				"type" : "c",
+				"major" : 1,
+				"minor" : 3,
+				"fileMode" : 438,
+				"uid" : 0,
+				"gid" : 0
+			}
+		]
+	}
+}

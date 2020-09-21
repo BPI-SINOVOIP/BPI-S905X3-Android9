@@ -1,0 +1,91 @@
+This directory contains tools for ICU updates.
+
+Data update tools
+=================
+
+updateicudata.py
+  - regerates the ICU data files.
+    ICU and CTS tests for libcore should be run before and
+    after.
+
+See $ANDROID_BUILD_TOP/system/timezone for tools related to time zone updates.
+
+Source code updates
+===================
+
+The source code in android_icu4j is generated from the source code in icu4j.
+
+Changes to upstream ICU4J can fall into one of three categories:
+
+1) Back-ported upstream ICU patches or other ICU behavior changes made for Android that cannot be
+upstreamed.
+2) Mechanical changes related to ICU4J being repackaged on Android under android.icu, the exposure
+of a subset of ICU in the Android SDK, or Android's platform or documentation build process.
+3) JavaDoc patches to replace ICU documentation that is incorrect/confusing for Android developers.
+
+Do not change the code in android_icu4j/src or android_icu4j/resources directly: instead you
+change the icu4j source, the transformation rules used by currysrc or the javadoc patch files.
+
+All changes made to icu4j should be accompanied by changes in android_icu4j and vice versa.
+
+Regenerating android_icu4j
+--------------------------
+
+After making changes (described below) the source code can be regenerated using:
+
+source build/envsetup.sh
+lunch
+
+cd external/icu/tools/srcgen
+./generate_android_icu4j.sh
+
+The code in android_icu4j will be regenerated and should contain the changes you made
+in icu4j. Confirm the diffs are what you intended. Commit both at the same time.
+
+Applying upstream and behavioral patches to ICU4J
+-------------------------------------------------
+
+Upstream patches and other code changes that modify ICU4J behavior are made in the icu4j
+source code before android_icu4j is generated. Apply ICU patches as normal and confirm that the
+ICU tests pass.
+
+Modifying the code gen
+----------------------
+
+android_icu4j is initially generated using a Java tool found in tools/srcgen.
+
+The "rules" that transform the source are configured in
+src/main/java/com/android/icu4j/srcgen/Icu4jTransform.java.
+
+Adding a Javadoc local patch
+----------------------------
+
+ICU4J has Javadoc patches specific to Android only and they can't be upstreamed.
+
+To reduce the maintenance cost of reapplying these changes when we upgrade ICU we store the patches
+in the javadoc_patches directory. The use of the patch command also helps detect when changes
+have been made to the upstream documentation being replaced that might otherwise be missed.
+
+Changes are stored in separate files, one for each source file. This avoids maintaining a monolithic
+patch file.
+
+Javadoc changes are applied by the generate_android_icu4j.sh script automatically during post-srcgen
+step.
+
+WARNING: DO NOT add any behavioral changes in these patches. Behavioral code changes should be made
+to icu4j directly.
+
+To add a new Javadoc local patch:
+
+1. Run ./generate_android_icu4j.sh
+2. Use your IDE to change the required javadoc under android_icu4j
+3. Run javadoc_patches/create_patches_i.sh
+4. Run ./generate_android_icu4j.sh again
+
+Re-generate all javadoc patches
+-------------------------------
+
+If you want to regenerate all of the Javadoc patch files you can do so by running:
+
+./javadoc_patches/create_patches.sh
+

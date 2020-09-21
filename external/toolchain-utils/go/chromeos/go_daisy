@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Invoke the Go cross compiler for daisy.
+# Uses ../go_target to add PIE flags.
+#
+# This is just an example for an arm board.
+
+GOOS="linux" GOARCH="arm" CGO_ENABLED="1" \
+	CC="armv7a-cros-linux-gnueabi-gcc" \
+	CXX="armv7a-cros-linux-gnueabi-g++" \
+	exec go_target "$@"

@@ -1,0 +1,22 @@
+# Copyright 2018 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+#
+
+AUTHOR = "ARC Team"
+NAME = "cheets_Midis"
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "login"
+TEST_TYPE = "client"
+DEPENDENCIES = 'arc'
+ATTRIBUTES = "suite:bvt-arc"
+JOB_RETRIES = 2
+
+DOC = """
+This is a simple test to check whether the midis daemon
+starts (and restarts) successfully on repeated logins
+of Chrome with ARC enabled.
+"""
+
+job.run_test('cheets_Midis')

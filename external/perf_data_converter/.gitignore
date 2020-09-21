@@ -1,0 +1,14 @@
+*.pb.*
+*.d.*
+*.d
+*.o
+
+perf_converter
+perf_to_profile
+intervalmap_test
+perf_data_converter_test
+perf_data_handler_test
+chrome_huge_pages_mapping_deducer_test
+unit_tests
+integration_tests
+perf_recorder_test

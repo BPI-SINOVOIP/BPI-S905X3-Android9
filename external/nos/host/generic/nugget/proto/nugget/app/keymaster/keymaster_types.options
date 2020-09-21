@@ -1,0 +1,3 @@
+nugget.app.keymaster.KeyParameters.params max_count:20
+nugget.app.keymaster.HmacSharingParameters.seed max_size:32
+nugget.app.keymaster.HmacSharingParameters.nonce max_size:32

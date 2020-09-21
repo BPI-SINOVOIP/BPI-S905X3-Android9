@@ -1,0 +1,17 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "The Chromium OS Authors"
+NAME = "performance_InboxInputLatency"
+ATTRIBUTES = "suite:crosbolt_perf_nightly"
+TIME = "SHORT"
+TEST_TYPE = "client"
+
+DOC = """
+This is a test that logins in through telemetry and
+starts Input tracing on the Inbox composer, then injects
+key events in order to measure and report the input latency.
+"""
+
+job.run_test('performance_InboxInputLatency')

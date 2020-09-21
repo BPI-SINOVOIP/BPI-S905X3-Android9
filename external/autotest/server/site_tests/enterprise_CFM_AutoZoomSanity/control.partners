@@ -1,0 +1,33 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+
+AUTHOR = "denniswu@chromium.org"
+NAME = "enterprise_CFM_AutoZoomSanity.partners"
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "enterprise"
+TEST_TYPE = "server"
+ATTRIBUTES = "suite:bluestreak-partners"
+DEPENDENCIES = "autozoom"
+JOB_RETRIES = 3
+
+DOC = """
+Sanity test for AutoZoom feature available with Huddly and Mimo on bluestreak.
+This test bypasses servo check and is used by third party vendor PAL Acoustics.
+"""
+
+args_dict = utils.args_to_dict(args)
+
+
+def run_test(machine):
+    peripheral_dict = {'Huddly GO': '2bd9:0011',
+                       'Hangouts Meet speakermic': '18d1:8001',
+                       'MIMO VUE HD': '17e9:016b'}
+    host = hosts.create_host(machine, servo_args=None)
+    job.run_test('enterprise_CFM_AutoZoomSanity', host=host,
+                 session_length=100, peripheral_dict=peripheral_dict)
+
+parallel_simple(run_test, machines)

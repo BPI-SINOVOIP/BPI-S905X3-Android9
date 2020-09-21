@@ -1,0 +1,28 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "kerl@google.com, chromeos-meetings@google.com"
+NAME = "webrtc_PausePlayPeerConnections.video"
+PURPOSE = "Ensures frequent pause and plays of peer connection streams work"
+CRITERIA = "Fails if the tab freezes during the test"
+ATTRIBUTES = ("suite:hotrod, suite:bluestreak, suite:bluestreak-release, "
+        "suite:bluestreak-perbuild, suite:bluestreak-pre-cq")
+TIME = "SHORT"
+TEST_CATEGORY = "Stress"
+TEST_CLASS = "video"
+TEST_TYPE = "client"
+BUG_TEMPLATE = {
+    "labels": ["OS-Chrome"],
+    "components": ["OS>Kernel>Video"],
+}
+
+DOC = """
+This test starts 10 peer connections with low resolution video
+streams. The tests randomly pauses and plays the streams.
+
+This is a regression test for bug 718369.
+"""
+
+job.run_test("webrtc_PausePlayPeerConnections", element_type='video', tag='video')
+

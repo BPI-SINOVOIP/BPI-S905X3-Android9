@@ -1,0 +1,28 @@
+# Copyright 2016 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = 'scunningham'
+NAME = 'policy_JavaScriptAllowedForUrls.multipleurls_allow'
+ATTRIBUTES = 'suite:bvt-perbuild, suite:policy'
+TIME = 'SHORT'
+TEST_CATEGORY = 'General'
+TEST_CLASS = 'enterprise'
+TEST_TYPE = 'client'
+
+DOC = '''
+Verify effects of JavaScriptAllowedForUrls policy.
+
+This test case verifies the behavior of Chrome OS when JavaScriptAllowedForUrls
+user policy is set to multiple URL patterns, and DefaultJavaScriptSetting policy
+is set to 2 (do not allow by default).
+
+A test case shall pass if the browser allows JavaScript to execute only
+on a test page with a URL that matches one or more of the URL patterns listed
+in JavaScriptAllowedForUrls. A test shall fail if the browser blocks execution
+on a page where it should be allowed, or allows execution on a page where it
+should be blocked.
+
+'''
+
+job.run_test('policy_JavaScriptAllowedForUrls', case='MultipleUrls_Allow')

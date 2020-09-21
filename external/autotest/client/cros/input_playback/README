@@ -1,0 +1,21 @@
+How to add new gesture files:
+1. Obtain a chromebook with a test image and the input source in question
+    (either onboard or plugged in).
+2. Determine the input node of the input, e.g. /dev/input/event4.  Either:
+    a. run evtest command on the device.  The output should be names and nodes
+       of all detected input sources.
+    b. run touch_UpdateErrors test on the device and read the logs.  All input
+       devices should be listed in .INFO along with their nodes.
+3. RECORD (from the device):
+    evemu-record $node -1 > $filename
+4. PLAY BACK (for verification, from the device):
+    evemu-play --insert-slot0 $node < $filename
+
+Other potentially useful commands:
+- Record device properties for emulation:
+    evemu-describe $node
+- Emulate device:
+    evemu-device < $filename
+
+
+See also https://www.freedesktop.org/wiki/Evemu/

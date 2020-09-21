@@ -1,0 +1,41 @@
+# Copyright 2014 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.server import utils
+from autotest_lib.client.common_lib.cros.cfm.usb import cfm_usb_devices
+
+AUTHOR = "harpreet"
+NAME = "enterprise_CFM_USBPeripheralHotplugDetect.c920"
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "enterprise"
+TEST_TYPE = "server"
+ATTRIBUTES = "suite:hotrod"
+DEPENDENCIES = "servo, c920"
+JOB_RETRIES = 3
+
+DOC = """
+This test clears the TPM if necessary, kicks off a client side test that enrolls
+a device as a hotrod device and hotplugs USB peripherals. After hotplug, it
+checks and verifies that both CrOS and Hotrod see the same set of Audio / Video
+peripherals. Clears the TPM again before test exits.
+
+Client side part of the test uses telemetry to query for peripherals detected by
+the hotrod app.
+"""
+
+args_dict = utils.args_to_dict(args)
+servo_args = hosts.CrosHost.get_servo_arguments(args_dict)
+
+def run_test(machine):
+    host = hosts.create_host(machine, servo_args=servo_args)
+    peripherals_to_check = [
+        cfm_usb_devices.JABRA_SPEAK_410,
+        cfm_usb_devices.HD_PRO_WEBCAM_C920
+    ]
+    job.run_test('enterprise_CFM_USBPeripheralHotplugDetect', host=host,
+            peripherals_to_check=peripherals_to_check, tag="c920")
+
+
+parallel_simple(run_test, machines)

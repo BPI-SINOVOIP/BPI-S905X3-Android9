@@ -1,0 +1,23 @@
+# Copyright 2018 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "kathrelkeld"
+NAME = "enterprise_ClearTPM"
+TIME = "SHORT"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "enterprise"
+TEST_TYPE = "server"
+
+DOC = """
+Not meant to be run in the lab.  A convienient way to clear the TPM on
+a test image while running other tests, if needed.
+"""
+
+
+def run_test(machine):
+    host = hosts.create_host(machine)
+    job.run_test('enterprise_ClearTPM', host=host)
+
+
+parallel_simple(run_test, machines)

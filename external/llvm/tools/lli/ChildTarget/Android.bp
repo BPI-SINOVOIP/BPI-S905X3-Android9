@@ -1,0 +1,19 @@
+//===---------------------------------------------------------------===
+// lli-child-target command line tool
+//===---------------------------------------------------------------===
+
+cc_binary_host {
+    name: "lli-child-target",
+    defaults: ["llvm-defaults"],
+    srcs: ["ChildTarget.cpp"],
+    static_libs: [
+        "libLLVMOrcJIT",
+        "libLLVMRuntimeDyld",
+        "libLLVMObject",
+        "libLLVMBitReader",
+        "libLLVMMC",
+        "libLLVMMCParser",
+        "libLLVMCore",
+        "libLLVMSupport",
+    ],
+}

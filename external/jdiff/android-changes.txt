@@ -1,0 +1,4 @@
+This version of jdiff has been modified to generate output using a template
+designed for use exclusively on developer.android.com. It is not suitable for
+use outside the Android platform.
+

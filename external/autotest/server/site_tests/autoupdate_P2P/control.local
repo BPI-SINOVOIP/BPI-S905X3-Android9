@@ -1,0 +1,45 @@
+# Copyright 2018 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "dhaddock, Chromium OS"
+NAME = "autoupdate_P2P.local"
+PURPOSE = "Test autoupdate via peer to peer(P2P) locally."
+TIME = "MEDIUM"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "platform"
+TEST_TYPE = "server"
+
+
+DOC = """
+This tests autoupdate between two devices via peer to peer.
+
+Use this control file to debug the test at your desk. The test requires the
+lab to schedule and provision two DUTs before the test begins. We will need
+to do that setup manually before running the test.
+
+Steps:
+1. Lock two DUTs in the lab. They need to be the same make/model.
+2. Ssh into both and make sure they can ping each other.
+3. Provision both DUTs to the same build. You can use provision_AutoUpdate or
+   cros flash to do this.
+4. Pass two args to test_that: host2, job_repo_url.
+
+test_that <hostname>.cros autoupdate_P2P.local args="host2=<hostname>.cros job_repo_url=<job_repo_url>"
+
+"""
+
+import logging
+from autotest_lib.server import utils
+
+args_dict = utils.args_to_dict(args)
+
+def run(machine):
+    if all(arg in args_dict for arg in ['host2', 'job_repo_url']):
+        host1 = hosts.create_host(machine)
+        host2 = hosts.create_host(args_dict.get('host2'))
+        job.run_test('autoupdate_P2P', hosts=[host1, host2], job_repo_url=args_dict.get('job_repo_url'))
+    else:
+        logging.info('Please provide both "host2" and "job_repo_url" args to test_that.')
+
+job.parallel_simple(run, machines)

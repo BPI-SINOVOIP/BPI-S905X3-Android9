@@ -1,0 +1,244 @@
+<!doctype html>
+<!-- Modified from rbyers.github.io/eventTest.js
+
+Changes were to remove some elements which don't make sense in this context,
+including UI to toggle events and various non-mouse, keyboard, touch events.
+There were also some formatting changes.  Finally, some test-friendly functions
+like clearPreviousEvents() were added.
+
+Add event handlers for all mouse, touch, and keyboard events.  Log any events
+seen.  Intended to be queried by an autotest after input playback.
+
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Touch Event Test Page</title>
+<script type="text/javascript">
+var pageReady = false; // Used to determine whether test can run yet.
+var lastEvent; // The last event seen.
+var eventCount = 0; // Count of events seen.
+var timeOfLastEvent; // Timestamp of when last event occurred.
+var netScrollDelta = {x: 0, y: 0}; // Net scroll seen.
+var clickCount = 0; // Total number of clicks seen.
+var eventLog = ''; // Log of all events seen.
+var preventDefaults = true; // Boolean whether to prevent default events.
+
+
+// Reset previously seen events.
+function clearPreviousEvents() {
+  lastEvent = undefined;
+  eventCount = 0;
+  timeOfLastEvent = undefined;
+  netScrollDelta = {x: 0, y: 0};
+  clickCount = 0;
+  eventLog = '';
+  pageReady = true;
+}
+
+// Add the given event and message to the running eventLog.
+function logEvent(event, msg) {
+  eventCount += 1;
+  if (!msg) {
+    msg = '';
+  }
+  if (timeOfLastEvent && event.timeStamp) {
+    msg += ' timeDelta=' + round(event.timeStamp - timeOfLastEvent) + 'ms';
+  }
+  timeOfLastEvent = event.timeStamp;
+  lastEvent = event;
+  msg = event.type + ': ' + msg + '\n';
+  eventLog += msg;
+  console.log(msg);
+}
+
+// Call preventDefault() on the event if preventDefaults is set.
+function preventDefault(event) {
+  if (preventDefaults) {
+    event.preventDefault();
+  }
+}
+
+// Round the given value to 2 decimal places.
+function round(val) {
+  return Math.round(val * 100) / 100;
+}
+
+// addEventListener with the given handler for the given event types.
+function setHandlerState(events, handler) {
+  for (var i = 0; i < events.length; i++) {
+    document.addEventListener(events[i], handler);
+  }
+};
+
+// mouse event handler
+function mouseEventHandler(event)
+{
+  var msg = '';
+  if (event.type == 'click') {
+    clickCount += 1;
+  }
+  if (event.type == 'mousewheel') {
+    msg += ', wheelDelta=' + round(event.wheelDelta) +
+        ' (' + round(event.wheelDeltaX) + ',' +
+        round(event.wheelDeltaY) + ')';
+    netScrollDelta.x += event.wheelDeltaX;
+    netScrollDelta.y += event.wheelDeltaY;
+  }
+  if (event.type == 'wheel') {
+    msg += ', deltaX=' + round(event.deltaX) + ', deltaY=' +
+        round(event.deltaY) + ', deltaZ=' + round(event.deltaZ);
+    netScrollDelta.x += event.deltaX;
+    netScrollDelta.y += event.deltaY;
+  }
+  if (event.type == 'mousewheel' || event.type == 'wheel') {
+    msg += ', deltaMode=' + (
+        event.deltaMode == 0 ? 'PIXEL' :
+        event.deltaMode == 1 ? 'LINE' :
+        event.deltaMode == 2 ? 'PAGE' :
+        event.deltaMode);
+  }
+  if (event.type.toLowerCase().indexOf('pointer') != -1) {
+    msg += ', pointerType=' + event.pointerType + ', pointerId=' +
+        event.pointerId + ', width=' + round(event.width) +
+        ', height=' + round(event.height) + ', pressure=' +
+        round(event.pressure) + ', tiltX=' + round(event.tiltX) +
+        ', tiltY=' + round(event.tiltY);
+  }
+
+  msg = ' client=' + round(event.clientX) + ',' + round(event.clientY) +
+      ' screen=' + round(event.screenX) + ',' + round(event.screenY) +
+      ' button=' + event.button + ' buttons=' + event.buttons +
+      ' detail=' + event.detail + ' cancelable=' +
+      event.cancelable + msg;
+
+  preventDefault(event);
+  logEvent(event, msg);
+}
+
+// Helper function for touch handler.
+function makeTouchList(touches, verbose) {
+  var touchStr = '';
+  for (var i = 0; i < touches.length; i++) {
+    var tgt = '';
+    if (i > 0)
+      touchStr += ' ';
+
+    if (verbose)
+      tgt = '-' + touches[i].target.id;
+    var id = touches[i].identifier;
+    if (id >= 100) {
+      if (!(id in touchMap)) {
+        touchMap[id] = nextId;
+        nextId++;
+      }
+      id = '#' + touchMap[id];
+    }
+
+    touchStr += id + tgt;
+  }
+  return touchStr;
+}
+
+activeTouchData = {};
+
+// Touch event handler.
+function touchEventHandler(event) {
+  var touchStr =
+      ' touches=' + makeTouchList(event.touches, true) +
+      ' changed=' + makeTouchList(event.changedTouches) +
+      ' target=' + makeTouchList(event.targetTouches) +
+      ' cancelable=' + event.cancelable;
+
+  preventDefault(event);
+  logEvent(event, touchStr);
+
+  for (var i = 0; i < event.changedTouches.length; i++) {
+    var touch = event.changedTouches[i];
+
+    if (event.type == 'touchstart') {
+      var touchData = {
+        startTime: event.timeStamp,
+        startX: touch.screenX,
+        startY: touch.screenY,
+        maxDist: 0,
+        maxMDist: 0
+      };
+      activeTouchData[touch.identifier] = touchData;
+    } else {
+      var touchData = activeTouchData[touch.identifier];
+      var distX = Math.abs(touch.screenX - touchData.startX);
+      var distY = Math.abs(touch.screenY - touchData.startY);
+      touchData.maxDist = Math.max(touchData.maxDist,
+          Math.sqrt(distX * distX + distY * distY));
+      touchData.maxMDist = Math.max(touchData.maxMDist, distX + distY);
+      if (event.type == 'touchend') {
+        msg = ('touch ' + touch.identifier + ' summary:' +
+               ' dist=(' + distX + ',' + distY + ')' +
+               ' max-dist=' + Math.round(touchData.maxDist) +
+               ' max-manhattan-dist=' + touchData.maxMDist +
+               ' dur=' + (Math.round(event.timeStamp - touchData.startTime)));
+        logEvent(event, msg);
+        delete activeTouchData[touch.identifier];
+      }
+    }
+  }
+}
+
+// Key event handler.
+function keyEventHandler(event) {
+  var msg = '';
+  if ('charCode' in event)
+    msg += ' charCode=' + event.charCode;
+  if ('keyCode' in event)
+    msg += ' keyCode=' + event.keyCode;
+  if ('key' in event)
+    msg += ' key=' + event.key;
+  if ('code' in event)
+    msg += ' code=' + event.code;
+  if ('location' in event) {
+    if (event.location == KeyboardEvent.DOM_KEY_LOCATION_LEFT)
+      msg += ' LOCATION_LEFT';
+    else if (event.location == KeyboardEvent.DOM_KEY_LOCATION_NUMPAD)
+      msg += ' LOCATION_NUMPAD';
+    else if (event.location == KeyboardEvent.DOM_KEY_LOCATION_RIGHT)
+      msg += ' LOCATION_RIGHT';
+  }
+  if (event.repeat)
+    msg += ' repeat';
+  if (event.isComposing)
+    msg += ' isComposing';
+
+  preventDefault(event);
+  logEvent(event, msg);
+}
+
+
+// On load, set handlers for mouse, touch, and key events.
+function onLoad() {
+  setHandlerState(
+      ['click', 'dblclick', 'contextmenu', 'mousedown', 'mouseup',
+      'mouseover', 'mousemove', 'mouseout', 'mouseenter', 'mouseleave',
+      'mousewheel', 'wheel'],
+      mouseEventHandler);
+
+  setHandlerState(
+      ['dragstart', 'dragenter', 'dragleave', 'drop', 'dragend'],
+      mouseEventHandler);
+
+  setHandlerState(
+      ['touchstart', 'touchmove', 'touchend', 'touchcancel'],
+      touchEventHandler);
+
+  setHandlerState(
+      ['keydown', 'keyup', 'keypress'],
+      keyEventHandler);
+
+  pageReady = true;
+}
+
+</script>
+</head>
+<body onload="onLoad()">
+</body>
+</html>

@@ -1,0 +1,32 @@
+# This example experiment file shows how to run a Telemetry test,
+# using autotest (via "suite: telemetry_Crosperf").  This runs the
+# Telemetry's "run_benchmark" for the specified test.
+#
+# You should replace all the placeholders, marked by angle-brackets,
+# with the appropriate actual values.
+
+name: basic_telemetry_crosperf_example
+board: <your-board-goes-here>
+
+# Note:  You can specify multiple remotes, to run your tests in parallel on
+# multiple machines. e.g. "remote: test-machine-1.com test-machine2.come
+# test-machine3.com"
+remote: <your-remote-goes-here>
+
+# Replace "octane" below with the name of the Telemetry benchmark you 
+# want to run.
+benchmark: octane {
+    suite: telemetry_Crosperf
+    iterations: 1
+}
+
+# NOTE: You must specify at least one image; you may specify more than one.
+# Replace <path-to-your-chroot-goes-here> and <board-goes-here> below.
+vanilla_image {
+  chromeos_image:<path-to-your-chroot>/src/build/images/<board>/vanilla-image/chromiumos_test_image.bin
+}
+
+# Replace the chromeos image below with the actual path to your test image.
+test_image {
+  chromeos_image:<path-to-your-chroot>/src/build/images/<board>/test-image/chromiumos_test_image.bin
+}

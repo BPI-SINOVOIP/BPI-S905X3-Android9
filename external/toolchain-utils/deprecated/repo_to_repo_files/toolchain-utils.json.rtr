@@ -1,0 +1,28 @@
+{
+  "input": [
+    {
+      "type": "p4", 
+      "mappings": [
+        "//depot2/gcctools/chromeos/v14/crosperf/... crosperf/...", 
+        "//depot2/gcctools/chromeos/v14/utils/... utils/...", 
+        "//depot2/gcctools/chromeos/v14/image_chromeos.py image_chromeos.py", 
+        "//depot2/gcctools/chromeos/v14/lock_machine.py lock_machine.py", 
+        "//depot2/gcctools/chromeos/v14/README README", 
+        "//depot2/gcctools/chromeos/v14/.gitignore .gitignore"
+      ], 
+      "address": "perforce2:2666"
+    }
+  ], 
+  "output": [
+    {
+      "type": "git", 
+      "ignores": [
+        ".svn", 
+        ".git", 
+        ".pyc", 
+        "logs"
+      ], 
+      "address": "https://chrome-internal.googlesource.com/chromeos/toolchain-utils.git"
+    }
+  ]
+}

@@ -1,0 +1,295 @@
+// Copyright (C) 2017 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+// Default values for the USE flags. Override these USE flags from your product
+// by setting BRILLO_USE_* values. Note that we define local variables like
+// local_use_* to prevent leaking our default setting for other packages.
+
+libbrillo_core_sources = [
+    "brillo/backoff_entry.cc",
+    "brillo/data_encoding.cc",
+    "brillo/errors/error.cc",
+    "brillo/errors/error_codes.cc",
+    "brillo/flag_helper.cc",
+    "brillo/key_value_store.cc",
+    "brillo/message_loops/base_message_loop.cc",
+    "brillo/message_loops/message_loop.cc",
+    "brillo/message_loops/message_loop_utils.cc",
+    "brillo/mime_utils.cc",
+    "brillo/osrelease_reader.cc",
+    "brillo/process.cc",
+    "brillo/process_information.cc",
+    "brillo/secure_blob.cc",
+    "brillo/strings/string_utils.cc",
+    "brillo/syslog_logging.cc",
+    "brillo/type_name_undecorate.cc",
+    "brillo/url_utils.cc",
+    "brillo/userdb_utils.cc",
+    "brillo/value_conversion.cc",
+]
+
+libbrillo_linux_sources = [
+    "brillo/asynchronous_signal_handler.cc",
+    "brillo/daemons/daemon.cc",
+    "brillo/file_utils.cc",
+    "brillo/process_reaper.cc",
+]
+
+libbrillo_binder_sources = ["brillo/binder_watcher.cc"]
+
+libbrillo_http_sources = [
+    "brillo/http/curl_api.cc",
+    "brillo/http/http_connection_curl.cc",
+    "brillo/http/http_form_data.cc",
+    "brillo/http/http_request.cc",
+    "brillo/http/http_transport.cc",
+    "brillo/http/http_transport_curl.cc",
+    "brillo/http/http_utils.cc",
+]
+
+libbrillo_policy_sources = [
+    "policy/device_policy.cc",
+    "policy/libpolicy.cc",
+]
+
+libbrillo_stream_sources = [
+    "brillo/streams/file_stream.cc",
+    "brillo/streams/input_stream_set.cc",
+    "brillo/streams/memory_containers.cc",
+    "brillo/streams/memory_stream.cc",
+    "brillo/streams/openssl_stream_bio.cc",
+    "brillo/streams/stream.cc",
+    "brillo/streams/stream_errors.cc",
+    "brillo/streams/stream_utils.cc",
+    "brillo/streams/tls_stream.cc",
+]
+
+libbrillo_test_helpers_sources = [
+    "brillo/http/http_connection_fake.cc",
+    "brillo/http/http_transport_fake.cc",
+    "brillo/message_loops/fake_message_loop.cc",
+    "brillo/streams/fake_stream.cc",
+    "brillo/unittest_utils.cc",
+]
+
+libbrillo_test_sources = [
+    "brillo/asynchronous_signal_handler_unittest.cc",
+    "brillo/backoff_entry_unittest.cc",
+    "brillo/data_encoding_unittest.cc",
+    "brillo/enum_flags_unittest.cc",
+    "brillo/errors/error_codes_unittest.cc",
+    "brillo/errors/error_unittest.cc",
+    "brillo/file_utils_unittest.cc",
+    "brillo/flag_helper_unittest.cc",
+    "brillo/http/http_connection_curl_unittest.cc",
+    "brillo/http/http_form_data_unittest.cc",
+    "brillo/http/http_request_unittest.cc",
+    "brillo/http/http_transport_curl_unittest.cc",
+    "brillo/http/http_utils_unittest.cc",
+    "brillo/key_value_store_unittest.cc",
+    "brillo/map_utils_unittest.cc",
+    "brillo/message_loops/base_message_loop_unittest.cc",
+    "brillo/message_loops/fake_message_loop_unittest.cc",
+    "brillo/mime_utils_unittest.cc",
+    "brillo/osrelease_reader_unittest.cc",
+    "brillo/process_reaper_unittest.cc",
+    "brillo/process_unittest.cc",
+    "brillo/secure_blob_unittest.cc",
+    "brillo/streams/fake_stream_unittest.cc",
+    "brillo/streams/file_stream_unittest.cc",
+    "brillo/streams/input_stream_set_unittest.cc",
+    "brillo/streams/memory_containers_unittest.cc",
+    "brillo/streams/memory_stream_unittest.cc",
+    "brillo/streams/openssl_stream_bio_unittests.cc",
+    "brillo/streams/stream_unittest.cc",
+    "brillo/streams/stream_utils_unittest.cc",
+    "brillo/strings/string_utils_unittest.cc",
+    "brillo/unittest_utils.cc",
+    "brillo/url_utils_unittest.cc",
+    "brillo/value_conversion_unittest.cc",
+]
+
+libbrillo_CFLAGS = [
+    "-Wall",
+    "-Werror",
+]
+
+libbrillo_shared_libraries = ["libchrome"]
+
+// Main library, shared and static for host and target
+// ========================================================
+cc_library {
+    name: "libbrillo",
+    host_supported: true,
+    srcs: libbrillo_core_sources,
+    shared_libs: libbrillo_shared_libraries,
+    static_libs: [
+        "libmodpb64",
+        "libgtest_prod",
+    ],
+    cflags: libbrillo_CFLAGS,
+    export_include_dirs: ["."],
+
+    target: {
+        host: {
+            cppflags: ["-D__ANDROID_HOST__"],
+        },
+        android: {
+            srcs: libbrillo_linux_sources,
+        },
+        darwin: {
+            enabled: false
+        }
+    },
+}
+
+// Shared binder library for target
+// ========================================================
+cc_library_shared {
+    name: "libbrillo-binder",
+    srcs: libbrillo_binder_sources,
+    shared_libs: libbrillo_shared_libraries + [
+        "libbinder",
+        "libbrillo",
+        "libutils",
+    ],
+    static_libs: ["libgtest_prod"],
+    cflags: libbrillo_CFLAGS,
+    export_include_dirs: ["."],
+}
+
+// Shared minijail library for target
+// ========================================================
+cc_library_shared {
+    name: "libbrillo-minijail",
+    srcs: [
+        "brillo/minijail/minijail.cc",
+    ],
+    shared_libs: [
+        "libchrome",
+        "libbrillo",
+        "libminijail",
+    ],
+    static_libs: ["libgtest_prod"],
+    cflags: libbrillo_CFLAGS,
+    export_include_dirs: ["."],
+}
+
+// Shared and static stream library for target and host
+// ========================================================
+cc_library {
+    name: "libbrillo-stream",
+    srcs: libbrillo_stream_sources,
+    shared_libs: libbrillo_shared_libraries + [
+        "libbrillo",
+        "libcrypto",
+        "libssl",
+    ],
+    static_libs: ["libgtest_prod"],
+    cflags: libbrillo_CFLAGS,
+    export_include_dirs: ["."],
+
+    host_supported: true,
+    target: {
+        darwin: {
+            enabled: false,
+        },
+        windows: {
+            enabled: false,
+        },
+    },
+}
+
+// Shared http library for target and host
+// ========================================================
+cc_library_shared {
+    name: "libbrillo-http",
+    srcs: libbrillo_http_sources,
+    shared_libs: libbrillo_shared_libraries + [
+        "libbrillo",
+        "libbrillo-stream",
+        "libcurl",
+    ],
+    static_libs: ["libgtest_prod"],
+    cflags: libbrillo_CFLAGS,
+    export_include_dirs: ["."],
+
+    host_supported: true,
+    target: {
+        darwin: {
+            enabled: false,
+        },
+        windows: {
+            enabled: false,
+        },
+    },
+}
+
+// Shared policy library for target
+// ========================================================
+cc_library_shared {
+    name: "libbrillo-policy",
+    srcs: libbrillo_policy_sources,
+    shared_libs: libbrillo_shared_libraries,
+    static_libs: ["libgtest_prod"],
+    cflags: libbrillo_CFLAGS,
+    export_include_dirs: ["."],
+}
+
+
+// Static test-helpers library for target
+// ========================================================
+cc_library_static {
+    name: "libbrillo-test-helpers",
+    srcs: libbrillo_test_helpers_sources,
+    static_libs: [
+        "libgtest",
+        "libgmock",
+    ],
+    shared_libs: libbrillo_shared_libraries + [
+        "libbrillo",
+        "libcurl",
+        "libbrillo-http",
+        "libbrillo-stream",
+        "libcrypto",
+    ],
+    cflags: libbrillo_CFLAGS,
+    cppflags: ["-Wno-sign-compare"],
+    export_include_dirs: ["."],
+}
+
+// Unit tests.
+// ========================================================
+cc_test {
+    name: "libbrillo_test",
+    srcs: libbrillo_test_sources,
+    static_libs: [
+        "libgtest",
+        "libchrome_test_helpers",
+        "libbrillo-test-helpers",
+        "libgmock",
+        "libBionicGtestMain",
+    ],
+    shared_libs: libbrillo_shared_libraries + [
+        "libbrillo",
+        "libcurl",
+        "libbrillo-http",
+        "libbrillo-stream",
+        "libcrypto",
+        "libprotobuf-cpp-lite",
+    ],
+    cflags: libbrillo_CFLAGS,
+    cppflags: ["-Wno-sign-compare"],
+}
+

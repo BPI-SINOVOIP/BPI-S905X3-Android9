@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p class="title">Job Groups</p>
+
+<form action="/job-group" method="post">
+{{ filter.as_p }}
+<p><input type="submit" value="Filter!" /></p>
+</form>
+
+<table class="list">
+  <tbody>
+    <tr>
+      <th>Group ID</th>
+      <th>Label</th>
+      <th>Time Submitted</th>
+      <th>Status</th>
+    </tr>
+    {% for group in groups %}
+    <tr>
+      <td>
+        <a class="button column" href="/job-group/{{ group.id }}">{{ group.id }}</a>
+      </td>
+      <td>{{ group.label }}</td>
+      <td>{{ group.submitted }}</td>
+      {% if group.status %}
+      <td class="{{ group.status }}">{{ group.state }}</td>
+      {% else %}
+      <td>{{ group.state }}</td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,1313 @@
+03-26 16:13:56 I/ModuleRepo: chromeos2-row8-rack4-host19:22 running 1 modules, expected to complete in 6m 38s
+03-26 16:13:56 I/CompatibilityTest: Starting 1 module on chromeos2-row8-rack4-host19:22
+03-26 16:13:56 D/ConfigurationFactory: Loading configuration 'system-status-checkers'
+03-26 16:13:56 D/ModuleDef: Preparer: LocationCheck
+03-26 16:13:56 I/PreconditionPreparer: Value true for option skip-media-download not applicable for class com.android.compatibility.common.tradefed.targetprep.LocationCheck
+03-26 16:13:57 I/CompatibilityTest: Running system status checker before module execution: CtsAppTestCases
+03-26 16:13:57 D/ModuleDef: Preparer: ApkInstaller
+03-26 16:13:57 D/TestAppInstallSetup: Installing apk from /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases/CtsSimpleApp.apk ...
+03-26 16:13:57 D/CtsSimpleApp.apk: Uploading CtsSimpleApp.apk onto device 'chromeos2-row8-rack4-host19:22'
+03-26 16:13:57 D/Device: Uploading file onto device 'chromeos2-row8-rack4-host19:22'
+03-26 16:13:58 D/RunUtil: Running command with timeout: 60000ms
+03-26 16:13:58 D/RunUtil: Running [aapt, dump, badging, /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases/CtsSimpleApp.apk]
+03-26 16:13:59 D/TestAppInstallSetup: Installing apk from /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases/CtsAppTestStubs.apk ...
+03-26 16:13:59 D/CtsAppTestStubs.apk: Uploading CtsAppTestStubs.apk onto device 'chromeos2-row8-rack4-host19:22'
+03-26 16:13:59 D/Device: Uploading file onto device 'chromeos2-row8-rack4-host19:22'
+03-26 16:14:01 D/RunUtil: Running command with timeout: 60000ms
+03-26 16:14:01 D/RunUtil: Running [aapt, dump, badging, /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases/CtsAppTestStubs.apk]
+03-26 16:14:01 D/TestAppInstallSetup: Installing apk from /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases/CtsAppTestCases.apk ...
+03-26 16:14:01 D/CtsAppTestCases.apk: Uploading CtsAppTestCases.apk onto device 'chromeos2-row8-rack4-host19:22'
+03-26 16:14:01 D/Device: Uploading file onto device 'chromeos2-row8-rack4-host19:22'
+03-26 16:14:03 D/RunUtil: Running command with timeout: 60000ms
+03-26 16:14:03 D/RunUtil: Running [aapt, dump, badging, /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/testcases/CtsAppTestCases.apk]
+03-26 16:14:03 D/ModuleDef: Test: AndroidJUnitTest
+03-26 16:14:03 D/InstrumentationTest: Collecting test info for android.app.cts on device chromeos2-row8-rack4-host19:22
+03-26 16:14:03 I/RemoteAndroidTest: Running am instrument -w -r --abi x86  -e testFile /data/local/tmp/ajur/includes.txt -e debug false -e log true -e timeout_msec 300000 android.app.cts/android.support.test.runner.AndroidJUnitRunner on google-chromebook_11_model_3180-chromeos2-row8-rack4-host19:22
+03-26 16:14:07 I/RemoteAndroidTest: Running am instrument -w -r --abi x86  -e testFile /data/local/tmp/ajur/includes.txt -e debug false -e log false -e timeout_msec 300000 android.app.cts/android.support.test.runner.AndroidJUnitRunner on google-chromebook_11_model_3180-chromeos2-row8-rack4-host19:22
+03-26 16:14:09 D/ModuleListener: ModuleListener.testRunStarted(android.app.cts, 321)
+03-26 16:14:09 I/ConsoleReporter: [chromeos2-row8-rack4-host19:22] Starting x86 CtsAppTestCases with 321 tests
+03-26 16:14:09 D/ModuleListener: ModuleListener.testStarted(android.app.backup.cts.BackupAgentHelperTest#testBackupAgentHelper)
+03-26 16:14:09 D/ModuleListener: ModuleListener.testEnded(android.app.backup.cts.BackupAgentHelperTest#testBackupAgentHelper, {})
+03-26 16:14:09 I/ConsoleReporter: [1/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.backup.cts.BackupAgentHelperTest#testBackupAgentHelper pass
+03-26 16:14:09 D/ModuleListener: ModuleListener.testStarted(android.app.backup.cts.BackupAgentTest#testBackupAgent)
+03-26 16:14:09 D/ModuleListener: ModuleListener.testEnded(android.app.backup.cts.BackupAgentTest#testBackupAgent, {})
+03-26 16:14:09 I/ConsoleReporter: [2/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.backup.cts.BackupAgentTest#testBackupAgent pass
+03-26 16:14:09 D/ModuleListener: ModuleListener.testStarted(android.app.backup.cts.BackupManagerTest#testBackupManager)
+03-26 16:14:09 D/ModuleListener: ModuleListener.testEnded(android.app.backup.cts.BackupManagerTest#testBackupManager, {})
+03-26 16:14:09 I/ConsoleReporter: [3/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.backup.cts.BackupManagerTest#testBackupManager pass
+03-26 16:14:09 D/ModuleListener: ModuleListener.testStarted(android.app.backup.cts.FileBackupHelperTest#testConstructor)
+03-26 16:14:09 D/ModuleListener: ModuleListener.testEnded(android.app.backup.cts.FileBackupHelperTest#testConstructor, {})
+03-26 16:14:09 I/ConsoleReporter: [4/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.backup.cts.FileBackupHelperTest#testConstructor pass
+03-26 16:14:09 D/ModuleListener: ModuleListener.testStarted(android.app.backup.cts.SharedPreferencesBackupHelperTest#testConstructor)
+03-26 16:14:09 D/ModuleListener: ModuleListener.testEnded(android.app.backup.cts.SharedPreferencesBackupHelperTest#testConstructor, {})
+03-26 16:14:09 I/ConsoleReporter: [5/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.backup.cts.SharedPreferencesBackupHelperTest#testConstructor pass
+03-26 16:14:09 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActionBarTest#testAddTab)
+03-26 16:14:10 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActionBarTest#testAddTab, {})
+03-26 16:14:10 I/ConsoleReporter: [6/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActionBarTest#testAddTab pass
+03-26 16:14:10 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityGroupTest#testTabBasic)
+03-26 16:14:10 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityGroupTest#testTabBasic, {})
+03-26 16:14:10 I/ConsoleReporter: [7/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityGroupTest#testTabBasic pass
+03-26 16:14:10 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityGroupTest#testTabDialog)
+03-26 16:14:11 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityGroupTest#testTabDialog, {})
+03-26 16:14:11 I/ConsoleReporter: [8/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityGroupTest#testTabDialog pass
+03-26 16:14:11 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityGroupTest#testTabScreen)
+03-26 16:14:12 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityGroupTest#testTabScreen, {})
+03-26 16:14:12 I/ConsoleReporter: [9/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityGroupTest#testTabScreen pass
+03-26 16:14:12 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityKeyboardShortcutsTest#testOnProvideKeyboardShortcuts)
+03-26 16:14:13 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityKeyboardShortcutsTest#testOnProvideKeyboardShortcuts, {})
+03-26 16:14:13 I/ConsoleReporter: [10/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityKeyboardShortcutsTest#testOnProvideKeyboardShortcuts pass
+03-26 16:14:13 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerMemoryClassTest#testGetMemoryClass)
+03-26 16:14:18 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerMemoryClassTest#testGetMemoryClass, {})
+03-26 16:14:18 I/ConsoleReporter: [11/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerMemoryClassTest#testGetMemoryClass pass
+03-26 16:14:18 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerMemoryInfoTest#testDescribeContents)
+03-26 16:14:18 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerMemoryInfoTest#testDescribeContents, {})
+03-26 16:14:18 I/ConsoleReporter: [12/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerMemoryInfoTest#testDescribeContents pass
+03-26 16:14:18 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerMemoryInfoTest#testReadFromParcel)
+03-26 16:14:18 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerMemoryInfoTest#testReadFromParcel, {})
+03-26 16:14:18 I/ConsoleReporter: [13/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerMemoryInfoTest#testReadFromParcel pass
+03-26 16:14:18 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerMemoryInfoTest#testWriteToParcel)
+03-26 16:14:18 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerMemoryInfoTest#testWriteToParcel, {})
+03-26 16:14:18 I/ConsoleReporter: [14/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerMemoryInfoTest#testWriteToParcel pass
+03-26 16:14:18 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerProcessErrorStateInfoTest#testConstructor)
+03-26 16:14:18 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerProcessErrorStateInfoTest#testConstructor, {})
+03-26 16:14:18 I/ConsoleReporter: [15/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerProcessErrorStateInfoTest#testConstructor pass
+03-26 16:14:18 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerProcessErrorStateInfoTest#testDescribeContents)
+03-26 16:14:18 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerProcessErrorStateInfoTest#testDescribeContents, {})
+03-26 16:14:18 I/ConsoleReporter: [16/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerProcessErrorStateInfoTest#testDescribeContents pass
+03-26 16:14:18 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerProcessErrorStateInfoTest#testReadFromParcel)
+03-26 16:14:18 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerProcessErrorStateInfoTest#testReadFromParcel, {})
+03-26 16:14:18 I/ConsoleReporter: [17/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerProcessErrorStateInfoTest#testReadFromParcel pass
+03-26 16:14:18 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerProcessErrorStateInfoTest#testWriteToParcel)
+03-26 16:14:18 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerProcessErrorStateInfoTest#testWriteToParcel, {})
+03-26 16:14:18 I/ConsoleReporter: [18/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerProcessErrorStateInfoTest#testWriteToParcel pass
+03-26 16:14:18 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerRecentTaskInfoTest#testConstructor)
+03-26 16:14:18 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerRecentTaskInfoTest#testConstructor, {})
+03-26 16:14:18 I/ConsoleReporter: [19/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerRecentTaskInfoTest#testConstructor pass
+03-26 16:14:18 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerRecentTaskInfoTest#testDescribeContents)
+03-26 16:14:18 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerRecentTaskInfoTest#testDescribeContents, {})
+03-26 16:14:18 I/ConsoleReporter: [20/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerRecentTaskInfoTest#testDescribeContents pass
+03-26 16:14:18 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerRecentTaskInfoTest#testReadFromParcel)
+03-26 16:14:18 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerRecentTaskInfoTest#testReadFromParcel, {})
+03-26 16:14:18 I/ConsoleReporter: [21/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerRecentTaskInfoTest#testReadFromParcel pass
+03-26 16:14:18 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerRecentTaskInfoTest#testWriteToParcel)
+03-26 16:14:18 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerRecentTaskInfoTest#testWriteToParcel, {})
+03-26 16:14:18 I/ConsoleReporter: [22/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerRecentTaskInfoTest#testWriteToParcel pass
+03-26 16:14:18 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerRunningTaskInfoTest#testConstructor)
+03-26 16:14:18 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerRunningTaskInfoTest#testConstructor, {})
+03-26 16:14:18 I/ConsoleReporter: [23/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerRunningTaskInfoTest#testConstructor pass
+03-26 16:14:18 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerRunningTaskInfoTest#testDescribeContents)
+03-26 16:14:18 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerRunningTaskInfoTest#testDescribeContents, {})
+03-26 16:14:18 I/ConsoleReporter: [24/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerRunningTaskInfoTest#testDescribeContents pass
+03-26 16:14:18 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerRunningTaskInfoTest#testReadFromParcel)
+03-26 16:14:18 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerRunningTaskInfoTest#testReadFromParcel, {})
+03-26 16:14:18 I/ConsoleReporter: [25/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerRunningTaskInfoTest#testReadFromParcel pass
+03-26 16:14:18 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerRunningTaskInfoTest#testWriteToParcel)
+03-26 16:14:18 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerRunningTaskInfoTest#testWriteToParcel, {})
+03-26 16:14:18 I/ConsoleReporter: [26/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerRunningTaskInfoTest#testWriteToParcel pass
+03-26 16:14:18 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerTest#testGetDeviceConfigurationInfo)
+03-26 16:14:18 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerTest#testGetDeviceConfigurationInfo, {})
+03-26 16:14:18 I/ConsoleReporter: [27/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerTest#testGetDeviceConfigurationInfo pass
+03-26 16:14:18 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerTest#testGetMemoryInfo)
+03-26 16:14:19 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerTest#testGetMemoryInfo, {})
+03-26 16:14:19 I/ConsoleReporter: [28/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerTest#testGetMemoryInfo pass
+03-26 16:14:19 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerTest#testGetProcessInErrorState)
+03-26 16:14:19 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerTest#testGetProcessInErrorState, {})
+03-26 16:14:19 I/ConsoleReporter: [29/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerTest#testGetProcessInErrorState pass
+03-26 16:14:19 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerTest#testGetRecentTasks)
+03-26 16:14:23 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerTest#testGetRecentTasks, {})
+03-26 16:14:23 I/ConsoleReporter: [30/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerTest#testGetRecentTasks pass
+03-26 16:14:24 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerTest#testGetRecentTasksLimitedToCurrentAPK)
+03-26 16:14:24 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerTest#testGetRecentTasksLimitedToCurrentAPK, {})
+03-26 16:14:24 I/ConsoleReporter: [31/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerTest#testGetRecentTasksLimitedToCurrentAPK pass
+03-26 16:14:24 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerTest#testGetRunningAppProcesses)
+03-26 16:14:30 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerTest#testGetRunningAppProcesses, {})
+03-26 16:14:30 I/ConsoleReporter: [32/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerTest#testGetRunningAppProcesses pass
+03-26 16:14:30 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerTest#testGetRunningServices)
+03-26 16:14:30 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerTest#testGetRunningServices, {})
+03-26 16:14:30 I/ConsoleReporter: [33/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerTest#testGetRunningServices pass
+03-26 16:14:30 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerTest#testGetRunningTasks)
+03-26 16:14:30 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerTest#testGetRunningTasks, {})
+03-26 16:14:30 I/ConsoleReporter: [34/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerTest#testGetRunningTasks pass
+03-26 16:14:31 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerTest#testIsRunningInTestHarness)
+03-26 16:14:31 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerTest#testIsRunningInTestHarness, {})
+03-26 16:14:31 I/ConsoleReporter: [35/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerTest#testIsRunningInTestHarness pass
+03-26 16:14:31 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerTest#testIsUserAMonkey)
+03-26 16:14:31 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerTest#testIsUserAMonkey, {})
+03-26 16:14:31 I/ConsoleReporter: [36/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerTest#testIsUserAMonkey pass
+03-26 16:14:31 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerTest#testTimeTrackingAPI_ChainedActivityExit)
+03-26 16:14:35 D/ModuleListener: ModuleListener.testFailed(android.app.cts.ActivityManagerTest#testTimeTrackingAPI_ChainedActivityExit, junit.framework.AssertionFailedError: expected:<3> but was:<1>
+at junit.framework.Assert.fail(Assert.java:50)
+at junit.framework.Assert.failNotEquals(Assert.java:287)
+at junit.framework.Assert.assertEquals(Assert.java:67)
+at junit.framework.Assert.assertEquals(Assert.java:199)
+at junit.framework.Assert.assertEquals(Assert.java:205)
+at android.app.cts.ActivityManagerTest.testTimeTrackingAPI_ChainedActivityExit(ActivityManagerTest.java:526)
+at java.lang.reflect.Method.invoke(Native Method)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at junit.framework.TestCase.runBare(TestCase.java:134)
+at junit.framework.TestResult$1.protect(TestResult.java:115)
+at android.support.test.internal.runner.junit3.AndroidTestResult.runProtected(AndroidTestResult.java:77)
+at junit.framework.TestResult.run(TestResult.java:118)
+at android.support.test.internal.runner.junit3.AndroidTestResult.run(AndroidTestResult.java:55)
+at junit.framework.TestCase.run(TestCase.java:124)
+at android.support.test.internal.runner.junit3.NonLeakyTestSuite$NonLeakyTest.run(NonLeakyTestSuite.java:63)
+at android.support.test.internal.runner.junit3.AndroidTestSuite$1.run(AndroidTestSuite.java:97)
+at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:428)
+at java.util.concurrent.FutureTask.run(FutureTask.java:237)
+at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+at java.lang.Thread.run(Thread.java:761)
+)
+03-26 16:14:35 I/ConsoleReporter: [37/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerTest#testTimeTrackingAPI_ChainedActivityExit fail: junit.framework.AssertionFailedError: expected:<3> but was:<1>
+at junit.framework.Assert.fail(Assert.java:50)
+at junit.framework.Assert.failNotEquals(Assert.java:287)
+at junit.framework.Assert.assertEquals(Assert.java:67)
+at junit.framework.Assert.assertEquals(Assert.java:199)
+at junit.framework.Assert.assertEquals(Assert.java:205)
+at android.app.cts.ActivityManagerTest.testTimeTrackingAPI_ChainedActivityExit(ActivityManagerTest.java:526)
+at java.lang.reflect.Method.invoke(Native Method)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at junit.framework.TestCase.runBare(TestCase.java:134)
+at junit.framework.TestResult$1.protect(TestResult.java:115)
+at android.support.test.internal.runner.junit3.AndroidTestResult.runProtected(AndroidTestResult.java:77)
+at junit.framework.TestResult.run(TestResult.java:118)
+at android.support.test.internal.runner.junit3.AndroidTestResult.run(AndroidTestResult.java:55)
+at junit.framework.TestCase.run(TestCase.java:124)
+at android.support.test.internal.runner.junit3.NonLeakyTestSuite$NonLeakyTest.run(NonLeakyTestSuite.java:63)
+at android.support.test.internal.runner.junit3.AndroidTestSuite$1.run(AndroidTestSuite.java:97)
+at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:428)
+at java.util.concurrent.FutureTask.run(FutureTask.java:237)
+at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+at java.lang.Thread.run(Thread.java:761)
+
+03-26 16:14:35 I/FailureListener: FailureListener.testFailed android.app.cts.ActivityManagerTest#testTimeTrackingAPI_ChainedActivityExit false true false
+03-26 16:14:37 D/FileUtil: Creating temp file at /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.26_16.13.24 with prefix "android.app.cts.ActivityManagerTest#testTimeTrackingAPI_ChainedActivityExit-logcat_" suffix ".zip"
+03-26 16:14:37 I/LogFileSaver: Saved log file /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.26_16.13.24/android.app.cts.ActivityManagerTest#testTimeTrackingAPI_ChainedActivityExit-logcat_1749029287882018249.zip
+03-26 16:14:37 I/ResultReporter: Saved logs for android.app.cts.ActivityManagerTest#testTimeTrackingAPI_ChainedActivityExit-logcat in /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.26_16.13.24/android.app.cts.ActivityManagerTest#testTimeTrackingAPI_ChainedActivityExit-logcat_1749029287882018249.zip
+03-26 16:14:37 D/FileUtil: Creating temp file at /tmp/3764431/cts/inv_7415891576764823370 with prefix "android.app.cts.ActivityManagerTest#testTimeTrackingAPI_ChainedActivityExit-logcat_" suffix ".zip"
+03-26 16:14:37 D/RunUtil: Running command with timeout: 10000ms
+03-26 16:14:37 D/RunUtil: Running [chmod]
+03-26 16:14:37 D/RunUtil: [chmod] command failed. return code 1
+03-26 16:14:37 D/FileUtil: Attempting to chmod /tmp/3764431/cts/inv_7415891576764823370/android.app.cts.ActivityManagerTest#testTimeTrackingAPI_ChainedActivityExit-logcat_6948998584874218607.zip to ug+rwx
+03-26 16:14:37 D/RunUtil: Running command with timeout: 10000ms
+03-26 16:14:37 D/RunUtil: Running [chmod, ug+rwx, /tmp/3764431/cts/inv_7415891576764823370/android.app.cts.ActivityManagerTest#testTimeTrackingAPI_ChainedActivityExit-logcat_6948998584874218607.zip]
+03-26 16:14:37 I/FileSystemLogSaver: Saved log file /tmp/3764431/cts/inv_7415891576764823370/android.app.cts.ActivityManagerTest#testTimeTrackingAPI_ChainedActivityExit-logcat_6948998584874218607.zip
+03-26 16:14:37 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerTest#testTimeTrackingAPI_ChainedActivityExit, {})
+03-26 16:14:37 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerTest#testTimeTrackingAPI_SimpleStartExit)
+03-26 16:14:38 D/ModuleListener: ModuleListener.testFailed(android.app.cts.ActivityManagerTest#testTimeTrackingAPI_SimpleStartExit, junit.framework.AssertionFailedError: expected:<3> but was:<1>
+at junit.framework.Assert.fail(Assert.java:50)
+at junit.framework.Assert.failNotEquals(Assert.java:287)
+at junit.framework.Assert.assertEquals(Assert.java:67)
+at junit.framework.Assert.assertEquals(Assert.java:199)
+at junit.framework.Assert.assertEquals(Assert.java:205)
+at android.app.cts.ActivityManagerTest.testTimeTrackingAPI_SimpleStartExit(ActivityManagerTest.java:431)
+at java.lang.reflect.Method.invoke(Native Method)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at junit.framework.TestCase.runBare(TestCase.java:134)
+at junit.framework.TestResult$1.protect(TestResult.java:115)
+at android.support.test.internal.runner.junit3.AndroidTestResult.runProtected(AndroidTestResult.java:77)
+at junit.framework.TestResult.run(TestResult.java:118)
+at android.support.test.internal.runner.junit3.AndroidTestResult.run(AndroidTestResult.java:55)
+at junit.framework.TestCase.run(TestCase.java:124)
+at android.support.test.internal.runner.junit3.NonLeakyTestSuite$NonLeakyTest.run(NonLeakyTestSuite.java:63)
+at android.support.test.internal.runner.junit3.AndroidTestSuite$1.run(AndroidTestSuite.java:97)
+at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:428)
+at java.util.concurrent.FutureTask.run(FutureTask.java:237)
+at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+at java.lang.Thread.run(Thread.java:761)
+)
+03-26 16:14:38 I/ConsoleReporter: [38/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerTest#testTimeTrackingAPI_SimpleStartExit fail: junit.framework.AssertionFailedError: expected:<3> but was:<1>
+at junit.framework.Assert.fail(Assert.java:50)
+at junit.framework.Assert.failNotEquals(Assert.java:287)
+at junit.framework.Assert.assertEquals(Assert.java:67)
+at junit.framework.Assert.assertEquals(Assert.java:199)
+at junit.framework.Assert.assertEquals(Assert.java:205)
+at android.app.cts.ActivityManagerTest.testTimeTrackingAPI_SimpleStartExit(ActivityManagerTest.java:431)
+at java.lang.reflect.Method.invoke(Native Method)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at junit.framework.TestCase.runBare(TestCase.java:134)
+at junit.framework.TestResult$1.protect(TestResult.java:115)
+at android.support.test.internal.runner.junit3.AndroidTestResult.runProtected(AndroidTestResult.java:77)
+at junit.framework.TestResult.run(TestResult.java:118)
+at android.support.test.internal.runner.junit3.AndroidTestResult.run(AndroidTestResult.java:55)
+at junit.framework.TestCase.run(TestCase.java:124)
+at android.support.test.internal.runner.junit3.NonLeakyTestSuite$NonLeakyTest.run(NonLeakyTestSuite.java:63)
+at android.support.test.internal.runner.junit3.AndroidTestSuite$1.run(AndroidTestSuite.java:97)
+at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:428)
+at java.util.concurrent.FutureTask.run(FutureTask.java:237)
+at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+at java.lang.Thread.run(Thread.java:761)
+
+03-26 16:14:38 I/FailureListener: FailureListener.testFailed android.app.cts.ActivityManagerTest#testTimeTrackingAPI_SimpleStartExit false true false
+03-26 16:14:40 D/FileUtil: Creating temp file at /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.26_16.13.24 with prefix "android.app.cts.ActivityManagerTest#testTimeTrackingAPI_SimpleStartExit-logcat_" suffix ".zip"
+03-26 16:14:40 I/LogFileSaver: Saved log file /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.26_16.13.24/android.app.cts.ActivityManagerTest#testTimeTrackingAPI_SimpleStartExit-logcat_8301445075066273627.zip
+03-26 16:14:40 I/ResultReporter: Saved logs for android.app.cts.ActivityManagerTest#testTimeTrackingAPI_SimpleStartExit-logcat in /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.26_16.13.24/android.app.cts.ActivityManagerTest#testTimeTrackingAPI_SimpleStartExit-logcat_8301445075066273627.zip
+03-26 16:14:40 D/FileUtil: Creating temp file at /tmp/3764431/cts/inv_7415891576764823370 with prefix "android.app.cts.ActivityManagerTest#testTimeTrackingAPI_SimpleStartExit-logcat_" suffix ".zip"
+03-26 16:14:40 D/RunUtil: Running command with timeout: 10000ms
+03-26 16:14:40 D/RunUtil: Running [chmod]
+03-26 16:14:40 D/RunUtil: [chmod] command failed. return code 1
+03-26 16:14:40 D/FileUtil: Attempting to chmod /tmp/3764431/cts/inv_7415891576764823370/android.app.cts.ActivityManagerTest#testTimeTrackingAPI_SimpleStartExit-logcat_1080005478558352547.zip to ug+rwx
+03-26 16:14:40 D/RunUtil: Running command with timeout: 10000ms
+03-26 16:14:40 D/RunUtil: Running [chmod, ug+rwx, /tmp/3764431/cts/inv_7415891576764823370/android.app.cts.ActivityManagerTest#testTimeTrackingAPI_SimpleStartExit-logcat_1080005478558352547.zip]
+03-26 16:14:40 I/FileSystemLogSaver: Saved log file /tmp/3764431/cts/inv_7415891576764823370/android.app.cts.ActivityManagerTest#testTimeTrackingAPI_SimpleStartExit-logcat_1080005478558352547.zip
+03-26 16:14:40 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerTest#testTimeTrackingAPI_SimpleStartExit, {})
+03-26 16:14:40 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManagerTest#testTimeTrackingAPI_SwitchAwayTriggers)
+03-26 16:14:42 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManagerTest#testTimeTrackingAPI_SwitchAwayTriggers, {})
+03-26 16:14:42 I/ConsoleReporter: [39/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManagerTest#testTimeTrackingAPI_SwitchAwayTriggers pass
+03-26 16:14:42 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManager_RunningAppProcessInfoTest#testRunningAppProcessInfo)
+03-26 16:14:42 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManager_RunningAppProcessInfoTest#testRunningAppProcessInfo, {})
+03-26 16:14:42 I/ConsoleReporter: [40/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManager_RunningAppProcessInfoTest#testRunningAppProcessInfo pass
+03-26 16:14:42 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManager_RunningServiceInfoTest#testConstructor)
+03-26 16:14:42 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManager_RunningServiceInfoTest#testConstructor, {})
+03-26 16:14:42 I/ConsoleReporter: [41/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManager_RunningServiceInfoTest#testConstructor pass
+03-26 16:14:42 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManager_RunningServiceInfoTest#testDescribeContents)
+03-26 16:14:42 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManager_RunningServiceInfoTest#testDescribeContents, {})
+03-26 16:14:42 I/ConsoleReporter: [42/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManager_RunningServiceInfoTest#testDescribeContents pass
+03-26 16:14:42 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManager_RunningServiceInfoTest#testReadFromParcel)
+03-26 16:14:42 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManager_RunningServiceInfoTest#testReadFromParcel, {})
+03-26 16:14:42 I/ConsoleReporter: [43/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManager_RunningServiceInfoTest#testReadFromParcel pass
+03-26 16:14:42 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ActivityManager_RunningServiceInfoTest#testWriteToParcel)
+03-26 16:14:42 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ActivityManager_RunningServiceInfoTest#testWriteToParcel, {})
+03-26 16:14:42 I/ConsoleReporter: [44/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ActivityManager_RunningServiceInfoTest#testWriteToParcel pass
+03-26 16:14:43 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlarmManagerTest#testAlarmTriggersImmediatelyIfSetTimeIsNegative)
+03-26 16:14:48 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlarmManagerTest#testAlarmTriggersImmediatelyIfSetTimeIsNegative, {})
+03-26 16:14:48 I/ConsoleReporter: [45/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlarmManagerTest#testAlarmTriggersImmediatelyIfSetTimeIsNegative pass
+03-26 16:14:48 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlarmManagerTest#testCancel)
+03-26 16:14:56 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlarmManagerTest#testCancel, {})
+03-26 16:14:56 I/ConsoleReporter: [46/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlarmManagerTest#testCancel pass
+03-26 16:14:56 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlarmManagerTest#testExactAlarmBatching)
+03-26 16:15:51 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlarmManagerTest#testExactAlarmBatching, {})
+03-26 16:15:51 I/ConsoleReporter: [47/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlarmManagerTest#testExactAlarmBatching pass
+03-26 16:15:51 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlarmManagerTest#testSetAlarmClock)
+03-26 16:16:04 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlarmManagerTest#testSetAlarmClock, {})
+03-26 16:16:04 I/ConsoleReporter: [48/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlarmManagerTest#testSetAlarmClock pass
+03-26 16:16:04 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlarmManagerTest#testSetInexactRepeating)
+03-26 16:16:04 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlarmManagerTest#testSetInexactRepeating, {})
+03-26 16:16:04 I/ConsoleReporter: [49/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlarmManagerTest#testSetInexactRepeating pass
+03-26 16:16:04 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlarmManagerTest#testSetRepeating)
+03-26 16:17:11 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlarmManagerTest#testSetRepeating, {})
+03-26 16:17:11 I/ConsoleReporter: [50/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlarmManagerTest#testSetRepeating pass
+03-26 16:17:11 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlarmManagerTest#testSetTypes)
+03-26 16:17:31 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlarmManagerTest#testSetTypes, {})
+03-26 16:17:31 I/ConsoleReporter: [51/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlarmManagerTest#testSetTypes pass
+03-26 16:17:31 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialogTest#testAlertDialog)
+03-26 16:17:32 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialogTest#testAlertDialog, {})
+03-26 16:17:32 I/ConsoleReporter: [52/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialogTest#testAlertDialog pass
+03-26 16:17:32 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialogTest#testAlertDialogAPIWithMessageDeprecated)
+03-26 16:17:32 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialogTest#testAlertDialogAPIWithMessageDeprecated, {})
+03-26 16:17:32 I/ConsoleReporter: [53/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialogTest#testAlertDialogAPIWithMessageDeprecated pass
+03-26 16:17:32 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialogTest#testAlertDialogAPIWithMessageNotDeprecated)
+03-26 16:17:33 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialogTest#testAlertDialogAPIWithMessageNotDeprecated, {})
+03-26 16:17:33 I/ConsoleReporter: [54/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialogTest#testAlertDialogAPIWithMessageNotDeprecated pass
+03-26 16:17:33 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialogTest#testAlertDialogCancelable)
+03-26 16:17:33 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialogTest#testAlertDialogCancelable, {})
+03-26 16:17:33 I/ConsoleReporter: [55/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialogTest#testAlertDialogCancelable pass
+03-26 16:17:33 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialogTest#testAlertDialogDeprecatedAPI)
+03-26 16:17:33 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialogTest#testAlertDialogDeprecatedAPI, {})
+03-26 16:17:33 I/ConsoleReporter: [56/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialogTest#testAlertDialogDeprecatedAPI pass
+03-26 16:17:33 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialogTest#testAlertDialogIconAttribute)
+03-26 16:17:33 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialogTest#testAlertDialogIconAttribute, {})
+03-26 16:17:33 I/ConsoleReporter: [57/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialogTest#testAlertDialogIconAttribute pass
+03-26 16:17:33 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialogTest#testAlertDialogIconDrawable)
+03-26 16:17:34 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialogTest#testAlertDialogIconDrawable, {})
+03-26 16:17:34 I/ConsoleReporter: [58/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialogTest#testAlertDialogIconDrawable pass
+03-26 16:17:34 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialogTest#testAlertDialogNotCancelable)
+03-26 16:17:34 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialogTest#testAlertDialogNotCancelable, {})
+03-26 16:17:34 I/ConsoleReporter: [59/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialogTest#testAlertDialogNotCancelable pass
+03-26 16:17:34 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialogTest#testAlertDialogTheme)
+03-26 16:17:34 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialogTest#testAlertDialogTheme, {})
+03-26 16:17:34 I/ConsoleReporter: [60/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialogTest#testAlertDialogTheme pass
+03-26 16:17:34 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialogTest#testCallback)
+03-26 16:17:35 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialogTest#testCallback, {})
+03-26 16:17:35 I/ConsoleReporter: [61/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialogTest#testCallback pass
+03-26 16:17:35 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialogTest#testCustomAlertDialog)
+03-26 16:17:35 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialogTest#testCustomAlertDialog, {})
+03-26 16:17:35 I/ConsoleReporter: [62/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialogTest#testCustomAlertDialog pass
+03-26 16:17:35 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialogTest#testCustomAlertDialogView)
+03-26 16:17:35 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialogTest#testCustomAlertDialogView, {})
+03-26 16:17:35 I/ConsoleReporter: [63/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialogTest#testCustomAlertDialogView pass
+03-26 16:17:35 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderCursorTest#testSetCursor)
+03-26 16:17:36 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderCursorTest#testSetCursor, {})
+03-26 16:17:36 I/ConsoleReporter: [64/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderCursorTest#testSetCursor pass
+03-26 16:17:36 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderCursorTest#testSetMultiChoiceItemsWithParamCursor)
+03-26 16:17:37 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderCursorTest#testSetMultiChoiceItemsWithParamCursor, {})
+03-26 16:17:37 I/ConsoleReporter: [65/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderCursorTest#testSetMultiChoiceItemsWithParamCursor pass
+03-26 16:17:37 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderCursorTest#testSetSingleChoiceItemsWithParamCursor)
+03-26 16:17:37 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderCursorTest#testSetSingleChoiceItemsWithParamCursor, {})
+03-26 16:17:37 I/ConsoleReporter: [66/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderCursorTest#testSetSingleChoiceItemsWithParamCursor pass
+03-26 16:17:37 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testConstructor)
+03-26 16:17:37 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testConstructor, {})
+03-26 16:17:37 I/ConsoleReporter: [67/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testConstructor pass
+03-26 16:17:37 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testConstructorWithThemeId)
+03-26 16:17:38 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testConstructorWithThemeId, {})
+03-26 16:17:38 I/ConsoleReporter: [68/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testConstructorWithThemeId pass
+03-26 16:17:38 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testCreate)
+03-26 16:17:38 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testCreate, {})
+03-26 16:17:38 I/ConsoleReporter: [69/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testCreate pass
+03-26 16:17:38 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testDisableCancelable)
+03-26 16:17:38 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testDisableCancelable, {})
+03-26 16:17:38 I/ConsoleReporter: [70/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testDisableCancelable pass
+03-26 16:17:38 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testSetAdapter)
+03-26 16:17:39 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testSetAdapter, {})
+03-26 16:17:39 I/ConsoleReporter: [71/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testSetAdapter pass
+03-26 16:17:39 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testSetCancelable)
+03-26 16:17:39 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testSetCancelable, {})
+03-26 16:17:39 I/ConsoleReporter: [72/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testSetCancelable pass
+03-26 16:17:39 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testSetCustomTitle)
+03-26 16:17:39 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testSetCustomTitle, {})
+03-26 16:17:39 I/ConsoleReporter: [73/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testSetCustomTitle pass
+03-26 16:17:39 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testSetIconAttribute)
+03-26 16:17:39 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testSetIconAttribute, {})
+03-26 16:17:39 I/ConsoleReporter: [74/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testSetIconAttribute pass
+03-26 16:17:39 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testSetIconWithParamDrawable)
+03-26 16:17:40 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testSetIconWithParamDrawable, {})
+03-26 16:17:40 I/ConsoleReporter: [75/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testSetIconWithParamDrawable pass
+03-26 16:17:40 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testSetIconWithParamInt)
+03-26 16:17:40 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testSetIconWithParamInt, {})
+03-26 16:17:40 I/ConsoleReporter: [76/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testSetIconWithParamInt pass
+03-26 16:17:40 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testSetInverseBackgroundForced)
+03-26 16:17:40 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testSetInverseBackgroundForced, {})
+03-26 16:17:40 I/ConsoleReporter: [77/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testSetInverseBackgroundForced pass
+03-26 16:17:40 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testSetItemsWithParamCharSequence)
+03-26 16:17:41 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testSetItemsWithParamCharSequence, {})
+03-26 16:17:41 I/ConsoleReporter: [78/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testSetItemsWithParamCharSequence pass
+03-26 16:17:41 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testSetItemsWithParamInt)
+03-26 16:17:41 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testSetItemsWithParamInt, {})
+03-26 16:17:41 I/ConsoleReporter: [79/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testSetItemsWithParamInt pass
+03-26 16:17:41 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testSetMultiChoiceItemsWithParamCharSequence)
+03-26 16:17:41 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testSetMultiChoiceItemsWithParamCharSequence, {})
+03-26 16:17:41 I/ConsoleReporter: [80/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testSetMultiChoiceItemsWithParamCharSequence pass
+03-26 16:17:41 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testSetMultiChoiceItemsWithParamInt)
+03-26 16:17:42 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testSetMultiChoiceItemsWithParamInt, {})
+03-26 16:17:42 I/ConsoleReporter: [81/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testSetMultiChoiceItemsWithParamInt pass
+03-26 16:17:42 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testSetNegativeButtonWithParamCharSequence)
+03-26 16:17:42 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testSetNegativeButtonWithParamCharSequence, {})
+03-26 16:17:42 I/ConsoleReporter: [82/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testSetNegativeButtonWithParamCharSequence pass
+03-26 16:17:42 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testSetNegativeButtonWithParamInt)
+03-26 16:17:42 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testSetNegativeButtonWithParamInt, {})
+03-26 16:17:42 I/ConsoleReporter: [83/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testSetNegativeButtonWithParamInt pass
+03-26 16:17:42 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testSetNeutralButtonWithParamCharSequence)
+03-26 16:17:43 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testSetNeutralButtonWithParamCharSequence, {})
+03-26 16:17:43 I/ConsoleReporter: [84/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testSetNeutralButtonWithParamCharSequence pass
+03-26 16:17:43 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testSetNeutralButtonWithParamInt)
+03-26 16:17:43 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testSetNeutralButtonWithParamInt, {})
+03-26 16:17:43 I/ConsoleReporter: [85/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testSetNeutralButtonWithParamInt pass
+03-26 16:17:43 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testSetOnCancelListener)
+03-26 16:17:43 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testSetOnCancelListener, {})
+03-26 16:17:43 I/ConsoleReporter: [86/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testSetOnCancelListener pass
+03-26 16:17:43 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testSetOnDismissListener)
+03-26 16:17:43 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testSetOnDismissListener, {})
+03-26 16:17:43 I/ConsoleReporter: [87/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testSetOnDismissListener pass
+03-26 16:17:43 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testSetOnItemSelectedListener)
+03-26 16:17:44 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testSetOnItemSelectedListener, {})
+03-26 16:17:44 I/ConsoleReporter: [88/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testSetOnItemSelectedListener pass
+03-26 16:17:44 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testSetOnKeyListener)
+03-26 16:17:44 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testSetOnKeyListener, {})
+03-26 16:17:44 I/ConsoleReporter: [89/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testSetOnKeyListener pass
+03-26 16:17:44 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testSetPositiveButtonWithParamCharSequence)
+03-26 16:17:44 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testSetPositiveButtonWithParamCharSequence, {})
+03-26 16:17:44 I/ConsoleReporter: [90/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testSetPositiveButtonWithParamCharSequence pass
+03-26 16:17:44 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testSetPositiveButtonWithParamInt)
+03-26 16:17:45 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testSetPositiveButtonWithParamInt, {})
+03-26 16:17:45 I/ConsoleReporter: [91/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testSetPositiveButtonWithParamInt pass
+03-26 16:17:45 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testSetSingleChoiceItems)
+03-26 16:17:45 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testSetSingleChoiceItems, {})
+03-26 16:17:45 I/ConsoleReporter: [92/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testSetSingleChoiceItems pass
+03-26 16:17:45 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testSetSingleChoiceItemsWithParamCharSequence)
+03-26 16:17:45 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testSetSingleChoiceItemsWithParamCharSequence, {})
+03-26 16:17:45 I/ConsoleReporter: [93/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testSetSingleChoiceItemsWithParamCharSequence pass
+03-26 16:17:45 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testSetSingleChoiceItemsWithParamInt)
+03-26 16:17:46 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testSetSingleChoiceItemsWithParamInt, {})
+03-26 16:17:46 I/ConsoleReporter: [94/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testSetSingleChoiceItemsWithParamInt pass
+03-26 16:17:46 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testSetView)
+03-26 16:17:46 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testSetView, {})
+03-26 16:17:46 I/ConsoleReporter: [95/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testSetView pass
+03-26 16:17:46 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testSetViewById)
+03-26 16:17:46 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testSetViewById, {})
+03-26 16:17:46 I/ConsoleReporter: [96/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testSetViewById pass
+03-26 16:17:46 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testSetViewFromInflater)
+03-26 16:17:47 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testSetViewFromInflater, {})
+03-26 16:17:47 I/ConsoleReporter: [97/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testSetViewFromInflater pass
+03-26 16:17:47 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AlertDialog_BuilderTest#testShow)
+03-26 16:17:47 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AlertDialog_BuilderTest#testShow, {})
+03-26 16:17:47 I/ConsoleReporter: [98/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AlertDialog_BuilderTest#testShow pass
+03-26 16:17:47 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AliasActivityTest#testAliasActivity)
+03-26 16:17:48 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AliasActivityTest#testAliasActivity, {})
+03-26 16:17:48 I/ConsoleReporter: [99/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AliasActivityTest#testAliasActivity pass
+03-26 16:17:48 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ApplicationTest#testApplication)
+03-26 16:17:49 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ApplicationTest#testApplication, {})
+03-26 16:17:49 I/ConsoleReporter: [100/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ApplicationTest#testApplication pass
+03-26 16:17:49 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AutomaticZenRuleTest#testDescribeContents)
+03-26 16:17:49 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AutomaticZenRuleTest#testDescribeContents, {})
+03-26 16:17:49 I/ConsoleReporter: [101/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AutomaticZenRuleTest#testDescribeContents pass
+03-26 16:17:49 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AutomaticZenRuleTest#testSetConditionId)
+03-26 16:17:49 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AutomaticZenRuleTest#testSetConditionId, {})
+03-26 16:17:49 I/ConsoleReporter: [102/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AutomaticZenRuleTest#testSetConditionId pass
+03-26 16:17:49 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AutomaticZenRuleTest#testSetEnabled)
+03-26 16:17:49 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AutomaticZenRuleTest#testSetEnabled, {})
+03-26 16:17:49 I/ConsoleReporter: [103/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AutomaticZenRuleTest#testSetEnabled pass
+03-26 16:17:49 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AutomaticZenRuleTest#testSetInterruptionFilter)
+03-26 16:17:49 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AutomaticZenRuleTest#testSetInterruptionFilter, {})
+03-26 16:17:49 I/ConsoleReporter: [104/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AutomaticZenRuleTest#testSetInterruptionFilter pass
+03-26 16:17:49 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AutomaticZenRuleTest#testSetName)
+03-26 16:17:49 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AutomaticZenRuleTest#testSetName, {})
+03-26 16:17:49 I/ConsoleReporter: [105/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AutomaticZenRuleTest#testSetName pass
+03-26 16:17:49 D/ModuleListener: ModuleListener.testStarted(android.app.cts.AutomaticZenRuleTest#testWriteToParcel)
+03-26 16:17:49 D/ModuleListener: ModuleListener.testEnded(android.app.cts.AutomaticZenRuleTest#testWriteToParcel, {})
+03-26 16:17:49 I/ConsoleReporter: [106/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.AutomaticZenRuleTest#testWriteToParcel pass
+03-26 16:17:49 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ConditionTest#testConstructor)
+03-26 16:17:49 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ConditionTest#testConstructor, {})
+03-26 16:17:49 I/ConsoleReporter: [107/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ConditionTest#testConstructor pass
+03-26 16:17:49 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ConditionTest#testDescribeContents)
+03-26 16:17:49 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ConditionTest#testDescribeContents, {})
+03-26 16:17:49 I/ConsoleReporter: [108/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ConditionTest#testDescribeContents pass
+03-26 16:17:49 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ConditionTest#testWriteToParcel)
+03-26 16:17:49 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ConditionTest#testWriteToParcel, {})
+03-26 16:17:49 I/ConsoleReporter: [109/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ConditionTest#testWriteToParcel pass
+03-26 16:17:49 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testAccessOwnerActivity)
+03-26 16:17:49 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testAccessOwnerActivity, {})
+03-26 16:17:49 I/ConsoleReporter: [110/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testAccessOwnerActivity pass
+03-26 16:17:49 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testCancel_listener)
+03-26 16:17:50 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testCancel_listener, {})
+03-26 16:17:50 I/ConsoleReporter: [111/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testCancel_listener pass
+03-26 16:17:50 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testCancel_noListener)
+03-26 16:17:50 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testCancel_noListener, {})
+03-26 16:17:50 I/ConsoleReporter: [112/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testCancel_noListener pass
+03-26 16:17:50 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testConstructor)
+03-26 16:17:50 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testConstructor, {})
+03-26 16:17:50 I/ConsoleReporter: [113/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testConstructor pass
+03-26 16:17:50 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testConstructor_protectedCancellable)
+03-26 16:17:50 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testConstructor_protectedCancellable, {})
+03-26 16:17:50 I/ConsoleReporter: [114/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testConstructor_protectedCancellable pass
+03-26 16:17:51 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testConstructor_protectedNotCancellable)
+03-26 16:17:51 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testConstructor_protectedNotCancellable, {})
+03-26 16:17:51 I/ConsoleReporter: [115/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testConstructor_protectedNotCancellable pass
+03-26 16:17:51 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testContextMenu)
+03-26 16:17:52 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testContextMenu, {})
+03-26 16:17:52 I/ConsoleReporter: [116/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testContextMenu pass
+03-26 16:17:52 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testDispatchKeyEvent)
+03-26 16:17:52 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testDispatchKeyEvent, {})
+03-26 16:17:52 I/ConsoleReporter: [117/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testDispatchKeyEvent pass
+03-26 16:17:52 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testGetCurrentFocus)
+03-26 16:17:53 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testGetCurrentFocus, {})
+03-26 16:17:53 I/ConsoleReporter: [118/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testGetCurrentFocus pass
+03-26 16:17:53 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testGetLayoutInflater)
+03-26 16:17:54 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testGetLayoutInflater, {})
+03-26 16:17:54 I/ConsoleReporter: [119/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testGetLayoutInflater pass
+03-26 16:17:54 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testOnContentChanged)
+03-26 16:17:54 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testOnContentChanged, {})
+03-26 16:17:54 I/ConsoleReporter: [120/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testOnContentChanged pass
+03-26 16:17:54 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testOnKeyDownKeyUp)
+03-26 16:17:54 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testOnKeyDownKeyUp, {})
+03-26 16:17:54 I/ConsoleReporter: [121/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testOnKeyDownKeyUp pass
+03-26 16:17:54 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testOnKeyMultiple)
+03-26 16:17:55 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testOnKeyMultiple, {})
+03-26 16:17:55 I/ConsoleReporter: [122/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testOnKeyMultiple pass
+03-26 16:17:55 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testOnSaveInstanceState)
+03-26 16:17:55 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testOnSaveInstanceState, {})
+03-26 16:17:55 I/ConsoleReporter: [123/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testOnSaveInstanceState pass
+03-26 16:17:55 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testOnSearchRequested)
+03-26 16:17:55 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testOnSearchRequested, {})
+03-26 16:17:55 I/ConsoleReporter: [124/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testOnSearchRequested pass
+03-26 16:17:56 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testOnStartCreateStop)
+03-26 16:17:56 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testOnStartCreateStop, {})
+03-26 16:17:56 I/ConsoleReporter: [125/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testOnStartCreateStop pass
+03-26 16:17:56 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testOnWindowAttributesChanged)
+03-26 16:17:56 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testOnWindowAttributesChanged, {})
+03-26 16:17:56 I/ConsoleReporter: [126/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testOnWindowAttributesChanged pass
+03-26 16:17:56 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testOnWindowFocusChanged)
+03-26 16:17:56 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testOnWindowFocusChanged, {})
+03-26 16:17:56 I/ConsoleReporter: [127/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testOnWindowFocusChanged pass
+03-26 16:17:56 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testRequestWindowFeature)
+03-26 16:17:57 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testRequestWindowFeature, {})
+03-26 16:17:57 I/ConsoleReporter: [128/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testRequestWindowFeature pass
+03-26 16:17:57 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testSetCancelMessage)
+03-26 16:17:57 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testSetCancelMessage, {})
+03-26 16:17:57 I/ConsoleReporter: [129/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testSetCancelMessage pass
+03-26 16:17:57 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testSetCancelable_true)
+03-26 16:17:57 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testSetCancelable_true, {})
+03-26 16:17:57 I/ConsoleReporter: [130/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testSetCancelable_true pass
+03-26 16:17:57 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testSetCancellable_false)
+03-26 16:17:58 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testSetCancellable_false, {})
+03-26 16:17:58 I/ConsoleReporter: [131/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testSetCancellable_false pass
+03-26 16:17:58 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testSetContentView)
+03-26 16:17:58 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testSetContentView, {})
+03-26 16:17:58 I/ConsoleReporter: [132/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testSetContentView pass
+03-26 16:17:58 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testSetDismissMessage)
+03-26 16:17:59 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testSetDismissMessage, {})
+03-26 16:17:59 I/ConsoleReporter: [133/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testSetDismissMessage pass
+03-26 16:17:59 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testSetFeatureDrawable)
+03-26 16:17:59 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testSetFeatureDrawable, {})
+03-26 16:17:59 I/ConsoleReporter: [134/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testSetFeatureDrawable pass
+03-26 16:17:59 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testSetFeatureDrawableAlpha)
+03-26 16:17:59 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testSetFeatureDrawableAlpha, {})
+03-26 16:17:59 I/ConsoleReporter: [135/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testSetFeatureDrawableAlpha pass
+03-26 16:17:59 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testSetFeatureDrawableResource)
+03-26 16:17:59 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testSetFeatureDrawableResource, {})
+03-26 16:17:59 I/ConsoleReporter: [136/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testSetFeatureDrawableResource pass
+03-26 16:17:59 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testSetFeatureDrawableUri)
+03-26 16:18:00 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testSetFeatureDrawableUri, {})
+03-26 16:18:00 I/ConsoleReporter: [137/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testSetFeatureDrawableUri pass
+03-26 16:18:00 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testSetOnDismissListener_listener)
+03-26 16:18:00 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testSetOnDismissListener_listener, {})
+03-26 16:18:00 I/ConsoleReporter: [138/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testSetOnDismissListener_listener pass
+03-26 16:18:00 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testSetOnDismissListener_noListener)
+03-26 16:18:00 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testSetOnDismissListener_noListener, {})
+03-26 16:18:00 I/ConsoleReporter: [139/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testSetOnDismissListener_noListener pass
+03-26 16:18:00 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testSetTitle)
+03-26 16:18:01 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testSetTitle, {})
+03-26 16:18:01 I/ConsoleReporter: [140/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testSetTitle pass
+03-26 16:18:01 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testShow)
+03-26 16:18:01 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testShow, {})
+03-26 16:18:01 I/ConsoleReporter: [141/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testShow pass
+03-26 16:18:01 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testTakeKeyEvents)
+03-26 16:18:01 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testTakeKeyEvents, {})
+03-26 16:18:01 I/ConsoleReporter: [142/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testTakeKeyEvents pass
+03-26 16:18:01 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testTouchEvent)
+03-26 16:18:02 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testTouchEvent, {})
+03-26 16:18:02 I/ConsoleReporter: [143/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testTouchEvent pass
+03-26 16:18:02 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DialogTest#testTrackballEvent)
+03-26 16:18:02 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DialogTest#testTrackballEvent, {})
+03-26 16:18:02 I/ConsoleReporter: [144/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DialogTest#testTrackballEvent pass
+03-26 16:18:02 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DownloadManagerTest#testDownloadManager)
+03-26 16:18:03 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DownloadManagerTest#testDownloadManager, {})
+03-26 16:18:03 I/ConsoleReporter: [145/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DownloadManagerTest#testDownloadManager pass
+03-26 16:18:03 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DownloadManagerTest#testDownloadManagerDestination)
+03-26 16:18:04 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DownloadManagerTest#testDownloadManagerDestination, {})
+03-26 16:18:04 I/ConsoleReporter: [146/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DownloadManagerTest#testDownloadManagerDestination pass
+03-26 16:18:04 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DownloadManagerTest#testDownloadManagerDestinationExtension)
+03-26 16:18:05 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DownloadManagerTest#testDownloadManagerDestinationExtension, {})
+03-26 16:18:05 I/ConsoleReporter: [147/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DownloadManagerTest#testDownloadManagerDestinationExtension pass
+03-26 16:18:05 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DownloadManagerTest#testDownloadManagerSupportsHttp)
+03-26 16:18:06 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DownloadManagerTest#testDownloadManagerSupportsHttp, {})
+03-26 16:18:06 I/ConsoleReporter: [148/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DownloadManagerTest#testDownloadManagerSupportsHttp pass
+03-26 16:18:06 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DownloadManagerTest#testDownloadManagerSupportsHttpWithExternalWebServer)
+03-26 16:18:06 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DownloadManagerTest#testDownloadManagerSupportsHttpWithExternalWebServer, {})
+03-26 16:18:06 I/ConsoleReporter: [149/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DownloadManagerTest#testDownloadManagerSupportsHttpWithExternalWebServer pass
+03-26 16:18:06 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DownloadManagerTest#testDownloadManagerSupportsHttpsWithExternalWebServer)
+03-26 16:18:06 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DownloadManagerTest#testDownloadManagerSupportsHttpsWithExternalWebServer, {})
+03-26 16:18:06 I/ConsoleReporter: [150/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DownloadManagerTest#testDownloadManagerSupportsHttpsWithExternalWebServer pass
+03-26 16:18:06 D/ModuleListener: ModuleListener.testStarted(android.app.cts.DownloadManagerTest#testMinimumDownload)
+03-26 16:18:12 D/ModuleListener: ModuleListener.testEnded(android.app.cts.DownloadManagerTest#testMinimumDownload, {})
+03-26 16:18:12 I/ConsoleReporter: [151/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.DownloadManagerTest#testMinimumDownload pass
+03-26 16:18:12 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ExpandableListActivityTest#testCallback)
+03-26 16:18:13 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ExpandableListActivityTest#testCallback, {})
+03-26 16:18:13 I/ConsoleReporter: [152/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ExpandableListActivityTest#testCallback pass
+03-26 16:18:13 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ExpandableListActivityTest#testSelect)
+03-26 16:18:14 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ExpandableListActivityTest#testSelect, {})
+03-26 16:18:14 I/ConsoleReporter: [153/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ExpandableListActivityTest#testSelect pass
+03-26 16:18:14 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ExpandableListActivityTest#testView)
+03-26 16:18:14 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ExpandableListActivityTest#testView, {})
+03-26 16:18:14 I/ConsoleReporter: [154/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ExpandableListActivityTest#testView pass
+03-26 16:18:14 D/ModuleListener: ModuleListener.testStarted(android.app.cts.FragmentReplaceTest#testReplaceFragment)
+03-26 16:18:14 D/ModuleListener: ModuleListener.testEnded(android.app.cts.FragmentReplaceTest#testReplaceFragment, {})
+03-26 16:18:14 I/ConsoleReporter: [155/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.FragmentReplaceTest#testReplaceFragment pass
+03-26 16:18:14 D/ModuleListener: ModuleListener.testStarted(android.app.cts.FragmentTest#testInstantiateFragment)
+03-26 16:18:14 D/ModuleListener: ModuleListener.testEnded(android.app.cts.FragmentTest#testInstantiateFragment, {})
+03-26 16:18:14 I/ConsoleReporter: [156/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.FragmentTest#testInstantiateFragment pass
+03-26 16:18:14 D/ModuleListener: ModuleListener.testStarted(android.app.cts.FragmentTest#testInstantiateNonFragment)
+03-26 16:18:14 D/ModuleListener: ModuleListener.testEnded(android.app.cts.FragmentTest#testInstantiateNonFragment, {})
+03-26 16:18:14 I/ConsoleReporter: [157/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.FragmentTest#testInstantiateNonFragment pass
+03-26 16:18:14 D/ModuleListener: ModuleListener.testStarted(android.app.cts.FragmentTransitionTest#testAddRemoved)
+03-26 16:18:15 D/ModuleListener: ModuleListener.testEnded(android.app.cts.FragmentTransitionTest#testAddRemoved, {})
+03-26 16:18:15 I/ConsoleReporter: [158/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.FragmentTransitionTest#testAddRemoved pass
+03-26 16:18:15 D/ModuleListener: ModuleListener.testStarted(android.app.cts.FragmentTransitionTest#testFirstOutLastInTransition)
+03-26 16:18:16 D/ModuleListener: ModuleListener.testEnded(android.app.cts.FragmentTransitionTest#testFirstOutLastInTransition, {})
+03-26 16:18:16 I/ConsoleReporter: [159/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.FragmentTransitionTest#testFirstOutLastInTransition pass
+03-26 16:18:16 D/ModuleListener: ModuleListener.testStarted(android.app.cts.FragmentTransitionTest#testFragmentTransition)
+03-26 16:18:18 D/ModuleListener: ModuleListener.testEnded(android.app.cts.FragmentTransitionTest#testFragmentTransition, {})
+03-26 16:18:18 I/ConsoleReporter: [160/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.FragmentTransitionTest#testFragmentTransition pass
+03-26 16:18:18 D/ModuleListener: ModuleListener.testStarted(android.app.cts.FragmentTransitionTest#testNullTransition)
+03-26 16:18:18 D/ModuleListener: ModuleListener.testEnded(android.app.cts.FragmentTransitionTest#testNullTransition, {})
+03-26 16:18:18 I/ConsoleReporter: [161/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.FragmentTransitionTest#testNullTransition pass
+03-26 16:18:18 D/ModuleListener: ModuleListener.testStarted(android.app.cts.FragmentTransitionTest#testPopTwo)
+03-26 16:18:20 D/ModuleListener: ModuleListener.testEnded(android.app.cts.FragmentTransitionTest#testPopTwo, {})
+03-26 16:18:20 I/ConsoleReporter: [162/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.FragmentTransitionTest#testPopTwo pass
+03-26 16:18:20 D/ModuleListener: ModuleListener.testStarted(android.app.cts.FragmentTransitionTest#testRemoveAdded)
+03-26 16:18:21 D/ModuleListener: ModuleListener.testEnded(android.app.cts.FragmentTransitionTest#testRemoveAdded, {})
+03-26 16:18:21 I/ConsoleReporter: [163/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.FragmentTransitionTest#testRemoveAdded pass
+03-26 16:18:21 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testAllocCounting)
+03-26 16:18:21 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testAllocCounting, {})
+03-26 16:18:21 I/ConsoleReporter: [164/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testAllocCounting pass
+03-26 16:18:21 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testCallActivityOnCreate)
+03-26 16:18:22 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testCallActivityOnCreate, {})
+03-26 16:18:22 I/ConsoleReporter: [165/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testCallActivityOnCreate pass
+03-26 16:18:22 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testCallActivityOnNewIntent)
+03-26 16:18:22 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testCallActivityOnNewIntent, {})
+03-26 16:18:22 I/ConsoleReporter: [166/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testCallActivityOnNewIntent pass
+03-26 16:18:22 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testCallActivityOnPause)
+03-26 16:18:22 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testCallActivityOnPause, {})
+03-26 16:18:22 I/ConsoleReporter: [167/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testCallActivityOnPause pass
+03-26 16:18:22 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testCallActivityOnPostCreate)
+03-26 16:18:22 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testCallActivityOnPostCreate, {})
+03-26 16:18:22 I/ConsoleReporter: [168/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testCallActivityOnPostCreate pass
+03-26 16:18:22 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testCallActivityOnRestart)
+03-26 16:18:23 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testCallActivityOnRestart, {})
+03-26 16:18:23 I/ConsoleReporter: [169/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testCallActivityOnRestart pass
+03-26 16:18:23 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testCallActivityOnRestoreInstanceState)
+03-26 16:18:23 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testCallActivityOnRestoreInstanceState, {})
+03-26 16:18:23 I/ConsoleReporter: [170/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testCallActivityOnRestoreInstanceState pass
+03-26 16:18:23 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testCallActivityOnResume)
+03-26 16:18:23 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testCallActivityOnResume, {})
+03-26 16:18:23 I/ConsoleReporter: [171/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testCallActivityOnResume pass
+03-26 16:18:23 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testCallActivityOnSaveInstanceState)
+03-26 16:18:23 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testCallActivityOnSaveInstanceState, {})
+03-26 16:18:23 I/ConsoleReporter: [172/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testCallActivityOnSaveInstanceState pass
+03-26 16:18:23 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testCallActivityOnStart)
+03-26 16:18:24 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testCallActivityOnStart, {})
+03-26 16:18:24 I/ConsoleReporter: [173/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testCallActivityOnStart pass
+03-26 16:18:24 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testCallActivityOnStop)
+03-26 16:18:24 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testCallActivityOnStop, {})
+03-26 16:18:24 I/ConsoleReporter: [174/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testCallActivityOnStop pass
+03-26 16:18:24 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testCallActivityOnUserLeaving)
+03-26 16:18:24 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testCallActivityOnUserLeaving, {})
+03-26 16:18:24 I/ConsoleReporter: [175/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testCallActivityOnUserLeaving pass
+03-26 16:18:24 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testCallApplicationOnCreate)
+03-26 16:18:24 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testCallApplicationOnCreate, {})
+03-26 16:18:24 I/ConsoleReporter: [176/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testCallApplicationOnCreate pass
+03-26 16:18:24 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testConstructor)
+03-26 16:18:24 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testConstructor, {})
+03-26 16:18:24 I/ConsoleReporter: [177/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testConstructor pass
+03-26 16:18:24 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testContext)
+03-26 16:18:25 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testContext, {})
+03-26 16:18:25 I/ConsoleReporter: [178/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testContext pass
+03-26 16:18:25 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testGetComponentName)
+03-26 16:18:25 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testGetComponentName, {})
+03-26 16:18:25 I/ConsoleReporter: [179/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testGetComponentName pass
+03-26 16:18:25 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testInvokeContextMenuAction)
+03-26 16:18:25 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testInvokeContextMenuAction, {})
+03-26 16:18:25 I/ConsoleReporter: [180/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testInvokeContextMenuAction pass
+03-26 16:18:25 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testInvokeMenuActionSync)
+03-26 16:18:26 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testInvokeMenuActionSync, {})
+03-26 16:18:26 I/ConsoleReporter: [181/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testInvokeMenuActionSync pass
+03-26 16:18:26 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testMisc)
+03-26 16:18:26 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testMisc, {})
+03-26 16:18:26 I/ConsoleReporter: [182/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testMisc pass
+03-26 16:18:26 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testMonitor)
+03-26 16:18:28 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testMonitor, {})
+03-26 16:18:28 I/ConsoleReporter: [183/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testMonitor pass
+03-26 16:18:28 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testNewActivity)
+03-26 16:18:28 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testNewActivity, {})
+03-26 16:18:28 I/ConsoleReporter: [184/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testNewActivity pass
+03-26 16:18:28 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testNewApplication)
+03-26 16:18:28 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testNewApplication, {})
+03-26 16:18:28 I/ConsoleReporter: [185/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testNewApplication pass
+03-26 16:18:28 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testPerformanceSnapshot)
+03-26 16:18:29 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testPerformanceSnapshot, {})
+03-26 16:18:29 I/ConsoleReporter: [186/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testPerformanceSnapshot pass
+03-26 16:18:29 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testProfiling)
+03-26 16:18:29 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testProfiling, {})
+03-26 16:18:29 I/ConsoleReporter: [187/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testProfiling pass
+03-26 16:18:29 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testRunOnMainSync)
+03-26 16:18:29 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testRunOnMainSync, {})
+03-26 16:18:29 I/ConsoleReporter: [188/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testRunOnMainSync pass
+03-26 16:18:29 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testSendCharacterSync)
+03-26 16:18:29 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testSendCharacterSync, {})
+03-26 16:18:29 I/ConsoleReporter: [189/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testSendCharacterSync pass
+03-26 16:18:29 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testSendKeyDownUpSync)
+03-26 16:18:30 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testSendKeyDownUpSync, {})
+03-26 16:18:30 I/ConsoleReporter: [190/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testSendKeyDownUpSync pass
+03-26 16:18:30 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testSendKeySync)
+03-26 16:18:30 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testSendKeySync, {})
+03-26 16:18:30 I/ConsoleReporter: [191/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testSendKeySync pass
+03-26 16:18:30 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testSendPointerSync)
+03-26 16:18:30 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testSendPointerSync, {})
+03-26 16:18:30 I/ConsoleReporter: [192/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testSendPointerSync pass
+03-26 16:18:30 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testSendStringSync)
+03-26 16:18:30 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testSendStringSync, {})
+03-26 16:18:30 I/ConsoleReporter: [193/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testSendStringSync pass
+03-26 16:18:30 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testSendTrackballEventSync)
+03-26 16:18:31 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testSendTrackballEventSync, {})
+03-26 16:18:31 I/ConsoleReporter: [194/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testSendTrackballEventSync pass
+03-26 16:18:31 D/ModuleListener: ModuleListener.testStarted(android.app.cts.InstrumentationTest#testWaitForIdle)
+03-26 16:18:32 D/ModuleListener: ModuleListener.testEnded(android.app.cts.InstrumentationTest#testWaitForIdle, {})
+03-26 16:18:32 I/ConsoleReporter: [195/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.InstrumentationTest#testWaitForIdle pass
+03-26 16:18:32 D/ModuleListener: ModuleListener.testStarted(android.app.cts.Instrumentation_ActivityMonitorTest#testActivityMonitor)
+03-26 16:18:32 D/ModuleListener: ModuleListener.testEnded(android.app.cts.Instrumentation_ActivityMonitorTest#testActivityMonitor, {})
+03-26 16:18:32 I/ConsoleReporter: [196/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.Instrumentation_ActivityMonitorTest#testActivityMonitor pass
+03-26 16:18:32 D/ModuleListener: ModuleListener.testStarted(android.app.cts.Instrumentation_ActivityResultTest#testActivityResultOp)
+03-26 16:18:32 D/ModuleListener: ModuleListener.testEnded(android.app.cts.Instrumentation_ActivityResultTest#testActivityResultOp, {})
+03-26 16:18:32 I/ConsoleReporter: [197/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.Instrumentation_ActivityResultTest#testActivityResultOp pass
+03-26 16:18:32 D/ModuleListener: ModuleListener.testStarted(android.app.cts.IntentServiceTest#testIntentServiceLifeCycle)
+03-26 16:18:33 D/ModuleListener: ModuleListener.testEnded(android.app.cts.IntentServiceTest#testIntentServiceLifeCycle, {})
+03-26 16:18:33 I/ConsoleReporter: [198/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.IntentServiceTest#testIntentServiceLifeCycle pass
+03-26 16:18:33 D/ModuleListener: ModuleListener.testStarted(android.app.cts.IntentServiceTest#testIntents)
+03-26 16:18:33 D/ModuleListener: ModuleListener.testEnded(android.app.cts.IntentServiceTest#testIntents, {})
+03-26 16:18:33 I/ConsoleReporter: [199/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.IntentServiceTest#testIntents pass
+03-26 16:18:33 D/ModuleListener: ModuleListener.testStarted(android.app.cts.KeyguardManagerKeyguardLockTest#testDisableKeyguard)
+03-26 16:18:33 D/ModuleListener: ModuleListener.testEnded(android.app.cts.KeyguardManagerKeyguardLockTest#testDisableKeyguard, {})
+03-26 16:18:33 I/ConsoleReporter: [200/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.KeyguardManagerKeyguardLockTest#testDisableKeyguard pass
+03-26 16:18:33 D/ModuleListener: ModuleListener.testStarted(android.app.cts.KeyguardManagerKeyguardLockTest#testReenableKeyguard)
+03-26 16:18:33 D/ModuleListener: ModuleListener.testEnded(android.app.cts.KeyguardManagerKeyguardLockTest#testReenableKeyguard, {})
+03-26 16:18:33 I/ConsoleReporter: [201/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.KeyguardManagerKeyguardLockTest#testReenableKeyguard pass
+03-26 16:18:33 D/ModuleListener: ModuleListener.testStarted(android.app.cts.KeyguardManagerTest#testNewKeyguardLock)
+03-26 16:18:33 D/ModuleListener: ModuleListener.testEnded(android.app.cts.KeyguardManagerTest#testNewKeyguardLock, {})
+03-26 16:18:33 I/ConsoleReporter: [202/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.KeyguardManagerTest#testNewKeyguardLock pass
+03-26 16:18:33 D/ModuleListener: ModuleListener.testStarted(android.app.cts.LaunchTest#testClearTopInCreate)
+03-26 16:18:33 D/ModuleListener: ModuleListener.testEnded(android.app.cts.LaunchTest#testClearTopInCreate, {})
+03-26 16:18:33 I/ConsoleReporter: [203/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.LaunchTest#testClearTopInCreate pass
+03-26 16:18:33 D/ModuleListener: ModuleListener.testStarted(android.app.cts.LaunchTest#testClearTopWhilResumed)
+03-26 16:18:34 D/ModuleListener: ModuleListener.testEnded(android.app.cts.LaunchTest#testClearTopWhilResumed, {})
+03-26 16:18:34 I/ConsoleReporter: [204/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.LaunchTest#testClearTopWhilResumed pass
+03-26 16:18:34 D/ModuleListener: ModuleListener.testStarted(android.app.cts.LaunchTest#testColdActivity)
+03-26 16:18:36 D/ModuleListener: ModuleListener.testEnded(android.app.cts.LaunchTest#testColdActivity, {})
+03-26 16:18:36 I/ConsoleReporter: [205/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.LaunchTest#testColdActivity pass
+03-26 16:18:36 D/ModuleListener: ModuleListener.testStarted(android.app.cts.LaunchTest#testColdScreen)
+03-26 16:18:37 D/ModuleListener: ModuleListener.testEnded(android.app.cts.LaunchTest#testColdScreen, {})
+03-26 16:18:37 I/ConsoleReporter: [206/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.LaunchTest#testColdScreen pass
+03-26 16:18:37 D/ModuleListener: ModuleListener.testStarted(android.app.cts.LaunchTest#testForwardResult)
+03-26 16:18:37 D/ModuleListener: ModuleListener.testEnded(android.app.cts.LaunchTest#testForwardResult, {})
+03-26 16:18:37 I/ConsoleReporter: [207/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.LaunchTest#testForwardResult pass
+03-26 16:18:37 D/ModuleListener: ModuleListener.testStarted(android.app.cts.LaunchTest#testLocalActivity)
+03-26 16:18:37 D/ModuleListener: ModuleListener.testEnded(android.app.cts.LaunchTest#testLocalActivity, {})
+03-26 16:18:37 I/ConsoleReporter: [208/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.LaunchTest#testLocalActivity pass
+03-26 16:18:37 D/ModuleListener: ModuleListener.testStarted(android.app.cts.LaunchTest#testLocalScreen)
+03-26 16:18:37 D/ModuleListener: ModuleListener.testEnded(android.app.cts.LaunchTest#testLocalScreen, {})
+03-26 16:18:37 I/ConsoleReporter: [209/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.LaunchTest#testLocalScreen pass
+03-26 16:18:37 D/ModuleListener: ModuleListener.testStarted(android.app.cts.LauncherActivityTest#testLaunchActivity)
+03-26 16:18:39 D/ModuleListener: ModuleListener.testEnded(android.app.cts.LauncherActivityTest#testLaunchActivity, {})
+03-26 16:18:39 I/ConsoleReporter: [210/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.LauncherActivityTest#testLaunchActivity pass
+03-26 16:18:39 D/ModuleListener: ModuleListener.testStarted(android.app.cts.LauncherActivity_IconResizerTest#testIconResizer)
+03-26 16:18:39 D/ModuleListener: ModuleListener.testEnded(android.app.cts.LauncherActivity_IconResizerTest#testIconResizer, {})
+03-26 16:18:39 I/ConsoleReporter: [211/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.LauncherActivity_IconResizerTest#testIconResizer pass
+03-26 16:18:39 D/ModuleListener: ModuleListener.testStarted(android.app.cts.LauncherActivity_ListItemTest#testConstructor)
+03-26 16:18:39 D/ModuleListener: ModuleListener.testEnded(android.app.cts.LauncherActivity_ListItemTest#testConstructor, {})
+03-26 16:18:39 I/ConsoleReporter: [212/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.LauncherActivity_ListItemTest#testConstructor pass
+03-26 16:18:39 D/ModuleListener: ModuleListener.testStarted(android.app.cts.LifecycleTest#testBasic)
+03-26 16:18:39 D/ModuleListener: ModuleListener.testEnded(android.app.cts.LifecycleTest#testBasic, {})
+03-26 16:18:39 I/ConsoleReporter: [213/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.LifecycleTest#testBasic pass
+03-26 16:18:39 D/ModuleListener: ModuleListener.testStarted(android.app.cts.LifecycleTest#testDialog)
+03-26 16:18:41 D/ModuleListener: ModuleListener.testEnded(android.app.cts.LifecycleTest#testDialog, {})
+03-26 16:18:41 I/ConsoleReporter: [214/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.LifecycleTest#testDialog pass
+03-26 16:18:41 D/ModuleListener: ModuleListener.testStarted(android.app.cts.LifecycleTest#testScreen)
+03-26 16:18:42 D/ModuleListener: ModuleListener.testEnded(android.app.cts.LifecycleTest#testScreen, {})
+03-26 16:18:42 I/ConsoleReporter: [215/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.LifecycleTest#testScreen pass
+03-26 16:18:42 D/ModuleListener: ModuleListener.testStarted(android.app.cts.LifecycleTest#testTabBasic)
+03-26 16:18:52 D/ModuleListener: ModuleListener.testFailed(android.app.cts.LifecycleTest#testTabBasic, java.lang.RuntimeException: Intent { act=Timeout }
+at android.app.stubs.ActivityTestsBase.waitForResultOrThrow(ActivityTestsBase.java:154)
+at android.app.stubs.ActivityTestsBase.waitForResultOrThrow(ActivityTestsBase.java:146)
+at android.app.stubs.ActivityTestsBase.runLaunchpad(ActivityTestsBase.java:131)
+at android.app.cts.LifecycleTest.testTabBasic(LifecycleTest.java:59)
+at java.lang.reflect.Method.invoke(Native Method)
+at junit.framework.TestCase.runTest(TestCase.java:168)
+at junit.framework.TestCase.runBare(TestCase.java:134)
+at junit.framework.TestResult$1.protect(TestResult.java:115)
+at android.support.test.internal.runner.junit3.AndroidTestResult.runProtected(AndroidTestResult.java:77)
+at junit.framework.TestResult.run(TestResult.java:118)
+at android.support.test.internal.runner.junit3.AndroidTestResult.run(AndroidTestResult.java:55)
+at junit.framework.TestCase.run(TestCase.java:124)
+at android.support.test.internal.runner.junit3.NonLeakyTestSuite$NonLeakyTest.run(NonLeakyTestSuite.java:63)
+at android.support.test.internal.runner.junit3.AndroidTestSuite$1.run(AndroidTestSuite.java:97)
+at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:428)
+at java.util.concurrent.FutureTask.run(FutureTask.java:237)
+at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+at java.lang.Thread.run(Thread.java:761)
+Caused by: java.lang.RuntimeException: Original error was here
+at android.app.stubs.LaunchpadActivity.setTestResult(LaunchpadActivity.java:534)
+at android.app.stubs.LaunchpadActivity.finishWithResult(LaunchpadActivity.java:521)
+at android.app.stubs.LaunchpadActivity.finishBad(LaunchpadActivity.java:517)
+at android.app.stubs.LaunchpadActivity.-wrap0(LaunchpadActivity.java)
+at android.app.stubs.LaunchpadActivity$4.run(LaunchpadActivity.java:638)
+at android.os.Handler.handleCallback(Handler.java:751)
+at android.os.Handler.dispatchMessage(Handler.java:95)
+at android.os.Looper.loop(Looper.java:154)
+at android.app.ActivityThread.main(ActivityThread.java:6265)
+at java.lang.reflect.Method.invoke(Native Method)
+at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:886)
+at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:776)
+)
+03-26 16:18:52 I/ConsoleReporter: [216/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.LifecycleTest#testTabBasic fail: java.lang.RuntimeException: Intent { act=Timeout }
+at android.app.stubs.ActivityTestsBase.waitForResultOrThrow(ActivityTestsBase.java:154)
+at android.app.stubs.ActivityTestsBase.waitForResultOrThrow(ActivityTestsBase.java:146)
+at android.app.stubs.ActivityTestsBase.runLaunchpad(ActivityTestsBase.java:131)
+at android.app.cts.LifecycleTest.testTabBasic(LifecycleTest.java:59)
+at java.lang.reflect.Method.invoke(Native Method)
+at junit.framework.TestCase.runTest(TestCase.java:168)
+at junit.framework.TestCase.runBare(TestCase.java:134)
+at junit.framework.TestResult$1.protect(TestResult.java:115)
+at android.support.test.internal.runner.junit3.AndroidTestResult.runProtected(AndroidTestResult.java:77)
+at junit.framework.TestResult.run(TestResult.java:118)
+at android.support.test.internal.runner.junit3.AndroidTestResult.run(AndroidTestResult.java:55)
+at junit.framework.TestCase.run(TestCase.java:124)
+at android.support.test.internal.runner.junit3.NonLeakyTestSuite$NonLeakyTest.run(NonLeakyTestSuite.java:63)
+at android.support.test.internal.runner.junit3.AndroidTestSuite$1.run(AndroidTestSuite.java:97)
+at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:428)
+at java.util.concurrent.FutureTask.run(FutureTask.java:237)
+at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+at java.lang.Thread.run(Thread.java:761)
+Caused by: java.lang.RuntimeException: Original error was here
+at android.app.stubs.LaunchpadActivity.setTestResult(LaunchpadActivity.java:534)
+at android.app.stubs.LaunchpadActivity.finishWithResult(LaunchpadActivity.java:521)
+at android.app.stubs.LaunchpadActivity.finishBad(LaunchpadActivity.java:517)
+at android.app.stubs.LaunchpadActivity.-wrap0(LaunchpadActivity.java)
+at android.app.stubs.LaunchpadActivity$4.run(LaunchpadActivity.java:638)
+at android.os.Handler.handleCallback(Handler.java:751)
+at android.os.Handler.dispatchMessage(Handler.java:95)
+at android.os.Looper.loop(Looper.java:154)
+at android.app.ActivityThread.main(ActivityThread.java:6265)
+at java.lang.reflect.Method.invoke(Native Method)
+at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:886)
+at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:776)
+
+03-26 16:18:52 I/FailureListener: FailureListener.testFailed android.app.cts.LifecycleTest#testTabBasic false true false
+03-26 16:18:54 D/FileUtil: Creating temp file at /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.26_16.13.24 with prefix "android.app.cts.LifecycleTest#testTabBasic-logcat_" suffix ".zip"
+03-26 16:18:54 I/LogFileSaver: Saved log file /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.26_16.13.24/android.app.cts.LifecycleTest#testTabBasic-logcat_6948728930863287330.zip
+03-26 16:18:54 I/ResultReporter: Saved logs for android.app.cts.LifecycleTest#testTabBasic-logcat in /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.26_16.13.24/android.app.cts.LifecycleTest#testTabBasic-logcat_6948728930863287330.zip
+03-26 16:18:54 D/FileUtil: Creating temp file at /tmp/3764431/cts/inv_7415891576764823370 with prefix "android.app.cts.LifecycleTest#testTabBasic-logcat_" suffix ".zip"
+03-26 16:18:54 D/RunUtil: Running command with timeout: 10000ms
+03-26 16:18:54 D/RunUtil: Running [chmod]
+03-26 16:18:54 D/RunUtil: [chmod] command failed. return code 1
+03-26 16:18:54 D/FileUtil: Attempting to chmod /tmp/3764431/cts/inv_7415891576764823370/android.app.cts.LifecycleTest#testTabBasic-logcat_1564817119535916838.zip to ug+rwx
+03-26 16:18:54 D/RunUtil: Running command with timeout: 10000ms
+03-26 16:18:54 D/RunUtil: Running [chmod, ug+rwx, /tmp/3764431/cts/inv_7415891576764823370/android.app.cts.LifecycleTest#testTabBasic-logcat_1564817119535916838.zip]
+03-26 16:18:54 I/FileSystemLogSaver: Saved log file /tmp/3764431/cts/inv_7415891576764823370/android.app.cts.LifecycleTest#testTabBasic-logcat_1564817119535916838.zip
+03-26 16:18:54 D/ModuleListener: ModuleListener.testEnded(android.app.cts.LifecycleTest#testTabBasic, {})
+03-26 16:18:54 D/ModuleListener: ModuleListener.testStarted(android.app.cts.LifecycleTest#testTabDialog)
+03-26 16:18:54 D/ModuleListener: ModuleListener.testEnded(android.app.cts.LifecycleTest#testTabDialog, {})
+03-26 16:18:54 I/ConsoleReporter: [217/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.LifecycleTest#testTabDialog pass
+03-26 16:18:54 D/ModuleListener: ModuleListener.testStarted(android.app.cts.LifecycleTest#testTabScreen)
+03-26 16:18:54 D/ModuleListener: ModuleListener.testEnded(android.app.cts.LifecycleTest#testTabScreen, {})
+03-26 16:18:54 I/ConsoleReporter: [218/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.LifecycleTest#testTabScreen pass
+03-26 16:18:54 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ListActivityTest#testAdapter)
+03-26 16:18:54 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ListActivityTest#testAdapter, {})
+03-26 16:18:54 I/ConsoleReporter: [219/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ListActivityTest#testAdapter pass
+03-26 16:18:54 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ListActivityTest#testItemClick)
+03-26 16:18:55 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ListActivityTest#testItemClick, {})
+03-26 16:18:55 I/ConsoleReporter: [220/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ListActivityTest#testItemClick pass
+03-26 16:18:55 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ListActivityTest#testSelection)
+03-26 16:18:55 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ListActivityTest#testSelection, {})
+03-26 16:18:55 I/ConsoleReporter: [221/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ListActivityTest#testSelection pass
+03-26 16:18:55 D/ModuleListener: ModuleListener.testStarted(android.app.cts.LocalActivityManagerTest#testConstructor)
+03-26 16:18:55 D/ModuleListener: ModuleListener.testEnded(android.app.cts.LocalActivityManagerTest#testConstructor, {})
+03-26 16:18:55 I/ConsoleReporter: [222/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.LocalActivityManagerTest#testConstructor pass
+03-26 16:18:55 D/ModuleListener: ModuleListener.testStarted(android.app.cts.LocalActivityManagerTest#testDispatchCreate)
+03-26 16:18:56 D/ModuleListener: ModuleListener.testEnded(android.app.cts.LocalActivityManagerTest#testDispatchCreate, {})
+03-26 16:18:56 I/ConsoleReporter: [223/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.LocalActivityManagerTest#testDispatchCreate pass
+03-26 16:18:56 D/ModuleListener: ModuleListener.testStarted(android.app.cts.LocalActivityManagerTest#testDispatchDestroy)
+03-26 16:18:56 D/ModuleListener: ModuleListener.testEnded(android.app.cts.LocalActivityManagerTest#testDispatchDestroy, {})
+03-26 16:18:56 I/ConsoleReporter: [224/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.LocalActivityManagerTest#testDispatchDestroy pass
+03-26 16:18:56 D/ModuleListener: ModuleListener.testStarted(android.app.cts.LocalActivityManagerTest#testDispatchPauseFalse)
+03-26 16:18:57 D/ModuleListener: ModuleListener.testEnded(android.app.cts.LocalActivityManagerTest#testDispatchPauseFalse, {})
+03-26 16:18:57 I/ConsoleReporter: [225/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.LocalActivityManagerTest#testDispatchPauseFalse pass
+03-26 16:18:57 D/ModuleListener: ModuleListener.testStarted(android.app.cts.LocalActivityManagerTest#testDispatchPauseTrue)
+03-26 16:18:57 D/ModuleListener: ModuleListener.testEnded(android.app.cts.LocalActivityManagerTest#testDispatchPauseTrue, {})
+03-26 16:18:57 I/ConsoleReporter: [226/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.LocalActivityManagerTest#testDispatchPauseTrue pass
+03-26 16:18:57 D/ModuleListener: ModuleListener.testStarted(android.app.cts.LocalActivityManagerTest#testDispatchResume)
+03-26 16:18:57 D/ModuleListener: ModuleListener.testEnded(android.app.cts.LocalActivityManagerTest#testDispatchResume, {})
+03-26 16:18:57 I/ConsoleReporter: [227/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.LocalActivityManagerTest#testDispatchResume pass
+03-26 16:18:57 D/ModuleListener: ModuleListener.testStarted(android.app.cts.LocalActivityManagerTest#testDispatchStop)
+03-26 16:18:57 D/ModuleListener: ModuleListener.testEnded(android.app.cts.LocalActivityManagerTest#testDispatchStop, {})
+03-26 16:18:57 I/ConsoleReporter: [228/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.LocalActivityManagerTest#testDispatchStop pass
+03-26 16:18:57 D/ModuleListener: ModuleListener.testStarted(android.app.cts.LocalActivityManagerTest#testRemoveAllActivities)
+03-26 16:18:58 D/ModuleListener: ModuleListener.testEnded(android.app.cts.LocalActivityManagerTest#testRemoveAllActivities, {})
+03-26 16:18:58 I/ConsoleReporter: [229/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.LocalActivityManagerTest#testRemoveAllActivities pass
+03-26 16:18:58 D/ModuleListener: ModuleListener.testStarted(android.app.cts.LocalActivityManagerTest#testSaveInstanceState)
+03-26 16:18:58 D/ModuleListener: ModuleListener.testEnded(android.app.cts.LocalActivityManagerTest#testSaveInstanceState, {})
+03-26 16:18:58 I/ConsoleReporter: [230/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.LocalActivityManagerTest#testSaveInstanceState pass
+03-26 16:18:58 D/ModuleListener: ModuleListener.testStarted(android.app.cts.LocalActivityManagerTest#testStartActivity)
+03-26 16:18:58 D/ModuleListener: ModuleListener.testEnded(android.app.cts.LocalActivityManagerTest#testStartActivity, {})
+03-26 16:18:58 I/ConsoleReporter: [231/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.LocalActivityManagerTest#testStartActivity pass
+03-26 16:18:58 D/ModuleListener: ModuleListener.testStarted(android.app.cts.NotificationManagerTest#testCancel)
+03-26 16:18:59 D/ModuleListener: ModuleListener.testEnded(android.app.cts.NotificationManagerTest#testCancel, {})
+03-26 16:18:59 I/ConsoleReporter: [232/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.NotificationManagerTest#testCancel pass
+03-26 16:18:59 D/ModuleListener: ModuleListener.testStarted(android.app.cts.NotificationManagerTest#testCancelAll)
+03-26 16:18:59 D/ModuleListener: ModuleListener.testEnded(android.app.cts.NotificationManagerTest#testCancelAll, {})
+03-26 16:18:59 I/ConsoleReporter: [233/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.NotificationManagerTest#testCancelAll pass
+03-26 16:18:59 D/ModuleListener: ModuleListener.testStarted(android.app.cts.NotificationManagerTest#testNotify)
+03-26 16:18:59 D/ModuleListener: ModuleListener.testEnded(android.app.cts.NotificationManagerTest#testNotify, {})
+03-26 16:18:59 I/ConsoleReporter: [234/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.NotificationManagerTest#testNotify pass
+03-26 16:18:59 D/ModuleListener: ModuleListener.testStarted(android.app.cts.NotificationTest#testBuilder)
+03-26 16:18:59 D/ModuleListener: ModuleListener.testEnded(android.app.cts.NotificationTest#testBuilder, {})
+03-26 16:18:59 I/ConsoleReporter: [235/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.NotificationTest#testBuilder pass
+03-26 16:18:59 D/ModuleListener: ModuleListener.testStarted(android.app.cts.NotificationTest#testConstructor)
+03-26 16:18:59 D/ModuleListener: ModuleListener.testEnded(android.app.cts.NotificationTest#testConstructor, {})
+03-26 16:18:59 I/ConsoleReporter: [236/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.NotificationTest#testConstructor pass
+03-26 16:18:59 D/ModuleListener: ModuleListener.testStarted(android.app.cts.NotificationTest#testDescribeContents)
+03-26 16:18:59 D/ModuleListener: ModuleListener.testEnded(android.app.cts.NotificationTest#testDescribeContents, {})
+03-26 16:18:59 I/ConsoleReporter: [237/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.NotificationTest#testDescribeContents pass
+03-26 16:18:59 D/ModuleListener: ModuleListener.testStarted(android.app.cts.NotificationTest#testToString)
+03-26 16:18:59 D/ModuleListener: ModuleListener.testEnded(android.app.cts.NotificationTest#testToString, {})
+03-26 16:18:59 I/ConsoleReporter: [238/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.NotificationTest#testToString pass
+03-26 16:19:00 D/ModuleListener: ModuleListener.testStarted(android.app.cts.NotificationTest#testWriteToParcel)
+03-26 16:19:01 D/ModuleListener: ModuleListener.testEnded(android.app.cts.NotificationTest#testWriteToParcel, {})
+03-26 16:19:01 I/ConsoleReporter: [239/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.NotificationTest#testWriteToParcel pass
+03-26 16:19:01 D/ModuleListener: ModuleListener.testStarted(android.app.cts.PendingIntentTest#testCancel)
+03-26 16:19:01 D/ModuleListener: ModuleListener.testEnded(android.app.cts.PendingIntentTest#testCancel, {})
+03-26 16:19:01 I/ConsoleReporter: [240/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.PendingIntentTest#testCancel pass
+03-26 16:19:01 D/ModuleListener: ModuleListener.testStarted(android.app.cts.PendingIntentTest#testDescribeContents)
+03-26 16:19:01 D/ModuleListener: ModuleListener.testEnded(android.app.cts.PendingIntentTest#testDescribeContents, {})
+03-26 16:19:01 I/ConsoleReporter: [241/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.PendingIntentTest#testDescribeContents pass
+03-26 16:19:01 D/ModuleListener: ModuleListener.testStarted(android.app.cts.PendingIntentTest#testEquals)
+03-26 16:19:01 D/ModuleListener: ModuleListener.testEnded(android.app.cts.PendingIntentTest#testEquals, {})
+03-26 16:19:01 I/ConsoleReporter: [242/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.PendingIntentTest#testEquals pass
+03-26 16:19:01 D/ModuleListener: ModuleListener.testStarted(android.app.cts.PendingIntentTest#testGetActivity)
+03-26 16:19:02 D/ModuleListener: ModuleListener.testEnded(android.app.cts.PendingIntentTest#testGetActivity, {})
+03-26 16:19:02 I/ConsoleReporter: [243/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.PendingIntentTest#testGetActivity pass
+03-26 16:19:02 D/ModuleListener: ModuleListener.testStarted(android.app.cts.PendingIntentTest#testGetBroadcast)
+03-26 16:19:02 D/ModuleListener: ModuleListener.testEnded(android.app.cts.PendingIntentTest#testGetBroadcast, {})
+03-26 16:19:02 I/ConsoleReporter: [244/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.PendingIntentTest#testGetBroadcast pass
+03-26 16:19:02 D/ModuleListener: ModuleListener.testStarted(android.app.cts.PendingIntentTest#testGetService)
+03-26 16:19:02 D/ModuleListener: ModuleListener.testEnded(android.app.cts.PendingIntentTest#testGetService, {})
+03-26 16:19:02 I/ConsoleReporter: [245/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.PendingIntentTest#testGetService pass
+03-26 16:19:02 D/ModuleListener: ModuleListener.testStarted(android.app.cts.PendingIntentTest#testGetTargetPackage)
+03-26 16:19:02 D/ModuleListener: ModuleListener.testEnded(android.app.cts.PendingIntentTest#testGetTargetPackage, {})
+03-26 16:19:02 I/ConsoleReporter: [246/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.PendingIntentTest#testGetTargetPackage pass
+03-26 16:19:02 D/ModuleListener: ModuleListener.testStarted(android.app.cts.PendingIntentTest#testReadAndWritePendingIntentOrNullToParcel)
+03-26 16:19:02 D/ModuleListener: ModuleListener.testEnded(android.app.cts.PendingIntentTest#testReadAndWritePendingIntentOrNullToParcel, {})
+03-26 16:19:02 I/ConsoleReporter: [247/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.PendingIntentTest#testReadAndWritePendingIntentOrNullToParcel pass
+03-26 16:19:02 D/ModuleListener: ModuleListener.testStarted(android.app.cts.PendingIntentTest#testSend)
+03-26 16:19:02 D/ModuleListener: ModuleListener.testEnded(android.app.cts.PendingIntentTest#testSend, {})
+03-26 16:19:02 I/ConsoleReporter: [248/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.PendingIntentTest#testSend pass
+03-26 16:19:02 D/ModuleListener: ModuleListener.testStarted(android.app.cts.PendingIntentTest#testSendNoReceiverOnFinishedHandler)
+03-26 16:19:02 D/ModuleListener: ModuleListener.testEnded(android.app.cts.PendingIntentTest#testSendNoReceiverOnFinishedHandler, {})
+03-26 16:19:02 I/ConsoleReporter: [249/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.PendingIntentTest#testSendNoReceiverOnFinishedHandler pass
+03-26 16:19:02 D/ModuleListener: ModuleListener.testStarted(android.app.cts.PendingIntentTest#testSendWithParamContextIntIntent)
+03-26 16:19:02 D/ModuleListener: ModuleListener.testEnded(android.app.cts.PendingIntentTest#testSendWithParamContextIntIntent, {})
+03-26 16:19:02 I/ConsoleReporter: [250/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.PendingIntentTest#testSendWithParamContextIntIntent pass
+03-26 16:19:02 D/ModuleListener: ModuleListener.testStarted(android.app.cts.PendingIntentTest#testSendWithParamContextIntIntentOnFinishedHandler)
+03-26 16:19:02 D/ModuleListener: ModuleListener.testEnded(android.app.cts.PendingIntentTest#testSendWithParamContextIntIntentOnFinishedHandler, {})
+03-26 16:19:02 I/ConsoleReporter: [251/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.PendingIntentTest#testSendWithParamContextIntIntentOnFinishedHandler pass
+03-26 16:19:02 D/ModuleListener: ModuleListener.testStarted(android.app.cts.PendingIntentTest#testSendWithParamInt)
+03-26 16:19:02 D/ModuleListener: ModuleListener.testEnded(android.app.cts.PendingIntentTest#testSendWithParamInt, {})
+03-26 16:19:02 I/ConsoleReporter: [252/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.PendingIntentTest#testSendWithParamInt pass
+03-26 16:19:02 D/ModuleListener: ModuleListener.testStarted(android.app.cts.PendingIntentTest#testSendWithParamIntOnFinishedHandler)
+03-26 16:19:02 D/ModuleListener: ModuleListener.testEnded(android.app.cts.PendingIntentTest#testSendWithParamIntOnFinishedHandler, {})
+03-26 16:19:02 I/ConsoleReporter: [253/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.PendingIntentTest#testSendWithParamIntOnFinishedHandler pass
+03-26 16:19:02 D/ModuleListener: ModuleListener.testStarted(android.app.cts.PendingIntentTest#testStartServiceOnFinishedHandler)
+03-26 16:19:02 D/ModuleListener: ModuleListener.testEnded(android.app.cts.PendingIntentTest#testStartServiceOnFinishedHandler, {})
+03-26 16:19:02 I/ConsoleReporter: [254/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.PendingIntentTest#testStartServiceOnFinishedHandler pass
+03-26 16:19:02 D/ModuleListener: ModuleListener.testStarted(android.app.cts.PendingIntentTest#testWriteToParcel)
+03-26 16:19:02 D/ModuleListener: ModuleListener.testEnded(android.app.cts.PendingIntentTest#testWriteToParcel, {})
+03-26 16:19:02 I/ConsoleReporter: [255/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.PendingIntentTest#testWriteToParcel pass
+03-26 16:19:02 D/ModuleListener: ModuleListener.testStarted(android.app.cts.PendingIntent_CanceledExceptionTest#testConstructor)
+03-26 16:19:02 D/ModuleListener: ModuleListener.testEnded(android.app.cts.PendingIntent_CanceledExceptionTest#testConstructor, {})
+03-26 16:19:02 I/ConsoleReporter: [256/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.PendingIntent_CanceledExceptionTest#testConstructor pass
+03-26 16:19:02 D/ModuleListener: ModuleListener.testStarted(android.app.cts.PipActivityTest#testLaunchPipActivity)
+03-26 16:19:03 D/ModuleListener: ModuleListener.testEnded(android.app.cts.PipActivityTest#testLaunchPipActivity, {})
+03-26 16:19:03 I/ConsoleReporter: [257/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.PipActivityTest#testLaunchPipActivity pass
+03-26 16:19:03 D/ModuleListener: ModuleListener.testStarted(android.app.cts.PipNotResizeableActivityTest#testLaunchPipNotResizeableActivity)
+03-26 16:19:03 D/ModuleListener: ModuleListener.testEnded(android.app.cts.PipNotResizeableActivityTest#testLaunchPipNotResizeableActivity, {})
+03-26 16:19:03 I/ConsoleReporter: [258/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.PipNotResizeableActivityTest#testLaunchPipNotResizeableActivity pass
+03-26 16:19:03 D/ModuleListener: ModuleListener.testStarted(android.app.cts.PipNotSupportedActivityTest#testLaunchPipNotSupportedActivity)
+03-26 16:19:04 D/ModuleListener: ModuleListener.testEnded(android.app.cts.PipNotSupportedActivityTest#testLaunchPipNotSupportedActivity, {})
+03-26 16:19:04 I/ConsoleReporter: [259/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.PipNotSupportedActivityTest#testLaunchPipNotSupportedActivity pass
+03-26 16:19:04 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ProgressDialogTest#testAccessMax)
+03-26 16:19:04 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ProgressDialogTest#testAccessMax, {})
+03-26 16:19:04 I/ConsoleReporter: [260/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ProgressDialogTest#testAccessMax pass
+03-26 16:19:04 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ProgressDialogTest#testAccessProgress)
+03-26 16:19:04 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ProgressDialogTest#testAccessProgress, {})
+03-26 16:19:04 I/ConsoleReporter: [261/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ProgressDialogTest#testAccessProgress pass
+03-26 16:19:04 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ProgressDialogTest#testAccessSecondaryProgress)
+03-26 16:19:05 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ProgressDialogTest#testAccessSecondaryProgress, {})
+03-26 16:19:05 I/ConsoleReporter: [262/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ProgressDialogTest#testAccessSecondaryProgress pass
+03-26 16:19:05 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ProgressDialogTest#testIncrementProgressBy)
+03-26 16:19:05 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ProgressDialogTest#testIncrementProgressBy, {})
+03-26 16:19:05 I/ConsoleReporter: [263/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ProgressDialogTest#testIncrementProgressBy pass
+03-26 16:19:05 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ProgressDialogTest#testIncrementSecondaryProgressBy)
+03-26 16:19:06 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ProgressDialogTest#testIncrementSecondaryProgressBy, {})
+03-26 16:19:06 I/ConsoleReporter: [264/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ProgressDialogTest#testIncrementSecondaryProgressBy pass
+03-26 16:19:06 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ProgressDialogTest#testOnStartCreateStop)
+03-26 16:19:06 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ProgressDialogTest#testOnStartCreateStop, {})
+03-26 16:19:06 I/ConsoleReporter: [265/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ProgressDialogTest#testOnStartCreateStop pass
+03-26 16:19:06 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ProgressDialogTest#testProgressDialog1)
+03-26 16:19:07 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ProgressDialogTest#testProgressDialog1, {})
+03-26 16:19:07 I/ConsoleReporter: [266/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ProgressDialogTest#testProgressDialog1 pass
+03-26 16:19:07 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ProgressDialogTest#testProgressDialog2)
+03-26 16:19:07 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ProgressDialogTest#testProgressDialog2, {})
+03-26 16:19:07 I/ConsoleReporter: [267/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ProgressDialogTest#testProgressDialog2 pass
+03-26 16:19:07 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ProgressDialogTest#testSetIndeterminate)
+03-26 16:19:07 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ProgressDialogTest#testSetIndeterminate, {})
+03-26 16:19:07 I/ConsoleReporter: [268/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ProgressDialogTest#testSetIndeterminate pass
+03-26 16:19:07 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ProgressDialogTest#testSetIndeterminateDrawable)
+03-26 16:19:07 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ProgressDialogTest#testSetIndeterminateDrawable, {})
+03-26 16:19:07 I/ConsoleReporter: [269/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ProgressDialogTest#testSetIndeterminateDrawable pass
+03-26 16:19:07 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ProgressDialogTest#testSetMessage)
+03-26 16:19:08 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ProgressDialogTest#testSetMessage, {})
+03-26 16:19:08 I/ConsoleReporter: [270/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ProgressDialogTest#testSetMessage pass
+03-26 16:19:08 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ProgressDialogTest#testSetProgressDrawable)
+03-26 16:19:08 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ProgressDialogTest#testSetProgressDrawable, {})
+03-26 16:19:08 I/ConsoleReporter: [271/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ProgressDialogTest#testSetProgressDrawable pass
+03-26 16:19:08 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ProgressDialogTest#testSetProgressStyle)
+03-26 16:19:09 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ProgressDialogTest#testSetProgressStyle, {})
+03-26 16:19:09 I/ConsoleReporter: [272/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ProgressDialogTest#testSetProgressStyle pass
+03-26 16:19:09 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ProgressDialogTest#testShow1)
+03-26 16:19:09 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ProgressDialogTest#testShow1, {})
+03-26 16:19:09 I/ConsoleReporter: [273/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ProgressDialogTest#testShow1 pass
+03-26 16:19:09 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ProgressDialogTest#testShow2)
+03-26 16:19:09 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ProgressDialogTest#testShow2, {})
+03-26 16:19:09 I/ConsoleReporter: [274/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ProgressDialogTest#testShow2 pass
+03-26 16:19:09 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ProgressDialogTest#testShow3)
+03-26 16:19:10 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ProgressDialogTest#testShow3, {})
+03-26 16:19:10 I/ConsoleReporter: [275/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ProgressDialogTest#testShow3 pass
+03-26 16:19:10 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ProgressDialogTest#testShow4)
+03-26 16:19:10 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ProgressDialogTest#testShow4, {})
+03-26 16:19:10 I/ConsoleReporter: [276/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ProgressDialogTest#testShow4 pass
+03-26 16:19:10 D/ModuleListener: ModuleListener.testStarted(android.app.cts.SearchManagerTest#testSetOnCancelListener)
+03-26 16:19:10 D/ModuleListener: ModuleListener.testEnded(android.app.cts.SearchManagerTest#testSetOnCancelListener, {})
+03-26 16:19:10 I/ConsoleReporter: [277/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.SearchManagerTest#testSetOnCancelListener pass
+03-26 16:19:10 D/ModuleListener: ModuleListener.testStarted(android.app.cts.SearchManagerTest#testSetOnDismissListener)
+03-26 16:19:11 D/ModuleListener: ModuleListener.testEnded(android.app.cts.SearchManagerTest#testSetOnDismissListener, {})
+03-26 16:19:11 I/ConsoleReporter: [278/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.SearchManagerTest#testSetOnDismissListener pass
+03-26 16:19:11 D/ModuleListener: ModuleListener.testStarted(android.app.cts.SearchManagerTest#testStopSearch)
+03-26 16:19:11 D/ModuleListener: ModuleListener.testEnded(android.app.cts.SearchManagerTest#testStopSearch, {})
+03-26 16:19:11 I/ConsoleReporter: [279/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.SearchManagerTest#testStopSearch pass
+03-26 16:19:11 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ServiceTest#testForegroundService_detachNotificationOnStop)
+03-26 16:19:16 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ServiceTest#testForegroundService_detachNotificationOnStop, {})
+03-26 16:19:16 I/ConsoleReporter: [280/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ServiceTest#testForegroundService_detachNotificationOnStop pass
+03-26 16:19:16 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ServiceTest#testForegroundService_dontRemoveNotificationOnStop)
+03-26 16:19:16 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ServiceTest#testForegroundService_dontRemoveNotificationOnStop, {})
+03-26 16:19:16 I/ConsoleReporter: [281/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ServiceTest#testForegroundService_dontRemoveNotificationOnStop pass
+03-26 16:19:16 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ServiceTest#testForegroundService_removeNotificationOnStop)
+03-26 16:19:16 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ServiceTest#testForegroundService_removeNotificationOnStop, {})
+03-26 16:19:16 I/ConsoleReporter: [282/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ServiceTest#testForegroundService_removeNotificationOnStop pass
+03-26 16:19:16 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ServiceTest#testForegroundService_removeNotificationOnStopUsingFlags)
+03-26 16:19:16 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ServiceTest#testForegroundService_removeNotificationOnStopUsingFlags, {})
+03-26 16:19:16 I/ConsoleReporter: [283/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ServiceTest#testForegroundService_removeNotificationOnStopUsingFlags pass
+03-26 16:19:16 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ServiceTest#testImplicitIntentFailsOnApiLevel21)
+03-26 16:19:16 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ServiceTest#testImplicitIntentFailsOnApiLevel21, {})
+03-26 16:19:16 I/ConsoleReporter: [284/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ServiceTest#testImplicitIntentFailsOnApiLevel21 pass
+03-26 16:19:16 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ServiceTest#testLocalBindAction)
+03-26 16:19:16 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ServiceTest#testLocalBindAction, {})
+03-26 16:19:16 I/ConsoleReporter: [285/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ServiceTest#testLocalBindAction pass
+03-26 16:19:16 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ServiceTest#testLocalBindActionPermissions)
+03-26 16:19:16 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ServiceTest#testLocalBindActionPermissions, {})
+03-26 16:19:16 I/ConsoleReporter: [286/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ServiceTest#testLocalBindActionPermissions pass
+03-26 16:19:16 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ServiceTest#testLocalBindAutoAction)
+03-26 16:19:16 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ServiceTest#testLocalBindAutoAction, {})
+03-26 16:19:16 I/ConsoleReporter: [287/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ServiceTest#testLocalBindAutoAction pass
+03-26 16:19:16 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ServiceTest#testLocalBindAutoActionPermissionGranted)
+03-26 16:19:16 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ServiceTest#testLocalBindAutoActionPermissionGranted, {})
+03-26 16:19:16 I/ConsoleReporter: [288/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ServiceTest#testLocalBindAutoActionPermissionGranted pass
+03-26 16:19:16 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ServiceTest#testLocalBindAutoClass)
+03-26 16:19:16 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ServiceTest#testLocalBindAutoClass, {})
+03-26 16:19:16 I/ConsoleReporter: [289/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ServiceTest#testLocalBindAutoClass pass
+03-26 16:19:16 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ServiceTest#testLocalBindAutoClassPermissionGranted)
+03-26 16:19:16 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ServiceTest#testLocalBindAutoClassPermissionGranted, {})
+03-26 16:19:16 I/ConsoleReporter: [290/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ServiceTest#testLocalBindAutoClassPermissionGranted pass
+03-26 16:19:16 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ServiceTest#testLocalBindClass)
+03-26 16:19:16 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ServiceTest#testLocalBindClass, {})
+03-26 16:19:16 I/ConsoleReporter: [291/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ServiceTest#testLocalBindClass pass
+03-26 16:19:16 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ServiceTest#testLocalBindClassPermissions)
+03-26 16:19:17 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ServiceTest#testLocalBindClassPermissions, {})
+03-26 16:19:17 I/ConsoleReporter: [292/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ServiceTest#testLocalBindClassPermissions pass
+03-26 16:19:17 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ServiceTest#testLocalStartAction)
+03-26 16:19:17 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ServiceTest#testLocalStartAction, {})
+03-26 16:19:17 I/ConsoleReporter: [293/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ServiceTest#testLocalStartAction pass
+03-26 16:19:17 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ServiceTest#testLocalStartActionPermissions)
+03-26 16:19:17 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ServiceTest#testLocalStartActionPermissions, {})
+03-26 16:19:17 I/ConsoleReporter: [294/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ServiceTest#testLocalStartActionPermissions pass
+03-26 16:19:17 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ServiceTest#testLocalStartClass)
+03-26 16:19:17 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ServiceTest#testLocalStartClass, {})
+03-26 16:19:17 I/ConsoleReporter: [295/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ServiceTest#testLocalStartClass pass
+03-26 16:19:17 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ServiceTest#testLocalStartClassPermissions)
+03-26 16:19:17 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ServiceTest#testLocalStartClassPermissions, {})
+03-26 16:19:17 I/ConsoleReporter: [296/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ServiceTest#testLocalStartClassPermissions pass
+03-26 16:19:17 D/ModuleListener: ModuleListener.testStarted(android.app.cts.ServiceTest#testLocalUnbindTwice)
+03-26 16:19:17 D/ModuleListener: ModuleListener.testEnded(android.app.cts.ServiceTest#testLocalUnbindTwice, {})
+03-26 16:19:17 I/ConsoleReporter: [297/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.ServiceTest#testLocalUnbindTwice pass
+03-26 16:19:17 D/ModuleListener: ModuleListener.testStarted(android.app.cts.SystemFeaturesTest#testBluetoothFeature)
+03-26 16:19:17 D/ModuleListener: ModuleListener.testEnded(android.app.cts.SystemFeaturesTest#testBluetoothFeature, {})
+03-26 16:19:17 I/ConsoleReporter: [298/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.SystemFeaturesTest#testBluetoothFeature pass
+03-26 16:19:17 D/ModuleListener: ModuleListener.testStarted(android.app.cts.SystemFeaturesTest#testCameraFeatures)
+03-26 16:19:17 D/ModuleListener: ModuleListener.testFailed(android.app.cts.SystemFeaturesTest#testCameraFeatures, junit.framework.AssertionFailedError: PackageManager#hasSystemFeature should NOT return true for android.hardware.camera.front
+at junit.framework.Assert.fail(Assert.java:50)
+at junit.framework.Assert.assertTrue(Assert.java:20)
+at junit.framework.Assert.assertFalse(Assert.java:34)
+at android.app.cts.SystemFeaturesTest.assertNotAvailable(SystemFeaturesTest.java:508)
+at android.app.cts.SystemFeaturesTest.testCameraFeatures(SystemFeaturesTest.java:122)
+at java.lang.reflect.Method.invoke(Native Method)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at junit.framework.TestCase.runBare(TestCase.java:134)
+at junit.framework.TestResult$1.protect(TestResult.java:115)
+at android.support.test.internal.runner.junit3.AndroidTestResult.runProtected(AndroidTestResult.java:77)
+at junit.framework.TestResult.run(TestResult.java:118)
+at android.support.test.internal.runner.junit3.AndroidTestResult.run(AndroidTestResult.java:55)
+at junit.framework.TestCase.run(TestCase.java:124)
+at android.support.test.internal.runner.junit3.NonLeakyTestSuite$NonLeakyTest.run(NonLeakyTestSuite.java:63)
+at android.support.test.internal.runner.junit3.AndroidTestSuite$1.run(AndroidTestSuite.java:97)
+at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:428)
+at java.util.concurrent.FutureTask.run(FutureTask.java:237)
+at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+at java.lang.Thread.run(Thread.java:761)
+)
+03-26 16:19:17 I/ConsoleReporter: [299/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.SystemFeaturesTest#testCameraFeatures fail: junit.framework.AssertionFailedError: PackageManager#hasSystemFeature should NOT return true for android.hardware.camera.front
+at junit.framework.Assert.fail(Assert.java:50)
+at junit.framework.Assert.assertTrue(Assert.java:20)
+at junit.framework.Assert.assertFalse(Assert.java:34)
+at android.app.cts.SystemFeaturesTest.assertNotAvailable(SystemFeaturesTest.java:508)
+at android.app.cts.SystemFeaturesTest.testCameraFeatures(SystemFeaturesTest.java:122)
+at java.lang.reflect.Method.invoke(Native Method)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at junit.framework.TestCase.runBare(TestCase.java:134)
+at junit.framework.TestResult$1.protect(TestResult.java:115)
+at android.support.test.internal.runner.junit3.AndroidTestResult.runProtected(AndroidTestResult.java:77)
+at junit.framework.TestResult.run(TestResult.java:118)
+at android.support.test.internal.runner.junit3.AndroidTestResult.run(AndroidTestResult.java:55)
+at junit.framework.TestCase.run(TestCase.java:124)
+at android.support.test.internal.runner.junit3.NonLeakyTestSuite$NonLeakyTest.run(NonLeakyTestSuite.java:63)
+at android.support.test.internal.runner.junit3.AndroidTestSuite$1.run(AndroidTestSuite.java:97)
+at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:428)
+at java.util.concurrent.FutureTask.run(FutureTask.java:237)
+at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+at java.lang.Thread.run(Thread.java:761)
+
+03-26 16:19:17 I/FailureListener: FailureListener.testFailed android.app.cts.SystemFeaturesTest#testCameraFeatures false true false
+03-26 16:19:19 D/FileUtil: Creating temp file at /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.26_16.13.24 with prefix "android.app.cts.SystemFeaturesTest#testCameraFeatures-logcat_" suffix ".zip"
+03-26 16:19:19 I/LogFileSaver: Saved log file /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.26_16.13.24/android.app.cts.SystemFeaturesTest#testCameraFeatures-logcat_531875273667484483.zip
+03-26 16:19:19 I/ResultReporter: Saved logs for android.app.cts.SystemFeaturesTest#testCameraFeatures-logcat in /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.26_16.13.24/android.app.cts.SystemFeaturesTest#testCameraFeatures-logcat_531875273667484483.zip
+03-26 16:19:19 D/FileUtil: Creating temp file at /tmp/3764431/cts/inv_7415891576764823370 with prefix "android.app.cts.SystemFeaturesTest#testCameraFeatures-logcat_" suffix ".zip"
+03-26 16:19:19 D/RunUtil: Running command with timeout: 10000ms
+03-26 16:19:19 D/RunUtil: Running [chmod]
+03-26 16:19:19 D/RunUtil: [chmod] command failed. return code 1
+03-26 16:19:19 D/FileUtil: Attempting to chmod /tmp/3764431/cts/inv_7415891576764823370/android.app.cts.SystemFeaturesTest#testCameraFeatures-logcat_2249973588247787856.zip to ug+rwx
+03-26 16:19:19 D/RunUtil: Running command with timeout: 10000ms
+03-26 16:19:19 D/RunUtil: Running [chmod, ug+rwx, /tmp/3764431/cts/inv_7415891576764823370/android.app.cts.SystemFeaturesTest#testCameraFeatures-logcat_2249973588247787856.zip]
+03-26 16:19:19 I/FileSystemLogSaver: Saved log file /tmp/3764431/cts/inv_7415891576764823370/android.app.cts.SystemFeaturesTest#testCameraFeatures-logcat_2249973588247787856.zip
+03-26 16:19:19 D/ModuleListener: ModuleListener.testEnded(android.app.cts.SystemFeaturesTest#testCameraFeatures, {})
+03-26 16:19:19 D/ModuleListener: ModuleListener.testStarted(android.app.cts.SystemFeaturesTest#testFeatureNamespaces)
+03-26 16:19:19 D/ModuleListener: ModuleListener.testEnded(android.app.cts.SystemFeaturesTest#testFeatureNamespaces, {})
+03-26 16:19:19 I/ConsoleReporter: [300/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.SystemFeaturesTest#testFeatureNamespaces pass
+03-26 16:19:19 D/ModuleListener: ModuleListener.testStarted(android.app.cts.SystemFeaturesTest#testLiveWallpaperFeature)
+03-26 16:19:19 D/ModuleListener: ModuleListener.testEnded(android.app.cts.SystemFeaturesTest#testLiveWallpaperFeature, {})
+03-26 16:19:19 I/ConsoleReporter: [301/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.SystemFeaturesTest#testLiveWallpaperFeature pass
+03-26 16:19:19 D/ModuleListener: ModuleListener.testStarted(android.app.cts.SystemFeaturesTest#testLocationFeatures)
+03-26 16:19:19 D/ModuleListener: ModuleListener.testEnded(android.app.cts.SystemFeaturesTest#testLocationFeatures, {})
+03-26 16:19:19 I/ConsoleReporter: [302/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.SystemFeaturesTest#testLocationFeatures pass
+03-26 16:19:19 D/ModuleListener: ModuleListener.testStarted(android.app.cts.SystemFeaturesTest#testNfcFeatures)
+03-26 16:19:19 D/ModuleListener: ModuleListener.testEnded(android.app.cts.SystemFeaturesTest#testNfcFeatures, {})
+03-26 16:19:19 I/ConsoleReporter: [303/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.SystemFeaturesTest#testNfcFeatures pass
+03-26 16:19:19 D/ModuleListener: ModuleListener.testStarted(android.app.cts.SystemFeaturesTest#testScreenFeatures)
+03-26 16:19:19 D/ModuleListener: ModuleListener.testEnded(android.app.cts.SystemFeaturesTest#testScreenFeatures, {})
+03-26 16:19:19 I/ConsoleReporter: [304/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.SystemFeaturesTest#testScreenFeatures pass
+03-26 16:19:19 D/ModuleListener: ModuleListener.testStarted(android.app.cts.SystemFeaturesTest#testSensorFeatures)
+03-26 16:19:19 D/ModuleListener: ModuleListener.testEnded(android.app.cts.SystemFeaturesTest#testSensorFeatures, {})
+03-26 16:19:19 I/ConsoleReporter: [305/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.SystemFeaturesTest#testSensorFeatures pass
+03-26 16:19:19 D/ModuleListener: ModuleListener.testStarted(android.app.cts.SystemFeaturesTest#testSipFeatures)
+03-26 16:19:19 D/ModuleListener: ModuleListener.testEnded(android.app.cts.SystemFeaturesTest#testSipFeatures, {})
+03-26 16:19:19 I/ConsoleReporter: [306/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.SystemFeaturesTest#testSipFeatures pass
+03-26 16:19:19 D/ModuleListener: ModuleListener.testStarted(android.app.cts.SystemFeaturesTest#testTelephonyFeatures)
+03-26 16:19:19 D/ModuleListener: ModuleListener.testEnded(android.app.cts.SystemFeaturesTest#testTelephonyFeatures, {})
+03-26 16:19:19 I/ConsoleReporter: [307/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.SystemFeaturesTest#testTelephonyFeatures pass
+03-26 16:19:19 D/ModuleListener: ModuleListener.testStarted(android.app.cts.SystemFeaturesTest#testTouchScreenFeatures)
+03-26 16:19:19 D/ModuleListener: ModuleListener.testEnded(android.app.cts.SystemFeaturesTest#testTouchScreenFeatures, {})
+03-26 16:19:19 I/ConsoleReporter: [308/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.SystemFeaturesTest#testTouchScreenFeatures pass
+03-26 16:19:19 D/ModuleListener: ModuleListener.testStarted(android.app.cts.SystemFeaturesTest#testUsbAccessory)
+03-26 16:19:19 D/ModuleListener: ModuleListener.testFailed(android.app.cts.SystemFeaturesTest#testUsbAccessory, junit.framework.AssertionFailedError: PackageManager#hasSystemFeature should return true for android.hardware.usb.accessory
+at junit.framework.Assert.fail(Assert.java:50)
+at junit.framework.Assert.assertTrue(Assert.java:20)
+at android.app.cts.SystemFeaturesTest.assertAvailable(SystemFeaturesTest.java:501)
+at android.app.cts.SystemFeaturesTest.testUsbAccessory(SystemFeaturesTest.java:481)
+at java.lang.reflect.Method.invoke(Native Method)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at junit.framework.TestCase.runBare(TestCase.java:134)
+at junit.framework.TestResult$1.protect(TestResult.java:115)
+at android.support.test.internal.runner.junit3.AndroidTestResult.runProtected(AndroidTestResult.java:77)
+at junit.framework.TestResult.run(TestResult.java:118)
+at android.support.test.internal.runner.junit3.AndroidTestResult.run(AndroidTestResult.java:55)
+at junit.framework.TestCase.run(TestCase.java:124)
+at android.support.test.internal.runner.junit3.NonLeakyTestSuite$NonLeakyTest.run(NonLeakyTestSuite.java:63)
+at android.support.test.internal.runner.junit3.AndroidTestSuite$1.run(AndroidTestSuite.java:97)
+at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:428)
+at java.util.concurrent.FutureTask.run(FutureTask.java:237)
+at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+at java.lang.Thread.run(Thread.java:761)
+)
+03-26 16:19:19 I/ConsoleReporter: [309/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.SystemFeaturesTest#testUsbAccessory fail: junit.framework.AssertionFailedError: PackageManager#hasSystemFeature should return true for android.hardware.usb.accessory
+at junit.framework.Assert.fail(Assert.java:50)
+at junit.framework.Assert.assertTrue(Assert.java:20)
+at android.app.cts.SystemFeaturesTest.assertAvailable(SystemFeaturesTest.java:501)
+at android.app.cts.SystemFeaturesTest.testUsbAccessory(SystemFeaturesTest.java:481)
+at java.lang.reflect.Method.invoke(Native Method)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at junit.framework.TestCase.runBare(TestCase.java:134)
+at junit.framework.TestResult$1.protect(TestResult.java:115)
+at android.support.test.internal.runner.junit3.AndroidTestResult.runProtected(AndroidTestResult.java:77)
+at junit.framework.TestResult.run(TestResult.java:118)
+at android.support.test.internal.runner.junit3.AndroidTestResult.run(AndroidTestResult.java:55)
+at junit.framework.TestCase.run(TestCase.java:124)
+at android.support.test.internal.runner.junit3.NonLeakyTestSuite$NonLeakyTest.run(NonLeakyTestSuite.java:63)
+at android.support.test.internal.runner.junit3.AndroidTestSuite$1.run(AndroidTestSuite.java:97)
+at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:428)
+at java.util.concurrent.FutureTask.run(FutureTask.java:237)
+at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+at java.lang.Thread.run(Thread.java:761)
+
+03-26 16:19:19 I/FailureListener: FailureListener.testFailed android.app.cts.SystemFeaturesTest#testUsbAccessory false true false
+03-26 16:19:21 D/FileUtil: Creating temp file at /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.26_16.13.24 with prefix "android.app.cts.SystemFeaturesTest#testUsbAccessory-logcat_" suffix ".zip"
+03-26 16:19:21 I/LogFileSaver: Saved log file /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.26_16.13.24/android.app.cts.SystemFeaturesTest#testUsbAccessory-logcat_6365276785843226030.zip
+03-26 16:19:21 I/ResultReporter: Saved logs for android.app.cts.SystemFeaturesTest#testUsbAccessory-logcat in /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/tools/../../android-cts/logs/2017.03.26_16.13.24/android.app.cts.SystemFeaturesTest#testUsbAccessory-logcat_6365276785843226030.zip
+03-26 16:19:21 D/FileUtil: Creating temp file at /tmp/3764431/cts/inv_7415891576764823370 with prefix "android.app.cts.SystemFeaturesTest#testUsbAccessory-logcat_" suffix ".zip"
+03-26 16:19:21 D/RunUtil: Running command with timeout: 10000ms
+03-26 16:19:21 D/RunUtil: Running [chmod]
+03-26 16:19:21 D/RunUtil: [chmod] command failed. return code 1
+03-26 16:19:21 D/FileUtil: Attempting to chmod /tmp/3764431/cts/inv_7415891576764823370/android.app.cts.SystemFeaturesTest#testUsbAccessory-logcat_1763226413533355576.zip to ug+rwx
+03-26 16:19:21 D/RunUtil: Running command with timeout: 10000ms
+03-26 16:19:21 D/RunUtil: Running [chmod, ug+rwx, /tmp/3764431/cts/inv_7415891576764823370/android.app.cts.SystemFeaturesTest#testUsbAccessory-logcat_1763226413533355576.zip]
+03-26 16:19:21 I/FileSystemLogSaver: Saved log file /tmp/3764431/cts/inv_7415891576764823370/android.app.cts.SystemFeaturesTest#testUsbAccessory-logcat_1763226413533355576.zip
+03-26 16:19:21 D/ModuleListener: ModuleListener.testEnded(android.app.cts.SystemFeaturesTest#testUsbAccessory, {})
+03-26 16:19:21 D/ModuleListener: ModuleListener.testStarted(android.app.cts.SystemFeaturesTest#testWifiFeature)
+03-26 16:19:21 D/ModuleListener: ModuleListener.testEnded(android.app.cts.SystemFeaturesTest#testWifiFeature, {})
+03-26 16:19:21 I/ConsoleReporter: [310/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.SystemFeaturesTest#testWifiFeature pass
+03-26 16:19:21 D/ModuleListener: ModuleListener.testStarted(android.app.cts.TabActivityTest#testChildTitleCallback)
+03-26 16:19:21 D/ModuleListener: ModuleListener.testEnded(android.app.cts.TabActivityTest#testChildTitleCallback, {})
+03-26 16:19:21 I/ConsoleReporter: [311/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.TabActivityTest#testChildTitleCallback pass
+03-26 16:19:21 D/ModuleListener: ModuleListener.testStarted(android.app.cts.TabActivityTest#testTabActivity)
+03-26 16:19:21 D/ModuleListener: ModuleListener.testEnded(android.app.cts.TabActivityTest#testTabActivity, {})
+03-26 16:19:21 I/ConsoleReporter: [312/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.TabActivityTest#testTabActivity pass
+03-26 16:19:21 D/ModuleListener: ModuleListener.testStarted(android.app.cts.TimePickerDialogTest#testOnClick)
+03-26 16:19:21 D/ModuleListener: ModuleListener.testEnded(android.app.cts.TimePickerDialogTest#testOnClick, {})
+03-26 16:19:21 I/ConsoleReporter: [313/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.TimePickerDialogTest#testOnClick pass
+03-26 16:19:21 D/ModuleListener: ModuleListener.testStarted(android.app.cts.TimePickerDialogTest#testOnRestoreInstanceState)
+03-26 16:19:21 D/ModuleListener: ModuleListener.testEnded(android.app.cts.TimePickerDialogTest#testOnRestoreInstanceState, {})
+03-26 16:19:21 I/ConsoleReporter: [314/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.TimePickerDialogTest#testOnRestoreInstanceState pass
+03-26 16:19:21 D/ModuleListener: ModuleListener.testStarted(android.app.cts.TimePickerDialogTest#testOnTimeChanged)
+03-26 16:19:21 D/ModuleListener: ModuleListener.testEnded(android.app.cts.TimePickerDialogTest#testOnTimeChanged, {})
+03-26 16:19:21 I/ConsoleReporter: [315/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.TimePickerDialogTest#testOnTimeChanged pass
+03-26 16:19:21 D/ModuleListener: ModuleListener.testStarted(android.app.cts.TimePickerDialogTest#testSaveInstanceState)
+03-26 16:19:21 D/ModuleListener: ModuleListener.testEnded(android.app.cts.TimePickerDialogTest#testSaveInstanceState, {})
+03-26 16:19:21 I/ConsoleReporter: [316/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.TimePickerDialogTest#testSaveInstanceState pass
+03-26 16:19:21 D/ModuleListener: ModuleListener.testStarted(android.app.cts.TimePickerDialogTest#testUpdateTime)
+03-26 16:19:21 D/ModuleListener: ModuleListener.testEnded(android.app.cts.TimePickerDialogTest#testUpdateTime, {})
+03-26 16:19:21 I/ConsoleReporter: [317/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.TimePickerDialogTest#testUpdateTime pass
+03-26 16:19:21 D/ModuleListener: ModuleListener.testStarted(android.app.cts.UiModeManagerTest#testNightMode)
+03-26 16:19:21 D/ModuleListener: ModuleListener.testEnded(android.app.cts.UiModeManagerTest#testNightMode, {})
+03-26 16:19:21 I/ConsoleReporter: [318/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.UiModeManagerTest#testNightMode pass
+03-26 16:19:21 D/ModuleListener: ModuleListener.testStarted(android.app.cts.UiModeManagerTest#testUiMode)
+03-26 16:19:21 D/ModuleListener: ModuleListener.testEnded(android.app.cts.UiModeManagerTest#testUiMode, {})
+03-26 16:19:21 I/ConsoleReporter: [319/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.UiModeManagerTest#testUiMode pass
+03-26 16:19:21 D/ModuleListener: ModuleListener.testStarted(android.app.cts.WallpaperInfoTest#test)
+03-26 16:19:21 D/ModuleListener: ModuleListener.testEnded(android.app.cts.WallpaperInfoTest#test, {})
+03-26 16:19:21 I/ConsoleReporter: [320/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.WallpaperInfoTest#test pass
+03-26 16:19:21 D/ModuleListener: ModuleListener.testStarted(android.app.cts.WallpaperManagerTest#testSuggestDesiredDimensions)
+03-26 16:19:21 D/ModuleListener: ModuleListener.testEnded(android.app.cts.WallpaperManagerTest#testSuggestDesiredDimensions, {})
+03-26 16:19:21 I/ConsoleReporter: [321/321 x86 CtsAppTestCases chromeos2-row8-rack4-host19:22] android.app.cts.WallpaperManagerTest#testSuggestDesiredDimensions pass
+03-26 16:19:22 D/ModuleListener: ModuleListener.testRunEnded(312026, {other_shared_dirty=4396, java_size=6706, native_shared_dirty=1504, native_private_dirty=17740, java_shared_dirty=1904, gc_invocation_count=0, native_free=6601, execution_time=672792, java_free=2681, pre_sent_transactions=-1, other_private_dirty=8992, global_freed_size=1432, java_private_dirty=5192, native_allocated=17462, global_freed_count=47, global_alloc_size=200, cpu_time=32844, native_pss=17785, sent_transactions=-1, other_pss=32927, java_pss=5238, global_alloc_count=8, received_transactions=-1, java_allocated=4025, pre_received_transactions=-1, native_size=24064})
+03-26 16:19:22 I/ConsoleReporter: [chromeos2-row8-rack4-host19:22] x86 CtsAppTestCases completed in 5m 12s. 316 passed, 5 failed, 0 not executed
+03-26 16:19:22 D/ModuleDef: Cleaner: ApkInstaller
+03-26 16:19:22 D/TestDevice: Uninstalling com.android.cts.launcherapps.simpleapp
+03-26 16:19:24 D/TestDevice: Uninstalling android.app.stubs
+03-26 16:19:26 D/TestDevice: Uninstalling android.app.cts
+03-26 16:19:27 W/CompatibilityTest: Inaccurate runtime hint for x86 CtsAppTestCases, expected 6m 38s was 5m 29s
+03-26 16:19:27 I/CompatibilityTest: Running system status checker after module execution: CtsAppTestCases
+03-26 16:19:28 I/MonitoringUtils: Connectivity: passed check.
+03-26 16:19:28 D/RunUtil: run interrupt allowed: false
+03-26 16:19:28 I/ResultReporter: Invocation finished in 6m 4s. PASSED: 316, FAILED: 5, NOT EXECUTED: 0, MODULES: 1 of 1
+03-26 16:19:29 I/ResultReporter: Test Result: /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/results/2017.03.26_16.13.24/test_result_failures.html
+03-26 16:19:29 I/ResultReporter: Full Result: /tmp/autotest-tradefed-install_e5FdR6/8d01e7b907e6e63a12b197e2ce3529c0/android-cts-7.1_r3-linux_x86-x86/android-cts/results/2017.03.26_16.13.24.zip

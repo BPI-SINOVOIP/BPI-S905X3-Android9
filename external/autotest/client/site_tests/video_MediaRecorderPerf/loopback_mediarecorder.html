@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>MediaStream Recoder Perf Test (w/ MediaSource)</title>
+</head>
+<body>
+  <div>MediaRecorder Performance test.</div>
+  <video id="video" autoplay></video>
+</body>
+<script>
+
+'use strict';
+
+var testProgress = 0;
+var videoBuffer;
+var elapsedTime = 0;
+var videoBufferSize = 0;
+
+const DEFAULT_CONSTRAINTS = {audio: true, video: {width: 1280, height: 720}};
+
+function createAndStartMediaRecorder(stream, mimeType) {
+  return new Promise(function(resolve, reject) {
+    document.getElementById('video').src = URL.createObjectURL(stream);
+    var recorder = new MediaRecorder(stream, {'mimeType' : mimeType});
+    console.log('Recorder object created.');
+    recorder.start();
+    resolve(recorder);
+  });
+}
+
+// Creates a MediaRecorder and starts recording. Caller can check
+// the generated histograms to verify whether HW encode is used.
+function startRecording(codec) {
+  var mimeType = 'video/webm; codecs=' + codec;
+  var videoSize = 0;
+  var emptyBlobs = 0;
+  var startTime = 0;
+  var timeStamps = [];
+  var recordedChunks = [];
+  navigator.mediaDevices.getUserMedia(DEFAULT_CONSTRAINTS)
+      .then(function(stream) {
+        return createAndStartMediaRecorder(stream, mimeType);
+      })
+      .then(function(recorder) {
+        startTime = new Date().getTime();
+        setTimeout(function() {
+          recorder.stop();
+        }, 20000);
+        recorder.ondataavailable = function(event) {
+          if (event.data.size > 0)
+            recordedChunks.push(event.data);
+        };
+        recorder.onstop = function(event) {
+          var endTime = new Date().getTime();
+          var recordedBlob = new Blob(recordedChunks, {type: 'video/webm'});
+          var reader = new FileReader();
+          reader.addEventListener("loadend", function() {
+            // reader.result contains the contents of blob as a typed array.
+            videoBuffer = reader.result;
+            videoBuffer = videoBuffer.substr(videoBuffer.indexOf(',') + 1);
+            videoBufferSize = videoBuffer.length;
+            elapsedTime = endTime - startTime;
+            testProgress = 1;
+          });
+          reader.readAsDataURL(recordedBlob);
+        };
+      });
+}
+
+</script>
+</body>
+</html>

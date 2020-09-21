@@ -1,0 +1,21 @@
+//===---------------------------------------------------------------===
+// llvm-diff command line tool
+//===---------------------------------------------------------------===
+
+cc_binary_host {
+    name: "llvm-diff",
+    defaults: ["llvm-defaults"],
+    srcs: [
+        "llvm-diff.cpp",
+        "DiffConsumer.cpp",
+        "DifferenceEngine.cpp",
+        "DiffLog.cpp",
+    ],
+    static_libs: [
+        "libLLVMIRReader",
+        "libLLVMBitReader",
+        "libLLVMAsmParser",
+        "libLLVMCore",
+        "libLLVMSupport",
+    ],
+}

@@ -1,0 +1,15 @@
+{
+  "name": "AudioTestExtension",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApII8Bgq/4hEHNLvYeaxZ+CVplFlh/i8bLs8pPCBLU535pcTvwzm2sF9d1EDKDR/JHJQ0szkFQUL0JjGL1nHrTAH9KN28gYd1qO9iUtXvNo+FkNMlYTerPw6Gkh3Gvt6cDiZpJHm2y4EMmE6kL7AFvuQnJ4PoQLQENHO9/JV9WNOB+KCen8Tbfcd5YQ/C1m3hhwRtbLMk9Am0qPs+rs4hgNNvR1qQpvGnfkm8stk1OAsPhOg/3dQMd/G8GA5jgNknFfaNKGUYr0Q71gxUDp1/n/OYWc71a0xkUANYA5K0NAJqC3BSfyPHizrce/3aeqbO1SXU0KdCIg/Z8CuB72SAiQIDAQAB",
+  "description": "Extension for audio autotests.",
+  "app": {
+    "background": {
+      "scripts": ["background.js"]
+    }
+  },
+  "permissions": [
+    "audio"
+  ]
+}

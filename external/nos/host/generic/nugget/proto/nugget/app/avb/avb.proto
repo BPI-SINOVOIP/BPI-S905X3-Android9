@@ -1,0 +1,191 @@
+/*
+ * Copyright (C) 2017 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+syntax = "proto3";
+
+package nugget.app.avb;
+
+import "nugget/protobuf/options.proto";
+
+service Avb {
+  option (nugget.protobuf.app_id) = "AVB";
+  option (nugget.protobuf.app_name) = "Android Verified Boot";
+  option (nugget.protobuf.app_version) = 1;
+  option (nugget.protobuf.request_buffer_size) = 2200;
+  option (nugget.protobuf.response_buffer_size) = 640;
+
+  rpc GetState (GetStateRequest) returns (GetStateResponse);
+  rpc Load (LoadRequest) returns (LoadResponse);
+  rpc Store (StoreRequest) returns (StoreResponse);
+  rpc GetLock (GetLockRequest) returns (GetLockResponse);
+  rpc CarrierLock (CarrierLockRequest) returns (CarrierLockResponse);
+  rpc CarrierUnlock (CarrierUnlockRequest) returns (CarrierUnlockResponse);
+  rpc SetDeviceLock (SetDeviceLockRequest) returns (SetDeviceLockResponse);
+  rpc SetBootLock (SetBootLockRequest) returns (SetBootLockResponse);
+  rpc SetOwnerLock (SetOwnerLockRequest) returns (SetOwnerLockResponse);
+  rpc SetProduction (SetProductionRequest) returns (SetProductionResponse);
+  rpc CarrierLockTest (CarrierLockTestRequest) returns (CarrierLockTestResponse);
+  rpc Reset (ResetRequest) returns (ResetResponse);
+  rpc BootloaderDone (BootloaderDoneRequest) returns (BootloaderDoneResponse);
+  rpc GetOwnerKey (GetOwnerKeyRequest) returns (GetOwnerKeyResponse);
+  rpc GetResetChallenge (GetResetChallengeRequest) returns (GetResetChallengeResponse);
+  rpc ProductionResetTest (ProductionResetTestRequest) returns (ProductionResetTestResponse);
+}
+
+enum LockIndex {
+  CARRIER = 0;
+  DEVICE = 1;
+  BOOT = 2;
+  OWNER = 3;
+}
+
+// GetState
+message GetStateRequest {}
+message GetStateResponse {
+  uint64 version = 1;
+  bool bootloader = 2;
+  bool production = 3;
+  uint32 number_of_locks = 4;
+  bytes locks = 5;
+}
+
+// Load
+message LoadRequest {
+  uint32 slot = 1;
+}
+message LoadResponse {
+  uint64 version = 1;
+}
+
+// Store
+message StoreRequest {
+  uint32 slot = 1;
+  uint64 version = 2;
+}
+message StoreResponse {}
+
+// GetLock
+message GetLockRequest {
+  LockIndex lock = 1;
+}
+message GetLockResponse {
+  uint32 locked = 1;
+}
+
+message CarrierUnlock {
+  uint64 version = 1;
+  uint64 nonce = 2;
+  bytes signature = 3;
+}
+
+// Carrier lock
+message CarrierLockRequest {
+  uint32 locked = 1;
+  bytes device_data = 2;
+}
+message CarrierLockResponse {}
+
+message CarrierUnlockRequest {
+  CarrierUnlock token = 1;
+}
+message CarrierUnlockResponse {}
+
+// Device lock
+message SetDeviceLockRequest {
+  uint32 locked = 1;
+}
+message SetDeviceLockResponse {}
+
+// Boot lock
+message SetBootLockRequest {
+  uint32 locked = 1;
+}
+message SetBootLockResponse {}
+
+// Owner lock
+message SetOwnerLockRequest {
+  uint32 locked = 1;
+  bytes key = 2;
+}
+message SetOwnerLockResponse {}
+
+message GetOwnerKeyRequest {
+  uint32 offset = 1;
+  uint32 size = 2;
+}
+message GetOwnerKeyResponse {
+  bytes chunk = 1;
+}
+
+// SetProduction
+message SetProductionRequest {
+  bool production = 1;
+  bytes device_data = 2;
+}
+message SetProductionResponse {}
+
+// CarrierLockTest
+message CarrierLockTestRequest {
+  uint64 last_nonce = 1;
+  uint64 version = 2;
+  bytes device_data = 3;
+  CarrierUnlock token = 4;
+}
+
+message CarrierLockTestResponse {}
+
+// Reset
+message ResetToken {
+  enum Selectors {
+    INVALID = 0;
+    CURRENT = 1;
+  };
+  uint32 selector = 1;
+  bytes signature = 2;
+}
+
+message ResetRequest {
+  enum ResetKind {
+    PRODUCTION = 0;
+    LOCKS = 1;
+  };
+
+  ResetKind kind = 1;
+  ResetToken token = 2; // optional
+}
+message ResetResponse {}
+
+// GetResetChallenge
+message GetResetChallengeRequest {}
+message GetResetChallengeResponse {
+  uint32 selector = 1;
+  uint64 nonce = 2;
+  bytes device_data = 3;
+}
+
+// ProductionResetTest
+message ProductionResetTestRequest {
+  uint32 selector = 1;
+  uint64 nonce = 2;
+  bytes device_data = 3;
+  bytes signature = 4;
+}
+message ProductionResetTestResponse {}
+
+// BootloaderDone
+message BootloaderDoneRequest {}
+
+message BootloaderDoneResponse {}

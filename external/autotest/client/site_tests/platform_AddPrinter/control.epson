@@ -1,0 +1,34 @@
+# Copyright 2017 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+AUTHOR = "The Chromium OS Authors"
+NAME = "platform_AddPrinter.epson"
+TIME = "SHORT"
+TEST_TYPE = "client"
+CRITERIA = """
+The test fails in case of malfunctioning of CUPS printing stack (cupsd,
+cupstestppd, cups filters) or component updater (unable to download epson
+filter from Omaha server).
+"""
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "platform"
+ATTRIBUTES = "suite:bvt-perbuild"
+JOB_RETRIES = 2
+
+DOC = """
+This is a test that emulates following user behavior:
+Manually add an Epson printer (user-provided ppd file) and print a pdf.
+
+In the process of adding a printer, API is triggered to download a
+component (escpr).
+
+When printing the pdf, the printing request sent to printer is caught by
+a fake printer which compares the request to a golden file to verify its
+correctness.
+"""
+
+job.run_test('platform_AddPrinter',
+             ppd_file='Epson-WF-3620_Series-epson-escpr-en.ppd',
+             golden_file='golden_printing_request_epson.bin',
+             component='epson-inkjet-printer-escpr')

@@ -1,0 +1,17 @@
+name: "libnos"
+description:
+    "libnos contains common header files used for communicating with Citadel."
+
+third_party {
+  url {
+    type: HOMEPAGE
+    value: "https://nugget-os.googlesource.com/host/generic/"
+  }
+  url {
+    type: GIT
+    value: "https://nugget-os.googlesource.com/host/generic/"
+  }
+  version: "304ad12670fbefde9d4d466715a5bb1e883a12d3"
+  last_upgrade_date { year: 2017 month: 10 day: 30 }
+  license_type: NOTICE
+}

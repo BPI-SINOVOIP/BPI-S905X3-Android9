@@ -1,0 +1,59 @@
+# Copyright (c) 2013 The Chromium OS Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+from autotest_lib.client.common_lib import utils
+
+AUTHOR = "Chromium OS"
+NAME = "autoupdate_CatchBadSignatures"
+TIME = "MEDIUM"
+TEST_CATEGORY = "Functional"
+TEST_CLASS = "platform"
+TEST_TYPE = "server"
+JOB_RETRIES = 2
+# TODO(jorgelo): move this to bvt-cq after crbug.com/427384 is fixed.
+ATTRIBUTES = "suite:bvt-perbuild"
+BUG_TEMPLATE = {
+    'cc': ['chromeos-installer-alerts@google.com'],
+    'components': ['Internals>Installer'],
+}
+
+DOC = """
+This is a test to verify that update_engine correctly checks
+signatures in the metadata hash and the update payload itself. This is
+achieved by feeding updates to update_engine where the private key
+used to make the signature, intentionally does not match with the
+public key used for verification.
+
+To run locally, you need to choose a devserver and a DUT that can reach each
+other. You cannot use a devserver on your workstation because it will not be
+accessible from any DUTs (due to SNAX).
+
+So lock a DUT that is not in use by the lab.
+Next, look up the dev_server_common.ini.erb (in repo chromeos_admin) for
+dev_server & restricted_subnet fields to pick a devserver in the same
+subnet with the testing DUT.
+
+Test that they can ping each other.
+
+You tell the test which devserver you want to use in this file:
+  src/third_party/autotest/files/shadow_config.ini
+
+by adding these lines:
+
+  [CROS]
+  dev_server = http://<hostname of devserver>:<port>
+
+With this in place, you can now run the test:
+
+  $ test_that <DUT_IP> autoupdate_CatchBadSignatures -b ${BOARD}
+
+"""
+
+def run_test(machine):
+    """Execute a test configuration on a given machine."""
+    host = hosts.create_host(machine)
+    job.run_test("autoupdate_CatchBadSignatures", host=host)
+
+# Invoke parallel tests.
+parallel_simple(run_test, machines)

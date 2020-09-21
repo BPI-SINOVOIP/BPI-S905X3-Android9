@@ -1,0 +1,64 @@
+From ea307c2e597a51f6cf60a786f2f2839413571e61 Mon Sep 17 00:00:00 2001
+From: Steve Muckle <smuckle@google.com>
+Date: Mon, 9 Oct 2017 14:35:11 -0700
+Subject: [PATCH] selftests/exec: build exec kselftest for Android
+
+The Makefile for the exec kselftest creates a script, symlink, copy of
+the binary, etc. Rather than have VTS copy all these items to the
+target, create a wrapper script to create these on the target. Note that
+the test also tries to access its Makefile.
+
+Bug: 67016227
+Test: run vts-kernel -m VtsKernelLinuxKselftestStaging
+Change-Id: Ifba2670b11e3ba80050eb0c89c269e4da14bdd27
+Signed-off-by: Steve Muckle <smuckle@google.com>
+---
+
+ [smuckle@google.com: drop changes to Android-specific files for
+  tracking of changes to upstream]
+
+  tools/testing/selftests/exec/execveat.sh | 33 ++++++++++++++++++++++++++++++++
+ create mode 100755 tools/testing/selftests/exec/execveat.sh
+
+diff --git a/tools/testing/selftests/exec/execveat.sh b/tools/testing/selftests/exec/execveat.sh
+new file mode 100755
+index 000000000000..dc049eaef690
+--- /dev/null
++++ b/tools/testing/selftests/exec/execveat.sh
+@@ -0,0 +1,33 @@
++#!/system/bin/sh
++
++#
++# Copyright (C) 2017 The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++# These are normally created as part of the kselftest build but for VTS
++# it is probably easier to use a wrapper script that creates them
++# at runtime, on target, as part of the test.
++
++DIR=$(dirname "$0")
++cd $DIR && \
++mkdir -p subdir && \
++echo '#!/system/bin/sh' > script && \
++echo 'exit $*' >> script && \
++chmod +x script && \
++touch Makefile && \
++ln -s -f execveat execveat.symlink && \
++cp execveat execveat.denatured && \
++chmod -x execveat.denatured && \
++./execveat
+-- 
+2.16.0.rc1.238.g530d649a79-goog
+

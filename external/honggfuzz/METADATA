@@ -1,0 +1,18 @@
+name: "Hongfuzz"
+description:
+    "A security oriented, feedback-driven, evolutionary, easy-to-use fuzzer "
+    "with interesting analysis options."
+
+third_party {
+  url {
+    type: HOMEPAGE
+    value: "https://github.com/google/honggfuzz"
+  }
+  url {
+    type: GIT
+    value: "https://github.com/google/honggfuzz"
+  }
+  version: "1.1"
+  last_upgrade_date { year: 2017 month: 9 day: 10 }
+  license_type: NOTICE
+}
