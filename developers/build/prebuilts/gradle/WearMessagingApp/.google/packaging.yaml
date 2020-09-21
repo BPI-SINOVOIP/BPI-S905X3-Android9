@@ -1,0 +1,23 @@
+
+# GOOGLE SAMPLE PACKAGING DATA
+#
+# This file is used by Google as part of our samples packaging process.
+# End users may safely ignore this file. It has no relevance to other systems.
+---
+status:       PUBLISHED
+technologies: [Android]
+categories:   [Wearable]
+languages:    [Java]
+solutions:    [Mobile]
+github:       android-WearMessagingApp
+level:        INTERMEDIATE
+icon:         screenshots/icon-web.png
+apiRefs:
+    - android:com.google.android.gms.auth.api.Auth
+    - android:com.google.android.gms.auth.api.signin.GoogleSignInAccount
+    - android:com.google.android.gms.common.api.GoogleApiClient
+    - android:android.support.wearable.view.WearableRecyclerView
+    - android:android.support.wearable.view.drawer.WearableActionDrawer
+    - android:android.support.wearable.view.drawer.WearableDrawerLayout
+    - android:android.support.v7.util.SortedList
+license: apache2
