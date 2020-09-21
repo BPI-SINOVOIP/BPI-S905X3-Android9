@@ -1,0 +1,1 @@
+rule android.wrap.cts.WrapTest** android.wrap.cts.WrapTestDebugMalloc@1

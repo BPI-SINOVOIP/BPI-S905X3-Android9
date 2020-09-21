@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        style="@style/RootLayoutPadding">
+
+        <TextView android:id="@+id/info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:padding="5dp"
+            android:text="@string/emergency_call_confirm_info"/>
+        <EditText
+            android:id="@+id/emergency_number"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:hint="@string/emergency_call_emergency_number_hint_text"
+            android:inputType="phone"
+            android:text="@string/emergency_call_emergency_number_text"/>
+        <EditText
+            android:id="@+id/local_phone_number"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:hint="@string/emergency_call_current_number_hint_text"
+            android:inputType="phone"/>
+        <Button
+            android:id="@+id/dial_button"
+            android:layout_width="200px"
+            android:layout_height="wrap_content"
+            android:text="@string/emergency_call_dial_text"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"/>
+    </LinearLayout>

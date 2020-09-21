@@ -1,0 +1,67 @@
+// Copyright (C) 2017 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+cc_library_shared {
+    name: "libctsjvmtiagent",
+
+    srcs: [
+        "cts_agent.cpp",
+        "tagging.cpp",
+        "tracking.cpp",
+        "redefine.cpp",
+    ],
+
+    header_libs: [
+        "libopenjdkjvmti_headers",
+    ],
+
+    shared_libs: [
+        "liblog",
+        "libdl",
+        "libz",
+    ],
+
+    // The test implementation. We get this provided by ART.
+    // Note: Needs to be "whole" as this exposes JNI functions.
+    whole_static_libs: ["libctstiagent"],
+
+    // Platform libraries  that may not be available to apps. Link in statically.
+    static_libs: ["libbase_ndk"],
+
+    strip: {
+        keep_symbols: true,
+    },
+
+    cflags: [
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wunreachable-code",
+        "-Wredundant-decls",
+        "-Wshadow",
+        "-Wunused",
+        "-Wimplicit-fallthrough",
+        "-Wfloat-equal",
+        "-Wint-to-void-pointer-cast",
+        "-Wused-but-marked-unused",
+        "-Wdeprecated",
+        "-Wunreachable-code-break",
+        "-Wunreachable-code-return",
+        "-g",
+        "-O0",
+    ],
+
+    sdk_version: "current",
+    stl: "c++_static",
+}

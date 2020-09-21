@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2018 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        package="android.appsecurity.cts.orderedactivity"
+        android:versionCode="10"
+        android:versionName="1.0">
+    <application android:label="@string/app_name">
+        <!-- Activities used for queries -->
+        <activity android:name=".OrderActivity2">
+            <intent-filter
+                    android:order="2">
+                <action android:name="android.cts.intent.action.ORDERED" />
+                <data android:scheme="https"
+                      android:host="www.google.com"
+                      android:pathPrefix="/cts/package" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".OrderActivity1">
+            <intent-filter
+                    android:order="1">
+                <action android:name="android.cts.intent.action.ORDERED" />
+                <data android:scheme="https"
+                      android:host="www.google.com"
+                      android:path="/cts/packageresolution" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".OrderActivityDefault">
+            <intent-filter>
+                <!-- default order -->
+                <action android:name="android.cts.intent.action.ORDERED" />
+                <data android:scheme="https"
+                      android:host="www.google.com" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".OrderActivity3">
+            <intent-filter
+                    android:order="3">
+                <action android:name="android.cts.intent.action.ORDERED" />
+                <data android:scheme="https"
+                      android:host="www.google.com"
+                      android:pathPrefix="/cts" />
+            </intent-filter>
+        </activity>
+
+        <!-- Services used for queries -->
+        <service android:name=".OrderServiceDefault">
+            <intent-filter>
+                <!-- default order -->
+              <action android:name="android.cts.intent.action.ORDERED" />
+                <data android:scheme="https"
+                      android:host="www.google.com" />
+            </intent-filter>
+        </service>
+        <service android:name=".OrderService2">
+            <intent-filter
+                    android:order="2">
+                <action android:name="android.cts.intent.action.ORDERED" />
+                <data android:scheme="https"
+                      android:host="www.google.com"
+                      android:pathPrefix="/cts/package" />
+            </intent-filter>
+        </service>
+        <service android:name=".OrderService3">
+            <intent-filter
+                    android:order="3">
+                <action android:name="android.cts.intent.action.ORDERED" />
+                <data android:scheme="https"
+                      android:host="www.google.com"
+                      android:pathPrefix="/cts" />
+            </intent-filter>
+        </service>
+        <service android:name=".OrderService1">
+            <intent-filter
+                    android:order="1">
+                <action android:name="android.cts.intent.action.ORDERED" />
+                <data android:scheme="https"
+                      android:host="www.google.com"
+                      android:path="/cts/packageresolution" />
+            </intent-filter>
+        </service>
+
+        <!-- Broadcast receivers used for queries -->
+        <receiver android:name=".OrderReceiver3">
+            <intent-filter
+                    android:order="3">
+                <action android:name="android.cts.intent.action.ORDERED" />
+                <data android:scheme="https"
+                      android:host="www.google.com"
+                      android:pathPrefix="/cts" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".OrderReceiverDefault">
+            <intent-filter>
+                <!-- default order -->
+              <action android:name="android.cts.intent.action.ORDERED" />
+                <data android:scheme="https"
+                      android:host="www.google.com" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".OrderReceiver1">
+            <intent-filter
+                    android:order="1">
+                <action android:name="android.cts.intent.action.ORDERED" />
+                <data android:scheme="https"
+                      android:host="www.google.com"
+                      android:path="/cts/packageresolution" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".OrderReceiver2">
+            <intent-filter
+                    android:order="2">
+                <action android:name="android.cts.intent.action.ORDERED" />
+                <data android:scheme="https"
+                      android:host="www.google.com"
+                      android:pathPrefix="/cts/package" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+    <instrumentation android:name="android.support.test.runner.AndroidJUnitRunner"
+        android:targetPackage="android.appsecurity.cts.orderedactivity" />
+</manifest>

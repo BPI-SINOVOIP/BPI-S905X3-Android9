@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2018 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textView_weight100_upright"
+        android:textFontWeight="100" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textView_weight100_italic"
+        android:textFontWeight="100"
+        android:textStyle="italic" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textAppearance_weight100_upright"
+        android:textAppearance="@style/TextAppearance.Weight100Upright" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textAppearance_weight100_italic"
+        android:textAppearance="@style/TextAppearance.Weight100Italic" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textView_weight200_upright"
+        android:textFontWeight="200" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textView_weight200_italic"
+        android:textFontWeight="200"
+        android:textStyle="italic" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textAppearance_weight200_upright"
+        android:textAppearance="@style/TextAppearance.Weight200Upright" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textAppearance_weight200_italic"
+        android:textAppearance="@style/TextAppearance.Weight200Italic" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textView_weight300_upright"
+        android:textFontWeight="300" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textView_weight300_italic"
+        android:textFontWeight="300"
+        android:textStyle="italic" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textAppearance_weight300_upright"
+        android:textAppearance="@style/TextAppearance.Weight300Upright" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textAppearance_weight300_italic"
+        android:textAppearance="@style/TextAppearance.Weight300Italic" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textView_weight400_upright"
+        android:textFontWeight="400" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textView_weight400_italic"
+        android:textFontWeight="400"
+        android:textStyle="italic" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textAppearance_weight400_upright"
+        android:textAppearance="@style/TextAppearance.Weight400Upright" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textAppearance_weight400_italic"
+        android:textAppearance="@style/TextAppearance.Weight400Italic" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textView_weight500_upright"
+        android:textFontWeight="500" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textView_weight500_italic"
+        android:textFontWeight="500"
+        android:textStyle="italic" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textAppearance_weight500_upright"
+        android:textAppearance="@style/TextAppearance.Weight500Upright" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textAppearance_weight500_italic"
+        android:textAppearance="@style/TextAppearance.Weight500Italic" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textView_weight600_upright"
+        android:textFontWeight="600" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textView_weight600_italic"
+        android:textFontWeight="600"
+        android:textStyle="italic" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textAppearance_weight600_upright"
+        android:textAppearance="@style/TextAppearance.Weight600Upright" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textAppearance_weight600_italic"
+        android:textAppearance="@style/TextAppearance.Weight600Italic" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textView_weight700_upright"
+        android:textFontWeight="700" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textView_weight700_italic"
+        android:textFontWeight="700"
+        android:textStyle="italic" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textAppearance_weight700_upright"
+        android:textAppearance="@style/TextAppearance.Weight700Upright" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textAppearance_weight700_italic"
+        android:textAppearance="@style/TextAppearance.Weight700Italic" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textView_weight800_upright"
+        android:textFontWeight="800" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textView_weight800_italic"
+        android:textFontWeight="800"
+        android:textStyle="italic" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textAppearance_weight800_upright"
+        android:textAppearance="@style/TextAppearance.Weight800Upright" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textAppearance_weight800_italic"
+        android:textAppearance="@style/TextAppearance.Weight800Italic" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textView_weight900_upright"
+        android:textFontWeight="900" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textView_weight900_italic"
+        android:textFontWeight="900"
+        android:textStyle="italic" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textAppearance_weight900_upright"
+        android:textAppearance="@style/TextAppearance.Weight900Upright" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textAppearance_weight900_italic"
+        android:textAppearance="@style/TextAppearance.Weight900Italic" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textView_normal"
+        android:textStyle="normal" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textAppearance_normal"
+        android:textAppearance="@style/TextAppearance.Normal" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textView_bold"
+        android:textStyle="bold" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textAppearance_bold"
+        android:textAppearance="@style/TextAppearance.Bold" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textView_italic"
+        android:textStyle="italic" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textAppearance_italic"
+        android:textAppearance="@style/TextAppearance.Italic" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textView_bold_italic"
+        android:textStyle="bold|italic" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textAppearance_bold_italic"
+        android:textAppearance="@style/TextAppearance.BoldItalic" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textView_weight100_bold"
+        android:textFontWeight="100"
+        android:textStyle="bold" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fullfamily"
+        android:id="@+id/textAppearance_weight100_bold"
+        android:textAppearance="@style/TextAppearance.Weight100Bold" />
+</LinearLayout>

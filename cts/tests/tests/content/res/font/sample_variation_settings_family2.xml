@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:android="http://schemas.android.com/apk/res/android">
+    <font android:font="@font/variable_width_dash_font" android:fontVariationSettings="'wdth' 500.0" />
+</font-family>

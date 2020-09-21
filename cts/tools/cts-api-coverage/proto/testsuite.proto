@@ -1,0 +1,175 @@
+// Copyright (C) 2018 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+// [START declaration]
+syntax = "proto3";
+package com_android_cts_apicoverage;
+// [END declaration]
+
+// [START java_declaration]
+option java_package = "com.android.cts.apicoverage";
+option java_outer_classname = "TestSuiteProto";
+// [END java_declaration]
+
+// [START messages]
+message Option {
+    string name = 1;
+    string key = 2;
+    string value =3;
+}
+
+message ConfigMetadata {
+    string module_name = 1;
+    string component = 2;
+    repeated Option options = 3;
+
+    message TargetPreparer {
+        string test_class = 1;
+        repeated Option options = 2;
+    }
+    repeated TargetPreparer target_preparers = 4;
+
+    message TestClass {
+        string test_class = 1;
+        string package = 2;
+        repeated Option options = 3;
+    }
+    repeated TestClass test_classes = 5;
+}
+
+message Annotation {
+    int32 visibility = 1;
+    string type = 2;
+
+    message Element {
+        string name = 1;
+        string value = 2;
+    }
+    repeated Element elements = 3;
+}
+
+message TestSuite {
+    string name = 1;
+
+    message Package {
+        string name = 1;
+
+        enum Type {
+            ANDROIDJUNIT = 0;
+            JAVAHOST = 1;
+            GTEST = 2;
+            DEQP = 3;
+            LIBCORE = 4;
+            DALVIK = 5;
+        }
+        Type type = 2;
+
+        message Class {
+            string name = 1;
+            string type = 2;
+            string super_class = 3;
+            string interface = 4;
+
+            enum ClassType {
+                UNKNOWN = 0;
+                JUNIT3 = 1;
+                JUNIT4 = 2;
+                PARAMETERIZED = 3;
+                JAVAHOST = 4;
+            }
+
+            ClassType class_type = 5;
+            repeated Annotation annotations = 6;
+
+            message Method {
+                string defining_class = 1;
+                string name = 2;
+                string parameters = 3;
+                string return_type = 4;
+                int32 access_flags = 5;
+                repeated Annotation annotations = 6;
+            }
+            repeated Method methods = 7;
+
+            message Field {
+                string defining_class = 1;
+                string name = 2;
+                string type = 3;
+                int32 access_flags = 4;
+                string initial_value = 5;
+                repeated Annotation annotations = 6;
+            }
+            repeated Field fields = 8;
+            string apk = 9;
+        }
+        repeated Class classes = 3;
+        string op_codes = 4;
+    }
+    repeated Package packages = 2;
+}
+
+// target File Metadata for e.g. config, apk, jar, exe, so
+message FileMetadata {
+    string description = 1;
+    ConfigMetadata config_metadata = 2;
+}
+
+// An entry in a Test Suire Release messages: cts, etc.
+message Entry {
+    // Entry ID
+    string id = 1;
+    // Name
+    string name = 2;
+
+    enum EntryType {
+        FOLDER = 0;
+        FILE = 1;
+        CONFIG = 2;
+        JAR = 3;
+        APK = 4;
+        EXE = 5;
+        SO = 6;
+    }
+
+    // Type
+    EntryType type = 3;
+    // Size
+    int64 size = 4;
+    // Content ID
+    string content_id = 5;
+    // Parent entry ID
+    string parent_id = 6;
+    // Relative path
+    string relative_path = 7;
+
+    FileMetadata file_metadata = 8;
+}
+
+// Test Suite Release: cts, etc.
+message TestSuiteContent {
+    // Entry ID
+    string id = 1;
+    // Name
+    string name = 2;
+    // Version
+    string version = 3;
+    // Build ID
+    string bid = 4;
+    // Content ID
+    string content_id = 5;
+    // File Entries
+    repeated Entry file_entries = 6;
+    repeated string known_failures = 7;
+}
+// [END messages]

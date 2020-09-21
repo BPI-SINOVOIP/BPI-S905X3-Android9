@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2018 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<resources>
+    <public type="attr" name="theme" id="0x01010000" />
+    <attr name="theme" format="reference" />
+
+    <public type="attr" name="name" id="0x01010003" />
+    <attr name="name" format="string" />
+
+    <public type="attr" name="exported" id="0x01010010" />
+    <attr name="exported" format="boolean" />
+
+    <public type="attr" name="minSdkVersion" id="0x0101020c" />
+    <attr name="minSdkVersion" format="integer|string" />
+
+    <public type="attr" name="versionCode" id="0x0101021b" />
+    <attr name="versionCode" format="integer" />
+
+    <public type="attr" name="versionName" id="0x0101021c" />
+    <attr name="versionName" format="string" />
+
+    <public type="attr" name="targetSdkVersion" id="0x01010270" />
+    <attr name="targetSdkVersion" format="integer|string" />
+
+    <public type="attr" name="compileSdkVersion" id="0x01010572" />
+    <attr name="compileSdkVersion" format="integer" />
+
+    <public type="attr" name="compileSdkVersionCodename" id="0x01010573" />
+    <attr name="compileSdkVersionCodename" format="string" />
+</resources>
+

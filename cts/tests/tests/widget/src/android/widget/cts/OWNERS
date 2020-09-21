@@ -1,0 +1,7 @@
+per-file TextView*.java = siyamed@google.com
+per-file TextView*.java = nona@google.com
+per-file TextView*.java = clarabayarri@google.com
+
+per-file EditText*.java = siyamed@google.com
+per-file EditText*.java = nona@google.com
+per-file EditText*.java = clarabayarri@google.com

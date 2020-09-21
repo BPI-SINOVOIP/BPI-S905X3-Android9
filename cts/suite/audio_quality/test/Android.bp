@@ -1,0 +1,52 @@
+//
+// Copyright (C) 2012 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+cc_test_host {
+    name: "cts_audio_quality_test",
+    srcs: ["*.cpp"],
+
+    static_libs: [
+        "libutils",
+        "liblog",
+        "libcutils",
+        "libtinyalsa",
+        "libtinyxml2",
+    ],
+
+    // need to keep everything in libcts_.. Otherwise, linker will drop some
+    // functions and linker error happens
+    whole_static_libs: ["libcts_audio_quality"],
+
+    cflags: [
+        "-g",
+        "-fno-exceptions",
+        "-Wall",
+        "-Werror",
+        "-Wno-unused-parameter",
+        "-Wno-unused-variable",
+    ],
+    ldflags: [
+        "-g",
+        "-fno-exceptions",
+    ],
+    stl: "libc++_static",
+    target: {
+        darwin: {
+            enabled: false,
+        },
+    },
+    compile_multilib: "first",
+}

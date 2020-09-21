@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2018 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<configuration description="Config for CTS Hidden API Signature test cases">
+    <option name="test-suite-tag" value="cts" />
+    <option name="config-descriptor:metadata" key="component" value="systems" />
+    <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
+        <option name="run-command" value="mkdir -p /data/local/tmp/signature-test" />
+        <option name="teardown-command" value="rm -rf /data/local/tmp/signature-test" />
+    </target_preparer>
+    <target_preparer class="com.android.compatibility.common.tradefed.targetprep.FilePusher">
+        <option name="push" value="blacklist.api->/data/local/tmp/signature-test/blacklist.api" />
+        <option name="push" value="dark_greylist.api->/data/local/tmp/signature-test/dark_greylist.api" />
+    </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.suite.SuiteApkInstaller">
+        <option name="cleanup-apks" value="true" />
+        <option name="test-file-name" value="CtsHiddenApiBlacklistCurrentApiTestCases.apk" />
+    </target_preparer>
+    <test class="com.android.tradefed.testtype.AndroidJUnitTest" >
+        <option name="package" value="android.signature.cts.api.hiddenapi_blacklist_current" />
+        <option name="runner" value="repackaged.android.test.InstrumentationTestRunner" />
+        <option name="class" value="android.signature.cts.api.HiddenApiTest" />
+        <option name="instrumentation-arg" key="hidden-api-files" value="blacklist.api,dark_greylist.api" />
+        <option name="runtime-hint" value="30s" />
+    </test>
+</configuration>

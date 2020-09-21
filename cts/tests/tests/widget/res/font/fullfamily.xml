@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2018 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<font-family xmlns:android="http://schemas.android.com/apk/res/android">
+    <font android:font="@font/ascii_a3em_weight100_upright" />
+    <font android:font="@font/ascii_b3em_weight100_italic" />
+    <font android:font="@font/ascii_c3em_weight200_upright" />
+    <font android:font="@font/ascii_d3em_weight200_italic" />
+    <font android:font="@font/ascii_e3em_weight300_upright" />
+    <font android:font="@font/ascii_f3em_weight300_italic" />
+    <font android:font="@font/ascii_g3em_weight400_upright" />
+    <font android:font="@font/ascii_h3em_weight400_italic" />
+    <font android:font="@font/ascii_i3em_weight500_upright" />
+    <font android:font="@font/ascii_j3em_weight500_italic" />
+    <font android:font="@font/ascii_k3em_weight600_upright" />
+    <font android:font="@font/ascii_l3em_weight600_italic" />
+    <font android:font="@font/ascii_m3em_weight700_upright" />
+    <font android:font="@font/ascii_n3em_weight700_italic" />
+    <font android:font="@font/ascii_o3em_weight800_upright" />
+    <font android:font="@font/ascii_p3em_weight800_italic" />
+    <font android:font="@font/ascii_q3em_weight900_upright" />
+    <font android:font="@font/ascii_r3em_weight900_italic" />
+</font-family>

@@ -1,0 +1,352 @@
+// Copyright (C) 2018 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+// Contains proto definition for storing CTS reports.
+
+syntax = "proto2";
+
+package com.android.cts.apicoverage;
+option java_package = "com.android.cts.apicoverage";
+option java_outer_classname = "CtsReportProto";
+
+// from common_report.proto
+// Information about the build on the phone.  All the fields
+// correspond to values from android.os.Build.
+// Next Id: 20
+message BuildInfo {
+  optional string board = 1;
+  optional string brand = 2;
+  optional string device = 3;
+  optional string display = 4;
+  optional string fingerprint = 5;
+  optional string id = 6;
+  optional string model = 7;
+  optional string product = 8;
+  message Version {
+    optional string release = 1;
+    optional string sdk = 2;
+  }
+  optional Version version = 9;
+  optional string manufacturer = 10;
+  // This field is deprecated in android.os.Build. Use supported_abi instead.
+  optional string abi = 11 [deprecated = true];
+  // This field is deprecated in android.os.Build. Use supported_abi instead.
+  optional string abi2 = 12 [deprecated = true];
+  repeated string supported_abi = 13;
+  repeated string supported_32_bit_abi = 14;
+  repeated string supported_64_bit_abi = 15;
+  // Build.BASE_OS The base OS build the product is based on. See b/23003940
+  optional string base_os = 16;
+  // Build.SECURITY_PATCH The user-visible security patch level. See b/23003940
+  optional string security_patch = 17;
+  // A build fingerprint of the reference device. See go/apfe-reference-build
+  optional string reference_build_fingerprint = 18;
+  // RO Property set for the build.
+  map<string, string> ro_property_map = 19;
+}
+
+// Summary count of the test results.
+message Summary {
+  optional int32 failed = 1;
+  optional int32 not_executed = 2;
+  optional int32 pass = 3;
+  optional int32 timeout = 4;
+  optional int32 warning = 5;
+}
+
+// Information about the device's memory configuration
+message MemoryInfo {
+    // ActivityManager.isLowRamDevice
+    optional bool is_low_ram_device = 1;
+
+    // ActivityManager.getMemoryClass()
+    optional int32 memory_class = 2;
+
+    // ActivityManager.getLargeMemoryClass()
+    optional int32 large_memory_class = 3;
+
+    // MemoryInfo.totalMem
+    optional int64 total_memory = 4;
+}
+
+message CpuInfo {
+  // Runtime.availableProcessors
+  optional int32 available_processors = 1;
+}
+// from common_report.proto ends
+
+// Logical screen density
+// The numbers are in dpi and should match android.util.DisplayMetrics.DENSITY_*
+enum LogicalDensity {
+  LDPI = 120;
+  MDPI = 160;
+  TVDPI = 213;
+  HDPI = 240;
+  DENSITY_260 = 260;
+  DENSITY_280 = 280;
+  DENSITY_300 = 300;
+  XHDPI = 320;
+  DENSITY_340 = 340;
+  DENSITY_360 = 360;
+  // Intermediate density for screens that sit somewhere between DENSITY_XHIGH (320 dpi) and
+  // DENSITY_XXHIGH (480 dpi).
+  DENSITY_400 = 400;
+  DENSITY_420 = 420;
+  XXHDPI = 480;
+  // Intermediate density for screens that sit somewhere between DENSITY_XXHIGH (480 dpi) and
+  // DENSITY_XXXHIGH (640 dpi).
+  DENSITY_560 = 560;
+  XXXHDPI = 640;
+}
+
+// Logical screen size
+// The numbers should match
+// android.content.res.Configuration.SCREENLAYOUT_SIZE_*
+enum LogicalSize {
+  UNDEFINED = 0;
+  SMALL = 1;
+  NORMAL = 2;
+  LARGE = 3;
+  XLARGE = 4;
+}
+
+// Result type of PTS tests defined in:
+// cts/suite/pts/lib/commonutil/src/com/android/pts/util/ResultType.java
+enum ResultType {
+  LOWER_BETTER = 0;
+  HIGHER_BETTER = 1;
+  NEUTRAL = 2;
+  WARNING = 3;
+}
+
+// Result unit of PTS values defined in:
+// cts/suite/pts/lib/commonutil/src/com/android/pts/util/ResultUnit.java
+enum ResultUnit {
+  NONE = 0;
+  MS = 1;
+  FPS = 2;
+  OPS = 3;
+  KBPS = 4;
+  MBPS = 5;
+  BYTE = 6;
+  COUNT = 7;
+  SCORE = 8;
+}
+
+// A CtsReport message encapsulates the output of a Compatibility Test Suite
+// (CTS) run.
+message CtsReport {
+
+  // Test plan that was run, generally "CTS".
+  optional string test_plan = 1;
+
+  // Version of the CTS tool.
+  optional string version = 2;
+
+  optional int64 start_time = 3;
+  optional int64 end_time = 4;
+
+  // Fields describing the particular device under test.
+  // Next Id: 32
+  message DeviceInfo {
+
+    optional string screen_resolution = 1;
+    optional LogicalDensity logical_screen_density = 17;
+    optional LogicalSize logical_screen_size = 18;
+
+    optional string subscriber_id = 2 [deprecated = true];
+    optional string type = 3 [deprecated = true];
+    optional string device_id = 4 [deprecated = true];
+    optional string imei = 5 [deprecated = true];
+    optional string imsi = 6 [deprecated = true];
+    optional string keypad = 7;
+    repeated string locale = 8;
+    optional string navigation = 9;
+    optional string network = 10 [deprecated = true];
+    optional string touch = 11;
+    optional float x_dpi = 12;
+    optional float y_dpi = 13;
+    optional string opengl_es_version = 19;
+
+    // Use BuildInfo.supported_abi instead
+    optional string build_abi = 20 [deprecated = true];
+    // Use BuildInfo.supported_abi instead
+    optional string build_abi2 = 21 [deprecated = true];
+
+    optional BuildInfo build_info = 14;
+    optional MemoryInfo memory_info = 29;
+    optional CpuInfo cpu_info = 30;
+
+    // Filesystem partitions.
+    optional string partitions = 22;
+
+    repeated string system_library = 23;
+    // Deprecated. These values are found in the extension list
+    repeated string opengl_texture_format = 24 [deprecated = true];
+    // GLES20.GL_EXTENSIONS,  GL10.GL_EXTENSIONS or GLES30.GL_EXTENSIONS
+    repeated string opengl_extension = 25;
+    // gl.glGetString(GL10.GL_VENDOR) or GLES20.glGetString(GLES20.GL_VENDOR)
+    // or GLES30.glGetString(GLES30.GL_VENDOR)
+    optional string opengl_vendor = 26;
+    // gl.glGetString(GL10.GL_RENDERER)
+    // or GLES20.glGetString(GLES20.GL_RENDERER)
+    // or GLES30.glGetString(GLES30.GL_RENDERER)
+    optional string opengl_renderer = 27;
+
+    // Hardware features that may be available on the device.
+    // This includes features such as camera, gps and compass.
+    message Feature {
+      optional string name = 1;
+      optional string type = 2;
+      optional bool available = 3;
+      optional int32 version = 4;
+    }
+    repeated Feature feature = 15;
+
+    // Running processes.
+    message Process {
+      optional string name = 1;
+      optional int32 uid = 2;
+    }
+    repeated Process process = 16;
+
+    // Configuration.smallestScreenWidthDp
+    optional int32 smallest_screen_width_dp = 28;
+
+    // The value reported from UserManager.getMaxSupportedUsers
+    optional int32 max_supported_users = 31;
+  }
+  optional DeviceInfo device_info = 5;
+
+  // Information about the host running the test suite.
+  message HostInfo {
+
+    // Hostname of the machine running the tests.
+    optional string hostname = 1;
+
+    // Operating system running on the host.
+    message Os {
+      optional string arch = 1;
+      optional string name = 2;
+      optional string version = 3;
+    }
+    optional Os os = 2;
+
+    // Information about the JRE used to run the tests.
+    message JavaEnv {
+      optional string name = 1;
+      optional string version = 2;
+    }
+    optional JavaEnv java_env = 3;
+
+    // CTS version and parameters during runtime.
+    message Cts {
+      optional string version = 1;
+
+      message Parameter {
+        optional string name = 1;
+        optional int32 value = 2;
+      }
+      repeated Parameter parameter = 2;
+    }
+    optional Cts cts = 4;
+  }
+  optional HostInfo host_info = 6;
+
+  optional Summary summary = 7;
+
+  // Group of test suites within a specific java package.
+  message TestPackage {
+
+    // Java package name.
+    optional string deprecated_app_package_name = 1 [deprecated = true];
+
+    // Unique name describing the test package within the java package.
+    optional string name = 2;
+    optional string deprecated_digest = 3 [deprecated = true];
+    optional bool deprecated_signature_check = 4 [deprecated = true];
+
+    // Group of test cases.
+    message TestSuite {
+
+      // Unique name describing the test suite within the test package.
+      optional string name = 1;
+
+      // Group of individual tests.
+      message TestCase {
+
+        // Unique name describing the test case within the test suite.
+        optional string name = 1;
+        optional string priority = 2;
+
+        // Smallest test unit, which ideally tests only one feature or function.
+        message Test {
+
+          // Unique name describing the test within the test case.
+          optional string name = 1;
+
+          // Result of the test run.
+          optional string result = 2;
+
+          // Bug id for known issues.
+          optional string deprecated_known_failure = 3 [deprecated = true];
+
+          // Time this test was started.
+          optional int64 deprecated_start_time = 4 [deprecated = true];
+
+          // Time this test completed.
+          optional int64 deprecated_end_time = 5 [deprecated = true];
+
+          // Captures an exception thrown during the test.
+          message FailedScene {
+            optional string exception_message = 1;
+            optional string stack_trace = 2;
+          }
+          repeated FailedScene failed_scene = 6;
+
+          // Summary of the PTS test.
+          message Summary {
+            optional string message = 1;
+            optional ResultType score_type = 2;
+            optional ResultUnit unit = 3;
+            optional double value = 4;
+          }
+          optional Summary summary = 7;
+
+          // Details of the PTS test.
+          message Details {
+
+            // Set of values captured when running the PTS test.
+            message ValueArray {
+              optional string source = 1;
+              optional string message = 2;
+              optional ResultType score_type = 3;
+              optional ResultUnit unit = 4;
+              repeated double value = 5;
+            }
+            repeated ValueArray value_array = 1;
+          }
+          optional Details details = 8;
+        }
+        repeated Test test = 3;
+      }
+      repeated TestCase test_case = 2;
+    }
+    repeated TestSuite test_suite = 5;
+
+    // abi specifies the ABI the test ran under like "armeabi".
+    optional string abi = 6;
+  }
+  repeated TestPackage test_package = 8;
+}

@@ -1,0 +1,58 @@
+/*
+ * Copyright (C) 2018 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+syntax = "proto2";
+
+option java_outer_classname = "BatterySavingCtsCommon";
+
+package android.os.cts.batterysaving.common;
+
+message Payload {
+    message TestServiceRequest {
+        // Request to clear TestService.LastStartIntent.
+        optional bool clear_last_intent = 1;
+
+        // Request to return the action set in TestService.LastStartIntent.
+        optional bool get_last_intent = 2;
+
+        // Request to start testService.
+        message StartServiceRequest {
+            optional bool foreground = 1;
+            optional string action = 2;
+        }
+
+        optional StartServiceRequest start_service = 3;
+
+        message SetAlarmRequest {
+            optional int32 type = 1;
+            optional int64 trigger_time = 2;
+            optional int64 repeat_interval = 3;
+            optional bool allow_while_idle = 4;
+            optional string intent_action = 5;
+        }
+        optional SetAlarmRequest set_alarm = 4;
+    }
+
+    optional TestServiceRequest test_service_request = 1;
+
+    message TestServiceResponse {
+        optional bool clear_last_intent_ack = 1;
+        optional string get_last_intent_action = 2;
+        optional bool start_service_ack = 3;
+        optional bool set_alarm_ack = 4;
+    }
+
+    optional TestServiceResponse test_service_response = 2;
+}

@@ -1,0 +1,24 @@
+# DO NOT MODIFY.  CHANGE gen_blacklist.py INSTEAD.
+{
+  "arm": {
+    "inotify_init": 316,
+    "openat": 322,
+    "syncfs": 373
+  },
+  "arm64": {
+    "openat": 56,
+    "syncfs": 267
+  },
+  "mips": {
+    "openat": 4288
+  },
+  "mips64": {
+    "openat": 5247
+  },
+  "x86": {
+    "openat": 295
+  },
+  "x86_64": {
+    "openat": 257
+  }
+}
