@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.mixpanel.android</groupId>
+  <artifactId>mixpanel-android</artifactId>
+  <version>4.6.4</version>
+  <packaging>aar</packaging>
+  <name>mixpanel-android</name>
+  <description>An Android library for Mixpanel Analytics 
+http://mixpanel.com/android-analytics/</description>
+  <url>https://github.com/mixpanel/mixpanel-android</url>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/license/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>mixpanel_dev</id>
+      <name>Mixpanel Developers</name>
+      <email>dev+android@mixpanel.com</email>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:http://github.com/mixpanel/mixpanel-android</connection>
+    <developerConnection>scm:git:git@github.com:mixpanel/mixpanel-android.git</developerConnection>
+    <url>http://github.com/mixpanel/mixpanel-android</url>
+  </scm>
+  <dependencies>
+    <dependency>
+      <groupId>com.google.android.gms</groupId>
+      <artifactId>play-services</artifactId>
+      <version>[3.1,)</version>
+      <scope>compile</scope>
+      <optional>true</optional>
+    </dependency>
+  </dependencies>
+</project>

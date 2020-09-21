@@ -1,0 +1,60 @@
+// Copyright (C) 2017 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+java_import_host {
+    name: "asm-5.2",
+    jars: ["asm-5.2.jar"],
+}
+
+java_import_host {
+    name: "asm-analysis-5.2",
+    jars: ["asm-analysis-5.2.jar"],
+}
+
+java_import_host {
+    name: "asm-commons-5.2",
+    jars: ["asm-commons-5.2.jar"],
+}
+
+java_import_host {
+    name: "asm-tree-5.2",
+    jars: ["asm-tree-5.2.jar"],
+}
+
+// These should be host-only, since there is no bytecode on the device to be
+// parsed with ASM, but jacocoagent currently needs them to compile (b/69671801)
+java_import {
+    name: "asm-6.0",
+    host_supported: true,
+    jars: ["asm-6.0.jar"],
+}
+
+java_import {
+    name: "asm-analysis-6.0",
+    host_supported: true,
+    jars: ["asm-analysis-6.0.jar"],
+}
+
+java_import {
+    name: "asm-commons-6.0",
+    host_supported: true,
+    jars: ["asm-commons-6.0.jar"],
+}
+
+java_import {
+    name: "asm-tree-6.0",
+    host_supported: true,
+    jars: ["asm-tree-6.0.jar"],
+}
+

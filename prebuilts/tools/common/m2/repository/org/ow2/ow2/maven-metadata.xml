@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>org.ow2</groupId>
+  <artifactId>ow2</artifactId>
+  <versioning>
+    <release>1.5</release>
+    <versions>
+      <version>1.5</version>
+    </versions>
+    <lastUpdated>20180502210534</lastUpdated>
+  </versioning>
+</metadata>

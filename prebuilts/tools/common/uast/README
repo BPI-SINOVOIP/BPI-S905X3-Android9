@@ -1,0 +1,17 @@
+UAST
+----
+Check out UAST from https://github.com/JetBrains/uast
+
+To generate UAST:
+./gradlew clean assemble sourceJar
+
+Then copy into prebuilts/tools/common/uast these libraries:
+cp \
+   uast-common/build/libs/uast-common-1.0.jar \
+   uast-java/build/libs/uast-java-1.0.jar \
+   uast-common/build/libs/uast-common-1.0-sources.jar \
+   uast-java/build/libs/uast-java-1.0-sources.jar \
+   $TOOLS_ROOT/prebuilts/tools/common/uast
+
+The current versions were built from the head at
+951b7e299a6eb604599ef5c8e5521bcbf5345ea6

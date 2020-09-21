@@ -1,0 +1,4 @@
+copy of prebuilts/tools/common/m2/repository/com/google/guava/guava/21.0/guava-21.0.jar
+
+TODO: delete this copy and just rely on above. This copy is here
+so projects that do not have prebuilts/tools can build against this jar.

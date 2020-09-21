@@ -1,0 +1,19 @@
+This jar was produced by the following command:
+
+mvn org.apache.maven.plugins:maven-install-plugin:2.5.1:install-file \
+        -Dfile=<path-to-jar>/apache-mime4j-core-0.7.2.jar \
+        -DgroupId=org.apache.james \
+        -DartifactId=apache-mime4j-core \
+        -Dversion=0.7.2 \
+        -Dpackaging=jar \
+        -DgeneratePom=true \
+        -DlocalRepositoryPath=repository \
+        -DcreateChecksum=true
+
+The Dfile jar was obtained from:
+
+http://central.maven.org/maven2/org/apache/james/apache-mime4j-core/0.7.2/
+
+And should track the release:
+
+https://github.com/apache/james-mime4j/releases/tag/apache-mime4j-project-0.7.2

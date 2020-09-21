@@ -1,0 +1,80 @@
+/*
+ * Modified from https://gist.github.com/xian/05c4f27da6d4156b9827842217c2cd5c
+ * Reference: http://robolectric.org/blog/2017/03/01/hermetic-builds/
+ *
+ * Run this script by `gradle -b update.gradle`
+ */
+
+defaultTasks 'copySdks'
+
+def androidSdkVersions = [
+        '4.1.2_r1-robolectric-0',
+        '4.1.2_r1-robolectric-r1',
+        '4.2.2_r1.2-robolectric-0',
+        '4.2.2_r1.2-robolectric-r1',
+        '4.3_r2-robolectric-0',
+        '4.3_r2-robolectric-r1',
+        '4.4_r1-robolectric-1',
+        '4.4_r1-robolectric-r2',
+        '5.0.0_r2-robolectric-1',
+        '5.0.2_r3-robolectric-r0',
+        '5.1.1_r9-robolectric-1',
+        '5.1.1_r9-robolectric-r2',
+        '6.0.0_r1-robolectric-0',
+        '6.0.1_r3-robolectric-0',
+        '6.0.1_r3-robolectric-r1',
+        '7.0.0_r1-robolectric-0',
+        '7.0.0_r1-robolectric-r1',
+        '7.1.0_r7-robolectric-0',
+        '7.1.0_r7-robolectric-r1',
+        'o-preview-4-robolectric-0',
+        '8.0.0_r4-robolectric-0',
+        '8.0.0_r4-robolectric-r1',
+        '8.1.0-robolectric-r4458339',
+]
+
+def buildDir = System.getProperty("user.dir")
+
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    sandbox
+}
+
+def allSdkConfigurations = []
+
+androidSdkVersions.forEach { version ->
+    allSdkConfigurations << configurations.create(version)
+    dependencies.add(version, "org.robolectric:android-all:${version}")
+    dependencies.add('sandbox', "org.robolectric:android-all:${version}")
+}
+
+task copySdks(type: Copy) {
+    into "$buildDir"
+    from allSdkConfigurations
+
+    doLast {
+        // robolectric-deps file is not used in Make build, so we don't need to generate it
+    //     def f = new File("$buildDir/robolectric-deps.properties")
+    //     f.delete()
+
+    //     f << "# Place this file in your test resources dir (e.g. src/test/resources).\n"
+    //     f << "# Paths below should be absolute, or relative to this file.\n"
+    //     f << "#\n"
+
+        allSdkConfigurations.forEach { config ->
+            config.allDependencies.forEach { dep ->
+                def files = new ArrayList(config.files)
+                if (files.size != 1) {
+                    throw new RuntimeException("huh, more than one file in ${dep}? ${files}")
+                }
+    //             def file = files[0]
+    //             f << "${dep.group}\\:${dep.name}\\:${dep.version}=path/to/${file.name}\n"
+            }
+        }
+    }
+}

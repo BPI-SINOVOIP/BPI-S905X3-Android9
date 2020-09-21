@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.braintreepayments.api</groupId>
+  <artifactId>braintree</artifactId>
+  <version>2.3.6</version>
+  <packaging>aar</packaging>
+  <name>braintree</name>
+  <description>This is Braintree's v.zero SDK for Android. Integrate this library to accept payments in your Android app.</description>
+  <url>https://github.com/braintree/braintree_android</url>
+  <licenses>
+    <license>
+      <name>MIT</name>
+      <url>http://opensource.org/licenses/MIT</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>devs</id>
+      <name>Braintree Payments</name>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git@github.com:braintree/braintree_android.git</connection>
+    <developerConnection>scm:git@github.com:braintree/braintree_android.git</developerConnection>
+    <url>scm:git@github.com:braintree/braintree_android.git</url>
+  </scm>
+  <dependencies>
+    <dependency>
+      <groupId>com.android.support</groupId>
+      <artifactId>support-annotations</artifactId>
+      <version>[24.0.0,25.0.0)</version>
+      <scope>compile</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>com.paypal.android.sdk</groupId>
+      <artifactId>paypal-one-touch</artifactId>
+      <version>2.3.6</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.braintreepayments.api</groupId>
+      <artifactId>core</artifactId>
+      <version>2.3.6</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.braintreepayments.api</groupId>
+      <artifactId>data-collector</artifactId>
+      <version>2.3.6</version>
+      <scope>compile</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>com.google.android.gms</groupId>
+      <artifactId>play-services-wallet</artifactId>
+      <version>[9.0.0,10.0.0)</version>
+      <scope>compile</scope>
+      <optional>true</optional>
+    </dependency>
+  </dependencies>
+</project>

@@ -1,0 +1,4 @@
+java_import_host {
+    name: "ninepatch-prebuilt",
+    jars: ["ninepatch-prebuilt.jar"],
+}

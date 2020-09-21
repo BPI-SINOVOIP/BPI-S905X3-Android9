@@ -1,0 +1,19 @@
+This jar was produced by the following command:
+
+mvn org.apache.maven.plugins:maven-install-plugin:2.5.1:install-file \
+        -Dfile=$OUT/guava-23.0.jar \
+        -DgroupId=com.google.guava \
+        -DartifactId=guava \
+        -Dversion=23.0 \
+        -Dpackaging=jar \
+        -DgeneratePom=true \
+        -DlocalRepositoryPath=repository \
+        -DcreateChecksum=true
+
+The Dfile jar was obtained from:
+
+http://central.maven.org/maven2/com/google/guava/guava/23.0/
+
+And should track the release:
+
+https://github.com/google/guava/releases/tag/v23.0

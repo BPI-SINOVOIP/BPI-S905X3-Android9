@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.facebook.stetho</groupId>
+  <artifactId>stetho-timber</artifactId>
+  <version>1.4.0</version>
+  <packaging>aar</packaging>
+  <name>Stetho Timber module</name>
+  <description>Stetho Debugging Platform for Android</description>
+  <url>https://github.com/facebook/stetho</url>
+  <licenses>
+    <license>
+      <name>BSD License</name>
+      <url>https://github.com/facebook/stetho/blob/master/LICENSE</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>facebook</id>
+      <name>Facebook</name>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:https://github.com/facebook/stetho.git</connection>
+    <developerConnection>scm:git:git@github.com:facebook/stetho.git</developerConnection>
+    <url>https://github.com/facebook/stetho.git</url>
+  </scm>
+  <dependencies>
+    <dependency>
+      <groupId>com.facebook.stetho</groupId>
+      <artifactId>stetho</artifactId>
+      <version>1.4.0</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.jakewharton.timber</groupId>
+      <artifactId>timber</artifactId>
+      <version>4.1.2</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+</project>

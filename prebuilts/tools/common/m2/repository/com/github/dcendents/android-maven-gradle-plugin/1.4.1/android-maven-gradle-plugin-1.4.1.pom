@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.github.dcendents</groupId>
+  <artifactId>android-maven-gradle-plugin</artifactId>
+  <version>1.4.1</version>
+  <name>Gradle Android Maven Plugin</name>
+  <description>Modification to the standard Maven plugin to be compatible with android-library projects (aar).</description>
+  <url>https://github.com/dcendents/android-maven-gradle-plugin</url>
+  <inceptionYear>2013</inceptionYear>
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+    </license>
+  </licenses>
+  <scm>
+    <url>https://github.com/dcendents/android-maven-gradle-plugin.git</url>
+  </scm>
+  <developers>
+    <developer>
+      <id>dcendents</id>
+      <name>Daniel Beland</name>
+      <email>dcendents@gmail.com</email>
+    </developer>
+  </developers>
+</project>

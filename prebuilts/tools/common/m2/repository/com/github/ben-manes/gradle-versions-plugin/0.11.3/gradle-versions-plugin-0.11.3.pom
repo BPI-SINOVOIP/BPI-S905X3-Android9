@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.github.ben-manes</groupId>
+  <artifactId>gradle-versions-plugin</artifactId>
+  <version>0.11.3</version>
+  <name>Gradle Versions plugin</name>
+  <description>Gradle plugin that provides tasks for discovering dependency updates.</description>
+  <url>https://github.com/ben-manes/gradle-versions-plugin</url>
+  <inceptionYear>2012</inceptionYear>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>ben-manes</id>
+      <name>Ben Manes</name>
+      <email>ben.manes@gmail.com</email>
+    </developer>
+    <developer>
+      <id>zenedith</id>
+      <name>Zenedith</name>
+      <email>zenedith@wp.pl</email>
+    </developer>
+    <developer>
+      <id>jochenberger</id>
+      <name>Jochen Berger</name>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:https://ben-manes@github.com/ben-manes/gradle-versions-plugin.git</connection>
+    <developerConnection>scm:git://github.com/ben-manes/gradle-versions-plugin.git</developerConnection>
+    <url>https://github.com/ben-manes/gradle-versions-plugin</url>
+  </scm>
+  <dependencies>
+    <dependency>
+      <groupId>org.spockframework</groupId>
+      <artifactId>spock-core</artifactId>
+      <version>0.7-groovy-2.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.thoughtworks.xstream</groupId>
+      <artifactId>xstream</artifactId>
+      <version>1.4.7</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+</project>

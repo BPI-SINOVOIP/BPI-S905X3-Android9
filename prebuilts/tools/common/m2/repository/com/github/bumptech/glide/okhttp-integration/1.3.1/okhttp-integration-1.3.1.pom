@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.github.bumptech.glide</groupId>
+  <artifactId>okhttp-integration</artifactId>
+  <version>1.3.1</version>
+  <name>Glide OkHttp Integration</name>
+  <description>An integration library to use OkHttp to fetch data over http/https in Glide</description>
+  <url>https://github.com/bumptech/glide</url>
+  <licenses>
+    <license>
+      <name>Simplified BSD License</name>
+      <url>http://www.opensource.org/licenses/bsd-license</url>
+      <distribution>repo</distribution>
+    </license>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>sjudd</id>
+      <name>Sam Judd</name>
+      <email>judds@google.com</email>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git@github.com:bumptech/glide.git</connection>
+    <developerConnection>scm:git@github.com:bumptech/glide.git</developerConnection>
+    <url>https://github.com/bumptech/glide</url>
+  </scm>
+  <dependencies>
+    <dependency>
+      <groupId>com.github.bumptech.glide</groupId>
+      <artifactId>glide</artifactId>
+      <version>3.6.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.squareup.okhttp</groupId>
+      <artifactId>okhttp</artifactId>
+      <version>2.2.0</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+</project>

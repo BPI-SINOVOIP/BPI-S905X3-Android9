@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.braintreepayments</groupId>
+  <artifactId>encryption</artifactId>
+  <version>2.1.0</version>
+  <name>encryption</name>
+  <description>Client side encryption for Braintree integrations on Android.</description>
+  <url>https://github.com/braintree/braintree_android_encryption</url>
+  <licenses>
+    <license>
+      <name>MIT</name>
+      <url>http://opensource.org/licenses/MIT</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>devs</id>
+      <name>Braintree Payments</name>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git@github.com:braintree/braintree_android_encryption.git</connection>
+    <developerConnection>scm:git@github.com:braintree/braintree_android_encryption.git</developerConnection>
+    <url>scm:git@github.com:braintree/braintree_android_encryption.git</url>
+  </scm>
+</project>

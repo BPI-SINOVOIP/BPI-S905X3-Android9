@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.artemzin.rxjava</groupId>
+  <artifactId>proguard-rules</artifactId>
+  <version>1.1.0.0</version>
+  <packaging>aar</packaging>
+  <name>proguard-rules</name>
+  <description>ProGuard rules for RxJava shipped as AAR!</description>
+  <url>https://github.com/artem-zinnatullin/RxJavaProGuardRules</url>
+  <licenses>
+    <license>
+      <name>Apache License Version 2.0</name>
+      <url>https://github.com/artem-zinnatullin/RxJavaProGuardRules/blob/master/LICENSE</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>Artem Zinnatullin</id>
+      <name>Artem Zinnatullin</name>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git@github.com:artem-zinnatullin/RxJavaProGuardRules.git</connection>
+    <developerConnection>scm:git@github.com:artem-zinnatullin/RxJavaProGuardRules.git</developerConnection>
+    <url>https://github.com/artem-zinnatullin/RxJavaProGuardRules</url>
+  </scm>
+</project>

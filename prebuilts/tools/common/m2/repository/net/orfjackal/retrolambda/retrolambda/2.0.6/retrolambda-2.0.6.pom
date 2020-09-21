@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <artifactId>parent</artifactId>
+    <groupId>net.orfjackal.retrolambda</groupId>
+    <version>2.0.6</version>
+    <relativePath>../../parent/pom.xml</relativePath>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>retrolambda</artifactId>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>net.orfjackal.retrolambda.Main</mainClass>
+            </manifest>
+            <manifestEntries>
+              <Premain-Class>net.orfjackal.retrolambda.PreMain</Premain-Class>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>retrolambda-inception</id>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <property />
+                <exec>
+                  <arg />
+                  <arg />
+                  <arg />
+                  <arg />
+                  <arg />
+                  <arg />
+                  <arg />
+                  <arg />
+                  <arg />
+                </exec>
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-shade-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <minimizeJar>true</minimizeJar>
+          <relocations>
+            <relocation>
+              <pattern>org.objectweb.asm</pattern>
+              <shadedPattern>net.orfjackal.retrolambda.asm</shadedPattern>
+            </relocation>
+            <relocation>
+              <pattern>com.google</pattern>
+              <shadedPattern>net.orfjackal.retrolambda.google</shadedPattern>
+            </relocation>
+          </relocations>
+          <filters>
+            <filter>
+              <artifact>org.ow2.asm:asm-debug-all</artifact>
+              <excludes>
+                <exclude>**/*.html</exclude>
+                <exclude>**/*.dtd</exclude>
+                <exclude>META-INF/**</exclude>
+              </excludes>
+            </filter>
+            <filter>
+              <artifact>com.google.guava:guava</artifact>
+              <excludes>
+                <exclude>META-INF/**</exclude>
+              </excludes>
+            </filter>
+          </filters>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>hamcrest-core</artifactId>
+          <groupId>org.hamcrest</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-library</artifactId>
+      <version>1.3</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>hamcrest-core</artifactId>
+          <groupId>org.hamcrest</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>1.10.19</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>objenesis</artifactId>
+          <groupId>org.objenesis</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hamcrest-core</artifactId>
+          <groupId>org.hamcrest</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+  </dependencies>
+</project>
+

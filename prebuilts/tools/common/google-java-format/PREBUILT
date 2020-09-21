@@ -1,0 +1,23 @@
+This folder contains prebuilt JARs from the google-java-format project:
+
+https://github.com/google/google-java-format
+
+Binaries and source may be obtained at:
+
+https://github.com/google/google-java-format/releases
+
+or for snapshots:
+
+https://oss.sonatype.org/content/repositories/snapshots/com/google/googlejavaformat/google-java-format/
+
+google-java-format-1.0-all-deps.jar was built from SHA-1:
+f8a2688f012bbc10f30cce5234d1b5370f4a4865
+with tag google-java-format-1.0
+
+google-java-format-all-deps.jar was built from SHA-1:
+7e2e9c57d275124b2c6b530fa79532cd409355a7
+and fetched from snapshot:
+https://oss.sonatype.org/content/repositories/snapshots/com/google/googlejavaformat/google-java-format/1.2-SNAPSHOT/google-java-format-1.2-20161215.234410-25-all-deps.jar
+
+google-java-format-diff.py was fetched at SHA-1:
+cfd66b25558271f0a53bbeaf5b44aac49a12fa76

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.uber.nullaway</groupId>
+  <artifactId>nullaway</artifactId>
+  <version>0.2.0</version>
+  <name>NullAway</name>
+  <description>A fast annotation-based null checker for Java</description>
+  <url>https://github.com/uber/NullAway/</url>
+  <licenses>
+    <license>
+      <name>The MIT License</name>
+      <url>https://opensource.org/licenses/MIT</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>msridhar</id>
+      <name>Manu Sridharan</name>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:git://github.com/uber/NullAway.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/uber/NullAway.git</developerConnection>
+    <url>https://github.com/uber/NullAway/</url>
+  </scm>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.errorprone</groupId>
+      <artifactId>error_prone_test_helpers</artifactId>
+      <version>2.1.1</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>junit</artifactId>
+          <groupId>junit</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.checkerframework</groupId>
+      <artifactId>checker-qual</artifactId>
+      <version>2.2.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.facebook.infer.annotation</groupId>
+      <artifactId>infer-annotation</artifactId>
+      <version>0.11.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.inject</groupId>
+      <artifactId>javax.inject</artifactId>
+      <version>1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.reactivex.rxjava2</groupId>
+      <artifactId>rxjava</artifactId>
+      <version>2.1.2</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>

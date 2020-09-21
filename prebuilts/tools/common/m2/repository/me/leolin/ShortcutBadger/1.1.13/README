@@ -1,0 +1,22 @@
+This jar was produced by the following command:
+
+mvn org.apache.maven.plugins:maven-install-plugin:2.5.1:install-file \
+        -Dfile=$OUT/ShortcutBadger-1.1.13.jar \
+        -DgroupId=me.leolin \
+        -DartifactId=ShortcutBadger \
+        -Dversion=1.1.13 \
+        -Dpackaging=jar \
+        -DgeneratePom=true \
+        -DlocalRepositoryPath=repository \
+        -DcreateChecksum=true
+
+The Dfile jar was obtained from:
+
+http://central.maven.org/maven2/me/leolin/ShortcutBadger/1.1.13/
+
+then unzipped, and classes.jar was repackaged as ShortcutBadger-1.1.13.jar.
+
+And should track the release:
+
+https://github.com/leolin310148/ShortcutBadger/commit/bcb3afd6c9c5efd5edfa453cddaf9375617d9ba5
+

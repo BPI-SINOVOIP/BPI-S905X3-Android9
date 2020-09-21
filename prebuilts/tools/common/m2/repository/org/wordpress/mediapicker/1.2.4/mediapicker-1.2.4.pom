@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.wordpress</groupId>
+  <artifactId>mediapicker</artifactId>
+  <version>1.2.4</version>
+  <packaging>aar</packaging>
+  <name>MediaPicker</name>
+  <description>MediaPicker is an Android Fragment that enables users to select multiple media from a variety of sources.</description>
+  <url>https://github.com/wordpress-mobile/MediaPicker</url>
+  <licenses>
+    <license>
+      <name>The MIT License (MIT)</name>
+      <url>http://opensource.org/licenses/MIT</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>tonyr59h</id>
+      <name>Anthony Rankin</name>
+      <email>tonyr@automattic.com</email>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:https://github.com/wordpress-mobile/MediaPicker.git</connection>
+    <developerConnection>scm:git:https://github.com/wordpress-mobile/MediaPicker.git</developerConnection>
+    <url>https://github.com/wordpress-mobile/MediaPicker</url>
+  </scm>
+  <dependencies>
+    <dependency>
+      <groupId>com.android.support</groupId>
+      <artifactId>support-v13</artifactId>
+      <version>22.0.0</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.mcxiaoke.volley</groupId>
+      <artifactId>library</artifactId>
+      <version>1.0.10</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+</project>

@@ -1,0 +1,11 @@
+// NOTE: This is not used during the actual build. Added to conveniently import into intellij
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+def jacocoVersion = "0.7.2.201409121644"
+dependencies {
+    compile files("lib/asm-debug-all-5.0.1.jar")
+    compile files("lib/org.jacoco.core-${jacocoVersion}.jar", "lib/org.jacoco.report-${jacocoVersion}.jar")
+    compile files("../commons-cli/commons-cli-1.2.jar")
+}

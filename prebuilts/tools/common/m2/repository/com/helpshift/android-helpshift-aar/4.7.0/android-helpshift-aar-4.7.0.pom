@@ -1,0 +1,40 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.helpshift</groupId>
+  <artifactId>android-helpshift-aar</artifactId>
+  <version>4.7.0</version>
+  <packaging>aar</packaging>
+
+  <name>Helpshift Android SDK</name>
+  <description>Android SDK to integrate with Helpshift.</description>
+  <url>http://www.helpshift.com</url>
+
+  <scm>
+    <url>http://www.helpshift.com</url>
+    <connection>http://www.helpshift.com</connection>
+  </scm>
+
+  <developers>
+    <developer>
+      <id>b.ghose</id>
+      <name>Baishampayan Ghose</name>
+      <email>b.ghose@helpshift.com</email>
+    </developer>
+    <developer>
+      <id>rhishikesh</id>
+      <name>Rhishikesh Joshi</name>
+      <email>rhishikesh@helpshift.com</email>
+    </developer>
+    <developer>
+      <id>daniel</id>
+      <name>Daniel Victor</name>
+      <email>daniel@helpshift.com</email>
+    </developer>
+  </developers>
+
+  <licenses>
+    <license>
+      <name>Proprietary</name>
+    </license>
+  </licenses>
+</project>

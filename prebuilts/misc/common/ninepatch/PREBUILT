@@ -1,0 +1,4 @@
+The object in this prebuilt directory can be rebuilt from
+	platform/tools/base/ninepatch
+
+From: https://android.googlesource.com/platform/tools/base/+/9bb80dcd51e8e953590473a469a67b3ec8f2b736

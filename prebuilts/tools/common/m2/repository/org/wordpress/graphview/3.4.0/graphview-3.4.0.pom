@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.wordpress</groupId>
+  <artifactId>graphview</artifactId>
+  <version>3.4.0</version>
+  <packaging>aar</packaging>
+  <name>GraphView</name>
+  <description>Android Graph Library for creating zoomable and scrollable line and bar graphs.</description>
+  <url>https://github.com/wordpress-mobile/GraphView</url>
+  <licenses>
+    <license>
+      <name>The GPLv2 License</name>
+      <url>https://www.gnu.org/licenses/old-licenses/gpl-2.0.html</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>daniloercoli</id>
+      <name>Danilo Ercoli</name>
+      <email>ercoli@gmail.com</email>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:https://github.com/wordpress-mobile/GraphView.git</connection>
+    <developerConnection>scm:git:https://github.com/wordpress-mobile/GraphView.git</developerConnection>
+    <url>https://github.com/wordpress-mobile/GraphView</url>
+  </scm>
+</project>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.meetic.dragueur</groupId>
+  <artifactId>dragueur</artifactId>
+  <version>1.0.3</version>
+  <packaging>aar</packaging>
+  <name>Dragueur</name>
+  <description>Dragueur</description>
+  <url>https://github.com/Meetic/Dragueur</url>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>meetic-android</id>
+      <name>meetic-android</name>
+      <email>champigny.florent@gmail.com</email>
+    </developer>
+  </developers>
+  <scm>
+    <connection>https://github.com/Meetic/Dragueur.git</connection>
+    <developerConnection>https://github.com/Meetic/Dragueur.git</developerConnection>
+    <url>https://github.com/Meetic/Dragueur</url>
+  </scm>
+  <dependencies>
+    <dependency>
+      <groupId>com.android.support</groupId>
+      <artifactId>appcompat-v7</artifactId>
+      <version>23.3.0</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+</project>

@@ -1,0 +1,17 @@
+IntelliJ Core:
+--------------
+Downloaded from
+https://www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/idea/intellij-core/162.2228.14/intellij-core-162.2228.14.zip
+
+The version number here, 162.2228.14, matches the IDE used in Studio,
+defined in tools/adt/idea/adt-branding/src/idea/AndroidStudioApplicationInfo.xml;
+
+  <build number="__BUILD_NUMBER__" date="__BUILD_DATE__" apiVersion="AI-162.2228.14"/>
+
+You can find all the available releases here:
+https://www.jetbrains.com/intellij-repository/releases
+
+They do not ship/distribute individual components for the contents
+inside that .zip file, so we unzip the download before checking in
+.jar files needed during the build as prebuilts. But we delete some
+of the larger unused pieces such as the 38MB intellij-core-analysis.jar

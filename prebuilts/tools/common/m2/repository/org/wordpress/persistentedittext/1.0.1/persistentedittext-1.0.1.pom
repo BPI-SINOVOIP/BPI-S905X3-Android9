@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.wordpress</groupId>
+  <artifactId>persistentedittext</artifactId>
+  <version>1.0.1</version>
+  <packaging>aar</packaging>
+  <name>PersistentEditText</name>
+  <description>Android EditText subclass with persistence</description>
+  <url>https://github.com/wordpress-mobile/PersistentEditText</url>
+  <licenses>
+    <license>
+      <name>The MIT License (MIT)</name>
+      <url>http://opensource.org/licenses/MIT</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>maxme</id>
+      <name>Maxime Biais</name>
+      <email>maxime@automattic.com</email>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:https://github.com/wordpress-mobile/PersistentEditText.git</connection>
+    <developerConnection>scm:git:https://github.com/wordpress-mobile/PersistentEditText.git</developerConnection>
+    <url>https://github.com/wordpress-mobile/PersistentEditText</url>
+  </scm>
+</project>

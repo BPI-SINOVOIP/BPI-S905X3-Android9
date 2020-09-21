@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>io.reactivex</groupId>
+  <artifactId>rxandroid</artifactId>
+  <version>1.1.0</version>
+  <packaging>aar</packaging>
+  <name>RxAndroid</name>
+  <description>RxAndroid</description>
+  <url>https://github.com/ReactiveX/RxAndroid</url>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>JakeWharton</id>
+      <name>Jake Wharton</name>
+    </developer>
+    <developer>
+      <id>mttkay</id>
+      <name>Matthias Käppler</name>
+    </developer>
+    <developer>
+      <id>dlew</id>
+      <name>Dan Lew</name>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:https://github.com/ReactiveX/RxAndroid.git</connection>
+    <developerConnection>scm:git:git@github.com:ReactiveX/RxAndroid.git</developerConnection>
+    <url>https://github.com/ReactiveX/RxAndroid</url>
+  </scm>
+  <dependencies>
+    <dependency>
+      <groupId>io.reactivex</groupId>
+      <artifactId>rxjava</artifactId>
+      <version>1.1.0</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+</project>

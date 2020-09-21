@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.mockito</groupId>
+  <artifactId>mockito-core</artifactId>
+  <version>2.7.6</version>
+  <dependencies>
+    <dependency>
+      <groupId>net.bytebuddy</groupId>
+      <artifactId>byte-buddy</artifactId>
+      <version>1.6.5</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.bytebuddy</groupId>
+      <artifactId>byte-buddy-agent</artifactId>
+      <version>1.6.5</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.objenesis</groupId>
+      <artifactId>objenesis</artifactId>
+      <version>2.5</version>
+      <scope>runtime</scope>
+    </dependency>
+  </dependencies>
+  <name>mockito-core</name>
+  <packaging>jar</packaging>
+  <url>http://mockito.org</url>
+  <description>Mockito mock objects library core API and implementation</description>
+  <licenses>
+    <license>
+      <name>The MIT License</name>
+      <url>http://github.com/mockito/mockito/blob/master/LICENSE</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <scm>
+    <url>http://github.com/mockito/mockito</url>
+  </scm>
+  <issueManagement>
+    <url>https://github.com/mockito/mockito/issues</url>
+    <system>GitHub issues</system>
+  </issueManagement>
+  <ciManagement>
+    <url>https://travis-ci.org/mockito/mockito</url>
+    <system>TravisCI</system>
+  </ciManagement>
+  <developers>
+    <developer>
+      <id>szczepiq</id>
+      <name>Szczepan Faber</name>
+      <roles>
+        <role>Core developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>bric3</id>
+      <name>Brice Dutheil</name>
+      <roles>
+        <role>Core developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>raphw</id>
+      <name>Rafael Winterhalter</name>
+      <roles>
+        <role>Core developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>TimvdLippe</id>
+      <name>Tim van der Lippe</name>
+      <roles>
+        <role>Core developer</role>
+      </roles>
+    </developer>
+  </developers>
+</project>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.firebase</groupId>
+  <artifactId>firebase-client-jvm</artifactId>
+  <version>2.5.2</version>
+  <name>Firebase JVM Client Library</name>
+  <description>This is the official JVM client library for Firebase. Build extraordinary native JVM apps in minutes with Firebase. The Firebase platform can power your app’s backend, user authentication, static hosting, and more.</description>
+  <url>https://www.firebase.com/docs/java-quickstart.html/firebase-client-jvm</url>
+  <organization>
+    <name>Firebase</name>
+    <url>https://www.firebase.com/</url>
+  </organization>
+  <licenses>
+    <license>
+      <name>Commercial</name>
+      <url>https://www.firebase.com/terms/terms-of-service.html</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>firebase</id>
+      <name>Firebase</name>
+      <email>support@firebase.com</email>
+      <url>https://firebase.com/</url>
+      <organization>Firebase</organization>
+      <organizationUrl>https://firebase.com/</organizationUrl>
+      <roles>
+        <role>architect</role>
+        <role>developer</role>
+      </roles>
+      <timezone>-8</timezone>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:git@github.com:firebase/firebase-client-jvm.git/firebase-client-jvm</connection>
+    <developerConnection>scm:git:git@github.com:firebase/firebase-client-jvm.git/firebase-client-jvm</developerConnection>
+    <tag>Java-v2.5.2</tag>
+    <url>https://github.com/firebase/firebase-client-jvm/firebase-client-jvm</url>
+  </scm>
+  <distributionManagement>
+    <repository>
+      <id>sonatype-nexus-staging</id>
+      <name>Nexus Release Repository</name>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+    <snapshotRepository>
+      <id>sonatype-nexus-snapshots</id>
+      <name>Sonatype Nexus Snapshots</name>
+      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
+  <dependencies>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.2.2</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.firebase</groupId>
+      <artifactId>tubesock</artifactId>
+      <version>0.0.12</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.0.1</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+  <repositories>
+    <repository>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>sonatype-nexus-snapshots</id>
+      <name>Sonatype Nexus Snapshots</name>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </repository>
+    <repository>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>central</id>
+      <name>Central Repository</name>
+      <url>http://repo.maven.apache.org/maven2</url>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <releases>
+        <updatePolicy>never</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>central</id>
+      <name>Central Repository</name>
+      <url>http://repo.maven.apache.org/maven2</url>
+    </pluginRepository>
+  </pluginRepositories>
+</project>

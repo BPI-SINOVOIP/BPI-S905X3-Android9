@@ -1,0 +1,13 @@
+URL: https://github.com/google/kythe/releases/download/v0.0.23/kythe-v0.0.23.tar.gz
+Version: 0.0.23
+License: Apache 2.0
+License File: LICENSE
+
+Description:
+Kythe is a pluggable, (mostly) language-agnostic ecosystem for building
+tools that work with code. https://kythe.io
+
+Local Modifications:
+-added extractors/BUILD and extractors/vnames.json
+-patched in https://github.com/google/kythe/commit/bd502d99c0605f52bb268e109598487327abaceb
+-added scripts to studio/ to run kythe over Android Studio.

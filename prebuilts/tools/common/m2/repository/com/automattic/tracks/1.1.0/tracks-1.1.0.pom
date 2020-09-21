@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.automattic</groupId>
+  <artifactId>tracks</artifactId>
+  <version>1.1.0</version>
+  <packaging>aar</packaging>
+  <name>Automattic-Tracks-Android</name>
+  <description>Android client for Nosara tracks (event tracking and analytics)</description>
+  <url>https://github.com/Automattic/Automattic-Tracks-Android</url>
+  <licenses>
+    <license>
+      <name>The GPLv2 License</name>
+      <url>https://www.gnu.org/licenses/old-licenses/gpl-2.0.html</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>daniloercoli</id>
+      <name>Danilo Ercoli</name>
+      <email>danilo@automattic.com</email>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:https://github.com/Automattic/Automattic-Tracks-Android.git</connection>
+    <developerConnection>scm:git:https://github.com/Automattic/Automattic-Tracks-Android.git</developerConnection>
+    <url>https://github.com/Automattic/Automattic-Tracks-Android</url>
+  </scm>
+</project>

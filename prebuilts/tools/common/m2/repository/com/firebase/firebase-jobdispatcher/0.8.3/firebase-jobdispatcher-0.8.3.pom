@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.firebase</groupId>
+  <artifactId>firebase-jobdispatcher</artifactId>
+  <version>0.8.3</version>
+  <packaging>aar</packaging>
+  <description>The Firebase JobDispatcher is a library that provides a common interface to scheduling engines on Android.</description>
+  <inceptionYear>2016</inceptionYear>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>firebase</id>
+      <name>Firebase</name>
+      <email>support@firebase.com</email>
+      <url>https://firebase.com/</url>
+      <organization>Firebase</organization>
+      <organizationUrl>https://firebase.com/</organizationUrl>
+      <roles>
+        <role>architect</role>
+        <role>developer</role>
+      </roles>
+    </developer>
+  </developers>
+  <scm>
+    <url>https://github.com/firebase/firebase-jobdispatcher-android</url>
+    <connection>scm:git:https://github.com/firebase/firebase-jobdispatcher-android.git</connection>
+    <developerConnection>scm:git:git@github.com:firebase/firebase-jobdispatcher-android.git</developerConnection>
+  </scm>
+  <dependencies>
+    <dependency>
+      <groupId>com.android.support</groupId>
+      <artifactId>support-v4</artifactId>
+      <version>25.0.0</version>
+      <type>aar</type>
+    </dependency>
+  </dependencies>
+</project>

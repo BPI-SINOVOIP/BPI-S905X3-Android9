@@ -1,0 +1,14 @@
+The binary extract_dtb in this prebuilt directory can be rebuilt using
+the source in system/libufdt with build command "make extract_dtb".
+
+The binary mkdtimg in this prebuilt directory can be rebuilt using
+the source in system/libufdt with build command "make mkdtimg".
+
+The binary ufdt_apply_overlay in this prebuilt directory can be rebuilt using
+the source in system/libufdt with build command "make ufdt_apply_overlay_host".
+
+extract_dtb: artifact libufdt/extract_dtb from git_master@3883748 (https://android-build.googleplex.com/builds/submitted/3883748/angler-userdebug_fastbuild3b_linux/latest)
+
+mkdtimg: artifact libufdt/mkdtimg from git_master@3883748 (https://android-build.googleplex.com/builds/submitted/3883748/angler-userdebug_fastbuild3b_linux/latest)
+
+ufdt_apply_overlay: artifact libufdt/ufdt_apply_overlay from git_master@3883748 (https://android-build.googleplex.com/builds/submitted/3883748/angler-userdebug_fastbuild3b_linux/latest)

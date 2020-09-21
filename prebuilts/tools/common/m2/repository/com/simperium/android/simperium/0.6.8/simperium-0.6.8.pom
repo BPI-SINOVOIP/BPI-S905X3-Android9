@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.simperium.android</groupId>
+  <artifactId>simperium</artifactId>
+  <version>0.6.8</version>
+  <packaging>aar</packaging>
+  <name>Simperium Android Library</name>
+  <description>Android Library for building applications using Simperium</description>
+  <url>https://github.com/simperium/simperium-android</url>
+  <licenses>
+    <license>
+      <name>The MIT License (MIT)</name>
+      <url>http://opensource.org/licenses/MIT</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>beaucollins</id>
+      <name>Robert Collins</name>
+      <email>robert@automattic.com</email>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:https://github.com/simperium/simperium-android.git</connection>
+    <developerConnection>scm:git:https://github.com/simperium/simperium-android.git</developerConnection>
+    <url>https://github.com/simperium/simperium-android.git</url>
+  </scm>
+  <dependencies>
+    <dependency>
+      <groupId>org.thoughtcrime.ssl.pinning</groupId>
+      <artifactId>AndroidPinning</artifactId>
+      <version>1.0.0</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.koushikdutta.async</groupId>
+      <artifactId>androidasync</artifactId>
+      <version>2.1.3</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+</project>

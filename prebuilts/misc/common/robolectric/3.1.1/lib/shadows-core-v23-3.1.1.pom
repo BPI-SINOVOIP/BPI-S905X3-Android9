@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.robolectric</groupId>
+  <artifactId>shadows-core-v23</artifactId>
+  <version>3.1.1</version>
+  <name>robolectric-shadows/shadows-core/v23</name>
+  <description>An alternative Android testing framework.</description>
+  <url>http://robolectric.org</url>
+  <licenses>
+    <license>
+      <name>The MIT License</name>
+      <url>https://opensource.org/licenses/MIT</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <name>Christian Williams</name>
+      <email>christianw@google.com</email>
+      <organization>org.apache.maven.model.Organization@6c334063</organization>
+      <organizationUrl>http://google.com</organizationUrl>
+    </developer>
+    <developer>
+      <name>Jonathan Gerrish</name>
+      <email>jongerrish@google.com</email>
+      <organization>org.apache.maven.model.Organization@64a4d55</organization>
+      <organizationUrl>http://google.com</organizationUrl>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:git://github.com/robolectric/robolectric.git</connection>
+    <developerConnection>scm:git:https://github.com/robolectric/robolectric.git</developerConnection>
+    <url>git@github.com:robolectric/robolectric.git</url>
+  </scm>
+  <dependencies>
+    <dependency>
+      <groupId>org.robolectric</groupId>
+      <artifactId>robolectric-annotations</artifactId>
+      <version>3.1.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.robolectric</groupId>
+      <artifactId>robolectric-resources</artifactId>
+      <version>3.1.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.robolectric</groupId>
+      <artifactId>robolectric-utils</artifactId>
+      <version>3.1.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.almworks.sqlite4java</groupId>
+      <artifactId>sqlite4java</artifactId>
+      <version>0.282</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.ibm.icu</groupId>
+      <artifactId>icu4j</artifactId>
+      <version>53.1</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+</project>

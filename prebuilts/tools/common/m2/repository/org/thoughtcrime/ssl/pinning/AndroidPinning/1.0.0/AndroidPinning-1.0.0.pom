@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.thoughtcrime.ssl.pinning</groupId>
+  <artifactId>AndroidPinning</artifactId>
+  <version>1.0.0</version>
+  <packaging>aar</packaging>
+  <name>AndroidPinning Library</name>
+  <description>An Android library that facilitates certificate pinning for SSL connections in Android apps, in order to minimize dependence on Certificate Authorities.</description>
+  <url>https://github.com/moxie0/AndroidPinning</url>
+  <licenses>
+    <license>
+      <name>GPLv3</name>
+      <url>http://www.gnu.org/licenses/gpl-3.0.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>moxie</id>
+      <name>Moxie Marlinspike</name>
+      <email>moxie@thoughtcrime.org</email>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git@github.com:moxie0/AndroidPinning.git</connection>
+    <developerConnection>scm:git@github.com:moxie0/AndroidPinning.git</developerConnection>
+    <url>scm:git@github.com:moxie0/AndroidPinning.git</url>
+  </scm>
+</project>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.uber</groupId>
+  <artifactId>rave</artifactId>
+  <version>0.6.0</version>
+  <name>RAVE</name>
+  <description>A data model validation framework that uses java annotation processing</description>
+  <url>https://github.com/uber-common/rave/</url>
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>http://opensource.org/licenses/MIT</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>behroozkhorashadi</id>
+      <name>Behrooz Khorashadi</name>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:git://github.com/uber-common/rave.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/uber-common/rave.git</developerConnection>
+    <url>https://github.com/uber-common/rave/</url>
+  </scm>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.10</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.uber</groupId>
+      <artifactId>rave-test</artifactId>
+      <version>0.6.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.6</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.android.support</groupId>
+      <artifactId>support-annotations</artifactId>
+      <version>23.3.0</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+</project>

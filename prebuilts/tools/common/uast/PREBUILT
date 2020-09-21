@@ -1,0 +1,6 @@
+The objects in this prebuilt directory can be rebuilt
+using 
+(1) The tools/base/misc/psi-extractor library, at revision:
+
+(2) Pointing it a build of Android Studio or IntelliJ with the version tag:
+    idea/162.2228.14

@@ -1,0 +1,33 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.crittercism</groupId>
+  <artifactId>crittercism-android-agent</artifactId>
+  <packaging>jar</packaging>
+  <name>Crittercism Agent for Android</name>
+  <version>5.6.4</version>
+  <description>!DESCRIPTION</description>
+  <url>http://www.crittercism.com</url>
+  <licenses>
+      <license>
+          <name>Crittercism Integration Code License</name>
+          <url>http://www.crittercism.com/terms-services/</url>
+      </license>
+  </licenses>
+
+
+  <scm>
+    <url>https://raw.githubusercontent.com/crittercism/crittercism-android-agent/master/</url>
+    <connection>
+        scm:git@github.com:crittercism/crittercism-android-agent.git
+    </connection>
+  </scm>
+  <developers>
+    <developer>
+      <id>crittercism</id>
+      <name>Crittercism</name>
+    </developer>
+  </developers>
+ 
+</project>
