@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2018 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License
+  -->
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/car_app_bar_height">
+
+    <FrameLayout
+        android:id="@+id/action_bar_icon_container"
+        android:layout_width="@dimen/car_margin"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/button_ripple_bg">
+        <ImageView
+            android:id="@+id/back_button"
+            style="@style/ListIcon.ActionBar"/>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/car_keyline_1"
+        android:layout_toEndOf="@id/action_bar_icon_container"
+        android:gravity="center_vertical"
+        android:textAppearance="@style/TextAppearance.Car.Title2"/>
+
+    <Button
+        android:id="@+id/action_button2"
+        style="?android:attr/borderlessButtonStyle"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/car_button_height"
+        android:layout_toStartOf="@id/action_button1"
+        android:layout_centerVertical="true"
+        android:ellipsize="end"
+        android:maxLines="1"/>
+
+    <Button
+        android:id="@+id/action_button1"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/car_button_height"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/car_padding_4"
+        android:ellipsize="end"
+        android:maxLines="1"/>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="@style/Widget.Car.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:indeterminate="true"/>
+</RelativeLayout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/enterprise_wp" >
+    <target
+        android:name="null_2"
+        android:animation="@anim/enterprise_wp_null_2_animation" />
+    <target
+        android:name="balamale_up"
+        android:animation="@anim/enterprise_wp_balamale_up_animation" />
+    <target
+        android:name="circle_0"
+        android:animation="@anim/enterprise_wp_circle_0_animation" />
+    <target
+        android:name="circle_2"
+        android:animation="@anim/enterprise_wp_circle_2_animation" />
+    <target
+        android:name="circlegreen_0"
+        android:animation="@anim/enterprise_wp_circlegreen_0_animation" />
+    <target
+        android:name="ellipse_path_21"
+        android:animation="@anim/enterprise_wp_ellipse_path_21_animation" />
+    <target
+        android:name="circleyellow_0"
+        android:animation="@anim/enterprise_wp_circleyellow_0_animation" />
+    <target
+        android:name="ellipse_path_22"
+        android:animation="@anim/enterprise_wp_ellipse_path_22_animation" />
+    <target
+        android:name="circlered_0"
+        android:animation="@anim/enterprise_wp_circlered_0_animation" />
+    <target
+        android:name="ellipse_path_23"
+        android:animation="@anim/enterprise_wp_ellipse_path_23_animation" />
+    <target
+        android:name="circleblue_0"
+        android:animation="@anim/enterprise_wp_circleblue_0_animation" />
+    <target
+        android:name="ellipse_path_24"
+        android:animation="@anim/enterprise_wp_ellipse_path_24_animation" />
+</animated-vector>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="system_tracing" msgid="4719188511746319848">"సిస్టమ్ స్థితిగతి కనుగొనుట"</string>
+    <string name="record_system_activity" msgid="4339462312915377825">"సిస్టమ్ కార్యకలాపాన్ని రికార్డ్ చేసి, తర్వాత దానిని విశ్లేషించి పనితీరుని మెరుగుపరచు"</string>
+    <string name="record_trace" msgid="6416875085186661845">"స్థితిగతిని రికార్డ్ చేయండి"</string>
+    <string name="trace_debuggable_applications" msgid="7957069895298887899">"డీబగ్ చేయగల అప్లికేషన్‌ల స్థితిగతి కనుగొనండి"</string>
+    <string name="categories" msgid="2280163673538611008">"వర్గాలు"</string>
+    <string name="restore_default_categories" msgid="5090536794637169521">"డిఫాల్ట్ వర్గాలను పునరుద్ధరించండి"</string>
+    <string name="default_categories_restored" msgid="6861683793680564181">"డిఫాల్ట్ వర్గాలు పునరుద్ధరించబడ్డాయి"</string>
+    <string name="applications" msgid="521776761270770549">"అప్లికేషన్‌లు"</string>
+    <string name="no_debuggable_apps" msgid="4386209254520471208">"డీబగ్ చేయగల అప్లికేషన్‌లు అందుబాటులో లేవు"</string>
+    <string name="buffer_size" msgid="3370134227980578569">"బఫర్ పరిమాణం"</string>
+    <string name="show_quick_settings_tile" msgid="4971147332635291585">"త్వరిత సెట్టింగ్‌ల టైల్‌ను చూపు"</string>
+    <string name="saving_trace" msgid="1468692734770800541">"స్థితిగతిని సేవ్ చేస్తోంది"</string>
+    <string name="trace_saved" msgid="5869970594780992309">"స్థితిగతి సేవ్ చేయబడింది"</string>
+    <string name="tap_to_share" msgid="6766732404489536899">"మీ స్థితిగతిని షేర్ చేయడానికి నొక్కండి"</string>
+    <string name="stop_tracing" msgid="8916938308534164152">"స్థితిగతిని కనుగొనడం ఆపివేయి"</string>
+    <string name="tracing_categories_unavailable" msgid="5609076391417077752">"కొన్ని స్థితిగతి వర్గాలు అందుబాటులో లేవు:"</string>
+    <string name="trace_is_being_recorded" msgid="5947378146009337469">"స్థితిగతి రికార్డ్ అవుతోంది"</string>
+    <string name="tap_to_stop_tracing" msgid="6533282719573871806">"స్థితిగతిని కనుగొనడం ఆపివేయడానికి నొక్కండి"</string>
+    <string name="clear_saved_traces" msgid="4809195654452260944">"సేవ్ చేసిన స్థితిగతి అంశాలను తీసివేయి"</string>
+    <string name="clear_saved_traces_question" msgid="2184026613055303818">"సేవ్ చేసిన స్థితిగతులను క్లియర్ చేయాలా?"</string>
+    <string name="all_traces_will_be_deleted" msgid="6646545462206955920">"/data/local/traces నుండి అన్ని స్థితిగతులు తొలగించబడతాయి"</string>
+    <string name="clear" msgid="5484761795406948056">"క్లియర్ చేయి"</string>
+    <string name="keywords" msgid="736547007949049535">"systrace, trace, performance"</string>
+</resources>

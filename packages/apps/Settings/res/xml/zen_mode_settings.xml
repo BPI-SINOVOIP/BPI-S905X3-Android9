@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2014 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:settings="http://schemas.android.com/apk/res-auto"
+    android:key="zen_mode_settings"
+    android:title="@string/zen_mode_settings_title"
+    settings:keywords="@string/keywords_zen_mode_settings">
+
+    <PreferenceCategory
+        android:title="@string/zen_category_behavior">
+        <!-- sound vibration -->
+        <Preference
+            android:key="zen_sound_vibration_settings"
+            android:title="@string/zen_sound_title"
+            android:fragment="com.android.settings.notification.ZenModeSoundVibrationSettings"/>
+
+        <!-- What to block (effects) -->
+        <Preference
+            android:key="zen_mode_block_effects_settings"
+            android:title="@string/zen_mode_restrict_notifications_title"
+            android:fragment="com.android.settings.notification.ZenModeRestrictNotificationsSettings" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/zen_category_exceptions">
+        <Preference
+            android:key="zen_mode_calls_settings"
+            android:title="@string/zen_mode_calls"
+            android:fragment="com.android.settings.notification.ZenModeCallsSettings" />
+        <Preference
+            android:key="zen_mode_msg_event_reminder_settings"
+            android:title="@string/zen_msg_event_reminder_title"
+            android:fragment="com.android.settings.notification.ZenModeMsgEventReminderSettings" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/zen_category_schedule">
+        <!-- DND duration settings -->
+        <Preference
+            android:key="zen_mode_duration_settings"
+            android:title="@string/zen_mode_duration_settings_title" />
+
+        <!-- Automatic rules -->
+        <Preference
+            android:key="zen_mode_automation_settings"
+            android:title="@string/zen_mode_automation_settings_title"
+            android:fragment="com.android.settings.notification.ZenModeAutomationSettings" />
+    </PreferenceCategory>
+
+    <!-- Turn on DND button -->
+    <!-- Layout preference doesn't obey allowDividerAbove, so put it in a PreferenceCategory -->
+    <PreferenceCategory
+        android:key="zen_mode_settings_button_category">
+        <com.android.settings.applications.LayoutPreference
+            android:key="zen_mode_settings_button_container"
+            android:selectable="false"
+            android:layout="@layout/zen_mode_settings_button" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="zen_mode_footer_container">
+        <com.android.settingslib.widget.FooterPreference />
+    </PreferenceCategory>
+
+</PreferenceScreen>

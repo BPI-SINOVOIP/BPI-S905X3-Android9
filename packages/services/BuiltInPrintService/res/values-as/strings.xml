@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+     Copyright (C) 2016 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+ -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name" msgid="3551052199033657984">"ডিফ\'ল্ট প্ৰিণ্ট সেৱা"</string>
+    <string name="printer_busy" msgid="8604311528104955859">"ব্যস্ত"</string>
+    <string name="printer_out_of_paper" msgid="4882186432807703877">"কাগজ শেষ হৈছে"</string>
+    <string name="printer_out_of_ink" msgid="7361897651097675464">"চিয়াহী শেষ হৈছে"</string>
+    <string name="printer_out_of_toner" msgid="2077516357225364154">"ট\'নাৰ শেষ হৈছে"</string>
+    <string name="printer_low_on_ink" msgid="3515015872393897705">"চিয়াহী কম আছে"</string>
+    <string name="printer_low_on_toner" msgid="8807858294038587130">"ট\'নাৰ কম আছে"</string>
+    <string name="printer_door_open" msgid="2446302931916940874">"প্ৰিণ্টাৰৰ দুৱাৰ খোল খাই আছে"</string>
+    <string name="printer_jammed" msgid="5104099859384749499">"প্ৰিণ্টাৰত জাম লাগিছে"</string>
+    <string name="printer_offline" msgid="9196864753298645066">"প্ৰিণ্টাৰ অফলাইন হৈ আছে"</string>
+    <string name="printer_check" msgid="6428369671197132828">"প্ৰিণ্টাৰ পৰীক্ষা কৰক"</string>
+    <string name="waiting_to_send" msgid="2022115199902822180">"পঠাবলৈ ৰৈ থকা হৈছে"</string>
+    <string name="unreadable_input" msgid="2199948329556527912">"দস্তাবেজ পঢ়িবপৰা নগ\'ল"</string>
+    <string name="media_size_l" msgid="164416542021598181">"L"</string>
+    <string name="media_size_5x7in" msgid="1275128379533195285">"৫x৭ ইঞ্চি"</string>
+    <string name="media_size_89x119mm" msgid="6828167243395807385">"৮৯x১১৯ মি. মি."</string>
+    <string name="media_size_54x86mm" msgid="1301991206183343895">"৫৪x৮৬ মি. মি."</string>
+    <string name="media_size_8x10in" msgid="1872576638522812402">"৮x১০ ইঞ্চি"</string>
+    <string name="media_size_4x6in" msgid="3093276425529958253">"৪x৬ ইঞ্চি"</string>
+    <string name="printer_description" msgid="8580767673213837142">"%1$s: %2$s"</string>
+    <string name="title_activity_add_printer" msgid="9119216095769228566">"প্ৰিণ্টাৰ যোগ কৰক"</string>
+    <string name="add_printer_by_ip" msgid="562864787592910327">"আইপি ঠিকনাৰ জৰিয়তে প্ৰিণ্টাৰ যোগ কৰক"</string>
+    <string name="hostname_or_ip" msgid="3460546103553992915">"হ\'ষ্টৰ নাম বা আইপি ঠিকনা"</string>
+    <string name="ip_hint" msgid="7939777481941979799">"192.168.0.4"</string>
+    <string name="add" msgid="1950342261671100906">"যোগ দিয়ক"</string>
+    <string name="add_named" msgid="9074106244018070583">"প্ৰিণ্টাৰ যোগ কৰক <xliff:g id="PRINTER">%1$s</xliff:g>"</string>
+    <string name="no_printer_found" msgid="4777867380924351173">"এই ঠিকনাত কোনো প্ৰিণ্টাৰ পোৱা নগ\'ল"</string>
+    <string name="printer_not_supported" msgid="281955849350938408">"এই প্ৰিণ্টাৰটো নচলে"</string>
+    <string name="wifi_direct" msgid="4629404342852294985">"ৱাই-ফাই ডাইৰেক্ট"</string>
+    <string name="find_wifi_direct" msgid="5270504288829123954">"ৱাই-ফাই ডাইৰেক্ট প্ৰিণ্টাৰ বিচাৰক"</string>
+    <string name="wifi_direct_printers" msgid="541168032444693191">"ৱাই-ফাই ডাইৰেক্ট প্ৰিণ্টাৰ"</string>
+    <string name="searching" msgid="2114018057619514587">"সন্ধান কৰি থকা হৈছে…"</string>
+    <string name="connect_hint_text" msgid="587112503851044234">"আপোনাৰ প্ৰিণ্টাৰৰ সন্মুখৰ পেনেলত আপুনি এই সংযোগটো অনুমোদন কৰিবলগীয়া হ\'ব পাৰে"</string>
+    <string name="connecting_to" msgid="2665161014972086194">"<xliff:g id="PRINTER">%1$s</xliff:g>ৰ লগত সংযোগ কৰি থকা হৈছে"</string>
+    <string name="failed_printer_connection" msgid="4196305972749960362">"প্ৰিণ্টাৰৰ লগত সংযোগ স্থাপন কৰিব পৰা নগ\'ল"</string>
+    <string name="failed_connection" msgid="8068661997318286575">"<xliff:g id="PRINTER">%1$s</xliff:g>ৰ লগত সংযোগ স্থাপন কৰিব পৰা নগ\'ল"</string>
+    <string name="saved_printers" msgid="4567534965213125526">"ছেভ কৰি ৰখা প্ৰিণ্টাৰ"</string>
+    <string name="forget" msgid="892068061425802502">"পাহৰক"</string>
+    <string name="connects_via_wifi_direct" msgid="652300632780158437">"ৱাই-ফাই ডাইৰেক্টৰ জৰিয়তে সংযোগ কৰে"</string>
+    <string name="connects_via_network" msgid="5990041581556733898">"<xliff:g id="IP_ADDRESS">%1$s</xliff:g> ঠিকনাত চলিত নেটৱৰ্কৰ জৰিয়তে সংযোগ কৰে"</string>
+</resources>

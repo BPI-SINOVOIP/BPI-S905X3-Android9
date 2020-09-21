@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="system_tracing" msgid="4719188511746319848">"ಸಿಸ್ಟಂ ಟ್ರೇಸಿಂಗ್"</string>
+    <string name="record_system_activity" msgid="4339462312915377825">"ಕಾರ್ಯಕ್ಷಮತೆಯನ್ನು ಸುಧಾರಿಸಲು ಸಿಸ್ಟಂ ಚಟುವಟಿಕೆಯನ್ನು ರೆಕಾರ್ಡ್ ಮಾಡಿ ನಂತರ ಅದನ್ನು ವಿಶ್ಲೇಷಿಸಿ"</string>
+    <string name="record_trace" msgid="6416875085186661845">"ಟ್ರೇಸ್ ರೆಕಾರ್ಡ್ ಮಾಡಿ"</string>
+    <string name="trace_debuggable_applications" msgid="7957069895298887899">"ಡೀಬಗ್‌ ಮಾಡುವಂತಹ ಅಪ್ಲಿಕೇಶನ್‌ಗಳ ಜಾಡು ಹಿಡಿಯಿರಿ"</string>
+    <string name="categories" msgid="2280163673538611008">"ವಿಭಾಗಗಳು"</string>
+    <string name="restore_default_categories" msgid="5090536794637169521">"ಡಿಫಾಲ್ಟ್ ವಿಭಾಗಗಳನ್ನು ಮರುಸಂಗ್ರಹಿಸಿ"</string>
+    <string name="default_categories_restored" msgid="6861683793680564181">"ಡಿಫಾಲ್ಟ್ ವಿಭಾಗಗಳನ್ನು ಮರುಸಂಗ್ರಹಿಸಲಾಗಿದೆ"</string>
+    <string name="applications" msgid="521776761270770549">"ಅಪ್ಲಿಕೇಶನ್‌ಗಳು"</string>
+    <string name="no_debuggable_apps" msgid="4386209254520471208">"ಡೀಬಗ್‌ ಮಾಡುವಂತಹ ಅಪ್ಲಿಕೇಶನ್‌ಗಳು ಲಭ್ಯವಿಲ್ಲ"</string>
+    <string name="buffer_size" msgid="3370134227980578569">"ಬಫರ್ ಗಾತ್ರ"</string>
+    <string name="show_quick_settings_tile" msgid="4971147332635291585">"ತ್ವರಿತ ಸೆಟ್ಟಿಂಗ್‌ಗಳ ಟೈಲ್ ತೋರಿಸು"</string>
+    <string name="saving_trace" msgid="1468692734770800541">"ಟ್ರೇಸ್ ಅನ್ನು ಉಳಿಸಲಾಗುತ್ತಿದೆ"</string>
+    <string name="trace_saved" msgid="5869970594780992309">"ಟ್ರೇಸ್ ಅನ್ನು ಉಳಿಸಲಾಗಿದೆ"</string>
+    <string name="tap_to_share" msgid="6766732404489536899">"ನಿಮ್ಮ ಟ್ರೇಸ್ ಅನ್ನು ಹಂಚಿಕೊಳ್ಳಲು ಟ್ಯಾಪ್ ಮಾಡಿ"</string>
+    <string name="stop_tracing" msgid="8916938308534164152">"ಟ್ರೇಸಿಂಗ್ ಅನ್ನು ನಿಲ್ಲಿಸಿ"</string>
+    <string name="tracing_categories_unavailable" msgid="5609076391417077752">"ಕೆಲವು ಟ್ರೇಸಿಂಗ್ ವಿಭಾಗಗಳು ಲಭ್ಯವಿಲ್ಲ:"</string>
+    <string name="trace_is_being_recorded" msgid="5947378146009337469">"ಟ್ರೇಸ್ ಅನ್ನು ರೆಕಾರ್ಡ್ ಮಾಡಲಾಗುತ್ತಿದೆ"</string>
+    <string name="tap_to_stop_tracing" msgid="6533282719573871806">"ಟ್ರೇಸಿಂಗ್ ಅನ್ನು ನಿಲ್ಲಿಸಲು ಟ್ಯಾಪ್‌ ಮಾಡಿ"</string>
+    <string name="clear_saved_traces" msgid="4809195654452260944">"ಉಳಿಸಿದ ಟ್ರೇಸ್‌ಗಳನ್ನು ತೆರವುಗೊಳಿಸಿ"</string>
+    <string name="clear_saved_traces_question" msgid="2184026613055303818">"ಉಳಿಸಿದ ಜಾಡುಗಳನ್ನು ತೆರವುಗೊಳಿಸುವುದೇ?"</string>
+    <string name="all_traces_will_be_deleted" msgid="6646545462206955920">"ಡೇಟಾ/ಸ್ಥಳೀಯ/ಜಾಡುಗಳಿಂದ ಎಲ್ಲಾ ಜಾಡುಗಳನ್ನು ಅಳಿಸಲಾಗುತ್ತದೆ"</string>
+    <string name="clear" msgid="5484761795406948056">"ತೆರವು ಮಾಡಿ"</string>
+    <string name="keywords" msgid="736547007949049535">"ಸಿಸ್ಟ್ರೇಸ್, ಟ್ರೇಸ್, ಕಾರ್ಯಕ್ಷಮತೆ"</string>
+</resources>

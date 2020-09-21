@@ -1,0 +1,5 @@
+# This type for lifetime_write_kbytes files which resides in
+# /sys/fs/<filesystem>/<partition>/lifetime_writes_kbytes
+# Vendors are supposed to extend genfs_contexts with the
+# partition names for their devices.
+type sysfs_fs_lifetime_write, sysfs_type, fs_type;

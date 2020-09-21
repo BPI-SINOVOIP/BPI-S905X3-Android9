@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  Copyright (C) 2014 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+ -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="sip_settings" msgid="3768482698061677257">"SIP ছেটিংসমূহ"</string>
+    <string name="sip_accounts" msgid="85559497282185405">"SIP একাউণ্টসমূহ"</string>
+    <string name="sip_accounts_title" msgid="2082527045326874519">"একাউণ্টসমূহ"</string>
+    <string name="sip_receive_calls" msgid="426678617137462173">"অন্তৰ্গামী কল লাভ কৰি থকা হৈছে"</string>
+    <string name="sip_receive_calls_summary" msgid="946161517528227523">"বেটাৰি অধিক ব্যৱহাৰ কৰে"</string>
+    <string name="sip_call_options_title" msgid="8421210494703869806">"SIP কলিং ব্যৱহাৰ কৰক"</string>
+    <string name="sip_call_options_wifi_only_title" msgid="5112579243580893890">"SIP কলিং ব্যৱহাৰ কৰক (কেৱল ৱাই-ফাই)"</string>
+    <string name="sip_call_options_entry_1" msgid="7217659161237099900">"ডেটা নেটৱৰ্ক উপলব্ধ থাকোঁতে সকলো কলৰ বাবে"</string>
+    <string name="sip_call_options_entry_2" msgid="1815335903940609729">"কেৱল SIP কলৰ বাবে"</string>
+    <string name="sip_call_options_wifi_only_entry_1" msgid="1358513095551847314">"সকলো কলৰ বাবে"</string>
+    <string name="add_sip_account" msgid="800843669753980091">"একাউণ্ট যোগ কৰক"</string>
+    <string name="remove_sip_account" msgid="1367664438506503690">"একাউণ্ট আঁতৰাওক"</string>
+    <string name="sip_account_list" msgid="5610858485304821480">"SIP একাউণ্টসমূহ"</string>
+    <string name="saving_account" msgid="5336529880235177448">"একাউণ্টটো ছেভ কৰা হৈছে…"</string>
+    <string name="removing_account" msgid="5537351356808985756">"একাউণ্টটো আঁতৰোৱা হৈছে…"</string>
+    <string name="sip_menu_save" msgid="7882219814563869225">"ছেভ কৰক"</string>
+    <string name="sip_menu_discard" msgid="2350421645423888438">"অগ্ৰাহ্য কৰক"</string>
+    <string name="alert_dialog_close" msgid="1326011828713435134">"প্ৰ\'ফাইলটো বন্ধ কৰক"</string>
+    <string name="alert_dialog_ok" msgid="4752048404605388940">"ঠিক"</string>
+    <string name="close_profile" msgid="3122414058856309881">"বন্ধ কৰক"</string>
+    <string name="registration_status_checking_status" msgid="6136793741862200337">"স্থিতি পৰীক্ষা কৰি থকা হৈছে…"</string>
+    <string name="registration_status_registering" msgid="2677183977796278749">"পঞ্জীয়ন কৰি থকা হৈছে…"</string>
+    <string name="registration_status_still_trying" msgid="7648151061205513458">"এতিয়াও চেষ্টা কৰি থকা হৈছে…"</string>
+    <string name="registration_status_not_receiving" msgid="7620333886153361090">"কল লাভ কৰি থকা নাই।"</string>
+    <string name="registration_status_no_data" msgid="2541999976218192413">"ইণ্টাৰনেট সংযোগ নথকাৰ বাবে একাউণ্টৰ পঞ্জীয়ন বন্ধ কৰা হ\'ল।"</string>
+    <string name="registration_status_no_wifi_data" msgid="9154717387473039546">"ৱাই-ফাই সংযোগ নথকাৰ বাবে একাউণ্টৰ পঞ্জীয়ন বন্ধ কৰা হ\'ল।"</string>
+    <string name="registration_status_not_running" msgid="514205414303796800">"একাউণ্টৰ পঞ্জীয়ন বিফল হৈছে।"</string>
+    <string name="registration_status_done" msgid="3264961069247314253">"কল লাভ কৰি থকা হৈছে…"</string>
+    <string name="registration_status_failed_try_later" msgid="2199970021756384317">"একাউণ্টৰ পঞ্জীয়ন বিফল হৈছে: (<xliff:g id="REGISTRATION_ERROR_MESSAGE">%s</xliff:g>); পিছত আকৌ চেষ্টা কৰা হ\'ব"</string>
+    <string name="registration_status_invalid_credentials" msgid="8406872554323334182">"একাউণ্টৰ পঞ্জীয়ন বিফল হৈছে: ব্যৱহাৰকাৰী নাম ভুল বা পাছৱৰ্ড ভুল"</string>
+    <string name="registration_status_server_unreachable" msgid="7710275557045148634">"একাউণ্টৰ পঞ্জীয়ন বিফল হৈছে: ছাৰ্ভাৰৰ নামটো পৰীক্ষা কৰক।"</string>
+    <string name="third_party_account_summary" msgid="9041060473615403041">"এই একাউণ্টটো বৰ্তমান <xliff:g id="ACCOUNT_OWNER">%s</xliff:g> এপটোৱে ব্যৱহাৰ কৰি আছে।"</string>
+    <string name="sip_edit_title" msgid="1967247832635750410">"SIP একাউণ্টৰ সবিশেষ"</string>
+    <string name="sip_edit_new_title" msgid="266414118302574305">"SIP একাউণ্টৰ সবিশেষ"</string>
+    <string name="domain_address_title" msgid="1968479941328225423">"ছাৰ্ভাৰ"</string>
+    <string name="username_title" msgid="6770064611005663470">"ব্যৱহাৰকাৰীৰ নাম"</string>
+    <string name="password_title" msgid="5289013731515564295">"পাছৱৰ্ড"</string>
+    <string name="display_name_title" msgid="579241787583079773">"ডিছপ্লেৰ নাম"</string>
+    <string name="proxy_address_title" msgid="6890163365640631841">"বহিৰ্গামী প্ৰ\'ক্সি ঠিকনা"</string>
+    <string name="port_title" msgid="6693965912656593862">"প\'ৰ্ট নম্বৰ"</string>
+    <string name="transport_title" msgid="889155457465372527">"ট্ৰান্সপ\'ৰ্টৰ প্ৰকাৰ"</string>
+    <string name="send_keepalive_title" msgid="599627072150501159">"কীপ-এলাইভ প্ৰেৰণ কৰক"</string>
+    <string name="advanced_settings" msgid="6622996380747040711">"ঐচ্ছিক ছেটিংসমূহ"</string>
+    <string name="auth_username_title" msgid="8262491689004708265">"বিশ্বাসযোগ্যতা প্ৰমাণীকৰণ ব্যৱহাৰকাৰীৰ নাম"</string>
+    <string name="auth_username_summary" msgid="941160241371436473">"বিশ্বাসযোগ্যতা প্ৰমাণীকৰণৰ বাবে ব্যৱহৃত ব্যৱহাৰকাৰীৰ নাম"</string>
+    <string name="default_preference_summary_username" msgid="8404717434312826082">"&lt;ছেট কৰা হোৱা নাই&gt;"</string>
+    <string name="default_preference_summary_password" msgid="4464464672997027904">"&lt;ছেট কৰা হোৱা নাই&gt;"</string>
+    <string name="default_preference_summary_domain_address" msgid="4871971710197441673">"&lt;ছেট কৰা হোৱা নাই&gt;"</string>
+    <string name="display_name_summary" msgid="7155076491675565407">"&lt;ব্যৱহাৰকাৰীৰ নামৰ সৈতে একেই&gt;"</string>
+    <string name="optional_summary" msgid="2363105560396317624">"&lt;ঐচ্ছিক&gt;"</string>
+    <string name="advanced_settings_show" msgid="7838761602853998622">"▷ সকলো দেখুওৱাবলৈ স্পৰ্শ কৰক"</string>
+    <string name="advanced_settings_hide" msgid="3480554978705290228">"▽ সকলো লুকুৱাবলৈ স্পৰ্শ কৰক"</string>
+    <string name="all_empty_alert" msgid="4087734950375192387">"নতুন SIP একাউণ্টৰ সবিশেষ লিখক।"</string>
+    <string name="empty_alert" msgid="6659484914371384024">"<xliff:g id="INPUT_FIELD_NAME">%s</xliff:g> দৰকাৰী আৰু ইয়াক খালীকৈ এৰি যাব নোৱাৰি।"</string>
+    <string name="not_a_valid_port" msgid="7931422555587011830">"প\'ৰ্ট নম্বৰটো 1000 আৰু 65534ৰ ভিতৰত হ\'ব লাগিব।"</string>
+    <string name="no_internet_available" msgid="5523747991760017298">"SIP কল কৰিবলৈ প্ৰথমে আপোনাৰ ইণ্টাৰনেট সংযোগ পৰীক্ষা কৰক।"</string>
+    <string name="no_wifi_available" msgid="1955023904229673488">"আপুনি SIP কল কৰিবলৈ কোনো ৱাই-ফাই নেটৱৰ্কৰ সৈতে সংযুক্ত হৈ থাকিব লাগিব (বেতাঁৰ আৰু নেটৱৰ্ক ছেটিংসমূহ ব্যৱহাৰ কৰক)।"</string>
+    <string name="no_voip" msgid="3038021971231952704">"SIP কলিং কৰাৰ সুবিধা নাই"</string>
+    <string name="sip_system_decide" msgid="5577696249416700671">"স্বয়ংক্ৰিয়"</string>
+    <string name="sip_always_send_keepalive" msgid="4773022409239823318">"সদায় প্ৰেৰণ কৰক"</string>
+    <string name="sip_connection_service_label" msgid="6935325004265884453">"বিল্ট-ইন SIP কলিং"</string>
+</resources>

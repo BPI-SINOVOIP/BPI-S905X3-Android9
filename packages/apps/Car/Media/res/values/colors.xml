@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2013 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<resources>
+    <color name="no_content_text_color">#ffffff</color>
+
+    <color name="car_body5_light">@android:color/white</color>
+    <color name="car_body5_dark">@android:color/black</color>
+    <color name="car_body5">@color/car_body5_dark</color>
+
+    <!-- Color displayed behind the transport controls while browsing -->
+    <color name="browse_playback_bg">@android:color/black</color>
+    <!-- Default media background -->
+    <color name="media_template_background">@color/car_dark_blue_grey_800</color>
+    <!-- Scrim displayed on top of playback album art background -->
+    <color name="media_scrim_background">@color/car_dark_blue_grey_900</color>
+    <!-- Color used on the progress bar background -->
+    <color name="progress_bar_background">@color/car_grey_900</color>
+    <!-- Color used on the progress bar -->
+    <color name="progress_bar_highlight">#fafafa</color>
+
+    <!-- App selection backgroun -->
+    <color name="alpha_fragment_background_color">#ea000000</color>
+    <!-- App selection items background -->
+    <color name="app_item_background_color">#66ffffff</color>
+</resources>

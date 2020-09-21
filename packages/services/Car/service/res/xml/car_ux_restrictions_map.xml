@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+This XML allows OEMs to configure a driving state to UX restrictions.  There are 2 major classes
+of configuration:
+1. Restriction Mapping as defined by the <restrictionMapping> tag.
+2. Restriction Parameters for restrictions that can be parametrized as defined by
+   <restrictionParameters> tag.
+
+Note:
+   1. The tags and attributes are declared in packages/services/Car/service/res/attrs.xml.
+   2. The driving states defined there should align with driving states (@CarDrivingState) defined in
+   packages/services/Car/car-lib/src/android/car/drivingstate/CarDrivingStateEvent.java
+   3. Similarly the UX restrictions should align with
+   packages/services/Car/car-lib/src/android/car/drivingstate/CarUxRestrictions.java
+-->
+
+<UxRestrictions xmlns:car="http://schemas.android.com/apk/res-auto">
+    <!-- Map the driving states to UX restrictions here -->
+    <!-- Note - The platform takes a fully restricted approach when there is no information or if
+    the information is malformed.  As a result,
+    1. Default values for requiresDistractionOptimization is true, and uxr is fully_restricted.
+    2. If uxr != baseline, then requiresDistractionOptimization is automatically promoted to true,
+    even if it is declared as false.  Because it doesn't make sense to have an non baseline UX
+    restriction without requiresDistractionOptimization set to true.
+    So if we don't want any restrictions, requiresDistractionOptimization should be explicitly
+    marked as false and uxr should be explicitly set to baseline. -->
+    <RestrictionMapping>
+        <DrivingState car:state="parked">
+            <Restrictions car:requiresDistractionOptimization="false" car:uxr="baseline"/>
+        </DrivingState>
+
+        <DrivingState car:state="idling">
+            <Restrictions car:requiresDistractionOptimization="false" car:uxr="baseline"/>
+        </DrivingState>
+
+        <!-- This is to illustrate how to add multiple speed ranges.  The restrictions here
+        are the same for both the speed ranges, but could be configured to be different.
+        NOTE:
+        1. The speed units is in meters per second to be in accordance with the
+        PERF_VEHICLE SPEED definition in hardware/interfaces/automotive/vehicle/2.0/types.hal
+        2. The speed ranges should be non overlapping, i.e one speed value cannot be in more
+        than one range.  It is denoted in a left closed, right open interval [minSpeed, maxSpeed).
+        For ex: [0,5) indicates speed >= 0 && speed < 5.0m/s.
+        3. For a speed range with no high limit, maxSpeed is not filled.  For ex., if the speed
+        range is anything >=5m/s, only the minSpeed is filled with a value of 5m/s.  There cannot be
+        a range higher than this, which will violate the 2nd condition above.
+        4. If the above conditions are not met, mapping behavior is undefined. -->
+        <!-- This is restrictions for moving and speed [0,5m/s) -->
+        <DrivingState car:state="moving" car:minSpeed="0" car:maxSpeed="5.0">
+            <Restrictions car:requiresDistractionOptimization="true" car:uxr="fully_restricted"/>
+        </DrivingState>
+
+        <!-- Restrictions for speed >=5 -->
+        <DrivingState car:state="moving" car:minSpeed="5.0">
+            <Restrictions car:requiresDistractionOptimization="true" car:uxr="fully_restricted"/>
+        </DrivingState>
+
+    </RestrictionMapping>
+
+    <!-- Configure restriction parameters here-->
+    <RestrictionParameters>
+        <!-- Parameters to express displayed String related restrictions -->
+        <StringRestrictions car:maxLength="120"/>
+        <!-- Parameters to express content related restrictions -->
+        <ContentRestrictions car:maxCumulativeItems="21" car:maxDepth="3"/>
+    </RestrictionParameters>
+
+</UxRestrictions>

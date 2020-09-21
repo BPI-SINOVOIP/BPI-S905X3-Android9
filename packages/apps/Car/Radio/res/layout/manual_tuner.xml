@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2016 The Android Open Source Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<!-- This Layout is clickable so that clicks do not fall through to the underlying
+     fragment. -->
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="@dimen/car_app_bar_height"
+    android:background="@color/car_card"
+    android:clickable="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/center_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.55"/>
+    <ImageView
+        android:id="@+id/exit_manual_tuner_button"
+        android:background="@drawable/radio_control_background"
+        android:layout_marginTop="@dimen/radio_default_spacing"
+        android:layout_marginStart="@dimen/radio_default_spacing"
+        android:layout_width="@dimen/car_touch_target_size"
+        android:layout_height="@dimen/car_touch_target_size"
+        android:scaleType="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/ic_down_outlined" />
+
+    <include
+        android:id="@+id/dialpad_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/center_guideline"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/manual_tuner_container_height"
+        layout="@layout/manual_tuner_dialpad" />
+
+    <com.android.car.radio.RadioBandButton
+        android:id="@+id/manual_tuner_am_band"
+        android:background="@drawable/radio_control_background"
+        android:layout_marginEnd="@dimen/radio_default_spacing"
+        app:layout_constraintEnd_toStartOf="@+id/manual_tuner_fm_band"
+        app:layout_constraintTop_toTopOf="@+id/dialpad_layout"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/center_guideline"
+        android:text="@string/radio_am_text"
+        style="@style/ManualTunerBandButton" />
+    <com.android.car.radio.RadioBandButton
+        android:id="@+id/manual_tuner_fm_band"
+        android:background="@drawable/manual_tuner_band_bg"
+        app:layout_constraintBaseline_toBaselineOf="@+id/manual_tuner_am_band"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/manual_tuner_am_band"
+        android:text="@string/radio_fm_text"
+        style="@style/ManualTunerBandButton" />
+
+    <TextView
+        android:id="@+id/manual_tuner_channel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/manual_tuner_am_band"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/center_guideline"
+        style="@style/ManualTunerChannelText" />
+    <com.android.car.radio.RadioFabButton
+        android:id="@id/manual_tuner_done_button"
+        android:src="@drawable/ic_done"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/center_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/manual_tuner_channel"
+        style="@style/RadioFab" />
+    <ImageView
+        android:id="@+id/manual_tuner_backspace"
+        android:background="@drawable/radio_control_background"
+        android:layout_width="@dimen/manual_tuner_fab_size"
+        android:layout_height="@dimen/manual_tuner_fab_size"
+        android:scaleType="center"
+        app:layout_constraintStart_toEndOf="@+id/manual_tuner_done_button"
+        app:layout_constraintBottom_toBottomOf="@+id/manual_tuner_done_button"
+        android:src="@drawable/ic_backspace" />
+</android.support.constraint.ConstraintLayout>

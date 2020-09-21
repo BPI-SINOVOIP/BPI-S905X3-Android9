@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="system_tracing" msgid="4719188511746319848">"Tracciamento del sistema"</string>
+    <string name="record_system_activity" msgid="4339462312915377825">"Registra le attività del sistema e analizzale in seguito per migliorare le prestazioni"</string>
+    <string name="record_trace" msgid="6416875085186661845">"Registra traccia"</string>
+    <string name="trace_debuggable_applications" msgid="7957069895298887899">"Monitora app di cui è possibile eseguire il debug"</string>
+    <string name="categories" msgid="2280163673538611008">"Categorie"</string>
+    <string name="restore_default_categories" msgid="5090536794637169521">"Ripristina categorie predefinite"</string>
+    <string name="default_categories_restored" msgid="6861683793680564181">"Categorie predefinite ripristinate"</string>
+    <string name="applications" msgid="521776761270770549">"App"</string>
+    <string name="no_debuggable_apps" msgid="4386209254520471208">"Nessuna app disponibile di cui è possibile eseguire il debug"</string>
+    <string name="buffer_size" msgid="3370134227980578569">"Dimensioni buffer"</string>
+    <string name="show_quick_settings_tile" msgid="4971147332635291585">"Mostra il riquadro Impostazioni rapide"</string>
+    <string name="saving_trace" msgid="1468692734770800541">"Salvataggio della traccia"</string>
+    <string name="trace_saved" msgid="5869970594780992309">"Traccia salvata"</string>
+    <string name="tap_to_share" msgid="6766732404489536899">"Tocca per condividere la traccia"</string>
+    <string name="stop_tracing" msgid="8916938308534164152">"Interrompi tracciamento"</string>
+    <string name="tracing_categories_unavailable" msgid="5609076391417077752">"Alcune categorie di traccia non sono disponibili:"</string>
+    <string name="trace_is_being_recorded" msgid="5947378146009337469">"Registrazione traccia"</string>
+    <string name="tap_to_stop_tracing" msgid="6533282719573871806">"Tocca per interrompere il tracciamento"</string>
+    <string name="clear_saved_traces" msgid="4809195654452260944">"Cancella tracce salvate"</string>
+    <string name="clear_saved_traces_question" msgid="2184026613055303818">"Vuoi cancellare le tracce salvate?"</string>
+    <string name="all_traces_will_be_deleted" msgid="6646545462206955920">"Tutte le tracce verranno eliminate da /data/local/traces"</string>
+    <string name="clear" msgid="5484761795406948056">"Cancella"</string>
+    <string name="keywords" msgid="736547007949049535">"systrace, traccia, prestazioni"</string>
+</resources>

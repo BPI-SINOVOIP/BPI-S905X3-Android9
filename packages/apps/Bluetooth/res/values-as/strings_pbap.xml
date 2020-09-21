@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="pbap_session_key_dialog_title" msgid="3580996574333882561">"%1$sৰ বাবে ছেশ্বনৰ চাবিটো টাইপ কৰক"</string>
+    <string name="pbap_session_key_dialog_header" msgid="2772472422782758981">"ব্লুটুথ ছেশ্বনৰ চাবি দৰকাৰ"</string>
+    <string name="pbap_acceptance_timeout_message" msgid="1107401415099814293">"%1$sৰ সৈতে সংযোগৰ অনুৰোধ গ্ৰহণ কৰাৰ সময় ওকলিল"</string>
+    <string name="pbap_authentication_timeout_message" msgid="4166979525521902687">"%1$sৰ সৈতে ছেশ্বনৰ চাবি ইনপুট কৰাৰ সময় ওকলিল"</string>
+    <string name="auth_notif_ticker" msgid="1575825798053163744">"Obex সত্যাপনৰ অনুৰোধ"</string>
+    <string name="auth_notif_title" msgid="7599854855681573258">"ছেশ্বনৰ চাবি"</string>
+    <string name="auth_notif_message" msgid="6667218116427605038">"%1$sৰ বাবে ছেশ্বনৰ চাবিটো টাইপ কৰক"</string>
+    <string name="defaultname" msgid="4821590500649090078">"গাড়ীৰ কিট"</string>
+    <string name="unknownName" msgid="2841414754740600042">"অজ্ঞাত নাম"</string>
+    <string name="localPhoneName" msgid="2349001318925409159">"মোৰ নাম"</string>
+    <string name="defaultnumber" msgid="8520116145890867338">"০০০০০০"</string>
+    <string name="pbap_notification_group" msgid="8487669554703627168">"ব্লুটুথ সম্পৰ্ক শ্বেয়াৰ"</string>
+</resources>

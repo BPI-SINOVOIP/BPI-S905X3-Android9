@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="system_tracing" msgid="4719188511746319848">"ការ​តាមដាន​ប្រព័ន្ធ"</string>
+    <string name="record_system_activity" msgid="4339462312915377825">"ថត​សកម្មភាព​ប្រព័ន្ធ ហើយ​វិភាគ​វា​នៅ​ពេល​ក្រោយ​ ដើម្បី​កែលម្អ​ប្រតិបត្តិការ"</string>
+    <string name="record_trace" msgid="6416875085186661845">"ថតដាន​"</string>
+    <string name="trace_debuggable_applications" msgid="7957069895298887899">"តាម​ដាន​កម្មវិធី​ដែល​អាច​ជួសជុល​បាន"</string>
+    <string name="categories" msgid="2280163673538611008">"ប្រភេទ"</string>
+    <string name="restore_default_categories" msgid="5090536794637169521">"ស្តារ​ប្រភេទ​លំនាំ​ដើម"</string>
+    <string name="default_categories_restored" msgid="6861683793680564181">"បាន​ស្តារ​ប្រភេទ​លំនាំ​ដើម"</string>
+    <string name="applications" msgid="521776761270770549">"កម្មវិធី"</string>
+    <string name="no_debuggable_apps" msgid="4386209254520471208">"មិន​មាន​កម្មវិធី​ដែល​អាច​ជួសជុល​បាន​ទេ"</string>
+    <string name="buffer_size" msgid="3370134227980578569">"ទំហំ​កន្លែង​ផ្ទុក"</string>
+    <string name="show_quick_settings_tile" msgid="4971147332635291585">"បង្ហាញ​ប្រអប់​ការ​កំណត់​រហ័ស"</string>
+    <string name="saving_trace" msgid="1468692734770800541">"កំពុង​រក្សាទុក​ដាន"</string>
+    <string name="trace_saved" msgid="5869970594780992309">"បាន​រក្សា​ទុក​ដាន"</string>
+    <string name="tap_to_share" msgid="6766732404489536899">"ចុច​ដើម្បី​ចែក​រំលែក​ដាន​របស់​អ្នក"</string>
+    <string name="stop_tracing" msgid="8916938308534164152">"បញ្ឈប់​ការតាមដាន"</string>
+    <string name="tracing_categories_unavailable" msgid="5609076391417077752">"មិនមាន​ប្រភេទ​ដាន​មួយ​ចំនួន​ទេ៖"</string>
+    <string name="trace_is_being_recorded" msgid="5947378146009337469">"កំពុង​ថត​ដាន"</string>
+    <string name="tap_to_stop_tracing" msgid="6533282719573871806">"ចុច​ដើម្បី​បញ្ឈប់​ការតាមដាន"</string>
+    <string name="clear_saved_traces" msgid="4809195654452260944">"សម្អាត​ដាន​ដែល​បានរក្សាទុក"</string>
+    <string name="clear_saved_traces_question" msgid="2184026613055303818">"សម្អាត​ដាន​ដែល​បានរក្សាទុក?"</string>
+    <string name="all_traces_will_be_deleted" msgid="6646545462206955920">"ដាន​ទាំងអស់​ត្រូវ​បាន​លុប​ពី /data/local/traces"</string>
+    <string name="clear" msgid="5484761795406948056">"សម្អាត"</string>
+    <string name="keywords" msgid="736547007949049535">"systrace, ដាន, ប្រតិបត្តិការ"</string>
+</resources>

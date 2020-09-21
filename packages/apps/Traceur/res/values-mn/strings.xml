@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="system_tracing" msgid="4719188511746319848">"Системийн шинжлэл"</string>
+    <string name="record_system_activity" msgid="4339462312915377825">"Системийн үйл ажиллагааг бүртгэж гүйцэтгэлээ сайжруулахын тулд үүнийг дараа шинжилнэ үү"</string>
+    <string name="record_trace" msgid="6416875085186661845">"Мөрийг бичих"</string>
+    <string name="trace_debuggable_applications" msgid="7957069895298887899">"Дебаг хийх боломжтой аппуудын ул мөрийг дагах"</string>
+    <string name="categories" msgid="2280163673538611008">"Ангилал"</string>
+    <string name="restore_default_categories" msgid="5090536794637169521">"Өгөгдмөл ангиллыг сэргээх"</string>
+    <string name="default_categories_restored" msgid="6861683793680564181">"Өгөгдмөл ангиллыг сэргээсэн"</string>
+    <string name="applications" msgid="521776761270770549">"Аппууд"</string>
+    <string name="no_debuggable_apps" msgid="4386209254520471208">"Дебаг хийх боломжтой аппууд алга"</string>
+    <string name="buffer_size" msgid="3370134227980578569">"Буферийн хэмжээ"</string>
+    <string name="show_quick_settings_tile" msgid="4971147332635291585">"Түргэн тохиргооны хэсгийг харуулах"</string>
+    <string name="saving_trace" msgid="1468692734770800541">"Мөрийг хадгалж байна"</string>
+    <string name="trace_saved" msgid="5869970594780992309">"Мөрийг хадгалсан"</string>
+    <string name="tap_to_share" msgid="6766732404489536899">"Мөрийг хуваалцахын тулд товшино уу"</string>
+    <string name="stop_tracing" msgid="8916938308534164152">"Мөрдөхийг зогсоох"</string>
+    <string name="tracing_categories_unavailable" msgid="5609076391417077752">"Зарим мөрийн ангилал боломжгүй байна:"</string>
+    <string name="trace_is_being_recorded" msgid="5947378146009337469">"Ул мөрийг бүртгэж байна"</string>
+    <string name="tap_to_stop_tracing" msgid="6533282719573871806">"Мөрдөхийг зогсоох бол товшино уу"</string>
+    <string name="clear_saved_traces" msgid="4809195654452260944">"Хадгалсан ул мөрийг устгах"</string>
+    <string name="clear_saved_traces_question" msgid="2184026613055303818">"Хадгалсан ул мөрийг устгах уу?"</string>
+    <string name="all_traces_will_be_deleted" msgid="6646545462206955920">"Бүх ул мөрийг /өгөгдөл/дотоод/ул мөрөөс устгана"</string>
+    <string name="clear" msgid="5484761795406948056">"Устгах"</string>
+    <string name="keywords" msgid="736547007949049535">"systrace, ул мөр, гүйцэтгэл"</string>
+</resources>

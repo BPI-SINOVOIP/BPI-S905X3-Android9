@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2018, The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/fragment_playback_with_queue">
+
+
+    <ImageView
+        android:id="@+id/album_art"
+        android:layout_width="@dimen/playback_album_art_size_normal"
+        android:layout_height="@dimen/playback_album_art_size_normal"
+        android:layout_marginTop="@dimen/car_padding_4"
+        android:layout_marginStart="@dimen/car_keyline_1"
+        android:contentDescription="@string/album_art"
+        android:background="@color/car_body1_light"
+        android:scaleType="centerCrop"
+        android:transitionName="@string/album_art"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/margin_start"
+        tools:src="@drawable/ic_person"/>
+
+    <include android:id="@+id/metadata_subcontainer"
+             layout="@layout/metadata_normal"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="@dimen/car_padding_4"
+             android:layout_marginEnd="@dimen/car_keyline_1"
+             app:layout_constraintBottom_toBottomOf="@+id/album_art"
+             app:layout_constraintEnd_toEndOf="@+id/margin_end"
+             app:layout_constraintStart_toEndOf="@+id/album_art"
+             app:layout_constraintTop_toTopOf="@+id/album_art"/>
+
+    <androidx.car.widget.PagedListView
+        android:id="@+id/queue_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/car_padding_4"
+        android:layout_marginBottom="@dimen/playback_controls_margin"
+        app:dividerEndMargin="@dimen/car_keyline_1"
+        app:dividerStartMargin="@dimen/car_keyline_1"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/album_art"
+        app:listDividerColor="@color/car_list_divider_light"/>
+
+</merge>

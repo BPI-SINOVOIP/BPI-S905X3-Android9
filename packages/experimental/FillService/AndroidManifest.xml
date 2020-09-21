@@ -1,0 +1,26 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="foo.bar.fill" >
+
+    <application>
+
+        <service android:name=".FillService"
+             android:permission="android.permission.BIND_AUTOFILL_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.autofill.AutofillService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.autofill"
+                android:resource="@xml/autofill_service_config">
+            </meta-data>
+
+        </service>
+
+        <activity android:name=".AuthActivity"/>
+        <activity android:name=".FirstActivity"/>
+        <activity android:name=".SecondActivity"/>
+
+    </application>
+
+</manifest>
+

@@ -1,0 +1,66 @@
+// Copyright (C) 2017 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License
+
+syntax = "proto2";
+
+option java_package = "com.android.dialer";
+option java_multiple_files = true;
+option optimize_for = LITE_RUNTIME;
+
+
+package com.android.dialer;
+
+// A phone number for use in the dialer application in the context of a call. It
+// consists of a normalized number string and a two-letter country code.
+// The country is retrieved from CallLog.Calls#COUNTRY: "The ISO 3166-1 two
+// letters country code of the country where the user received or made the
+// call."
+message DialerPhoneNumber {
+  // A dialer-normalized version of the number. Here are some general rules:
+  //
+  // -Numbers containing "#" or starting with "*" are considered service numbers
+  // and are stored exactly as the user dialed them.
+  //
+  // -If a number is valid according to libphonenumber and can be parsed, this
+  //  is the E164 version of it, with post dial digits appended.
+  //
+  // -Otherwise, it is the network portion of the number as dialed with
+  //  non-digits removed, with post dial digits appended. An example invalid
+  //  number is a 7-digit US number (missing an area code) like "456-7890" which
+  //  would be stored as "4567890".
+  //
+  //  Note: Using this field without country_iso effectively loses country info
+  //  when the number is not valid and no country prefix was prepended. This may
+  //  cause numbers like {"456-7890", "US"} to be treated equivalently to
+  //  {"456-7890", "DE"}, when they are not in fact equivalent.
+  //
+  //  See DialerPhoneNumberUtil#parse.
+  optional string normalized_number = 1;
+
+  // The country in which the call to the number occurred, retrieved from
+  // CallLog.Calls#COUNTRY: "The ISO 3166-1 two letters country code of the
+  // country where the user received or made the call."
+  optional string country_iso = 2;
+
+  // True if the number is valid according to libphonenumber.
+  optional bool is_valid = 3;
+
+  // The post dial portion of the number as described by
+  // PhoneNumberUtils#extractPostDialPortion. Note that this is also part of
+  // normalized_number, but this information is duplicated here for convenience.
+  //
+  // This includes pause and wait characters, but strips other characters, so
+  // for example would be ",123;456" given the raw input of "456-7890,123; 456".
+  optional string post_dial_portion = 4;
+}

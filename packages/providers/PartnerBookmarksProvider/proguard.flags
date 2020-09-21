@@ -1,0 +1,4 @@
+# Needed for tests
+-keep class com.android.providers.partnerbookmarks.PartnerBookmarksContract$Bookmarks {
+  *;
+}

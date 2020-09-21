@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ * Copyright (c) 2017, The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Application name, temporarily misspelled to allow it to live alongside the regular
+         android settings without confusion. -->
+    <string name="settings_label">Settings</string>
+    <string name="more_settings_label">More</string>
+    <string name="display_settings">Display</string>
+    <!-- Sound & display settings screen, setting option name to change brightness level -->
+    <string name="brightness">Brightness level</string>
+    <!-- Sound & display settings screen, setting option name to enable adaptive brightness [CHAR LIMIT=30] -->
+    <string name="auto_brightness_title">Adaptive brightness</string>
+    <!-- Sound & display settings screen, setting option summary to enable adaptive brightness [CHAR LIMIT=100] -->
+    <string name="auto_brightness_summary">Optimize brightness level for available light</string>
+    <!-- Title of condition that night display is on (renamed "Night Light" with title caps) [CHAR LIMIT=30] -->
+    <string name="condition_night_display_title">Night Light is on</string>
+    <string name="keywords_display">screen, touchscreen</string>
+    <string name="keywords_display_brightness_level">dim screen, touchscreen, battery</string>
+    <string name="keywords_display_auto_brightness">dim screen, touchscreen, battery</string>
+    <string name="keywords_display_night_display">dim screen, night, tint</string>
+    <!-- Label for night mode toggle tile in quick setting [CHAR LIMIT=20] -->
+    <string name="night_mode_tile_label">Night mode</string>
+
+    <!-- wifi settings--><skip />
+    <!-- Used in the 1st-level settings screen to go to the 2nd-level settings screen  [CHAR LIMIT=20]-->
+    <string name="wifi_settings">Wi\u2011Fi</string>
+    <!-- Summary text of the Wi-fi settings screen -->
+    <string name="wifi_settings_summary">Set up &amp; manage wireless access points</string>
+    <!-- Summary text when turning Wi-Fi or bluetooth on -->
+    <string name="wifi_starting">Turning Wi\u2011Fi on\u2026</string>
+    <!-- Summary text when turning Wi-Fi or bluetooth off -->
+    <string name="wifi_stopping">Turning off Wi\u2011Fi\u2026</string>
+    <!-- Failured notification for forget -->
+    <string name="wifi_failed_forget_message">Failed to forget network</string>
+    <!-- Failured notification for connect -->
+    <string name="wifi_failed_connect_message">Failed to connect to network</string>
+    <!-- Button message shown on the button adding manual setting.
+     Used in Wifi Setup For Setup Wizard with XL screen. -->
+    <string name="wifi_setup_add_network">Add network</string>
+    <!-- Summary text when Wi-Fi is turned off -->
+    <string name="wifi_disabled">Wi\u2011Fi disabled</string>
+    <!-- Button label to connect to a Wi-Fi network.
+     Used in SetupWizard for XLarge screen [CHAR LIMIT=10] -->
+    <string name="wifi_setup_connect">Connect</string>
+    <!-- Label for the password of the secured network -->
+    <string name="wifi_password">Password</string>
+    <!-- Label for the check box to show password -->
+    <string name="wifi_show_password">Show password</string>
+    <!-- Label for the SSID of the network -->
+    <string name="wifi_ssid">Network name</string>
+    <!-- Hint for a text field to enter the SSID of a hidden wifi network. [CHAR LIMIT=35] -->
+    <!-- <string name="wifi_ssid_hint">Enter the SSID</string> -->
+    <!-- Label for the security of the connection -->
+    <string name="wifi_security">Security</string>
+    <!-- Label for the signal strength of the connection -->
+    <string name="wifi_signal">Signal strength</string>
+    <!-- Label for the status of the connection -->
+    <string name="wifi_status">Status</string>
+    <!-- Label for the link speed of the connection -->
+    <string name="wifi_speed">Link speed</string>
+    <!-- Label for the frequency band of the connection -->
+    <string name="wifi_frequency">Frequency</string>
+    <!-- Label for the IP address of the connection -->
+    <string name="wifi_ip_address">IP address</string>
+    <!-- Key for the tag to store UI info for access point -->
+    <string name="access_point_tag_key">access_point_tag_key</string>
+    <!-- Match this with drawable.wifi_signal. --> <skip />
+    <!-- Wi-Fi settings. The signal strength a Wi-Fi network has. -->
+    <string-array name="wifi_signals">
+        <item>Poor</item>
+        <item>Fair</item>
+        <item>Good</item>
+        <item>Excellent</item>
+    </string-array>
+
+    <!-- Bluetooth settings --><skip />
+    <!-- Bluetooth settings check box title on Main Settings screen -->
+    <string name="bluetooth_quick_toggle_title">Bluetooth</string>
+    <!-- Bluetooth settings check box summary for turning on bluetooth -->
+    <string name="bluetooth_quick_toggle_summary">Turn on Bluetooth</string>
+    <!--Used as title on second screen after selecting Bluetooth settings -->
+    <string name="bluetooth_settings">Bluetooth</string>
+    <!--Bluetooth was disabled. -->
+    <string name="bluetooth_disabled">Bluetooth disabled</string>
+    <!--Wireless controls screen, settings title for the item to take you to the bluetooth settings screen -->
+    <string name="bluetooth_settings_title">Bluetooth</string>
+    <!--Wireless controls screen, settings summary for the item tot ake you to the bluetooth settings screen -->
+    <string name="bluetooth_settings_summary">Manage connections, set device name &amp; discoverability</string>
+
+    <!-- Message for telling the user the kind of BT device being displayed in list. -->
+    <string name="bluetooth_talkback_computer">Computer</string>
+
+    <!-- Message for telling the user the kind of BT device being displayed in list. -->
+    <string name="bluetooth_talkback_headset">Headset</string>
+
+    <!-- Message for telling the user the kind of BT device being displayed in list. -->
+    <string name="bluetooth_talkback_phone">Phone</string>
+
+    <!-- Message for telling the user the kind of BT device being displayed in list. -->
+    <string name="bluetooth_talkback_imaging">Imaging</string>
+
+    <!-- Message for telling the user the kind of BT device being displayed in list. -->
+    <string name="bluetooth_talkback_headphone">Headphone</string>
+
+    <!-- Message for telling the user the kind of BT device being displayed in list. -->
+    <string name="bluetooth_talkback_input_peripheral">Input Peripheral</string>
+
+    <!-- Message for telling the user the kind of BT device being displayed in list. -->
+    <string name="bluetooth_talkback_bluetooth">Bluetooth</string>
+    <!-- Bluetooth settings: The sub heading for devices which have already been paired with this device. [CHAR LIMIT=40] -->
+    <string name="bluetooth_preference_paired_devices">Paired devices</string>
+    <!-- Bluetooth settings: The sub heading for available devices during and after scanning. [CHAR LIMIT=40] -->
+    <string name="bluetooth_preference_found_devices">Available devices</string>
+    <!-- Bluetooth settings: The sub heading for no bluetooth device has been paired with this device. [CHAR LIMIT=40] -->
+    <string name="bluetooth_preference_no_paired_devices">No paired devices</string>
+    <!-- Bluetooth settings: The sub heading for no available bluetooth devices during and after scanning. [CHAR LIMIT=40] -->
+    <string name="bluetooth_preference_no_found_devices">No available devices</string>
+    <!-- Bluetooth settings: Paired dialog title [CHAR LIMIT=40] -->
+    <string name="bluetooth_preference_paired_dialog_title">Paired device</string>
+    <!-- Bluetooth settings: Name label [CHAR LIMIT=40] -->
+    <string name="bluetooth_preference_paired_dialog_name_label">Name</string>
+    <!-- Bluetooth settings.  Connection options screen.  The title of the header that is above all of the profiles.
+     When a user decides what Bluetooth capabilities to use with the device.  -->
+    <string name="bluetooth_device_advanced_profile_header_title">Use for</string>
+    <!-- Hint for a text field to change the name of the Bluetooth device. [CHAR LIMIT=35] -->
+    <string name="wifi_ssid_hint">Change the name of the Bluetooth device</string>
+
+    <!-- Bluetooth pairing -->
+    <!-- Notification ticker text (shown in the status bar) when a Bluetooth device wants to pair with us -->
+    <string name="bluetooth_notif_ticker">Bluetooth pairing request</string>
+    <!-- Bluetooth settings.  Context menu item for a device.  Action will first pair, and then connect to all profiles on the device. -->
+    <string name="bluetooth_device_context_pair_connect">Pair &amp; connect</string>
+    <!-- Used as setting title (for checkbox) on second screen after selecting Bluetooth settings -->
+    <string name="bluetooth">Bluetooth</string>
+    <!-- Message when bluetooth is informing the user of the pairing key. [CHAR LIMIT=NONE] -->
+    <string name="bluetooth_pairing_key_msg">Bluetooth pairing code</string>
+    <!-- Checkbox label for alphanumeric PIN entry (default is numeric PIN). [CHAR LIMIT=50] -->
+    <string name="bluetooth_enable_alphanumeric_pin">PIN contains letters or symbols</string>
+    <!-- Message when bluetooth dialog for passkey entry is showing. [CHAR LIMIT=NONE] -->
+    <string name="bluetooth_enter_passkey_msg">Type the pairing code then press Return or Enter</string>
+    <!-- Title for the dialog to enter PIN. [CHAR LIMIT=40] -->
+    <string name="bluetooth_pairing_request">Pair with <xliff:g id="device_name">%1$s</xliff:g>?</string>
+    <!-- Checkbox message in pairing dialogs.  [CHAR LIMIT=NONE] -->
+    <string name="bluetooth_pairing_shares_phonebook">Allow <xliff:g id="device_name">%1$s</xliff:g> to access your contacts and call history</string>
+    <!-- Pairing dialog text to remind user to enter the PIN on the other device. [CHAR LIMIT=NONE] -->
+    <string name="bluetooth_enter_pin_other_device">You may also need to type this PIN on the other device.</string>
+    <!-- Pairing dialog text to remind user to enter the passkey on the other device. [CHAR LIMIT=NONE] -->
+    <string name="bluetooth_enter_passkey_other_device">You may also need to type this passkey on the other device.</string>
+    <!-- Bluetooth PIN hint text (below the text entry box). [CHAR LIMIT=30] -->
+    <string name="bluetooth_pin_values_hint_16_digits">Must be 16 digits</string>
+    <!-- Bluetooth PIN hint text (below the text entry box). [CHAR LIMIT=30] -->
+    <string name="bluetooth_pin_values_hint">Usually 0000 or 1234</string>
+    <!-- Notification title when a Bluetooth device wants to pair with us -->
+    <string name="bluetooth_notif_title">Pairing request</string>
+    <!-- Notification message when a Bluetooth device wants to pair with us -->
+    <string name="bluetooth_notif_message">Tap to pair with <xliff:g id="device_name">%1$s</xliff:g>.</string>
+    <!-- Title for BT error dialogs. -->
+    <string name="bluetooth_error_title"></string>
+
+    <!-- Language settings screen heading. [CHAR LIMIT=30] -->
+    <string name="language_settings">Languages</string>
+
+    <!-- sound settings --><skip />
+    <!-- Sound settings screen heading -->
+    <string name="sound_settings">Sound</string>
+    <!-- Sound settings screen, setting option name -->
+    <string name="ring_volume_title">Ring volume</string>
+    <!-- Sound settings screen, the title of the volume bar to adjust the navigation guidance volume -->
+    <string name="navi_volume_title">Navigation volume</string>
+    <!-- Sound settings screen, the title of the volume bar to adjust the incoming call volume -->
+    <string name="incoming_call_volume_title">Ringtone</string>
+    <!-- Sound settings screen, the title of the volume bar to adjust the notification volume -->
+    <string name="notification_volume_title">Notification</string>
+    <!-- Sound settings screen, setting option name -->
+    <string name="media_volume_title">Media</string>
+    <!-- Sound settings screen, setting option summary text -->
+    <string name="media_volume_summary">Set volume for music and videos</string>
+    <!-- Sound settings screen, alarm volume slider title -->
+    <string name="alarm_volume_title">Alarm</string>
+
+    <!-- applications --><skip />
+    <!-- Applications settings title, on main settings screen. If clicked, the user is taken to a settings screen full of application settings-->
+    <string name="applications_settings">App info</string>
+    <!-- [CHAR LIMIT=25] Manage applications, individual application info screen, button label under Storage heading. Button to disable an existing application. -->
+    <string name="disable_text">Disable</string>
+    <!-- [CHAR LIMIT=25] Manage applications, individual application info screen, button label under Storage heading. Button to re-enable an existing application. -->
+    <string name="enable_text">Enable</string>
+    <!-- Manage applications, individual application info screen, heading for settings related to the app's permissions. for example, it may list all the permissions the app has. -->
+    <string name="permissions_label">Permissions</string>
+    <!-- Label for displaying application version. -->
+    <string name="application_version_label">Version: %1$s</string>
+    <!-- Runtime permissions preference summary, shown when the app has no permissions granted. [CHAR LIMIT=40] -->
+    <string name="runtime_permissions_summary_no_permissions_granted">No permissions granted</string>
+    <!-- Runtime permissions preference summary, shown when the app requests no permissions. [CHAR LIMIT=40] -->
+    <string name="runtime_permissions_summary_no_permissions_requested">No permissions requested</string>
+    <!-- Activity title for network data usage summary. [CHAR LIMIT=25] -->
+    <string name="data_usage_summary_title">Data usage</string>
+    <!-- Activity title for Appk data usage summary. [CHAR LIMIT=25] -->
+    <string name="data_usage_app_summary_title">App data usage</string>
+    <!-- Manage applications, text label for button to kill / force stop an application -->
+    <string name="force_stop">Force stop</string>
+    <string name="computing_size">Computing\u2026</string>
+    <!-- Runtime permissions preference summary.  Number of additional permissions granted. [CHAR LIMIT=40] -->
+    <plurals name="runtime_permissions_additional_count">
+        <item quantity="one"><xliff:g id="count" example="1">%d</xliff:g> additional permission</item>
+        <item quantity="other"><xliff:g id="count" example="10">%d</xliff:g> additional permissions</item>
+    </plurals>
+
+
+    <!-- System --><skip />
+    <!-- Main setting menu item to go into system settings -->
+    <string name="system_setting_title">System</string>
+    <!-- About phone screen, list item title.  Takes the user to the screen for seeing and installing system updates. [CHAR LIMIT=40] -->
+    <string name="system_update_settings_list_item_title">System updates</string>
+    <!-- About phone screen, list item summary.  Takes the user to the screen for seeing and installing system updates. [CHAR LIMIT=40] -->
+    <string name="system_update_settings_list_item_summary">""</string>
+
+    <!-- About phone screen, status item label  [CHAR LIMIT=40] -->
+    <string name="firmware_version">Android version</string>
+    <!-- About phone screen, status item label  [CHAR LIMIT=60] -->
+    <string name="security_patch">Android security patch level</string>
+    <!-- About phone screen, status item label  [CHAR LIMIT=40] -->
+    <string name="model_info">Model</string>
+    <!-- About phone screen,  setting option name  [CHAR LIMIT=40] -->
+    <string name="baseband_version">Baseband version</string>
+    <!-- About phone screen,  setting option name  [CHAR LIMIT=40] -->
+    <string name="kernel_version">Kernel version</string>
+    <!-- About phone screen,  setting option name  [CHAR LIMIT=40] -->
+    <string name="build_number">Build number</string>
+
+    <!-- About phone screen, show when a value of some status item is unavailable. -->
+    <string name="device_info_not_available">Not available</string>
+    <!-- About phone screen, phone status screen title -->
+    <string name="device_status_activity_title">Status</string>
+    <!-- About phone screen, title of the item to go into the Phone status screen -->
+    <string name="device_status">Status</string>
+    <!-- About tablet screen, summary of the item that takes you to tablet status screen -->
+    <string name="device_status_summary" product="tablet">Status of the battery, network, and other information</string>
+    <!-- About phone screen, summary of the item to go into the phone status screen -->
+    <string name="device_status_summary" product="default">Phone number, signal, etc.</string>
+
+    <!-- About --> <skip />
+    <!-- Main settings screen, setting title for the user to go into the About phone screen -->
+    <string name="about_settings">About</string>
+    <!-- Summary of device info page [CHAR LIMIT=NONE] -->
+    <string name="about_summary">Android <xliff:g id="version" example="6.0">%1$s</xliff:g></string>
+    <!-- Main settings screen, setting summary for the user to go into the About phone screen-->
+    <string name="about_settings_summary">View legal info, status, software version</string>
+    <!-- About phone settings screen, setting option name to go to dialog that shows legal info -->
+    <string name="legal_information">Legal information</string>
+    <!-- About phone settings screen, setting option name to see a list of contributors -->
+    <string name="contributors_title">Contributors</string>
+    <!-- About phone settings screen, setting option name to show Manual [CHAR LIMIT=25] -->
+    <string name="manual">Manual</string>
+    <!-- About phone settings screen, setting option name to show regulatory labels [CHAR LIMIT=25] -->
+    <string name="regulatory_labels">Regulatory labels</string>
+    <!-- About phone settings screen, setting option name to show the safety and regulatory manual [CHAR LIMIT=40] -->
+    <string name="safety_and_regulatory_info">Safety &amp; regulatory manual</string>
+    <!-- Note: this may be replaced by a more-specific title of the activity that will get launched --> <skip />
+    <!-- About phone settings screen, setting option name to see copyright-related info -->
+    <string name="copyright_title">Copyright</string>
+    <!-- Note: this may be replaced by a more-specific title of the activity that will get launched --> <skip />
+    <!-- About phone settings screen, setting option name to see licensing info -->
+    <string name="license_title">License</string>
+    <!-- Note: this may be replaced by a more-specific title of the activity that will get launched --> <skip />
+    <!-- About phone settings screen, setting option name to see terms and conditions -->
+    <string name="terms_title">Terms and conditions</string>
+    <!-- Note: this may be replaced by a more-specific title of the activity that will get launched --> <skip />
+    <!-- About phone settings screen, setting option name to see licensing info for WebView component. [CHAR LIMIT=35] -->
+    <string name="webview_license_title">System WebView License</string>
+    <!-- About phone settings screen, setting option name to see wallpapers attributions -->
+    <string name="wallpaper_attributions">Wallpapers</string>
+    <!-- About phone settings screen, setting option name to see wallpapers attributions values -->
+    <string name="wallpaper_attributions_values">Satellite imagery providers:\n©2014 CNES / Astrium, DigitalGlobe, Bluesky</string>
+
+    <!-- Title for actual Settings license activity. --> <skip />
+    <!-- About phone settings, Legal information setting option name and title of dialog box holding license info -->
+    <string name="settings_license_activity_title">Third-party licenses</string>
+    <!-- About phone settings screen, Open source license dialog message when licenses cannot be loaded -->
+    <string name="settings_license_activity_unavailable">There is a problem loading the licenses.</string>
+    <!-- About phone settings screen, Open source license dialog title until license is fully loaded -->
+    <string name="settings_license_activity_loading">Loading\u2026</string>
+
+
+    <!-- Date and time settings --><skip />
+    <!-- Main Settings screen setting option name to go into the date and time settings-->
+    <string name="date_and_time_settings_title">Date &amp; time</string>
+    <!-- Title for Date & Time settings screen in SetupWizard [CHAR LIMIT=40] -->
+    <string name="date_and_time_settings_title_setup_wizard">Set date and time</string>
+    <!-- Main Settings screen setting option summary text for the item to go into the date and time settings. -->
+    <string name="date_and_time_settings_summary">Set date, time, time zone, &amp; formats</string>
+    <!-- Date & time setting screen setting check box title if the date and time should be determined automatically [CHAR LIMIT=30] -->
+    <string name="date_time_auto">Automatic date &amp; time</string>
+    <!-- Date & time setting screen setting option summary text when Automatic check box is selected
+        (that is, when date and time should be determined automatically) [CHAR LIMIT=100] -->
+    <string name="date_time_auto_summary">Use network-provided time</string>
+    <!-- Date & time setting screen setting check box title if the time zone should be determined automatically [CHAR LIMIT=30] -->
+    <string name="zone_auto">Automatic time zone</string>
+    <!-- Date & time setting screen setting option summary text when Automatic time zone check box is selected (that is, when date and time should be determined automatically)
+        [CHAR LIMIT=100]  -->
+    <string name="zone_auto_summary">Use network-provided time zone</string>
+    <!-- Date & time setting screen setting check box title [CHAR LIMIT=30] -->
+    <string name="date_time_24hour_title">24\u2011hour format</string>
+    <!-- Date & time setting screen setting check box title -->
+    <string name="date_time_24hour">Use 24-hour format</string>
+    <!-- Date & time setting screen setting option title [CHAR LIMIT=30] -->
+    <string name="date_time_set_time_title">Time</string>
+    <!-- Date & time setting screen setting option title -->
+    <string name="date_time_set_time">Set time</string>
+    <!-- Date & time setting screen setting option title [CHAR LIMIT=30] -->
+    <string name="date_time_set_timezone_title">Time zone</string>
+    <!-- Date & time setting screen setting option title -->
+    <string name="date_time_set_timezone">Select time zone</string>
+    <!-- Date & time setting screen setting option title [CHAR LIMIT=30] -->
+    <string name="date_time_set_date_title">Date</string>
+    <!-- Date & time setting screen setting option title -->
+    <string name="date_time_set_date">Set date</string>
+    <!-- Menu item on Select time zone screen -->
+    <string name="zone_list_menu_sort_alphabetically">Sort alphabetically</string>
+    <!-- Menu item on Select time zone screen -->
+    <string name="zone_list_menu_sort_by_timezone">Sort by time zone</string>
+    <!-- Title string shown above DatePicker, letting a user select system date
+         [CHAR LIMIT=20] -->
+    <string name="date_picker_title">Date</string>
+    <!-- Title string shown above TimePicker, letting a user select system time
+         [CHAR LIMIT=20] -->
+    <string name="time_picker_title">Time</string>
+
+    <!-- User settings add user menu [CHAR LIMIT=35] -->
+    <string name="user_add_user_menu">Add user</string>
+    <!-- Button title for adding an account [CHAR LIMIT=35] -->
+    <string name="user_add_account_menu">Add account</string>
+    <!-- Spoken content description for delete icon beside a user [CHAR LIMIT=none] -->
+    <string name="user_delete_user_description">Delete user</string>
+    <!-- User details new user name [CHAR LIMIT=30] -->
+    <string name="user_new_user_name">New user</string>
+    <!-- Title for Guest user [CHAR LIMIT=35] -->
+    <string name="user_guest">Guest</string>
+    <!-- Description for icon to switch user [CHAR LIMIT=35] -->
+    <string name="user_switch">Switch</string>
+    <!-- Description for user name that is currently in use -->
+    <string name="current_user_name">You (%1$s)</string>
+    <!-- User settings label for user name [CHAR LIMIT=25] -->
+    <string name="user_name_label">Name</string>
+    <!-- User summary to indicate that user is currently not set up [CHAR LIMIT=100] -->
+    <string name="user_summary_not_set_up">Not set up</string>
+    <!-- Title for edit user name page [CHAR LIMIT=30] -->
+    <string name="edit_user_name_title">Edit user name</string>
+
+    <!-- User settings header for list of users on the system. [CHAR LIMIT=35] -->
+    <string name="users_list_title">Users</string>
+    <!-- Title for settings that lead into information about User's accounts [CHAR LIMIT=35] -->
+    <string name="accounts_settings_title">Accounts</string>
+    <!-- Title for detailed user information page [CHAR LIMIT=25] -->
+    <string name="user_details_title">User</string>
+    <!-- Text to display in Accounts settings if the user has not added any accounts yet [CHAR LIMIT=40] -->
+    <string name="no_accounts_added">No accounts added</string>
+    <!-- Account settings header for list of added accounts [CHAR LIMIT=40] -->
+    <string name="account_list_title">Accounts for <xliff:g id="current_user_name">%1$s</xliff:g></string>
+    <!-- Account details in Settings screen title [CHAR LIMIT=25] -->
+    <string name="account_details_title">Account info</string>
+    <!-- Account details in Settings screen title [CHAR LIMIT=25] -->
+    <string name="add_account_title">Add account</string>
+    <!-- Add Account screen title. [CHAR LIMIT=25] -->
+    <string name="add_an_account">Add an account</string>
+    <!-- Message to limited users that they cannot add accounts [CHAR LIMIT=100] -->
+    <string name="user_cannot_add_accounts_message">Restricted profiles cannot add accounts</string>
+    <!-- Button label to remove current account [CHAR LIMIT=25] -->
+    <string name="remove_account_title">Remove account</string>
+    <!-- Title of remove message for remove account dialog [CHAR LIMIT=25] -->
+    <string name="really_remove_account_title">Remove account?</string>
+    <!-- Remove account message in dialog [CHAR LIMIT=NONE] -->
+    <string name="really_remove_account_message">Removing this account will delete all of its messages, contacts, and other data from the device!</string>
+    <!-- This is shown if the authenticator for a given account fails to remove it. [CHAR LIMIT=NONE] -->
+    <string name="remove_account_failed">This change isn\'t allowed by your admin</string>
+    <!-- Title of the alert dialog to ask user to confirm user deletion [CHAR LIMIT=25] -->
+    <string name="really_remove_user_title">Remove this user?</string>
+    <!-- Message to inform user that all of user's data will be deleted if confirmed [CHAR LIMIT=NONE] -->
+    <string name="really_remove_user_message">"All apps and data will be deleted."</string>
+    <!-- Title of the alert dialog to ask user to confirm user deletion [CHAR LIMIT=40] -->
+    <string name="remove_user_error_title">Failed to remove user.</string>
+    <!-- Message to ask to retry user deletion [CHAR LIMIT=30] -->
+    <string name="remove_user_error_message">Try again?</string>
+    <!-- Button label to dismiss user deletion error [CHAR LIMIT=25] -->
+    <string name="remove_user_error_dismiss">Dismiss</string>
+    <!-- Button label to retry user deletion [CHAR LIMIT=25] -->
+    <string name="remove_user_error_retry">Retry</string>
+    <!-- Title of the alert dialog to ask user to confirm creation of new user. [CHAR LIMIT=30] -->
+    <string name="user_add_user_title">"Add new user?"</string>
+    <!-- Message to inform user that creation of new user requires that user to set up their space. [CHAR LIMIT=100] -->
+    <string name="user_add_user_message_setup">When you add a new user, that person needs to set up their space.</string>
+    <!-- Message to inform user that the newly created user will have permissions to update apps for all other users. [CHAR LIMIT=100] -->
+    <string name="user_add_user_message_update">Any user can update apps for all other users.</string>
+
+    <!-- security lock -->
+    <!-- Title for security settings [CHAR LIMIT=20] -->
+    <string name="security_settings_title">Security</string>
+    <!-- Subtitle for security settings [CHAR LIMIT=20] -->
+    <string name="security_settings_subtitle">Screen lock</string>
+    <!-- Title string shown in screen lock types for no locks [CHAR LIMIT=40] -->
+    <string name="security_lock_none">None</string>
+    <!-- Title string shown in choose screen lock for lock pattern [CHAR LIMIT=40] -->
+    <string name="security_lock_pattern">Pattern</string>
+    <!-- Title string shown in choose screen lock for lock pin [CHAR LIMIT=40] -->
+    <string name="security_lock_pin">PIN</string>
+    <!-- Title string shown in choose screen lock for lock password [CHAR LIMIT=40] -->
+    <string name="security_lock_password">Password</string>
+    <!--  Title for security picker to choose the unlock method: None/Pattern/PIN/Password [CHAR LIMIT=30] -->
+    <string name="lock_settings_picker_title">Choose a lock type</string>
+    <!--  Button caption to open a dialog for user to choose an screen lock method: Pattern/PIN/Password [CHAR LIMIT=40] -->
+    <string name="screen_lock_options">Screen lock options</string>
+    <!--  Title for screen asking user to enter their existing lock pattern [CHAR LIMIT=30] -->
+    <string name="lock_settings_enter_pattern">Enter your pattern</string>
+    <!-- Security & location settings screen, change unlock pattern screen button, on bottom of screen.  After they draw a pattern and release their finger, we display the pattern so they remember.  When they are ready to draw it once again to confirm it, they press this button. -->
+    <string name="lockpattern_confirm_button_text">Confirm</string>
+    <!-- Security & location settings screen, change unlock pattern screen button, on bottom of screen.  After they draw a pattern and release their finger, we display the pattern so they remember.  If they are not satisfied with this pattern, they click this button to redraw the pattern. -->
+    <string name="lockpattern_restart_button_text">Redraw</string>
+    <!-- Choose security lock screen button. After first valid enter, they will be prompt to confirm page. [CHAR LIMIT=20] -->
+    <string name="continue_button_text">Continue</string>
+    <!-- Security lock screen button. If error is encountered when saving password, PIN or pattern, the user can click this button to try saving again. [CHAR LIMIT=20] -->
+    <string name="lockscreen_retry_button_text">Retry</string>
+    <!-- Security lock screen button, allowing user to skip setting a screen lock [CHAR LIMIT=20] -->
+    <string name="lockscreen_skip_button_text">Skip</string>
+    <!-- Title string shown in choose screen lock [CHAR LIMIT=40] -->
+    <string name="set_screen_lock">Set a screen lock</string>
+    <!-- Title string shown in choose lock pattern [CHAR LIMIT=40] -->
+    <string name="lockscreen_choose_your_pattern">Choose your pattern</string>
+    <!-- Subtitle indicating the current screen lock type (none/PIN/pattern/password) [CHAR LIMIT=40] -->
+    <string name="current_screen_lock">Current screen lock</string>
+    <!-- Message on first screen of choose pattern flow [CHAR LIMIT=40] -->
+    <string name="choose_lock_pattern_message">For security, set a pattern</string>
+    <!-- Choose unlock pattern screen button. If they are supposed to enter their current pattern before being able to draw another one, and they made a mistake, they hit this button to try again [CHAR LIMIT=20] -->
+    <string name="lockpattern_retry_button_text">Clear</string>
+    <!-- Choose unlock pattern screen button. They can choose to cancel the setting of lock pattern. [CHAR LIMIT=20] -->
+    <string name="lockpattern_cancel_button_text">Cancel</string>
+    <!-- Choose unlock pattern screen message, confirm pattern success.[CHAR LIMIT=40] -->
+    <string name="lockpattern_pattern_confirmed">Your new unlock pattern</string>
+    <!-- Choose unlock pattern screen instruction on top of screen. When they are supposed to draw a new unlock pattern (for example, if they are changing their unlock patterns). [CHAR LIMIT=40] -->
+    <string name="lockpattern_recording_intro_header">Draw an unlock pattern</string>
+    <!-- Choose unlock pattern screen instruction on top of screen while drawing pattern. [CHAR LIMIT=40] -->
+    <string name="lockpattern_recording_inprogress">Release finger when done</string>
+    <!-- Choose unlock pattern screen message after drawing pattern. [CHAR LIMIT=40] -->
+    <string name="lockpattern_pattern_entered">Pattern recorded</string>
+    <!-- Choose unlock pattern screen instruction to confirm pattern. [CHAR LIMIT=40] -->
+    <string name="lockpattern_need_to_confirm">Draw pattern again to confirm</string>
+    <!-- Choose unlock pattern screen instruction on top of screen if user doesn't connect enough dots. [CHAR LIMIT=48] -->
+    <string name="lockpattern_recording_incorrect_too_short">Connect at least 4 dots. Try again.</string>
+    <!-- Choose unlock pattern screen instruction if user draws incorrect pattern [CHAR LIMIT=30] -->
+    <string name="lockpattern_pattern_wrong">Wrong pattern</string>
+    <!-- Choose unlock pattern screen instruction, the help instructions (an animation) caption. [CHAR LIMIT=40] -->
+    <string name="lockpattern_settings_help_how_to_record">How to draw an unlock pattern</string>
+    <!-- Message shown when error is encountered when saving pattern [CHAR LIMIT=40] -->
+    <string name="error_saving_lockpattern">Error saving pattern</string>
+    <!-- Label for button to confirm picker selection [CHAR_LIMIT=20] -->
+    <string name="okay">OK</string>
+    <!-- Title of dialog asking the user if they really want to remove the screen lock [CHAR LIMIT=30]-->
+    <string name="remove_screen_lock_title">Remove screen lock?</string>
+    <!-- Message in dialog warning the user about the consequence if they choose to remove the screen lock [CHAR LIMIT=60]-->
+    <string name="remove_screen_lock_message">This will allow anyone to access your account</string>
+
+    <!--  Title for screen asking user to enter their existing lock PIN [CHAR LIMIT=30] -->
+    <string name="lock_settings_enter_pin">Enter your PIN</string>
+    <!--  Title for screen asking user to enter their existing password [CHAR LIMIT=30] -->
+    <string name="lock_settings_enter_password">Enter your password</string>
+    <!-- Description for Choose Lock Pin Screen [CHAR_LIMIT=40] -->
+    <string name="choose_lock_pin_message">For security, set a PIN</string>
+    <!-- Header on password confirm screen [CHAR LIMIT=40] -->
+    <string name="confirm_your_pin_header">Re-enter your PIN</string>
+    <!-- Hints for Choose Lock Pin Screen [CHAR_LIMIT=40] -->
+    <string name="choose_lock_pin_hints">PIN must be at least 4 digits</string>
+    <!-- Error shown when in PASSWORD doesn't meet requirement. Because this may be concatenated with other messages, please make sure there's a period at the end of the sentence.  [CHAR LIMIT=40] -->
+    <string name="lockpin_invalid_pin">Pin invalid, must be at least 4 digits.</string>
+    <!-- Header on pin confirm screen if second pin doesn't match the first. [CHAR LIMIT=30]-->
+    <string name="confirm_pins_dont_match">PINs don\'t match</string>
+    <!-- Message shown when error is encountered when saving PIN [CHAR LIMIT=40] -->
+    <string name="error_saving_lockpin">Error saving PIN</string>
+    <!-- Confirm existing PIN screen error message when the user-entered PIN doesn't match record [CHAR LIMIT=30] -->
+    <string name="lockscreen_wrong_pin">Wrong PIN</string>
+    <!-- Confirm existing password screen error message when the user-entered password doesn't match record [CHAR LIMIT=30] -->
+    <string name="lockscreen_wrong_password">Wrong password</string>
+    <!-- Description for Choose Lock Password Screen [CHAR_LIMIT=40] -->
+    <string name="choose_lock_password_message">For security, set a password</string>
+    <!-- Header on password confirm screen [CHAR LIMIT=40] -->
+    <string name="confirm_your_password_header">Re-enter your password</string>
+    <!-- Header on password confirm screen if second password doesn't match the first. [CHAR LIMIT=30] -->
+    <string name="confirm_passwords_dont_match">Passwords don\'t match</string>
+    <!-- Label for Clear button when entering PIN / password. [CHAR LIMIT=30] -->
+    <string name="lockpassword_clear_label">Clear</string>
+    <!-- Label for Cancel button when entering PIN / password. [CHAR LIMIT=30] -->
+    <string name="lockpassword_cancel_label">Cancel</string>
+    <!-- Label for Confirm button when entering PIN / password the second time. [CHAR LIMIT=30] -->
+    <string name="lockpassword_confirm_label">Confirm</string>
+    <!-- Hints for Choose Lock Password Screen [CHAR_LIMIT=73] -->
+    <string name="choose_lock_password_hints">Password must be between 4-8 characters with at least 1 number</string>
+    <!-- Hint shown in dialog screen when password is too short [CHAR LIMIT=40] -->
+    <string name="lockpassword_password_too_short">Must be at least <xliff:g id="count" example="3">%d</xliff:g> characters</string>
+    <!-- Hint shown in dialog screen when PIN is too short [CHAR LIMIT=44] -->
+    <string name="lockpassword_pin_too_short">PIN must be at least <xliff:g id="count" example="3">%d</xliff:g> digits</string>
+
+    <!-- Error shown in popup when password is too long [CHAR LIMIT=42] -->
+    <string name="lockpassword_password_too_long">Must be fewer than
+        <xliff:g id="number" example="17">%d</xliff:g> characters</string>
+    <!-- Error shown in popup when PIN is too long [CHAR LIMIT=42] -->
+    <string name="lockpassword_pin_too_long">Must be fewer than
+        <xliff:g id="number" example="17">%d</xliff:g> digits</string>
+
+    <!-- Error shown when in PIN mode and user enters a non-digit. Because this may be concatenated with other messages, please make sure there's a period at the end of the sentence. [CHAR LIMIT=40] -->
+    <string name="lockpassword_pin_contains_non_digits">Must contain only digits 0-9.</string>
+
+    <!-- Error shown when in PIN mode and PIN has been used recently. Please keep this string short! [CHAR LIMIT=NONE] -->
+    <string name="lockpassword_pin_recently_used">Device admin doesn\'t allow using a recent PIN</string>
+
+    <!-- Error shown when a user is choosing a PIN for their work phone, but what they suggest is blocked by their company's IT administrator. The user should try another PIN that's less common and more complicated. [CHAR LIMIT=NONE] -->
+    <string name="lockpassword_pin_blacklisted_by_admin">Common PINs are blocked by your IT admin. Try a different PIN.</string>
+
+    <!-- Error shown when in PASSWORD mode and user enters an invalid character. Because this may be concatenated with other messages, please make sure there's a period at the end of the sentence.  [CHAR LIMIT=40] -->
+    <string name="lockpassword_illegal_character">This can\'t include an invalid character.</string>
+
+    <!-- Error shown when in PASSWORD doesn't meet requirement. Because this may be concatenated with other messages, please make sure there's a period at the end of the sentence. [CHAR LIMIT=NONE] -->
+    <string name="lockpassword_invalid_password">Password invalid, must be 4-8 characters, contain at least 1 digit, 1 letter, no whitespace.</string>
+
+    <!-- Error shown when in PASSWORD mode and password doesn't contain the required number of letters [CHAR LIMIT=NONE] -->
+    <plurals name="lockpassword_password_requires_letters">
+        <item quantity="one">Must contain at least 1 letter</item>
+        <item quantity="other">Must contain at least <xliff:g id="count" example="3">%d</xliff:g> letters</item>
+    </plurals>
+
+    <!-- Error shown when in PASSWORD mode and password doesn't contain the required number of lowercase letters [CHAR LIMIT=NONE] -->
+    <plurals name="lockpassword_password_requires_lowercase">
+        <item quantity="one">Must contain at least 1 lowercase letter</item>
+        <item quantity="other">Must contain at least <xliff:g id="count" example="3">%d</xliff:g> lowercase letters</item>
+    </plurals>
+
+    <!-- Error shown when in PASSWORD mode and password doesn't contain the required number of uppercase letters [CHAR LIMIT=NONE] -->
+    <plurals name="lockpassword_password_requires_uppercase">
+        <item quantity="one">Must contain at least 1 uppercase letter</item>
+        <item quantity="other">Must contain at least <xliff:g id="count" example="3">%d</xliff:g> uppercase letters</item>
+    </plurals>
+
+    <!-- Error shown when in PASSWORD mode and password doesn't contain the required number of numerical digits [CHAR LIMIT=NONE] -->
+    <plurals name="lockpassword_password_requires_numeric">
+        <item quantity="one">Must contain at least 1 numerical digit</item>
+        <item quantity="other">Must contain at least <xliff:g id="count" example="3">%d</xliff:g> numerical digits</item>
+    </plurals>
+
+    <!-- Error shown when in PASSWORD mode and password doesn't contain the required number of special symbols [CHAR LIMIT=NONE] -->
+    <plurals name="lockpassword_password_requires_symbols">
+        <item quantity="one">Must contain at least 1 special symbol</item>
+        <item quantity="other">Must contain at least <xliff:g id="count" example="3">%d</xliff:g> special symbols</item>
+    </plurals>
+
+    <!-- Error shown when in PASSWORD mode and password doesn't contain the required number of non-letter characters [CHAR LIMIT=NONE] -->
+    <plurals name="lockpassword_password_requires_nonletter">
+        <item quantity="one">Must contain at least 1 non-letter character</item>
+        <item quantity="other">Must contain at least <xliff:g id="count" example="3">%d</xliff:g> non-letter characters</item>
+    </plurals>
+
+    <!-- Error shown when in PASSWORD mode and password has been used recently. Please keep this string short! [CHAR LIMIT=NONE] -->
+    <string name="lockpassword_password_recently_used">Device admin doesn\'t allow using a recent
+        password</string>
+
+    <!-- Message shown when error is encountered when saving password [CHAR LIMIT=50] -->
+    <string name="error_saving_password">Error saving password</string>
+
+    <!-- Error shown when a user is choosing a PASSWORD for their work phone, but what they suggest is blocked by their company's IT administrator. The user should try another PASSWORD that's less common and more complicated. [CHAR LIMIT=NONE] -->
+    <string name="lockpassword_password_blacklisted_by_admin">Common passwords are blocked by your IT admin. Try a different password.</string>
+
+    <!-- [CHAR_LIMIT=NONE] Error shown when the user tries to set an ascending or descending sequence of digits. Because this may be concatenated with other messages, please make sure there's a period at the end of the sentence. [CHAR LIMIT=NONE] -->
+    <string name="lockpassword_pin_no_sequential_digits">Ascending, descending, or repeated sequence of digits isn\'t allowed.</string>
+
+    <!-- Label for button in screen lock settings, allowing users to choose other types of screen locks. [CHAR LIMIT=40] -->
+    <string name="setup_lock_settings_options_button_label">Screen lock options</string>
+
+    <!-- generic -->
+    <!-- Button label for generic forget action [CHAR LIMIT=20] -->
+    <string name="forget">Forget</string>
+    <!-- Delete button text [CHAR LIMIT=20] -->
+    <string name="delete_button">Delete</string>
+    <!-- Remove button text [CHAR LIMIT=20] -->
+    <string name="remove_button">Remove</string>
+    <!-- Cancel button text [CHAR LIMIT=20] -->
+    <string name="cancel">Cancel</string>
+
+    <!-- Accessibility description for the backspace key in the PIN pad [CHAR LIMIT=NONE] -->
+    <string name="backspace_key">Backspace key</string>
+    <!-- Accessibility description for the enter key in the PIN pad [CHAR LIMIT=NONE] -->
+    <string name="enter_key">Enter key</string>
+
+    <!-- These are the digits on the PIN pad -->
+    <string name="one" translatable="false">1</string>
+    <string name="two" translatable="false">2</string>
+    <string name="three" translatable="false">3</string>
+    <string name="four" translatable="false">4</string>
+    <string name="five" translatable="false">5</string>
+    <string name="six" translatable="false">6</string>
+    <string name="seven" translatable="false">7</string>
+    <string name="eight" translatable="false">8</string>
+    <string name="nine" translatable="false">9</string>
+    <string name="zero" translatable="false">0</string>
+
+    <!-- Demo/Retail-related strings -->
+    <!-- Text of button the user presses to exit Retail/Demo mode [CHAR LIMIT=25]-->
+    <string name="exit_retail_button_text">Exit Demo</string>
+    <!-- Title of dialog asking the user if they really want to exit the demo, which requires a
+         factory reset [CHAR LIMIT=30]-->
+    <string name="exit_retail_mode_dialog_title">Exit demo mode</string>
+    <!-- Message in dialog asking the user if they really want to exit the demo, which requires a
+         factory reset [CHAR LIMIT=150]-->
+    <string name="exit_retail_mode_dialog_body">This will delete the demo account and factory data reset the system. All user data will be lost.</string>
+    <!-- Text of confirmation button in dialog that appears to confirm that Demo Mode should be exited. [CHAR LIMIT=25]-->
+    <string name="exit_retail_mode_dialog_confirmation_button_text">Exit Demo</string>
+
+    <!-- String values for settings suggestions. -->
+    <!-- Button that allows users to re-open the setup wizard (changed to all caps so case doesn't matter) [CHAR_LIMIT=30] -->
+    <string name="suggestion_primary_button">finish setup</string>
+    <!-- Button that dismisses the suggestion to finish setting up their device (changed to all caps so case doesn't matter) [CHAR_LIMIT=30] -->
+    <string name="suggestion_secondary_button">not now</string>
+
+    <!-- Warn user that the action they are trying to perform is blocked while the car is in
+         motion [CHAR LIMIT=60] -->
+    <string name="restricted_while_driving">Feature not available while driving.</string>
+    <!-- Warn user that adding a user is blocked while the car is in motion [CHAR LIMIT=60] -->
+    <string name="add_user_restricted_while_driving">Can\'t add user while driving.</string>
+</resources>

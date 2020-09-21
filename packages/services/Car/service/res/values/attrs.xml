@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+** Copyright 2018, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+<resources>
+    <!-- Defines the attributes and values used in res/xml/car_volume_group.xml -->
+    <declare-styleable name="volumeGroups" />
+
+    <declare-styleable name="volumeGroups_group"/>
+
+    <declare-styleable name="volumeGroups_context">
+        <!-- Align with hardware/interfaces/automotive/audiocontrol/1.0/types.hal:ContextNumber -->
+        <attr name="context">
+            <enum name="music" value="1"/>
+            <enum name="navigation" value="2"/>
+            <enum name="voice_command" value="3"/>
+            <enum name="call_ring" value="4"/>
+            <enum name="call" value="5"/>
+            <enum name="alarm" value="6"/>
+            <enum name="notification" value="7"/>
+            <enum name="system_sound" value="8"/>
+        </attr>
+    </declare-styleable>
+
+    <!-- Defines the UX restrictions to be imposed for different driving states of a vehicle -->
+    <declare-styleable name="UxRestrictions"/>
+    <!-- 1. UX restriction Mapping from a driving state of the vehicle-->
+    <declare-styleable name="UxRestrictions_RestrictionMapping"/>
+
+    <!-- 1.a. Driving states supported -->
+    <declare-styleable name="UxRestrictions_DrivingState">
+        <!-- Align with the driving states (@CarDrivingState) defined in
+        packages/services/Car/car-lib/src/android/car/drivingstate/CarDrivingStateEvent.java-->
+        <attr name="state">
+            <enum name="parked" value="0"/>
+            <enum name="idling" value="1"/>
+            <enum name="moving" value="2"/>
+        </attr>
+        <!-- Minimum and Maximum speed attributes useful to provide different restrictions
+        for different speed ranges -->
+        <attr name="minSpeed" format="float"/>
+        <attr name="maxSpeed" format="float"/>
+    </declare-styleable>
+
+    <!-- 1.b. UX restriction types-->
+    <declare-styleable name="UxRestrictions_Restrictions">
+        <!-- This corresponds to what CarUxRestrictions#mRequiresDistractionOptimization needs to
+         be set to. This means that apps will have to follow the general baseline
+         distraction optimization rules defined in the Driver Distraction Guidelines.  -->
+        <attr name="requiresDistractionOptimization" format="boolean"/>
+        <!-- These are the additional UX restrictions that OEMs can configure in addition to
+        the baseline restrictions defined in the above requiresDistractionOptimization.
+        The values here have to align with the UX  Restrictions defined in
+        packages/services/Car/car-lib/src/android/car/drivingstate/CarUxRestrictions.java-->
+        <attr name="uxr">
+            <flag name="baseline" value="0"/>
+            <flag name="no_dialpad" value="1"/>
+            <flag name="no_filtering" value="2"/>
+            <flag name="limit_string_length" value="4"/>
+            <flag name="no_keyboard" value="8"/>
+            <flag name="no_video" value="16"/>
+            <flag name="limit_content" value="32"/>
+            <flag name="no_setup" value="64"/>
+            <flag name="no_text_message" value="128"/>
+            <flag name="no_voice_transcription" value="256"/>
+            <flag name="fully_restricted" value="511"/>
+        </attr>
+    </declare-styleable>
+
+    <!-- 2. Some of UX restrictions can be parametrized. -->
+    <declare-styleable name="UxRestrictions_RestrictionParameters"/>
+
+    <!-- 2.a Parameters to express displayed String related restrictions -->
+    <declare-styleable name="UxRestrictions_StringRestrictions">
+        <!-- Max allowed length of general purpose strings when limit_string_length is imposed-->
+        <attr name="maxLength" format="integer"/>
+    </declare-styleable>
+
+    <!-- 2.b. Parameters to express content related restrictions -->
+    <declare-styleable name="UxRestrictions_ContentRestrictions">
+        <!-- Max number of cumulative content items allowed to be displayed when
+        limit_content is imposed. -->
+        <attr name="maxCumulativeItems" format="integer"/>
+        <!-- Maximum levels deep that the user can navigate to when limit_content is imposed. -->
+        <attr name="maxDepth" format="integer"/>
+    </declare-styleable>
+
+</resources>

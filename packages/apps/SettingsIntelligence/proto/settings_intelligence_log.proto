@@ -1,0 +1,92 @@
+syntax = "proto2";
+
+option java_outer_classname = "SettingsIntelligenceLogProto";
+
+package com.android.settings.intelligence;
+
+// Wrapper for SettingsIntelligence event.
+// Next index: 3
+message SettingsIntelligenceEvent {
+
+    // Event type for this log.
+    enum EventType {
+        // Do not use
+        UNUSED = 0;
+
+        // Gets suggestion list
+        GET_SUGGESTION = 1;
+
+        // Dismisses a suggestion
+        DISMISS_SUGGESTION = 2;
+
+        // Launches a suggestion
+        LAUNCH_SUGGESTION = 3;
+
+        // Opens search page
+        OPEN_SEARCH_PAGE = 4;
+
+        // Leaves search page
+        LEAVE_SEARCH_PAGE = 5;
+
+        // User sends a query to settings search
+        PERFORM_SEARCH = 6;
+
+        // Clicks a search result
+        CLICK_SEARCH_RESULT = 7;
+
+        // Clicks a saved query
+        CLICK_SAVED_QUERY = 8;
+
+        // Search service indexes database
+        INDEX_SEARCH = 9;
+
+        // Displays the no result image in search
+        SHOW_SEARCH_NO_RESULT = 10;
+
+        // Displays some result in search
+        SHOW_SEARCH_RESULT = 11;
+
+        // Leaves search page without entering any query
+        LEAVE_SEARCH_WITHOUT_QUERY = 12;
+
+        // Queries search data during a search session
+        SEARCH_QUERY_DATABASE = 13;
+
+        // Queries installed app list during a search session
+        SEARCH_QUERY_INSTALLED_APPS = 14;
+
+        // Queries input device list (keyboards, game controller etc) during
+        // a search session
+        SEARCH_QUERY_INPUT_DEVICES = 15;
+
+        // Queries accessiblity service list during a search session
+        SEARCH_QUERY_ACCESSIBILITY_SERVICES = 16;
+    }
+
+    message SearchResultMetadata {
+        // The id of the search result row in this event, this is an internally
+        // generated key and does not associate with any user data.
+        optional string search_result_key = 1;
+
+        // The rank of the search result row in this event.
+        optional int32 search_result_rank = 2;
+
+        // The number of results in this query.
+        optional int32 result_count = 3;
+
+        // The length of query word.
+        optional int32 search_query_length = 4;
+    }
+
+    // The type of suggestion event.
+    optional EventType event_type = 1;
+
+    // The name/id of the suggestion in this event.
+    repeated string suggestion_ids = 2;
+
+    // Data about search results in this event.
+    optional SearchResultMetadata search_result_metadata = 3;
+
+    // Latency for the current event.
+    optional int64 latency_millis = 4;
+}

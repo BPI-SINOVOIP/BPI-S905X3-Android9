@@ -1,0 +1,155 @@
+syntax = "proto2";
+
+option java_package = "com.android.dialer.phonelookup";
+option java_multiple_files = true;
+option optimize_for = LITE_RUNTIME;
+
+
+package com.android.dialer.phonelookup;
+
+// Contains information about a phone number, possibly from many sources.
+//
+// This message is organized into sub-message fields where each one corresponds
+// to an implementation of PhoneLookup. For example, field
+// "cp2_info_in_default_directory" corresponds to class
+// Cp2DefaultDirectoryPhoneLookup, and class Cp2DefaultDirectoryPhoneLookup
+// alone is responsible for populating it. Next ID: 7
+message PhoneLookupInfo {
+  // Information about a PhoneNumber retrieved from CP2.
+  message Cp2Info {
+    // Information about a single contact.
+    // Next ID: 8
+    message Cp2ContactInfo {
+      // For a contact in the default directory:
+      //   android.provider.ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME_PRIMARY
+      // For a contact in other directories:
+      //   android.provider.ContactsContract.PhoneLookup.DISPLAY_NAME_PRIMARY
+      optional string name = 1;
+
+      // For a contact in the default directory:
+      //   android.provider.ContactsContract.CommonDataKinds.Phone.PHOTO_THUMBNAIL_URI
+      // For a contact in other directories:
+      //   android.provider.ContactsContract.PhoneLookup.PHOTO_THUMBNAIL_URI
+      optional string photo_thumbnail_uri = 2;
+
+      // For a contact in the default directory:
+      //   android.provider.ContactsContract.CommonDataKinds.Phone.PHOTO_URI
+      // For a contact in other directories:
+      //   android.provider.ContactsContract.PhoneLookup.PHOTO_URI
+      optional string photo_uri = 3;
+
+      // For a contact in the default directory:
+      //   android.provider.ContactsContract.CommonDataKinds.Phone.PHOTO_ID
+      // For a contact in other directories:
+      //   android.provider.ContactsContract.PhoneLookup.PHOTO_ID
+      optional fixed64 photo_id = 4;
+
+      // For a contact in the default directory:
+      //   android.provider.ContactsContract.CommonDataKinds.Phone.LABEL
+      // For a contact in other directories:
+      //   android.provider.ContactsContract.PhoneLookup.LABEL
+      //
+      // The value can be "Home", "Mobile", ect.
+      optional string label = 5;
+
+      // For a contact in the default directory:
+      //   android.provider.ContactsContract.CommonDataKinds.Phone.CONTACT_ID
+      // For a contact in other directories:
+      //   android.provider.ContactsContract.PhoneLookup.CONTACT_ID
+      optional fixed64 contact_id = 6;
+
+      // For a contact in the default directory:
+      //   constructed based on
+      //   android.provider.ContactsContract.CommonDataKinds.Phone.LOOKUP_KEY
+      // For a contact in other directories:
+      //   constructed based on
+      //   android.provider.ContactsContract.PhoneLookup.LOOKUP_KEY
+      optional string lookup_uri = 7;
+    }
+    // Repeated because one phone number can be associated with multiple CP2
+    // contacts.
+    //
+    // Empty if there is no CP2 contact information for the number.
+    repeated Cp2ContactInfo cp2_contact_info = 1;
+
+    // The information for this number is incomplete. This can happen when the
+    // call log is requested to be updated but there are many invalid numbers
+    // and the update cannot be performed efficiently. In this case, the call
+    // log needs to query for the CP2 information at render time.
+    optional bool is_incomplete = 2;
+  }
+
+  // Information about a contact in the default directory, retrieved via CP2.
+  // Cp2DefaultDirectoryPhoneLookup is responsible for populating this field.
+  optional Cp2Info default_cp2_info = 1;
+
+  // Information about a contact in other directories, retrieved via CP2.
+  // Cp2ExtendedDirectoryPhoneLookup is responsible for populating this field.
+  optional Cp2Info extended_cp2_info = 6;
+
+  // Message for spam info.
+  // SpamPhoneLookup is responsible for populating this message.
+  message SpamInfo {
+    optional bool is_spam = 1;
+  }
+  optional SpamInfo spam_info = 2;
+
+  // Message for PeopleApi, including G+ contacts and nearby places
+  message PeopleApiInfo {
+    // Best display name determined by people API if available, first display
+    // name otherwise.
+    optional string display_name = 1;
+
+    // The type of the number, for example "phone" or "home".
+    optional string number_type = 2;
+
+    // The number_type label in human readable string, for example "Phone".
+    // The UI should display known number_type with string resources if possible
+    // but if number_type is unrecognized formatted_number_type. For example
+    // if the user set an custom type label.
+    optional string formatted_number_type = 3;
+
+    // URL to the contact's full size photo.
+    optional string image_url = 4;
+
+    // The primary key of the contact in people API.
+    optional string person_id = 5;
+
+    enum InfoType {
+      UNKNOWN = 0;
+      CONTACT = 1;          // the result is a saved contact in people API
+      NEARBY_BUSINESS = 2;  // the result is found through nearby places
+    }
+    // The type of the lookup result, for example, a saved contact or a nearby
+    // business.
+    optional InfoType info_type = 6;
+
+    // A URI that contains encoded JSON about the number so contacts can
+    // populate the quick contact activity with name and numbers. This does not
+    // point to any real contact entry anywhere.
+    optional string lookup_uri = 7;
+  }
+  optional PeopleApiInfo people_api_info = 3;
+
+  // Whether a number is blocked or not. Used by both the system blacklist and
+  // dialer fallback
+  enum BlockedState {
+    UNKNOWN = 0;
+    BLOCKED = 1;
+    NOT_BLOCKED = 2;
+  }
+
+  // Message for the android system BlockedNumber lookup. Available starting in
+  // N.
+  message SystemBlockedNumberInfo {
+    optional BlockedState blocked_state = 1;
+  }
+  optional SystemBlockedNumberInfo system_blocked_number_info = 4;
+
+  // Message for the dialer fallback for blocked number. Used in M or when the
+  // migration to the system has not been completed.
+  message DialerBlockedNumberInfo {
+    optional BlockedState blocked_state = 1;
+  }
+  optional DialerBlockedNumberInfo dialer_blocked_number_info = 5;
+}

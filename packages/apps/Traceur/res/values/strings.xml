@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <!-- This is the user visible name of the app and title. The purpose of the app is to allow the user to take a "Trace" of the activity on their system, recording it for later review. Here's a description of the process, but we'd like to refer to it using the general term "tracing": https://developer.android.com/studio/command-line/systrace.html -->
+    <string name="system_tracing">System Tracing</string>
+
+    <!-- This string is a description of what "System Tracing" is. It is used as a subtitle or summary text to describe this System Tracing app. -->
+    <string name="record_system_activity">Record system activity and analyze it later to improve performance</string>
+
+    <!-- This is the label for a toggle button. When the toggle is enabled, we will begin recording a "Trace" of activity on the user's phone. This is also used as a Quick Settings tile label. -->
+    <string name="record_trace">Record trace</string>
+
+    <!-- This is the label for a toggle that will let the user choose whether to trace debuggable applications in the trace they are collecting. -->
+    <string name="trace_debuggable_applications">Trace debuggable applications</string>
+
+    <!-- This is the title for a list of trace categories. The user will be able to select as many categories as they want to from this list (that list will not be translated). Categories are explained here: https://developer.android.com/studio/command-line/systrace.html -->
+    <string name="categories">Categories</string>
+    <!-- When the user taps this button, the default list of categories to trace will be restored. -->
+    <string name="restore_default_categories">Restore default categories</string>
+    <!-- This is the label for a toast that appears when the user taps the "Restore default categories" button.-->
+    <string name="default_categories_restored">Default categories restored</string>
+
+    <!-- This is the label for a list of applications on the device that the user can add to their trace. The user will be able to select one or more applications from this list (that list will not be translated). -->
+    <string name="applications">Applications</string>
+    <!-- This is an optional subtitle under the Applications label, indicating that there are no applications available to be traced because the device doesn't have any applications in debug mode. -->
+    <string name="no_debuggable_apps">No debuggable applications are available</string>
+
+    <!-- This is the label for a picker that will let the user select the buffer size to use for their trace. -->
+    <string name="buffer_size">Buffer size</string>
+
+    <!-- This setting is the label for a toggle button. When enabled, a Quick Settings tile will be available in the Quick Settings bar (available when you swipe down from the top of the screen). -->
+    <string name="show_quick_settings_tile">Show Quick Settings tile</string>
+
+    <!-- This is the title for a notification that appears while a trace is being saved. -->
+    <string name="saving_trace">Saving trace</string>
+    <!-- This is the title for a notification that appears after a trace was saved. -->
+    <string name="trace_saved">Trace saved</string>
+    <!-- This is the subtitle for a notification that appears after a trace was saved. Tapping it will open the 'share sheet' that will appear at the bottom of the screen and will allow the user to share the trace, for example to email. -->
+    <string name="tap_to_share">Tap to share your trace</string>
+
+    <!-- This is a message prompting the user to stop tracing. -->
+    <string name="stop_tracing">Stop tracing</string>
+
+    <!-- This is the title for a notification that appears when a trace begins but for some reason a desired tracing category is not available. This ends in a colon because the subtitle for this notification is a list of the unavailable tracing categories. That list could contain one or more categories. (This should rarely happen) -->
+    <string name="tracing_categories_unavailable">Some tracing categories are unavailable:</string>
+
+    <!-- This is the title for a notification that appears while a trace is being recorded. -->
+    <string name="trace_is_being_recorded">Trace is being recorded</string>
+    <!-- This is the subtitle for a notification that appears while a trace is being recorded. Tapping the notification will stop the recording. -->
+    <string name="tap_to_stop_tracing">Tap to stop tracing</string>
+
+    <!-- This is the label for a button that will clear all of the saved traces, removing them all from the directory they are saved to. There will be a confirmation dialog after this button is tapped, but clearing the traces after confirming is not reversible. -->
+    <string name="clear_saved_traces">Clear saved traces</string>
+    <!-- This is the title for a confirmation dialog asking the user to confirm that they want to clear, or delete, all of the traces t hey have saved. -->
+    <string name="clear_saved_traces_question">Clear saved traces?</string>
+    <!-- This is the confirmation dialog for deleting all of the saved traces. Don't translate "/data/local/traces". After confirming, this decision is not reversible. -->
+    <string name="all_traces_will_be_deleted">All traces will be deleted from /data/local/traces</string>
+    <!-- This is the confirmation button indicating that the user does want to clear, or delete, all of the saved traces from their device. -->
+    <string name="clear">Clear</string>
+
+    <!-- These are keywords that the user can use to search for this app. 'systrace' should not be translated, as it is an app name. -->
+    <string name="keywords">systrace, trace, performance</string>
+</resources>

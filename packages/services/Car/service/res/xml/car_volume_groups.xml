@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2018 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<!--
+  Defines the all available volume groups for volume control in a car.
+  One can overlay this configuration to customize the groups.
+
+  This configuration will be populated by CarAudioService and
+  surfaced to Car Settings App and/or other volume control interfaces.
+
+  Certain constraints applied to this configuration
+    - One context should not appear in two groups
+    - All contexts are assigned
+    - One bus should not appear in two groups
+    - All gain controllers (set on each bus) in one group have same step value
+
+  It is fine that there are buses that do not appear in any group, those buses
+  may be reserved for other usages.
+
+  Important note: when overlaying this configuration,
+  make sure the resources are in the same package as CarAudioService.
+-->
+<volumeGroups xmlns:car="http://schemas.android.com/apk/res-auto">
+    <group>
+        <context car:context="music"/>
+        <context car:context="call_ring"/>
+        <context car:context="notification"/>
+        <context car:context="system_sound"/>
+    </group>
+    <group>
+        <context car:context="navigation"/>
+        <context car:context="voice_command"/>
+    </group>
+    <group>
+        <context car:context="call"/>
+    </group>
+    <group>
+        <context car:context="alarm"/>
+    </group>
+</volumeGroups>

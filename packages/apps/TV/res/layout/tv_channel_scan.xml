@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2015 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/progress_holder"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_vertical|center_horizontal"
+    android:animateLayoutChanges="true"
+    android:background="@color/common_tv_background"
+    android:keepScreenOn="true"
+    android:weightSum="5" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="vertical"
+        android:layout_weight="1" >
+
+        <ImageView
+            android:id="@+id/tune_icon"
+            android:layout_width="@dimen/ut_scan_icon_width"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/tv_antenna" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:gravity="left|center_vertical"
+        android:orientation="vertical"
+        android:layout_weight="3" >
+
+        <TextView
+            android:id="@+id/tv_tune_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ut_scan_icon_margin_right"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-light"
+            android:maxLines="@integer/ut_scan_title_max_lines"
+            android:textColor="@color/ut_scan_title_text"
+            android:textSize="@dimen/ut_scan_title_text_size"
+            android:text="@string/ut_channel_scan" />
+
+        <ProgressBar
+            android:id="@+id/tune_progress"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="@dimen/ut_scan_progress_width"
+            android:layout_height="@dimen/ut_scan_progress_height"
+            android:layout_marginTop="@dimen/ut_scan_progress_margin_top"
+            android:layout_marginLeft="@dimen/ut_scan_icon_margin_right"
+            android:progressDrawable="@drawable/tv_scan_progress" />
+
+        <TextView
+            android:id="@+id/tune_description"
+            android:accessibilityLiveRegion="polite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ut_scan_description_margin_top"
+            android:layout_marginLeft="@dimen/ut_scan_icon_margin_right"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/ut_scan_description_text"
+            android:textSize="@dimen/ut_scan_description_text_size"
+            android:text="@string/ut_channel_scan_time" />
+
+       <TextView
+            android:id="@+id/mode_option"
+            android:accessibilityLiveRegion="polite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ut_scan_description_margin_top"
+            android:layout_marginLeft="@dimen/ut_scan_icon_margin_right"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/ut_scan_description_text"
+            android:textSize="@dimen/ut_scan_button_text_size"
+            android:text="@string/tv_mode_option" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/country"
+                    android:accessibilityLiveRegion="polite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ut_scan_button_margin_top"
+                    android:layout_marginLeft="@dimen/ut_scan_icon_margin_right"
+                    android:paddingLeft="@dimen/ut_scan_button_padding"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/ut_scan_description_text"
+                    android:textSize="@dimen/ut_scan_description_text_size"
+                    android:text="@string/tv_country" />
+
+                <Spinner
+                    android:id="@+id/country_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ut_scan_button_margin_top"
+                    android:layout_marginLeft="@dimen/ut_scan_icon_margin_right"
+                    android:paddingLeft="@dimen/ut_scan_button_padding"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/ut_scan_description_text"
+                    android:textSize="@dimen/ut_scan_description_text_size"
+                    android:popupBackground="@color/side_panel_header_droid_background" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/search_mode"
+                    android:accessibilityLiveRegion="polite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ut_scan_button_margin_top"
+                    android:layout_marginLeft="@dimen/ut_scan_icon_margin_right"
+                    android:paddingLeft="@dimen/ut_scan_button_padding"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/ut_scan_description_text"
+                    android:textSize="@dimen/ut_scan_description_text_size"
+                    android:text="@string/tv_search_mode" />
+                <Spinner
+                    android:id="@+id/search_mode_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ut_scan_button_margin_top"
+                    android:layout_marginLeft="@dimen/ut_scan_icon_margin_right"
+                    android:paddingLeft="@dimen/ut_scan_button_padding"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/ut_scan_description_text"
+                    android:textSize="@dimen/ut_scan_description_text_size"
+                    android:popupBackground="@color/side_panel_header_droid_background" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/search_type"
+                    android:accessibilityLiveRegion="polite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ut_scan_button_margin_top"
+                    android:layout_marginLeft="@dimen/ut_scan_icon_margin_right"
+                    android:paddingLeft="@dimen/ut_scan_button_padding"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/ut_scan_description_text"
+                    android:textSize="@dimen/ut_scan_description_text_size"
+                    android:text="@string/tv_search_type" />
+                <Spinner
+                    android:id="@+id/search_type_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ut_scan_button_margin_top"
+                    android:layout_marginLeft="@dimen/ut_scan_icon_margin_right"
+                    android:paddingLeft="@dimen/ut_scan_button_padding"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/ut_scan_description_text"
+                    android:textSize="@dimen/ut_scan_description_text_size"
+                    android:popupBackground="@color/side_panel_header_droid_background" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/search_option"
+            android:accessibilityLiveRegion="polite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ut_scan_description_margin_top"
+            android:layout_marginLeft="@dimen/ut_scan_icon_margin_right"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/ut_scan_description_text"
+            android:textSize="@dimen/ut_scan_button_text_size"
+            android:text="@string/tv_search_option" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <LinearLayout
+                android:id="@+id/channel_input_type_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/channel"
+                    android:accessibilityLiveRegion="polite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ut_scan_description_margin_top"
+                    android:layout_marginLeft="@dimen/ut_scan_icon_margin_right"
+                    android:paddingLeft="@dimen/ut_scan_button_padding"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/ut_scan_description_text"
+                    android:textSize="@dimen/ut_scan_description_text_size"
+                    android:text="@string/tv_search_channel" />
+
+                <LinearLayout
+                    android:id="@+id/channel_input_from_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+                    <TextView
+                        android:id="@+id/channel_from"
+                        android:accessibilityLiveRegion="polite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ut_scan_button_margin_top"
+                        android:layout_marginLeft="@dimen/ut_scan_icon_margin_right"
+                        android:paddingLeft="@dimen/ut_scan_button_padding"
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/black_background"
+                        android:textSize="@dimen/ut_scan_description_text_size"
+                        android:text="@string/tv_search_channel_from" />
+
+                    <EditText
+                        android:id="@+id/input_channel_from"
+                        android:accessibilityLiveRegion="polite"
+                        android:layout_width="@dimen/ut_scan_channel_edit_text_width"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ut_scan_button_margin_top"
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/ut_scan_description_text"
+                        android:textSize="@dimen/ut_scan_description_text_size"
+                        android:inputType="number"
+                        android:imeOptions="actionDone"
+                        android:hint=""/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/channel_input_to_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+                    <TextView
+                        android:id="@+id/channel_to"
+                        android:accessibilityLiveRegion="polite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/ut_scan_icon_margin_right"
+                        android:paddingLeft="@dimen/ut_scan_button_padding"
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/black_background"
+                        android:textSize="@dimen/ut_scan_description_text_size"
+                        android:text="@string/tv_search_channel_to" />
+
+                    <EditText
+                        android:id="@+id/input_channel_to"
+                        android:accessibilityLiveRegion="polite"
+                        android:layout_width="@dimen/ut_scan_channel_edit_text_width"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/ut_scan_description_text"
+                        android:textSize="@dimen/ut_scan_description_text_size"
+                        android:inputType="number"
+                        android:imeOptions="actionDone"
+                        android:hint=""/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/dtmb_select_frequency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/ut_scan_icon_margin_right"
+                    android:paddingTop="@dimen/ut_scan_button_margin_top" >
+
+                    <Button
+                        android:id="@+id/button_left"
+                        android:accessibilityLiveRegion="polite"
+                        android:layout_width="@dimen/dtmb_select_frequency_array_width"
+                        android:layout_height="@dimen/dtmb_select_frequency_array_height"
+                        android:background="@drawable/dtmb_arrow_drop_down_selector"
+                        android:rotation="90" />
+
+                    <TextView
+                        android:id="@+id/textview_display"
+                        android:accessibilityLiveRegion="polite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/ut_scan_description_text"
+                        android:textSize="@dimen/ut_scan_description_text_size"
+                        android:paddingLeft="@dimen/dtmb_select_frequency_array_padding"
+                        android:paddingRight="@dimen/dtmb_select_frequency_array_padding" />
+
+                    <Button
+                        android:id="@+id/button_right"
+                        android:accessibilityLiveRegion="polite"
+                        android:layout_width="@dimen/dtmb_select_frequency_array_width"
+                        android:layout_height="@dimen/dtmb_select_frequency_array_height"
+                        android:background="@drawable/dtmb_arrow_drop_down_selector"
+                        android:rotation="-90" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/order_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/order"
+                    android:accessibilityLiveRegion="polite"
+                    android:layout_width="@dimen/ut_scan_channel_edit_text_width"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ut_scan_description_margin_top"
+                    android:layout_marginLeft="@dimen/ut_scan_icon_margin_right"
+                    android:paddingLeft="@dimen/ut_scan_button_padding"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/ut_scan_description_text"
+                    android:textSize="@dimen/ut_scan_description_text_size"
+                    android:text="@string/tv_search_order" />
+                <Spinner
+                    android:id="@+id/order_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ut_scan_button_margin_top"
+                    android:layout_marginLeft="@dimen/ut_scan_icon_margin_right"
+                    android:paddingLeft="@dimen/ut_scan_button_padding"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/ut_scan_description_text"
+                    android:textSize="@dimen/ut_scan_description_text_size"
+                    android:popupBackground="@color/side_panel_header_droid_background" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/atv_color"
+                    android:accessibilityLiveRegion="polite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ut_scan_description_margin_top"
+                    android:layout_marginLeft="@dimen/ut_scan_icon_margin_right"
+                    android:paddingLeft="@dimen/ut_scan_button_padding"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/ut_scan_description_text"
+                    android:textSize="@dimen/ut_scan_description_text_size"
+                    android:text="@string/tv_search_atv_clolor" />
+                <Spinner
+                    android:id="@+id/atv_color_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ut_scan_button_margin_top"
+                    android:layout_marginLeft="@dimen/ut_scan_icon_margin_right"
+                    android:paddingLeft="@dimen/ut_scan_button_padding"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/ut_scan_description_text"
+                    android:textSize="@dimen/ut_scan_description_text_size"
+                    android:popupBackground="@color/side_panel_header_droid_background" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/atv_sound"
+                    android:accessibilityLiveRegion="polite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ut_scan_description_margin_top"
+                    android:layout_marginLeft="@dimen/ut_scan_icon_margin_right"
+                    android:paddingLeft="@dimen/ut_scan_button_padding"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/ut_scan_description_text"
+                    android:textSize="@dimen/ut_scan_description_text_size"
+                    android:text="@string/tv_search_atv_sound" />
+                <Spinner
+                    android:id="@+id/atv_sound_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ut_scan_button_margin_top"
+                    android:layout_marginLeft="@dimen/ut_scan_icon_margin_right"
+                    android:paddingLeft="@dimen/ut_scan_button_padding"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/ut_scan_description_text"
+                    android:textSize="@dimen/ut_scan_description_text_size"
+                    android:popupBackground="@color/side_panel_header_droid_background" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/dvbc_qam_mode"
+                    android:accessibilityLiveRegion="polite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ut_scan_description_margin_top"
+                    android:layout_marginLeft="@dimen/ut_scan_icon_margin_right"
+                    android:paddingLeft="@dimen/ut_scan_button_padding"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/ut_scan_description_text"
+                    android:textSize="@dimen/ut_scan_description_text_size"
+                    android:text="@string/ut_tune_dvb_c_qam" />
+                <Spinner
+                    android:id="@+id/dvbc_qam_mode_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ut_scan_button_margin_top"
+                    android:layout_marginLeft="@dimen/ut_scan_icon_margin_right"
+                    android:paddingLeft="@dimen/ut_scan_button_padding"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/ut_scan_description_text"
+                    android:textSize="@dimen/ut_scan_description_text_size"
+                    android:popupBackground="@color/side_panel_header_droid_background" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/dvbc_symbol"
+                    android:accessibilityLiveRegion="polite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ut_scan_description_margin_top"
+                    android:layout_marginLeft="@dimen/ut_scan_icon_margin_right"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/ut_scan_description_text"
+                    android:textSize="@dimen/ut_scan_description_text_size"
+                    android:text="@string/ut_tune_dvb_c_symbol" />
+                <EditText
+                    android:id="@+id/dvbc_symbol_in"
+                    android:accessibilityLiveRegion="polite"
+                    android:layout_width="@dimen/ut_scan_channel_edit_text_width"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ut_scan_button_margin_top"
+                    android:layout_marginLeft="@dimen/ut_scan_icon_margin_right"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/ut_scan_description_text"
+                    android:textSize="@dimen/ut_scan_description_text_size"
+                    android:hint=""/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/search_channel"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/ut_scan_button_height"
+            android:layout_marginTop="@dimen/ut_scan_button_margin_top"
+            android:layout_marginLeft="@dimen/ut_scan_icon_margin_right"
+            android:paddingLeft="@dimen/ut_scan_button_padding"
+            android:paddingRight="@dimen/ut_scan_button_padding"
+            android:textAllCaps="false"
+            android:focusable="true"
+            android:fontFamily="sans-serif-condensed"
+            android:textColor="@color/ut_scan_button_text"
+            android:textSize="@dimen/ut_scan_button_text_size"
+            android:text="@string/tv_search"
+            style="?android:attr/borderlessButtonStyle" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/channel_holder"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="vertical"
+        android:focusable="false"
+        android:descendantFocusability="blocksDescendants"
+        android:animateLayoutChanges="true"
+        android:layout_weight="1"
+        android:visibility="gone" >
+
+        <ListView
+            android:id="@+id/channel_list"
+            android:layout_width="@dimen/ut_scan_channellist_width"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/ut_scan_channellist_padding_top"
+            android:layout_marginBottom="@dimen/ut_scan_channellist_padding_bottom"
+            android:paddingStart="@dimen/ut_scan_channellist_padding_start"
+            android:divider="@android:color/transparent"
+            android:scrollbars="none"
+            android:dividerHeight="7dp"
+            android:transcriptMode="alwaysScroll" />
+
+    </LinearLayout>
+
+</LinearLayout>

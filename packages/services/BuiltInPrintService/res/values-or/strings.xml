@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+     Copyright (C) 2016 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+ -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name" msgid="3551052199033657984">"ଡିଫଲ୍ଟ ପ୍ରିଣ୍ଟ ସେବା"</string>
+    <string name="printer_busy" msgid="8604311528104955859">"ବ୍ୟସ୍ତ"</string>
+    <string name="printer_out_of_paper" msgid="4882186432807703877">"ପେପର୍‍ ଶେଷ ହୋଇଯାଇଛି"</string>
+    <string name="printer_out_of_ink" msgid="7361897651097675464">"ଇଙ୍କ ଶେଷ ହୋଇଯାଇଛି"</string>
+    <string name="printer_out_of_toner" msgid="2077516357225364154">"ଟୋନର୍‍ ନାହିଁ"</string>
+    <string name="printer_low_on_ink" msgid="3515015872393897705">"ଇଙ୍କ କମ୍‍ ଅଛି"</string>
+    <string name="printer_low_on_toner" msgid="8807858294038587130">"ଟୋନର୍‍ କମ୍‍ ଅଛି"</string>
+    <string name="printer_door_open" msgid="2446302931916940874">"ଡୋର୍‍ ଖୋଲା ଅଛି"</string>
+    <string name="printer_jammed" msgid="5104099859384749499">"ଜାମ୍‍ ହୋଇଯାଇଛି"</string>
+    <string name="printer_offline" msgid="9196864753298645066">"ଅଫଲାଇନ୍"</string>
+    <string name="printer_check" msgid="6428369671197132828">"ପ୍ରିଣ୍ଟର୍‍ ଖୋଜନ୍ତୁ"</string>
+    <string name="waiting_to_send" msgid="2022115199902822180">"ପଠାଇବାକୁ ଅପେକ୍ଷା କରାଯାଉଛି"</string>
+    <string name="unreadable_input" msgid="2199948329556527912">"ଡକ୍ୟୁମେଣ୍ଟ ପଢ଼ିପାରିଲା ନାହିଁ"</string>
+    <string name="media_size_l" msgid="164416542021598181">"L"</string>
+    <string name="media_size_5x7in" msgid="1275128379533195285">"5x7 ଇଞ୍ଚ"</string>
+    <string name="media_size_89x119mm" msgid="6828167243395807385">"89x119 ମିମି"</string>
+    <string name="media_size_54x86mm" msgid="1301991206183343895">"54x86 ମିମି"</string>
+    <string name="media_size_8x10in" msgid="1872576638522812402">"8x10 ଇଞ୍ଚ"</string>
+    <string name="media_size_4x6in" msgid="3093276425529958253">"4x6 ଇଞ୍ଚ"</string>
+    <string name="printer_description" msgid="8580767673213837142">"%1$s – %2$s"</string>
+    <string name="title_activity_add_printer" msgid="9119216095769228566">"ପ୍ରିଣ୍ଟର୍‌ ଯୋଡ଼ନ୍ତୁ"</string>
+    <string name="add_printer_by_ip" msgid="562864787592910327">"IP ଠିକଣା ମାଧ୍ୟମରେ ପ୍ରିଣ୍ଟର୍‌କୁ ଯୋଡ଼ନ୍ତୁ"</string>
+    <string name="hostname_or_ip" msgid="3460546103553992915">"ହୋଷ୍ଟନେମ୍‍ କିମ୍ବା IP ଠିକଣା"</string>
+    <string name="ip_hint" msgid="7939777481941979799">"192.168.0.4"</string>
+    <string name="add" msgid="1950342261671100906">"ଯୋଡ଼ନ୍ତୁ"</string>
+    <string name="add_named" msgid="9074106244018070583">"<xliff:g id="PRINTER">%1$s</xliff:g>କୁ ଯୋଡ଼ନ୍ତୁ"</string>
+    <string name="no_printer_found" msgid="4777867380924351173">"ଏହି ଠିକଣାରେ କୌଣସି ପ୍ରିଣ୍ଟର ମିଳିଲା ନାହିଁ"</string>
+    <string name="printer_not_supported" msgid="281955849350938408">"ପ୍ରିଣ୍ଟର୍‍ ସପୋର୍ଟ କରୁନାହିଁ"</string>
+    <string name="wifi_direct" msgid="4629404342852294985">"ୱାଇ-ଫାଇ ଡାଇରେକ୍ଟ"</string>
+    <string name="find_wifi_direct" msgid="5270504288829123954">"ୱାଇ-ଫାଇ ଡାଇରେକ୍ଟ ପ୍ରିଣ୍ଟର୍‌ ଖୋଜନ୍ତୁ"</string>
+    <string name="wifi_direct_printers" msgid="541168032444693191">"ୱାଇ-ଫାଇ ଡାଇରେକ୍ଟ ପ୍ରିଣ୍ଟର୍"</string>
+    <string name="searching" msgid="2114018057619514587">"ଖୋଜୁଛି…"</string>
+    <string name="connect_hint_text" msgid="587112503851044234">"ପ୍ରିଣ୍ଟର୍‌ର ସାମ୍ନା ପ୍ୟାନେଲ୍‌ରୁ ଆପଣ ଏହି କନେକ୍ସନ୍‌କୁ ଅନୁମୋଦନ କରିପାରିବେ"</string>
+    <string name="connecting_to" msgid="2665161014972086194">"<xliff:g id="PRINTER">%1$s</xliff:g> ସହିତ କନେକ୍ଟ ହେଉଛି"</string>
+    <string name="failed_printer_connection" msgid="4196305972749960362">"ପ୍ରିଣ୍ଟର ସହିତ କନେକ୍ଟ ହେଲାନାହିଁ"</string>
+    <string name="failed_connection" msgid="8068661997318286575">"<xliff:g id="PRINTER">%1$s</xliff:g> ସହିତ କନେକ୍ଟ ହେଲାନାହିଁ"</string>
+    <string name="saved_printers" msgid="4567534965213125526">"ସେଭ୍ ହୋଇଥିବା ପ୍ରିଣ୍ଟର୍"</string>
+    <string name="forget" msgid="892068061425802502">"ଭୁଲିଯାଆନ୍ତୁ"</string>
+    <string name="connects_via_wifi_direct" msgid="652300632780158437">"ୱାଇ-ଫାଇ ଡାଇରେକ୍ଟ ମାଧ୍ୟମରେ କନେକ୍ଟ ହେବ"</string>
+    <string name="connects_via_network" msgid="5990041581556733898">"<xliff:g id="IP_ADDRESS">%1$s</xliff:g>ରେ ବର୍ତ୍ତମାନର ନେଟ୍‌ୱର୍କ ମାଧ୍ୟମରେ କନେକ୍ଟ କରାଯାଇଥାଏ"</string>
+</resources>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Name of this application. It appears in TV app UI, as one of available TV inputs. -->
+  <string name="sample_dvb_tuner_app_name" translatable="false">Sample DVB Tuner</string>
+</resources>

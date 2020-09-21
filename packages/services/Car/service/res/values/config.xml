@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+** Copyright 2015, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+<!-- Resources to configure car service based on each OEM's preference. -->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!--  Configuration to enable usage of dynamic audio routing. If this is set to false,
+          dynamic audio routing is disabled and audio works in legacy mode. It may be useful
+          during initial development where audio hal does not support bus based addressing yet. -->
+    <bool name="audioUseDynamicRouting">false</bool>
+    <!-- Whether to block other audio while media audio is muted with display off. When set to true,
+         other sounds cannot be played either while display is off. If false, only media is muted
+         and other sounds can be still played. -->
+    <bool name="displayOffMuteLockAllAudio">true</bool>
+
+    <string name="inputService">android.car.input.service/.DefaultInputService</string>
+
+    <string name="instrumentClusterRendererService">android.car.cluster.sample/.SampleClusterServiceImpl</string>
+
+    <!--  Whether to enable Activity blocking for safety. When Activity blocking is enabled,
+          only whitelisted safe Activities will be allowed while car is not parked. -->
+    <bool name="enableActivityBlockingForSafety">true</bool>
+    <!--  Activity to be presented when un-safe activity is launched. Take a look at the javadoc of the
+          default implementation. -->
+    <string name="activityBlockingActivity">com.android.car/com.android.car.pm.ActivityBlockingActivity</string>
+    <!--  Comma separated list of activities that need to be exempted from getting
+          blocked in a UX restricted state.
+          Format of each entry is either to specify package name to whitelist the whole package or
+          use format of "packagename/activity_classname" for tagging each activities.
+          The current implementations expects the following system packages/activities to be
+          whitelisted. For general guidelines to design distraction optimized apps, please refer
+          to Android Auto Driver Distraction Guidelines. -->
+    <string name="activityWhitelist">com.android.systemui,com.google.android.packageinstaller/com.android.packageinstaller.permission.ui.GrantPermissionsActivity</string>
+    <!--  Comma separated list of activities that will be blocked during restricted state.
+          Format of each entry is either to specify package name to whitelist the whole package
+          or use format of "packagename/activity_classname" for tagging each activities.-->
+    <string name="activityBlacklist"></string>
+    <!-- Default home activity -->
+    <string name="defaultHomeActivity"><!--com.your.package/com.your.package.Activity--></string>
+    <!--  The com.android.car.VmsPublisherService will bind to this list of clients -->
+    <string-array translatable="false" name="vmsPublisherClients">
+    </string-array>
+    <!--  Permissions that the com.android.car.VmsPublisherService is allowed to grant to publishers -->
+    <string-array translatable="false" name="vmsSafePermissions">
+        <item>"android.permission.ACCESS_FINE_LOCATION"</item>
+    </string-array>
+
+    <!-- Number of milliseconds to wait before trying re-bind to a crashed publisher. -->
+    <integer name="millisecondsBeforeRebindToVmsPublisher">10000</integer>
+
+    <!-- Hours of uptime (excluding sleep) after which a 1% increase in the wear of the flash
+         storage in the head-unit is considered as acceptable level of wear. -->
+    <integer name="acceptableHoursPerOnePercentFlashWear">70</integer>
+
+    <!-- How often (in hours of uptime excluding sleep) CarService will flush to disk information
+         about the total running time of the head-unit. A shutdown or reboot of the head-unit
+          will always cause a flush of the uptime information, regardless of this setting. -->
+    <integer name="uptimeHoursIntervalBetweenUptimeDataWrite">5</integer>
+
+    <!-- The name of an activity to be launched by CarService whenever it detects a change in the
+         level of wear of the flash storage. Value must either be an empty string, which means that
+         no activity shall be launched, or must be in the format of a flattened ComponentName and
+         reference a valid activity. It is strongly recommended that the chosen activity be
+         protected with the android.car.permission.STORAGE_MONITORING permission. -->
+    <string name="activityHandlerForFlashWearChanges">com.google.android.car.defaultstoragemonitoringcompanionapp/.MainActivity</string>
+
+    <!-- How often (in seconds) CarService will update I/O metrics from the kernel. -->
+    <integer name="ioStatsRefreshRateSeconds">60</integer>
+
+    <!-- The number of I/O metrics samples to keep in memory at one time.
+         The system will keep a sliding window of samples of this size, and allow
+         retrieval of activity this many sample windows back in time. Setting this to
+         0 means no samples will be collected, effectively disabling I/O metric collection. -->
+    <integer name="ioStatsNumSamplesToStore">15</integer>
+
+    <!-- The maximum number of KB (1024 bytes) that can be written to storage in one sample
+         before CarService deems I/O activity excessive. A simple way to set this value
+         is - given the total writable amount (storage size * P/E cycles) - to make
+         reasonable assumptions about the expected lifetime of the vehicle and the average
+         daily driving time, and use that to allocate a per-sample budget. -->
+    <integer name="acceptableWrittenKBytesPerSample">115000</integer>
+    <!-- The maximum number of fsync() system calls that can be made in one sample before
+         CarService deems I/O activity excessive. -->
+    <integer name="acceptableFsyncCallsPerSample">150</integer>
+
+    <!-- The maximum number of samples (within an I/O stats sample window) that CarService
+         should consider exhibiting excessive I/O activity before broadcasting an intent
+         to signal the potential for flash wear. -->
+    <integer name="maxExcessiveIoSamplesInWindow">11</integer>
+
+    <!-- The name of an intent to be notified by CarService whenever it detects too many
+         samples with excessive I/O activity. Value must either be an empty string, which
+         means that no notification will take place, or be in the format of a flattened
+         ComponentName and reference a valid BroadcastReceiver. This broadcast receiver
+         must be registered in its containing app's AndroidManifest.xml and it is
+         strongly recommended that it be protected with the
+         android.car.permission.STORAGE_MONITORING permission. -->
+    <string name="intentReceiverForUnacceptableIoMetrics">com.google.android.car.defaultstoragemonitoringcompanionapp/.ExcessiveIoIntentReceiver</string>
+
+    <!-- The Model ID to advertise Bluetooth Fast Pair connections with.  Must be overlayed with
+         device specific model id. -->
+    <integer name="fastPairModelId">0x000000</integer>
+
+    <!-- The garage mode configuration, specifying the time after shutdown to reboot into garage
+         mode and the number of attempts at that time to try before moving to the next wake up
+         time. This is intended to be a back-off pattern. -->
+    <string-array translatable="false" name="config_garageModeCadence">
+        <!-- <wake up after X min/hour/days>,<how many times> -->
+        <item>15m,1</item>
+        <item>6h,8</item>
+        <item>1d,5</item>
+        <item>3d,2</item>
+        <item>7d,3</item>
+    </string-array>
+
+</resources>

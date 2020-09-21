@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="pref_key_tracing_on">tracing_on</string>
+    <string name="pref_key_tags">current_tags_2</string>
+    <string name="pref_key_apps">all_apps</string>
+    <string name="pref_key_buffer_size">buffer_size</string>
+    <string name="pref_key_quick_setting">quick_setting_enabled</string>
+</resources>

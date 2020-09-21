@@ -1,0 +1,7 @@
+service com.android.car.procfsinspector /system/bin/com.android.car.procfsinspector
+    class core
+    user nobody
+    group readproc
+
+on boot && property:boot.car_service_created=1
+    start com.android.car.procfsinspector

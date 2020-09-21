@@ -1,0 +1,750 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  Copyright (C) 2007 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+ -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="phoneAppLabel" product="tablet" msgid="8576272342240415145">"ମୋବାଇଲ୍‌ ଡାଟା"</string>
+    <string name="phoneAppLabel" product="default" msgid="6790717591729922998">"ଫୋନ୍ ସେବା"</string>
+    <string name="emergencyDialerIconLabel" msgid="7812140032168171053">"ଜରୁରୀକାଳିନ ଡାଏଲର୍"</string>
+    <string name="phoneIconLabel" msgid="2331230813161304895">"ଫୋନ୍"</string>
+    <string name="fdnListLabel" msgid="8630418672279521003">"FDN ତାଲିକା"</string>
+    <string name="unknown" msgid="6878797917991465859">"ଅଜଣା"</string>
+    <string name="private_num" msgid="6713286113000232309">"ବ୍ୟକ୍ତିଗତ ନମ୍ବର୍"</string>
+    <string name="payphone" msgid="4793877574636445118">"ପେ-ଫୋନ୍"</string>
+    <string name="onHold" msgid="9035493194749959955">"ହୋଲ୍ଡରେ ଅଛି"</string>
+    <string name="mmiStarted" msgid="6347869857061147003">"MMI କୋଡ୍‌କୁ ଆରମ୍ଭ କରାଯାଇଛି"</string>
+    <string name="ussdRunning" msgid="485588686340541690">"USSD କୋଡ୍ ରନ୍ କରୁଛି…"</string>
+    <string name="mmiCancelled" msgid="2771923949751842276">"MMI କୋଡ୍‌କୁ କ୍ୟାନ୍ସଲ୍ କରାଯାଇଛି"</string>
+    <string name="cancel" msgid="5044513931633602634">"କ୍ୟାନ୍ସଲ୍‍ କରନ୍ତୁ"</string>
+    <string name="enter_input" msgid="1810529547726803893">"USSD ମେସେଜ୍ ନିଶ୍ଚିତରୂପେ <xliff:g id="MIN_LEN">%d</xliff:g> ଓ <xliff:g id="MAX_LEN">%d</xliff:g>ଟି ଅକ୍ଷର ମଧ୍ୟରେ ରହିବ। ଦୟାକରି ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।"</string>
+    <string name="manageConferenceLabel" msgid="4691922394301969053">"କନଫରେନ୍ସ କଲ୍‌କୁ ପରିଚାଳନା କରନ୍ତୁ"</string>
+    <string name="ok" msgid="3811371167865772377">"ଠିକ୍ ଅଛି"</string>
+    <string name="audio_mode_speaker" msgid="27649582100085266">"ସ୍ପିକର୍‌"</string>
+    <string name="audio_mode_earpiece" msgid="4156527186373869107">"ହ୍ୟାଣ୍ଡସେଟ୍ ଇୟରପିସ୍"</string>
+    <string name="audio_mode_wired_headset" msgid="1465350758489175975">"ଖରାପ୍‌ଥିବା ହେଡସେଟ୍"</string>
+    <string name="audio_mode_bluetooth" msgid="3047641300848211128">"ବ୍ଲୁ-ଟୂଥ୍‍‌"</string>
+    <string name="wait_prompt_str" msgid="7601815427707856238">"ନିମ୍ନଲିଖିତ ଟୋନ୍ ପଠାନ୍ତୁ?\n"</string>
+    <string name="pause_prompt_str" msgid="1789964702154314806">"ଟୋନ୍ ପଠାଯାଉଛି \n"</string>
+    <string name="send_button" msgid="4106860097497818751">"ପଠାନ୍ତୁ"</string>
+    <string name="pause_prompt_yes" msgid="3564467212025151797">"ହଁ"</string>
+    <string name="pause_prompt_no" msgid="6686238803236884877">"ନାହିଁ"</string>
+    <string name="wild_prompt_str" msgid="5543521676355533577">"ୱାଇଲଡ୍ ଅକ୍ଷରକୁ ଏହା ସହିତ ବଦଳାନ୍ତୁ"</string>
+    <string name="no_vm_number" msgid="4164780423805688336">"ହଜିଯାଇଥିବା ଭଏସମେଲ୍ ନମ୍ବର୍"</string>
+    <string name="no_vm_number_msg" msgid="1300729501030053828">"SIM କାର୍ଡରେ କୌଣସି ଭଏସମେଲ୍ ନମ୍ବର୍ ଷ୍ଟୋର୍ କରାଯାଇନାହିଁ।"</string>
+    <string name="add_vm_number_str" msgid="4676479471644687453">"ନମ୍ବର୍ ଯୋଡ଼ନ୍ତୁ"</string>
+    <string name="voice_number_setting_primary_user_only" msgid="6596604364907022416">"କେବଳ ପ୍ରାଥମିକ ୟୁଜରଙ୍କ ଦ୍ଵାରା ଭଏସମେଲ୍ ସେଟିଙ୍ଗକୁ ସଂଶୋଧିତ କରାଯାଇପାରିବ।"</string>
+    <string name="puk_unlocked" msgid="2284912838477558454">"ଆପଣଙ୍କର SIM କାର୍ଡକୁ ଅବରୋଧ କରିଦିଆଯାଇଛି। ଆପଣଙ୍କର ଫୋନ୍ ଅନଲକ୍ ହେଉଛି…"</string>
+    <string name="label_ndp" msgid="780479633159517250">"SIM ନେଟ୍‌ୱର୍କ‌କୁ ଅନଲକ୍ କରିବା ପାଇଁ PIN"</string>
+    <string name="sim_ndp_unlock_text" msgid="683628237760543009">"ଅନଲକ୍‌ କରନ୍ତୁ"</string>
+    <string name="sim_ndp_dismiss_text" msgid="1604823375752456947">"ଖାରଜ କରନ୍ତୁ"</string>
+    <string name="requesting_unlock" msgid="6412629401033249351">"ନେଟ୍‌ୱର୍କକୁ ଅନଲକ୍ କରିବା ପାଇଁ ଅନୁରୋଧ କରାଯାଉଛି…"</string>
+    <string name="unlock_failed" msgid="6490531697031504225">"ନେଟ୍‌ୱର୍କ ଅନଲକ୍ କରିବା ପାଇଁ ଅନୁରୋଧ ବିଫଳ ହୋ‌ଇଛି।"</string>
+    <string name="unlock_success" msgid="6770085622238180152">"ନେଟ୍‌ୱର୍କ ଅନଲକ୍ କରିବା ସଫଳ ହେଲା।"</string>
+    <string name="mobile_network_settings_not_available" msgid="7355254462995117896">"ଏହି ୟୁଜରଙ୍କ ପାଇଁ ମୋବାଇଲ୍ ନେଟ୍‌ୱର୍କ ସେଟିଙ୍ଗ ଉପଲବ୍ଧ ନାହିଁ"</string>
+    <string name="labelGSMMore" msgid="5930842194056092106">"GSM କଲ୍ ସେଟିଙ୍ଗ"</string>
+    <string name="labelGsmMore_with_label" msgid="2674012918829238901">"GSM କଲ୍ ସେଟିଙ୍ଗ (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
+    <string name="labelCDMAMore" msgid="1630676740428229339">"CDMA କଲ୍ ସେଟିଙ୍ଗ"</string>
+    <string name="labelCdmaMore_with_label" msgid="6333588719319970399">"CDMA କଲ୍ ସେଟିଙ୍ଗ (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
+    <string name="apn_settings" msgid="9043423184895642077">"ଆକ୍ସେସ୍ ପଏଣ୍ଟ ନାମ"</string>
+    <string name="settings_label" msgid="3876743539816984008">"ନେଟ୍‍ୱର୍କ ସେଟିଙ୍ଗ"</string>
+    <string name="phone_accounts" msgid="6376603393888116364">"କଲ୍ କରିବା ଆକାଉଣ୍ଟ"</string>
+    <string name="phone_accounts_make_calls_with" msgid="1969188078933152231">"ଏହା ସହିତ କଲ୍ କରନ୍ତୁ"</string>
+    <string name="phone_accounts_make_sip_calls_with" msgid="4677789312053828493">"ଏହା ସହିତ SIP କଲ୍ କରନ୍ତୁ"</string>
+    <string name="phone_accounts_ask_every_time" msgid="4346499067149985702">"ପ୍ରଥମେ ପଚାରନ୍ତୁ"</string>
+    <string name="phone_accounts_default_account_label" msgid="4183772241814460014">"କୈଣସି ନେଟ୍‌ୱର୍କ ଉପଲବ୍ଧ ନାହିଁ"</string>
+    <string name="phone_accounts_settings_header" msgid="4141710640883261094">"ସେଟିଙ୍ଗ"</string>
+    <string name="phone_accounts_choose_accounts" msgid="5232948804226424002">"ଆକାଉଣ୍ଟ ଚୟନ କରନ୍ତୁ"</string>
+    <string name="phone_accounts_selection_header" msgid="1365215726106915865">"ଫୋନ୍ ଆକାଉଣ୍ଟ"</string>
+    <string name="phone_accounts_add_sip_account" msgid="2023821743341923271">"SIP ଆକାଉଣ୍ଟକୁ ଯୋଡ଼ନ୍ତୁ"</string>
+    <string name="phone_accounts_configure_account_settings" msgid="1361715069911607109">"ଆକାଉଣ୍ଟ ସେଟିଙ୍ଗକୁ କନଫିଗର୍ କରନ୍ତୁ"</string>
+    <string name="phone_accounts_all_calling_accounts" msgid="207619531589278471">"ସମସ୍ତ କଲିଙ୍ଗ ଆକାଉଣ୍ଟ"</string>
+    <string name="phone_accounts_all_calling_accounts_summary" msgid="8594186415822657011">"କଲ୍ କରିପାରୁଥିବା ଆକାଉଣ୍ଟକୁ ଚୟନ କରନ୍ତୁ"</string>
+    <string name="wifi_calling" msgid="739018212480165598">"ୱାଇ-ଫାଇ କଲିଙ୍ଗ"</string>
+    <string name="connection_service_default_label" msgid="1498481943805913754">"ବିଲ୍ଟ-ଇନ୍ ସଂଯୋଗ ସେବା"</string>
+    <string name="voicemail" msgid="8693759337917898954">"ଭଏସମେଲ୍"</string>
+    <string name="voicemail_settings_with_label" msgid="152724978380748296">"ଭଏସମେଲ୍ (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
+    <string name="voicemail_abbreviated" msgid="2215592488517217448">"VM:"</string>
+    <string name="voicemail_notifications_preference_title" msgid="4019728578955102213">"ବିଜ୍ଞପ୍ତି"</string>
+    <string name="cell_broadcast_settings" msgid="8740238216690502563">"ଜରୁରିକାଳୀନ ପ୍ରସାରଣ"</string>
+    <string name="call_settings" msgid="6112441768261754562">"କଲ୍‌ ସେଟିଙ୍ଗ"</string>
+    <string name="additional_gsm_call_settings" msgid="1391795981938800617">"ଅତିରିକ୍ତ ସେଟିଙ୍ଗ"</string>
+    <string name="additional_gsm_call_settings_with_label" msgid="1385241520708457376">"ଅତିରିକ୍ତ ସେଟିଙ୍ଗ(<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
+    <string name="sum_gsm_call_settings" msgid="4076647190996778012">"ଅତିରିକ୍ତ କେବଳ GSM କଲ୍ ସେଟିଙ୍ଗ"</string>
+    <string name="additional_cdma_call_settings" msgid="8628958775721886909">"ଅତିରିକ୍ତ CDMA କଲ୍ ସେଟିଙ୍ଗ"</string>
+    <string name="sum_cdma_call_settings" msgid="284753265979035549">"ଅତିରିକ୍ତ କେବଳ CDMA କଲ୍ ସେଟିଙ୍ଗ"</string>
+    <string name="labelNwService" msgid="4699970172021870983">"ନେଟ୍‌ୱର୍କ ସେବା ସେଟିଙ୍ଗ"</string>
+    <string name="labelCallerId" msgid="3888899447379069198">"କଲର୍ ID"</string>
+    <string name="sum_loading_settings" msgid="1826692909391168620">"ସେଟିଙ୍ଗ ଲୋଡ୍ ହେଉଛି…"</string>
+    <string name="sum_hide_caller_id" msgid="1071407020290873782">"ଆଉଟ୍‌ଗୋ‌ଇଙ୍ଗ କଲ୍‌ରେ ଲୁଚିଥିବା କଲ୍"</string>
+    <string name="sum_show_caller_id" msgid="6768534125447290401">"ଆଉଟ୍‌ଗୋ‌ଇଙ୍ଗ କଲ୍‌ରେ ନମ୍ବର୍ ଡିସପ୍ଲେ ହୋ‌ଇଛି"</string>
+    <string name="sum_default_caller_id" msgid="1954518825510901365">"ଆଉଟ୍‌ଗୋ‌ଇଙ୍ଗ କଲ୍‌ରେ ମୋର ନମ୍ବର୍‌କୁ ଦେଖାଇବା ପାଇଁ ଡିଫଲ୍ଟ ଅପରେଟର୍ ସେଟିଙ୍ଗକୁ ବ୍ୟବହାର କରନ୍ତୁ"</string>
+    <string name="labelCW" msgid="6120513814915920200">"କଲ୍‌ ଅପେକ୍ଷାରେ ଅଛି"</string>
+    <string name="sum_cw_enabled" msgid="8083061901633671397">"ଗୋଟିଏ କଲ୍ କରିବା ବେଳେ ଇନକମିଙ୍ଗ କଲ୍ ପାଇଁ ମୋତେ ସୂଚିତ କରନ୍ତୁ"</string>
+    <string name="sum_cw_disabled" msgid="3648693907300104575">"ଗୋଟିଏ କଲ୍ କରିବା ବେଳେ ଇନକମିଙ୍ଗ କଲ୍ ପାଇଁ ମୋତେ ସୂଚିତ କରନ୍ତୁ"</string>
+    <string name="call_forwarding_settings" msgid="3378927671091537173">"କଲ୍ ଫରୱାର୍ଡିଙ୍ଗ ସେଟିଙ୍ଗ"</string>
+    <string name="call_forwarding_settings_with_label" msgid="8569489414006897127">"କଲ୍ ଫର୍‌ୱାର୍ଡିଙ୍ଗ ସେଟିଙ୍ଗ (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
+    <string name="labelCF" msgid="2574386948026924737">"କଲ୍‌ ଫର୍‌ୱାର୍ଡିଙ୍ଗ"</string>
+    <string name="labelCFU" msgid="8147177368148660600">"ସର୍ବଦା ଫର୍‌ୱାର୍ଡ କରନ୍ତୁ"</string>
+    <string name="messageCFU" msgid="3560082430662923687">"ସର୍ବଦା ଏହି ନମ୍ବର୍‌କୁ ବ୍ୟବହାର କରନ୍ତୁ"</string>
+    <string name="sum_cfu_enabled_indicator" msgid="4014187342724130197">"ସମସ୍ତ କଲ୍ ଫରୱାର୍ଡ କରାଯାଉଛି"</string>
+    <string name="sum_cfu_enabled" msgid="2450052502198827927">"<xliff:g id="PHONENUMBER">{0}</xliff:g>କୁ ସମସ୍ତ କଲ୍ ଫରୱାର୍ଡ କରାଯାଉଛି"</string>
+    <string name="sum_cfu_enabled_no_number" msgid="6591985777096823616">"ନମ୍ବର୍ ଉପଲବ୍ଧ ନାହିଁ"</string>
+    <string name="sum_cfu_disabled" msgid="8384177689501334080">"ଅଫ୍ ଅଛି"</string>
+    <string name="labelCFB" msgid="6139853033106283172">"ବ୍ୟସ୍ତଥିବା ବେଳେ"</string>
+    <string name="messageCFB" msgid="3711089705936187129">"ବ୍ୟସ୍ତ ଥିବା ବେଳେ ନମ୍ବର୍"</string>
+    <string name="sum_cfb_enabled" msgid="5984198104833116690">"<xliff:g id="PHONENUMBER">{0}</xliff:g>କୁ ଫରୱାର୍ଡ କରାଯାଉଛି"</string>
+    <string name="sum_cfb_disabled" msgid="4913145177320506827">"ଅଫ୍ ଅଛି"</string>
+    <string name="disable_cfb_forbidden" msgid="3506984333877998061">"ଆପଣଙ୍କର ଫୋନ୍ ବ୍ୟସ୍ତ ଥିବାବେଳେ ଆପଣଙ୍କର ଅପରେଟର୍ କଲ୍ ଫର୍‌ୱାର୍ଡିଙ୍ଗକୁ ଅକ୍ଷମ କରିବାରେ ସପୋର୍ଟ କରିବେ ନାହିଁ।"</string>
+    <string name="labelCFNRy" msgid="1736067178393744351">"ଉତ୍ତର ଦେଉନଥିବା ବେଳେ"</string>
+    <string name="messageCFNRy" msgid="672317899884380374">"ଉତ୍ତର ଦେଉନଥିବା ବେଳେ ନମ୍ବର୍"</string>
+    <string name="sum_cfnry_enabled" msgid="6955775691317662910">"<xliff:g id="PHONENUMBER">{0}</xliff:g>କୁ ଫରୱାର୍ଡ କରାଯାଉଛି"</string>
+    <string name="sum_cfnry_disabled" msgid="3884684060443538097">"ଅଫ୍ ଅଛି"</string>
+    <string name="disable_cfnry_forbidden" msgid="4308233959150658058">"ଆପଣଙ୍କର ଫୋନ୍ ଉତ୍ତର ଦେଇନପାରିବାବେଳେ ଆପଣଙ୍କର ଅପରେଟର୍ କଲ୍ ଫର୍‌ୱାର୍ଡିଙ୍ଗକୁ ଅକ୍ଷମ କରିବାରେ ସପୋର୍ଟ କରିବେ ନାହିଁ।"</string>
+    <string name="labelCFNRc" msgid="2614827454402079766">"ଅପହଞ୍ଚ ଦୂରତାରେ ଥିବା ବେଳେ"</string>
+    <string name="messageCFNRc" msgid="6380695421020295119">"ଅପହଞ୍ଚ ଦୂରତାରେ ଥିବା ବେଳେ ନମ୍ବର୍"</string>
+    <string name="sum_cfnrc_enabled" msgid="7010898346095497421">"<xliff:g id="PHONENUMBER">{0}</xliff:g>କୁ ଫରୱାର୍ଡ କରାଯାଉଛି"</string>
+    <string name="sum_cfnrc_disabled" msgid="2684474391807469832">"ଅଫ୍ ଅଛି"</string>
+    <string name="disable_cfnrc_forbidden" msgid="5646361343094064333">"ଆପଣଙ୍କର ଫୋନ୍ ଅପହଞ୍ଚ ଦୂରତାରେ ଥିବାବେଳେ ଆପଣଙ୍କର କେରିଅର୍ କଲ୍ ଫର୍‌ୱାର୍ଡିଙ୍ଗକୁ ଅକ୍ଷମ କରିବାରେ ସପୋର୍ଟ କରିବେ ନାହିଁ।"</string>
+    <string name="updating_title" msgid="6146755386174019046">"କଲ୍‌ ସେଟିଙ୍ଗ"</string>
+    <string name="call_settings_admin_user_only" msgid="4526094783818216374">"କଲ୍ ସେଟିଙ୍ଗକୁ କେବଳ ଆଡମିନ୍ ୟୁଜର୍‌ ବଦଳାଇପାରିବେ।"</string>
+    <string name="call_settings_with_label" msgid="3401177261468593519">"ସେଟିଙ୍ଗ (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
+    <string name="error_updating_title" msgid="7970259216988931777">"କଲ୍ ସେଟିଙ୍ଗରେ ତ୍ରୁଟି"</string>
+    <string name="reading_settings" msgid="1920291699287055284">"ସେଟିଙ୍ଗକୁ ପଢ଼ାଯାଉଛି…"</string>
+    <string name="updating_settings" msgid="8171225533884883252">"ସେଟିଙ୍ଗ ଅପଡେଟ୍ ହେଉଛି…"</string>
+    <string name="reverting_settings" msgid="4752151682666912828">"ସେଟିଙ୍ଗକୁ ଫେରାଇଅଣାଯାଉଛି…"</string>
+    <string name="response_error" msgid="6674110501330139405">"ନେଟ୍‌ୱର୍କରୁ ଆଶା କରାଯାଇନଥିବା ଉତ୍ତର ମିଳିଲା।"</string>
+    <string name="exception_error" msgid="7027667130619518211">"ନେଟ୍‌ୱର୍କ କିମ୍ବା SIM କାର୍ଡରେ ତ୍ରୁଟି।"</string>
+    <string name="stk_cc_ss_to_dial_error" msgid="4440038807310535377">"SS ଅନୁରୋଧକୁ ସ୍ଵାଭାବିକ କଲ୍‌ରେ ପରିବର୍ତ୍ତନ କରାଗଲା"</string>
+    <string name="stk_cc_ss_to_ussd_error" msgid="6095812685884176176">"SS ଅନୁରୋଧ, USSD ଅନୁରୋଧକୁ ପରିବର୍ତ୍ତନ ହେଲା"</string>
+    <string name="stk_cc_ss_to_ss_error" msgid="7920654012697945858">"ନୂଆ SS ଅନୁରୋଧରେ ପରିବର୍ତ୍ତନ ହେଲା"</string>
+    <string name="stk_cc_ss_to_dial_video_error" msgid="3873905132181743781">"SS ଅନୁରୋଧକୁ ଭିଡିଓ କଲ୍‌ରେ ପରିବର୍ତ୍ତନ କରାଗଲା"</string>
+    <string name="fdn_check_failure" msgid="18200614306525434">"ଆପଣଙ୍କ ଫୋନ୍ ଆପ୍‌ର ଫିକ୍ସଡ୍ ଡାଏଲିଙ୍ଗ ନମ୍ବର୍ ସେଟିଙ୍ଗ ଚାଲୁଅଛି। ପରିଣାମସ୍ଵରୂପ କଲ୍ ସମ୍ପର୍କିତ କିଛି ଫିଚର୍ କାମ କରୁନାହିଁ।"</string>
+    <string name="radio_off_error" msgid="2304459933248513376">"ଏହି ସେଟିଙ୍ଗକୁ ଦେଖିବା ପୂର୍ବରୁ ରେଡିଓକୁ ଚାଲୁ କରନ୍ତୁ।"</string>
+    <string name="close_dialog" msgid="2365884406356986917">"ଠିକ୍ ଅଛି"</string>
+    <string name="enable" msgid="7248657275000173526">"ଚାଲୁ କରନ୍ତୁ"</string>
+    <string name="disable" msgid="4678348128118573672">"ବନ୍ଦ କରନ୍ତୁ"</string>
+    <string name="change_num" msgid="239476305819844391">"ଅପଡେଟ୍‌ କରନ୍ତୁ"</string>
+  <string-array name="clir_display_values">
+    <item msgid="5560134294467334594">"ନେଟ୍‌ୱର୍କ ଡିଫଲ୍ଟ"</item>
+    <item msgid="7876195870037833661">"ସଂଖ୍ୟାକୁ ଲୁଚାନ୍ତୁ"</item>
+    <item msgid="1108394741608734023">"ସଂଖ୍ୟାକୁ ଦେଖାନ୍ତୁ"</item>
+  </string-array>
+    <string name="vm_changed" msgid="380744030726254139">"ଭଏସମେଲ୍ ନମ୍ବର୍ ବଦଳିଗଲା।"</string>
+    <string name="vm_change_failed" msgid="3352934863246208918">"ଭଏସମେଲ୍ ନମ୍ବର୍ ବଦଳାଯାଇପାରିଲା ନାହିଁ। \nଯଦି ଏହି ସମସ୍ୟା ଜାରିରୁହେ ତେବେ ନିଜର କେରିଅର୍‌ଙ୍କ ସହ ସମ୍ପର୍କ କରନ୍ତୁ।"</string>
+    <string name="fw_change_failed" msgid="5298103228470214665">"ଫଏ‌ୱାର୍ଡିଙ୍ଗ ନମ୍ବର୍‌କୁ ବଦଳାଇହେଲା ନାହିଁ। \n ଯଦି ଏହି ସମସ୍ୟା ଜାରିରୁହେ ତେବେ ନିଜର କେରିଅର୍‌ଙ୍କ ସହ ସମ୍ପର୍କ କରନ୍ତୁ।"</string>
+    <string name="fw_get_in_vm_failed" msgid="8862896836093833973">"ସାମ୍ପ୍ରତିକ ଫର୍‌ୱାର୍ଡିଙ୍ଗ ନମ୍ବର୍ ସେଟିଙ୍ଗକୁ ପୁନଃପ୍ରାପ୍ତ ଓ ସେଭ୍ କରିହେଲା ନାହିଁ। \nଯେକୌଣସି ଭାବେ ନୂଆ ପ୍ରଦାତାଙ୍କୁ ସ୍ଵିଚ୍ କରିବେ?"</string>
+    <string name="no_change" msgid="3186040086622435212">"କୌଣସି ପରିବର୍ତ୍ତନ କରାଯାଇନାହିଁ|"</string>
+    <string name="sum_voicemail_choose_provider" msgid="59911196126278922">"ଭଏସ୍‌ମେଲ୍ ସେବାକୁ ଚୟନ କରନ୍ତୁ"</string>
+    <string name="voicemail_default" msgid="2001233554889016880">"ଆପଣଙ୍କ କେରିଅର୍"</string>
+    <string name="vm_change_pin_old_pin" msgid="7295220109886682573">"ପୁରୁଣା PIN"</string>
+    <string name="vm_change_pin_new_pin" msgid="5412922262839438097">"ନୂଆ PIN"</string>
+    <string name="vm_change_pin_progress_message" msgid="3977357361934350336">"ଦୟାକରି ଅପେକ୍ଷା କରନ୍ତୁ…"</string>
+    <string name="vm_change_pin_error_too_short" msgid="5974971097302710497">"ନୂଆ PIN ଅତିଛୋଟ ଅଟେ।"</string>
+    <string name="vm_change_pin_error_too_long" msgid="8476870806115051865">"ନୂଆ PIN ଅତିଲମ୍ବା ଅଟେ।"</string>
+    <string name="vm_change_pin_error_too_weak" msgid="7883744811891784882">"ନୂଆ PIN ଅତି ଦୂର୍ବଳ ଅଟେ। ଗୋଟିଏ ସୁରକ୍ଷିତ ପାସ୍‌ୱର୍ଡରେ ନିରନ୍ତର କ୍ରମରେ କିମ୍ବା ଦୋହରାଯାଇଥିବା ସଂଖ୍ୟା କଦାପି ରହିବ ନାହିଁ।"</string>
+    <string name="vm_change_pin_error_mismatch" msgid="2754685537970757317">"ପୁରୁଣା PIN ଆଦୌ ମେଳ ହେଉନାହିଁ।"</string>
+    <string name="vm_change_pin_error_invalid" msgid="3972205462701668653">"ନୂଆ PINରେ ଅବୈଧ ଅକ୍ଷର ଅଛି।"</string>
+    <string name="vm_change_pin_error_system_error" msgid="6610603326230000207">"PINକୁ ବଦଳାଇବାରେ ଅକ୍ଷମ"</string>
+    <string name="vvm_unsupported_message_format" msgid="11795090778411977">"ସପୋର୍ଟ ନଥିବା ମେସେଜ୍‌ର ପ୍ରକାର, ଶୁଣିବା ପାଇଁ <xliff:g id="NUMBER">%s</xliff:g>କୁ କଲ୍ କରନ୍ତୁ।"</string>
+    <string name="network_settings_title" msgid="514120489499925574">"ମୋବାଇଲ୍‌ ନେଟ୍‌ୱର୍କ"</string>
+    <string name="label_available" msgid="1181658289009300430">"ଉପଲବ୍ଧ ଥିବା ନେଟ୍‌ୱର୍କ"</string>
+    <string name="load_networks_progress" msgid="5230707536168902952">"ଖୋଜୁଛି…"</string>
+    <string name="empty_networks_list" msgid="4249426905018815316">"କୌଣସି ନେଟ୍‌ୱର୍କ ମିଳୁନାହିଁ"</string>
+    <string name="network_query_error" msgid="8466081377231178298">"ନେଟ୍‌ୱର୍କ ମିଳୁନାହିଁ। ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ"</string>
+    <string name="register_on_network" msgid="9055203954040805084">"<xliff:g id="NETWORK">%s</xliff:g>ରେ ପଞ୍ଜୀକରଣ ହେଉଛି…"</string>
+    <string name="not_allowed" msgid="5613353860205691579">"ଆପଣଙ୍କର SIM କାର୍ଡ ଏହି ନେଟ୍‌ୱର୍କରେ କନେକ୍ଟ ହେବା ପାଇଁ ଅନୁମତି ଦେବ ନାହିଁ।"</string>
+    <string name="connect_later" msgid="2308119155752343975">"ବର୍ତ୍ତମାନ ଏହି ନେଟ୍‌ୱର୍କରେ କନେକ୍ଟ ହୋ‌ଇପାରିବ ନାହିଁ। ପରେ ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।"</string>
+    <string name="registration_done" msgid="495135664535876612">"ଏହି ନେଟ୍‌ୱର୍କରେ ପଞ୍ଜୀକୃତ କରାଯାଇଛି।"</string>
+    <string name="already_auto" msgid="6067116884321285507">"ପୂର୍ବରୁ ସ୍ଵାଚାଳିତ ଚୟନରେ ଅଛି।"</string>
+    <string name="select_automatically" msgid="1046727200631770962">"ସ୍ଵଚାଳିତ ଭାବେ ନେଟ୍‌ୱର୍କ ଚୟନ କରନ୍ତୁ"</string>
+    <string name="network_select_title" msgid="7733107364757544558">"ନେଟ୍‌ୱର୍କ"</string>
+    <string name="register_automatically" msgid="6017849844573519637">"ସ୍ଵଚାଳିତ ପଞ୍ଜୀକରଣ…"</string>
+    <string name="preferred_network_mode_title" msgid="2336624679902659306">"ନିଜ ପସନ୍ଦର ନେଟ୍‌ୱର୍କ ପ୍ରକାର"</string>
+    <string name="preferred_network_mode_summary" msgid="1434820673166126609">"ନେଟ୍‌ୱର୍କ ଅପରେଟିଙ୍ଗ ମୋଡ୍‌କୁ ବଦଳାନ୍ତୁ"</string>
+    <string name="preferred_network_mode_dialogtitle" msgid="4048082093347807230">"ନିଜ ପସନ୍ଦର ନେଟ୍‌ୱର୍କ ପ୍ରକାର"</string>
+    <string name="forbidden_network" msgid="4384929668343563440">"(ଅନୁମତିପ୍ରାପ୍ତ ନୁହେଁ)"</string>
+    <string name="choose_network_title" msgid="4023911977543009350">"ନେଟ୍‌ୱର୍କ ଚୟନ କରନ୍ତୁ"</string>
+    <string name="network_disconnected" msgid="2227251609006103194">"ଡିସ୍‌କନେକ୍ଟ କରାଗଲା"</string>
+    <string name="network_connected" msgid="1288589103624338857">"କନେନ୍ଟ ହୋ‌ଇଛି"</string>
+    <string name="network_connecting" msgid="4927203097283533783">"କନେନ୍ଟ ହେଉଛି..."</string>
+    <string name="network_could_not_connect" msgid="8254009365807767243">"କନେକ୍ଟ କରିହେଲା ନାହିଁ"</string>
+  <string-array name="preferred_network_mode_choices">
+    <item msgid="3628460389382468528">"ନିଜ ପସନ୍ଦର GSM/WCDMA"</item>
+    <item msgid="8442633436636425221">"କେବଳ GSM"</item>
+    <item msgid="2032314385791760810">"କେବଳ WCDMA"</item>
+    <item msgid="6334554401059422303">"GSM/WCDMA ଅଟୋ"</item>
+    <item msgid="1462198368200398663">"CDMA/EvDo ଅଟୋ"</item>
+    <item msgid="3611460019185359968">"CDMA ବିନା EvDo"</item>
+    <item msgid="545430093607698090">"କେବଳ EvDo"</item>
+    <item msgid="4286774020869405140">"CDMA/EvDo/GSM/WCDMA"</item>
+    <item msgid="4006002265696868538">"CDMA + LTE/EvDo"</item>
+    <item msgid="8973936140318359205">"GSM/WCDMA/LTE"</item>
+    <item msgid="3471059554252610472">"ଗ୍ଲୋବାଲ୍"</item>
+    <item msgid="2882615514545171802">"LTE"</item>
+    <item msgid="8076204422288290116">"LTE / WCDMA"</item>
+    <item msgid="3982984144824159726">"କେବଳ TDSCDMA"</item>
+    <item msgid="3686191974505922271">"TDSCDMA/WCDMA"</item>
+    <item msgid="7135671700201836475">"LTE/TDSCDMA"</item>
+    <item msgid="3736619459066330755">"TDSCDMA/GSM"</item>
+    <item msgid="4778666570887216861">"LTE/TDSCDMA/GSM"</item>
+    <item msgid="2952322596201849456">"TDSCDMA/GSM/WCDMA"</item>
+    <item msgid="115984258536697617">"LTE/TDSCDMA/WCDMA"</item>
+    <item msgid="7957991936217192636">"LTE/TDSCDMA/GSM/WCDMA"</item>
+    <item msgid="2828588917858484655">"TDSCDMA/CDMA/EVDO/GSM/WCDMA"</item>
+    <item msgid="4989979948139945854">"LTE/TDSCDMA/CDMA/EVDO/GSM/WCDMA"</item>
+  </string-array>
+    <string name="preferred_network_mode_wcdma_perf_summary" msgid="8521677230113533809">"ନିଜ ପସନ୍ଦର ନେଟ୍‌ୱର୍କ ମୋଡ୍: WCDMAକୁ ପସନ୍ଦ କରାଯାଇଛି"</string>
+    <string name="preferred_network_mode_gsm_only_summary" msgid="3352445413437453511">"ନିଜ ପସନ୍ଦର ନେଟ୍‌ୱର୍କ ମୋଡ୍: କେବଳ GSM"</string>
+    <string name="preferred_network_mode_wcdma_only_summary" msgid="2836897236221063413">"ନିଜ ପସନ୍ଦର ନେଟ୍‌ୱର୍କ ମୋଡ୍: କେବଳ WCDMA"</string>
+    <string name="preferred_network_mode_gsm_wcdma_summary" msgid="3161255745326408587">"ନିଜ ପସନ୍ଦର ନେଟ୍‌ୱର୍କ ମୋଡ୍: GSM / WCDMA"</string>
+    <string name="preferred_network_mode_cdma_summary" msgid="3175690187294334241">"ନିଜ ପସନ୍ଦର ନେଟ୍‌ୱର୍କ ମୋଡ୍: CDMA"</string>
+    <string name="preferred_network_mode_cdma_evdo_summary" msgid="8332063064712726618">"ନିଜ ପସନ୍ଦର ନେଟ୍‌ୱର୍କ ମୋଡ୍: CDMA / EvDo"</string>
+    <string name="preferred_network_mode_cdma_only_summary" msgid="1309770926198634150">"ନିଜ ପସନ୍ଦର ନେଟ୍‌ୱର୍କ ମୋଡ୍: କେବଳ CDMA"</string>
+    <string name="preferred_network_mode_evdo_only_summary" msgid="8472220691721269155">"ନିଜ ପସନ୍ଦର ନେଟ୍‌ୱର୍କ ମୋଡ୍: କେବଳ EvDo"</string>
+    <string name="preferred_network_mode_cdma_evdo_gsm_wcdma_summary" msgid="4726682079415227330">"ନିଜ ପସନ୍ଦର ନେଟ୍‌ୱର୍କ ମୋଡ୍: CDMA/EvDo/GSM/WCDMA"</string>
+    <string name="preferred_network_mode_lte_summary" msgid="574752287596469136">"ନିଜ ପସନ୍ଦର ନେଟ୍‌ୱର୍କ ମୋଡ୍: LTE"</string>
+    <string name="preferred_network_mode_lte_gsm_wcdma_summary" msgid="8455358514068283935">"ନିଜ ପସନ୍ଦର ନେଟ୍‌ୱର୍କ ମୋଡ୍: GSM/WCDMA/LTE"</string>
+    <string name="preferred_network_mode_lte_cdma_evdo_summary" msgid="228702246343742853">"ନିଜ ପସନ୍ଦର ନେଟ୍‌ୱର୍କ ମୋଡ୍: CDMA+LTE/EVDO"</string>
+    <string name="preferred_network_mode_global_summary" msgid="1633134285545730364">"ନିଜ ପସନ୍ଦର ନେଟ୍‌ୱର୍କ ମୋଡ୍: ଗ୍ଲୋବାଲ୍"</string>
+    <string name="preferred_network_mode_lte_wcdma_summary" msgid="9180775701594742750">"ନିଜ ପସନ୍ଦର ନେଟ୍‌ୱର୍କ ମୋଡ୍: LTE / WCDMA"</string>
+    <string name="preferred_network_mode_lte_gsm_umts_summary" msgid="633315028976225026">"ପସନ୍ଦଦାର୍ ନେଟ୍‌ୱର୍କ ମୋଡ୍: LTE / GSM / UMTS"</string>
+    <string name="preferred_network_mode_lte_cdma_summary" msgid="3722647806454528426">"ନିଜ ପସନ୍ଦର ନେଟ୍‌ୱର୍କ ମୋଡ୍: LTE / CDMA"</string>
+    <string name="preferred_network_mode_tdscdma_summary" msgid="8021016193718678775">"ପସନ୍ଦଦାର୍ ନେଟ୍‌ୱର୍କ ମୋଡ୍: TDSCDMA"</string>
+    <string name="preferred_network_mode_tdscdma_wcdma_summary" msgid="2405154895437348623">"ପସନ୍ଦଦାର୍ ନେଟ୍‌ୱର୍କ ମୋଡ୍: TDSCDMA / WCDMA"</string>
+    <string name="preferred_network_mode_lte_tdscdma_summary" msgid="2104702896644235637">"ପସନ୍ଦଦାର୍ ନେଟ୍‌ୱର୍କ ମୋଡ୍: LTE / TDSCDMA"</string>
+    <string name="preferred_network_mode_tdscdma_gsm_summary" msgid="4893784445338396204">"ପସନ୍ଦଦାର୍ ନେଟ୍‌ୱର୍କ ମୋଡ୍: TDSCDMA / GSM"</string>
+    <string name="preferred_network_mode_lte_tdscdma_gsm_summary" msgid="1815169717046729757">"ପସନ୍ଦଦାର୍ ନେଟ୍‌ୱର୍କ ମୋଡ୍: LTE/GSM/TDSCDMA"</string>
+    <string name="preferred_network_mode_tdscdma_gsm_wcdma_summary" msgid="2195358773359424099">"ପସନ୍ଦଦାର୍ ନେଟ୍‌ୱର୍କ ମୋଡ୍: TDSCDMA/GSM/WCDMA"</string>
+    <string name="preferred_network_mode_lte_tdscdma_wcdma_summary" msgid="1181424059695667803">"ପସନ୍ଦଦାର୍ ନେଟ୍‌ୱର୍କ ମୋଡ୍: LTE/TDSCDMA/WCDMA"</string>
+    <string name="preferred_network_mode_lte_tdscdma_gsm_wcdma_summary" msgid="2526539326505354382">"ପସନ୍ଦଦାର୍ ନେଟ୍‌ୱର୍କ ମୋଡ୍: LTE/TDSCDMA/GSM/WCDMA"</string>
+    <string name="preferred_network_mode_tdscdma_cdma_evdo_gsm_wcdma_summary" msgid="8195248059196614939">"ପସନ୍ଦଦାର୍ ନେଟ୍‌ୱର୍କ ମୋଡ୍: TDSCDMA/CDMA/EvDo/GSM/WCDMA"</string>
+    <string name="preferred_network_mode_lte_tdscdma_cdma_evdo_gsm_wcdma_summary" msgid="5596733053095592791">"ପସନ୍ଦଦାର୍ ନେଟ୍‌ୱର୍କ ମୋଡ୍: LTE/TDSCDMA/CDMA/EvDo/GSM/WCDMA"</string>
+    <string name="call_category" msgid="5863978196309462052">"କଲ୍ କରାଯାଉଛି"</string>
+    <string name="network_operator_category" msgid="4830701959205735636">"ନେଟ୍‌ୱର୍କ"</string>
+    <string name="enhanced_4g_lte_mode_title" msgid="522191650223239171">"ଉନ୍ନତ 4G LTE ମୋଡ୍‍"</string>
+    <string name="enhanced_4g_lte_mode_title_variant" msgid="4871126028907265406">"ଉନ୍ନତ କଲିଙ୍ଗ"</string>
+    <string name="enhanced_4g_lte_mode_summary" msgid="2332175070522125850">"ଭଏସ୍ ଓ ଅନ୍ୟାନ୍ୟ ଯୋଗାଯୋଗ(ପରାମର୍ଶିତ)କୁ ଉନ୍ନତ କରିବା ପାଇଁ LTE ସେବା ବ୍ୟବହାର କରନ୍ତୁ"</string>
+    <string name="data_enabled" msgid="5972538663568715366">"ଡାଟା ସକ୍ଷମ ହୋ‌ଇଛି"</string>
+    <string name="data_enable_summary" msgid="2382798156640007971">"ଡାଟାର ବ୍ୟବହାରକୁ ଅନୁମତି ଦିଅନ୍ତୁ"</string>
+    <string name="dialog_alert_title" msgid="6751344986194435476">"ଧ୍ୟାନଦିଅନ୍ତୁ"</string>
+    <string name="roaming" msgid="7894878421600247140">"ରୋମିଙ୍ଗ"</string>
+    <string name="roaming_enable" msgid="7331106985174381987">"ରୋମିଙ୍ଗ ବେଳେ ଡାଟା ସେବାଗୁଡିକୁ କନେକ୍ଟ କରନ୍ତୁ"</string>
+    <string name="roaming_disable" msgid="1843417228755568110">"ରୋମିଙ୍ଗ ବେଳେ ଡାଟା ସେବାଗୁଡିକୁ କନେକ୍ଟ କରନ୍ତୁ"</string>
+    <string name="roaming_reenable_message" msgid="6843814381576397939">"ଡାଟା ରୋମିଙ୍ଗ ବନ୍ଦ କରାଯାଇଛି। ଚାଲୁ କରିବା ପାଇଁ ଟାପ୍ କରନ୍ତୁ।"</string>
+    <string name="roaming_notification_title" msgid="4749053220884743110">"ମୋବାଇଲ୍ ଡାଟା କନେକ୍ସନ୍ ଉପଲବ୍ଧ ନାହିଁ"</string>
+    <string name="roaming_warning" msgid="1603164667540144353">"ଆପଣଙ୍କୁ ଅଧିକ ଦେୟ ଲାଗୁ ହୋଇପାରେ।"</string>
+    <string name="roaming_check_price_warning" msgid="7497570906830902550">"ମୂଲ୍ୟ ଜାଣିବା ପାଇଁ ନିଜର ନେଟ୍‌ୱର୍କ ପ୍ରଦାତାଙ୍କ ସହ ସମ୍ପର୍କ କରନ୍ତୁ।"</string>
+    <string name="roaming_alert_title" msgid="3654815360303826008">"ଡାଟା ରୋମିଙ୍ଗର ଅନୁମତି ଦେବେ?"</string>
+    <string name="data_usage_title" msgid="4042209259808900283">"ଆପ୍‌ ଦ୍ୱାରା ଡାଟା ବ୍ୟବହାର"</string>
+    <string name="data_usage_template" msgid="8526428824844656364">"<xliff:g id="ID_2">%2$s</xliff:g>ରେ <xliff:g id="ID_1">%1$s</xliff:g> ମୋବାଇଲ୍ ଡାଟା ବ୍ୟବହାର କରାଯାଇଛି"</string>
+    <string name="advanced_options_title" msgid="8074895510265488035">"ଆଧୁନିକ"</string>
+    <string name="carrier_settings_euicc" msgid="6714062862127226405">"ନେଟୱର୍କ କ୍ୟାରିଅର"</string>
+    <string name="keywords_carrier_settings_euicc" msgid="6861505396475991277">"ମୋବାଇଲ୍ ଓ ଇଣ୍ଟରନେଟ୍ ସେବା ପ୍ରଦାନକାରୀ କମ୍ପାନୀ, ଇସିମ୍, ସିମ୍, euicc, ମୋବାଇଲ୍ ଓ ଇଣ୍ଟରନେଟ୍ ସେବା ପ୍ରଦାନକାରୀ କମ୍ପାନୀକୁ ସ୍ଵିଚ୍ କରନ୍ତୁ, ମୋବାଇଲ୍ ଓ ଇଣ୍ଟରନେଟ୍ ସେବା ପ୍ରଦାନକାରୀ କମ୍ପାନୀକୁ ଯୋଡ଼ନ୍ତୁ"</string>
+    <string name="carrier_settings_euicc_summary" msgid="5115001942761995457">"<xliff:g id="CARRIER_NAME">%1$s</xliff:g> — <xliff:g id="PHONE_NUMBER">%2$s</xliff:g>"</string>
+    <string name="mobile_data_settings_title" msgid="4661165467914727157">"ମୋବାଇଲ୍‌ ଡାଟା"</string>
+    <string name="mobile_data_settings_summary" msgid="5087255915840576895">"ମୋବାଇଲ୍ ନେଟ୍‌ୱର୍କକୁ ବ୍ୟବହାରକରି ଡାଟା ଆକ୍ସେସ୍ କରନ୍ତୁ"</string>
+    <string name="data_usage_disable_mobile" msgid="3577275288809667615">"ମୋବାଇଲ୍‌ ଡାଟା ବନ୍ଦ କରିବେ?"</string>
+    <string name="sim_selection_required_pref" msgid="7049424902961844236">"ମନୋନୟନ ଆବଶ୍ୟକ"</string>
+    <string name="sim_change_data_title" msgid="5332425991853799280">"ଡାଟା ସିମ୍‌ ବଦଳାଇବେ?"</string>
+    <string name="sim_change_data_message" msgid="2163963581444907496">"ମୋବାଇଲ୍‌ ଡାଟା ପାଇଁ <xliff:g id="OLD_SIM">%2$s</xliff:g> ବଦଳରେ <xliff:g id="NEW_SIM">%1$s</xliff:g> ବ୍ୟବହାର କରିବେ?"</string>
+    <string name="wifi_calling_settings_title" msgid="7741961465416430470">"ୱାଇ-ଫାଇ କଲିଙ୍ଗ"</string>
+    <string name="video_calling_settings_title" msgid="539714564273795574">"କେରିଅର୍ ଭିଡିଓ କଲିଙ୍ଗ"</string>
+    <string name="gsm_umts_options" msgid="6538311689850981686">"GSM/UMTS ବିକଳ୍ପ"</string>
+    <string name="cdma_options" msgid="4016822858172249884">"CDMA ବିକଳ୍ପ"</string>
+    <string name="throttle_data_usage" msgid="3715677828160555808">"ଡାଟାର ବ୍ୟବହାର"</string>
+    <string name="throttle_current_usage" msgid="8762280193043815361">"ବର୍ତ୍ତମାନ ସମୟରେ ବ୍ୟବହାର ହୋ‌ଇଥିବା ଡାଟା"</string>
+    <string name="throttle_time_frame" msgid="1915198770363734685">"ଡାଟା ବ୍ୟବହାର ହୋ‌ଇଥିବା ଅବଧି"</string>
+    <string name="throttle_rate" msgid="4710388992676803508">"ଡାଟା ରେଟ୍ ପଲିସୀ"</string>
+    <string name="throttle_help" msgid="243651091785169900">"ଅଧିକ ଜାଣନ୍ତୁ"</string>
+    <string name="throttle_status_subtext" msgid="1657318943142085170">"<xliff:g id="USED_2">%3$s</xliff:g>ର <xliff:g id="USED_0">%1$s</xliff:g> (<xliff:g id="USED_1">%2$d</xliff:g>٪) ସର୍ବାଧିକ ସମୟ \n ପରବର୍ତ୍ତୀ ଅବଧି <xliff:g id="USED_3">%4$d</xliff:g> ଦିନରେ (<xliff:g id="USED_4">%5$s</xliff:g>) ଆରମ୍ଭ ହେବ"</string>
+    <string name="throttle_data_usage_subtext" msgid="6029276011123694701">"<xliff:g id="USED_2">%3$s</xliff:g>ର <xliff:g id="USED_0">%1$s</xliff:g> (<xliff:g id="USED_1">%2$d</xliff:g>٪) ସର୍ବାଧିକ ସମୟ"</string>
+    <string name="throttle_data_rate_reduced_subtext" msgid="7492763592720107737">"<xliff:g id="USED_0">%1$s</xliff:g>ସର୍ବାଧିକ ସୀମା ପାର୍ କରିଯାଇଛି\n ଡାଟାର ବେଗ <xliff:g id="USED_1">%2$d</xliff:g> Kb/sକୁ ହ୍ରାସ ପାଇଯାଇଛି"</string>
+    <string name="throttle_time_frame_subtext" msgid="7732763021560399960">"ଚକ୍ରର <xliff:g id="USED_0">%1$d</xliff:g>٪ ବିତିଯାଇଛି\n ପରବର୍ତ୍ତୀ ଅବଧି <xliff:g id="USED_1">%2$d</xliff:g> ଦିନରେ (<xliff:g id="USED_2">%3$s</xliff:g>) ଆରମ୍ଭ ହେବ"</string>
+    <string name="throttle_rate_subtext" msgid="2149102656120726855">"ଯଦି ଡାଟା ବ୍ୟବହାରର ସୀମା ପାର୍ କରିଯିବ ତେବେ ଡାଟା ରେଟ୍ <xliff:g id="USED">%1$d</xliff:g> Kb/sକୁ ହ୍ରାସ ପାଇବ"</string>
+    <string name="throttle_help_subtext" msgid="5217706521499010816">"ଆପଣଙ୍କ କେରିଅର୍‌ର ମୋବାଇଲ୍ ନେଟ୍‌ୱର୍କ ଡାଟା ବ୍ୟବହାର ନୀତି ବିଷୟରେ ଅଧିକ ସୂଚନା"</string>
+    <string name="cell_broadcast_sms" msgid="5584192824053625842">"ସେଲ୍ ପ୍ରସାରଣ SMS"</string>
+    <string name="enable_disable_cell_bc_sms" msgid="4851147873691392255">"ସେଲ୍ ପ୍ରସାରଣ SMS"</string>
+    <string name="cell_bc_sms_enable" msgid="6441688565738921084">"ସେଲ୍ ପ୍ରସାରଣ SMSକୁ ସକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="cell_bc_sms_disable" msgid="3398365088309408749">"ସେଲ୍ ପ୍ରସାରଣ SMSକୁ ଅକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="cb_sms_settings" msgid="651715019785107312">"ସେଲ୍ ପ୍ରସାରଣ SMS ସେଟିଙ୍ଗ"</string>
+    <string name="enable_disable_emergency_broadcast" msgid="2157014609041245335">"ଜରରୀକାଳିନ ପ୍ରସାରଣ"</string>
+    <string name="emergency_broadcast_enable" msgid="2645980025414010211">"ଜରୁରୀକାଳିନ ପ୍ରସାରଣକୁ ସକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="emergency_broadcast_disable" msgid="3665199821267569426">"ଜରୁରୀକାଳିନ ପ୍ରସାରଣକୁ ଅକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="enable_disable_administrative" msgid="6501582322182059412">"ଆଡମିନିଷ୍ଟ୍ରେଟିଭ୍"</string>
+    <string name="administrative_enable" msgid="1750086122962032235">"ଆଡମିନ୍‌ଙ୍କ ଦ୍ଵାରା ସକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="administrative_disable" msgid="8433273857248698539">"ଆଡମିନ୍‌ଙ୍କ ଦ୍ଵାରା ଅକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="enable_disable_maintenance" msgid="1819693083025106678">"ରକ୍ଷଣାବେକ୍ଷଣ"</string>
+    <string name="maintenance_enable" msgid="8566636458770971189">"ରକ୍ଷଣାବେକ୍ଷଣକୁ ସକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="maintenance_disable" msgid="7340189100885066077">"ରକ୍ଷଣାବେକ୍ଷଣକୁ ଅକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="general_news_settings" msgid="4968779723948432978">"ସାଧାରଣ ସମାଚାର"</string>
+    <string name="bf_news_settings" msgid="3935593091894685267">"ବ୍ୟାବସାୟିକ ଓ ଆର୍ଥିକ ସମାଚାର"</string>
+    <string name="sports_news_settings" msgid="7649399631270052835">"ଖେଳ ସମାଚାର"</string>
+    <string name="entertainment_news_settings" msgid="5051153952959405035">"ମନୋରଞ୍ଜନ ସମାଚାର"</string>
+    <string name="enable_disable_local" msgid="7890281063123416120">"ସ୍ଥାନୀୟ"</string>
+    <string name="local_enable" msgid="6370463247609136359">"ସ୍ଥାନୀୟ ସମାଚାରକୁ ସକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="local_disable" msgid="4405691986943795798">"ସ୍ଥାନୀୟ ସମାଚାରକୁ ଅକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="enable_disable_regional" msgid="4905652414535565872">"ଆଞ୍ଚଳିକ"</string>
+    <string name="regional_enable" msgid="4434680415437834759">"ଆଞ୍ଚଳିକ ସମାଚାରକୁ ସକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="regional_disable" msgid="5359325527213850077">"ଆଞ୍ଚଳିକ ସମାଚାରକୁ ଅକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="enable_disable_national" msgid="236278090206880734">"ଜାତୀୟ"</string>
+    <string name="national_enable" msgid="1172443648912246952">"ରାଷ୍ଟ୍ରୀୟ ସମାଚାରକୁ ସକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="national_disable" msgid="326018148178601166">"ରାଷ୍ଟ୍ରୀୟ ସମାଚାରକୁ ଅକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="enable_disable_international" msgid="7535348799604565592">"ଆନ୍ତର୍ଜାତୀୟ"</string>
+    <string name="international_enable" msgid="5855356769925044927">"ଅନ୍ତରାଷ୍ଟ୍ରୀୟ ସମାଚାରକୁ ସକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="international_disable" msgid="2850648591041088931">"ଅନ୍ତରାଷ୍ଟ୍ରୀୟ ସମାଚାରକୁ ଅକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="list_language_title" msgid="2841683501919760043">"ଭାଷା"</string>
+    <string name="list_language_summary" msgid="8109546531071241601">"ସମାଚାର ପାଇଁ ଭାଷାକୁ ଚୟନ କରନ୍ତୁ"</string>
+  <string-array name="list_language_entries">
+    <item msgid="6137851079727305485">"ଇଙ୍ଗଲିଶ୍"</item>
+    <item msgid="1151988412809572526">"ଫ୍ରେଞ୍ଚ"</item>
+    <item msgid="577840534704312665">"ସ୍ପାନିଶ୍‍"</item>
+    <item msgid="8385712091143148180">"ଜାପାନିଜ୍"</item>
+    <item msgid="1858401628368130638">"କୋରିଆନ୍"</item>
+    <item msgid="1933212028684529632">"ଚାଇନିଜ୍"</item>
+    <item msgid="1908428006803639064">"ହିବ୍ର୍ୟୁ"</item>
+  </string-array>
+  <string-array name="list_language_values">
+    <item msgid="1804908636436467150">"1"</item>
+    <item msgid="289708030346890334">"2"</item>
+    <item msgid="1121469729692402684">"3"</item>
+    <item msgid="2614093115912897722">"4"</item>
+    <item msgid="2411164639857960614">"5"</item>
+    <item msgid="5884448729274543324">"6"</item>
+    <item msgid="5511864807618312598">"7"</item>
+  </string-array>
+    <string name="list_language_dtitle" msgid="5442908726538951934">"ଭାଷା"</string>
+    <string name="enable_disable_local_weather" msgid="986967454867219114">"ସ୍ଥାନୀୟ ପାଣିପାଗ"</string>
+    <string name="local_weather_enable" msgid="6199315114382448922">"ସ୍ଥାନୀୟ ପାଣିପାଗକୁ ସକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="local_weather_disable" msgid="2510158089142626480">"ସ୍ଥାନୀୟ ପାଣିପାଗକୁ ଅକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="enable_disable_atr" msgid="8339572391278872343">"ଏରିଆ ଟ୍ରାଫିକ୍ ରିପୋର୍ଟ"</string>
+    <string name="atr_enable" msgid="5541757457789181799">"କ୍ଷେତ୍ରର ଟ୍ରାଫିକ୍ ରିପୋର୍ଟକୁ ସକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="atr_disable" msgid="7085558154727596455">"କ୍ଷେତ୍ରର ଟ୍ରାଫିକ୍ ରିପୋର୍ଟକୁ ଅକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="enable_disable_lafs" msgid="668189073721277199">"ସ୍ଥାନୀୟ ଏୟାରପୋର୍ଟ ଫ୍ଲାଇଟ୍‌ଗୁଡ଼ିକର ଉଡ଼ାଣ-ଅବତରଣ ସୂଚୀ"</string>
+    <string name="lafs_enable" msgid="2791978667205137052">"ସ୍ଥାନୀୟ ଏୟାରପୋର୍ଟ ଫ୍ଲାଇଟ୍ ଉଡ଼ାଣ-ଅବତରଣ ସୂଚୀକୁ ସକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="lafs_disable" msgid="2391212397725495350">"ସ୍ଥାନୀୟ ଏୟାରପୋର୍ଟ ଫ୍ଲାଇଟ୍ ଉଡ଼ାଣ-ଅବତରଣ ସୂଚୀକୁ ଅକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="enable_disable_restaurants" msgid="6240381945336814024">"ରେଷ୍ଟୁରାଣ୍ଟଗୁଡ଼ିକ"</string>
+    <string name="restaurants_enable" msgid="5137657479469118847">"ରେଷ୍ଟୁରାଣ୍ଟକୁ ସକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="restaurants_disable" msgid="3678480270938424092">"ରେଷ୍ଟୁରାଣ୍ଟକୁ ଅକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="enable_disable_lodgings" msgid="1822029172658551202">"ଲଜିଙ୍ଗ"</string>
+    <string name="lodgings_enable" msgid="3230042508992850322">"ଲଜିଙ୍ଗକୁ ସକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="lodgings_disable" msgid="3387879742320682391">"ଲଜିଙ୍ଗକୁ ଅକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="enable_disable_retail_directory" msgid="1357809784475660303">"ରିଟେଲ୍ ଡାଇରେକ୍ଟୋରୀ"</string>
+    <string name="retail_directory_enable" msgid="3280626290436111496">"ରିଟେଲ୍ ଡାଇରେକ୍ଟୋରୀକୁ ସକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="retail_directory_disable" msgid="6479739816662879027">"ରିଟେଲ୍ ଡାଇରେକ୍ଟୋରୀକୁ ଅକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="enable_disable_advertisements" msgid="5999495926176182128">"ବିଜ୍ଞାପନ"</string>
+    <string name="advertisements_enable" msgid="2050305021264683786">"ବିଜ୍ଞାପନକୁ ସକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="advertisements_disable" msgid="8350985908788707935">"ବିଜ୍ଞାପନକୁ ଅକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="enable_disable_stock_quotes" msgid="6397810445293533603">"ଷ୍ଟକ୍ କ୍ଵୋଟ୍"</string>
+    <string name="stock_quotes_enable" msgid="4384802470887170543">"ଶେୟାର୍‌ର ଦାମ୍‌କୁ ସକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="stock_quotes_disable" msgid="4781450084565594998">"ଶେୟାର୍‌ର ଦାମ୍‌କୁ ଅକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="enable_disable_eo" msgid="4863043263443942494">"ନିଯୁକ୍ତି ସୁଯୋଗ"</string>
+    <string name="eo_enable" msgid="8623559062015685813">"ନିଯୁକ୍ତି ସୁଯୋଗକୁ ସକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="eo_disable" msgid="3863812478090907609">"ନିଯୁକ୍ତି ସୁଯୋଗକୁ ଅକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="enable_disable_mhh" msgid="908214593528968522">"ଚିକିତ୍ସା, ସ୍ଵାସ୍ଥ୍ୟ ଓ ସ୍ଵାସ୍ଥ୍ୟକେନ୍ଦ୍ର"</string>
+    <string name="mhh_enable" msgid="5544500632306446815">"ଚିକିତ୍ସା, ସ୍ଵାସ୍ଥ୍ୟ ଓ ସ୍ଵାସ୍ଥ୍ୟକେନ୍ଦ୍ରକୁ ସକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="mhh_disable" msgid="8998210550117117437">"ଚିକିତ୍ସା, ସ୍ଵାସ୍ଥ୍ୟ ଓ ସ୍ଵାସ୍ଥ୍ୟକେନ୍ଦ୍ରକୁ ଅକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="enable_disable_technology_news" msgid="3517184627114999149">"ବୈଷୟିକ ସମାଚାର"</string>
+    <string name="technology_news_enable" msgid="7995209394210455181">"ବୈଷୟିକ ସମାଚାରକୁ ସକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="technology_news_disable" msgid="5483490380561851946">"ବୈଷୟିକ ସମାଚାରକୁ ଅକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="enable_disable_multi_category" msgid="626771003122899280">"ବିବିଧ ଶ୍ରେଣୀ"</string>
+    <string name="multi_category_enable" msgid="1179299804641721768">"ବିବିଧ ଶ୍ରେଣୀକୁ ସକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="multi_category_disable" msgid="880104702904139505">"ବିବିଧ ଶ୍ରେଣୀକୁ ଅକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="network_lte" msgid="7702681952521375754">"LTE (ପ୍ରସ୍ତାବିତ)"</string>
+    <string name="network_4G" msgid="2723512640529983138">"4G (ପ୍ରସ୍ତାବିତ)"</string>
+    <string name="network_global" msgid="1323190488685355309">"ଗ୍ଲୋବାଲ୍"</string>
+    <string name="cdma_system_select_title" msgid="5757657769327732833">"ସିଷ୍ଟମ୍‌ ଚୟନ କରନ୍ତୁ"</string>
+    <string name="cdma_system_select_summary" msgid="60460043745797517">"CDMAର ରୋମିଙ୍ଗ ମୋଡ୍‌କୁ ବଦଳାନ୍ତୁ"</string>
+    <string name="cdma_system_select_dialogtitle" msgid="6083355415165359075">"ସିଷ୍ଟମ୍‌ ଚୟନ କରନ୍ତୁ"</string>
+  <string-array name="cdma_system_select_choices">
+    <item msgid="176474317493999285">"କେବଳ ହୋମ୍"</item>
+    <item msgid="1205664026446156265">"ସ୍ଵଚାଳିତ"</item>
+  </string-array>
+    <string name="cdma_subscription_title" msgid="1162564010076763284">"CDMA ସବସ୍କ୍ରିପଶନ୍"</string>
+    <string name="cdma_subscription_summary" msgid="2530890766115781140">"RUIM/SIM ଓ NV ମଧ୍ୟରେ ବଦଳ କରନ୍ତୁ"</string>
+    <string name="cdma_subscription_dialogtitle" msgid="2699527950523333110">"ସବସ୍କ୍ରିପଶନ୍"</string>
+  <string-array name="cdma_subscription_choices">
+    <item msgid="2258014151300708431">"RUIM/SIM"</item>
+    <item msgid="5127722015571873880">"NV"</item>
+  </string-array>
+  <string-array name="cdma_subscription_values">
+    <item msgid="7494167883478914080">"0"</item>
+    <item msgid="6043847456049107742">"1"</item>
+  </string-array>
+    <string name="cdma_activate_device" msgid="3793805892364814518">"ସକ୍ରିୟ ଡିଭାଇସ୍"</string>
+    <string name="cdma_lte_data_service" msgid="4255018217292548962">"ଡାଟା ସେବାକୁ ସେଟ‌ଅପ୍ କରନ୍ତୁ"</string>
+    <string name="carrier_settings_title" msgid="9028166176523012300">"କେରିଅର୍‍ ସେଟିଙ୍ଗ"</string>
+    <string name="fdn" msgid="7878832555095183202">"ଫିକ୍ସଡ୍ ଡାଏଲିଙ୍ଗ ନମ୍ବର୍"</string>
+    <string name="fdn_with_label" msgid="187084204115493366">"ଫିକ୍ସଡ୍ ଡାଏଲିଙ୍ଗ ନମ୍ବର୍ (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
+    <string name="manage_fdn_list" msgid="8777755791892122369">"FDN ତାଲିକା"</string>
+    <string name="fdn_list_with_label" msgid="7437232552210469217">"FDN ତାଲିକା (<xliff:g id="SUBSCRIPTIONLABEL">%s</xliff:g>)"</string>
+    <string name="fdn_activation" msgid="2156479741307463576">"FDNକୁ ସକ୍ରିୟ କରିବା"</string>
+    <string name="fdn_enabled" msgid="5238109009915521240">"ଫିକ୍ସଡ୍ ଡାଏଲିଙ୍ଗ ନମ୍ବର୍‌କୁ ସକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="fdn_disabled" msgid="4700049736675368279">"ଫିକ୍ସଡ୍ ଡାଏଲିଙ୍ଗ ନମ୍ବର୍‌କୁ ଅକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="enable_fdn" msgid="3740191529180493851">"FDNକୁ ସକ୍ଷମ କରନ୍ତୁ"</string>
+    <string name="disable_fdn" msgid="7944020890722540616">"FDNକୁ ଅକ୍ଷମ କରନ୍ତୁ"</string>
+    <string name="change_pin2" msgid="2153563695382176676">"PIN2 ବଦଳାନ୍ତୁ"</string>
+    <string name="enable_fdn_ok" msgid="7215588870329688132">"FDNକୁ ଅକ୍ଷମ କରନ୍ତୁ"</string>
+    <string name="disable_fdn_ok" msgid="5727046928930740173">"FDNକୁ ସକ୍ଷମ କରନ୍ତୁ"</string>
+    <string name="sum_fdn" msgid="1959399454900272878">"ଫିକ୍ସଡ୍ ଡାଏଲିଙ୍ଗ ନମ୍ବର୍‌କୁ ପରିଚାଳନା କରନ୍ତୁ"</string>
+    <string name="sum_fdn_change_pin" msgid="6666549734792827932">"FDN ଆକ୍ସେସ୍ ପାଇଁ PIN ବଦଳାନ୍ତୁ"</string>
+    <string name="sum_fdn_manage_list" msgid="8431088265332628316">"ଫୋନ୍ ନମ୍ବର୍ ତାଲିକାକୁ ପରିଚାଳନା କରନ୍ତୁ"</string>
+    <string name="voice_privacy" msgid="3776841382844614716">"ଭଏସ୍ ଗୋପନୀୟତା"</string>
+    <string name="voice_privacy_summary" msgid="3159383389833516214">"ଉନ୍ନତ ଗୋପନିୟ ମୋଡ୍‌କୁ ସକ୍ଷମ କରନ୍ତୁ"</string>
+    <string name="tty_mode_option_title" msgid="9033098925144434669">"TTY ମୋଡ୍"</string>
+    <string name="tty_mode_option_summary" msgid="1073835131534808732">"TTY ମୋଡ୍ ସେଟ୍ କରନ୍ତୁ"</string>
+    <string name="auto_retry_mode_title" msgid="4073265511427813322">"ଅଟୋ-ରିଟ୍ରାଏ କରନ୍ତୁ"</string>
+    <string name="auto_retry_mode_summary" msgid="4973886004067532288">"ଅଟୋ-ରିଟ୍ରାଏ ମୋଡ୍‌କୁ ସକ୍ଷମ କରନ୍ତୁ"</string>
+    <string name="tty_mode_not_allowed_video_call" msgid="3795846787901909176">"ଭିଡିଓ କଲ୍ କରିବା ସମୟରେ TTY ମୋଡ୍‌କୁ ପରିବର୍ତ୍ତନ କରିବା ପାଇଁ ଅନୁମତି ନାହିଁ"</string>
+    <string name="menu_add" msgid="1882023737425114762">"ଯୋଗାଯୋଗକୁ ଯୋଡ଼ନ୍ତୁ"</string>
+    <string name="menu_edit" msgid="7143003705504672374">"ଯୋଗାଯୋଗକୁ ଏଡିଟ୍‍ କରନ୍ତୁ"</string>
+    <string name="menu_delete" msgid="3977150783449642851">"ଯୋଗାଯୋଗକୁ ଡିଲିଟ୍ କରନ୍ତୁ"</string>
+    <string name="menu_dial" msgid="3223106222819685808">"ଯୋଗାଯୋଗକୁ ଡାଏଲ୍ କରନ୍ତୁ"</string>
+    <string name="get_pin2" msgid="8204677063922225311">"PIN2 ଟାଇପ୍ କରନ୍ତୁ"</string>
+    <string name="name" msgid="7329028332786872378">"ନାମ"</string>
+    <string name="number" msgid="7905950798349903858">"ନମ୍ବର୍‌"</string>
+    <string name="save" msgid="4094274636321939086">"ସେଭ୍‌ କରନ୍ତୁ"</string>
+    <string name="add_fdn_contact" msgid="2481915899633353976">"ଫିକ୍ସଡ୍ ଡାଏଲିଙ୍ଗ ନମ୍ବର୍‌ ଯୋଡ଼ନ୍ତୁ"</string>
+    <string name="adding_fdn_contact" msgid="7627379633721940991">"ଫିକ୍ସଡ୍ ଡାଏଲିଙ୍ଗ ନମ୍ବର୍‌କୁ ଯୋଡ଼ାଯାଉଛି…"</string>
+    <string name="fdn_contact_added" msgid="7458335758501736665">"ଫିକ୍ସଡ୍ ଡାଏଲିଙ୍ଗ ନମ୍ବର୍ ଯୋଡ଼ାଗଲା।"</string>
+    <string name="edit_fdn_contact" msgid="7976936035587081480">"ଫିକ୍ସଡ୍ ଡାଏଲିଙ୍ଗ ନମ୍ବର୍‌କୁ ଏଡିଟ୍ କରନ୍ତୁ"</string>
+    <string name="updating_fdn_contact" msgid="8370929876849803600">"ଫିକ୍ସଡ୍ ଡାଏଲିଙ୍ଗ ନମ୍ବର୍ ଅପଡେଟ୍ ହେଉଛି…"</string>
+    <string name="fdn_contact_updated" msgid="5497828782609005017">"ଫିକ୍ସଡ୍ ଡାଏଲିଙ୍ଗ ନମ୍ବର୍ ଅପଡେଟ୍ କରାଗଲା।"</string>
+    <string name="delete_fdn_contact" msgid="6668958073074151717">"ଫିକ୍ସଡ୍ ଡାଏଲିଙ୍ଗ ନମ୍ବର୍‌କୁ ଡିଲିଟ୍ କରନ୍ତୁ"</string>
+    <string name="deleting_fdn_contact" msgid="5669163206349319969">"ଫିକ୍ସଡ୍ ଡାଏଲିଙ୍ଗ ନମ୍ବର୍‌ ଡିଲିଟ୍ ହେଉଛି…"</string>
+    <string name="fdn_contact_deleted" msgid="7154162327112259569">"ଫିକ୍ସଡ୍ ଡାଏଲିଙ୍ଗ ନମ୍ବର୍‌କୁ ଡିଲିଟ୍ କରାଗଲା।"</string>
+    <string name="pin2_invalid" msgid="5470854099230755944">"FDN ଅପଡେଟ୍ ହେଲା ନାହିଁ କାରଣ ଆପଣ ଗୋଟିଏ ଭୁଲ୍ PIN ଟାଇପ୍ କରିଥିଲେ।"</string>
+    <string name="fdn_invalid_number" msgid="2062898833049589309">"FDN ଅପଡେଟ୍ ହେଲା ନାହିଁ କାରଣ ନମ୍ବର୍ 20ଟି ସଂଖ୍ୟାରୁ ଅଧିକ ଅଛି।"</string>
+    <string name="pin2_or_fdn_invalid" msgid="6025144083384701197">"FDN ଅପଡେଟ୍ ହୋ‌ଇନଥିଲା। PIN2 ଭୁଲ୍ ଥିଲା କିମ୍ବା ଫୋନ୍ ନମ୍ବର୍‌କୁ ଗ୍ରହଣ କରାଗଲା ନାହିଁ।"</string>
+    <string name="fdn_failed" msgid="540018079008319747">"FDN ଅପରେଶନ୍ ବିଫଳ ହେଲା।"</string>
+    <string name="simContacts_emptyLoading" msgid="2203331234764498011">"SIM କାର୍ଡରୁ ପଢ଼ାଯାଉଛି…"</string>
+    <string name="simContacts_empty" msgid="5270660846489561932">"ଆପଣଙ୍କ SIM କାର୍ଡରେ କୌଣସି ଯୋଗାଯୋଗ ନାହିଁ।"</string>
+    <string name="simContacts_title" msgid="1861472842524839921">"ଇମ୍ପୋର୍ଟ କରିବା ପାଇଁ ଯୋଗାଯୋଗକୁ ଚୟନ କରନ୍ତୁ"</string>
+    <string name="simContacts_airplaneMode" msgid="5254946758982621072">"SIM କାର୍ଡରୁ ଯୋଗାଯୋଗକୁ ଇମ୍ପୋର୍ଟ କରିବାବେଳେ ଏୟାରପ୍ଲେନ୍ ମୋଡ୍‌କୁ ବନ୍ଦ କରନ୍ତୁ।"</string>
+    <string name="enable_pin" msgid="5422767284133234860">"SIM PINକୁ ସକ୍ଷମ/ଅକ୍ଷମ କରନ୍ତୁ"</string>
+    <string name="change_pin" msgid="9174186126330785343">"ସିମ୍‌ ପିନ୍‌ ବଦାଳନ୍ତୁ"</string>
+    <string name="enter_pin_text" msgid="8532615714751931951">"ସିମ୍‌ PIN:"</string>
+    <string name="oldPinLabel" msgid="5287773661246368314">"ପୁରୁଣା PIN"</string>
+    <string name="newPinLabel" msgid="207488227285336897">"ନୂଆ PIN"</string>
+    <string name="confirmPinLabel" msgid="257597715098070206">"ନୂଆ PIN ନିଶ୍ଚିତ କରନ୍ତୁ"</string>
+    <string name="badPin" msgid="8955102849303984935">"ଆପଣ ଟାଇପ୍ କରିଥିବା ପୁରୁଣା PIN ଠିକ୍ ନୁହେଁ। ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।"</string>
+    <string name="mismatchPin" msgid="5923253370683071889">"ଆପଣ ଟାଇପ୍ କରିଥିବା PINs ମେଳ ହେଉନାହିଁ। ପୁଣି ଥରେ ଚେଷ୍ଟା କରନ୍ତୁ।"</string>
+    <string name="invalidPin" msgid="5981171102258684792">"4 ରୁ 8 ସଂଖ୍ୟା ବିଶିଷ୍ଟ ଏକ PIN ଟାଇପ୍ କରନ୍ତୁ।"</string>
+    <string name="disable_sim_pin" msgid="3419351358300716472">"SIM PINକୁ ଖାଲି କରନ୍ତୁ"</string>
+    <string name="enable_sim_pin" msgid="4845145659651484248">"SIM PINକୁ ସେଟ୍ କରନ୍ତୁ"</string>
+    <string name="enable_in_progress" msgid="3417917024688497010">"PIN ସେଟ୍ କରାଯାଉଛି…"</string>
+    <string name="enable_pin_ok" msgid="2918545971413270063">"PIN ସେଟ୍ ହୋ‌ଇଛି"</string>
+    <string name="disable_pin_ok" msgid="2109571368635883688">"PINକୁ ଖାଲି କରିଦିଆଗଲା"</string>
+    <string name="pin_failed" msgid="5644377896213584760">"PIN ଭୁଲ୍ ଅଛି"</string>
+    <string name="pin_changed" msgid="4455736268023261662">"PIN ଅପଡେଟ୍ ହୋ‌ଇଛି"</string>
+    <string name="puk_requested" msgid="5921393215789090200">"ଭୁଲ୍ ପାସ୍‌ୱର୍ଡ। ବର୍ତ୍ତମାନ PIN ଲକ୍ ହୋ‌ଇଗଲା। PUK2 ପାଇଁ ଅନୁରୋଧ କରାଯାଇଛି।"</string>
+    <string name="enter_pin2_text" msgid="8339444124477720345">"PIN2"</string>
+    <string name="oldPin2Label" msgid="8559146795026261502">"ପୁରୁଣା PIN2"</string>
+    <string name="newPin2Label" msgid="4573956902204349054">"ନୂଆ PIN2"</string>
+    <string name="confirmPin2Label" msgid="8100319484454787708">"ନୂଆ PIN2 ନିଶ୍ଚିତ କରନ୍ତୁ"</string>
+    <string name="badPuk2" msgid="7910064009531541708">"PUK2 ଭୁଲ୍ ଅଛି। ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।"</string>
+    <string name="badPin2" msgid="6646896629970023109">"ପୁରିଣା PIN2 ଭୁଲ୍ ଅଛି। ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।"</string>
+    <string name="mismatchPin2" msgid="4177967478551851117">"PINଗୁଡିକ ମେଳ ହେଉନାହିଁ। ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।"</string>
+    <string name="invalidPin2" msgid="1757045131429105595">"ଗୋଟିଏ PIN2 ପ୍ରବେଶ କରନ୍ତୁ ଯାହା 4 ରୁ 8 ସଂଖ୍ୟାବିଶିଷ୍ଟ ଅଟେ।"</string>
+    <string name="invalidPuk2" msgid="7059081153334815973">"8 ସଂଖ୍ୟାବିଶିଷ୍ଟ ଗୋଟିଏ PUK2 ପ୍ରବେଶ କରନ୍ତୁ।"</string>
+    <string name="pin2_changed" msgid="3724522579945610956">"PIN2 ଅପଡେଟ୍ ହୋ‌ଇଛି"</string>
+    <string name="label_puk2_code" msgid="4688069961795341948">"PUK2 ହୋଡ୍ ପ୍ରବେଶ କରନ୍ତୁ"</string>
+    <string name="fdn_enable_puk2_requested" msgid="4991074891459554705">"ଭୁଲ୍ ପାସ୍‌ୱର୍ଡ। ବର୍ତ୍ତମାନ PIN2କୁ ଅବରୋଧ କରାଯାଇଛି। ପୁଣି ଚେଷ୍ଟା କରିବା ପାଇଁ PIN 2କୁ ବଦଳାନ୍ତୁ।"</string>
+    <string name="puk2_requested" msgid="5831015200030161434">"ଭୁଲ୍ ପାସ୍‌ୱର୍ଡ। ବର୍ତ୍ତମାନ SIM ଲକ୍ ହୋ‌ଇଗଲା। PUK2କୁ ପ୍ରବେଶ କରନ୍ତୁ।"</string>
+    <string name="puk2_blocked" msgid="3150263853077280049">"PUK2କୁ ସ୍ଥାୟୀରୂପେ ଅବରୋଧ କରାଯାଇଛି।"</string>
+    <string name="pin2_attempts" msgid="720736232885011507">\n"ଆପଣଙ୍କର <xliff:g id="NUMBER">%d</xliff:g>ଟି ସୁଯୋଗ ବଳକା ଅଛି।"</string>
+    <string name="pin2_unblocked" msgid="7791600368153469078">"PIN2କୁ ଆଉ ଅବରୋଧ କରାଯାଇନାହିଁ"</string>
+    <string name="pin2_error_exception" msgid="1088689322248996699">"ନେଟ୍‌ୱର୍କ କିମ୍ବା SIM କାର୍ଡ ତ୍ରୁଟି"</string>
+    <string name="doneButton" msgid="2859593360997984240">"ହୋଇଗଲା"</string>
+    <string name="voicemail_settings_number_label" msgid="8524164258691887790">"ଭଏସମେଲ୍ ନମ୍ବର୍"</string>
+    <string name="card_title_dialing" msgid="5769417478498348054">"ଡାଏଲ୍ କରାଯାଉଛି"</string>
+    <string name="card_title_redialing" msgid="8253487008234167266">"ପୁନଃଡାଏଲ୍ କରନ୍ତୁ"</string>
+    <string name="card_title_conf_call" msgid="1162980346189744501">"କନ୍‌ଫରେନ୍ସ କଲ୍‍"</string>
+    <string name="card_title_incoming_call" msgid="7364539451234646909">"ଇନ୍‌କମିଙ୍ଗ କଲ୍‌"</string>
+    <string name="card_title_call_ended" msgid="5544730338889702298">"କଲ୍ ସମାପ୍ତ ହେଲା"</string>
+    <string name="card_title_on_hold" msgid="821463117892339942">"ହୋଲ୍ଡରେ ଅଛି"</string>
+    <string name="card_title_hanging_up" msgid="3999101620995182450">"କଲ୍ ସମାପ୍ତ ହେଉଛି"</string>
+    <string name="card_title_in_call" msgid="6346543933068225205">"କଲ୍‌ରେ ଅଛନ୍ତି"</string>
+    <string name="notification_voicemail_title" msgid="8933468752045550523">"ନୂଆ ଭଏସମେଲ୍"</string>
+    <string name="notification_voicemail_title_count" msgid="4366360747660929916">"ନୂଆ ଭଏସମେଲ୍ (<xliff:g id="COUNT">%d</xliff:g>)"</string>
+    <string name="notification_voicemail_text_format" msgid="4447323569453981685">"<xliff:g id="VOICEMAIL_NUMBER">%s</xliff:g>କୁ ଡାଏଲ୍ କରନ୍ତୁ"</string>
+    <string name="notification_voicemail_no_vm_number" msgid="760963466895609716">"ଭଏସ୍ ମେଲ୍ ନମ୍ବର୍ ଅଜଣା"</string>
+    <string name="notification_network_selection_title" msgid="4224455487793492772">"କୌଣସି ସେବା ନାହିଁ"</string>
+    <string name="notification_network_selection_text" msgid="2607085729661923269">"ଚୟନିତ ନେଟ୍‌ୱର୍କ (<xliff:g id="OPERATOR_NAME">%s</xliff:g>) ଉପଲବ୍ଧ ନାହିଁ"</string>
+    <string name="incall_error_power_off" product="watch" msgid="2007450435656211658">"କଲ୍ କରିବା ପାଇଁ ମୋବାଇଲ୍ ନେଟ୍‌ୱର୍କକୁ ଚାଲୁ କରନ୍ତୁ, ଏୟାରପ୍ଲେନ୍ ମୋଡ୍‌କୁ ବନ୍ଦ କରନ୍ତୁ କିମ୍ବା ବ୍ୟାଟେରୀ ସେଭର୍‌କୁ ବନ୍ଦ କରନ୍ତୁ।"</string>
+    <string name="incall_error_power_off" product="default" msgid="2947938060513306698">"ଗୋଟିଏ କଲ୍ କରିବା ପାଇଁ ଏୟାରପ୍ଲେନ୍ ମୋଡ୍‌କୁ ବନ୍ଦ କରନ୍ତୁ।"</string>
+    <string name="incall_error_power_off_wfc" msgid="8711428920632416575">"ଗୋଟିଏ କଲ୍ କରିବା ପାଇଁ ଏୟାରପ୍ଲେନ୍ ମୋଡ୍‌କୁ ବନ୍ଦ କରନ୍ତୁ କିମ୍ବା ଏକ ତାରବିହୀନ ନେଟ୍‌ୱର୍କ ସହ କନେକ୍ଟ କରନ୍ତୁ।"</string>
+    <string name="incall_error_ecm_emergency_only" msgid="738708660612388692">"ଗୋଟିଏ ସାଧାରଣ କଲ୍ କରିବା ପାଇଁ ଜରୁରିକାଳୀନ କଲବ୍ୟାକ୍ ମୋଡ୍‌ରୁ ବାହାରି ଆସନ୍ତୁ।"</string>
+    <string name="incall_error_emergency_only" msgid="4678640422710818317">"ନେଟ୍‌ୱର୍କରେ ପଞ୍ଜୀକୃତ କରାଯାଇନାହିଁ।"</string>
+    <string name="incall_error_out_of_service" msgid="8587993036435080418">"ମୋବାଇଲ୍ ନେଟ୍‌ୱର୍କ ଉପଲବ୍ଧ ନାହିଁ।"</string>
+    <string name="incall_error_out_of_service_wfc" msgid="8741629779555132471">"ମୋବାଇଲ୍ ନେଟ୍‌ୱର୍କ ଉପଲବ୍ଧ ନାହିଁ। କଲ୍ କରିବା ପାଇଁ ଗୋଟିଏ ତାରବିହୀନ ନେଟ୍‌ୱର୍କରେ କନେକ୍ଟ କରନ୍ତୁ"</string>
+    <string name="incall_error_no_phone_number_supplied" msgid="1150414018684246528">"ଗୋଟିଏ କଲ୍ କରିବା ପାଇଁ ଏକ ବୈଧ ନମ୍ବର୍ ପ୍ରବେଶ କରନ୍ତୁ।"</string>
+    <string name="incall_error_call_failed" msgid="5891978320269774095">"କଲ୍ ହେଲା ନାହିଁ।"</string>
+    <string name="incall_error_cannot_add_call" msgid="8878159278947023326">"ଏବେ କଲ୍‌କୁ ଯୋଡ଼ାଯାଇପାରିବ ନାହିଁ। ଆପଣ ମେସେଜ୍ ପଠାଇ ସମ୍ପର୍କ କରିବା ପାଇଁ ଚେଷ୍ଟା କରିପାରନ୍ତି।"</string>
+    <string name="incall_error_supp_service_unknown" msgid="655570339115407698">"ସେବା ସପୋର୍ଟ କରୁନାହିଁ"</string>
+    <string name="incall_error_supp_service_switch" msgid="5237002176899962862">"କଲ୍‌କୁ ସ୍ଵିଚ୍ କରିହେବ ନାହିଁ।"</string>
+    <string name="incall_error_supp_service_separate" msgid="7224393405134545246">"କଲ୍‌କୁ ଅଲଗା କରିହେବ ନାହିଁ।"</string>
+    <string name="incall_error_supp_service_transfer" msgid="7235952238189391438">"ଟ୍ରାନ୍ସଫର୍ କରିହେବ ନାହିଁ।"</string>
+    <string name="incall_error_supp_service_conference" msgid="2505727299596357312">"କନଫରେନ୍ସ କଲ୍ କରିବାରେ ଅକ୍ଷମ।"</string>
+    <string name="incall_error_supp_service_reject" msgid="8998568661508655638">"କଲ୍‌କୁ ପ୍ରତ୍ୟାକ୍ଷାନ କରିହେବ ନାହିଁ।"</string>
+    <string name="incall_error_supp_service_hangup" msgid="7434513517153834426">"କଲ୍(ଗୁଡ଼ିକୁ)କୁ ରିଲିଜ୍ କରାଯାଇପରିବ ନାହିଁ।"</string>
+    <string name="incall_error_supp_service_hold" msgid="7967020511232222078">"କଲ୍‍କୁ ହୋଲ୍ଡ କରାଯାଇପାରିବ ନାହିଁ।"</string>
+    <string name="incall_error_wfc_only_no_wireless_network" msgid="1782466780452640089">"ଗୋଟିଏ କଲ୍ କରିବା ପାଇଁ ଏକ ତାରବିହୀନ ନେଟ୍‌ୱର୍କ ସହ କନେକ୍ଟ କରନ୍ତୁ।"</string>
+    <string name="incall_error_promote_wfc" msgid="106510757624022064">"ଗୋଟିଏ କଲ୍ କରିବା ପାଇଁ ୱାଇ-ଫାଇ କଲିଙ୍ଗକୁ ସକ୍ଷମ କରନ୍ତୁ।"</string>
+    <string name="emergency_enable_radio_dialog_title" msgid="4627849966634578257">"ଜରୁରୀକାଳିନ କଲ୍‌"</string>
+    <string name="emergency_enable_radio_dialog_message" msgid="207613549344420291">"ରେଡିଓକୁ ଚାଲୁ କରାଯାଉଛି…"</string>
+    <string name="emergency_enable_radio_dialog_retry" msgid="5960061579996526883">"କୌଣସି ସେବା ନାହିଁ। ପୁଣି ଚେଷ୍ଟାକରାଯାଉଛି…"</string>
+    <string name="radio_off_during_emergency_call" msgid="2535800034010306830">"ଗୋଟିଏ ଜରୁରିକାଳୀନ କଲ୍ କରିବାବେଳେ ଏୟାରପ୍ଲେନ୍ ମୋଡ୍‌କୁ ପ୍ରବେଶ କରାଯାଇପାରିବ ନାହିଁ।"</string>
+    <string name="dial_emergency_error" msgid="1509085166367420355">"କଲ୍ କରିପାରିବେ ନାହିଁ। <xliff:g id="NON_EMERGENCY_NUMBER">%s</xliff:g> ଗୋଟିଏ ଜରୁରିକାଳୀନ ନମ୍ବର୍ ନୁହେଁ।"</string>
+    <string name="dial_emergency_empty_error" msgid="9130194953830414638">"କଲ୍ କରିପାରିବେ ନାହିଁ। ଗୋଟିଏ ଜରୁରିକାଳୀନ ନମ୍ବର୍ ଡାଏଲ୍ କରନ୍ତୁ।"</string>
+    <string name="dial_emergency_calling_not_available" msgid="5675557523782491826">"ଜରୁରିକାଳୀନ କଲ୍ କରିବା ଉପଲବ୍ଧ ନାହିଁ"</string>
+    <string name="dialerKeyboardHintText" msgid="9192914825413747792">"ଡାଏଲ୍ କରିବା ପାଇଁ କୀବୋର୍ଡକୁ ବ୍ୟବହାର କରନ୍ତୁ"</string>
+    <string name="onscreenHoldText" msgid="2285258239691145872">"ହୋଲ୍ଡ କରନ୍ତୁ"</string>
+    <string name="onscreenEndCallText" msgid="4403855834875398585">"ସମାପ୍ତ କରନ୍ତୁ"</string>
+    <string name="onscreenShowDialpadText" msgid="8561805492659639893">"ଡାଏଲପ୍ୟାଡ୍"</string>
+    <string name="onscreenMuteText" msgid="5011369181754261374">"ମ୍ୟୁଟ୍ କରନ୍ତୁ"</string>
+    <string name="onscreenAddCallText" msgid="5140385634712287403">"କଲ୍‌କୁ ଯୋଡ଼ନ୍ତୁ"</string>
+    <string name="onscreenMergeCallsText" msgid="6640195098064538950">"କଲ୍‌କୁ ମର୍ଜ କରନ୍ତୁ"</string>
+    <string name="onscreenSwapCallsText" msgid="1602990689244030047">"ସ୍ଵାପ୍ କରନ୍ତୁ"</string>
+    <string name="onscreenManageCallsText" msgid="5473231160123254154">"କଲ୍ ପରିଚାଳନା କରନ୍ତୁ"</string>
+    <string name="onscreenManageConferenceText" msgid="6485935856534311346">"କନଫରେନ୍ସ ପରିଚାଳନା କରନ୍ତୁ"</string>
+    <string name="onscreenAudioText" msgid="1710087112800041743">"ଅଡିଓ"</string>
+    <string name="onscreenVideoCallText" msgid="4800924186056115442">"ଭିଡିଓ କଲ୍ କରନ୍ତୁ"</string>
+    <string name="importSimEntry" msgid="6614358325359736031">"ଇମ୍ପୋର୍ଟ କରନ୍ତୁ"</string>
+    <string name="importAllSimEntries" msgid="1503181169636198673">"ସମସ୍ତ ଇମ୍ପୋର୍ଟ କରନ୍ତୁ"</string>
+    <string name="importingSimContacts" msgid="7374056215462575769">"SIMରେ ଥିବା ଯୋଗାଯୋଗକୁ ଇମ୍ପୋର୍ଟ କରାଯାଉଛି"</string>
+    <string name="importToFDNfromContacts" msgid="2130620207013368580">"ଯୋଗଯୋଗରୁ ଇମ୍ପୋର୍ଟ କରନ୍ତୁ"</string>
+    <string name="singleContactImportedMsg" msgid="6868483416182599206">"ଇମ୍ପୋର୍ଟ କରାଯାଇଥିବା ଯୋଗାଯୋଗ"</string>
+    <string name="failedToImportSingleContactMsg" msgid="415399285420353917">"ଯୋଗଯୋଗକୁ ଇମ୍ପୋର୍ଟ କରିବାରେ ବିଫଳ ହେଲା"</string>
+    <string name="hac_mode_title" msgid="8740268574688743289">"ଶ୍ରବଣ ଯନ୍ତ୍ର"</string>
+    <string name="hac_mode_summary" msgid="6833851160514929341">"ଶ୍ରବଣ ଯନ୍ତ୍ର କମ୍ପ୍ୟାଟିବିଲିଟୀକୁ ଚାଲୁ କରନ୍ତୁ"</string>
+    <string name="rtt_mode_title" msgid="6954652435543570121">"ରିଅଲ୍-ଟାଇମ୍ ଟେକ୍ସଟ୍ (RTT) କଲ୍"</string>
+    <string name="rtt_mode_summary" msgid="5146344277246544580">"ଭଏସ୍ କଲ୍ କରିବା ମଧ୍ୟରେ ମେସେଜ୍ କରିବାକୁ ଅନୁମତି ଦିଅନ୍ତୁ"</string>
+    <string name="rtt_mode_more_information" msgid="6080420780730383030">"RTT ସେହି କଲର୍‌ମାନଙ୍କୁ ସହାୟତା କରିଥାଏ, ଯେଉଁମାନେ ବଧିର, କ୍ଷୀଣ ଶ୍ରବଣଶକ୍ତି, ମୂକ କିମ୍ବା ଭଏସ୍ ଅପେକ୍ଷା ଅଧିକ କିଛି ଆବଶ୍ୟକ କରନ୍ତି। &lt;br&gt; &lt;a href=<xliff:g id="URL">http://support.google.com/mobile?p=telephony_rtt</xliff:g>&gt;ଅଧିକ ଜାଣନ୍ତୁ&lt;/a&gt;\n       &lt;br&gt;&lt;br&gt; - ମେସେଜ୍ ଟ୍ରାନସ୍କ୍ରିପ୍ଟ ଭାବେ RTT କଲ୍ ସେଭ୍ ହୋ‌ଇଛି\n       &lt;br&gt; - ଭିଡିଓ କଲ୍ ପାଇଁ RTT ଉପଲବ୍ଧ ନାହିଁ"</string>
+  <string-array name="tty_mode_entries">
+    <item msgid="512950011423868021">"TTY ବନ୍ଦ ଅଛି"</item>
+    <item msgid="3971695875449640648">"TTY ପୂର୍ଣ୍ଣ"</item>
+    <item msgid="1937509904407445684">"TTY HCO"</item>
+    <item msgid="5644925873488772224">"TTY VCO"</item>
+  </string-array>
+    <string name="dtmf_tones_title" msgid="5163153771291340803">"DTMF ଟୋନ୍"</string>
+    <string name="dtmf_tones_summary" msgid="3351820372864020331">"DTMF ଟୋନ୍‌ର ଦୀର୍ଘତାକୁ ସେଟ୍ କରନ୍ତୁ"</string>
+  <string-array name="dtmf_tone_entries">
+    <item msgid="899650777817315681">"ସାଧାରଣ"</item>
+    <item msgid="2883365539347850535">"ଲମ୍ଵା"</item>
+  </string-array>
+    <string name="network_info_message" msgid="7738596060242881930">"ନେଟ୍‌ୱର୍କ ମେସେଜ୍"</string>
+    <string name="network_error_message" msgid="3394780436230411413">"ତ୍ରୁଟି ମେସେଜ୍"</string>
+    <string name="ota_title_activate" msgid="8616918561356194398">"ଆପଣଙ୍କର ଫୋନ୍‌କୁ ସକ୍ରିୟ କରନ୍ତୁ"</string>
+    <string name="ota_touch_activate" msgid="6553212803262586244">"ଆପଣଙ୍କ ଫୋନ୍‌ର ସେବାକୁ ସକ୍ରିୟ କରିବା ପାଇଁ ଗୋଟିଏ ସ୍ଵରନ୍ତ୍ର କଲ୍ କରିବା ଆବଶ୍ୟକ ହେଉଛି। \n\n “ସକ୍ରିୟ କରନ୍ତୁ”କୁ ଦାବିବା ପରେ, ନିଜର ଫୋନ୍‌କୁ ସକ୍ରିୟ କରିବା ପାଇଁ ଦିଆଯାଇଥିବା ନିର୍ଦ୍ଦେଶାବଳୀର ଅନୁସରଣ କରନ୍ତୁ।"</string>
+    <string name="ota_hfa_activation_title" msgid="2234246934160473981">"ସକ୍ରିୟ ହେଉଛି..."</string>
+    <string name="ota_hfa_activation_dialog_message" msgid="8092479227918463415">"ଏହି ଫୋନ୍‌ ଆପଣଙ୍କର ମୋବାଇଲ୍‌ ଡାଟା ସେବାକୁ ସକ୍ରିୟ କରୁଛି। \n\nଏଥି ପାଇଁ ପ୍ରାୟ 5 ମିନିଟ୍‌ ସମୟ ଲାଗିପାରେ।"</string>
+    <string name="ota_skip_activation_dialog_title" msgid="2943366608272261306">"ସକ୍ରିୟ କରିବା ଛାଡ଼ିଯିବେ?"</string>
+    <string name="ota_skip_activation_dialog_message" msgid="2440770373498870550">"ଯଦି ଆପଣ ସକ୍ରିୟ କରିବା କାର୍ଯ୍ୟକୁ ଛାଡ଼ିଯା’ନ୍ତି ତେବେ ଆପଣ କଲ୍ କରିପାରିବେ ନାହିଁ କିମ୍ବା ମୋବାଇଲ୍ ନେଟ୍‌ୱର୍କ (ଯଦିଓ ଆପଣ ୱାଇ-ଫାଇ ନେଟ୍‌ୱର୍କ ସହିତ ଯୋଡ଼ିହୋ‌ଇପାରିବେ) ସହିତ ଯୋଡ଼ିହୋ‌ଇପାରିବେ ନାହିଁ। ଆପଣ ନିଜର ଫୋନ୍‌କୁ ସକ୍ରିୟ ନକରିବା ପର୍ଯ୍ୟନ୍ତ ପ୍ରତ୍ୟେକଥର ଏହାକୁ ଚାଲୁ କରିବା ସମୟରେ ସକ୍ରିୟ କରିବା ପାଇଁ କୁହାଯିବ।"</string>
+    <string name="ota_skip_activation_dialog_skip_label" msgid="3458532775091563208">"ଛାଡ଼ିଦିଅନ୍ତୁ"</string>
+    <string name="ota_activate" msgid="1368528132525626264">"ସକ୍ରିୟ କରନ୍ତୁ"</string>
+    <string name="ota_title_activate_success" msgid="6570240212263372046">"ଫୋନ୍ ସକ୍ରିୟ ହୋ‌ଇଯାଇଛି।"</string>
+    <string name="ota_title_problem_with_activation" msgid="7095824491970084367">"ସକ୍ରିୟ ହେବାରେ ସମସ୍ୟା"</string>
+    <string name="ota_listen" msgid="162923839877584937">"ଆପଣ ସକ୍ରିୟ କାର୍ଯ୍ୟ ସମ୍ପୂର୍ଣ୍ଣ ହୋ‌ଇଛି ନଶୁଣିବା ପର୍ଯ୍ୟନ୍ତ କଥାକୁହା ନିର୍ଦ୍ଦେଶାବଳୀକୁ ଅନୁସରଣ କରନ୍ତୁ।"</string>
+    <string name="ota_speaker" msgid="6904589278542719647">"ସ୍ପିକର୍‌"</string>
+    <string name="ota_progress" msgid="460876637828044519">"ଆପଣଙ୍କ ଫୋନ୍‌କୁ ପ୍ରୋଗ୍ରାମ୍ କରାଯାଉଛି…"</string>
+    <string name="ota_failure" msgid="7713756181204620397">"ଆପଣଙ୍କ ଫୋନ୍‌କୁ ପ୍ରୋଗ୍ରାମ୍ କରିହେଲା ନାହିଁ"</string>
+    <string name="ota_successful" msgid="1880780692887077407">"ବର୍ତ୍ତମାନ ଆପଣଙ୍କର ଫୋନ୍ ସକ୍ରିୟ ହୋ‌ଇଯାଇଛି। ସେବା ଆରମ୍ଭ କରିବା ପାଇଁ ଏହା ପାଖାପାଖି 15 ମିନିଟ୍ ସମୟ ନେଇପାରେ।"</string>
+    <string name="ota_unsuccessful" msgid="8072141612635635357">"ଆପଣଙ୍କର ଫୋନ୍ ସକ୍ରିୟ ହେଲା ନାହିଁ। \n ଆପଣଙ୍କୁ ଭଲ ଆଚ୍ଛାଦନ ଥିବା ଗୋଟିଏ ସ୍ଥାନ ଖୋଜିବାକୁ ପଡ଼ିବ (ଝରକା ପାଖରେ କିମ୍ବା ବାହାରେ)। \n\nପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ କିମ୍ବା ଅଧିକ ବିକଳ୍ପ ପାଇଁ ଗ୍ରାହକ ସେବାକୁ କଲ୍ କରନ୍ତୁ।"</string>
+    <string name="ota_spc_failure" msgid="3909983542575030796">"ଅତିରିକ୍ତ SPC ବିଫଳତା"</string>
+    <string name="ota_call_end" msgid="4537279738134612388">"ପଛକୁ"</string>
+    <string name="ota_try_again" msgid="7685477206465902290">"ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ"</string>
+    <string name="ota_next" msgid="3904945374358235910">"ଆଗକୁ"</string>
+    <string name="ecm_exit_dialog" msgid="4448531867763097533">"EcmExitDialog"</string>
+    <string name="phone_entered_ecm_text" msgid="6266424252578731203">"ଜରୁରୀକାଳିନ କଲବ୍ୟାକ୍ ମୋଡ୍‌କୁ ପ୍ରବେଶ କରାଯାଉଛି"</string>
+    <string name="phone_in_ecm_notification_title" msgid="3226896828951687085">"ଜରୁରୀକାଳିନ କଲବ୍ୟାକ୍‍ ମୋଡ୍‍"</string>
+    <string name="phone_in_ecm_call_notification_text" msgid="4611608947314729773">"ଡାଟା କନେକ୍ସନ୍‌କୁ ଅକ୍ଷମ କରାଯାଇଛି"</string>
+    <string name="phone_in_ecm_notification_complete_time" msgid="7730376844178948351">"<xliff:g id="COMPLETETIME">%s</xliff:g> ପର୍ଯ୍ୟନ୍ତ କୌଣସି ଡାଟା କନେକ୍ସନ୍ ନାହିଁ"</string>
+    <plurals name="alert_dialog_exit_ecm" formatted="false" msgid="7179911675595441201">
+      <item quantity="other">ଫୋନ୍ <xliff:g id="COUNT_1">%s</xliff:g> ମିନିଟ୍ ପାଇଁ ଜରୁରିକାଳୀନ କଲବ୍ୟାକ୍ ମୋଡ୍‌ରେ ରହିବ। ଏହି ମୋଡ୍‌ରେ ଥିବା ବେଳେ ଗୋଟିଏ ଡାଟା କନେକ୍ସନ୍‌କୁ ବ୍ୟବହାର କରୁଥିବା କୌଣସି ଆପ୍ଲିକେଶନ୍‌କୁ ବ୍ୟବହାର କରାଯାଇପାରିବ ନାହିଁ। ବର୍ତ୍ତମାନ ଆପଣ ବାହାରିଯିବାକୁ ଚାହାନ୍ତି କି?</item>
+      <item quantity="one">ଫୋନ୍ <xliff:g id="COUNT_0">%s</xliff:g> ମିନିଟ୍ ପାଇଁ ଜରୁରିକାଳୀନ କଲବ୍ୟାକ୍ ମୋଡ୍‌ରେ ରହିବ ଏହି ମୋଡ୍‌ରେ ଥିବା ବେଳେ ଗୋଟିଏ ଡାଟା କନେକ୍ସନ୍‌କୁ ବ୍ୟବହାର କରୁଥିବା କୌଣସି ଆପ୍‌କୁ ବ୍ୟବହାର କରାଯାଇପାରିବ ନାହିଁ। ବର୍ତ୍ତମାନ ଆପଣ ବାହାରିଯିବାକୁ ଚାହାନ୍ତି କି?</item>
+    </plurals>
+    <plurals name="alert_dialog_not_avaialble_in_ecm" formatted="false" msgid="8042973425225093895">
+      <item quantity="other">ଜରୁରିକାଳୀନ କଲବ୍ୟାକ୍ ମୋଡ୍‌ରେ ରହିଥିବା ବେଳେ ଚୟନିତ କାର୍ଯ୍ୟ ଉପଲବ୍ଧ ହେବ ନାହିଁ। ଫୋନ୍ ଏହି ମୋଡ୍‌ରେ <xliff:g id="COUNT_1">%s</xliff:g> ମିନିଟ୍ ପାଇଁ ରହିବ। ବର୍ତ୍ତମାନ ଆପଣ ବାହାରିଯିବାକୁ ଚାହାନ୍ତି କି?</item>
+      <item quantity="one">ଜରୁରିକାଳୀନ କଲବ୍ୟାକ୍ ମୋଡ୍‌ରେ ରହିଥିବା ବେଳେ ଚୟନିତ କାର୍ଯ୍ୟ ଉପଲବ୍ଧ ହେବ ନାହିଁ। ଫୋନ୍ ଏହି ମୋଡ୍‌ରେ <xliff:g id="COUNT_0">%s</xliff:g> ମିନିଟ୍ ପାଇଁ ରହିବ। ବର୍ତ୍ତମାନ ଆପଣ ବାହାରିଯିବାକୁ ଚାହାନ୍ତି କି?</item>
+    </plurals>
+    <string name="alert_dialog_in_ecm_call" msgid="1886723687211887104">"ଜରୁରୀକାଳୀନ କଲ୍ କରୁଥିବାବେଳେ ଚୟନିତ କାର୍ଯ୍ୟ ଉପଲବ୍ଧ ନାହିଁ।"</string>
+    <string name="progress_dialog_exiting_ecm" msgid="4835734101617817074">"ଜରୁରୀକାଳିନ କଲବ୍ୟାକ୍ ମୋଡ୍‌ରୁ ବାହାରି ଆସନ୍ତୁ"</string>
+    <string name="alert_dialog_yes" msgid="6674268047820703974">"ହଁ"</string>
+    <string name="alert_dialog_no" msgid="1476091437797628703">"ନାହିଁ"</string>
+    <string name="alert_dialog_dismiss" msgid="2491494287075907171">"ଖାରଜ କରନ୍ତୁ"</string>
+    <string name="voicemail_provider" msgid="5135942703327136909">"ସେବା"</string>
+    <string name="voicemail_settings" msgid="72448049107749316">"ସେଟଅପ୍ କରନ୍ତୁ"</string>
+    <string name="voicemail_number_not_set" msgid="6724904736891087856">"&lt;ସେଟ୍ ହୋ‌ଇନାହିଁ&gt;"</string>
+    <string name="other_settings" msgid="3672912580359716394">"ଅନ୍ୟାନ୍ୟ କଲ୍‌ ସେଟିଙ୍ଗ"</string>
+    <string name="calling_via_template" msgid="4839419581866928142">"<xliff:g id="PROVIDER_NAME">%s</xliff:g> ମାଧ୍ୟମରେ କଲ୍ କରନ୍ତୁ"</string>
+    <string name="contactPhoto" msgid="4713193418046639466">"ଯୋଗାଯୋଗ ଫଟୋ"</string>
+    <string name="goPrivate" msgid="865837794424530980">"ବ୍ୟକ୍ତିଗତ ହୁଅନ୍ତୁ"</string>
+    <string name="selectContact" msgid="781975788478987237">"ଯୋଗାଯୋଗକୁ ଚୟନ କରନ୍ତୁ"</string>
+    <string name="not_voice_capable" msgid="2739898841461577811">"ଭଏସ୍ କଲ୍ ସପୋର୍ଟ କରୁନାହିଁ"</string>
+    <string name="description_dial_button" msgid="7459705245418435351">"ଡାଏଲ୍ କରନ୍ତୁ"</string>
+    <string name="voicemail_visual_voicemail_switch_title" msgid="5012622186976275457">"ଭିଜୁଆଲ୍ ଭଏସମେଲ୍"</string>
+    <string name="voicemail_set_pin_dialog_title" msgid="2797924461029093837">"PIN ସେଟ୍ କରନ୍ତୁ"</string>
+    <string name="voicemail_change_pin_dialog_title" msgid="6035421908626121564">"PIN ବଦଳାନ୍ତୁ"</string>
+    <string name="preference_category_ringtone" msgid="5197960752529332721">"ରିଙ୍ଗଟୋନ୍ ଓ ଭାଇବ୍ରେଟ୍"</string>
+    <string name="pstn_connection_service_label" msgid="1743245930577325900">"ବିଲ୍ଟ-ଇନ୍ ଥିବା SIM କାର୍ଡ"</string>
+    <string name="enable_video_calling_title" msgid="7237253660669000899">"ଭିଡିଓ କଲ୍‌ ଚାଲୁ କରନ୍ତୁ"</string>
+    <string name="enable_video_calling_dialog_msg" msgid="8948186136957417948">"ଭିଡିଓ କଲ୍‌କୁ ଚାଲୁ କରିବା ପାଇଁ ଆପଣଙ୍କୁ ନେଟ୍‌ୱର୍କ ସେଟିଙ୍ଗରେ ଉନ୍ନତ 4G LTE ମୋଡ୍‌କୁ ସକ୍ଷମ କରିବାକୁ ପଡ଼ିବ।"</string>
+    <string name="enable_video_calling_dialog_settings" msgid="576528473599603249">"ନେଟ୍‍ୱର୍କ ସେଟିଙ୍ଗ"</string>
+    <string name="enable_video_calling_dialog_close" msgid="7411471282167927991">"ବନ୍ଦ କରନ୍ତୁ"</string>
+    <string name="sim_label_emergency_calls" msgid="4847699229529306397">"ଜରୁରିକାଳୀନ କଲ୍"</string>
+    <string name="sim_description_emergency_calls" msgid="7535215397212301562">"କେବଳ ଜରୁରିକାଳୀନ କଲ୍ ପାଇଁ"</string>
+    <string name="sim_description_default" msgid="4778679519938775515">"SIM କାର୍ଡ, ସ୍ଲଟ୍: <xliff:g id="SLOT_ID">%s</xliff:g>"</string>
+    <string name="accessibility_settings_activity_title" msgid="8562004288733103868">"ଆକ୍ସେସିବିଲିଟୀ"</string>
+    <string name="status_hint_label_incoming_wifi_call" msgid="5932176406432044638">"ଠାରୁ ୱାଇ-ଫାଇ କଲ୍ କରନ୍ତୁ"</string>
+    <string name="status_hint_label_wifi_call" msgid="8900805254974653903">"ୱାଇ-ଫାଇ କଲ୍"</string>
+    <string name="emergency_action_launch_hint" msgid="4906759256275562674">"ଖୋଲିବା ପାଇଁ ପୁଣି ଟାପ୍‍ କରନ୍ତୁ"</string>
+    <string name="message_decode_error" msgid="3456481534066924855">"ମେସେଜ୍‌କୁ ଡିକୋଡ୍ କରିବା ବେଳେ ଗୋଟିଏ ତ୍ରୁଟି ଦେଖାଦେଲା।"</string>
+    <string name="callFailed_cdma_activation" msgid="2307989779233262164">"ଗୋଟିଏ SIM କାର୍ଡ ଆପଣଙ୍କର ସେବାକୁ କାର୍ଯ୍ୟକ୍ଷମ କରିଛି ଏବଂ ଆପଣଙ୍କ ଫୋନ୍‌ର ରୋମିଙ୍ଗ କ୍ଷମତାକୁ ଅପଡେଟ୍ କରିଛି।"</string>
+    <string name="callFailed_cdma_call_limit" msgid="1556916577171457086">"ଏଠାରେ ଅନେକ ସକ୍ରିୟ କଲ୍ ଅଛି। ଗୋଟିଏ ନୂଆ କଲ୍‌କୁ ସ୍ଥାପନ କରିବା ପୂର୍ବରୁ ଦୟାକରି ବିଦ୍ୟମାନ ଥିବା କଲ୍‌କୁ ସମାପ୍ତ କିମ୍ବା ମର୍ଜ କରନ୍ତୁ।"</string>
+    <string name="callFailed_imei_not_accepted" msgid="132192626901238542">"କନେକ୍ଟ କରିହେଲା ନାହିଁ, ଦୟାକରି ଗୋଟିଏ ବୈଧ SIM କାର୍ଡ ଇନସର୍ଟ କରନ୍ତୁ।"</string>
+    <string name="callFailed_wifi_lost" msgid="5968076625137297184">"ୱାଇ-ଫାଇ କନେକ୍ସନ୍ ହଜିଗଲା। କଲ୍ ସମାପ୍ତ ହୋ‌ଇଗଲା।"</string>
+    <string name="dialFailed_low_battery" msgid="8760548177088774268">"ବ୍ୟାଟେରୀ କମ୍ ଥିବା ହେତୁ ଆପଣ ଭିଡିଓ କଲ୍ କରିପାରିବେ ନାହିଁ।"</string>
+    <string name="callFailed_low_battery" msgid="4913582435905872616">"ଅଳ୍ପ ବ୍ୟାଟେରୀ ଥିବା ହେତୁ ଭିଡିଓ କଲ୍ ସମାପ୍ତ ହୋ‌ଇଗଲା।"</string>
+    <string name="change_pin_title" msgid="7790232089699034029">"ଭଏସମେଲ୍ PINକୁ ବଦଳାନ୍ତୁ"</string>
+    <string name="change_pin_continue_label" msgid="2135088662420163447">"ଜାରି ରଖନ୍ତୁ"</string>
+    <string name="change_pin_cancel_label" msgid="353535488390948596">"କ୍ୟାନ୍ସଲ୍‍ କରନ୍ତୁ"</string>
+    <string name="change_pin_ok_label" msgid="6204308560844889926">"ଠିକ୍ ଅଛି"</string>
+    <string name="change_pin_enter_old_pin_header" msgid="419179847657548887">"ଆପଣଙ୍କର ପୁରୁଣା PINକୁ ନିଶ୍ଚିତ କରନ୍ତୁ"</string>
+    <string name="change_pin_enter_old_pin_hint" msgid="8579171678763615453">"ଜାରି ରଖିବା ପାଇଁ ଆପଣଙ୍କର ଭଏସମେଲ୍ PINକୁ ପ୍ରବେଶ କରନ୍ତୁ।"</string>
+    <string name="change_pin_enter_new_pin_header" msgid="2611191814590251532">"ଗୋଟିଏ ନୂଆ PIN ସେଟ୍ କରନ୍ତୁ"</string>
+    <string name="change_pin_enter_new_pin_hint" msgid="2322940054329689309">"PIN ନିଶ୍ଚିତରୂପେ <xliff:g id="MIN">%1$d</xliff:g>-<xliff:g id="MAX">%2$d</xliff:g> ଅଙ୍କବିଶିଷ୍ଟ ହେବା ଉଚିତ୍।"</string>
+    <string name="change_pin_confirm_pin_header" msgid="8113764019347322170">"ଆପଣଙ୍କ PIN ନିଶ୍ଚିତ କରନ୍ତୁ"</string>
+    <string name="change_pin_confirm_pins_dont_match" msgid="4795052654904027909">"PIN ମେଳ ହେଉ ନାହିଁ"</string>
+    <string name="change_pin_succeeded" msgid="2022852286442211151">"ଭଏସମେଲ୍ PIN ଅପଡେଟ୍ ହୋ‌ଇଛି"</string>
+    <string name="change_pin_system_error" msgid="8308462387154257840">"PIN ସେଟ୍ କରିବାରେ ଅସମର୍ଥ"</string>
+    <string name="mobile_data_status_roaming_turned_off_subtext" msgid="935636805765823307">"ଡାଟା ରୋମିଙ୍ଗ ବନ୍ଦ ଅଛି"</string>
+    <string name="mobile_data_status_roaming_turned_on_subtext" msgid="1335176927083781041">"ଡାଟା ରୋମିଙ୍ଗ ଚାଲୁ ଅଛି"</string>
+    <string name="mobile_data_status_roaming_without_plan_subtext" msgid="3568412513831673037">"ବର୍ତ୍ତମାନ ରୋମିଙ୍ଗରେ ଅଛି, ଡାଟା ପ୍କାନ୍ ଆବଶ୍ୟକ"</string>
+    <string name="mobile_data_status_roaming_with_plan_subtext" msgid="8721998948811064377">"ବର୍ତ୍ତମାନ ରୋମିଙ୍ଗରେ ଅଛି, ଡାଟା ପ୍କାନ୍ ସକ୍ରିୟ ଅଛି"</string>
+    <string name="mobile_data_status_no_plan_subtext" msgid="4887747337017565725">"ଲିଛି ମୋବାଇଲ୍ ଡାଟା ବଳକା ନାହିଁ"</string>
+    <string name="mobile_data_activate_prepaid" msgid="7447025165850512683">"ଲିଛି ମୋବାଇଲ୍ ଡାଟା ବଳକା ନାହିଁ"</string>
+    <string name="mobile_data_activate_prepaid_summary" msgid="5705389791791637666">"<xliff:g id="PROVIDER_NAME">%s</xliff:g> ମାଧ୍ୟମରେ ମୋବାଇଲ୍ ଡାଟାକୁ ଯୋଡ଼ନ୍ତୁ"</string>
+    <string name="mobile_data_activate_roaming_plan" msgid="5998161536947086264">"କୈଣସି ରୋମିଙ୍ଗ ପ୍ଲାନ୍ ନାହିଁ"</string>
+    <string name="mobile_data_activate_roaming_plan_summary" msgid="511202908883425459">"<xliff:g id="PROVIDER_NAME">%s</xliff:g> ମାଧ୍ୟମରେ ରୋମିଙ୍ଗ ପ୍ଲାନ୍‌କୁ ଯୋଡ଼ନ୍ତୁ"</string>
+    <string name="mobile_data_activate_footer" msgid="5979019929980140594">"ଆପଣଙ୍କ କେରିଅର୍‌ <xliff:g id="PROVIDER_NAME">%s</xliff:g> ମାଧ୍ୟମରେ ଆପଣ ମୋବାଇଲ୍ ଡାଟା କିମ୍ବା ରୋମିଙ୍ଗ ପ୍ଲାନ୍‌କୁ ଯୋଡ଼ିପାରିବେ।"</string>
+    <string name="mobile_data_activate_diag_title" msgid="9044252207707864493">"ଡାଟାକୁ ଯୋଡ଼ିବେ?"</string>
+    <string name="mobile_data_activate_diag_message" msgid="8216154678758451453">"ଆପଣଙ୍କୁ <xliff:g id="PROVIDER_NAME">%s</xliff:g> ମାଧ୍ୟମରେ ଡାଟା ଯୋଡ଼ିବାକୁ ପଡ଼ିପାରେ"</string>
+    <string name="mobile_data_activate_button" msgid="3682400969184405446">"ଡାଟା ଯୋଡ଼ନ୍ତୁ"</string>
+    <string name="mobile_data_activate_cancel_button" msgid="1708022171547398765">"କ୍ୟାନ୍ସଲ୍‍ କରନ୍ତୁ"</string>
+    <string name="clh_card_title_call_ended_txt" msgid="4072101334811753823">"କଲ୍ ସମାପ୍ତ ହୋ‌ଇଛି"</string>
+    <string name="clh_callFailed_powerOff_txt" msgid="3773036949107147708">"ରେଡିଓ ବନ୍ଦ କରନ୍ତୁ"</string>
+    <string name="clh_callFailed_simError_txt" msgid="757650590524277969">"କୌଣସି SIM କାର୍ଡ ନାହିଁ କିମ୍ବା SIM କାର୍ଡରେ ତ୍ରୁଟି ଅଛି"</string>
+    <string name="clh_incall_error_out_of_service_txt" msgid="3974373603657193827">"ମୋବାଇଲ୍ ନେଟ୍‌ୱର୍କ ଉପଲବ୍ଧ ଅଛି"</string>
+    <string name="clh_callFailed_unassigned_number_txt" msgid="7635996793232604064">"ଆସାଇନ୍ କରାଯାଇନଥିବା (ପ୍ରଦାନ କରାଯାଇନଥିବା) ନମ୍ବର୍"</string>
+    <string name="clh_callFailed_no_route_to_destination_txt" msgid="8561586745288855167">"ଗନ୍ତବ୍ୟ ସ୍ଥାନକୁ କୌଣସି ମାର୍ଗ ନାହିଁ"</string>
+    <string name="clh_callFailed_channel_unacceptable_txt" msgid="8048626924246611459">"ଚ୍ୟାନେଲ୍ ସ୍ଵୀକାର୍ଯ୍ୟ ନୁହେଁ"</string>
+    <string name="clh_callFailed_operator_determined_barring_txt" msgid="6889705714244076823">"ଅପରେଟର୍‌ଙ୍କ ଦ୍ଵାରା ନିର୍ଦ୍ଧାରିତ ପ୍ରତିବନ୍ଧ"</string>
+    <string name="clh_callFailed_normal_call_clearing_txt" msgid="2810975267106345820">"ସାଧାରଣ କଲ୍ ଖାଲିକରନ୍ତୁ"</string>
+    <string name="clh_callFailed_user_busy_txt" msgid="2736095995784746915">"ୟୁଜର୍ ବ୍ୟସ୍ତ ଅଛନ୍ତି"</string>
+    <string name="clh_callFailed_no_user_responding_txt" msgid="1421543095873040084">"କୌଣସି ୟୁଜର୍ ଉତ୍ତର ଦେଉନାହାନ୍ତି"</string>
+    <string name="clh_callFailed_user_alerting_txt" msgid="6606245970376797447">"ୟୁଜର୍ ଆଲର୍ଟ କରୁଛନ୍ତି, କୌଣସି ଉତ୍ତର ନାହିଁ"</string>
+    <string name="clh_callFailed_call_rejected_txt" msgid="8001665478195793223">"କଲ୍‌କୁ ପ୍ରତ୍ୟାଖ୍ୟାନ କରାଗଲା"</string>
+    <string name="clh_callFailed_number_changed_txt" msgid="5127909898925154242">"ନମ୍ବର୍ ବଦଳିଯାଇଛି"</string>
+    <string name="clh_callFailed_pre_emption_txt" msgid="6864702416751338567">"ପୂର୍ବାନୁମାନ"</string>
+    <string name="clh_callFailed_non_selected_user_clearing_txt" msgid="8725898326616836656">"ଅଚୟନିତ ୟୁଜର୍‌ଙ୍କୁ ଖାଲି କରନ୍ତୁ"</string>
+    <string name="clh_callFailed_destination_out_of_order_txt" msgid="6626355413556362437">"ଗନ୍ତବ୍ୟ ଖରାପ ଅଛି"</string>
+    <string name="clh_callFailed_invalid_number_format_txt" msgid="6987646655639655370">"ଅବୌଧ ନମ୍ବର୍ ଫର୍ମାଟ୍ (ଅସମ୍ପୂର୍ଣ୍ଣ ନମ୍ବର୍)"</string>
+    <string name="clh_callFailed_facility_rejected_txt" msgid="4539787567476563415">"ସୁବିଧାକୁ ପ୍ରତ୍ୟାଖ୍ୟାନ କରାଗଲା"</string>
+    <string name="clh_callFailed_response_to_STATUS_ENQUIRY_txt" msgid="178503536263624366">"ଷ୍ଟାଟସ୍ ଏନକ୍ଵାରୀର ଉତ୍ତର"</string>
+    <string name="clh_callFailed_normal_unspecified_txt" msgid="2777574148560245427">"ସାଧାରଣ, ଅନିର୍ଦ୍ଦିଷ୍ଟ"</string>
+    <string name="clh_callFailed_no_circuit_available_txt" msgid="2894749820848784700">"କୌଣସି ସର୍କିଟ୍ କିମ୍ବା ଚ୍ୟାନେଲ୍ ଉପଲବ୍ଧ ନାହିଁ"</string>
+    <string name="clh_callFailed_network_out_of_order_txt" msgid="807472585030492179">"ନେଟ୍‌ୱର୍କ ଖରାପ ଅଛି"</string>
+    <string name="clh_callFailed_temporary_failure_txt" msgid="1985847623937655151">"ଅସ୍ଥାୟୀରୂପେ ବିଫଳ ହୋ‌ଇଛି"</string>
+    <string name="clh_callFailed_switching_equipment_congestion_txt" msgid="465517139462928431">"ସ୍ଵିଚିଙ୍ଗ ଉପକରଣ ଭର୍ତ୍ତି ହୋ‌ଇଯାଇଛି"</string>
+    <string name="clh_callFailed_access_information_discarded_txt" msgid="132851305339579892">"ଆକ୍ସେସ୍ ସୂଚନାକୁ କାଢ଼ିଦିଆଗଲା"</string>
+    <string name="clh_callFailed_requested_circuit_txt" msgid="2316345471851443847">"ଅନୁରୋଧ କରାଯାଇଥିବା ସର୍କିଟ୍/ଚ୍ୟାନେଲ୍ ଉପଲବ୍ଧ ନାହିଁ"</string>
+    <string name="clh_callFailed_resources_unavailable_unspecified_txt" msgid="4460267429142724322">"ରିସୋର୍ସ ଉପଲବ୍ଧ ନାହିଁ, ଅନିର୍ଦ୍ଦିଷ୍ଟ"</string>
+    <string name="clh_callFailed_quality_of_service_unavailable_txt" msgid="7315823047206338755">"ସେବାର କ୍ଵାଲିଟୀ ଉପଲବ୍ଧ ନାହିଁ"</string>
+    <string name="clh_callFailed_requested_facility_not_subscribed_txt" msgid="1688438372518949530">"ଅନୁରୋଧ କରାଯାଇଥିବା ସୁବିଧା ସବସ୍କ୍ରାଇବ୍ କରାଯାଇନାହିଁ"</string>
+    <string name="clh_callFailed_incoming_calls_barred_within_the_CUG_txt" msgid="3922231620226043342">"CUG ମଧ୍ୟରେ ଇନକମିଙ୍ଗ କଲ୍‌କୁ ରୋକାଗଲା"</string>
+    <string name="clh_callFailed_bearer_capability_not_authorized_txt" msgid="6515594235334537340">"ଧାରକଙ୍କର କ୍ଷମତାକୁ ଅଧିକୃତ କରାଯାଇନାହିଁ"</string>
+    <string name="clh_callFailed_bearer_capability_not_presently_available_txt" msgid="8013567156449692135">"ଧାରକଙ୍କର କ୍ଷମତା ବର୍ତ୍ତମାନ ଉପଲବ୍ଧ ନାହିଁ"</string>
+    <string name="clh_callFailed_service_or_option_not_available_unspecified_txt" msgid="8663374141880847414">"ସେବା କିମ୍ବା ବିକଳ୍ପ ଉପଲବ୍ଧ ନାହିଁ, ଅନିର୍ଦ୍ଦିଷ୍ଟ"</string>
+    <string name="clh_callFailed_bearer_service_not_implemented_txt" msgid="2772484977847973583">"ଧାରକଙ୍କର ସେବାକୁ ପ୍ରୟୋଗ କରାଯାଇନାହିଁ"</string>
+    <string name="clh_callFailed_ACM_equal_to_or_greater_than_ACMmax_txt" msgid="2192709279981159761">"ACM, ACMmax ସହିତ ସମାନ କିମ୍ବା ଠାରୁ ବଡ଼ ହେବ"</string>
+    <string name="clh_callFailed_requested_facility_not_implemented_txt" msgid="406404292085779118">"ଅନୁରୋଧ କରାଯାଇଥିବା ସୁବିଧା ପ୍ରୟୋଗ କରାଯାଇନାହିଁ"</string>
+    <string name="clh_callFailed_only_restricted_digital_information_bearer_capability_is_available_txt" msgid="4817899794531157207">"କେବଳ ପ୍ରତିରୋଧିତ ଡିଜିଟାଲ୍ ସୂଚନା ଧାରକ କ୍ଷମତା ଉପଲବ୍ଧ ଅଛି"</string>
+    <string name="clh_callFailed_service_or_option_not_implemented_unspecified_txt" msgid="2968655784896862505">"ସେବା କିମ୍ବା ବିକଳ୍ପ ପ୍ରୟୋଗ କରାଯାଇନାହିଁ, ଅନିର୍ଦ୍ଦିଷ୍ଟ"</string>
+    <string name="clh_callFailed_invalid_transaction_identifier_value_txt" msgid="3843478518660918642">"କାରବାର ବିହ୍ନଟକର୍ତ୍ତାଙ୍କର ମୂଲ୍ୟ ଅବୈଧ ଅଟେ"</string>
+    <string name="clh_callFailed_user_not_member_of_CUG_txt" msgid="8462852903153938988">"ୟୁଜର୍ CUGର ସଭ୍ୟ ନୁହନ୍ତି"</string>
+    <string name="clh_callFailed_incompatible_destination_txt" msgid="2580750652910253219">"କମ୍ପ୍ୟାଟିବଲ୍‌ନଥିବା ଗନ୍ତବ୍ୟ"</string>
+    <string name="clh_callFailed_invalid_transit_network_selection_txt" msgid="6589916900457111005">"ଚୟନିତ ଅବୈଧ ଟ୍ରାନଜିଟ୍ ନେଟ୍‌ୱର୍କ"</string>
+    <string name="clh_callFailed_semantically_incorrect_message_txt" msgid="2329284157442218683">"ମେସେଜ୍‌ର ଅର୍ଥ ଭୁଲ୍ ଅଟେ"</string>
+    <string name="clh_callFailed_invalid_mandatory_information_txt" msgid="9081556111928912676">"ଅବୈଧ ବାଧ୍ୟତାମୂଳକ ସୂଚନା"</string>
+    <string name="clh_callFailed_message_type_non_existent_or_not_implemented_txt" msgid="2641350895896546715">"ମେସେଜ୍‌ର ପ୍ରକାର ଉପଲବ୍ଧ ନାହିଁ କିମ୍ବା ପ୍ରୟୋଗ କରାଯାଇନାହିଁ"</string>
+    <string name="clh_callFailed_message_type_not_compatible_with_protocol_state_txt" msgid="6598180735494982466">"ପ୍ରୋଟୋକଲ୍‌ର ଅବସ୍ଥା ସହିତ ମେସେଜ୍‌ର ପ୍ରକାର କମ୍ପ୍ୟାଟିବଲ୍ ନୁହେଁ"</string>
+    <string name="clh_callFailed_information_element_non_existent_or_not_implemented_txt" msgid="4725610801664706983">"ସୂଚନା ନାହିଁ କିମ୍ବା ଲାଗୁକରାଯାଇନାହିଁ"</string>
+    <string name="clh_callFailed_conditional_IE_error_txt" msgid="9140031076499566143">"ସର୍ତ୍ତ ସହିତ IE ତ୍ରୁଟି"</string>
+    <string name="clh_callFailed_message_not_compatible_with_protocol_state_txt" msgid="6586005128633024271">"ପ୍ରୋଟୋକଲ୍‌ର ଅବସ୍ଥା ସହିତ ମେସେଜ୍ କମ୍ପ୍ୟାଟିବଲ୍ ନୁହେଁ"</string>
+    <string name="clh_callFailed_recovery_on_timer_expiry_txt" msgid="3680765722923600294">"ଟାଇମର୍‌ର ସମାପ୍ତିରେ ପୁନଃପ୍ରାପ୍ତ କରନ୍ତୁ"</string>
+    <string name="clh_callFailed_protocol_Error_unspecified_txt" msgid="8294907817156524790">"ପ୍ରୋଟୋକଲ୍ ତ୍ରୁଟି, ଅନିର୍ଦ୍ଦିଷ୍ଟ"</string>
+    <string name="clh_callFailed_interworking_unspecified_txt" msgid="8838850798491763729">"ଇଣ୍ଟରୱର୍କିଙ୍ଗ, ନିର୍ଦ୍ଦିଷ୍ଟ କରାଯାଇନଥିବା"</string>
+    <string name="labelCallBarring" msgid="3452870940716226978">"କଲ୍‌ ରୋକନ୍ତୁ"</string>
+    <string name="sum_call_barring_enabled" msgid="6804489690436703488">"ଅନ୍ ଅଛି"</string>
+    <string name="sum_call_barring_disabled" msgid="5900772179198857783">"ଅଫ୍ ଅଛି"</string>
+    <string name="call_barring_baoc" msgid="1199843944333106035">"ସମସ୍ତ ଆଉଟ୍‌ଗୋ‌ଇଙ୍ଗ"</string>
+    <string name="call_barring_baoc_enabled" msgid="8112118391869380361">"ସମସ୍ତ ଆଉଟ୍‌ଗୋ‌ଇଙ୍ଗର ଅବରୋଧକୁ ଅକ୍ଷମ କରିବେ?"</string>
+    <string name="call_barring_baoc_disabled" msgid="7806697133004697974">"ସମସ୍ତ ଆଉଟ୍‌ଗୋ‌ଇଙ୍ଗକୁ ଅବରୋଧ କରିବେ?"</string>
+    <string name="call_barring_baoic" msgid="3162154267825211826">"ଆଉଟ୍‌ଗୋ‌ଇଙ୍ଗ ଅନ୍ତରାଷ୍ଟ୍ରୀୟ"</string>
+    <string name="call_barring_baoic_enabled" msgid="2634377543147258105">"ଆଉଟ୍‌ଗୋ‌ଇଙ୍ଗ ଅନ୍ତରାଷ୍ଟ୍ରୀୟ କଲ୍‌ର ଅବରୋଧକୁ ଅକ୍ଷମ କରିବେ?"</string>
+    <string name="call_barring_baoic_disabled" msgid="5817895648306183464">"ଆଉଟ୍‌ଗୋ‌ଇଙ୍ଗ ଅନ୍ତରାଷ୍ଟ୍ରୀୟ କଲ୍‌କୁ ଅବରୋଧ କରିବେ?"</string>
+    <string name="call_barring_baoicr" msgid="8951699885885742076">"ଆଉଟ୍‌ଗୋ‌ଇଙ୍ଗ ଅନ୍ତରାଷ୍ଟ୍ରୀୟ ରୋମିଙ୍ଗ"</string>
+    <string name="call_barring_baoicr_enabled" msgid="2519630715322138317">"ଆଉଟ୍‌ଗୋ‌ଇଙ୍ଗ ଅନ୍ତରାଷ୍ଟ୍ରୀୟ ରୋମିଙ୍ଗର ଅବରୋଧକୁ ଅକ୍ଷମ କରିବେ?"</string>
+    <string name="call_barring_baoicr_disabled" msgid="5831267468931377699">"ଆଉଟ୍‌ଗୋ‌ଇଙ୍ଗ ଅନ୍ତରାଷ୍ଟ୍ରୀୟ ରୋମିଙ୍ଗକୁ ଅବରୋଧ କରିବେ?"</string>
+    <string name="call_barring_baic" msgid="5272726081458339912">"ସମସ୍ତ ଇନ୍‌କମିଙ୍ଗ"</string>
+    <string name="call_barring_baic_enabled" msgid="2457134916223203380">"ସମସ୍ତ ଇନ୍‌କମିଙ୍ଗ କଲ୍‌ର ଅବରୋଧକୁ ଅକ୍ଷମ କରିବେ?"</string>
+    <string name="call_barring_baic_disabled" msgid="6945604947500275636">"ସମସ୍ତ ଇନ୍‌କମିଙ୍ଗ କଲ୍‌କୁ ଅବରୋଧ କରିବେ?"</string>
+    <string name="call_barring_baicr" msgid="5728784220691481693">"ଇନ୍‌କମିଙ୍ଗ ଅନ୍ତରାଷ୍ଟ୍ରୀୟ ରୋମିଙ୍ଗ"</string>
+    <string name="call_barring_baicr_enabled" msgid="6533336994391716127">"ସମସ୍ତ ଇନ୍‌କମିଙ୍ଗ ଅନ୍ତରାଷ୍ଟ୍ରୀୟ ରୋମିଙ୍ଗର ଅବରୋଧକୁ ଅକ୍ଷମ କରିବେ?"</string>
+    <string name="call_barring_baicr_disabled" msgid="6746329853943256566">"ଇନ୍‌କମିଙ୍ଗ ଅନ୍ତରାଷ୍ଟ୍ରୀୟ ରୋମିଙ୍ଗକୁ ଅବରୋଧ କରିବେ?"</string>
+    <string name="call_barring_deactivate_all" msgid="5269788384941003415">"ସମସ୍ତକୁ ନିଷ୍କ୍ରିୟ କରନ୍ତୁ"</string>
+    <string name="call_barring_deactivate_all_description" msgid="4972365443287257704">"ସମସ୍ତ କଲ୍ ରୋକିବା ସେଟିଙ୍ଗକୁ ନିଷ୍କ୍ରିୟ କରନ୍ତୁ"</string>
+    <string name="call_barring_deactivate_success" msgid="8014685598632000936">"ସମସ୍ତ କଲ୍ ରୋକିବା ନିଷ୍କ୍ରିୟ ହୋ‌ଇଯାଇଛି"</string>
+    <string name="call_barring_change_pwd" msgid="6887420609726284232">"ପାସ୍‌ୱର୍ଡ ବଦଳାନ୍ତୁ"</string>
+    <string name="call_barring_change_pwd_description" msgid="5505087790260233953">"କଲ୍ ରୋକିବା ପାସ୍‌ୱର୍ଡକୁ ବଦଳାନ୍ତୁ"</string>
+    <string name="call_barring_change_pwd_description_disabled" msgid="7630770327645349957">"କଲ୍ ରୋକିବା ପାସ୍‌ୱର୍ଡକୁ ବଦଳାଯାଇପାରିବ ନାହିଁ।"</string>
+    <string name="call_barring_pwd_not_match" msgid="6716711689350314525">"ପାସ୍‌ୱର୍ଡ ମେଳ ହେଉ ନାହିଁ"</string>
+    <string name="call_barring_right_pwd_number" msgid="2902966502520410446">"4 ଅଙ୍କ ବିଶିଷ୍ଟ ଗୋଟିଏ ପାସ୍‌ୱର୍ଡ ପ୍ରବେଶ କରନ୍ତୁ"</string>
+    <string name="call_barring_change_pwd_success" msgid="3278310763742760321">"ପାସ୍‌ୱର୍ଡ ବଦଳାଯାଇଛି"</string>
+    <string name="call_barring_old_pwd" msgid="6080515987320238522">"ପୁରୁଣା ପାସ୍‌ୱର୍ଡ"</string>
+    <string name="call_barring_new_pwd" msgid="7048532299150269547">"ନୂଆ ପାସ୍‌ୱର୍ଡ"</string>
+    <string name="call_barring_confirm_pwd" msgid="1947167278466285411">"ପାସ୍‌ୱର୍ଡ ସୁନିଶ୍ଚିତ କରନ୍ତୁ"</string>
+    <string name="messageCallBarring" msgid="2412123220272136055">"ପାସ୍‌ୱର୍ଡ ପ୍ରବେଶ କରନ୍ତୁ"</string>
+    <string name="call_barring_settings" msgid="80766145008623645">"କଲ୍ ରୋକିବା ସେଟିଙ୍ଗ"</string>
+    <string name="call_barring_deactivate_all_no_password" msgid="920902774366557311">"ସମସ୍ତ କଲ୍ ରୋକିବା ସେଟିଙ୍ଗକୁ ନିଷ୍କ୍ରିୟ କରିବେ?"</string>
+    <string name="supp_service_notification_call_deflected" msgid="9195460512875330926">"କଲ୍ ଅନ୍ୟ ପାଖକୁ ଯିବା ବଦଳରେ ନିଜ ପାଖକୁ ଆସିଯାଇଛି।"</string>
+    <string name="supp_service_notification_call_forwarded" msgid="7818548630812124053">"କଲ୍‌କୁ ଫରୱାର୍ଡ କରାଯାଇଛି।"</string>
+    <string name="supp_service_notification_call_waiting" msgid="789154111899572489">"କଲ୍ ଅପେକ୍ଷାରେ ଅଛି।"</string>
+    <string name="supp_service_clir_suppression_rejected" msgid="1581851661582189045">"ନମ୍ବର୍ ଅବରୋଧକୁ ପ୍ରତ୍ୟାଖ୍ୟାନ କରାଗଲା।"</string>
+    <string name="supp_service_closed_user_group_call" msgid="5761735840904590950">"ନିକଟତମ ୟୁଜର୍ ଗ୍ରୁପ୍ ଦ୍ଵାରା କଲ୍‌ରେ ସୀମିତ।"</string>
+    <string name="supp_service_incoming_calls_barred" msgid="3248813207307882723">"ଇନକମିଙ୍ଗ କଲ୍‌କୁ ରୋକାଯାଇଛି।"</string>
+    <string name="supp_service_outgoing_calls_barred" msgid="1962644621292054081">"ଆଉଟ୍‌ଗୋ‌ଇଙ୍ଗ କଲ୍‌କୁ ରୋକାଯାଇଛି।"</string>
+    <string name="supp_service_call_forwarding_active" msgid="1253134771682248735">"କଲ୍ ଫରୱାର୍ଡିଙ୍ଗ ସକ୍ରିୟ ଅଛି।"</string>
+    <string name="supp_service_additional_call_forwarded" msgid="5228624725214727315">"ଅତିରିକ୍ତ କଲ୍‌କୁ ଫରୱାର୍ଡ କରାଗଲା।"</string>
+    <string name="supp_service_additional_ect_connected" msgid="6396964292513707102">"ସ୍ପଷ୍ଟ କଲ୍ ଟ୍ରାନ୍ସଫର୍ ସମ୍ପୂର୍ଣ୍ଣ ହେଲା।"</string>
+    <string name="supp_service_additional_ect_connecting" msgid="5443373059716058480">"ସ୍ପଷ୍ଟ କଲ୍ ଟ୍ରାନ୍ସଫର୍ ଜାରି ଅଛି।"</string>
+    <string name="supp_service_call_on_hold" msgid="1478976782361795422">"କଲ୍ ହୋଲ୍ଡରେ ଅଛି।"</string>
+    <string name="supp_service_call_resumed" msgid="1656475289958070674">"କଲ୍ ପୁଣି ଆରମ୍ଭ ହେଲା।"</string>
+    <string name="supp_service_deflected_call" msgid="138970419873492166">"କଲ୍‌କୁ ଅନ୍ୟକୁ ପଠାଯାଇଥିବା ବେଳେ ତାହା ନିଜପାଖକୁ ଆସିଯାଇଥିଲା।"</string>
+    <string name="supp_service_forwarded_call" msgid="4509980341645679803">"ଫରୱାର୍ଡ କରାଯାଇଥିବା କଲ୍।"</string>
+    <string name="supp_service_conference_call" msgid="4448616364004466832">"କନଫରେନ୍ସ କଲ୍‌ରେ ଯୋଗ ଦେବା।"</string>
+    <string name="supp_service_held_call_released" msgid="2030677825038709779">"ହୋଲ୍ଡ କରାଯାଇଥିବା କଲ୍‌ରୁ ହୋଲ୍ଡ ହଟାଇଦିଆଗଲା।"</string>
+</resources>

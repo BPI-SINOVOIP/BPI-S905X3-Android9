@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2011 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_label" translatable="false">Cell Broadcast Tests</string>
+    <string name="button_etws_earthquake_type" translatable="false">Send ETWS Earthquake Broadcast</string>
+    <string name="button_etws_tsunami_type" translatable="false">Send ETWS Tsunami Broadcast</string>
+    <string name="button_etws_earthquake_tsunami_type" translatable="false">Send ETWS Earthquake and Tsunami Broadcast</string>
+    <string name="button_etws_other_type" translatable="false">Send ETWS Other Emergency Broadcast</string>
+    <string name="button_etws_cancel_type" translatable="false">Send ETWS Cancel Broadcast</string>
+    <string name="button_etws_test_type" translatable="false">Send ETWS Test Broadcast</string>
+    <string name="button_cmas_pres_alert" translatable="false">Send CDMA CMAS Presidential Alert</string>
+    <string name="button_cmas_extreme_alert" translatable="false">Send CDMA CMAS Extreme Alert</string>
+    <string name="button_cmas_severe_alert" translatable="false">Send CDMA CMAS Severe Alert</string>
+    <string name="button_cmas_amber_alert" translatable="false">Send CDMA CMAS AMBER Alert</string>
+    <string name="button_cmas_monthly_test" translatable="false">Send CDMA CMAS Monthly Test Alert</string>
+    <string name="button_gsm_cmas_pres_alert" translatable="false">Send GSM CMAS Presidential Alert</string>
+    <string name="button_gsm_cmas_extreme_alert" translatable="false">Send GSM CMAS Extreme Alert</string>
+    <string name="button_gsm_cmas_severe_alert" translatable="false">Send GSM CMAS Severe Alert</string>
+    <string name="button_gsm_cmas_amber_alert" translatable="false">Send GSM CMAS AMBER Alert</string>
+    <string name="button_gsm_cmas_monthly_test" translatable="false">Send GSM CMAS Monthly Test Alert</string>
+    <string name="button_gsm_public_safety_message" translatable="false">Send GSM Public Safety Message</string>
+    <string name="button_gsm_7bit_type" translatable="false">Send GSM 7 Bit Test Broadcast</string>
+    <string name="button_gsm_7bit_umts_type" translatable="false">Send UMTS 7 Bit Test Broadcast</string>
+    <string name="button_gsm_7bit_nopadding_type" translatable="false">Send GSM 7 Bit Full Length Broadcast</string>
+    <string name="button_gsm_7bit_nopadding_umts_type" translatable="false">Send UMTS 7 Bit Full Length Broadcast</string>
+    <string name="button_gsm_7bit_multipage_type" translatable="false">Send GSM 7 Bit Multi Page Broadcast</string>
+    <string name="button_gsm_7bit_multipage_umts_type" translatable="false">Send UMTS 7 Bit Multi Page Broadcast</string>
+    <string name="button_gsm_7bit_with_language_type" translatable="false">Send GSM 7 Bit With Language</string>
+    <string name="button_gsm_7bit_with_language_body_gsm_type" translatable="false">Send GSM 7 Bit With Language In Body</string>
+    <string name="button_gsm_7bit_with_language_body_umts_type" translatable="false">Send UMTS 7 Bit With Language</string>
+    <string name="button_gsm_ucs2_type" translatable="false">Send GSM UCS-2 Test Broadcast</string>
+    <string name="button_gsm_ucs2_umts_type" translatable="false">Send UMTS UCS-2 Test Broadcast</string>
+    <string name="button_gsm_ucs2_multipage_umts_type" translatable="false">Send UMTS UCS-2 Multi Page Broadcast</string>
+    <string name="button_gsm_ucs2_with_language_type" translatable="false">Send GSM UCS-2 With Language</string>
+    <string name="button_gsm_ucs2_with_language_umts_type" translatable="false">Send UMTS UCS-2 With Language</string>
+    <string name="button_delay_broadcast" translatable="false">Delay 5 seconds before sending</string>
+    <string name="message_id_label" translatable="false">Message ID:</string>
+    <string name="category_id_label" translatable="false">Category:</string>
+</resources>

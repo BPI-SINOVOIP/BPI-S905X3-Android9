@@ -1,0 +1,29 @@
+-verbose
+-keep @com.android.internal.annotations.VisibleForTesting class *
+-keep public class * extends android.widget.ListView {
+    public *;
+}
+-keep class com.android.server.telecom.TelecomSystem {
+  *;
+}
+-keep class android.telecom.Log {
+  *;
+}
+
+# Keep classes, annotations and members used by Lifecycle. Remove this once aapt2 is enabled
+-keepattributes *Annotation*
+
+-keepclassmembers enum android.arch.lifecycle.Lifecycle$Event {
+    <fields>;
+}
+
+-keep class * implements android.arch.lifecycle.LifecycleObserver {
+}
+
+-keep class * implements android.arch.lifecycle.GeneratedAdapter {
+    <init>(...);
+}
+
+-keepclassmembers class ** {
+    @android.arch.lifecycle.OnLifecycleEvent *;
+}

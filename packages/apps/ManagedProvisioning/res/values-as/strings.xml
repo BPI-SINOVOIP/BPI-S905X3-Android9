@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+/**
+ * Copyright (C) 2014 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_label" msgid="2400883737290705700">"কৰ্মস্থানৰ প্ৰ’ফাইলৰ ছেট আপ"</string>
+    <string name="provisioning_error_title" msgid="6320515739861578118">"ওঁহ!"</string>
+    <string name="setup_work_profile" msgid="1468934631731845267">"কৰ্মস্থানৰ প্ৰ’ফাইল ছেট আপ কৰক"</string>
+    <string name="company_controls_workspace" msgid="2808025277267917221">"আপোনাৰ সংস্থাই এই প্ৰ\'ফাইলটো নিয়ন্ত্ৰণ কৰে আৰু সুৰক্ষিত কৰি ৰাখে। আপুনি আপোনাৰ ডিভাইচত ইয়াৰ বাহিৰে অন্যবিলাক নিয়ন্ত্ৰণ কৰিব পাৰে।"</string>
+    <string name="company_controls_device" msgid="8230957518758871390">"আপোনাৰ সংস্থাই এই ডিভাইচটো নিয়ন্ত্ৰণ কৰিব আৰু সুৰক্ষিত কৰি ৰাখিব।"</string>
+    <string name="the_following_is_your_mdm" msgid="6613658218262376404">"নিম্নোক্ত এপটোৱে এই প্ৰ\'ফাইলটোলৈ যোৱাৰ প্ৰয়োজন:"</string>
+    <string name="the_following_is_your_mdm_for_device" msgid="6717973404364414816">"এই এপটোৱে আপোনাৰ ডিভাইচটো পৰিচালনা কৰিব:"</string>
+    <string name="next" msgid="1004321437324424398">"পৰৱৰ্তী"</string>
+    <string name="setting_up_workspace" msgid="7862472373642601041">"আপোনাৰ কৰ্মস্থানৰ প্ৰ\'ফাইল ছেট আপ কৰি থকা হৈছে…"</string>
+    <string name="admin_has_ability_to_monitor_profile" msgid="4552308842716093826">"আপোনাৰ প্ৰশাসকে এই প্ৰ\'ফাইলৰ লগত জড়িত ছেটিংসমূহ, কৰ্প\'ৰেইট আৰু এপসমূহৰ অনুমতি আৰু ডেটাৰ লগতে নেটৱৰ্কৰ কাৰ্যকলাপ, আপোনাৰ ডিভাইচৰ অৱস্থান, কলৰ ইতিহাস আৰু সম্পৰ্ক সূচীত থকা ব্যক্তিসকলক সন্ধান কৰা ইতিহাস পৰ্যবেক্ষণ আৰু পৰিচালনা কৰিব পাৰিব।<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>অধিক তথ্যৰ লগতে আপোনাৰ প্ৰতিষ্ঠানৰ গোপনীয়তাৰ নীতিসমূহৰ বিষয়ে জানিবলৈ আপোনাৰ প্ৰশাসকৰ সৈতে যোগাযোগ কৰক।"</string>
+    <string name="admin_has_ability_to_monitor_device" msgid="8598573866079474861">"আপোনাৰ প্ৰশাসকে ছেটিংসমূহ, ক’ৰ্পৰেট প্ৰৱেশাধিকাৰ, এপসমূহ, অনুমতিসমূহ আৰু ডিভাইচটোৰ লগত জড়িত অন্যান্য ডেটা পৰ্যবেক্ষণ কৰাৰ লগতে পৰিচালনা কৰিবলৈ সক্ষম। সেই ডেটাবিলাকৰ ভিতৰত নেটৱৰ্কৰ কাৰ্যকলাপ, ডিভাইচৰ অৱস্থানৰ তথ্য, কলৰ ইতিহাস আৰু সম্পৰ্কসূচীত আপুনি কৰা অনুসন্ধানৰ ইতিহাস আদিও অন্তৰ্ভুক্ত।<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>অধিক তথ্যৰ বাবে আৰু লগতে আপোনাৰ প্ৰতিষ্ঠানৰ গোপনীয়তাৰ নীতিসমূহৰ বিষয়ে জানিবলৈ আপোনাৰ প্ৰশাসকৰ সৈতে যোগাযোগ কৰক।"</string>
+    <string name="theft_protection_disabled_warning" msgid="3708092473574738478">"চুৰি প্ৰতিৰোধী সুৰক্ষা সুবিধা ব্যৱহাৰ কৰিবৰ বাবে আপোনাৰ ডিভাইচত পাছৱৰ্ডেৰে সুৰক্ষিত স্ক্ৰীণ ল\'ক থাকিব লাগিব।"</string>
+    <string name="contact_your_admin_for_more_info" msgid="5959191345827902911">"আপোনাৰ প্ৰতিষ্ঠানৰ গোপনীয়তা নীতিসমূহকে ধৰি অধিক তথ্য়ৰ বাবে আপোনাৰ প্ৰশাসকৰ সৈতে যোগাযোগ কৰক।"</string>
+    <string name="learn_more_link" msgid="3012495805919550043">"অধিক জানক"</string>
+    <string name="cancel_setup" msgid="2949928239276274745">"বাতিল কৰক"</string>
+    <string name="ok_setup" msgid="4593707675416137504">"ঠিক আছে"</string>
+    <string name="user_consent_msg" msgid="8820951802130353584">"মই সন্মতি দিছোঁ"</string>
+    <string name="url_error" msgid="5958494012986243186">"এই লিংকটো দেখুওৱাব পৰা নাযায়।"</string>
+    <string name="terms" msgid="8295436105384703903">"চৰ্তসমূহ"</string>
+    <string name="work_profile_info" msgid="5433388376309583996">"কৰ্মস্থানৰ প্ৰ’ফাইলৰ বিষয়ে তথ্য"</string>
+    <string name="managed_device_info" msgid="1529447646526616811">"পৰিচালিত ডিভাইচৰ তথ্য"</string>
+    <string name="default_managed_profile_name" msgid="5370257687074907055">"কৰ্মস্থানৰ প্ৰ\'ফাইল"</string>
+    <string name="default_first_meat_user_name" msgid="7540515892748490540">"মুখ্য ব্যৱহাৰকাৰী"</string>
+    <string name="delete_profile_title" msgid="2841349358380849525">"আগৰে পৰা থকা প্ৰ\'ফাইলটো মচিবনে?"</string>
+    <string name="opening_paragraph_delete_profile" msgid="4913885310795775967">"আপোনাৰ ইতিমধ্যে এটা কৰ্মস্থানৰ প্ৰ\'ফাইল আছে। সেইটোক তলত উল্লেখ কৰা এপটোৱে পৰিচালনা কৰে:"</string>
+    <string name="read_more_delete_profile" msgid="7789171620401666343">"আৰম্ভ কৰাৰ আগতে, "<a href="#read_this_link">"এয়া পঢ়ক"</a>"।"</string>
+    <string name="sure_you_want_to_delete_profile" msgid="6927697984573575564">"আপুনি এই কার্য অব্য়াহত ৰাখিলে এই প্ৰ\'ফাইলৰ সকলো এপ্ আৰু ডেটা মচা হ\'ব।"</string>
+    <string name="delete_profile" msgid="2299218578684663459">"মচক"</string>
+    <string name="cancel_delete_profile" msgid="5155447537894046036">"বাতিল কৰক"</string>
+    <string name="encrypt_device_text_for_profile_owner_setup" msgid="7828515754696057140">"আপোনাৰ কৰ্মস্থানৰ প্ৰ\'ফাইলটো ছেট আপ কৰিবলৈ আপোনাৰ ডিভাইচটো এনক্ৰিপ্ট কৰিব লাগিব। এই কাম সম্পূৰ্ণ হ\'বলৈ কিছু সময়ৰ প্ৰয়োজন হ\'ব পাৰে।"</string>
+    <string name="encrypt_device_text_for_device_owner_setup" msgid="5194673142404735676">"এই ডিভাইচটো ছেট আপ কৰিবলৈ ইয়াক প্ৰথমে এনক্ৰিপ্ট কৰিব লাগিব। এই কাম সম্পূৰ্ণ হ\'বলৈ কিছু সময়ৰ প্ৰয়োজন হ\'ব পাৰে।"</string>
+    <string name="encrypt_this_device_question" msgid="8719916619866892601">"এই ডিভাইচটো এনক্ৰিপ্ট কৰিবনে?"</string>
+    <string name="encrypt" msgid="1749320161747489212">"এনক্ৰিপ্ট কৰক"</string>
+    <string name="continue_provisioning_notify_title" msgid="5191449100153186648">"এনক্ৰিপশ্বন সম্পূৰ্ণ হ\'ল"</string>
+    <string name="continue_provisioning_notify_text" msgid="1066841819786425980">"আপোনাৰ কৰ্মস্থানৰ প্ৰ\'ফাইলৰ ছেটিং কাৰ্য অব্যাহত ৰাখিবলৈ ইয়াত টিপক"</string>
+    <string name="managed_provisioning_error_text" msgid="7063621174570680890">"কৰ্মস্থানৰ প্ৰ\'ফাইল ছেটআপ কৰিব পৰা নগ\'ল। আপোনাৰ আইটি বিভাগৰ সৈতে যোগাযোগ কৰক বা পিছত পুনৰ চেষ্টা কৰক।"</string>
+    <string name="cant_add_work_profile" msgid="9217268909964154934">"কৰ্মস্থানৰ প্ৰ\'ফাইল যোগ কৰিব নোৱাৰি"</string>
+    <string name="cant_replace_or_remove_work_profile" msgid="7861054306792698290">"কৰ্মস্থানৰ প্ৰ\'ফাইল আঁতৰাব বা সলনি কৰিব নোৱাৰি"</string>
+    <string name="work_profile_cant_be_added_contact_admin" msgid="4740182491195894659">"এই ডিভাইচটোত কোনো কৰ্মস্থানৰ প্ৰ\'ফাইল যোগ কৰিব নোৱাৰি। আপোনাৰ কিবা প্ৰশ্ন থাকিলে, আপোনাৰ প্ৰশাসকৰ সৈতে যোগাযোগ কৰক।"</string>
+    <string name="change_device_launcher" msgid="4523563368433637980">"ডিভাইচ লঞ্চাৰ সলনি কৰক"</string>
+    <string name="launcher_app_cant_be_used_by_work_profile" msgid="3524366082000739743">"আপোনাৰ কৰ্মস্থানৰ প্ৰ\'ফাইলে এই লঞ্চাৰ এপটো ব্যৱহাৰ কৰিব নোৱাৰে"</string>
+    <string name="cancel_provisioning" msgid="3408069559452653724">"বাতিল কৰক"</string>
+    <string name="pick_launcher" msgid="4257084827403983845">"ঠিক আছে"</string>
+    <string name="user_setup_incomplete" msgid="6494920045526591079">"ব্যৱহাৰকাৰীৰ ছেট আপ কার্য সম্পূর্ণ নহ\'ল"</string>
+    <string name="default_owned_device_username" msgid="3915120202811807955">"কৰ্মস্থানৰ ডিভাইচৰ ব্যৱহাৰকাৰী"</string>
+    <string name="setup_work_device" msgid="6003988351437862369">"কৰ্মস্থানৰ ডিভাইচ ছেট আপ কৰি থকা হৈছে…"</string>
+    <string name="progress_data_process" msgid="1707745321954672971">"ডেটা ছেট আপ প্ৰক্ৰিয়া চলি আছে…"</string>
+    <string name="progress_connect_to_wifi" msgid="472251154628863539">"ৱাই-ফাইৰ লগত সংযোগ কৰি থকা হৈছে…"</string>
+    <string name="progress_connect_to_mobile_network" msgid="3852054186860657088">"ম\'বাইল নেটৱৰ্কৰ সৈতে সংযোগ কৰি থকা হৈছে…"</string>
+    <string name="progress_download" msgid="3522436271691064624">"প্ৰশাসক এপ্ ডাউনল\'ড কৰি থকা হৈছে…"</string>
+    <string name="progress_install" msgid="2258045670385866183">"প্ৰশাসক এপ্ ইনষ্টল কৰি থকা হৈছে…"</string>
+    <string name="progress_delete_non_required_apps" msgid="7633458399262691256">"অপ্ৰয়োজনীয় ছিষ্টেম এপসমূহ আঁতৰাই থকা হৈছে…"</string>
+    <string name="progress_finishing_touches" msgid="9037776404089697198">"অন্তিম পৰ্যায়ৰ কামবোৰ কৰি থকা হৈছে…"</string>
+    <string name="progress_set_owner" msgid="8214062820093757961">"ডিভাইচৰ গৰাকী ছেট আপ কৰি থকা হৈছে…"</string>
+    <string name="progress_initialize" msgid="1104643492713424939">"ডিভাইচটো আৰম্ভ কৰি থকা হৈছে…"</string>
+    <string name="device_doesnt_allow_encryption_contact_admin" msgid="8297141458771829628">"এই ডিভাইচটোৱে ছেট আপৰ বাবে দৰকাৰী এনক্ৰিপশ্বন কৰিবলৈ নিদিয়ে। সহায়ৰ বাবে আপোনাৰ প্ৰশাসকৰ সৈতে যোগাযোগ কৰক।"</string>
+    <string name="stop_setup_reset_device_question" msgid="7547191251522623210">"ছেট আপ বন্ধ কৰি ডিভাইচটো ৰিছেট কৰিবনে?"</string>
+    <string name="this_will_reset_take_back_first_screen" msgid="4623290347188404725">"এই কাৰ্যই আপোনাৰ ডিভাইচটো ৰিছেট কৰিব আৰু আপোনাক আৰম্ভণিৰ স্ক্ৰীণখনলৈ লৈ যাব"</string>
+    <string name="device_owner_cancel_message" msgid="2529288571742712065">"ছেট আপ কার্য বন্ধ কৰেনে আৰু আপোনাৰ ডিভাইচটোৰ ডেটা মচেনে?"</string>
+    <string name="device_owner_cancel_cancel" msgid="1052951540909389275">"বাতিল কৰক"</string>
+    <string name="device_owner_error_ok" msgid="2002250763093787051">"ঠিক আছে"</string>
+    <string name="reset" msgid="6467204151306265796">"ৰিছেট কৰক"</string>
+    <string name="cant_set_up_profile" msgid="4341825293970158436">"প্ৰ\'ফাইল ছেট আপ কৰিব নোৱাৰি"</string>
+    <string name="cant_set_up_device" msgid="4120090138983350714">"ডিভাইচ ছেট আপ কৰিব নোৱাৰি"</string>
+    <string name="couldnt_set_up_device" msgid="60699158233724802">"ডিভাইচ ছেট আপ কৰিব পৰা নগ\'ল। সহায়ৰ বাবে আপোনাৰ প্ৰশাসকৰ সৈতে যোগাযোগ কৰক।"</string>
+    <string name="contact_your_admin_for_help" msgid="8045606258802719235">"সহায়ৰ বাবে আপোনাৰ প্ৰশাসকৰ সৈতে যোগাযোগ কৰক"</string>
+    <string name="device_already_set_up" msgid="507881934487140294">"ডিভাইচটো ইতিমধ্যে ছেট আপ কৰি ৰখা হৈছে"</string>
+    <string name="device_owner_error_wifi" msgid="4256310285761332378">"ৱাই-ফাইৰ লগত সংযোগ কৰিব পৰা নগ\'ল"</string>
+    <string name="device_has_reset_protection_contact_admin" msgid="1221351721899290155">"আপোনাৰ ডিভাইচটোত ৰিছেট সুৰক্ষা সুবিধা অন হৈ আছে। সহায়ৰ বাবে আপোনাৰ প্ৰশাসকৰ সৈতে যোগাযোগ কৰক।"</string>
+    <string name="frp_clear_progress_title" msgid="8628074089458234965">"মচি থকা হৈছে"</string>
+    <string name="frp_clear_progress_text" msgid="1740164332830598827">"অনুগ্রহ কৰি অপেক্ষা কৰক..."</string>
+    <string name="device_owner_error_hash_mismatch" msgid="7256273143549784838">"চ্চেকছাম আসোঁৱাহৰ বাবে প্ৰশাসক এপটো ব্যৱহাৰ কৰিব পৰা নগ\'ল। সহায়ৰ বাবে আপোনাৰ প্ৰশাসকৰ সৈতে যোগাযোগ কৰক।"</string>
+    <string name="device_owner_error_download_failed" msgid="4520111971592657116">"এডমিন এপটো ডাউনল\'ড কৰিব পৰা নগ\'ল"</string>
+    <string name="device_owner_error_package_invalid" msgid="1096901016820157695">"প্ৰশাসক এপটো ব্যৱহাৰ কৰিব নোৱাৰি। এপটোত থাকিবলগীয়া কোনো উপাদান নাই বা ই ব্যৱহাৰযোগ্য হৈ থকা নাই। সহায়ৰ বাবে আপোনাৰ প্ৰশাসকৰ সৈতে যোগাযোগ কৰক।"</string>
+    <string name="device_owner_error_installation_failed" msgid="684566845601079360">"এডমিন এপটো ইনষ্টল কৰিব পৰা নগ\'ল"</string>
+    <string name="profile_owner_cancel_message" msgid="6868736915633023477">"ছেট আপ কার্য বন্ধ কৰিবনে?"</string>
+    <string name="profile_owner_cancel_cancel" msgid="4408725524311574891">"নহয়"</string>
+    <string name="profile_owner_cancel_ok" msgid="5951679183850766029">"হয়"</string>
+    <string name="profile_owner_cancelling" msgid="5679573829145112822">"বাতিল কৰি থকা হৈছে…"</string>
+    <string name="work_profile_setup_later_title" msgid="9069148190226279892">"প্ৰ\'ফাইল ছেট আপ কার্য বন্ধ কৰিবনে?"</string>
+    <string name="work_profile_setup_later_message" msgid="122069011117225292">"আপুনি পিছত আপোনাৰ প্ৰতিষ্ঠানৰ ডিভাইচ পৰিচালনা এপত আপোনাৰ কৰ্মস্থানৰ প্ৰ\'ফাইল ছেট আপ কৰিব পাৰিব"</string>
+    <string name="continue_button" msgid="7177918589510964446">"অব্যাহত ৰাখক"</string>
+    <string name="work_profile_setup_stop" msgid="6772128629992514750">"বন্ধ কৰক"</string>
+    <string name="dismiss" msgid="9009534756748565880">"অগ্ৰাহ্য কৰক"</string>
+    <string name="profile_owner_info" msgid="8975319972303812298">"আপুনি এটা কৰ্মস্থানৰ প্ৰ\'ফাইল সৃষ্টি কৰিবলৈ লৈছে যাক আপোনাৰ প্ৰতিষ্ঠানে পৰিচালনা কৰাৰ লগতে পৰ্যবেক্ষণও কৰিব। চৰ্ত প্ৰযোজ্য হ\'ব।"</string>
+    <string name="profile_owner_info_with_terms_headers" msgid="7373591910245655373">"আপুনি এটা কৰ্মস্থানৰ প্ৰ\'ফাইল সৃষ্টি কৰিবলৈ লৈছে যাক আপোনাৰ প্ৰতিষ্ঠানে পৰিচালনা কৰাৰ লগতে পৰ্যবেক্ষণও কৰিব। <xliff:g id="TERMS_HEADERS">%1$s</xliff:g>ৰ চৰ্ত প্ৰযোজ্য হ\'ব।"</string>
+    <string name="profile_owner_info_comp" msgid="9190421701126119142">"আপোনাৰ কৰ্মস্থান সম্পৰ্কীয় এপসমূহৰ বাবে এটা প্ৰ\'ফাইল সৃষ্টি কৰা হ\'ব। আপোনাৰ প্ৰতিষ্ঠানে এই প্ৰ\'ফাইলটো আৰু বাকী ডিভাইচটো পৰিচালনা কৰাৰ লগতে পৰ্যবেক্ষণও কৰিব। চৰ্ত প্ৰযোজ্য হ\'ব।"</string>
+    <string name="profile_owner_info_with_terms_headers_comp" msgid="2012766614492554556">"আপোনাৰ কৰ্মস্থান সম্পৰ্কীয় এপসমূহৰ বাবে এটা প্ৰ\'ফাইল সৃষ্টি কৰা হ\'ব। আপোনাৰ প্ৰতিষ্ঠানে এই প্ৰ\'ফাইল আৰু বাকী ডিভাইচৰ প্ৰ\'ফাইল পৰিচালনা কৰাৰ লগতে পৰ্যবেক্ষণও কৰিব। <xliff:g id="TERMS_HEADERS">%1$s</xliff:g>ৰ চৰ্ত প্ৰযোজ্য হ\'ব।"</string>
+    <string name="device_owner_info" msgid="3716661456037934467">"<xliff:g id="YOUR_ORGANIZATION">%1$s</xliff:g>এ এই ডিভাইচটো পৰিচালনা কৰিব, পৰ্যবেক্ষণ কৰিব আৰু সুৰক্ষিত কৰি ৰাখিব। চৰ্ত প্ৰযোজ্য হ\'ব। <xliff:g id="VIEW_TERMS">%2$s</xliff:g>"</string>
+    <string name="device_owner_info_with_terms_headers" msgid="1254243288669282977">"<xliff:g id="YOUR_ORGANIZATION">%1$s</xliff:g>এ এই ডিভাইচটো পৰিচালনা কৰিব, পৰ্যবেক্ষণ কৰিব আৰু সুৰক্ষিত কৰি ৰাখিব। <xliff:g id="TERMS_HEADERS">%2$s</xliff:g>ৰ চৰ্তাৱলী প্ৰযোজ্য হ\'ব। <xliff:g id="VIEW_TERMS">%3$s</xliff:g>"</string>
+    <string name="link_isnt_secure_and_cant_be_opened_until_device_setup_finished" msgid="1604497932637832657">"এই লিংকটো সুৰক্ষিত নহয় আৰু ইয়াক ডিভাইচটোৰ ছেট আপ সম্পূৰ্ণ নোহোৱালৈকে খুলিব পৰা নাযাব: <xliff:g id="LINK_RAW_TEST">%1$s</xliff:g>"</string>
+    <string name="contact_device_provider" msgid="9100405424740726066">"আপোনাৰ কিবা প্ৰশ্ন থাকিলে <xliff:g id="ORGANIZATIONS_ADMIN">%1$s</xliff:g>ৰ সৈতে যোগাযোগ কৰক।"</string>
+    <string name="if_questions_contact_admin" msgid="6147462485780267795">"আপোনাৰ কিবা প্ৰশ্ন থাকিলে, আপোনাৰ প্ৰতিষ্ঠানৰ প্ৰশাসকৰ সৈতে যোগাযোগ কৰক।"</string>
+    <string name="setup_isnt_finished_contact_admin" msgid="235011880559615998">"ছেট আপ সম্পূৰ্ণ হোৱা নাই। সহায়ৰ বাবে আপোনাৰ প্ৰশাসকৰ সৈতে যোগাযোগ কৰক।"</string>
+    <string name="for_help_contact_admin" msgid="8687037236275184653">"সহায়ৰ বাবে আপোনাৰ প্ৰশাসকৰ সৈতে যোগাযোগ কৰক"</string>
+    <string name="organization_admin" msgid="1595001081906025683">"প্ৰতিষ্ঠানৰ প্ৰশাসক"</string>
+    <string name="your_org_app_used" msgid="5336414768293540831">"<xliff:g id="YOUR_ORGANIZATION">%1$s</xliff:g>এ এই ডিভাইচটো তলত উল্লেখ কৰা এপটো ব্যৱহাৰ কৰি পৰিচালনা আৰু পৰ্যবেক্ষণ কৰিব:"</string>
+    <string name="your_organization_beginning" msgid="5952561489910967255">"আপোনাৰ প্ৰতিষ্ঠান"</string>
+    <string name="your_organization_middle" msgid="8288538158061644733">"আপোনাৰ প্ৰতিষ্ঠান"</string>
+    <string name="view_terms" msgid="7230493092383341605">"চৰ্তসমূহ চাওক"</string>
+    <string name="accept_and_continue" msgid="1632679734918410653">"গ্ৰহণ কৰি অব্যাহত ৰাখক"</string>
+    <string name="close" msgid="7208600934846389439">"বন্ধ কৰক"</string>
+    <string name="set_up_your_device" msgid="1896651520959894681">"আপোনাৰ ডিভাইচটো ছেট আপ কৰক"</string>
+    <string name="info_anim_title_0" msgid="3285414600215959704">"আপুনি কেনেকৈ কাম কৰে তাক সলনি কৰক"</string>
+    <string name="info_anim_title_1" msgid="2657512519467714760">"আপোনাৰ কর্ম আৰু ব্যক্তিগত জীৱন সুকীয়া কৰি ৰাখক"</string>
+    <string name="one_place_for_work_apps" msgid="2595597562302953960">"কৰ্মস্থানৰ এপবোৰৰ বাবে একেখন ঠাই"</string>
+    <string name="info_anim_title_2" msgid="4629781398620470204">"আপোনাৰ কাম সম্পন্ন হ\'লে অফ কৰক"</string>
+    <string name="provisioning" msgid="4512493827019163451">"প্ৰ\'ভিজনিং"</string>
+    <string name="copying_certs" msgid="5697938664953550881">"চিএ প্ৰমাণপত্ৰসমূহ ছেট আপ কৰি থকা হৈছে"</string>
+    <string name="setup_profile" msgid="5573950582159698549">"আপোনাৰ প্ৰ\'ফাইল ছেট আপ কৰক"</string>
+    <string name="profile_benefits_description" msgid="758432985984252636">"কৰ্মস্থানৰ প্ৰ\'ফাইল ব্যৱহাৰ কৰি আপুনি কৰ্মস্থান সম্পৰ্কীয় ডেটা আৰু ব্যক্তিগত ডেটাক সুকীয়াকৈ ৰাখিব পাৰে"</string>
+    <string name="comp_profile_benefits_description" msgid="379837075456998273">"কৰ্মস্থানৰ প্ৰ\'ফাইল ব্যৱহাৰ কৰি আপুনি কৰ্মস্থান সম্পৰ্কীয় এপবোৰক একেঠাইতে ৰাখিব পাৰে"</string>
+    <string name="setup_profile_encryption" msgid="5241291404536277038">"আপোনাৰ ডিভাইচৰ ছেট আপ প্ৰক্ৰিয়া। এনক্ৰিপশ্বন"</string>
+    <string name="setup_profile_progress" msgid="7742718527853325656">"আপোনাৰ প্ৰ\'ফাইলৰ ছেট আপ প্ৰক্ৰিয়া। অগ্ৰগতি দেখুওৱা হৈছে"</string>
+    <string name="setup_device" msgid="6725265673245816366">"আপোনাৰ ডিভাইচ ছেটআপ কৰক"</string>
+    <string name="setup_device_encryption" msgid="7852944465414197103">"আপোনাৰ ডিভাইচৰ ছেট আপ প্ৰক্ৰিয়া। এনক্ৰিপশ্বন"</string>
+    <string name="setup_device_progress" msgid="7035335208571175393">"আপোনাৰ ডিভাইচৰ ছেট আপ প্ৰক্ৰিয়া। অগ্ৰগতি দেখুওৱা হৈছে"</string>
+    <string name="learn_more_label" msgid="2723716758654655009">"অধিক জানক বুটাম"</string>
+    <string name="mdm_icon_label" msgid="3399134595549660561">"<xliff:g id="ICON_LABEL">%1$s</xliff:g> আইকন"</string>
+    <string name="section_heading" msgid="3924666803774291908">"<xliff:g id="SECTION_HEADING">%1$s</xliff:g> খণ্ডৰ শিৰোনাম।"</string>
+    <string name="section_content" msgid="8875502515704374394">"<xliff:g id="SECTION_HEADING">%1$s</xliff:g> খণ্ডৰ সমল: <xliff:g id="SECTION_CONTENT">%2$s</xliff:g>"</string>
+    <string name="expand" msgid="37188292156131304">"বিস্তাৰ কৰক"</string>
+    <string name="collapse" msgid="7817530505064432580">"সংকুচিত কৰক"</string>
+    <string name="access_list_of_links" msgid="7094123315959323372">"লিংকৰ তালিকা এখন পাওক"</string>
+    <string name="access_links" msgid="7991363727326168600">"মেনু খোলাৰ লিংকবোৰ"</string>
+    <string name="access_terms" msgid="1982500872249763745">"স্ক্ৰিণ খোলাৰ শব্দ…"</string>
+    <string name="read_terms" msgid="1745011123626640728">"চৰ্তসমূহ পঢ়ক"</string>
+    <string name="close_list" msgid="9053538299788717597">"তালিকা বন্ধ কৰক"</string>
+    <string name="cancel_setup_and_factory_reset_dialog_title" msgid="5416045931532004811">"ছেট আপ আৰু ফেক্টৰী ৰিছেট কার্য বন্ধ কৰিবনে?"</string>
+    <string name="cancel_setup_and_factory_reset_dialog_msg" msgid="808442439937994485">"ছেট আপ কার্য বন্ধ কৰিলে আপোনাৰ ডিভাইচটো ফেক্টৰী ৰিছেট কৰা হ\'ব আৰু আপোনাক আৰম্ভণিৰ স্ক্ৰীণলৈ লৈ যোৱা হ\'ব।"</string>
+    <string name="cancel_setup_and_factory_reset_dialog_cancel" msgid="2810966091829264727">"বাতিল কৰক"</string>
+    <string name="cancel_setup_and_factory_reset_dialog_ok" msgid="7168008267496150529">"ডিভাইচটো ৰিছেট কৰক"</string>
+    <string name="join_two_items" msgid="6110273439759895837">"<xliff:g id="FIRST_ITEM">%1$s</xliff:g> আৰু <xliff:g id="SECOND_ITEM">%2$s</xliff:g>"</string>
+    <string name="join_many_items_last" msgid="7469666990442158802">"<xliff:g id="ALL_BUT_LAST_ITEM">%1$s</xliff:g>, আৰু <xliff:g id="LAST_ITEM_0">%2$s</xliff:g>"</string>
+    <string name="join_many_items_first" msgid="8365482726853276608">"<xliff:g id="FIRST_ITEM">%1$s</xliff:g>, <xliff:g id="ALL_BUT_FIRST_AND_LAST_ITEM">%2$s</xliff:g>"</string>
+    <string name="join_many_items_middle" msgid="8569294838319639963">"<xliff:g id="ADDED_ITEM">%1$s</xliff:g>, <xliff:g id="REST_OF_ITEMS">%2$s</xliff:g>"</string>
+    <string name="take_a_few_minutes" msgid="6282806501305322838">"এই কামত কেইবামিনিটও সময় লাগিব পাৰে"</string>
+    <string name="work_profile_description" msgid="8524116010729569213">"আপোনাৰ কৰ্মস্থানৰ এপসমূহ এই প্ৰ\'ফাইলত ৰখা হ\'ব আপোনাৰ প্ৰতিষ্ঠানে ইয়াক পৰিচালনা কৰিব"</string>
+    <string name="device_owner_description" msgid="168013145812679664">"আপোনাৰ প্ৰতিষ্ঠানে এই ডিভাইচটো পৰিচালনা কৰিব আৰু সুৰক্ষিত কৰি ৰাখিব।"</string>
+</resources>

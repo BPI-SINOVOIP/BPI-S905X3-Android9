@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2018 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:phone="http://schemas.android.com/apk/res/com.android.phone"
+     android:title="@string/call_barring_settings">
+
+    <!-- Note for all com.android.phone.EditPinPreference objects
+
+         The last several attributes are for use with the EditText field
+         in the dialog. These attributes are forwarded to that field
+         when the edittext is created. The attributes include:
+           1. android:singleLine
+           2. android:autoText -->
+
+    <!-- All outgoing -->
+    <com.android.phone.CallBarringEditPreference
+        android:key="button_baoc_key"
+        android:title="@string/call_barring_baoc"
+        android:persistent="false"
+        android:summaryOn="@string/sum_call_barring_enabled"
+        android:summaryOff="@string/sum_call_barring_disabled"
+        android:dialogTitle="@string/call_barring_baoc"
+        phone:dialogMessageEnabledNoPwd="@string/call_barring_baoc_enabled"
+        phone:dialogMessageDisabledNoPwd="@string/call_barring_baoc_disabled"
+        phone:facility="AO"
+        android:singleLine="true"
+        android:autoText="false"/>
+
+    <!-- Outgoing international -->
+    <com.android.phone.CallBarringEditPreference
+        android:key="button_baoic_key"
+        android:title="@string/call_barring_baoic"
+        android:persistent="false"
+        android:summaryOn="@string/sum_call_barring_enabled"
+        android:summaryOff="@string/sum_call_barring_disabled"
+        android:dialogTitle="@string/call_barring_baoic"
+        phone:dialogMessageEnabledNoPwd="@string/call_barring_baoic_enabled"
+        phone:dialogMessageDisabledNoPwd="@string/call_barring_baoic_disabled"
+        phone:facility="OI"
+        android:dependency="button_baoc_key"
+        android:singleLine="true"
+        android:autoText="false"/>
+
+    <!-- Outgoing international roaming -->
+    <com.android.phone.CallBarringEditPreference
+        android:key="button_baoicxh_key"
+        android:title="@string/call_barring_baoicr"
+        android:persistent="false"
+        android:summaryOn="@string/sum_call_barring_enabled"
+        android:summaryOff="@string/sum_call_barring_disabled"
+        android:dialogTitle="@string/call_barring_baoicr"
+        phone:dialogMessageEnabledNoPwd="@string/call_barring_baoicr_enabled"
+        phone:dialogMessageDisabledNoPwd="@string/call_barring_baoicr_disabled"
+        phone:facility="OX"
+        android:dependency="button_baoc_key"
+        android:singleLine="true"
+        android:autoText="false"/>
+
+    <!-- All incoming -->
+    <com.android.phone.CallBarringEditPreference
+        android:key="button_baic_key"
+        android:title="@string/call_barring_baic"
+        android:persistent="false"
+        android:summaryOn="@string/sum_call_barring_enabled"
+        android:summaryOff="@string/sum_call_barring_disabled"
+        android:dialogTitle="@string/call_barring_baic"
+        phone:dialogMessageEnabledNoPwd="@string/call_barring_baic_enabled"
+        phone:dialogMessageDisabledNoPwd="@string/call_barring_baic_disabled"
+        phone:facility="AI"
+        android:singleLine="true"
+        android:autoText="false"/>
+
+    <!-- Incoming international roaming -->
+    <com.android.phone.CallBarringEditPreference
+        android:key="button_baicr_key"
+        android:title="@string/call_barring_baicr"
+        android:persistent="false"
+        android:summaryOn="@string/sum_call_barring_enabled"
+        android:summaryOff="@string/sum_call_barring_disabled"
+        android:dialogTitle="@string/call_barring_baicr"
+        phone:dialogMessageEnabledNoPwd="@string/call_barring_baicr_enabled"
+        phone:dialogMessageDisabledNoPwd="@string/call_barring_baicr_disabled"
+        phone:facility="IR"
+        android:dependency="button_baic_key"
+        android:singleLine="true"
+        android:autoText="false"/>
+
+    <!-- Disable all -->
+    <com.android.phone.CallBarringDeselectAllPreference
+        android:key="button_ba_all_key"
+        android:title="@string/call_barring_deactivate_all"
+        android:persistent="false"
+        android:dialogTitle="@string/call_barring_deactivate_all"
+        android:summary="@string/call_barring_deactivate_all_description"/>
+
+    <!-- Change password -->
+    <com.android.phone.settings.fdn.EditPinPreference
+        android:key="button_change_pw_key"
+        android:title="@string/call_barring_change_pwd"
+        android:dialogTitle="@string/call_barring_change_pwd"
+        android:summary="@string/call_barring_change_pwd_description"
+        android:persistent="false"/>
+</PreferenceScreen>

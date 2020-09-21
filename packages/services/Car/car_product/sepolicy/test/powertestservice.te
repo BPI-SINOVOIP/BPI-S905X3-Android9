@@ -1,0 +1,9 @@
+type powertestservice, domain, coredomain;
+type powertestservice_exec, exec_type, file_type;
+
+init_daemon_domain(powertestservice)
+
+binder_use(powertestservice)
+binder_call(powertestservice, carservice_app)
+
+allow powertestservice carservice_service:service_manager find;

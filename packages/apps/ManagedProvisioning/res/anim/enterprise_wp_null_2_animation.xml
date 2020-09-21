@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <set
+        android:ordering="sequentially" >
+        <objectAnimator
+            android:duration="266"
+            android:propertyName="scaleX"
+            android:valueFrom="1.0"
+            android:valueTo="1.0"
+            android:valueType="floatType"
+            android:interpolator="@android:interpolator/linear" />
+        <objectAnimator
+            android:duration="150"
+            android:propertyName="scaleX"
+            android:valueFrom="1.0"
+            android:valueTo="0.98"
+            android:valueType="floatType"
+            android:interpolator="@interpolator/enterprise_wp_animation_interpolator_11" />
+        <objectAnimator
+            android:duration="200"
+            android:propertyName="scaleX"
+            android:valueFrom="0.98"
+            android:valueTo="1.0"
+            android:valueType="floatType"
+            android:interpolator="@interpolator/enterprise_wp_animation_interpolator_11" />
+    </set>
+    <set
+        android:ordering="sequentially" >
+        <objectAnimator
+            android:duration="266"
+            android:propertyName="scaleY"
+            android:valueFrom="1.0"
+            android:valueTo="1.0"
+            android:valueType="floatType"
+            android:interpolator="@android:interpolator/linear" />
+        <objectAnimator
+            android:duration="150"
+            android:propertyName="scaleY"
+            android:valueFrom="1.0"
+            android:valueTo="0.98"
+            android:valueType="floatType"
+            android:interpolator="@interpolator/enterprise_wp_animation_interpolator_11" />
+        <objectAnimator
+            android:duration="200"
+            android:propertyName="scaleY"
+            android:valueFrom="0.98"
+            android:valueTo="1.0"
+            android:valueType="floatType"
+            android:interpolator="@interpolator/enterprise_wp_animation_interpolator_11" />
+    </set>
+</set>

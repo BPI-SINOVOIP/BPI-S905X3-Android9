@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  Copyright (C) 2016 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+ -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name" msgid="963247385700831716">"ଷ୍ଟୋରେଜ୍‌ ମ୍ୟାନେଜର୍"</string>
+    <string name="cancel" msgid="7021218262867558825">"କ୍ୟାନ୍ସଲ୍‍"</string>
+    <string name="storage_menu_free" msgid="1878247401436882778">"ଜାଗା ଖାଲି କରନ୍ତୁ"</string>
+    <string name="deletion_helper_title" msgid="3526170325226275927">"ଆଇଟମ୍‌‌ କାଢ଼ନ୍ତୁ"</string>
+    <string name="deletion_helper_app_summary" msgid="4904590040180275237">"<xliff:g id="DAYS">%1$d</xliff:g> ଦିନ ପୂର୍ବେ"</string>
+    <!-- no translation found for deletion_helper_app_summary_item_size (3770886184921427886) -->
+    <skip />
+    <string name="deletion_helper_app_summary_never_used" msgid="2695210890063792461">"ଗତ ବର୍ଷ ବ୍ୟବହାର ହୋଇନାହିଁ"</string>
+    <string name="deletion_helper_app_summary_unknown_used" msgid="8576377054665785558">"ଶେଷଥର କେବେ ବ୍ୟବହାର ହୋଇଛି କହି ହେଉନାହିଁ"</string>
+    <string name="deletion_helper_free_button" msgid="1760529213407548661">"<xliff:g id="FREEABLE">%1$s</xliff:g> ଜାଗା ଖାଲି କରନ୍ତୁ"</string>
+    <string name="deletion_helper_photos_title" msgid="2602723121486729972">"ବ୍ୟାକଅପ୍‌ ନିଆଯାଇଥିବା ଫଟୋ ଓ ଭିଡିଓ"</string>
+    <string name="deletion_helper_photos_age_summary" msgid="1820871709448371984">"30 ଦିନରୁ ଅଧିକ ପୁରୁଣା"</string>
+    <!-- no translation found for deletion_helper_photos_summary (3194825464552700889) -->
+    <skip />
+    <string name="deletion_helper_downloads_title" msgid="8002058095019254694">"ଡାଉନଲୋଡ୍‌ଗୁଡ଼ିକ"</string>
+    <!-- no translation found for deletion_helper_downloads_category_summary (8545989355108311347) -->
+    <skip />
+    <!-- no translation found for deletion_helper_downloads_summary_empty (3988054032360371887) -->
+    <skip />
+    <string name="deletion_helper_clear_dialog_title" msgid="9169670752655850967">"ଜାଗା ଖାଲି କରନ୍ତୁ"</string>
+    <string name="deletion_helper_clear_dialog_message" msgid="5196490478187120700">"ଆପଣଙ୍କ ଡିଭାଇସ୍‌ରୁ <xliff:g id="CLEARABLE_BYTES">%1$s</xliff:g> କଣ୍ଟେଣ୍ଟ ଡିଲିଟ୍‌ କରାହେବ"</string>
+    <string name="deletion_helper_clear_dialog_remove" msgid="863575755467985516">"ଜାଗା ଖାଲି କରନ୍ତୁ"</string>
+    <string name="deletion_helper_upsell_title" msgid="8512037674466762017">"ସ୍ଵଚାଳିତଭାବେ ଷ୍ଟୋରେଜ୍‌ ପରିଚାଳନା କରିବେ?"</string>
+    <string name="deletion_helper_upsell_summary" msgid="2301597713694474407">"ଏବେ <xliff:g id="USED">%1$s</xliff:g> ଖାଲି ହୋଇଗଲା। ଷ୍ଟୋରେଜ୍‌ ମ୍ୟାନେଜର୍‌କୁ ଆପଣଙ୍କ ଡିଭାଇସ୍‌ରୁ ବ୍ୟାକଅପ୍‌ ନେଇଥିବା କଣ୍ଟେଣ୍ଟକୁ ସ୍ଵଚାଳିତଭାବେ ଡିଲିଟ୍‌ କରି ଜାଗା ଖାଲି କରିବାକୁ ଦେବେ?"</string>
+    <string name="deletion_helper_upsell_cancel" msgid="7084167642850053889">"ନାହିଁ, ଥାଉ"</string>
+    <string name="deletion_helper_upsell_activate" msgid="7157360257760895976">"ଅନ୍ କରନ୍ତୁ"</string>
+    <string name="deletion_helper_apps_group_title" msgid="2578309121350341258">"କ୍ଵଚିତ୍‌ ବ୍ୟବହାର ହୋଇଥିବା ଆପ୍‌"</string>
+    <!-- no translation found for deletion_helper_apps_group_summary (360315517252452356) -->
+    <skip />
+    <string name="deletion_helper_automatic_title" msgid="4610119358490679299">"ସ୍ଵଚାଳିତ"</string>
+    <string name="deletion_helper_manual_title" msgid="3905192395039688529">"ମାନୁଆଲ୍‌"</string>
+    <string name="deletion_helper_preference_title" msgid="803484286872745892">"ଏବେ ଜାଗା ଖାଲି କରନ୍ତୁ"</string>
+    <string name="automatic_storage_manager_service_label" msgid="648592272375278978">"ସ୍ଵଚାଳିତ ଷ୍ଟୋରେଜ୍‌ ପରିଚାଳନା ସେବା"</string>
+    <string name="automatic_storage_manager_notification_title" product="default" msgid="8480483265300964701">"ଆପଣଙ୍କ ଫୋନ୍‌ରେ ଜାଗା କମ୍‌ ଅଛି"</string>
+    <string name="automatic_storage_manager_notification_title" product="tablet" msgid="3150907918531844467">"ଆପଣଙ୍କ ଟାବଲେଟ୍‌ରେ ଜାଗା କମ୍‌ ଅଛି"</string>
+    <string name="automatic_storage_manager_notification_summary" msgid="2267399886362245822">"ଆପଣଙ୍କ ଫୋନ୍‌ର ଷ୍ଟୋରେଜ୍‌ ପୁଣି ଭର୍ତ୍ତି ହେବାକୁ ଯାଉଥିଲେ ଷ୍ଟୋରେଜ୍‌ ମ୍ୟାନେଜର୍‌କୁ ସ୍ଵଚାଳିତଭାବେ ପୁରୁଣା ଫଟୋ ଓ ଭିଡିଓକୁ ଡିଲିଟ୍‌ କରି ଜାଗା ଖାଲି କରିବାକୁ ଦିଅନ୍ତୁ।"</string>
+    <string name="automatic_storage_manager_cancel_button" msgid="1826365037494962803">"ନାହିଁ, ଥାଉ"</string>
+    <string name="automatic_storage_manager_activate_button" msgid="6257070263061898041">"ଅନ୍ କରନ୍ତୁ"</string>
+    <string name="deletion_helper_photos_loading_title" msgid="2768067991066779772">"ବ୍ୟାକଅପ୍‌ ନିଆଯାଇଥିବା ଫଟୋ ଓ ଭିଡିଓ"</string>
+    <string name="deletion_helper_photos_loading_summary" msgid="8203033249458245854">"ଆଇଟମ୍‌ ଖୋଜୁଛି…"</string>
+    <string name="deletion_helper_no_threshold" msgid="6943179204098250444">"ସବୁ ଆଇଟମ୍‌କୁ ଦେଖନ୍ତୁ"</string>
+    <string name="deletion_helper_default_threshold" msgid="8410389370069021113">"ସାମ୍ପ୍ରତିକ ଆଇଟମ୍‌ଗୁଡ଼ିକୁ ଲୁଚାଇ ରଖନ୍ତୁ"</string>
+    <string name="deletion_helper_clear_dialog_message_first_time" msgid="686530413183529901">"ଆପଣଙ୍କ ଡିଭାଇସ୍‌ରୁ <xliff:g id="CLEARABLE_BYTES">%1$s</xliff:g> କଣ୍ଟେଣ୍ଟ ଡିଲିଟ୍‌ କରାହେବ"</string>
+    <string name="automatic_storage_manager_activation_warning" msgid="7657017408180001078">"ଆପଣଙ୍କ ଷ୍ଟୋରେଜ୍‌ ଏବେ, ଷ୍ଟୋରେଜ୍‌ ମ୍ୟାନେଜର୍‌ ଦ୍ୱାରା ପରିଚାଳିତ ହେଉଛି"</string>
+    <string name="empty_state_title" msgid="4033285438176545309">"ଡିଲିଟ୍‌ କରିବା ପାଇଁ କିଛି ନାହିଁ"</string>
+    <string name="empty_state_review_items_link" msgid="8411186441239304545">"ସାମ୍ପ୍ରତିକ ଆଇଟମ୍‌ଗୁଡ଼ିକୁ ରିଭ୍ୟୁ କରନ୍ତୁ"</string>
+    <string name="empty_state_summary" msgid="8439893007424243790">"ଡିଲିଟ୍‌ କରିବା ପାଇଁ କୌଣସି ପୁରୁଣା ଫାଇଲ୍‌ ନାହିଁ। ଜାଗା ତିଆରି କରିବା ପାଇଁ ସାମ୍ପ୍ରତିକ ଫଟୋ, ଭିଡିଓ ଏବଂ ଆପ୍‌ ଡିଲିଟ୍‌ କରନ୍ତୁ।"</string>
+    <string name="app_requesting_space" msgid="857425181289960167">"<xliff:g id="APP">%1$s</xliff:g>କୁ <xliff:g id="CLEARABLE_BYTES">%2$s</xliff:g> ଜାଗା ଆବଶ୍ୟକ"</string>
+</resources>

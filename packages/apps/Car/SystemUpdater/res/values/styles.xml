@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) 2016, The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<resources>
+    <style name="Theme.SettingsBase" parent="@android:style/Theme.Material.Settings" />
+
+    <style name="SystemUpdaterTheme" parent="Theme.Car.Light.NoActionBar">
+        <item name="android:windowBackground">@color/car_card</item>
+        <item name="android:windowAnimationStyle">@style/SettingAnimationStyle</item>
+    </style>
+
+    <style name="SettingAnimationStyle">
+        <item name="android:windowEnterAnimation">@anim/trans_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/trans_fade_out</item>
+    </style>
+
+    <style name="ActionBarStyle.Car" parent="Widget.Car.Toolbar">
+        <item name="actionBarSize">@dimen/car_app_bar_height</item>
+    </style>
+
+    <style name="ListIcon">
+        <item name="android:layout_width">@dimen/car_primary_icon_size</item>
+        <item name="android:layout_height">@dimen/car_primary_icon_size</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:tint">@color/car_tint</item>
+    </style>
+
+    <style name="ListIcon.ActionBar" parent="ListIcon">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:src">@drawable/ic_arrow_back</item>
+    </style>
+
+    <style name="SystemUpdate.ActionBar.Button.Borderless.Colored"
+           parent="Widget.Car.Button.Borderless.Colored">
+        <item name="android:minWidth">@dimen/car_button_min_width</item>
+        <item name="android:fontFamily">roboto-regular</item>
+        <item name="android:textColor">@color/car_accent</item>
+    </style>
+</resources>

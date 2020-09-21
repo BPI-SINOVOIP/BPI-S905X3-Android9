@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  Copyright (C) 2009 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+  
+          http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+ -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name" msgid="9095072584761066851">"ସର୍ଟିଫିକେଟ୍‍ ଇନଷ୍ଟଲର୍‍"</string>
+    <string name="pick_file_title" msgid="4481949485108233297">"ଗୋଟିଏ ସର୍ଟିଫିକେଟ୍‌ ବାଛନ୍ତୁ"</string>
+    <string name="pkcs12_password_dialog_title" msgid="5997624645207427161">"ସର୍ଟିଫିକେଟ୍‌ ଏକ୍ସଟ୍ରାକ୍ଟ କରନ୍ତୁ"</string>
+    <string name="extracting_pkcs12" msgid="1881267738821799771">"ଏକ୍ସଟ୍ରାକ୍ଟ କରୁଛି…"</string>
+    <string name="pkcs12_file_password_dialog_title" msgid="8102721384767269510">"%sରୁ ଏକ୍ସଟ୍ରାକ୍ଟ କରନ୍ତୁ"</string>
+    <string name="name_credential_dialog_title" msgid="277729846491554437">"ସର୍ଟିଫିକେଟର ନାମ ଦିଅନ୍ତୁ"</string>
+    <string name="credential_name" msgid="1974979771369744378">"ସର୍ଟିଫିକେଟ୍‌ର ନାମ:"</string>
+    <string name="credential_password" msgid="3520176519550993326">"ସର୍ଟିଫିକେଟ୍‌ଗୁଡ଼ିକୁ ଏକ୍ସଟ୍ରାକ୍ଟ କରିବା ପାଇଁ ପାସ୍‌ୱର୍ଡ ଟାଇପ୍‌ କରନ୍ତୁ।"</string>
+    <string name="credential_info" msgid="2436768402308470397">"ଏହି ପ୍ୟାକେଜ୍‌ରେ ରହିଛି:"</string>
+    <string name="p12_description" msgid="4128352087331630024">"PKCS12 କୀ’ଷ୍ଟୋରରେ ସର୍ଟିଫିକେଟ୍‍।"</string>
+    <string name="one_userkey" msgid="3500697912370644881">"ଗୋଟିଏ ୟୁଜର୍‍ କୀ\'"</string>
+    <string name="one_usercrt" msgid="7690798336332403106">"ଜଣେ ୟୁଜରଙ୍କ ସର୍ଟିଫିକେଟ୍‍"</string>
+    <string name="one_cacrt" msgid="2667950425420663146">"ଏକ CA ସର୍ଟିଫିକେଟ୍‍"</string>
+    <string name="n_cacrts" msgid="2141498640685639208">"%d CA ସର୍ଟିଫିକେଟ୍‍"</string>
+    <string name="password_error" msgid="2042471639556516356">"ସଠିକ୍‌ ପାସ୍‌ୱର୍ଡ ଟାଇପ୍‌ କରନ୍ତୁ।"</string>
+    <string name="password_empty_error" msgid="591713406761723025">"ପାସ୍‌ୱର୍ଡ ଟାଇପ୍‌ କରନ୍ତୁ।"</string>
+    <string name="name_empty_error" msgid="3808800768660110354">"ଗୋଟିଏ ନାମ ଟାଇପ୍‌ କରନ୍ତୁ।"</string>
+    <string name="name_char_error" msgid="3176618568784938968">"ଏପରି ଗୋଟିଏ ନାମ ଟାଇପ୍‌ କରନ୍ତୁ, ଯେଉଁଥିରେ କେବଳ ଅକ୍ଷର ଓ ସଂଖ୍ୟା ରହିଥିବ।"</string>
+    <string name="unable_to_save_cert" msgid="9178604087335389686">"ସର୍ଟିଫିକେଟ୍‌କୁ ସେଭ୍‌ କରିପାରିବ ନାହିଁ। କ୍ରେଡେନ୍ସିଆଲ୍‌ ଷ୍ଟୋରେଜ୍‌ ସକ୍ଷମ କରାଯାଇନାହିଁ କିମ୍ୱା ଠିକ୍‌ ଭାବେ ଆରମ୍ଭ ହୋଇନାହିଁ।"</string>
+    <string name="cert_not_saved" msgid="4037698479662830270">"ସର୍ଟିଫିକେଟ୍‌ଟି ଇନଷ୍ଟଲ୍‌ ହୋଇନାହିଁ।"</string>
+    <string name="no_cert_to_saved" msgid="5708884372817309068">"ଇନଷ୍ଟଲ୍‌ କରାଯିବାକୁ କୌଣସି ସର୍ଟିଫିକେଟ୍‍ ନାହିଁ।"</string>
+    <string name="invalid_cert" msgid="7704228670980743590">"ଏହି ସର୍ଟିଫିକେଟ୍‍ ବୈଧ ନୁହେଁ।"</string>
+    <string name="cert_is_added" msgid="6996557598167000500">"<xliff:g id="CREDENTIAL">%s</xliff:g> ଇନଷ୍ଟଲ୍‌ ହୋଇଛି।"</string>
+    <string name="cert_too_large_error" msgid="8715414972725646285">"ଇନଷ୍ଟଲ୍‌ କରିହେଉନାହିଁ, କାରଣ ସର୍ଟିଫିକେଟ୍‌ର ଆକାର ବହୁତ ବଡ଼ ଅଟେ।"</string>
+    <string name="cert_missing_error" msgid="7040527352278728220">"ଇନଷ୍ଟଲ୍‌ କରିହେଉନାହିଁ, କାରଣ ସର୍ଟିଫିକେଟ୍‌ ଫାଇଲ୍‍ ମିଳୁନାହିଁ।"</string>
+    <string name="cert_read_error" msgid="7353463360652419796">"ଇନଷ୍ଟଲ୍‌ କରିହେଉନାହିଁ, କାରଣ ସର୍ଟିଫିକେଟ୍‌ ଫାଇଲ୍‍ ପଢ଼ି ହେଉନାହିଁ।"</string>
+    <string name="no_cert_file_found" product="nosdcard" msgid="3555332946357131929">"USB ଷ୍ଟୋରେଜରେ କୌଣସି ସର୍ଟିଫିକେଟ୍‍ ଫାଇଲ୍ ମିଳୁନାହିଁ।"</string>
+    <string name="no_cert_file_found" product="default" msgid="1942077544887243999">"SD କାର୍ଡରେ କୌଣସି ସର୍ଟିଫିକେଟ୍‍ ଫାଇଲ୍ ମିଳୁନାହିଁ।"</string>
+    <string name="sdcard_not_present" product="nosdcard" msgid="9197143240492611196">"USB ଷ୍ଟୋରେଜ୍ ଉପଲବ୍ଧ ନାହିଁ।"</string>
+    <string name="sdcard_not_present" product="default" msgid="3866952732541932947">"ଏଥିରେ SD କାର୍ଡ ନାହିଁ।"</string>
+    <string name="only_primary_user_allowed" msgid="4005084935023047716">"କେବଳ ଏହି ଡିଭାଇସ୍‌‍ର ମାଲିକ ହିଁ ସର୍ଟିଫିକେଟ୍‌ ଇନଷ୍ଟଲ୍‍ କରିପାରିବେ।"</string>
+    <string name="credential_usage_label" msgid="1513892208033156805">"ତଥ୍ୟର ବ୍ୟବହାର:"</string>
+  <string-array name="credential_usage">
+    <item msgid="375085478373011304">"VPN ଓ ଆପ୍‍"</item>
+    <item msgid="692322974985472861">"ୱାଇ-ଫାଇ"</item>
+  </string-array>
+    <string name="certificate_capabilities_warning" msgid="4158609401937799110">"ଧ୍ୟାନଦିଅନ୍ତୁ: ଏହି ସର୍ଟିଫିକେଟ୍ ଜାରି କରିଥିବା କମ୍ପାନୀ, ଡିଭାଇସ୍‌ରୁ ଯାଉଥିବା ଓ ଆସୁଥିବା ସମସ୍ତ ଟ୍ରାଫିକ୍‌କୁ ଯାଞ୍ଚ କରିପାରନ୍ତି।"</string>
+    <string name="wifi_title" msgid="8475811746333426489">"ୱାଇ-ଫାଇ ପ୍ରୋଫାଇଲ୍‍"</string>
+    <string name="wifi_detail_title" msgid="3627332137252994395">"%sର ବିବରଣୀ"</string>
+    <string name="wifi_detail_label" msgid="3032151019356747583">"ବିବରଣୀ"</string>
+    <string name="wifi_install_label" msgid="1449629407724323233">"ଇନଷ୍ଟଲ୍‍"</string>
+    <string name="wifi_installing_label" msgid="8387393993627129025">"ଇନଷ୍ଟଲ୍ କରାଯାଉଛି"</string>
+    <string name="wifi_cancel_label" msgid="1328748037608392134">"କ୍ୟାନ୍ସଲ୍‍ କରନ୍ତୁ"</string>
+    <string name="wifi_dismiss_label" msgid="1916684434873972698">"ଖାରଜ"</string>
+    <string name="wifi_no_config" msgid="1835743123288916755">"କିଛିନୁହେଁ"</string>
+    <string name="wifi_config_text" msgid="8259587306773310314">"ନାମ: %1$s\nFQDN: %2$s\nରୋମିଙ୍ଗ କନ୍ସୋଟିୟମ୍ସ: %3$s\nରେଲାମ୍‍: %4$s\nସ୍ୱୀକୃତି ପଦ୍ଧତି: EAP-%5$s\n"</string>
+    <string name="wifi_ttls_config_text" msgid="2002413183253872168">"ୟୁଜର୍‍ଙ୍କ ନାମ: %s\n"</string>
+    <string name="wifi_tls_config_text" msgid="9062328536640168510">"କ୍ଲାଏଣ୍ଟ ସର୍ଟିଫିକେଟ୍‍:\n%1$s\nକୀ’: %2$s\n"</string>
+    <string name="wifi_sim_config_text" msgid="1666019954520831840">"SIM: %s\n"</string>
+    <string name="wifi_trust_config_text" msgid="5916047381475747783">"ବିଶ୍ୱସ୍ତ ସର୍ଟିଫିକେଟ୍‍:\n%s\n"</string>
+    <string name="install_done_title" msgid="4822989918460334497">"କ୍ରେଡେନସିଆଲ୍ସ ଇନଷ୍ଟଲ୍‍ କରାଗଲା"</string>
+    <string name="install_done" msgid="1522718684172097080">"ୱାଇ-ଫାଇ ସେଭ୍‍ କରାଯାଇଥିବା ନେଟୱର୍କଗୁଡିକରେ <xliff:g id="NAME">%1$s</xliff:g>ଙ୍କ କ୍ରେଡେନ୍ସିଆଲ୍ସ ଯୋଡ଼ାଯାଇଛି।"</string>
+    <string name="done_label" msgid="5597425930652904250">"ହୋଇଗଲା"</string>
+    <string name="wifi_installer_detail" msgid="63879632832701669">"<xliff:g id="NAME">%1$s</xliff:g> ଜରିଆରେ ଉପଲବ୍ଧ ନେଟୱର୍କଗୁଡ଼ିକ ସହ ସଂଯୋଗ କରିବାକୁ ୱାଇ-ଫାଇ କ୍ରେଡେନସିଆଲ୍ସ ଇନଷ୍ଟଲ୍‍ କରନ୍ତୁ।"</string>
+    <string name="wifi_installer_download_error" msgid="5429453090956277692">"ଡାଉନଲୋଡ୍ କରାଯାଇଥିବା ଫାଇଲ୍‍ରେ ସମସ୍ୟା ରହିଛି ଏବଂ ଇନଷ୍ଟଲ୍‍ କରାଯାଇପାରିବ ନାହିଁ। ଆପଣ ସଠିକ୍‍ ସୋର୍ସରୁ ଫାଇଲ୍‍ ଡାଉନଲୋଡ୍ କରିଥିବା ନିଶ୍ଚିତ କରନ୍ତୁ।"</string>
+    <string name="wifi_installer_fail" msgid="894483173306576331">"ୱାଇ-ଫାଇଲ କ୍ରେଡେନସିଆଲ୍ସ ଇନଷ୍ଟଲ୍‍ କରିପାରିବ ନାହିଁ। ଫାଇଲ୍‍ ପୁଣି ଡାଉନଲୋଡ୍ କରିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ।"</string>
+    <string name="wifi_installer_fail_no_wifi_title" msgid="8358191074828840533">"ଇନଷ୍ଟଲେଶନ୍ କ୍ୟାନ୍ସଲ୍‍ କରାଯାଇଛି"</string>
+    <string name="wifi_installer_fail_title" msgid="5547079779067835479">"ଇନଷ୍ଟଲ୍‍ କରାଯାଇପାରିବ ନାହିଁ"</string>
+    <string name="wifi_installer_fail_no_wifi" msgid="2044576439984209921">"ୱାଇ-ଫାଇ ଅନ୍‍ କରନ୍ତୁ ଏବଂ ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।"</string>
+</resources>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="system_tracing" msgid="4719188511746319848">"Sistem İzleme"</string>
+    <string name="record_system_activity" msgid="4339462312915377825">"Daha sonra performansı iyileştirmek için sistem etkinliğini kaydedin ve analiz edin"</string>
+    <string name="record_trace" msgid="6416875085186661845">"İzlemeyi kaydet"</string>
+    <string name="trace_debuggable_applications" msgid="7957069895298887899">"Hata ayıklaması yapılabilecek uygulamaları izle"</string>
+    <string name="categories" msgid="2280163673538611008">"Kategoriler"</string>
+    <string name="restore_default_categories" msgid="5090536794637169521">"Varsayılan kategorileri geri yükle"</string>
+    <string name="default_categories_restored" msgid="6861683793680564181">"Varsayılan kategoriler geri yüklendi"</string>
+    <string name="applications" msgid="521776761270770549">"Uygulamalar"</string>
+    <string name="no_debuggable_apps" msgid="4386209254520471208">"Hata ayıklaması yapılabilecek uygulama yok"</string>
+    <string name="buffer_size" msgid="3370134227980578569">"Arabellek boyutu"</string>
+    <string name="show_quick_settings_tile" msgid="4971147332635291585">"Hızlı Ayarlar kutusunu göster"</string>
+    <string name="saving_trace" msgid="1468692734770800541">"İzleme kaydediliyor"</string>
+    <string name="trace_saved" msgid="5869970594780992309">"İzleme kaydedildi"</string>
+    <string name="tap_to_share" msgid="6766732404489536899">"İzlemenizi paylaşmak için dokunun"</string>
+    <string name="stop_tracing" msgid="8916938308534164152">"İzlemeyi durdur"</string>
+    <string name="tracing_categories_unavailable" msgid="5609076391417077752">"Bazı izleme kategorileri kullanılamıyor:"</string>
+    <string name="trace_is_being_recorded" msgid="5947378146009337469">"İz kaydediliyor"</string>
+    <string name="tap_to_stop_tracing" msgid="6533282719573871806">"İzlemeyi durdurmak için dokunun"</string>
+    <string name="clear_saved_traces" msgid="4809195654452260944">"Kaydedilen izleri temizle"</string>
+    <string name="clear_saved_traces_question" msgid="2184026613055303818">"Kaydedilen izler temizlensin mi?"</string>
+    <string name="all_traces_will_be_deleted" msgid="6646545462206955920">"/data/local/traces konumundaki tüm izler silinecek"</string>
+    <string name="clear" msgid="5484761795406948056">"Sil"</string>
+    <string name="keywords" msgid="736547007949049535">"systrace, izleme, performans"</string>
+</resources>

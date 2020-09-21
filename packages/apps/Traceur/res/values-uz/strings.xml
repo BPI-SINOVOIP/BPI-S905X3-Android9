@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="system_tracing" msgid="4719188511746319848">"Tizim yangilanishlarini kuzatish"</string>
+    <string name="record_system_activity" msgid="4339462312915377825">"Tizim unumdorligini oshirish maqsadida ishchi jarayonlarni kuzatish va tahlil qilish"</string>
+    <string name="record_trace" msgid="6416875085186661845">"Trassirovkani yozib olish"</string>
+    <string name="trace_debuggable_applications" msgid="7957069895298887899">"Tuzatishga ruxsati bor ilovalarning harakatlarni yozib olish"</string>
+    <string name="categories" msgid="2280163673538611008">"Turkumlar"</string>
+    <string name="restore_default_categories" msgid="5090536794637169521">"Asosiy turkumlarni tiklash"</string>
+    <string name="default_categories_restored" msgid="6861683793680564181">"Asosiy turkumlar tiklandi"</string>
+    <string name="applications" msgid="521776761270770549">"Ilovalar"</string>
+    <string name="no_debuggable_apps" msgid="4386209254520471208">"Hech qaysi ilovada tuzatishga ruxsati yo‘q"</string>
+    <string name="buffer_size" msgid="3370134227980578569">"Bufer hajmi"</string>
+    <string name="show_quick_settings_tile" msgid="4971147332635291585">"Tezkor sozlamalar panelini ko‘rsatish"</string>
+    <string name="saving_trace" msgid="1468692734770800541">"Trassirovka saqlanmoqda"</string>
+    <string name="trace_saved" msgid="5869970594780992309">"Trassirovka saqlandi"</string>
+    <string name="tap_to_share" msgid="6766732404489536899">"Trassirovkani ulashish uchun bosing"</string>
+    <string name="stop_tracing" msgid="8916938308534164152">"Trassirovkani to‘xtatish"</string>
+    <string name="tracing_categories_unavailable" msgid="5609076391417077752">"Ayrim trassirovka turkumlari mavjud emas:"</string>
+    <string name="trace_is_being_recorded" msgid="5947378146009337469">"Trassirovka yozib olinmoqda"</string>
+    <string name="tap_to_stop_tracing" msgid="6533282719573871806">"Trassirovkani to‘xtatish uchun bosing"</string>
+    <string name="clear_saved_traces" msgid="4809195654452260944">"Saqlangan trassirovkalarni tozalash"</string>
+    <string name="clear_saved_traces_question" msgid="2184026613055303818">"Harakatlarning saqlangan yozuvlari o‘chirib tashlansinmi?"</string>
+    <string name="all_traces_will_be_deleted" msgid="6646545462206955920">"Barcha yozuvlar /data/local/traces jildidan o‘chirib tashlanadi"</string>
+    <string name="clear" msgid="5484761795406948056">"Tozalash"</string>
+    <string name="keywords" msgid="736547007949049535">"systrace, kuzatish, unumdorlik"</string>
+</resources>

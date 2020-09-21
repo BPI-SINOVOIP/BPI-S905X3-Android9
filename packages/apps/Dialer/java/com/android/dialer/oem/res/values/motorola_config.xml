@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2017 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License
+  -->
+
+<resources>
+  <!-- Flag to control if HD codec is supported by Sprint. -->
+  <bool name="motorola_sprint_hd_codec">false</bool>
+
+  <!-- Hidden menu configuration for Motorola. -->
+  <!-- This defines the specific key sequence that will be caught in the SpecialCharSequenceMgr
+       such as, ##OMADM# -->
+  <string-array name="motorola_hidden_menu_key_sequence">
+  </string-array>
+
+  <string name="motorola_hidden_menu_intent"></string>
+
+  <!-- This defines the intents that will be send out when the key sequence is matched, this must be
+       in the same order with he KeySequence array. -->
+  <string-array name="motorola_hidden_menu_key_sequence_intents">
+  </string-array>
+
+  <!-- This defines the specific key patterns that will be caught in the SpecialCharSequenceMgr
+       such as, ##[0-9]{3,7}# -->
+  <string-array name="motorola_hidden_menu_key_pattern">
+  </string-array>
+
+  <!-- This defines the intents that will be send out when the key sequence is matched, this must be
+       in the same order with he KeyPattern array. -->
+  <string-array name="motorola_hidden_menu_key_pattern_intents">
+  </string-array>
+
+  <!-- This defines the provider names for cequint callerid applications
+       used for different carriers-->
+  <string-array name="cequint_providers">
+    <item>com.cequint.ecid</item>
+  </string-array>
+</resources>

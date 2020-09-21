@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2018 The Android Open Source Project
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:title="@string/device_pref_category_title">
+    <Preference
+        android:fragment="com.android.tv.settings.about.AboutFragment"
+        android:icon="@drawable/ic_info_outline"
+        android:key="about_device"
+        android:title="@string/about_preference"/>
+    <Preference
+        android:fragment="com.android.tv.settings.system.DateTimeFragment"
+        android:icon="@drawable/ic_access_time"
+        android:key="date_time"
+        android:title="@string/system_date_time"/>
+    <Preference
+        android:fragment="com.android.tv.settings.system.LanguageFragment"
+        android:icon="@drawable/ic_language"
+        android:key="language"
+        android:title="@string/system_language"/>
+    <Preference
+        android:fragment="com.android.tv.settings.inputmethod.KeyboardFragment"
+        android:icon="@drawable/ic_keyboard"
+        android:key="keyboard"
+        android:title="@string/system_keyboard"/>
+    <Preference
+        android:fragment="com.android.tv.settings.device.sound.SoundFragment"
+        android:icon="@drawable/ic_volume_up"
+        android:key="sound_effects"
+        android:title="@string/device_sound"/>
+    <Preference
+        android:fragment="com.android.tv.settings.device.StorageSummaryFragment"
+        android:icon="@drawable/ic_storage"
+        android:key="storage"
+        android:title="@string/device_storage"/>
+    <Preference
+        android:icon="@drawable/ic_home"
+        android:key="home"
+        android:title="@string/system_home">
+        <intent android:action="com.google.android.tvlauncher.SETTINGS"/>
+    </Preference>
+    <Preference
+        android:key="google_settings"
+        android:title="@string/system_google">
+        <intent
+            android:action="com.google.assistant.GOOGLE_SETTINGS"/>
+    </Preference>
+    <Preference
+        android:icon="@drawable/ic_cast"
+        android:key="cast"
+        android:title="@string/system_cast" >
+        <intent android:action="com.google.android.settings.CAST_RECEIVER_SETTINGS" />
+    </Preference>
+    <Preference
+        android:fragment="com.android.tv.settings.device.display.daydream.DaydreamFragment"
+        android:icon="@drawable/ic_settings_system_daydream"
+        android:key="daydream"
+        android:title="@string/device_daydream"/>
+    <Preference
+        android:fragment="com.android.tv.settings.system.development.DevelopmentFragment"
+        android:icon="@drawable/ic_settings_developeroptions"
+        android:key="developer"
+        android:title="@string/system_developer_options"/>
+    <Preference
+        android:fragment="com.android.tv.settings.system.LocationFragment"
+        android:icon="@drawable/ic_location_on"
+        android:key="location"
+        android:title="@string/system_location"/>
+    <Preference
+        android:icon="@drawable/ic_timeline"
+        android:key="usageAndDiag"
+        android:title="@string/system_diagnostic">
+        <intent
+            android:action="com.google.android.settings.USAGE_AND_DIAGNOSTICS_SETTING"/>
+    </Preference>
+    <Preference
+        android:fragment="com.android.tv.settings.system.SecurityFragment"
+        android:icon="@drawable/ic_lock"
+        android:key="security"
+        android:title="@string/system_security"/>
+    <Preference
+        android:fragment="com.android.tv.settings.accessibility.AccessibilityFragment"
+        android:icon="@drawable/ic_accessibility_new"
+        android:key="accessibility"
+        android:title="@string/system_accessibility"/>
+    <Preference
+        android:icon="@drawable/ic_reset"
+        android:key="reset"
+        android:title="@string/device_reset">
+        <intent
+            android:targetClass="com.android.tv.settings.device.storage.ResetActivity"
+            android:targetPackage="com.android.tv.settings"/>
+    </Preference>
+</PreferenceScreen>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (C) 2017 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:title="@string/applications_category_title">
+
+    <PreferenceCategory
+        android:key="recently_used_apps_category"
+        android:title="@string/apps_recently_used_category_title"
+        android:layout="@layout/preference_category_compact_layout">
+        <!-- Placeholder for a list of recent apps -->
+    </PreferenceCategory>
+
+    <!-- See all apps button -->
+    <Preference
+        android:key="see_all_apps"
+        android:title="@string/apps_see_all_apps"
+        android:fragment="com.android.tv.settings.device.apps.AllAppsFragment" />
+
+    <PreferenceCategory
+        android:key="permissions"
+        android:title="@string/apps_permissions_category_title"
+        android:layout="@layout/preference_category_compact_layout">
+
+        <Preference
+            android:key="Permissions"
+            android:title="@string/device_apps_permissions">
+            <intent android:action="android.intent.action.MANAGE_PERMISSIONS"/>
+        </Preference>
+        <Preference
+            android:key="special_access"
+            android:title="@string/special_access"
+            android:fragment="com.android.tv.settings.device.apps.specialaccess.SpecialAppAccess"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

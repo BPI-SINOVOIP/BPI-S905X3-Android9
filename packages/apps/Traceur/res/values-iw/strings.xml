@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="system_tracing" msgid="4719188511746319848">"עקבות מערכת"</string>
+    <string name="record_system_activity" msgid="4339462312915377825">"אפשר לתעד את פעילות המערכת ולנתח אותה מאוחר יותר כדי לשפר את הביצועים"</string>
+    <string name="record_trace" msgid="6416875085186661845">"הקלטת מעקב"</string>
+    <string name="trace_debuggable_applications" msgid="7957069895298887899">"ניהול מעקב אחר אפליקציות שניתן לנפות בהן באגים"</string>
+    <string name="categories" msgid="2280163673538611008">"קטגוריות"</string>
+    <string name="restore_default_categories" msgid="5090536794637169521">"שחזור קטגוריות המוגדרות כברירת מחדל"</string>
+    <string name="default_categories_restored" msgid="6861683793680564181">"שוחזרו הקטגוריות שמוגדרות כברירת המחדל"</string>
+    <string name="applications" msgid="521776761270770549">"אפליקציות"</string>
+    <string name="no_debuggable_apps" msgid="4386209254520471208">"אין אפליקציות שניתן לנפות בהן באגים"</string>
+    <string name="buffer_size" msgid="3370134227980578569">"גודל של מאגר נתונים זמני"</string>
+    <string name="show_quick_settings_tile" msgid="4971147332635291585">"הצגת אריח של הגדרות מהירות"</string>
+    <string name="saving_trace" msgid="1468692734770800541">"שמירת מעקב מתבצעת"</string>
+    <string name="trace_saved" msgid="5869970594780992309">"המעקב נשמר"</string>
+    <string name="tap_to_share" msgid="6766732404489536899">"ניתן להקיש כדי לשתף את המעקב"</string>
+    <string name="stop_tracing" msgid="8916938308534164152">"הפסקת המעקב"</string>
+    <string name="tracing_categories_unavailable" msgid="5609076391417077752">"חלק מקטגוריות המעקב אינן זמינות:"</string>
+    <string name="trace_is_being_recorded" msgid="5947378146009337469">"המעקב מתועד"</string>
+    <string name="tap_to_stop_tracing" msgid="6533282719573871806">"יש להקיש כדי להפסיק את המעקב"</string>
+    <string name="clear_saved_traces" msgid="4809195654452260944">"ניקוי נתוני מעקב שנשמרו"</string>
+    <string name="clear_saved_traces_question" msgid="2184026613055303818">"לנקות נתוני מעקב שנשמרו?"</string>
+    <string name="all_traces_will_be_deleted" msgid="6646545462206955920">"‏כל נתוני המעקב יימחקו מ-‎/data/local/traces"</string>
+    <string name="clear" msgid="5484761795406948056">"ניקוי"</string>
+    <string name="keywords" msgid="736547007949049535">"‏systrace, מעקב, ביצועים"</string>
+</resources>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="system_tracing" msgid="4719188511746319848">"系統追蹤"</string>
+    <string name="record_system_activity" msgid="4339462312915377825">"記錄系統活動，並在稍後進行分析以提升效能"</string>
+    <string name="record_trace" msgid="6416875085186661845">"錄製追蹤記錄"</string>
+    <string name="trace_debuggable_applications" msgid="7957069895298887899">"追蹤可偵錯的應用程式"</string>
+    <string name="categories" msgid="2280163673538611008">"類別"</string>
+    <string name="restore_default_categories" msgid="5090536794637169521">"還原預設類別"</string>
+    <string name="default_categories_restored" msgid="6861683793680564181">"已還原預設類別"</string>
+    <string name="applications" msgid="521776761270770549">"應用程式"</string>
+    <string name="no_debuggable_apps" msgid="4386209254520471208">"沒有可偵錯的應用程式"</string>
+    <string name="buffer_size" msgid="3370134227980578569">"緩衝區大小"</string>
+    <string name="show_quick_settings_tile" msgid="4971147332635291585">"顯示「快速設定」圖塊"</string>
+    <string name="saving_trace" msgid="1468692734770800541">"正在儲存追蹤記錄"</string>
+    <string name="trace_saved" msgid="5869970594780992309">"追蹤記錄已儲存"</string>
+    <string name="tap_to_share" msgid="6766732404489536899">"輕按即可分享您的追蹤記錄"</string>
+    <string name="stop_tracing" msgid="8916938308534164152">"停止追蹤"</string>
+    <string name="tracing_categories_unavailable" msgid="5609076391417077752">"無法使用部分追蹤記錄類別："</string>
+    <string name="trace_is_being_recorded" msgid="5947378146009337469">"已錄製追蹤記錄"</string>
+    <string name="tap_to_stop_tracing" msgid="6533282719573871806">"輕按即可停止追蹤"</string>
+    <string name="clear_saved_traces" msgid="4809195654452260944">"清除已儲存的追蹤記錄"</string>
+    <string name="clear_saved_traces_question" msgid="2184026613055303818">"要清除已儲存的追蹤記錄嗎？"</string>
+    <string name="all_traces_will_be_deleted" msgid="6646545462206955920">"系統將刪除 /data/local/traces 中的所有追蹤記錄"</string>
+    <string name="clear" msgid="5484761795406948056">"清除"</string>
+    <string name="keywords" msgid="736547007949049535">"systrace, 追蹤, 效能"</string>
+</resources>

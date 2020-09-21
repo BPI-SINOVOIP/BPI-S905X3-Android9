@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2011 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<resources>
+    <!-- Whether to enable ETWS settings (Japan) -->
+    <bool name="show_etws_settings">false</bool>
+    <!-- Whether to always sound CBS alerts at full volume -->
+    <bool name="use_full_volume">false</bool>
+    <!-- Whether to enable CMAS settings (United States) -->
+    <bool name="show_cmas_settings">true</bool>
+    <!-- Whether to append date-time to the alert title -->
+    <bool name="show_date_time_title">false</bool>
+    <!-- Emergecny alert tone duration in milliseconds. -1 indicates playing the tone with the tone's duration -->
+    <integer name="alert_duration">-1</integer>
+    <!-- Whether to compare message body when performing message duplicate dection -->
+    <bool name="duplicate_compare_body">false</bool>
+    <!-- Whether to enable audio alert for non emergency broadcasts on FEATURE_WATCH devices -->
+    <bool name="watch_enable_non_emergency_audio">false</bool>
+
+    <!-- 4370, 4383 -->
+    <string-array name="cmas_presidential_alerts_channels_range_strings" translatable="false">
+        <item>0x1112-0x1112:rat=gsm, emergency=true</item>
+        <item>0x1000-0x1000:rat=cdma, emergency=true</item>
+        <!-- additional language -->
+        <item>0x111F-0x111F:rat=gsm, emergency=true</item>
+    </string-array>
+    <!-- 4371~4372, 4384~4385 -->
+    <string-array name="cmas_alert_extreme_channels_range_strings" translatable="false">
+        <item>0x1113-0x1114:rat=gsm, emergency=true</item>
+        <item>0x1001-0x1001:rat=cdma, emergency=true</item>
+        <!-- additional language -->
+        <item>0x1120-0x1121:rat=gsm, emergency=true</item>
+    </string-array>
+    <!-- 4373~4378, 4386~4391 -->
+    <string-array name="cmas_alerts_severe_range_strings" translatable="false">
+        <item>0x1115-0x111A:rat=gsm, emergency=true</item>
+        <item>0x1002-0x1002:rat=cdma, emergency=true</item>
+        <!-- additional language -->
+        <item>0x1122-0x1127:rat=gsm, emergency=true</item>
+    </string-array>
+    <!-- 4379, 4392 -->
+    <string-array name="cmas_amber_alerts_channels_range_strings" translatable="false">
+        <item>0x111B-0x111B:rat=gsm, emergency=true</item>
+        <item>0x1003-0x1003:rat=cdma, emergency=true</item>
+        <!-- additional language -->
+        <item>0x1128-0x1128:rat=gsm, emergency=true</item>
+    </string-array>
+    <!-- 4380~4382, 4393~4395 -->
+    <string-array name="required_monthly_test_range_strings" translatable="false">
+        <item>0x111C-0x111C:rat=gsm, emergency=true</item>
+        <item>0x1004-0x1004:rat=cdma, emergency=true</item>
+        <!-- additional language -->
+        <item>0x1129-0x1129:rat=gsm, emergency=true</item>
+    </string-array>
+    <string-array name="exercise_alert_range_strings" translatable="false">
+        <item>0x111D-0x111D:rat=gsm, emergency=true</item>
+        <!-- additional language -->
+        <item>0x112A-0x112A:rat=gsm, emergency=true</item>
+    </string-array>
+    <string-array name="operator_defined_alert_range_strings" translatable="false">
+        <item>0x111E-0x111E:rat=gsm, emergency=true</item>
+        <!-- additional language -->
+        <item>0x112B-0x112B:rat=gsm, emergency=true</item>
+    </string-array>
+
+    <!-- 4352~4354, 4356 -->
+    <string-array name="etws_alerts_range_strings" translatable="false">
+        <item>0x1100-0x1102:rat=gsm, emergency=true</item>
+        <item>0x1104-0x1104:rat=gsm, emergency=true</item>
+    </string-array>
+    <!-- 4355-->
+    <string-array name="etws_test_alerts_range_strings" translatable="false">
+        <item>0x1103-0x1103:rat=gsm, emergency=true</item>
+    </string-array>
+
+    <!-- Additional cell broadcast channels to enable -->
+    <string-array name="additional_cbs_channels_strings" translatable="false"></string-array>
+    <!-- Channels to receive emergency alerts -->
+    <string-array name="emergency_alerts_channels_range_strings" translatable="false"></string-array>
+    <!-- Channels to receive public safety messages -->
+    <string-array name="public_safety_messages_channels_range_strings" translatable="false"></string-array>
+
+    <!-- Values that are retrieved from the ListPreference.
+         These must match the alert_reminder_interval_entries list above. -->
+    <string-array name="alert_reminder_interval_values" translatable="false">
+      <item>1</item>
+      <item>2</item>
+      <item>5</item>
+      <item>15</item>
+      <item>0</item>
+    </string-array>
+
+    <!-- Values that are active in the ListPreference.
+         These must be a subset of the alert_reminder_interval_values list above. -->
+    <string-array name="alert_reminder_interval_active_values" translatable="false">
+      <item>1</item>
+      <item>2</item>
+      <item>15</item>
+      <item>0</item>
+    </string-array>
+
+    <!-- Default value that in the ListPreference.
+         These must be a subset of the alert_reminder_interval_values list above. -->
+    <string name="alert_reminder_interval_default_value" translatable="false">0</string>
+
+    <!-- Values that for the vibration pattern. -->
+    <integer-array name="default_vibration_pattern">
+        <item>0</item>      <!-- the number of milliseconds to wait before turning the vibrator on -->
+        <item>2000</item>   <!-- the number of milliseconds for which to keep the vibrator on before turning it off -->
+        <item>500</item>    <!-- Subsequent values alternate between durations in milliseconds to turn the vibrator off or to turn the vibrator on -->
+        <item>1000</item>
+        <item>500</item>
+        <item>1000</item>
+        <item>500</item>
+        <item>2000</item>
+        <item>500</item>
+        <item>1000</item>
+        <item>500</item>
+        <item>1000</item>
+    </integer-array>
+</resources>

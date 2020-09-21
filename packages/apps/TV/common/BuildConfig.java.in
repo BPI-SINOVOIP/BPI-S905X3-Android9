@@ -1,0 +1,9 @@
+/* This file is auto generated. Do not modify. */
+package com.android.tv.common;
+
+public final class BuildConfig {
+    public static final boolean DEBUG = %DEBUG%;
+    public static final boolean ENG = %ENG%;
+    public static final boolean NO_JNI_TEST = false;
+    private BuildConfig() {}
+}

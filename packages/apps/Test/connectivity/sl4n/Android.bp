@@ -1,0 +1,41 @@
+cc_binary {
+    name: "sl4n",
+    header_libs: [
+        "libbluetooth_headers",
+    ],
+    include_dirs: [
+        "system/bt",
+    ],
+    local_include_dirs: [
+        "rapidjson/include",
+        "facades",
+    ],
+    srcs: [
+        "facades/bluetooth/bt_binder_facade.cpp",
+        "facades/test/test_facade.cpp",
+        "main.cpp",
+        "utils/command_receiver.cpp",
+        "utils/common_utils.cpp",
+    ],
+    shared_libs: [
+        "libbinder",
+        "libchrome",
+        "libcutils",
+        "libutils",
+        "libwifi-system",
+        "liblog",
+    ],
+    static_libs: [
+        "libbtcore",
+        "libosi",
+        "libnl",
+        "libbluetooth-binder-common",
+        "libbluetooth-types",
+    ],
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wno-unused-parameter",
+        "-Wno-missing-field-initializers",
+    ],
+}

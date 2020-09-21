@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="system_tracing" msgid="4719188511746319848">"Трасіроўка сістэмы"</string>
+    <string name="record_system_activity" msgid="4339462312915377825">"Адсочванне і аналіз працоўных працэсаў з мэтай павышэння прадукцыйнасці сістэмы"</string>
+    <string name="record_trace" msgid="6416875085186661845">"Запісаць трасіроўку"</string>
+    <string name="trace_debuggable_applications" msgid="7957069895298887899">"Трасіраваць праграмы з магчымасцю адладкi"</string>
+    <string name="categories" msgid="2280163673538611008">"Катэгорыі"</string>
+    <string name="restore_default_categories" msgid="5090536794637169521">"Аднавіць стандартныя катэгорыі"</string>
+    <string name="default_categories_restored" msgid="6861683793680564181">"Стандартныя катэгорыі адноўлены"</string>
+    <string name="applications" msgid="521776761270770549">"Праграмы"</string>
+    <string name="no_debuggable_apps" msgid="4386209254520471208">"Няма даступных праграм з магчымасцю адладкi"</string>
+    <string name="buffer_size" msgid="3370134227980578569">"Памер буфера"</string>
+    <string name="show_quick_settings_tile" msgid="4971147332635291585">"Паказваць плітку Хуткіх налад"</string>
+    <string name="saving_trace" msgid="1468692734770800541">"Трасіроўка захоўваецца"</string>
+    <string name="trace_saved" msgid="5869970594780992309">"Трасіроўка захавана"</string>
+    <string name="tap_to_share" msgid="6766732404489536899">"Націсніце, каб абагуліць трасіроўку"</string>
+    <string name="stop_tracing" msgid="8916938308534164152">"Спыніць трасіроўку"</string>
+    <string name="tracing_categories_unavailable" msgid="5609076391417077752">"Некаторыя катэгорыі трасіроўкі недаступныя:"</string>
+    <string name="trace_is_being_recorded" msgid="5947378146009337469">"Трасіроўка запісваецца"</string>
+    <string name="tap_to_stop_tracing" msgid="6533282719573871806">"Націсніце, каб спыніць трасіроўку"</string>
+    <string name="clear_saved_traces" msgid="4809195654452260944">"Выдаліць захаваныя трасіроўкі"</string>
+    <string name="clear_saved_traces_question" msgid="2184026613055303818">"Выдаліць захаваныя трасіроўкі?"</string>
+    <string name="all_traces_will_be_deleted" msgid="6646545462206955920">"Усе трасіроўкі будуць выдалены з /data/local/traces"</string>
+    <string name="clear" msgid="5484761795406948056">"Выдаліць"</string>
+    <string name="keywords" msgid="736547007949049535">"systrace, трасіроўка, прадукцыйнасць"</string>
+</resources>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) 2016, The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<resources>
+    <!-- Apply a system update. The name and title of the application. [CHAR LIMIT=40] -->
+    <string name="title">Local System Update</string>
+
+    <!-- Device List Fragment -->
+    <!-- An error that the selected file is not a valid update. [CHAR LIMIT=40] -->
+    <string name="invalid_file_type">This is not a valid file for updating</string>
+    <!-- A name of an invalid file. [CHAR LIMIT=40] -->
+    <string name="unknown_file">Unknown File</string>
+    <!-- An error message indicating that the file system could not be found. [CHAR LIMIT=40] -->
+    <string name="cannot_access_storage">Cannot access the storage device</string>
+
+    <!-- UpdateLayoutFragment -->
+    <string name="update_in_progress">Applying system update</string>
+    <!-- The name of the update file. [CHAR LIMIT=40] -->
+    <string name="update_file_name">File: %s"</string>
+    <!-- The size of the update file. [CHAR LIMIT=40] -->
+    <string name="update_file_size">Size: "</string>
+    <!-- A button to start installation of the update. [CHAR LIMIT=40] -->
+    <string name="install_now">Install Now</string>
+    <!-- An error message title to indicate the the update failed. [CHAR LIMIT=40] -->
+    <string name="update_failed">Update Failed</string>
+    <!-- A status that indicates that the update is being verified before installation. [CHAR LIMIT=40] -->
+    <string name="verify_in_progress">Verifying update&#8230;</string>
+    <!-- An error message indicating that verification failed. [CHAR LIMIT=40] -->
+    <string name="verify_failure">Verification Failed. Please select a valid update file.</string>
+    <!-- A status that indicates that the update is ready to be installed. [CHAR LIMIT=40] -->
+    <string name="install_ready">The update is ready to be installed.</string>
+    <!-- A status that indicates the installation process is running. [CHAR LIMIT=40] -->
+    <string name="install_in_progress">Installation in progress&#8230;</string>
+    <!-- A status that indicates that installation worked and update is complete. [CHAR LIMIT=40] -->
+    <string name="install_success">The update is successful.</string>
+    <!-- A status that indicates that installation failed. [CHAR LIMIT=40] -->
+    <string name="install_failed">System update installation failed.</string>
+    <!-- A status that indicates the system is about to reboot. [CHAR LIMIT=40] -->
+    <string name="rebooting">The update is successful. Rebooting now&#8230;</string>
+    <!-- The volumes found on the device. [CHAR LIMIT=40] -->
+    <string name="volumes">Volumes (%d)</string>
+    <!-- The path of the current directory. [CHAR LIMIT=20] -->
+    <string name="path">Path: %s</string>
+</resources>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2017 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.example.partnersupportsampletvinput">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- TODO: READ_EPG_DATA and WRITE_EPG_DATA need to be removed, once we fully
+         migrate all test environment from LMP to MNC, because the permissions
+         are not required from MNC. -->
+    <uses-permission android:name="com.android.providers.tv.permission.READ_EPG_DATA" />
+    <uses-permission android:name="com.android.providers.tv.permission.WRITE_EPG_DATA" />
+    <uses-permission android:name="com.android.tv.permission.RECEIVE_INPUT_EVENT" />
+    <uses-sdk android:targetSdkVersion="26" android:minSdkVersion="23"/>
+    <!--TODO(b/68949299): remove tool hint when we have smaller dependency targets-->
+    <application android:label="@string/partner_support_sample_tv_input"
+            tools:replace="android:label,icon,theme"
+            android:icon="@mipmap/ic_launcher"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
+        <activity android:name=".SampleTvInputSetupActivity"
+                android:theme="@style/Theme.Leanback.GuidedStep">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <service android:name=".SampleTvInputService"
+            android:permission="android.permission.BIND_TV_INPUT"
+            android:label="@string/partner_support_sample_tv_input"
+            android:process="com.example.partnersupportsampletvinput">
+            <intent-filter>
+                <action android:name="android.media.tv.TvInputService" />
+            </intent-filter>
+            <meta-data android:name="android.media.tv.input"
+                android:resource="@xml/sampletvinputservice" />
+        </service>
+    </application>
+</manifest>

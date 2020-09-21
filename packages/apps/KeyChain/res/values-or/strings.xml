@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  Copyright (C) 2011 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+ -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name" msgid="170210454004696382">"କୀ’ ଚେନ୍"</string>
+    <string name="title_no_certs" msgid="8350009443064722873">"କୌଣସି ସର୍ଟିଫିକେଟ୍ ମିଳିଲା ନାହିଁ"</string>
+    <string name="title_select_cert" msgid="3588447616418041699">"ସର୍ଟିଫିକେଟ୍‌ ବାଛନ୍ତୁ"</string>
+    <string name="requesting_application" msgid="1589142627467598421">"%s ଆପ୍‌ଟି ଏକ ସାର୍ଟିଫିକେଟ୍‌ ଅନୁରୋଧ କରିଛି। ଏକ ସାର୍ଟିଫିକେଟ୍‌ ବାଛିବା ଦ୍ୱାରା ଆପ୍‌ଟି ବର୍ତ୍ତମାନ ଏବଂ ଭବିଷ୍ୟତରେ ସର୍ଭର ସହ ଏହି ପରିଚୟ ବ୍ୟବହାର କରିପାରିବ।"</string>
+    <string name="requesting_server" msgid="5832565605998634370">"ଆପ୍‌ଟି ଅନୁରୋଧ କରୁଥିବା ସର୍ଭରକୁ %s ପରି ଚିହ୍ନଟ କରିଛି, କିନ୍ତୁ ଯଦି ଆପଣ ଆପ୍‌ଟିକୁ ବିଶ୍ୱାସ କରନ୍ତି ତେବେ ହିଁ ସାର୍ଟିଫିକେଟ୍‌ ପ୍ରତି ଆପ୍‌ଟିକୁ ଆକସେସ୍‌ ଦେବା ଉଚିତ।"</string>
+    <string name="install_new_cert_message" msgid="4451971501142085495">"ଏକ୍ସଟର୍ନଲ୍‌ ଷ୍ଟୋରେଜ୍‌ରେ ଥିବା ଏକ PKCS#12 ଫାଇଲ୍‌ରୁ ଆପଣ ସର୍ଟିଫିକେଟ୍‌ଗୁଡ଼ିକ ଇନ୍‌ଷ୍ଟଲ୍‌ କରିପାରିବେ, ଯାହାର ଏକ୍ସଟେନ୍ସନ୍‌ ହେଉଛି %1$s କିମ୍ବା ଏକ %2$s।"</string>
+    <string name="install_new_cert_button_label" msgid="903474285774077171">"ସର୍ଟିଫିକେଟ୍‌ ଇନ୍‌ଷ୍ଟଲ୍‍ କରନ୍ତୁ"</string>
+    <string name="allow_button" msgid="3030990695030371561">"ଚୟନ କରନ୍ତୁ"</string>
+    <string name="deny_button" msgid="3766539809121892584">"ପ୍ରତ୍ୟାଖ୍ୟାନ"</string>
+</resources>

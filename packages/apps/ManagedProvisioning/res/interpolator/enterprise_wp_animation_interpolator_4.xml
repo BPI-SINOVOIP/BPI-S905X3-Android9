@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pathInterpolator
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:pathData="M 0.0,0.0 c 0.225153911557,0.0 0.450307829868,0.555555555556 0.675461741425,0.555555555556 c 0.108179418443,0.0 0.216358840132,0.444444444444 0.324538258575,0.444444444444 L 1.0,1.0" />

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2017 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License
+  -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
+    android:orientation="vertical"
+    android:layout_gravity="bottom"
+    android:elevation="@dimen/car_card_view_elevation"
+    android:background="@drawable/round_corner"
+    android:animateLayoutChanges="true"
+    android:alpha="0"
+    android:layout_marginStart="@dimen/car_margin"
+    android:layout_marginEnd="@dimen/car_margin"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:id="@+id/message_container"
+        android:visibility="gone"
+        android:layout_marginStart="@dimen/car_keyline_3"
+        android:layout_marginEnd="@dimen/car_keyline_3"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:layout_width="match_parent" >
+        <!-- expandable spacing -->
+        <View
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_weight="1"/>
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/emoji1"
+                style="@style/MessageEmoji">
+            </TextView>
+            <!-- expandable spacing -->
+            <View
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/emoji2"
+                style="@style/MessageEmoji">
+            </TextView>
+            <!-- expandable spacing -->
+            <View
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/emoji3"
+                style="@style/MessageEmoji">
+            </TextView>
+        </LinearLayout>
+        <!-- expandable spacing -->
+        <View
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/canned_message"
+            style="@style/TextAppearance.Car.Body1.Light"
+            android:gravity="center"
+            android:textStyle="italic"
+            android:layout_gravity="center"
+            android:background="@drawable/rounded_corner_btn_bg"
+            android:text="@string/caned_message_driving_right_now"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/car_touch_target_size">
+        </TextView>
+        <!-- expandable spacing -->
+        <View
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/reply_notice"
+        style="@style/TextAppearance.Car.Body1"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/car_single_line_list_item_height">
+    </TextView>
+
+    <LinearLayout
+        android:id="@+id/voice_plate"
+        android:background="@color/car_card"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/car_single_line_list_item_height">
+        <TextView
+            android:id="@+id/left_btn"
+            style="@style/TextAppearance.Car.Body1"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:textAllCaps="true"
+            android:maxLines="1"
+            android:layout_marginStart="@dimen/car_keyline_1"
+            android:layout_marginEnd="@dimen/voice_plate_button_margin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+        </TextView>
+
+        <ImageView
+            android:id="@+id/voice_icon"
+            android:layout_width="@dimen/car_primary_icon_size"
+            android:layout_height="@dimen/car_primary_icon_size"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_voice_out"
+            android:scaleType="fitCenter">
+        </ImageView>
+
+        <TextView
+            android:id="@+id/right_btn"
+            style="@style/TextAppearance.Car.Body1"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:textAllCaps="true"
+            android:maxLines="1"
+            android:layout_marginStart="@dimen/voice_plate_button_margin"
+            android:layout_marginEnd="@dimen/car_keyline_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+        </TextView>
+    </LinearLayout>
+</LinearLayout>

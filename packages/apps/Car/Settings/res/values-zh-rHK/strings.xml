@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ * Copyright (c) 2017, The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
+ -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="settings_label" msgid="5147911978211079839">"設定"</string>
+    <string name="more_settings_label" msgid="3867559443480110616">"更多"</string>
+    <string name="display_settings" msgid="5325515247739279185">"螢幕"</string>
+    <string name="brightness" msgid="2919605130898772866">"亮度"</string>
+    <string name="auto_brightness_title" msgid="9124647862844666581">"自動調整亮度"</string>
+    <string name="auto_brightness_summary" msgid="4741887033140384352">"根據環境光源調整亮度"</string>
+    <string name="condition_night_display_title" msgid="3777509730126972675">"夜燈模式已開啟"</string>
+    <string name="keywords_display" msgid="3978416985146943922">"螢幕, 觸控螢幕"</string>
+    <string name="keywords_display_brightness_level" msgid="3956411572536209195">"調暗螢幕, 觸控螢幕, 電池"</string>
+    <string name="keywords_display_auto_brightness" msgid="2700310050333468752">"調暗螢幕, 觸控螢幕, 電池"</string>
+    <string name="keywords_display_night_display" msgid="2922294576679769957">"調暗螢幕, 夜間, 色調"</string>
+    <string name="night_mode_tile_label" msgid="6603597795502131664">"夜間模式"</string>
+    <string name="wifi_settings" msgid="7701477685273103841">"Wi‑Fi"</string>
+    <string name="wifi_settings_summary" msgid="6095898149997291025">"設定、管理無線網路存取點"</string>
+    <string name="wifi_starting" msgid="473253087503153167">"正在開啟 Wi-Fi…"</string>
+    <string name="wifi_stopping" msgid="3534173972547890148">"正在關閉 Wi-Fi…"</string>
+    <string name="wifi_failed_forget_message" msgid="121732682699377206">"無法清除網路設定"</string>
+    <string name="wifi_failed_connect_message" msgid="4447498225022147324">"無法連上網路"</string>
+    <string name="wifi_setup_add_network" msgid="3660498520389954620">"新增網路"</string>
+    <string name="wifi_disabled" msgid="5013262438128749950">"Wi-Fi 已停用"</string>
+    <string name="wifi_setup_connect" msgid="3512399573397979101">"連線"</string>
+    <string name="wifi_password" msgid="5565632142720292397">"密碼"</string>
+    <string name="wifi_show_password" msgid="8423293211933521097">"顯示密碼"</string>
+    <string name="wifi_ssid" msgid="488604828159458741">"網路名稱"</string>
+    <string name="wifi_security" msgid="158358046038876532">"安全性"</string>
+    <string name="wifi_signal" msgid="1817579728350364549">"訊號強度"</string>
+    <string name="wifi_status" msgid="5688013206066543952">"狀態"</string>
+    <string name="wifi_speed" msgid="1650692446731850781">"連線速度"</string>
+    <string name="wifi_frequency" msgid="8951455949682864922">"頻率"</string>
+    <string name="wifi_ip_address" msgid="3128140627890954061">"IP 位址"</string>
+    <string name="access_point_tag_key" msgid="1517143378973053337">"access_point_tag_key"</string>
+  <string-array name="wifi_signals">
+    <item msgid="4897376984576812606">"差"</item>
+    <item msgid="2032262610626057081">"一般"</item>
+    <item msgid="3859756017461098953">"良好"</item>
+    <item msgid="1521103743353335724">"極佳"</item>
+  </string-array>
+    <string name="bluetooth_quick_toggle_title" msgid="637869245038061523">"藍牙"</string>
+    <string name="bluetooth_quick_toggle_summary" msgid="4390699431893305353">"開啟藍牙"</string>
+    <string name="bluetooth_settings" msgid="3878243366013638982">"藍牙"</string>
+    <string name="bluetooth_disabled" msgid="4187409401590350572">"藍牙已停用"</string>
+    <string name="bluetooth_settings_title" msgid="3794688574569688649">"藍牙"</string>
+    <string name="bluetooth_settings_summary" msgid="4023303473646769835">"管理連線，設定裝置名稱和可偵測性"</string>
+    <string name="bluetooth_talkback_computer" msgid="5223330129934365312">"電腦"</string>
+    <string name="bluetooth_talkback_headset" msgid="6155254514321149935">"耳機"</string>
+    <string name="bluetooth_talkback_phone" msgid="8833977851215000426">"手機"</string>
+    <string name="bluetooth_talkback_imaging" msgid="8762390801115154654">"顯像裝置"</string>
+    <string name="bluetooth_talkback_headphone" msgid="5362155791551671490">"耳機"</string>
+    <string name="bluetooth_talkback_input_peripheral" msgid="868933277567862622">"周邊輸入裝置"</string>
+    <string name="bluetooth_talkback_bluetooth" msgid="1715933297419387985">"藍牙"</string>
+    <string name="bluetooth_preference_paired_devices" msgid="5875643105380630583">"配對裝置"</string>
+    <string name="bluetooth_preference_found_devices" msgid="125155123214560511">"可用的裝置"</string>
+    <string name="bluetooth_preference_no_paired_devices" msgid="483742146117390001">"沒有任何配對裝置"</string>
+    <string name="bluetooth_preference_no_found_devices" msgid="1391812056491062262">"沒有可用的裝置"</string>
+    <string name="bluetooth_preference_paired_dialog_title" msgid="2470829827455850904">"配對裝置"</string>
+    <string name="bluetooth_preference_paired_dialog_name_label" msgid="3528740139365123415">"名稱"</string>
+    <string name="bluetooth_device_advanced_profile_header_title" msgid="8165093257483965783">"用於"</string>
+    <string name="wifi_ssid_hint" msgid="4155050863239489553">"變更藍牙裝置的名稱"</string>
+    <string name="bluetooth_notif_ticker" msgid="7192577740198156792">"藍牙配對要求"</string>
+    <string name="bluetooth_device_context_pair_connect" msgid="3138105800372470422">"配對並連線"</string>
+    <string name="bluetooth" msgid="5235115159234688629">"藍牙"</string>
+    <string name="bluetooth_pairing_key_msg" msgid="5066825929751599037">"藍牙配對碼"</string>
+    <string name="bluetooth_enable_alphanumeric_pin" msgid="1636575922217263060">"PIN 碼含有字母或符號"</string>
+    <string name="bluetooth_enter_passkey_msg" msgid="5955236916732265593">"輸入配對碼，然後按下返回鍵或 Enter 鍵"</string>
+    <string name="bluetooth_pairing_request" msgid="4769675459526556801">"要與「<xliff:g id="DEVICE_NAME">%1$s</xliff:g>」配對嗎？"</string>
+    <string name="bluetooth_pairing_shares_phonebook" msgid="2015966932886300630">"允許「<xliff:g id="DEVICE_NAME">%1$s</xliff:g>」存取你的聯絡人和通話記錄"</string>
+    <string name="bluetooth_enter_pin_other_device" msgid="7825091249522704764">"你可能也必須在另一個裝置上輸入這組 PIN 碼。"</string>
+    <string name="bluetooth_enter_passkey_other_device" msgid="7147248221018865922">"你可能也必須在另一個裝置上輸入這個密碼金鑰。"</string>
+    <string name="bluetooth_pin_values_hint_16_digits" msgid="418776900816984778">"必須是 16 位數的數字"</string>
+    <string name="bluetooth_pin_values_hint" msgid="1561325817559141687">"通常為 0000 或 1234"</string>
+    <string name="bluetooth_notif_title" msgid="8374602799367803335">"配對要求"</string>
+    <string name="bluetooth_notif_message" msgid="1060821000510108726">"輕觸即可與「<xliff:g id="DEVICE_NAME">%1$s</xliff:g>」配對。"</string>
+    <string name="bluetooth_error_title" msgid="2341600997536511742"></string>
+    <string name="sound_settings" msgid="3072423952331872246">"音效"</string>
+    <string name="ring_volume_title" msgid="3135241004980719442">"鈴聲音量"</string>
+    <string name="navi_volume_title" msgid="946292066759195165">"導航音量"</string>
+    <string name="incoming_call_volume_title" msgid="6972117872424656876">"鈴聲"</string>
+    <string name="notification_volume_title" msgid="6749411263197157876">"通知"</string>
+    <string name="media_volume_title" msgid="6697416686272606865">"媒體"</string>
+    <string name="media_volume_summary" msgid="2961762827637127239">"設定音樂和影片的音量"</string>
+    <string name="alarm_volume_title" msgid="840384014895796587">"鬧鐘"</string>
+    <string name="applications_settings" msgid="794261395191035632">"應用程式資訊"</string>
+    <string name="disable_text" msgid="4358165448648990820">"停用"</string>
+    <string name="enable_text" msgid="1794971777861881238">"啟用"</string>
+    <string name="permissions_label" msgid="2701446753515612685">"權限"</string>
+    <string name="application_version_label" msgid="8556889839783311649">"版本：%1$s"</string>
+    <string name="runtime_permissions_summary_no_permissions_granted" msgid="6001439205270250021">"未取得任何授權"</string>
+    <string name="runtime_permissions_summary_no_permissions_requested" msgid="4074220596273432442">"未要求任何權限"</string>
+    <string name="data_usage_summary_title" msgid="4368024763485916986">"數據用量"</string>
+    <string name="data_usage_app_summary_title" msgid="5012851696585421420">"應用程式數據用量"</string>
+    <string name="force_stop" msgid="2153183697014720520">"強制停止"</string>
+    <string name="computing_size" msgid="5791407621793083965">"計算中…"</string>
+    <plurals name="runtime_permissions_additional_count" formatted="false" msgid="3513360187065317613">
+      <item quantity="other">還有其他 <xliff:g id="COUNT_1">%d</xliff:g> 項權限</item>
+      <item quantity="one">還有其他 <xliff:g id="COUNT_0">%d</xliff:g> 項權限</item>
+    </plurals>
+    <string name="system_setting_title" msgid="6864599341809463440">"系統"</string>
+    <string name="system_update_settings_list_item_title" msgid="5182439376921868735">"系統更新"</string>
+    <string name="system_update_settings_list_item_summary" msgid="7395202602021608371"></string>
+    <string name="firmware_version" msgid="8491753744549309333">"Android 版本"</string>
+    <string name="security_patch" msgid="4794276590178386903">"Android 安全性修補程式等級"</string>
+    <string name="model_info" msgid="4966408071657934452">"型號"</string>
+    <string name="baseband_version" msgid="2370088062235041897">"基頻版本"</string>
+    <string name="kernel_version" msgid="7327212934187011508">"核心版本"</string>
+    <string name="build_number" msgid="3997326631001009102">"版本號碼"</string>
+    <string name="device_info_not_available" msgid="2095601973977376655">"無法取得"</string>
+    <string name="device_status_activity_title" msgid="4083567497305368200">"狀態"</string>
+    <string name="device_status" msgid="267298179806290920">"狀態"</string>
+    <string name="device_status_summary" product="tablet" msgid="600543254608862075">"電池、網路狀態及其他資訊"</string>
+    <string name="device_status_summary" product="default" msgid="9130360324418117815">"電話號碼、訊號等。"</string>
+    <string name="about_settings" msgid="4329457966672592345">"關於"</string>
+    <string name="about_summary" msgid="5374623866267691206">"Android <xliff:g id="VERSION">%1$s</xliff:g>"</string>
+    <string name="about_settings_summary" msgid="7975072809083281401">"查看法律資訊、狀態、軟體版本"</string>
+    <string name="legal_information" msgid="1838443759229784762">"法律資訊"</string>
+    <string name="contributors_title" msgid="7698463793409916113">"貢獻者"</string>
+    <string name="manual" msgid="4819839169843240804">"手動"</string>
+    <string name="regulatory_labels" msgid="3165587388499646779">"法規標籤"</string>
+    <string name="safety_and_regulatory_info" msgid="1204127697132067734">"安全性和法規手冊"</string>
+    <string name="copyright_title" msgid="4220237202917417876">"版權"</string>
+    <string name="license_title" msgid="936705938435249965">"授權"</string>
+    <string name="terms_title" msgid="5201471373602628765">"條款及細則"</string>
+    <string name="webview_license_title" msgid="2531829466541104826">"系統 WebView 授權"</string>
+    <string name="wallpaper_attributions" msgid="9201272150014500697">"桌布"</string>
+    <string name="wallpaper_attributions_values" msgid="4292446851583307603">"衛星影像提供者：\n©2014 CNES / Astrium, DigitalGlobe, Bluesky"</string>
+    <string name="settings_license_activity_title" msgid="8499293744313077709">"第三方授權"</string>
+    <string name="settings_license_activity_unavailable" msgid="6104592821991010350">"載入授權時發生問題。"</string>
+    <string name="settings_license_activity_loading" msgid="6163263123009681841">"載入中…"</string>
+    <string name="date_and_time_settings_title" msgid="4058492663544475485">"日期和時間"</string>
+    <string name="date_and_time_settings_title_setup_wizard" msgid="7580119979694174107">"設定日期和時間"</string>
+    <string name="date_and_time_settings_summary" msgid="7669856855390804666">"設定日期、時間、時區及時間格式"</string>
+    <string name="date_time_auto" msgid="3570339569471779767">"自動判斷日期和時間"</string>
+    <string name="date_time_auto_summary" msgid="3311706425095342759">"使用網路提供的時間"</string>
+    <string name="zone_auto" msgid="3701878581920206160">"自動判定時區"</string>
+    <string name="zone_auto_summary" msgid="4345856882906981864">"使用網路提供的時區"</string>
+    <string name="date_time_24hour_title" msgid="3025576547136168692">"24 小時制"</string>
+    <string name="date_time_24hour" msgid="1137618702556486913">"使用 24 小時格式"</string>
+    <string name="date_time_set_time_title" msgid="5884883050656937853">"時間"</string>
+    <string name="date_time_set_time" msgid="6449555153906058248">"設定時間"</string>
+    <string name="date_time_set_timezone_title" msgid="3001779256157093425">"時區"</string>
+    <string name="date_time_set_timezone" msgid="4759353576185916944">"選取時區"</string>
+    <string name="date_time_set_date_title" msgid="6834785820357051138">"日期"</string>
+    <string name="date_time_set_date" msgid="2537494485643283230">"設定日期"</string>
+    <string name="zone_list_menu_sort_alphabetically" msgid="7041628618528523514">"依照字母排序"</string>
+    <string name="zone_list_menu_sort_by_timezone" msgid="4944880536057914136">"依照時區排序"</string>
+    <string name="date_picker_title" msgid="1533614225273770178">"日期"</string>
+    <string name="time_picker_title" msgid="7436045944320504639">"時間"</string>
+    <string name="user_add_user_menu" msgid="5319151436895941496">"新增使用者"</string>
+    <string name="user_add_account_menu" msgid="6625351983590713721">"新增帳戶"</string>
+    <string name="user_delete_user_description" msgid="2300280525351142435">"刪除使用者"</string>
+    <string name="user_new_user_name" msgid="7115771396412339662">"新使用者"</string>
+    <string name="user_guest" msgid="3465399481257448601">"訪客"</string>
+    <string name="user_switch" msgid="6544839750534690781">"切換"</string>
+    <string name="current_user_name" msgid="3813671533249316823">"你 (%1$s)"</string>
+    <string name="user_name_label" msgid="3210832645046206845">"名稱"</string>
+    <string name="user_summary_not_set_up" msgid="1473688119241224145">"尚未設定"</string>
+    <string name="edit_user_name_title" msgid="6890782937520262478">"編輯使用者名稱"</string>
+    <string name="users_list_title" msgid="770764290290240909">"使用者"</string>
+    <string name="accounts_settings_title" msgid="436190037084293471">"帳戶"</string>
+    <string name="user_details_title" msgid="1104762783367701498">"使用者"</string>
+    <string name="no_accounts_added" msgid="5148163140691096055">"未新增任何帳戶"</string>
+    <string name="account_list_title" msgid="7631588514613843065">"<xliff:g id="CURRENT_USER_NAME">%1$s</xliff:g> 的帳戶"</string>
+    <string name="account_details_title" msgid="7529571432258448573">"帳戶資訊"</string>
+    <string name="add_account_title" msgid="5988746086885210040">"新增帳戶"</string>
+    <string name="add_an_account" msgid="1072285034300995091">"新增帳戶"</string>
+    <string name="user_cannot_add_accounts_message" msgid="6775605884544906797">"設有限制的個人資料無法新增帳戶"</string>
+    <string name="remove_account_title" msgid="8840386525787836381">"移除帳戶"</string>
+    <string name="really_remove_account_title" msgid="3555164432587924900">"要移除帳戶嗎？"</string>
+    <string name="really_remove_account_message" msgid="4296769280849579900">"移除帳戶後，裝置上所有的訊息、聯絡人和其他資料將全部遭到刪除！"</string>
+    <string name="remove_account_failed" msgid="7472511529086294087">"你的管理員不允許這項變更"</string>
+    <string name="really_remove_user_title" msgid="4990029019291756762">"要移除這位使用者嗎？"</string>
+    <string name="really_remove_user_message" msgid="3828090902833944533">"所有應用程式和資料都會遭到刪除。"</string>
+    <string name="remove_user_error_title" msgid="2038275458657689420">"無法移除使用者。"</string>
+    <string name="remove_user_error_message" msgid="6803947507134323358">"要再試一次嗎？"</string>
+    <string name="remove_user_error_dismiss" msgid="4006591159426844335">"關閉"</string>
+    <string name="remove_user_error_retry" msgid="8291692909396995093">"重試"</string>
+    <string name="user_add_user_title" msgid="7458813670614932479">"要新增使用者嗎？"</string>
+    <string name="user_add_user_message_setup" msgid="6030901156040053106">"新增的使用者需要自行設定個人空間。"</string>
+    <string name="user_add_user_message_update" msgid="1528170913388932459">"任何使用者都可以為所有其他使用者更新應用程式。"</string>
+    <string name="security_settings_title" msgid="6955331714774709746">"安全性"</string>
+    <string name="security_settings_subtitle" msgid="2244635550239273229">"螢幕鎖定"</string>
+    <string name="security_lock_none" msgid="1054645093754839638">"無"</string>
+    <string name="security_lock_pattern" msgid="1174352995619563104">"圖案"</string>
+    <string name="security_lock_pin" msgid="4891899974369503200">"PIN"</string>
+    <string name="security_lock_password" msgid="4420203740048322494">"密碼"</string>
+    <string name="lock_settings_picker_title" msgid="6590330165050361632">"選擇鎖定類型"</string>
+    <string name="screen_lock_options" msgid="7023338635352915768">"螢幕鎖定選項"</string>
+    <string name="lock_settings_enter_pattern" msgid="4826034565853171624">"畫出您的圖案"</string>
+    <string name="lockpattern_confirm_button_text" msgid="7784925958324484965">"確認"</string>
+    <string name="lockpattern_restart_button_text" msgid="9355771277617537">"重畫"</string>
+    <string name="continue_button_text" msgid="5129979170426836641">"繼續"</string>
+    <string name="lockscreen_retry_button_text" msgid="5314212350698701242">"重試"</string>
+    <string name="lockscreen_skip_button_text" msgid="3755748786396198091">"略過"</string>
+    <string name="set_screen_lock" msgid="5239317292691332780">"設定螢幕鎖定"</string>
+    <string name="lockscreen_choose_your_pattern" msgid="6801175111142593404">"選擇圖案"</string>
+    <string name="current_screen_lock" msgid="637651611145979587">"目前的螢幕鎖定方式"</string>
+    <string name="choose_lock_pattern_message" msgid="6242765203541309524">"為了安全起見，請設定圖案"</string>
+    <string name="lockpattern_retry_button_text" msgid="4655398824001857843">"清除"</string>
+    <string name="lockpattern_cancel_button_text" msgid="4068764595622381766">"取消"</string>
+    <string name="lockpattern_pattern_confirmed" msgid="5984306638250515385">"你的新解鎖圖案"</string>
+    <string name="lockpattern_recording_intro_header" msgid="7864149726033694408">"畫出解鎖圖案"</string>
+    <string name="lockpattern_recording_inprogress" msgid="1575019990484725964">"完成時請移開手指"</string>
+    <string name="lockpattern_pattern_entered" msgid="6103071005285320575">"已記錄圖案"</string>
+    <string name="lockpattern_need_to_confirm" msgid="4648070076022940382">"請再畫一次，以確認圖案無誤"</string>
+    <string name="lockpattern_recording_incorrect_too_short" msgid="2417932185815083082">"圖案至少需連接 4 點，請再試一次。"</string>
+    <string name="lockpattern_pattern_wrong" msgid="929223969555399363">"圖案錯誤"</string>
+    <string name="lockpattern_settings_help_how_to_record" msgid="4436556875843192284">"如何畫出解鎖圖案"</string>
+    <string name="error_saving_lockpattern" msgid="2933512812768570130">"儲存圖案時發生錯誤"</string>
+    <string name="okay" msgid="4589873324439764349">"確定"</string>
+    <string name="remove_screen_lock_title" msgid="1234382338764193387">"要移除螢幕鎖定嗎？"</string>
+    <string name="remove_screen_lock_message" msgid="6675850371585564965">"這樣，任何人都能存取您的帳戶"</string>
+    <string name="lock_settings_enter_pin" msgid="1669172111244633904">"請輸入 PIN"</string>
+    <string name="lock_settings_enter_password" msgid="2636669926649496367">"請輸入密碼"</string>
+    <string name="choose_lock_pin_message" msgid="2963792070267774417">"為了安全起見，請設定 PIN 碼"</string>
+    <string name="confirm_your_pin_header" msgid="9096581288537156102">"請重新輸入 PIN 碼"</string>
+    <string name="choose_lock_pin_hints" msgid="7362906249992020844">"PIN 碼至少要有 4 個數字"</string>
+    <string name="lockpin_invalid_pin" msgid="2149191577096327424">"PIN 無效，必須至少有 4 位數字。"</string>
+    <string name="confirm_pins_dont_match" msgid="4607110139373520720">"PIN 碼不符"</string>
+    <string name="error_saving_lockpin" msgid="9011960139736000393">"儲存 PIN 碼時發生錯誤"</string>
+    <string name="lockscreen_wrong_pin" msgid="4922465731473805306">"PIN 錯誤"</string>
+    <string name="lockscreen_wrong_password" msgid="5757087577162231825">"密碼錯誤"</string>
+    <string name="choose_lock_password_message" msgid="6124341145027370784">"為了安全起見，請設定密碼"</string>
+    <string name="confirm_your_password_header" msgid="7052891840366724938">"請重新輸入密碼"</string>
+    <string name="confirm_passwords_dont_match" msgid="7300229965206501753">"密碼不符"</string>
+    <string name="lockpassword_clear_label" msgid="6363680971025188064">"清除"</string>
+    <string name="lockpassword_cancel_label" msgid="5791237697404166450">"取消"</string>
+    <string name="lockpassword_confirm_label" msgid="5918463281546146953">"確認"</string>
+    <string name="choose_lock_password_hints" msgid="1802962836351866087">"密碼長度必須介於 4 到 8 個字元之間，當中要包含至少 1 個數字"</string>
+    <string name="lockpassword_password_too_short" msgid="6681218025001328405">"至少要有 <xliff:g id="COUNT">%d</xliff:g> 個字元"</string>
+    <string name="lockpassword_pin_too_short" msgid="6363004004424904218">"PIN 碼至少要有 <xliff:g id="COUNT">%d</xliff:g> 個數字"</string>
+    <string name="lockpassword_password_too_long" msgid="7530214940279491291">"長度必須少於 <xliff:g id="NUMBER">%d</xliff:g> 個字元"</string>
+    <string name="lockpassword_pin_too_long" msgid="62957683396974404">"長度必須少於 <xliff:g id="NUMBER">%d</xliff:g> 個數字"</string>
+    <string name="lockpassword_pin_contains_non_digits" msgid="3044526271686839923">"只可包含數字 0-9。"</string>
+    <string name="lockpassword_pin_recently_used" msgid="7901918311213276207">"裝置管理員不允許使用最近用過的 PIN 碼"</string>
+    <string name="lockpassword_pin_blacklisted_by_admin" msgid="7412709707800738442">"你的 IT 管理員已封鎖常見 PIN 碼，請改用其他 PIN 碼。"</string>
+    <string name="lockpassword_illegal_character" msgid="1984970060523635618">"不可包含無效字元。"</string>
+    <string name="lockpassword_invalid_password" msgid="4987689810161043367">"密碼無效。長度必須介乎 4 至 8 個字元之間，並包含至少 1 個數字和 1 個字母；不可使用空白字元。"</string>
+    <plurals name="lockpassword_password_requires_letters" formatted="false" msgid="424616259312760303">
+      <item quantity="other">至少必須包含 <xliff:g id="COUNT">%d</xliff:g> 個字母</item>
+      <item quantity="one">至少必須包含 1 個字母</item>
+    </plurals>
+    <plurals name="lockpassword_password_requires_lowercase" formatted="false" msgid="2267487180744744833">
+      <item quantity="other">至少必須包含 <xliff:g id="COUNT">%d</xliff:g> 個小寫字母</item>
+      <item quantity="one">至少必須包含 1 個小寫字母</item>
+    </plurals>
+    <plurals name="lockpassword_password_requires_uppercase" formatted="false" msgid="7999264563026517898">
+      <item quantity="other">至少必須包含 <xliff:g id="COUNT">%d</xliff:g> 個大寫字母</item>
+      <item quantity="one">至少必須包含 1 個大寫字母</item>
+    </plurals>
+    <plurals name="lockpassword_password_requires_numeric" formatted="false" msgid="7935079851855168646">
+      <item quantity="other">至少必須包含 <xliff:g id="COUNT">%d</xliff:g> 個數字</item>
+      <item quantity="one">至少必須包含 1 個數字</item>
+    </plurals>
+    <plurals name="lockpassword_password_requires_symbols" formatted="false" msgid="3994046435150094132">
+      <item quantity="other">至少必須包含 <xliff:g id="COUNT">%d</xliff:g> 個特殊符號</item>
+      <item quantity="one">至少必須包含 1 個特殊符號</item>
+    </plurals>
+    <plurals name="lockpassword_password_requires_nonletter" formatted="false" msgid="6878486326748506524">
+      <item quantity="other">至少必須包含 <xliff:g id="COUNT">%d</xliff:g> 個非字母字元</item>
+      <item quantity="one">至少必須包含 1 個非字母字元</item>
+    </plurals>
+    <string name="lockpassword_password_recently_used" msgid="8255729487108602924">"裝置管理員不允許使用最近用過的密碼"</string>
+    <string name="error_saving_password" msgid="8334882262622500658">"儲存密碼時發生錯誤"</string>
+    <string name="lockpassword_password_blacklisted_by_admin" msgid="7965893810326503891">"你的 IT 管理員已封鎖常見密碼，請改用其他密碼。"</string>
+    <string name="lockpassword_pin_no_sequential_digits" msgid="38813552228809240">"不可使用依遞增或遞減順序排列或重複的連續數字。"</string>
+    <string name="setup_lock_settings_options_button_label" msgid="3337845811029780896">"螢幕鎖定選項"</string>
+    <string name="forget" msgid="3971143908183848527">"清除"</string>
+    <string name="delete_button" msgid="5840500432614610850">"刪除"</string>
+    <string name="remove_button" msgid="6664656962868194178">"移除"</string>
+    <string name="cancel" msgid="750286395700355455">"取消"</string>
+    <string name="backspace_key" msgid="1545590866688979099">"Backspace 鍵"</string>
+    <string name="enter_key" msgid="2121394305541579468">"輸入密鑰"</string>
+    <string name="exit_retail_button_text" msgid="6093240315583384473">"結束示範模式"</string>
+    <string name="exit_retail_mode_dialog_title" msgid="7970631760237469168">"結束示範模式"</string>
+    <string name="exit_retail_mode_dialog_body" msgid="8314316171782527301">"執行這項操作後，示範模式帳戶會刪除，而系統會回復原廠設定。所有使用者資料將會失去。"</string>
+    <string name="exit_retail_mode_dialog_confirmation_button_text" msgid="3147249675355968649">"結束示範模式"</string>
+    <string name="suggestion_primary_button" msgid="6421115494714083020">"完成設定"</string>
+    <string name="suggestion_secondary_button" msgid="7075088546904464681">"暫時不要"</string>
+    <string name="restricted_while_driving" msgid="6217369093121968299">"無法在駕駛時使用此功能。"</string>
+    <!-- no translation found for add_user_restricted_while_driving (6384004350628271556) -->
+    <skip />
+</resources>

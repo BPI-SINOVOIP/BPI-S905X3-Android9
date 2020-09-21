@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2018 The Android Open Source Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Row 1 -->
+    <Button
+        android:id="@+id/key1"
+        style="@style/PinPadKey"
+        android:text="@string/one"
+        android:tag="1"/>
+    <Button
+        android:id="@+id/key2"
+        style="@style/PinPadKey"
+        android:text="@string/two"
+        android:tag="2"/>
+    <Button
+        android:id="@+id/key3"
+        style="@style/PinPadKey"
+        android:text="@string/three"
+        android:tag="3"/>
+
+    <!-- Row 2 -->
+    <Button
+        android:id="@+id/key4"
+        style="@style/PinPadKey"
+        android:text="@string/four"
+        android:tag="4"/>
+    <Button
+        android:id="@+id/key5"
+        style="@style/PinPadKey"
+        android:text="@string/five"
+        android:tag="5"/>
+    <Button
+        android:id="@+id/key6"
+        style="@style/PinPadKey"
+        android:text="@string/six"
+        android:tag="6"/>
+
+    <!-- Row 3 -->
+    <Button
+        android:id="@+id/key7"
+        style="@style/PinPadKey"
+        android:text="@string/seven"
+        android:tag="7"/>
+    <Button
+        android:id="@+id/key8"
+        style="@style/PinPadKey"
+        android:text="@string/eight"
+        android:tag="8"/>
+    <Button
+        android:id="@+id/key9"
+        style="@style/PinPadKey"
+        android:text="@string/nine"
+        android:tag="9"/>
+
+    <!-- Row 4 -->
+    <ImageButton
+        android:id="@+id/key_backspace"
+        style="@style/PinPadKey"
+        android:src="@drawable/ic_backspace"
+        android:tint="@color/car_body3"
+        android:contentDescription="@string/backspace_key"/>
+    <Button
+        android:id="@+id/key0"
+        style="@style/PinPadKey"
+        android:text="@string/zero"
+        android:tag="0"/>
+    <ImageButton
+        android:id="@+id/key_enter"
+        style="@style/PinPadKey"
+        android:contentDescription="@string/enter_key"/>
+</merge>

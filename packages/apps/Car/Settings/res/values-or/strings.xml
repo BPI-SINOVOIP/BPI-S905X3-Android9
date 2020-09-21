@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ * Copyright (c) 2017, The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
+ -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- no translation found for settings_label (5147911978211079839) -->
+    <skip />
+    <string name="more_settings_label" msgid="3867559443480110616">"ଅଧିକ"</string>
+    <!-- no translation found for display_settings (5325515247739279185) -->
+    <skip />
+    <!-- no translation found for brightness (2919605130898772866) -->
+    <skip />
+    <!-- no translation found for auto_brightness_title (9124647862844666581) -->
+    <skip />
+    <!-- no translation found for auto_brightness_summary (4741887033140384352) -->
+    <skip />
+    <!-- no translation found for condition_night_display_title (3777509730126972675) -->
+    <skip />
+    <!-- no translation found for keywords_display (3978416985146943922) -->
+    <skip />
+    <!-- no translation found for keywords_display_brightness_level (3956411572536209195) -->
+    <skip />
+    <!-- no translation found for keywords_display_auto_brightness (2700310050333468752) -->
+    <skip />
+    <!-- no translation found for keywords_display_night_display (2922294576679769957) -->
+    <skip />
+    <string name="night_mode_tile_label" msgid="6603597795502131664">"ନାଇଟ୍ ମୋଡ୍"</string>
+    <!-- no translation found for wifi_settings (7701477685273103841) -->
+    <skip />
+    <!-- no translation found for wifi_settings_summary (6095898149997291025) -->
+    <skip />
+    <!-- no translation found for wifi_starting (473253087503153167) -->
+    <skip />
+    <!-- no translation found for wifi_stopping (3534173972547890148) -->
+    <skip />
+    <!-- no translation found for wifi_failed_forget_message (121732682699377206) -->
+    <skip />
+    <!-- no translation found for wifi_failed_connect_message (4447498225022147324) -->
+    <skip />
+    <!-- no translation found for wifi_setup_add_network (3660498520389954620) -->
+    <skip />
+    <!-- no translation found for wifi_disabled (5013262438128749950) -->
+    <skip />
+    <!-- no translation found for wifi_setup_connect (3512399573397979101) -->
+    <skip />
+    <!-- no translation found for wifi_password (5565632142720292397) -->
+    <skip />
+    <!-- no translation found for wifi_show_password (8423293211933521097) -->
+    <skip />
+    <!-- no translation found for wifi_ssid (488604828159458741) -->
+    <skip />
+    <!-- no translation found for wifi_security (158358046038876532) -->
+    <skip />
+    <!-- no translation found for wifi_signal (1817579728350364549) -->
+    <skip />
+    <!-- no translation found for wifi_status (5688013206066543952) -->
+    <skip />
+    <!-- no translation found for wifi_speed (1650692446731850781) -->
+    <skip />
+    <!-- no translation found for wifi_frequency (8951455949682864922) -->
+    <skip />
+    <!-- no translation found for wifi_ip_address (3128140627890954061) -->
+    <skip />
+    <!-- no translation found for access_point_tag_key (1517143378973053337) -->
+    <skip />
+    <!-- no translation found for wifi_signals:0 (4897376984576812606) -->
+    <!-- no translation found for wifi_signals:1 (2032262610626057081) -->
+    <!-- no translation found for wifi_signals:2 (3859756017461098953) -->
+    <!-- no translation found for wifi_signals:3 (1521103743353335724) -->
+    <!-- no translation found for bluetooth_quick_toggle_title (637869245038061523) -->
+    <skip />
+    <!-- no translation found for bluetooth_quick_toggle_summary (4390699431893305353) -->
+    <skip />
+    <!-- no translation found for bluetooth_settings (3878243366013638982) -->
+    <skip />
+    <!-- no translation found for bluetooth_disabled (4187409401590350572) -->
+    <skip />
+    <!-- no translation found for bluetooth_settings_title (3794688574569688649) -->
+    <skip />
+    <!-- no translation found for bluetooth_settings_summary (4023303473646769835) -->
+    <skip />
+    <!-- no translation found for bluetooth_talkback_computer (5223330129934365312) -->
+    <skip />
+    <!-- no translation found for bluetooth_talkback_headset (6155254514321149935) -->
+    <skip />
+    <!-- no translation found for bluetooth_talkback_phone (8833977851215000426) -->
+    <skip />
+    <!-- no translation found for bluetooth_talkback_imaging (8762390801115154654) -->
+    <skip />
+    <!-- no translation found for bluetooth_talkback_headphone (5362155791551671490) -->
+    <skip />
+    <!-- no translation found for bluetooth_talkback_input_peripheral (868933277567862622) -->
+    <skip />
+    <!-- no translation found for bluetooth_talkback_bluetooth (1715933297419387985) -->
+    <skip />
+    <!-- no translation found for bluetooth_preference_paired_devices (5875643105380630583) -->
+    <skip />
+    <!-- no translation found for bluetooth_preference_found_devices (125155123214560511) -->
+    <skip />
+    <!-- no translation found for bluetooth_preference_no_paired_devices (483742146117390001) -->
+    <skip />
+    <!-- no translation found for bluetooth_preference_no_found_devices (1391812056491062262) -->
+    <skip />
+    <!-- no translation found for bluetooth_preference_paired_dialog_title (2470829827455850904) -->
+    <skip />
+    <!-- no translation found for bluetooth_preference_paired_dialog_name_label (3528740139365123415) -->
+    <skip />
+    <!-- no translation found for bluetooth_device_advanced_profile_header_title (8165093257483965783) -->
+    <skip />
+    <!-- no translation found for wifi_ssid_hint (4155050863239489553) -->
+    <skip />
+    <!-- no translation found for bluetooth_notif_ticker (7192577740198156792) -->
+    <skip />
+    <!-- no translation found for bluetooth_device_context_pair_connect (3138105800372470422) -->
+    <skip />
+    <!-- no translation found for bluetooth (5235115159234688629) -->
+    <skip />
+    <!-- no translation found for bluetooth_pairing_key_msg (5066825929751599037) -->
+    <skip />
+    <!-- no translation found for bluetooth_enable_alphanumeric_pin (1636575922217263060) -->
+    <skip />
+    <!-- no translation found for bluetooth_enter_passkey_msg (5955236916732265593) -->
+    <skip />
+    <!-- no translation found for bluetooth_pairing_request (4769675459526556801) -->
+    <skip />
+    <!-- no translation found for bluetooth_pairing_shares_phonebook (2015966932886300630) -->
+    <skip />
+    <!-- no translation found for bluetooth_enter_pin_other_device (7825091249522704764) -->
+    <skip />
+    <!-- no translation found for bluetooth_enter_passkey_other_device (7147248221018865922) -->
+    <skip />
+    <!-- no translation found for bluetooth_pin_values_hint_16_digits (418776900816984778) -->
+    <skip />
+    <!-- no translation found for bluetooth_pin_values_hint (1561325817559141687) -->
+    <skip />
+    <!-- no translation found for bluetooth_notif_title (8374602799367803335) -->
+    <skip />
+    <!-- no translation found for bluetooth_notif_message (1060821000510108726) -->
+    <skip />
+    <string name="bluetooth_error_title" msgid="2341600997536511742"></string>
+    <!-- no translation found for sound_settings (3072423952331872246) -->
+    <skip />
+    <!-- no translation found for ring_volume_title (3135241004980719442) -->
+    <skip />
+    <!-- no translation found for navi_volume_title (946292066759195165) -->
+    <skip />
+    <!-- no translation found for incoming_call_volume_title (6972117872424656876) -->
+    <skip />
+    <!-- no translation found for notification_volume_title (6749411263197157876) -->
+    <skip />
+    <!-- no translation found for media_volume_title (6697416686272606865) -->
+    <skip />
+    <!-- no translation found for media_volume_summary (2961762827637127239) -->
+    <skip />
+    <!-- no translation found for alarm_volume_title (840384014895796587) -->
+    <skip />
+    <!-- no translation found for applications_settings (794261395191035632) -->
+    <skip />
+    <!-- no translation found for disable_text (4358165448648990820) -->
+    <skip />
+    <!-- no translation found for enable_text (1794971777861881238) -->
+    <skip />
+    <!-- no translation found for permissions_label (2701446753515612685) -->
+    <skip />
+    <!-- no translation found for application_version_label (8556889839783311649) -->
+    <skip />
+    <!-- no translation found for runtime_permissions_summary_no_permissions_granted (6001439205270250021) -->
+    <skip />
+    <!-- no translation found for runtime_permissions_summary_no_permissions_requested (4074220596273432442) -->
+    <skip />
+    <!-- no translation found for data_usage_summary_title (4368024763485916986) -->
+    <skip />
+    <!-- no translation found for data_usage_app_summary_title (5012851696585421420) -->
+    <skip />
+    <!-- no translation found for force_stop (2153183697014720520) -->
+    <skip />
+    <!-- no translation found for computing_size (5791407621793083965) -->
+    <skip />
+    <!-- no translation found for runtime_permissions_additional_count (3513360187065317613) -->
+    <!-- no translation found for system_setting_title (6864599341809463440) -->
+    <skip />
+    <!-- no translation found for system_update_settings_list_item_title (5182439376921868735) -->
+    <skip />
+    <string name="system_update_settings_list_item_summary" msgid="7395202602021608371"></string>
+    <!-- no translation found for firmware_version (8491753744549309333) -->
+    <skip />
+    <!-- no translation found for security_patch (4794276590178386903) -->
+    <skip />
+    <!-- no translation found for model_info (4966408071657934452) -->
+    <skip />
+    <!-- no translation found for baseband_version (2370088062235041897) -->
+    <skip />
+    <!-- no translation found for kernel_version (7327212934187011508) -->
+    <skip />
+    <!-- no translation found for build_number (3997326631001009102) -->
+    <skip />
+    <!-- no translation found for device_info_not_available (2095601973977376655) -->
+    <skip />
+    <!-- no translation found for device_status_activity_title (4083567497305368200) -->
+    <skip />
+    <!-- no translation found for device_status (267298179806290920) -->
+    <skip />
+    <!-- no translation found for device_status_summary (600543254608862075) -->
+    <skip />
+    <!-- no translation found for device_status_summary (9130360324418117815) -->
+    <skip />
+    <!-- no translation found for about_settings (4329457966672592345) -->
+    <skip />
+    <!-- no translation found for about_summary (5374623866267691206) -->
+    <skip />
+    <!-- no translation found for about_settings_summary (7975072809083281401) -->
+    <skip />
+    <!-- no translation found for legal_information (1838443759229784762) -->
+    <skip />
+    <!-- no translation found for contributors_title (7698463793409916113) -->
+    <skip />
+    <!-- no translation found for manual (4819839169843240804) -->
+    <skip />
+    <!-- no translation found for regulatory_labels (3165587388499646779) -->
+    <skip />
+    <!-- no translation found for safety_and_regulatory_info (1204127697132067734) -->
+    <skip />
+    <!-- no translation found for copyright_title (4220237202917417876) -->
+    <skip />
+    <!-- no translation found for license_title (936705938435249965) -->
+    <skip />
+    <!-- no translation found for terms_title (5201471373602628765) -->
+    <skip />
+    <!-- no translation found for webview_license_title (2531829466541104826) -->
+    <skip />
+    <!-- no translation found for wallpaper_attributions (9201272150014500697) -->
+    <skip />
+    <!-- no translation found for wallpaper_attributions_values (4292446851583307603) -->
+    <skip />
+    <!-- no translation found for settings_license_activity_title (8499293744313077709) -->
+    <skip />
+    <!-- no translation found for settings_license_activity_unavailable (6104592821991010350) -->
+    <skip />
+    <!-- no translation found for settings_license_activity_loading (6163263123009681841) -->
+    <skip />
+    <!-- no translation found for date_and_time_settings_title (4058492663544475485) -->
+    <skip />
+    <!-- no translation found for date_and_time_settings_title_setup_wizard (7580119979694174107) -->
+    <skip />
+    <!-- no translation found for date_and_time_settings_summary (7669856855390804666) -->
+    <skip />
+    <!-- no translation found for date_time_auto (3570339569471779767) -->
+    <skip />
+    <!-- no translation found for date_time_auto_summary (3311706425095342759) -->
+    <skip />
+    <!-- no translation found for zone_auto (3701878581920206160) -->
+    <skip />
+    <!-- no translation found for zone_auto_summary (4345856882906981864) -->
+    <skip />
+    <!-- no translation found for date_time_24hour_title (3025576547136168692) -->
+    <skip />
+    <!-- no translation found for date_time_24hour (1137618702556486913) -->
+    <skip />
+    <!-- no translation found for date_time_set_time_title (5884883050656937853) -->
+    <skip />
+    <!-- no translation found for date_time_set_time (6449555153906058248) -->
+    <skip />
+    <!-- no translation found for date_time_set_timezone_title (3001779256157093425) -->
+    <skip />
+    <!-- no translation found for date_time_set_timezone (4759353576185916944) -->
+    <skip />
+    <!-- no translation found for date_time_set_date_title (6834785820357051138) -->
+    <skip />
+    <!-- no translation found for date_time_set_date (2537494485643283230) -->
+    <skip />
+    <!-- no translation found for zone_list_menu_sort_alphabetically (7041628618528523514) -->
+    <skip />
+    <!-- no translation found for zone_list_menu_sort_by_timezone (4944880536057914136) -->
+    <skip />
+    <!-- no translation found for date_picker_title (1533614225273770178) -->
+    <skip />
+    <!-- no translation found for time_picker_title (7436045944320504639) -->
+    <skip />
+    <!-- no translation found for user_add_user_menu (5319151436895941496) -->
+    <skip />
+    <!-- no translation found for user_add_account_menu (6625351983590713721) -->
+    <skip />
+    <!-- no translation found for user_delete_user_description (2300280525351142435) -->
+    <skip />
+    <!-- no translation found for user_new_user_name (7115771396412339662) -->
+    <skip />
+    <!-- no translation found for user_guest (3465399481257448601) -->
+    <skip />
+    <!-- no translation found for user_switch (6544839750534690781) -->
+    <skip />
+    <!-- no translation found for current_user_name (3813671533249316823) -->
+    <skip />
+    <!-- no translation found for user_name_label (3210832645046206845) -->
+    <skip />
+    <!-- no translation found for user_summary_not_set_up (1473688119241224145) -->
+    <skip />
+    <string name="edit_user_name_title" msgid="6890782937520262478">"ୟୁଜର୍‍ ନାମକୁ ଏଡିଟ୍ କରନ୍ତୁ"</string>
+    <string name="users_list_title" msgid="770764290290240909">"ୟୁଜର୍"</string>
+    <string name="accounts_settings_title" msgid="436190037084293471">"ଆକାଉଣ୍ଟ"</string>
+    <string name="user_details_title" msgid="1104762783367701498">"ୟୁଜର୍‌"</string>
+    <string name="no_accounts_added" msgid="5148163140691096055">"କୌଣସି ଆକାଉଣ୍ଟ ଯୋଡ଼ାଯାଇନାହିଁ"</string>
+    <!-- no translation found for account_list_title (7631588514613843065) -->
+    <skip />
+    <!-- no translation found for account_details_title (7529571432258448573) -->
+    <skip />
+    <!-- no translation found for add_account_title (5988746086885210040) -->
+    <skip />
+    <!-- no translation found for add_an_account (1072285034300995091) -->
+    <skip />
+    <!-- no translation found for user_cannot_add_accounts_message (6775605884544906797) -->
+    <skip />
+    <!-- no translation found for remove_account_title (8840386525787836381) -->
+    <skip />
+    <!-- no translation found for really_remove_account_title (3555164432587924900) -->
+    <skip />
+    <!-- no translation found for really_remove_account_message (4296769280849579900) -->
+    <skip />
+    <!-- no translation found for remove_account_failed (7472511529086294087) -->
+    <skip />
+    <!-- no translation found for really_remove_user_title (4990029019291756762) -->
+    <skip />
+    <!-- no translation found for really_remove_user_message (3828090902833944533) -->
+    <skip />
+    <string name="remove_user_error_title" msgid="2038275458657689420">"ୟୁଜର୍‍ଙ୍କୁ କାଢ଼ିହେଲା ନାହିଁ।"</string>
+    <string name="remove_user_error_message" msgid="6803947507134323358">"ପୁଣି ଚେଷ୍ଟା କରିବେ?"</string>
+    <string name="remove_user_error_dismiss" msgid="4006591159426844335">"ଖାରଜ କରନ୍ତୁ"</string>
+    <string name="remove_user_error_retry" msgid="8291692909396995093">"ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ"</string>
+    <!-- no translation found for user_add_user_title (7458813670614932479) -->
+    <skip />
+    <!-- no translation found for user_add_user_message_setup (6030901156040053106) -->
+    <skip />
+    <!-- no translation found for user_add_user_message_update (1528170913388932459) -->
+    <skip />
+    <!-- no translation found for security_settings_title (6955331714774709746) -->
+    <skip />
+    <!-- no translation found for security_settings_subtitle (2244635550239273229) -->
+    <skip />
+    <string name="security_lock_none" msgid="1054645093754839638">"କିଛି ନାହିଁ"</string>
+    <!-- no translation found for security_lock_pattern (1174352995619563104) -->
+    <skip />
+    <string name="security_lock_pin" msgid="4891899974369503200">"PIN"</string>
+    <!-- no translation found for security_lock_password (4420203740048322494) -->
+    <skip />
+    <!-- no translation found for lock_settings_picker_title (6590330165050361632) -->
+    <skip />
+    <string name="screen_lock_options" msgid="7023338635352915768">"ସ୍କ୍ରୀନ୍‌ ଲକ୍‌ ବିକଳ୍ପ"</string>
+    <string name="lock_settings_enter_pattern" msgid="4826034565853171624">"ଆପଣଙ୍କର ପାଟର୍ନ ଆଙ୍କନ୍ତୁ"</string>
+    <!-- no translation found for lockpattern_confirm_button_text (7784925958324484965) -->
+    <skip />
+    <!-- no translation found for lockpattern_restart_button_text (9355771277617537) -->
+    <skip />
+    <!-- no translation found for continue_button_text (5129979170426836641) -->
+    <skip />
+    <!-- no translation found for lockscreen_retry_button_text (5314212350698701242) -->
+    <skip />
+    <string name="lockscreen_skip_button_text" msgid="3755748786396198091">"ଛାଡ଼ିଦିଅନ୍ତୁ"</string>
+    <!-- no translation found for set_screen_lock (5239317292691332780) -->
+    <skip />
+    <string name="lockscreen_choose_your_pattern" msgid="6801175111142593404">"ନିଜ ପାର୍ଟନ୍‌ ବାଛନ୍ତୁ"</string>
+    <string name="current_screen_lock" msgid="637651611145979587">"ବର୍ତ୍ତମାନର ସ୍କ୍ରୀନ୍‌ ଲକ୍‌"</string>
+    <!-- no translation found for choose_lock_pattern_message (6242765203541309524) -->
+    <skip />
+    <!-- no translation found for lockpattern_retry_button_text (4655398824001857843) -->
+    <skip />
+    <!-- no translation found for lockpattern_cancel_button_text (4068764595622381766) -->
+    <skip />
+    <!-- no translation found for lockpattern_pattern_confirmed (5984306638250515385) -->
+    <skip />
+    <!-- no translation found for lockpattern_recording_intro_header (7864149726033694408) -->
+    <skip />
+    <!-- no translation found for lockpattern_recording_inprogress (1575019990484725964) -->
+    <skip />
+    <!-- no translation found for lockpattern_pattern_entered (6103071005285320575) -->
+    <skip />
+    <!-- no translation found for lockpattern_need_to_confirm (4648070076022940382) -->
+    <skip />
+    <!-- no translation found for lockpattern_recording_incorrect_too_short (2417932185815083082) -->
+    <skip />
+    <!-- no translation found for lockpattern_pattern_wrong (929223969555399363) -->
+    <skip />
+    <!-- no translation found for lockpattern_settings_help_how_to_record (4436556875843192284) -->
+    <skip />
+    <!-- no translation found for error_saving_lockpattern (2933512812768570130) -->
+    <skip />
+    <!-- no translation found for okay (4589873324439764349) -->
+    <skip />
+    <string name="remove_screen_lock_title" msgid="1234382338764193387">"ସ୍କ୍ରୀନ ଲକ୍ ରିମୁଭ୍‍ କରିବେ କି?"</string>
+    <string name="remove_screen_lock_message" msgid="6675850371585564965">"ଏହା ଯେକୌଣସି ବ୍ୟକ୍ତି ଆପଣଙ୍କ ଆକାଉଣ୍ଟରେ ପ୍ରବେଶ ପାଇଁ ଅନୁମତି ଦେବ"</string>
+    <string name="lock_settings_enter_pin" msgid="1669172111244633904">"ନିଜର PIN ଲେଖନ୍ତୁ"</string>
+    <string name="lock_settings_enter_password" msgid="2636669926649496367">"ନିଜ ପାସ୍‌ୱର୍ଡ ଲେଖନ୍ତୁ"</string>
+    <!-- no translation found for choose_lock_pin_message (2963792070267774417) -->
+    <skip />
+    <!-- no translation found for confirm_your_pin_header (9096581288537156102) -->
+    <skip />
+    <!-- no translation found for choose_lock_pin_hints (7362906249992020844) -->
+    <skip />
+    <string name="lockpin_invalid_pin" msgid="2149191577096327424">"Pin ଅମାନ୍ୟ ଅଟେ, ଅତିକମରେ 4ଟି ସଂଖ୍ୟା ରହିବା ଆବଶ୍ୟକ।"</string>
+    <!-- no translation found for confirm_pins_dont_match (4607110139373520720) -->
+    <skip />
+    <!-- no translation found for error_saving_lockpin (9011960139736000393) -->
+    <skip />
+    <string name="lockscreen_wrong_pin" msgid="4922465731473805306">"ଭୁଲ PIN"</string>
+    <string name="lockscreen_wrong_password" msgid="5757087577162231825">"ଭୁଲ ପାସ୍‌ୱର୍ଡ"</string>
+    <!-- no translation found for choose_lock_password_message (6124341145027370784) -->
+    <skip />
+    <!-- no translation found for confirm_your_password_header (7052891840366724938) -->
+    <skip />
+    <!-- no translation found for confirm_passwords_dont_match (7300229965206501753) -->
+    <skip />
+    <!-- no translation found for lockpassword_clear_label (6363680971025188064) -->
+    <skip />
+    <!-- no translation found for lockpassword_cancel_label (5791237697404166450) -->
+    <skip />
+    <!-- no translation found for lockpassword_confirm_label (5918463281546146953) -->
+    <skip />
+    <!-- no translation found for choose_lock_password_hints (1802962836351866087) -->
+    <skip />
+    <!-- no translation found for lockpassword_password_too_short (6681218025001328405) -->
+    <skip />
+    <!-- no translation found for lockpassword_pin_too_short (6363004004424904218) -->
+    <skip />
+    <!-- no translation found for lockpassword_password_too_long (7530214940279491291) -->
+    <skip />
+    <!-- no translation found for lockpassword_pin_too_long (62957683396974404) -->
+    <skip />
+    <string name="lockpassword_pin_contains_non_digits" msgid="3044526271686839923">"କେବଳ 0-9 ପର୍ଯ୍ୟନ୍ତ ସଂଖ୍ୟା ରହିବା ଦରକାର"</string>
+    <!-- no translation found for lockpassword_pin_recently_used (7901918311213276207) -->
+    <skip />
+    <!-- no translation found for lockpassword_pin_blacklisted_by_admin (7412709707800738442) -->
+    <skip />
+    <string name="lockpassword_illegal_character" msgid="1984970060523635618">"ଏହା ଗୋଟିଏ ଭୁଲ ଅକ୍ଷରକୁ ଯୋଡ଼ିପାରିବନାହିଁ"</string>
+    <string name="lockpassword_invalid_password" msgid="4987689810161043367">"ପାସ୍‌ୱର୍ଡ ଅମାନ୍ୟ ଅଟେ, ଏଥିରେ ନିହାତି 4-8ଟି ବର୍ଣ୍ଣ ରହିବା ଦରକାର, ଯେଉଁଥିରେ ଅତିକମରେ 1ଟି ସଂଖ୍ୟା, 1 ଅକ୍ଷର ଥିବ ଓ କୌଣସି ଖାଲି ସ୍ଥାନ ନଥିବ।"</string>
+    <!-- no translation found for lockpassword_password_requires_letters (424616259312760303) -->
+    <!-- no translation found for lockpassword_password_requires_lowercase (2267487180744744833) -->
+    <!-- no translation found for lockpassword_password_requires_uppercase (7999264563026517898) -->
+    <!-- no translation found for lockpassword_password_requires_numeric (7935079851855168646) -->
+    <!-- no translation found for lockpassword_password_requires_symbols (3994046435150094132) -->
+    <!-- no translation found for lockpassword_password_requires_nonletter (6878486326748506524) -->
+    <!-- no translation found for lockpassword_password_recently_used (8255729487108602924) -->
+    <skip />
+    <!-- no translation found for error_saving_password (8334882262622500658) -->
+    <skip />
+    <!-- no translation found for lockpassword_password_blacklisted_by_admin (7965893810326503891) -->
+    <skip />
+    <string name="lockpassword_pin_no_sequential_digits" msgid="38813552228809240">"ସଂଖ୍ୟାର କ୍ରମବୃଦ୍ଧି, କ୍ରମହ୍ରାସ, କିମ୍ବା କ୍ରମ ଦୋହରାଇବାର ଅନୁମତି ନାହିଁ।"</string>
+    <!-- no translation found for setup_lock_settings_options_button_label (3337845811029780896) -->
+    <skip />
+    <!-- no translation found for forget (3971143908183848527) -->
+    <skip />
+    <!-- no translation found for delete_button (5840500432614610850) -->
+    <skip />
+    <!-- no translation found for remove_button (6664656962868194178) -->
+    <skip />
+    <!-- no translation found for cancel (750286395700355455) -->
+    <skip />
+    <string name="backspace_key" msgid="1545590866688979099">"Backspace କୀ"</string>
+    <string name="enter_key" msgid="2121394305541579468">"କୀ ଦବାନ୍ତୁ"</string>
+    <string name="exit_retail_button_text" msgid="6093240315583384473">"ଡେମୋରୁ ବାହାରିଯା’ନ୍ତୁ"</string>
+    <string name="exit_retail_mode_dialog_title" msgid="7970631760237469168">"ଡେମୋ ମୋଡ୍‌ରୁ ବାହାରିଯା’ନ୍ତୁ"</string>
+    <string name="exit_retail_mode_dialog_body" msgid="8314316171782527301">"ଏହା ଡେମୋ ଆକାଉଣ୍ଟକୁ ଡିଲିଟ୍ କରିଦେବ ଏବଂ ଫ୍ୟାକ୍ଟୋରୀ ଡାଟା ସିଷ୍ଟମ୍‍କୁ ରିସେଟ୍ କରିବ। ସମସ୍ତ ୟୁଜର୍ ଡାଟା ନଷ୍ଟ ହୋ‍ଇଯିବ।"</string>
+    <string name="exit_retail_mode_dialog_confirmation_button_text" msgid="3147249675355968649">"ଡେମୋରୁ ବାହାରିଯା’ନ୍ତୁ"</string>
+    <string name="suggestion_primary_button" msgid="6421115494714083020">"ସେଟ୍-ଅପ୍ ସମାପ୍ତ କରନ୍ତୁ"</string>
+    <string name="suggestion_secondary_button" msgid="7075088546904464681">"ଏବେ ନୁହେଁଁ"</string>
+    <string name="restricted_while_driving" msgid="6217369093121968299">"ଗାଡ଼ି ଚଲାଇବାବେଳେ ଫିଚର୍ ଉପଲବ୍ଧ ହେବନାହିଁ।"</string>
+    <!-- no translation found for add_user_restricted_while_driving (6384004350628271556) -->
+    <skip />
+</resources>

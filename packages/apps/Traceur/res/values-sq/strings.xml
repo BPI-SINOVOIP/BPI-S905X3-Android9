@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="system_tracing" msgid="4719188511746319848">"Gjurmimi i sistemit"</string>
+    <string name="record_system_activity" msgid="4339462312915377825">"Regjistro aktivitetin e sistemit dhe analizoje atë më vonë për të përmirësuar cilësinë e funksionimit"</string>
+    <string name="record_trace" msgid="6416875085186661845">"Regjistro gjurmën"</string>
+    <string name="trace_debuggable_applications" msgid="7957069895298887899">"Gjurmo aplikacionet e gjurmueshme"</string>
+    <string name="categories" msgid="2280163673538611008">"Kategoritë"</string>
+    <string name="restore_default_categories" msgid="5090536794637169521">"Restauro kategoritë e parazgjedhura"</string>
+    <string name="default_categories_restored" msgid="6861683793680564181">"Kategoritë e parazgjedhura u restauruan"</string>
+    <string name="applications" msgid="521776761270770549">"Aplikacionet"</string>
+    <string name="no_debuggable_apps" msgid="4386209254520471208">"Nuk ka asnjë aplikacion të korrigjueshëm"</string>
+    <string name="buffer_size" msgid="3370134227980578569">"Madhësia e memories së regjistrimit"</string>
+    <string name="show_quick_settings_tile" msgid="4971147332635291585">"Pllakëza \"Shfaq cilësimet e shpejta\""</string>
+    <string name="saving_trace" msgid="1468692734770800541">"Po ruhet gjurma"</string>
+    <string name="trace_saved" msgid="5869970594780992309">"Gjurma u ruajt"</string>
+    <string name="tap_to_share" msgid="6766732404489536899">"Trokit për të ndarë gjurmën tënde"</string>
+    <string name="stop_tracing" msgid="8916938308534164152">"Ndalo gjurmimin"</string>
+    <string name="tracing_categories_unavailable" msgid="5609076391417077752">"Disa kategori gjurme nuk ofrohen:"</string>
+    <string name="trace_is_being_recorded" msgid="5947378146009337469">"Gjurma po regjistrohet"</string>
+    <string name="tap_to_stop_tracing" msgid="6533282719573871806">"Trokit për të ndaluar gjurmimin"</string>
+    <string name="clear_saved_traces" msgid="4809195654452260944">"Pastro gjurmët e ruajtura"</string>
+    <string name="clear_saved_traces_question" msgid="2184026613055303818">"Të pastrohen gjurmët e ruajtura?"</string>
+    <string name="all_traces_will_be_deleted" msgid="6646545462206955920">"Të gjitha gjurmët do të fshihen nga /data/local/traces"</string>
+    <string name="clear" msgid="5484761795406948056">"Pastro"</string>
+    <string name="keywords" msgid="736547007949049535">"systrace, gjurmimi, cilësia e funksionimit"</string>
+</resources>

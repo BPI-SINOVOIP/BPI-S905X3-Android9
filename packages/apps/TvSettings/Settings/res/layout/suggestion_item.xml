@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2018 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License
+  -->
+
+
+<com.android.tv.settings.suggestions.SuggestionItemView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="afterDescendants"
+    android:importantForAccessibility="no">
+    <LinearLayout
+        android:id="@+id/main_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:importantForAccessibility="no"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/lb_preference_item_padding_end"
+        android:paddingStart="@dimen/lb_preference_item_padding_start">
+        <FrameLayout
+            android:id="@+id/icon_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical">
+            <ImageView
+                android:id="@android:id/icon"
+                android:layout_width="@dimen/lb_preference_item_icon_size"
+                android:layout_height="@dimen/lb_preference_item_icon_size"
+                android:layout_marginEnd="@dimen/lb_preference_item_icon_margin_end"
+            />
+        </FrameLayout>
+        <LinearLayout
+            android:id="@+id/item_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:focusable="true"
+            android:orientation="vertical">
+            <Space android:layout_width="0dp"
+                   android:layout_height="@dimen/lb_preference_item_text_space_top"/>
+            <TextView
+                android:id="@android:id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/lb_preference_item_primary_text_margin_bottom"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/lb_preference_item_primary_text_color"
+                android:textSize="@dimen/lb_preference_item_primary_text_size"/>
+            <TextView
+                android:id="@android:id/summary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:maxLines="4"
+                android:textColor="@color/lb_preference_item_secondary_text_color"
+                android:textSize="@dimen/lb_preference_item_secondary_text_size"/>
+            <Space android:layout_width="0dp"
+                   android:layout_height="@dimen/lb_preference_item_text_space_bottom"/>
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/dismiss_button"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginStart="6dp"
+            android:layout_gravity="center_vertical"
+            android:alpha="0.4"
+            android:clickable="true"
+            android:contentDescription="@string/dismiss_suggestion"
+            android:focusable="true"
+            android:src="@drawable/ic_cancel"/>
+
+        <LinearLayout
+            android:id="@android:id/widget_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical"/>
+    </LinearLayout>
+</com.android.tv.settings.suggestions.SuggestionItemView>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.android.se"
+          android:sharedUserId="android.uid.se">
+    <application android:name=".SEApplication"
+                 android:label="SecureElementApplication"
+                 android:persistent="true">
+        <service android:name=".SecureElementService">
+            <intent-filter>
+                <action android:name="android.omapi.ISecureElementService"/>
+            </intent-filter>
+        </service>
+    </application>
+</manifest>

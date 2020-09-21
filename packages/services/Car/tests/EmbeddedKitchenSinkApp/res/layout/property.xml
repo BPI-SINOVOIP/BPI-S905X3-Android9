@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2017 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+    <ListView
+        android:id="@+id/lvPropertyList"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:scrollbars="vertical">
+    </ListView>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:orientation="vertical" >
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:orientation="horizontal" >
+            <Spinner
+                android:id="@+id/sPropertyId"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp" />
+            <Button
+                android:id="@+id/bGetProperty"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:text="@string/property_get"
+                android:textSize="@dimen/propertyTextSize"/>
+            <TextView
+                android:id="@+id/tvGetPropertyValue"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:textSize="@dimen/propertyValueTextSize"/>
+        </LinearLayout>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:orientation="horizontal" >
+            <Spinner
+                android:id="@+id/sAreaId"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp" />
+            <EditText
+                android:id="@+id/etSetPropertyValue"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:inputType="phone" />
+            <Button
+                android:id="@+id/bSetProperty"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:text="@string/property_set"
+                android:textSize="@dimen/propertyTextSize"/>
+        </LinearLayout>
+
+        <!-- Event Log -->
+        <ScrollView
+            android:id="@+id/svEventLog"
+            android:layout_height="0dp"
+            android:layout_weight="6"
+            android:layout_width="match_parent"
+            android:scrollbars="vertical">
+            <TextView
+                android:id="@+id/tvEventLog"
+                android:gravity="left"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:textSize="@dimen/propertyValueTextSize"/>
+        </ScrollView>
+        <Button
+            android:id="@+id/bClearLog"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:text="@string/property_clear"
+            android:textSize="@dimen/propertyTextSize"/>
+    </LinearLayout>
+</LinearLayout>

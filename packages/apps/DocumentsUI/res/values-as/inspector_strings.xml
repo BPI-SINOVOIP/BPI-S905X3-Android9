@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  Copyright (C) 2017 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+ -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="inspector_title" msgid="1924760928091740238">"তথ্য"</string>
+    <string name="inspector_load_error" msgid="7522190243413249291">"ফাইলৰ তথ্য ল\'ড কৰিবপৰা নগ\'ল"</string>
+    <string name="inspector_debug_section" msgid="2576052661505700421">"ডিবাগ তথ্য (বিকাশকৰ্তা মাত্ৰ)"</string>
+    <string name="inspector_debug_metadata_section" msgid="5875140675600744846">"ৰ\' মেটাডেটা: <xliff:g id="METADATATYPE">%1$s</xliff:g>"</string>
+    <string name="inspector_metadata_section" msgid="6077622515328240575">"মিডিয়াৰ সবিশেষ"</string>
+    <string name="handler_app_file_opens_with" msgid="5272329600389613550">"এইধৰণৰ ফাইল ই খুলিব পাৰে"</string>
+    <string name="handler_app_belongs_to" msgid="5444507329303253553">"ই এই ফাইলটো যোগান ধৰিছে"</string>
+    <string name="handler_app_not_selected" msgid="1294439257183908786">"বাছনি কৰা হোৱা নাই"</string>
+    <string name="handler_app_unknown" msgid="5911661530593229287">"অজ্ঞাত"</string>
+    <string name="metadata_dimensions" msgid="6112907724016659801">"দীঘ-প্ৰস্থ"</string>
+    <string name="metadata_dimensions_format" msgid="6138765871412005962">"<xliff:g id="WIDTH">%1$d</xliff:g> x <xliff:g id="HEIGHT">%2$d</xliff:g> - <xliff:g id="MEGAPIXELS">%3$,.1f</xliff:g>মে.পি."</string>
+    <string name="metadata_coordinates" msgid="6897383227370702734">"স্থানাংক"</string>
+    <string name="metadata_coordinates_format" msgid="1402724596764547761">"<xliff:g id="LATITUDE">%1$,.3f</xliff:g>, <xliff:g id="LONGITUDE">%2$,.3f</xliff:g>"</string>
+    <string name="metadata_altitude" msgid="8063792127436794294">"উচ্চতা"</string>
+    <string name="metadata_camera" msgid="2363009732801281319">"কেমেৰা"</string>
+    <string name="metadata_camera_format" msgid="1494489751904311612">"<xliff:g id="MAKE">%1$s</xliff:g> <xliff:g id="MODEL">%2$s</xliff:g>"</string>
+    <string name="metadata_aperture" msgid="6538741952698935357">"এপাৰচ্চাৰ"</string>
+    <string name="metadata_shutter_speed" msgid="8204739885103326131">"শ্বাটাৰৰ বেগ"</string>
+    <string name="metadata_duration" msgid="3115494422055472715">"কালদৈৰ্ঘ্য"</string>
+    <string name="metadata_date_time" msgid="1090351199248114406">"তোলাৰ সময়"</string>
+    <string name="metadata_focal_length" msgid="3440735161407699893">"ফ\'কেল দৈৰ্ঘ্য"</string>
+    <string name="metadata_focal_format" msgid="8542211707962355623">"<xliff:g id="LENGTH">%1$.2f </xliff:g>মি.মি."</string>
+    <string name="metadata_iso_speed_ratings" msgid="1699781252899759058">"আইএছঅ\' সমতুল্য"</string>
+    <string name="metadata_iso_format" msgid="4153285204012694861">"আইএছঅ\' <xliff:g id="ISO_SPEED">%1$d</xliff:g>"</string>
+    <string name="metadata_artist" msgid="8972421485694988540">"শিল্পী"</string>
+    <string name="metadata_composer" msgid="4696926808308256056">"সুৰকাৰ"</string>
+    <string name="metadata_album" msgid="1661699531214720236">"এলবাম"</string>
+    <string name="metadata_address" msgid="1849921023707744640">"অৱস্থান"</string>
+    <string name="debug_stream_types" msgid="2088565280360139333">"ষ্ট্ৰীমৰ প্ৰকাৰ"</string>
+    <string name="debug_raw_size" msgid="7487139640175650185">"ডিবাগ ফাইলৰ আকাৰ (বাইট)"</string>
+</resources>

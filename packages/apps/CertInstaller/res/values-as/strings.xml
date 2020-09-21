@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  Copyright (C) 2009 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+  
+          http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+ -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name" msgid="9095072584761066851">"প্ৰমাণপত্ৰ ইনষ্টলাৰ"</string>
+    <string name="pick_file_title" msgid="4481949485108233297">"এখন প্ৰমাণপত্ৰ বাছনি কৰক"</string>
+    <string name="pkcs12_password_dialog_title" msgid="5997624645207427161">"প্ৰমাণপত্ৰ উলিয়াওক"</string>
+    <string name="extracting_pkcs12" msgid="1881267738821799771">"উলিয়াই থকা হৈছে…"</string>
+    <string name="pkcs12_file_password_dialog_title" msgid="8102721384767269510">"%sৰ পৰা উলিয়াওক"</string>
+    <string name="name_credential_dialog_title" msgid="277729846491554437">"প্ৰমাণপত্ৰক নাম দিয়ক"</string>
+    <string name="credential_name" msgid="1974979771369744378">"প্ৰমাণপত্ৰৰ নাম:"</string>
+    <string name="credential_password" msgid="3520176519550993326">"প্ৰমাণপত্ৰসমূহ উলিয়াবৰ বাবে পাছৱৰ্ডটো লিখক।"</string>
+    <string name="credential_info" msgid="2436768402308470397">"পেকেজত এইবোৰ বস্তু আছে:"</string>
+    <string name="p12_description" msgid="4128352087331630024">"PKCS12 কীষ্ট’ৰৰ প্ৰমাণপত্ৰবোৰ৷"</string>
+    <string name="one_userkey" msgid="3500697912370644881">"এটা ব্যৱহাৰকাৰীৰ কী"</string>
+    <string name="one_usercrt" msgid="7690798336332403106">"এজন ব্যৱহাৰকাৰী থকা প্ৰমাণপত্ৰ"</string>
+    <string name="one_cacrt" msgid="2667950425420663146">"এখন চিএ প্ৰমাণপত্ৰ"</string>
+    <string name="n_cacrts" msgid="2141498640685639208">"%d চিএ প্ৰমাণপত্ৰবোৰ"</string>
+    <string name="password_error" msgid="2042471639556516356">"শুদ্ধ পাছৱৰ্ডটো লিখক।"</string>
+    <string name="password_empty_error" msgid="591713406761723025">"পাছৱৰ্ডটো লিখক।"</string>
+    <string name="name_empty_error" msgid="3808800768660110354">"এটা নাম লিখক।"</string>
+    <string name="name_char_error" msgid="3176618568784938968">"কেৱল আখৰ আৰু সংখ্যা থকা এটা নামহে লিখক৷"</string>
+    <string name="unable_to_save_cert" msgid="9178604087335389686">"প্ৰমাণপত্ৰ ছেভ কৰিব পৰা নগ\'ল৷ ক্ৰেডেনশ্বিয়েল সঞ্চয়াগাৰ সক্ষম হোৱা নাই বা সঠিকভাৱে আৰম্ভ কৰা হোৱা নাই।"</string>
+    <string name="cert_not_saved" msgid="4037698479662830270">"প্ৰমাণপত্ৰ ইনষ্টল কৰা হোৱা নাই।"</string>
+    <string name="no_cert_to_saved" msgid="5708884372817309068">"ইনষ্টল কৰিবলৈ কোনো প্ৰমাণপত্ৰ নাই।"</string>
+    <string name="invalid_cert" msgid="7704228670980743590">"এই প্ৰমাণপত্ৰখন মান্য নহয়।"</string>
+    <string name="cert_is_added" msgid="6996557598167000500">"<xliff:g id="CREDENTIAL">%s</xliff:g> ইনষ্টল কৰা হৈছে।"</string>
+    <string name="cert_too_large_error" msgid="8715414972725646285">"প্ৰমাণপত্ৰৰ আকাৰ অতি বৃহৎ হোৱাৰ বাবে ইনষ্টল কৰিব পৰা নগ\'ল।"</string>
+    <string name="cert_missing_error" msgid="7040527352278728220">"প্ৰমাণপত্ৰ ফাইল নোপোৱাৰ বাবে ইনষ্টল কৰিব পৰা নগ\'ল।"</string>
+    <string name="cert_read_error" msgid="7353463360652419796">"প্ৰমাণপত্ৰ ফাইল পঢ়িব নোৱাৰাৰ বাবে ইনষ্টল কৰিব পৰা নগ\'ল।"</string>
+    <string name="no_cert_file_found" product="nosdcard" msgid="3555332946357131929">"ইউএছবি সঞ্চয়াগাৰত প্ৰমাণপত্ৰৰ কোনো ফাইল পোৱা নগ\'ল।"</string>
+    <string name="no_cert_file_found" product="default" msgid="1942077544887243999">"এছডি কাৰ্ডত প্ৰমাণপত্ৰৰ কোনো ফাইল পোৱা নগ\'ল।"</string>
+    <string name="sdcard_not_present" product="nosdcard" msgid="9197143240492611196">"ইউএছবি সঞ্চয়াগাৰ উপলব্ধ নহয়।"</string>
+    <string name="sdcard_not_present" product="default" msgid="3866952732541932947">"এছডি কাৰ্ড মজুত নাই।"</string>
+    <string name="only_primary_user_allowed" msgid="4005084935023047716">"এই ডিভাইচৰ গৰাকীয়েহে প্ৰমাণপত্ৰসমূহ ইনষ্টল কৰিব পাৰে৷"</string>
+    <string name="credential_usage_label" msgid="1513892208033156805">"প্ৰমাণপত্ৰৰ ব্যৱহাৰ:"</string>
+  <string-array name="credential_usage">
+    <item msgid="375085478373011304">"ভিপিএন আৰু এপসমূহ"</item>
+    <item msgid="692322974985472861">"ৱাই-ফাই"</item>
+  </string-array>
+    <string name="certificate_capabilities_warning" msgid="4158609401937799110">"টোকা: এই প্ৰমাণপত্ৰ প্ৰদানকাৰীয়ে এই ডিভাইচটোৰ পৰা যোৱা আৰু ডিভাইচটোলৈ অহা সকলো ট্ৰেফিক পৰ্যবেক্ষণ কৰিব পাৰে।"</string>
+    <string name="wifi_title" msgid="8475811746333426489">"ৱাই- ফাই প্ৰ\'ফাইল"</string>
+    <string name="wifi_detail_title" msgid="3627332137252994395">"%sৰ সবিশেষ"</string>
+    <string name="wifi_detail_label" msgid="3032151019356747583">"সবিশেষ"</string>
+    <string name="wifi_install_label" msgid="1449629407724323233">"ইনষ্টল কৰক"</string>
+    <string name="wifi_installing_label" msgid="8387393993627129025">"ইনষ্টল কৰি থকা হৈছে"</string>
+    <string name="wifi_cancel_label" msgid="1328748037608392134">"বাতিল কৰক"</string>
+    <string name="wifi_dismiss_label" msgid="1916684434873972698">"অগ্ৰাহ্য কৰক"</string>
+    <string name="wifi_no_config" msgid="1835743123288916755">"একো নাই"</string>
+    <string name="wifi_config_text" msgid="8259587306773310314">"নাম: %1$s\nFQDN: %2$s\nৰ\'মিঙৰ বাণিজ্যিক গোটসমূহ: %3$s\nৰাষ্ট্ৰ: %4$s\nসত্যাপন পদ্ধতি: EAP-%5$s\n"</string>
+    <string name="wifi_ttls_config_text" msgid="2002413183253872168">"ব্য়ৱহাৰকাৰীৰ নাম: %s\n"</string>
+    <string name="wifi_tls_config_text" msgid="9062328536640168510">"ক্লায়েণ্টৰ প্ৰমাণপত্ৰ:\n%1$s\nকী: %2$s\n"</string>
+    <string name="wifi_sim_config_text" msgid="1666019954520831840">"ছিম: %s\n"</string>
+    <string name="wifi_trust_config_text" msgid="5916047381475747783">"প্ৰমাণপত্ৰখনক বিশ্বাস কৰক:\n%s\n"</string>
+    <string name="install_done_title" msgid="4822989918460334497">"ক্ৰেডেনশ্বিয়েলসমূহ ইনষ্টল কৰা হ\'ল"</string>
+    <string name="install_done" msgid="1522718684172097080">"<xliff:g id="NAME">%1$s</xliff:g>ৰ ক্ৰেডেনশ্বিয়েলসমূহ ৱাই-ফাইয়ে ছেভ কৰা নেটৱৰ্কসমূহত যোগ দিয়া হ\'ল।"</string>
+    <string name="done_label" msgid="5597425930652904250">"সম্পন্ন কৰা হ\'ল"</string>
+    <string name="wifi_installer_detail" msgid="63879632832701669">"<xliff:g id="NAME">%1$s</xliff:g>ৰ যোগেৰে উপলব্ধ নেটৱর্কসমূহৰ সৈতে সংযোগ কৰিবলৈ ৱাই-ফাইৰ ক্ৰেডেনশ্বিয়েলসমূহ ইনষ্টল কৰক।"</string>
+    <string name="wifi_installer_download_error" msgid="5429453090956277692">"ডাউনল\'ড কৰা ফাইলটোত সমস্য়া আছে আৰু ইয়াক ইনষ্টল কৰিব নোৱাৰি। আপুনি সঠিক উৎসৰ পৰা ফাইলটো ডাউনল\'ড কৰিছিলনে সুনিশ্চিত কৰক।"</string>
+    <string name="wifi_installer_fail" msgid="894483173306576331">"ৱাই-ফাইৰ ক্ৰেডেনশ্বিয়েলসমূহ ইনষ্টল কৰিব নোৱাৰি। ফাইলটো আকৌ ডাউনল\'ড কৰিবলৈ চেষ্টা কৰক।"</string>
+    <string name="wifi_installer_fail_no_wifi_title" msgid="8358191074828840533">"ইনষ্টলেশ্বন বাতিল কৰা হ\'ল"</string>
+    <string name="wifi_installer_fail_title" msgid="5547079779067835479">"ইনষ্টল কৰিব নোৱাৰি"</string>
+    <string name="wifi_installer_fail_no_wifi" msgid="2044576439984209921">"ৱাই-ফাই অন কৰি আকৌ চেষ্টা কৰক।"</string>
+</resources>

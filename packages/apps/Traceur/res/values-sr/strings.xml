@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="system_tracing" msgid="4719188511746319848">"Праћење система"</string>
+    <string name="record_system_activity" msgid="4339462312915377825">"Бележите системску активност и касније је анализирајте да бисте побољшали учинак"</string>
+    <string name="record_trace" msgid="6416875085186661845">"Снимај траг"</string>
+    <string name="trace_debuggable_applications" msgid="7957069895298887899">"Прати апликације са функцијом за отклањање грешака"</string>
+    <string name="categories" msgid="2280163673538611008">"Категорије"</string>
+    <string name="restore_default_categories" msgid="5090536794637169521">"Врати подразумеване категорије"</string>
+    <string name="default_categories_restored" msgid="6861683793680564181">"Подразумеване категорије су враћене"</string>
+    <string name="applications" msgid="521776761270770549">"Апликације"</string>
+    <string name="no_debuggable_apps" msgid="4386209254520471208">"Није доступна ниједна апликација са функцијом за отклањање грешака"</string>
+    <string name="buffer_size" msgid="3370134227980578569">"Величина бафера података"</string>
+    <string name="show_quick_settings_tile" msgid="4971147332635291585">"Прикажи плочицу Брза подешавања"</string>
+    <string name="saving_trace" msgid="1468692734770800541">"Чува се траг"</string>
+    <string name="trace_saved" msgid="5869970594780992309">"Траг је сачуван"</string>
+    <string name="tap_to_share" msgid="6766732404489536899">"Додирните да бисте делили траг"</string>
+    <string name="stop_tracing" msgid="8916938308534164152">"Зауставите трагање"</string>
+    <string name="tracing_categories_unavailable" msgid="5609076391417077752">"Неке категорије праћења нису доступне:"</string>
+    <string name="trace_is_being_recorded" msgid="5947378146009337469">"Траг се снима"</string>
+    <string name="tap_to_stop_tracing" msgid="6533282719573871806">"Додирните да бисте зауставили трагање"</string>
+    <string name="clear_saved_traces" msgid="4809195654452260944">"Обриши сачуване трагове"</string>
+    <string name="clear_saved_traces_question" msgid="2184026613055303818">"Желите ли да обришете сачуване трагове?"</string>
+    <string name="all_traces_will_be_deleted" msgid="6646545462206955920">"Сви трагови ће бити избрисани са /data/local/traces"</string>
+    <string name="clear" msgid="5484761795406948056">"Обриши"</string>
+    <string name="keywords" msgid="736547007949049535">"systrace, праћење, учинак"</string>
+</resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/enterprise_do" >
+    <target
+        android:name="dots_0"
+        android:animation="@anim/enterprise_do_dots_0_animation" />
+    <target
+        android:name="lock"
+        android:animation="@anim/enterprise_do_lock_animation" />
+    <target
+        android:name="path_32"
+        android:animation="@anim/enterprise_do_path_32_animation" />
+    <target
+        android:name="cerc"
+        android:animation="@anim/enterprise_do_cerc_animation" />
+    <target
+        android:name="circlegreen"
+        android:animation="@anim/enterprise_do_circlegreen_animation" />
+    <target
+        android:name="ellipse_path_2"
+        android:animation="@anim/enterprise_do_ellipse_path_2_animation" />
+    <target
+        android:name="circleyellow"
+        android:animation="@anim/enterprise_do_circleyellow_animation" />
+    <target
+        android:name="ellipse_path_3"
+        android:animation="@anim/enterprise_do_ellipse_path_3_animation" />
+    <target
+        android:name="circlered"
+        android:animation="@anim/enterprise_do_circlered_animation" />
+    <target
+        android:name="ellipse_path_4"
+        android:animation="@anim/enterprise_do_ellipse_path_4_animation" />
+    <target
+        android:name="circleblue"
+        android:animation="@anim/enterprise_do_circleblue_animation" />
+    <target
+        android:name="ellipse_path_5"
+        android:animation="@anim/enterprise_do_ellipse_path_5_animation" />
+</animated-vector>

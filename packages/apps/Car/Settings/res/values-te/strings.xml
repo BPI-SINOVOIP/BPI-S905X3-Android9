@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ * Copyright (c) 2017, The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
+ -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="settings_label" msgid="5147911978211079839">"సెట్టింగ్‌లు"</string>
+    <string name="more_settings_label" msgid="3867559443480110616">"మరింత"</string>
+    <string name="display_settings" msgid="5325515247739279185">"డిస్‌ప్లే"</string>
+    <string name="brightness" msgid="2919605130898772866">"ప్రకాశం స్థాయి"</string>
+    <string name="auto_brightness_title" msgid="9124647862844666581">"పరిసర అనుకూల ప్రకాశం"</string>
+    <string name="auto_brightness_summary" msgid="4741887033140384352">"అందుబాటులో ఉన్న కాంతికి తగినట్లు ప్రకాశం స్థాయిని ఆప్టిమైజ్ చేస్తుంది"</string>
+    <string name="condition_night_display_title" msgid="3777509730126972675">"రాత్రి కాంతి ఆన్‌లో ఉంది"</string>
+    <string name="keywords_display" msgid="3978416985146943922">"స్క్రీన్, టచ్‌స్క్రీన్"</string>
+    <string name="keywords_display_brightness_level" msgid="3956411572536209195">"కాంతివిహీన స్క్రీన్, టచ్‌స్క్రీన్, బ్యాటరీ"</string>
+    <string name="keywords_display_auto_brightness" msgid="2700310050333468752">"కాంతివిహీన స్క్రీన్, టచ్‌స్క్రీన్, బ్యాటరీ"</string>
+    <string name="keywords_display_night_display" msgid="2922294576679769957">"కాంతివిహీన స్క్రీన్, రాత్రి, లేత రంగు"</string>
+    <string name="night_mode_tile_label" msgid="6603597795502131664">"రాత్రి మోడ్"</string>
+    <string name="wifi_settings" msgid="7701477685273103841">"Wi‑Fi"</string>
+    <string name="wifi_settings_summary" msgid="6095898149997291025">"వైర్‌లెస్ యాక్సెస్ స్థానాలను సెటప్ చేయండి &amp; నిర్వహించండి"</string>
+    <string name="wifi_starting" msgid="473253087503153167">"Wi‑Fiని ఆన్ చేస్తోంది…"</string>
+    <string name="wifi_stopping" msgid="3534173972547890148">"Wi‑Fiని ఆఫ్ చేస్తోంది…"</string>
+    <string name="wifi_failed_forget_message" msgid="121732682699377206">"నెట్‌వర్క్‌ను మర్చిపోవడంలో విఫలమైంది"</string>
+    <string name="wifi_failed_connect_message" msgid="4447498225022147324">"నెట్‌వర్క్‌కు కనెక్ట్ చేయడం విఫలమైంది"</string>
+    <string name="wifi_setup_add_network" msgid="3660498520389954620">"నెట్‌వర్క్‌ను జోడించు"</string>
+    <string name="wifi_disabled" msgid="5013262438128749950">"Wi‑Fi నిలిపివేయబడింది"</string>
+    <string name="wifi_setup_connect" msgid="3512399573397979101">"కనెక్ట్"</string>
+    <string name="wifi_password" msgid="5565632142720292397">"పాస్‌‌వర్డ్"</string>
+    <string name="wifi_show_password" msgid="8423293211933521097">"పాస్‌వర్డ్‌ను చూపు"</string>
+    <string name="wifi_ssid" msgid="488604828159458741">"నెట్‌వర్క్ పేరు"</string>
+    <string name="wifi_security" msgid="158358046038876532">"భద్రత"</string>
+    <string name="wifi_signal" msgid="1817579728350364549">"సిగ్నల్ సామర్థ్యం"</string>
+    <string name="wifi_status" msgid="5688013206066543952">"స్థితి"</string>
+    <string name="wifi_speed" msgid="1650692446731850781">"లింక్ వేగం"</string>
+    <string name="wifi_frequency" msgid="8951455949682864922">"తరచుదనం"</string>
+    <string name="wifi_ip_address" msgid="3128140627890954061">"IP చిరునామా"</string>
+    <string name="access_point_tag_key" msgid="1517143378973053337">"access_point_tag_key"</string>
+  <string-array name="wifi_signals">
+    <item msgid="4897376984576812606">"బాగాలేదు"</item>
+    <item msgid="2032262610626057081">"పర్వాలేదు"</item>
+    <item msgid="3859756017461098953">"బాగుంది"</item>
+    <item msgid="1521103743353335724">"అద్భుతం"</item>
+  </string-array>
+    <string name="bluetooth_quick_toggle_title" msgid="637869245038061523">"బ్లూటూత్"</string>
+    <string name="bluetooth_quick_toggle_summary" msgid="4390699431893305353">"బ్లూటూత్‌ను ఆన్ చేయి"</string>
+    <string name="bluetooth_settings" msgid="3878243366013638982">"బ్లూటూత్"</string>
+    <string name="bluetooth_disabled" msgid="4187409401590350572">"బ్లూటూత్ నిలిపివేయబడింది"</string>
+    <string name="bluetooth_settings_title" msgid="3794688574569688649">"బ్లూటూత్"</string>
+    <string name="bluetooth_settings_summary" msgid="4023303473646769835">"కనెక్షన్‌లను నిర్వహించండి, పరికరం పేరును &amp; శోధనలో కనుగొనబడే సామర్థ్యాన్ని సెట్ చేయండి"</string>
+    <string name="bluetooth_talkback_computer" msgid="5223330129934365312">"కంప్యూటర్"</string>
+    <string name="bluetooth_talkback_headset" msgid="6155254514321149935">"హెడ్‌సెట్"</string>
+    <string name="bluetooth_talkback_phone" msgid="8833977851215000426">"ఫోన్"</string>
+    <string name="bluetooth_talkback_imaging" msgid="8762390801115154654">"ప్రతిబింబనం"</string>
+    <string name="bluetooth_talkback_headphone" msgid="5362155791551671490">"హెడ్‌ఫోన్"</string>
+    <string name="bluetooth_talkback_input_peripheral" msgid="868933277567862622">"ఇన్‌పుట్ అనుబంధ పరికరం"</string>
+    <string name="bluetooth_talkback_bluetooth" msgid="1715933297419387985">"బ్లూటూత్"</string>
+    <string name="bluetooth_preference_paired_devices" msgid="5875643105380630583">"జత చేయబడిన పరికరాలు"</string>
+    <string name="bluetooth_preference_found_devices" msgid="125155123214560511">"అందుబాటులో ఉన్న పరికరాలు"</string>
+    <string name="bluetooth_preference_no_paired_devices" msgid="483742146117390001">"జత చేయబడిన పరికరాలు లేవు"</string>
+    <string name="bluetooth_preference_no_found_devices" msgid="1391812056491062262">"అందుబాటులో ఉన్న పరికరాలేవీ లేవు"</string>
+    <string name="bluetooth_preference_paired_dialog_title" msgid="2470829827455850904">"జత చేయబడిన పరికరం"</string>
+    <string name="bluetooth_preference_paired_dialog_name_label" msgid="3528740139365123415">"పేరు"</string>
+    <string name="bluetooth_device_advanced_profile_header_title" msgid="8165093257483965783">"దీని కోసం ఉపయోగించు"</string>
+    <string name="wifi_ssid_hint" msgid="4155050863239489553">"బ్లూటూత్ పరికరం పేరును మార్చండి"</string>
+    <string name="bluetooth_notif_ticker" msgid="7192577740198156792">"బ్లూటూత్ జత చేయడానికి అభ్యర్థన"</string>
+    <string name="bluetooth_device_context_pair_connect" msgid="3138105800372470422">"జత చేసి, కనెక్ట్ చేయి"</string>
+    <string name="bluetooth" msgid="5235115159234688629">"బ్లూటూత్"</string>
+    <string name="bluetooth_pairing_key_msg" msgid="5066825929751599037">"బ్లూటూత్ జత చేసే కోడ్"</string>
+    <string name="bluetooth_enable_alphanumeric_pin" msgid="1636575922217263060">"పిన్‌ అక్షరాలను లేదా చిహ్నాలను కలిగి ఉంది"</string>
+    <string name="bluetooth_enter_passkey_msg" msgid="5955236916732265593">"జత చేసే కోడ్‌ను టైప్ చేసి, ఆపై Return లేదా Enter నొక్కండి"</string>
+    <string name="bluetooth_pairing_request" msgid="4769675459526556801">"<xliff:g id="DEVICE_NAME">%1$s</xliff:g>తో జత చేయాలా?"</string>
+    <string name="bluetooth_pairing_shares_phonebook" msgid="2015966932886300630">"మీ పరిచయాలు మరియు కాల్ చరిత్రను యాక్సెస్ చేయడానికి <xliff:g id="DEVICE_NAME">%1$s</xliff:g>ని అనుమతించండి"</string>
+    <string name="bluetooth_enter_pin_other_device" msgid="7825091249522704764">"మీరు ఈ పిన్‌ను మరో పరికరంలో కూడా టైప్ చేయాల్సి ఉండవచ్చు."</string>
+    <string name="bluetooth_enter_passkey_other_device" msgid="7147248221018865922">"మీరు ఈ పాస్‌కీని మరో పరికరంలో కూడా టైప్ చేయాల్సి ఉండవచ్చు."</string>
+    <string name="bluetooth_pin_values_hint_16_digits" msgid="418776900816984778">"తప్పనిసరిగా 16 అంకెలు ఉండాలి"</string>
+    <string name="bluetooth_pin_values_hint" msgid="1561325817559141687">"సాధారణంగా 0000 లేదా 1234"</string>
+    <string name="bluetooth_notif_title" msgid="8374602799367803335">"జత చేయడానికి అభ్యర్థన"</string>
+    <string name="bluetooth_notif_message" msgid="1060821000510108726">"<xliff:g id="DEVICE_NAME">%1$s</xliff:g>తో జత చేయడానికి నొక్కండి."</string>
+    <string name="bluetooth_error_title" msgid="2341600997536511742"></string>
+    <string name="sound_settings" msgid="3072423952331872246">"ధ్వని"</string>
+    <string name="ring_volume_title" msgid="3135241004980719442">"రింగ్ వాల్యూమ్"</string>
+    <string name="navi_volume_title" msgid="946292066759195165">"నావిగేషన్ వాల్యూమ్"</string>
+    <string name="incoming_call_volume_title" msgid="6972117872424656876">"రింగ్‌టోన్"</string>
+    <string name="notification_volume_title" msgid="6749411263197157876">"నోటిఫికేషన్"</string>
+    <string name="media_volume_title" msgid="6697416686272606865">"మీడియా"</string>
+    <string name="media_volume_summary" msgid="2961762827637127239">"సంగీతం మరియు వీడియోల కోసం వాల్యూమ్‌ను సెట్ చేయండి"</string>
+    <string name="alarm_volume_title" msgid="840384014895796587">"అలారం"</string>
+    <string name="applications_settings" msgid="794261395191035632">"యాప్ సమాచారం"</string>
+    <string name="disable_text" msgid="4358165448648990820">"నిలిపివేయి"</string>
+    <string name="enable_text" msgid="1794971777861881238">"ప్రారంభించు"</string>
+    <string name="permissions_label" msgid="2701446753515612685">"అనుమతులు"</string>
+    <string name="application_version_label" msgid="8556889839783311649">"వెర్షన్: %1$s"</string>
+    <string name="runtime_permissions_summary_no_permissions_granted" msgid="6001439205270250021">"అనుమతులు మంజూరు కాలేదు"</string>
+    <string name="runtime_permissions_summary_no_permissions_requested" msgid="4074220596273432442">"అనుమతులను అభ్యర్థించలేదు"</string>
+    <string name="data_usage_summary_title" msgid="4368024763485916986">"డేటా వినియోగం"</string>
+    <string name="data_usage_app_summary_title" msgid="5012851696585421420">"యాప్ డేటా వినియోగం"</string>
+    <string name="force_stop" msgid="2153183697014720520">"ఫోర్స్ స్టాప్"</string>
+    <string name="computing_size" msgid="5791407621793083965">"గణిస్తోంది…"</string>
+    <plurals name="runtime_permissions_additional_count" formatted="false" msgid="3513360187065317613">
+      <item quantity="other"><xliff:g id="COUNT_1">%d</xliff:g> అదనపు అనుమతులు</item>
+      <item quantity="one"><xliff:g id="COUNT_0">%d</xliff:g> అదనపు అనుమతి</item>
+    </plurals>
+    <string name="system_setting_title" msgid="6864599341809463440">"సిస్టమ్"</string>
+    <string name="system_update_settings_list_item_title" msgid="5182439376921868735">"సిస్టమ్ అప్‌డేట్‌లు"</string>
+    <string name="system_update_settings_list_item_summary" msgid="7395202602021608371"></string>
+    <string name="firmware_version" msgid="8491753744549309333">"Android వెర్షన్"</string>
+    <string name="security_patch" msgid="4794276590178386903">"Android భద్రతా ప్యాచ్ స్థాయి"</string>
+    <string name="model_info" msgid="4966408071657934452">"మోడల్"</string>
+    <string name="baseband_version" msgid="2370088062235041897">"బేస్‌బ్యాండ్ వెర్షన్"</string>
+    <string name="kernel_version" msgid="7327212934187011508">"కెర్నెల్ వెర్షన్"</string>
+    <string name="build_number" msgid="3997326631001009102">"బిల్డ్ సంఖ్య"</string>
+    <string name="device_info_not_available" msgid="2095601973977376655">"అందుబాటులో లేదు"</string>
+    <string name="device_status_activity_title" msgid="4083567497305368200">"స్థితి"</string>
+    <string name="device_status" msgid="267298179806290920">"స్థితి"</string>
+    <string name="device_status_summary" product="tablet" msgid="600543254608862075">"బ్యాటరీ, నెట్‌వర్క్ యొక్క స్థితి మరియు ఇతర సమాచారం"</string>
+    <string name="device_status_summary" product="default" msgid="9130360324418117815">"ఫోన్ నంబర్, సిగ్నల్ మొ."</string>
+    <string name="about_settings" msgid="4329457966672592345">"పరిచయం"</string>
+    <string name="about_summary" msgid="5374623866267691206">"Android <xliff:g id="VERSION">%1$s</xliff:g>"</string>
+    <string name="about_settings_summary" msgid="7975072809083281401">"చట్టపరమైన సమాచారం, స్థితి, సాఫ్ట్‌వేర్ వెర్షన్‌ని వీక్షించండి"</string>
+    <string name="legal_information" msgid="1838443759229784762">"చట్టబద్ధమైన సమాచారం"</string>
+    <string name="contributors_title" msgid="7698463793409916113">"సహకారులు"</string>
+    <string name="manual" msgid="4819839169843240804">"మాన్యువల్"</string>
+    <string name="regulatory_labels" msgid="3165587388499646779">"నియంత్రణ లేబుల్‌లు"</string>
+    <string name="safety_and_regulatory_info" msgid="1204127697132067734">"భద్రత &amp; amp; నియంత్రణ మాన్యువల్"</string>
+    <string name="copyright_title" msgid="4220237202917417876">"కాపీరైట్"</string>
+    <string name="license_title" msgid="936705938435249965">"లైసెన్స్"</string>
+    <string name="terms_title" msgid="5201471373602628765">"నిబంధనలు మరియు షరతులు"</string>
+    <string name="webview_license_title" msgid="2531829466541104826">"సిస్టమ్ వెబ్ వీక్షణ లైసెన్స్"</string>
+    <string name="wallpaper_attributions" msgid="9201272150014500697">"వాల్‌పేపర్‌లు"</string>
+    <string name="wallpaper_attributions_values" msgid="4292446851583307603">"ఉపగ్రహ చిత్రాల ప్రదాతలు:\n©2014 CNES / Astrium, DigitalGlobe, Bluesky"</string>
+    <string name="settings_license_activity_title" msgid="8499293744313077709">"మూడవ పక్షం లైసెన్స్‌లు"</string>
+    <string name="settings_license_activity_unavailable" msgid="6104592821991010350">"లైసెన్స్‌లను లోడ్ చేయడంలో సమస్య ఉంది."</string>
+    <string name="settings_license_activity_loading" msgid="6163263123009681841">"లోడ్ చేస్తోంది…"</string>
+    <string name="date_and_time_settings_title" msgid="4058492663544475485">"తేదీ &amp; సమయం"</string>
+    <string name="date_and_time_settings_title_setup_wizard" msgid="7580119979694174107">"తేదీ మరియు సమయాన్ని సెట్ చేయండి"</string>
+    <string name="date_and_time_settings_summary" msgid="7669856855390804666">"తేదీ, సమయం, సమయ మండలి &amp; ఫార్మాట్‌లను సెట్ చేయండి"</string>
+    <string name="date_time_auto" msgid="3570339569471779767">"ఆటోమేటిక్‌గా తేదీ &amp; సమయం"</string>
+    <string name="date_time_auto_summary" msgid="3311706425095342759">"నెట్‌వర్క్ అందించిన సమయాన్ని ఉపయోగించు"</string>
+    <string name="zone_auto" msgid="3701878581920206160">"ఆటోమేటిక్ సమయ మండలి"</string>
+    <string name="zone_auto_summary" msgid="4345856882906981864">"నెట్‌వర్క్ అందించిన సమయ మండలిని ఉపయోగించు"</string>
+    <string name="date_time_24hour_title" msgid="3025576547136168692">"24‑గంటల ఫార్మాట్"</string>
+    <string name="date_time_24hour" msgid="1137618702556486913">"24-గంటల ఫార్మాట్‌ని ఉపయోగించు"</string>
+    <string name="date_time_set_time_title" msgid="5884883050656937853">"సమయం"</string>
+    <string name="date_time_set_time" msgid="6449555153906058248">"సమయాన్ని సెట్ చేయండి"</string>
+    <string name="date_time_set_timezone_title" msgid="3001779256157093425">"సమయ మండలి"</string>
+    <string name="date_time_set_timezone" msgid="4759353576185916944">"సమయ మండలిని ఎంచుకోండి"</string>
+    <string name="date_time_set_date_title" msgid="6834785820357051138">"తేదీ"</string>
+    <string name="date_time_set_date" msgid="2537494485643283230">"తేదీని సెట్ చేయండి"</string>
+    <string name="zone_list_menu_sort_alphabetically" msgid="7041628618528523514">"అక్షరక్రమంలో క్రమీకరించు"</string>
+    <string name="zone_list_menu_sort_by_timezone" msgid="4944880536057914136">"సమయ మండలి ప్రకారం క్రమీకరించు"</string>
+    <string name="date_picker_title" msgid="1533614225273770178">"తేదీ"</string>
+    <string name="time_picker_title" msgid="7436045944320504639">"సమయం"</string>
+    <string name="user_add_user_menu" msgid="5319151436895941496">"వినియోగదారుని జోడించు"</string>
+    <string name="user_add_account_menu" msgid="6625351983590713721">"ఖాతాను జోడించు"</string>
+    <string name="user_delete_user_description" msgid="2300280525351142435">"వినియోగదారుని తొలగించు"</string>
+    <string name="user_new_user_name" msgid="7115771396412339662">"కొత్త వినియోగదారు"</string>
+    <string name="user_guest" msgid="3465399481257448601">"అతిథి"</string>
+    <string name="user_switch" msgid="6544839750534690781">"మార్చు"</string>
+    <string name="current_user_name" msgid="3813671533249316823">"మీరు (%1$s)"</string>
+    <string name="user_name_label" msgid="3210832645046206845">"పేరు"</string>
+    <string name="user_summary_not_set_up" msgid="1473688119241224145">"సెటప్ చేయలేదు"</string>
+    <string name="edit_user_name_title" msgid="6890782937520262478">"వినియోగదారు పేరుని సవరించండి"</string>
+    <string name="users_list_title" msgid="770764290290240909">"వినియోగదారులు"</string>
+    <string name="accounts_settings_title" msgid="436190037084293471">"ఖాతాలు"</string>
+    <string name="user_details_title" msgid="1104762783367701498">"వినియోగదారు"</string>
+    <string name="no_accounts_added" msgid="5148163140691096055">"ఖాతాలు జోడించబడలేదు"</string>
+    <string name="account_list_title" msgid="7631588514613843065">"<xliff:g id="CURRENT_USER_NAME">%1$s</xliff:g> యొక్క ఖాతాలు"</string>
+    <string name="account_details_title" msgid="7529571432258448573">"ఖాతా సమాచారం"</string>
+    <string name="add_account_title" msgid="5988746086885210040">"ఖాతాను జోడించండి"</string>
+    <string name="add_an_account" msgid="1072285034300995091">"ఖాతాను జోడించండి"</string>
+    <string name="user_cannot_add_accounts_message" msgid="6775605884544906797">"పరిమిత ప్రొఫైల్‌లలో ఖాతాలను జోడించడం సాధ్యపడదు"</string>
+    <string name="remove_account_title" msgid="8840386525787836381">"ఖాతాను తీసివేయి"</string>
+    <string name="really_remove_account_title" msgid="3555164432587924900">"ఖాతాను తీసివేయాలా?"</string>
+    <string name="really_remove_account_message" msgid="4296769280849579900">"ఈ ఖాతాను తీసివేయడం వలన పరికరం నుండి దానికి సంబంధించిన అన్ని సందేశాలు, పరిచయాలు మరియు ఇతర డేటా తొలగించబడతాయి!"</string>
+    <string name="remove_account_failed" msgid="7472511529086294087">"ఈ మార్పును మీ నిర్వాహకులు అనుమతించలేదు"</string>
+    <string name="really_remove_user_title" msgid="4990029019291756762">"ఈ వినియోగదారుని తీసేయాలా?"</string>
+    <string name="really_remove_user_message" msgid="3828090902833944533">"అన్ని యాప్‌లు మరియు డేటా తొలగించబడతాయి."</string>
+    <string name="remove_user_error_title" msgid="2038275458657689420">"వినియోగదారును తీసివేయడంలో విఫలమైంది."</string>
+    <string name="remove_user_error_message" msgid="6803947507134323358">"మళ్లీ ప్రయత్నించాలా?"</string>
+    <string name="remove_user_error_dismiss" msgid="4006591159426844335">"విస్మరించండి"</string>
+    <string name="remove_user_error_retry" msgid="8291692909396995093">"మళ్లీ ప్రయత్నించండి"</string>
+    <string name="user_add_user_title" msgid="7458813670614932479">"కొత్త వినియోగదారుని జోడించాలా?"</string>
+    <string name="user_add_user_message_setup" msgid="6030901156040053106">"మీరు కొత్త వినియోగదారును జోడించినప్పుడు, ఆ వ్యక్తి తన స్థలాన్ని సెటప్ చేసుకోవాలి."</string>
+    <string name="user_add_user_message_update" msgid="1528170913388932459">"ఏ వినియోగదారు అయినా మిగతా అందరు వినియోగదారుల కోసం యాప్‌లను అప్‌డేట్ చేయవచ్చు."</string>
+    <string name="security_settings_title" msgid="6955331714774709746">"భద్రత"</string>
+    <string name="security_settings_subtitle" msgid="2244635550239273229">"స్క్రీన్ లాక్"</string>
+    <string name="security_lock_none" msgid="1054645093754839638">"ఏదీ కాదు"</string>
+    <string name="security_lock_pattern" msgid="1174352995619563104">"ఆకృతి"</string>
+    <string name="security_lock_pin" msgid="4891899974369503200">"పిన్"</string>
+    <string name="security_lock_password" msgid="4420203740048322494">"పాస్‌‌వర్డ్"</string>
+    <string name="lock_settings_picker_title" msgid="6590330165050361632">"లాక్ రకాన్ని ఎంచుకోండి"</string>
+    <string name="screen_lock_options" msgid="7023338635352915768">"స్క్రీన్ లాక్ ఎంపికలు"</string>
+    <string name="lock_settings_enter_pattern" msgid="4826034565853171624">"మీ ఆకృతిని నమోదు చేయండి"</string>
+    <string name="lockpattern_confirm_button_text" msgid="7784925958324484965">"నిర్ధారించు"</string>
+    <string name="lockpattern_restart_button_text" msgid="9355771277617537">"మళ్లీ గీయి"</string>
+    <string name="continue_button_text" msgid="5129979170426836641">"కొనసాగించు"</string>
+    <string name="lockscreen_retry_button_text" msgid="5314212350698701242">"మళ్లీ ప్రయత్నించు"</string>
+    <string name="lockscreen_skip_button_text" msgid="3755748786396198091">"దాటవేయి"</string>
+    <string name="set_screen_lock" msgid="5239317292691332780">"స్క్రీన్ లాక్‌ను సెట్ చేయండి"</string>
+    <string name="lockscreen_choose_your_pattern" msgid="6801175111142593404">"మీ నమూనాను ఎంచుకోండి"</string>
+    <string name="current_screen_lock" msgid="637651611145979587">"ప్రస్తుత స్క్రీన్ లాక్"</string>
+    <string name="choose_lock_pattern_message" msgid="6242765203541309524">"భద్రత కోసం, ఆకృతిని సెట్ చేయండి"</string>
+    <string name="lockpattern_retry_button_text" msgid="4655398824001857843">"తీసివేయి"</string>
+    <string name="lockpattern_cancel_button_text" msgid="4068764595622381766">"రద్దు చేయి"</string>
+    <string name="lockpattern_pattern_confirmed" msgid="5984306638250515385">"మీ కొత్త అన్‌లాక్ నమూనా"</string>
+    <string name="lockpattern_recording_intro_header" msgid="7864149726033694408">"అన్‌లాక్ నమూనాని గీయండి"</string>
+    <string name="lockpattern_recording_inprogress" msgid="1575019990484725964">"పూర్తయినప్పుడు వేలును తీసివేయండి"</string>
+    <string name="lockpattern_pattern_entered" msgid="6103071005285320575">"ఆకృతి రికార్డ్ చేయబడింది"</string>
+    <string name="lockpattern_need_to_confirm" msgid="4648070076022940382">"నిర్ధారించడానికి ఆకృతిని మళ్లీ గీయండి"</string>
+    <string name="lockpattern_recording_incorrect_too_short" msgid="2417932185815083082">"కనీసం 4 చుక్కలు కలపండి. మళ్లీ ప్రయత్నించండి."</string>
+    <string name="lockpattern_pattern_wrong" msgid="929223969555399363">"ఆకృతి తప్పు"</string>
+    <string name="lockpattern_settings_help_how_to_record" msgid="4436556875843192284">"అన్‌లాక్ నమూనాను ఎలా గీయాలి"</string>
+    <string name="error_saving_lockpattern" msgid="2933512812768570130">"ఆకృతిని సేవ్ చేయడంలో ఎర్రర్ ఏర్పడింది"</string>
+    <string name="okay" msgid="4589873324439764349">"సరే"</string>
+    <string name="remove_screen_lock_title" msgid="1234382338764193387">"స్క్రీన్ లాక్‌ను తీసివేయాలా?"</string>
+    <string name="remove_screen_lock_message" msgid="6675850371585564965">"ఎవరైనా మీ ఖాతాను యాక్సెస్ చేయడానికి ఇది అనుమతిస్తుంది"</string>
+    <string name="lock_settings_enter_pin" msgid="1669172111244633904">"మీ పిన్‌ని నమోదు చేయండి"</string>
+    <string name="lock_settings_enter_password" msgid="2636669926649496367">"మీ పాస్‌వర్డ్‌ను నమోదు చేయండి"</string>
+    <string name="choose_lock_pin_message" msgid="2963792070267774417">"భద్రత కోసం, పిన్‌ను సెట్ చేయండి"</string>
+    <string name="confirm_your_pin_header" msgid="9096581288537156102">"మీ పిన్‌ను మళ్లీ నమోదు చేయండి"</string>
+    <string name="choose_lock_pin_hints" msgid="7362906249992020844">"పిన్ తప్పనిసరిగా కనీసం 4 అంకెలు ఉండాలి"</string>
+    <string name="lockpin_invalid_pin" msgid="2149191577096327424">"పిన్ చెల్లదు, కనీసం 4 అంకెలు ఉండాలి."</string>
+    <string name="confirm_pins_dont_match" msgid="4607110139373520720">"పిన్‌లు సరిపోలలేదు"</string>
+    <string name="error_saving_lockpin" msgid="9011960139736000393">"పిన్‌ని సేవ్ చేయడంలో ఎర్రర్ ఏర్పడింది"</string>
+    <string name="lockscreen_wrong_pin" msgid="4922465731473805306">"పిన్ తప్పు"</string>
+    <string name="lockscreen_wrong_password" msgid="5757087577162231825">"పాస్‌వర్డ్ తప్పు"</string>
+    <string name="choose_lock_password_message" msgid="6124341145027370784">"భద్రత కోసం, పాస్‌వర్డ్‌ను సెట్ చేయండి"</string>
+    <string name="confirm_your_password_header" msgid="7052891840366724938">"మీ పాస్‌వర్డ్‌ను మళ్లీ నమోదు చేయండి"</string>
+    <string name="confirm_passwords_dont_match" msgid="7300229965206501753">"పాస్‌‌వర్డ్‌లు సరిపోలలేదు"</string>
+    <string name="lockpassword_clear_label" msgid="6363680971025188064">"తీసివేయి"</string>
+    <string name="lockpassword_cancel_label" msgid="5791237697404166450">"రద్దు చేయి"</string>
+    <string name="lockpassword_confirm_label" msgid="5918463281546146953">"నిర్ధారించు"</string>
+    <string name="choose_lock_password_hints" msgid="1802962836351866087">"పాస్‌వర్డ్ 4-8 అక్షరాల్లో ఉండాలి, అందులో కనీసం 1 సంఖ్య ఉండాలి"</string>
+    <string name="lockpassword_password_too_short" msgid="6681218025001328405">"తప్పనిసరిగా కనీసం <xliff:g id="COUNT">%d</xliff:g> అక్షరాలు ఉండాలి"</string>
+    <string name="lockpassword_pin_too_short" msgid="6363004004424904218">"పిన్ తప్పనిసరిగా కనీసం <xliff:g id="COUNT">%d</xliff:g> అంకెలు ఉండాలి"</string>
+    <string name="lockpassword_password_too_long" msgid="7530214940279491291">"తప్పనిసరిగా <xliff:g id="NUMBER">%d</xliff:g> కంటే తక్కువ అక్షరాలు ఉండాలి"</string>
+    <string name="lockpassword_pin_too_long" msgid="62957683396974404">"తప్పనిసరిగా <xliff:g id="NUMBER">%d</xliff:g> కంటే తక్కువ అంకెలు ఉండాలి"</string>
+    <string name="lockpassword_pin_contains_non_digits" msgid="3044526271686839923">"తప్పనిసరిగా 0-9 అంకెలను మాత్రమే కలిగి ఉండాలి."</string>
+    <string name="lockpassword_pin_recently_used" msgid="7901918311213276207">"ఇటీవలి పిన్‌ని ఉపయోగించడానికి పరికర నిర్వాహకులు అనుమతించరు"</string>
+    <string name="lockpassword_pin_blacklisted_by_admin" msgid="7412709707800738442">"సాధారణ పిన్‌లను మా IT నిర్వాహకులు బ్లాక్ చేసారు. వేరే పిన్‌ని ప్రయత్నించండి."</string>
+    <string name="lockpassword_illegal_character" msgid="1984970060523635618">"ఇందులో చెల్లని అక్షరం ఉండకూడదు."</string>
+    <string name="lockpassword_invalid_password" msgid="4987689810161043367">"పాస్‌వర్డ్ చెల్లదు, తప్పనిసరిగా 4-8 అక్షరాల్లో ఉండాలి, వాటిలో కనీసం 1 అంకె, 1 వర్ణమాల అక్షరం ఉండాలి, తెల్లని ఖాళీ ఉండకూడదు."</string>
+    <plurals name="lockpassword_password_requires_letters" formatted="false" msgid="424616259312760303">
+      <item quantity="other">తప్పనిసరిగా కనీసం <xliff:g id="COUNT">%d</xliff:g> అక్షరాలను కలిగి ఉండాలి</item>
+      <item quantity="one">తప్పనిసరిగా కనీసం 1 అక్షరాన్ని కలిగి ఉండాలి</item>
+    </plurals>
+    <plurals name="lockpassword_password_requires_lowercase" formatted="false" msgid="2267487180744744833">
+      <item quantity="other">తప్పనిసరిగా కనీసం <xliff:g id="COUNT">%d</xliff:g> చిన్న అక్షరాలను కలిగి ఉండాలి</item>
+      <item quantity="one">తప్పనిసరిగా కనీసం 1 చిన్న అక్షరాన్ని కలిగి ఉండాలి</item>
+    </plurals>
+    <plurals name="lockpassword_password_requires_uppercase" formatted="false" msgid="7999264563026517898">
+      <item quantity="other">తప్పనిసరిగా కనీసం <xliff:g id="COUNT">%d</xliff:g> అప్పర్‌కేస్ అక్షరాలను కలిగి ఉండాలి</item>
+      <item quantity="one">తప్పనిసరిగా కనీసం 1 అప్పర్‌కేస్ అక్షరాన్ని కలిగి ఉండాలి</item>
+    </plurals>
+    <plurals name="lockpassword_password_requires_numeric" formatted="false" msgid="7935079851855168646">
+      <item quantity="other">తప్పనిసరిగా కనీసం <xliff:g id="COUNT">%d</xliff:g> సంఖ్యాత్మక అంకెలను కలిగి ఉండాలి</item>
+      <item quantity="one">తప్పనిసరిగా కనీసం 1 సంఖ్యాత్మక అంకెను కలిగి ఉండాలి</item>
+    </plurals>
+    <plurals name="lockpassword_password_requires_symbols" formatted="false" msgid="3994046435150094132">
+      <item quantity="other">తప్పనిసరిగా కనీసం <xliff:g id="COUNT">%d</xliff:g> ప్రత్యేక గుర్తులను కలిగి ఉండాలి</item>
+      <item quantity="one">తప్పనిసరిగా కనీసం 1 ప్రత్యేక గుర్తును కలిగి ఉండాలి</item>
+    </plurals>
+    <plurals name="lockpassword_password_requires_nonletter" formatted="false" msgid="6878486326748506524">
+      <item quantity="other">తప్పనిసరిగా కనీసం <xliff:g id="COUNT">%d</xliff:g> వర్ణమాల యేతర అక్షరాలను కలిగి ఉండాలి</item>
+      <item quantity="one">తప్పనిసరిగా కనీసం 1 వర్ణమాల యేతర అక్షరాన్ని కలిగి ఉండాలి</item>
+    </plurals>
+    <string name="lockpassword_password_recently_used" msgid="8255729487108602924">"ఇటీవలి పాస్‌వర్డ్‌ను ఉపయోగించడానికి పరికర నిర్వాహకులు అనుమతించరు"</string>
+    <string name="error_saving_password" msgid="8334882262622500658">"పాస్‌వర్డ్‌ని సేవ్ చేయడంలో ఎర్రర్"</string>
+    <string name="lockpassword_password_blacklisted_by_admin" msgid="7965893810326503891">"సాధారణ పాస్‌వర్డ్‌లను మా IT నిర్వాహకులు బ్లాక్ చేసారు. వేరే పాస్‌వర్డ్‌ని ప్రయత్నించండి."</string>
+    <string name="lockpassword_pin_no_sequential_digits" msgid="38813552228809240">"అంకెలను ఆరోహణ, అవరోహణ క్రమంలో లేదా ఒకే అంకెను వరుసగా పునరావృతంగా ఉపయోగించకూడదు."</string>
+    <string name="setup_lock_settings_options_button_label" msgid="3337845811029780896">"స్క్రీన్ లాక్ ఎంపికలు"</string>
+    <string name="forget" msgid="3971143908183848527">"విస్మరించు"</string>
+    <string name="delete_button" msgid="5840500432614610850">"తొలగించు"</string>
+    <string name="remove_button" msgid="6664656962868194178">"తీసివేయి"</string>
+    <string name="cancel" msgid="750286395700355455">"రద్దు చేయి"</string>
+    <string name="backspace_key" msgid="1545590866688979099">"Backspace కీ"</string>
+    <string name="enter_key" msgid="2121394305541579468">"Enter కీ"</string>
+    <string name="exit_retail_button_text" msgid="6093240315583384473">"డెమో నుండి నిష్క్రమించండి"</string>
+    <string name="exit_retail_mode_dialog_title" msgid="7970631760237469168">"డెమో మోడ్ నుండి నిష్క్రమించండి"</string>
+    <string name="exit_retail_mode_dialog_body" msgid="8314316171782527301">"ఫ్యాక్టరీ డేటా డెమో ఖాతాను తొలగించి, సిస్టమ్‌ను రీసెట్ చేస్తుంది. మొత్తం వినియోగదారు డేటాను కోల్పోతారు."</string>
+    <string name="exit_retail_mode_dialog_confirmation_button_text" msgid="3147249675355968649">"డెమో నుండి నిష్క్రమించండి"</string>
+    <string name="suggestion_primary_button" msgid="6421115494714083020">"సెటప్‌ను పూర్తి చేయండి"</string>
+    <string name="suggestion_secondary_button" msgid="7075088546904464681">"ఇప్పుడు వద్దు"</string>
+    <string name="restricted_while_driving" msgid="6217369093121968299">"డ్రైవింగ్ చేస్తున్నప్పుడు ఫీచర్ అందుబాటులో ఉండదు."</string>
+    <!-- no translation found for add_user_restricted_while_driving (6384004350628271556) -->
+    <skip />
+</resources>

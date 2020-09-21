@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2017 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License
+  -->
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/LineItem" >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="@dimen/car_keyline_1"
+        android:layout_marginEnd="@dimen/car_keyline_1" >
+        <ImageView
+            android:id="@+id/icon"
+            style="@style/ListIcon"
+            android:layout_marginEnd="@dimen/car_keyline_1"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:visibility="gone" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toEndOf="@+id/icon">
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/line_item_top_margin"
+                style="@style/TextAppearance.Car.Body2.SingleLine" />
+            <SeekBar
+                android:id="@+id/seekbar"
+                android:progressDrawable="@drawable/ic_seekbar_track"
+                android:layout_marginTop="@dimen/car_padding_1"
+                android:thumb="@drawable/ic_seekbar_thumb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </RelativeLayout>
+    <View
+        android:id="@+id/line_item_divider"
+        android:layout_gravity="bottom"
+        android:background="@color/car_list_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/car_list_divider_height" />
+</FrameLayout>

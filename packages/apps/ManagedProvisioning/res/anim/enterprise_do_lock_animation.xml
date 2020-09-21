@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <set
+        android:ordering="sequentially" >
+        <objectAnimator
+            android:duration="350"
+            android:propertyName="translateY"
+            android:valueFrom="136.45755"
+            android:valueTo="136.45755"
+            android:valueType="floatType"
+            android:interpolator="@interpolator/enterprise_do_animation_interpolator_1" />
+        <objectAnimator
+            android:duration="300"
+            android:propertyName="translateY"
+            android:valueFrom="136.45755"
+            android:valueTo="130.45755"
+            android:valueType="floatType"
+            android:interpolator="@interpolator/enterprise_do_animation_interpolator_10" />
+        <objectAnimator
+            android:duration="150"
+            android:propertyName="translateY"
+            android:valueFrom="130.45755"
+            android:valueTo="137.46029"
+            android:valueType="floatType"
+            android:interpolator="@interpolator/enterprise_do_animation_interpolator_10" />
+        <objectAnimator
+            android:duration="199"
+            android:propertyName="translateY"
+            android:valueFrom="137.46029"
+            android:valueTo="136.45755"
+            android:valueType="floatType"
+            android:interpolator="@interpolator/enterprise_do_animation_interpolator_10" />
+    </set>
+</set>

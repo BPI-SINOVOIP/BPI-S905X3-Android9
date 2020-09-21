@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (C) 2016 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License
+  -->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/device_sound">
+
+    <SwitchPreference
+        android:key="sound_effects"
+        android:persistent="true"
+        android:title="@string/device_sound_effects"/>
+
+    <PreferenceCategory
+        android:key="surround_sound_category"
+        android:title="@string/surround_sound_category_title"
+        android:layout="@layout/preference_category_compact_layout" >
+
+        <ListPreference
+            android:key="surround_passthrough"
+            android:persistent="true"
+            android:entries="@array/surround_sound_entries"
+            android:entryValues="@array/surround_sound_entry_values"
+            android:title="@string/surround_sound_select_formats"
+            android:summary="%s"
+            android:dialogMessage="@string/surround_sound_auto_info"/>
+
+        <!-- Switches for each surround sound format programmatically added here. -->
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

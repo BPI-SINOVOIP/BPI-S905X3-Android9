@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2018 The Android Open Source Project
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+       http://www.apache.org/licenses/LICENSE-2.0
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<!-- There seems to be a bug in layout inflation where it can't use a resource to inflate a view
+     group that sets layout_marginTop with a dimension. Work around by putting in a shell layout.
+-->
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/car_app_bar_height">
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/dialer_info_fragment_container"
+        android:paddingLeft="@dimen/car_margin"
+        android:paddingRight="@dimen/car_margin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/dialpad_fragment_container"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/TextAppearance.Car.Headline2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/car_padding_4"
+            android:gravity="center"
+            android:focusable="true"
+            android:maxLines="1"
+            android:text="@string/dial_a_number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/body"
+            style="@style/TextAppearance.Car.Body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/car_padding_3"
+            android:gravity="center"
+            android:visibility="gone"
+            android:maxLines="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title"/>
+
+        <ImageButton
+            android:id="@+id/call_button"
+            style="@style/DialpadPrimaryButton"
+            android:src="@drawable/ic_phone"
+            android:layout_marginBottom="@dimen/car_padding_4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/delete_button"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <ImageButton
+            android:id="@+id/delete_button"
+            style="@style/DialpadSecondaryButton"
+            android:layout_marginBottom="@dimen/car_padding_4"
+            android:layout_marginStart="@dimen/car_padding_6"
+            android:src="@drawable/ic_backspace"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/call_button"/>
+
+        <ImageButton
+            android:id="@+id/end_call_button"
+            style="@style/DialpadPrimaryButton"
+            android:layout_marginBottom="@dimen/car_padding_4"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/mute_button"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <ImageButton
+            android:id="@+id/mute_button"
+            style="@style/DialpadSecondaryButton"
+            android:layout_marginBottom="@dimen/car_padding_4"
+            android:layout_marginStart="@dimen/car_padding_6"
+            android:src="@drawable/ic_mute_call_normal"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/end_call_button"/>
+    </android.support.constraint.ConstraintLayout>
+</FrameLayout>

@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ * Copyright (c) 2017, The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
+ -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="settings_label" msgid="5147911978211079839">"அமைப்புகள்"</string>
+    <string name="more_settings_label" msgid="3867559443480110616">"மேலும்"</string>
+    <string name="display_settings" msgid="5325515247739279185">"திரை"</string>
+    <string name="brightness" msgid="2919605130898772866">"ஒளிர்வு நிலை"</string>
+    <string name="auto_brightness_title" msgid="9124647862844666581">"சூழலுக்கு ஏற்ற ஒளிர்வு"</string>
+    <string name="auto_brightness_summary" msgid="4741887033140384352">"சுற்றியிருக்கும் ஒளிக்கேற்ப, ஒளிர்வு நிலையைச் சரிசெய்யும்"</string>
+    <string name="condition_night_display_title" msgid="3777509730126972675">"நைட் லைட் ஆன் செய்யப்பட்டது"</string>
+    <string name="keywords_display" msgid="3978416985146943922">"திரை, டச்ஸ்கிரீன்"</string>
+    <string name="keywords_display_brightness_level" msgid="3956411572536209195">"ஒளிமங்கல் திரை, டச்ஸ்கிரீன், பேட்டரி"</string>
+    <string name="keywords_display_auto_brightness" msgid="2700310050333468752">"ஒளிமங்கல் திரை, டச்ஸ்கிரீன், பேட்டரி"</string>
+    <string name="keywords_display_night_display" msgid="2922294576679769957">"ஒளிமங்கல் திரை, இரவு, மென்னிறம்"</string>
+    <string name="night_mode_tile_label" msgid="6603597795502131664">"இரவுப் பயன்முறை"</string>
+    <string name="wifi_settings" msgid="7701477685273103841">"வைஃபை"</string>
+    <string name="wifi_settings_summary" msgid="6095898149997291025">"வயர்லெஸ் ஆக்சஸ் பாயிண்ட்களை அமைத்து நிர்வகிக்கவும்"</string>
+    <string name="wifi_starting" msgid="473253087503153167">"வைஃபையை ஆன் செய்கிறது…"</string>
+    <string name="wifi_stopping" msgid="3534173972547890148">"வைஃபையை ஆஃப் செய்கிறது…"</string>
+    <string name="wifi_failed_forget_message" msgid="121732682699377206">"நெட்வொர்க்கை நீக்க முடியவில்லை"</string>
+    <string name="wifi_failed_connect_message" msgid="4447498225022147324">"நெட்வொர்க்குடன் இணைக்க முடியவில்லை"</string>
+    <string name="wifi_setup_add_network" msgid="3660498520389954620">"நெட்வொர்க்கைச் சேர்"</string>
+    <string name="wifi_disabled" msgid="5013262438128749950">"வைஃபை ஆஃப் செய்யப்பட்டது"</string>
+    <string name="wifi_setup_connect" msgid="3512399573397979101">"இணை"</string>
+    <string name="wifi_password" msgid="5565632142720292397">"கடவுச்சொல்"</string>
+    <string name="wifi_show_password" msgid="8423293211933521097">"கடவுச்சொல்லைக் காட்டு"</string>
+    <string name="wifi_ssid" msgid="488604828159458741">"நெட்வொர்க் பெயர்"</string>
+    <string name="wifi_security" msgid="158358046038876532">"பாதுகாப்பு"</string>
+    <string name="wifi_signal" msgid="1817579728350364549">"சிக்னலின் வலிமை"</string>
+    <string name="wifi_status" msgid="5688013206066543952">"நிலை"</string>
+    <string name="wifi_speed" msgid="1650692446731850781">"இணைப்பு வேகம்"</string>
+    <string name="wifi_frequency" msgid="8951455949682864922">"அதிர்வெண்"</string>
+    <string name="wifi_ip_address" msgid="3128140627890954061">"IP முகவரி"</string>
+    <string name="access_point_tag_key" msgid="1517143378973053337">"access_point_tag_key"</string>
+  <string-array name="wifi_signals">
+    <item msgid="4897376984576812606">"மோசம்"</item>
+    <item msgid="2032262610626057081">"சுமார்"</item>
+    <item msgid="3859756017461098953">"நன்று"</item>
+    <item msgid="1521103743353335724">"பிரமாதம்"</item>
+  </string-array>
+    <string name="bluetooth_quick_toggle_title" msgid="637869245038061523">"புளூடூத்"</string>
+    <string name="bluetooth_quick_toggle_summary" msgid="4390699431893305353">"புளூடூத்தை ஆன் செய்"</string>
+    <string name="bluetooth_settings" msgid="3878243366013638982">"புளூடூத்"</string>
+    <string name="bluetooth_disabled" msgid="4187409401590350572">"புளூடூத் முடக்கப்பட்டுள்ளது"</string>
+    <string name="bluetooth_settings_title" msgid="3794688574569688649">"புளூடூத்"</string>
+    <string name="bluetooth_settings_summary" msgid="4023303473646769835">"இணைப்புகளை நிர்வகிக்கவும், சாதனப் பெயரையும் கண்டறியத்தக்க நிலையையும் அமைக்கவும்"</string>
+    <string name="bluetooth_talkback_computer" msgid="5223330129934365312">"கம்ப்யூட்டர்"</string>
+    <string name="bluetooth_talkback_headset" msgid="6155254514321149935">"ஹெட்செட்"</string>
+    <string name="bluetooth_talkback_phone" msgid="8833977851215000426">"மொபைல்"</string>
+    <string name="bluetooth_talkback_imaging" msgid="8762390801115154654">"இமேஜிங்"</string>
+    <string name="bluetooth_talkback_headphone" msgid="5362155791551671490">"ஹெட்ஃபோன்"</string>
+    <string name="bluetooth_talkback_input_peripheral" msgid="868933277567862622">"இன்புட் பெரிபெரல்"</string>
+    <string name="bluetooth_talkback_bluetooth" msgid="1715933297419387985">"புளூடூத்"</string>
+    <string name="bluetooth_preference_paired_devices" msgid="5875643105380630583">"இணைக்கப்பட்ட சாதனங்கள்"</string>
+    <string name="bluetooth_preference_found_devices" msgid="125155123214560511">"கிடைக்கும் சாதனங்கள்"</string>
+    <string name="bluetooth_preference_no_paired_devices" msgid="483742146117390001">"இணைக்கப்பட்ட சாதனங்கள் இல்லை"</string>
+    <string name="bluetooth_preference_no_found_devices" msgid="1391812056491062262">"சாதனங்கள் எதுவுமில்லை"</string>
+    <string name="bluetooth_preference_paired_dialog_title" msgid="2470829827455850904">"இணைக்கப்பட்ட சாதனம்"</string>
+    <string name="bluetooth_preference_paired_dialog_name_label" msgid="3528740139365123415">"பெயர்"</string>
+    <string name="bluetooth_device_advanced_profile_header_title" msgid="8165093257483965783">"இதற்குப் பயன்படுத்து"</string>
+    <string name="wifi_ssid_hint" msgid="4155050863239489553">"புளூடூத் சாதனத்தின் பெயரை மாற்றவும்"</string>
+    <string name="bluetooth_notif_ticker" msgid="7192577740198156792">"புளூடூத் இணைப்பிற்கான கோரிக்கை"</string>
+    <string name="bluetooth_device_context_pair_connect" msgid="3138105800372470422">"ஜோடி சேர்த்து, இணை"</string>
+    <string name="bluetooth" msgid="5235115159234688629">"புளூடூத்"</string>
+    <string name="bluetooth_pairing_key_msg" msgid="5066825929751599037">"புளூடூத் இணைத்தல் குறியீடு"</string>
+    <string name="bluetooth_enable_alphanumeric_pin" msgid="1636575922217263060">"பின்னில் எழுத்துகள் அல்லது குறிகள் உள்ளன"</string>
+    <string name="bluetooth_enter_passkey_msg" msgid="5955236916732265593">"இணைத்தல் குறியீட்டை உள்ளிட்டு, ரிட்டர்ன் அல்லது என்டரை அழுத்தவும்"</string>
+    <string name="bluetooth_pairing_request" msgid="4769675459526556801">"<xliff:g id="DEVICE_NAME">%1$s</xliff:g> உடன் இணைக்கவா?"</string>
+    <string name="bluetooth_pairing_shares_phonebook" msgid="2015966932886300630">"தொடர்புகளையும் அழைப்பு வரலாற்றையும் அணுக, <xliff:g id="DEVICE_NAME">%1$s</xliff:g> சாதனத்தை அனுமதி"</string>
+    <string name="bluetooth_enter_pin_other_device" msgid="7825091249522704764">"இந்தப் பின்னை வேறொரு சாதனத்திலும் உள்ளிட வேண்டியிருக்கலாம்."</string>
+    <string name="bluetooth_enter_passkey_other_device" msgid="7147248221018865922">"இந்தக் கடவுச்சொல்லை வேறொரு சாதனத்திலும் உள்ளிட வேண்டியிருக்கலாம்."</string>
+    <string name="bluetooth_pin_values_hint_16_digits" msgid="418776900816984778">"16 இலக்கங்கள் இருக்க வேண்டும்"</string>
+    <string name="bluetooth_pin_values_hint" msgid="1561325817559141687">"பொதுவாக 0000 அல்லது 1234"</string>
+    <string name="bluetooth_notif_title" msgid="8374602799367803335">"இணைப்பிற்கான கோரிக்கை"</string>
+    <string name="bluetooth_notif_message" msgid="1060821000510108726">"<xliff:g id="DEVICE_NAME">%1$s</xliff:g> உடன் இணைக்க, தட்டவும்."</string>
+    <string name="bluetooth_error_title" msgid="2341600997536511742"></string>
+    <string name="sound_settings" msgid="3072423952331872246">"ஒலி"</string>
+    <string name="ring_volume_title" msgid="3135241004980719442">"ரிங் ஒலியளவு"</string>
+    <string name="navi_volume_title" msgid="946292066759195165">"வழிசெலுத்தலுக்கான ஒலியளவு"</string>
+    <string name="incoming_call_volume_title" msgid="6972117872424656876">"ரிங்டோன்"</string>
+    <string name="notification_volume_title" msgid="6749411263197157876">"அறிவிப்பு"</string>
+    <string name="media_volume_title" msgid="6697416686272606865">"மீடியா"</string>
+    <string name="media_volume_summary" msgid="2961762827637127239">"இசை மற்றும் வீடியோக்களுக்கான ஒலியளவை அமை"</string>
+    <string name="alarm_volume_title" msgid="840384014895796587">"அலாரம்"</string>
+    <string name="applications_settings" msgid="794261395191035632">"பயன்பாட்டுத் தகவல்"</string>
+    <string name="disable_text" msgid="4358165448648990820">"முடக்கு"</string>
+    <string name="enable_text" msgid="1794971777861881238">"இயக்கு"</string>
+    <string name="permissions_label" msgid="2701446753515612685">"அனுமதிகள்"</string>
+    <string name="application_version_label" msgid="8556889839783311649">"பதிப்பு: %1$s"</string>
+    <string name="runtime_permissions_summary_no_permissions_granted" msgid="6001439205270250021">"அனுமதிகள் எதுவும் வழங்கப்படவில்லை"</string>
+    <string name="runtime_permissions_summary_no_permissions_requested" msgid="4074220596273432442">"அனுமதிகள் எதையும் கோரவில்லை"</string>
+    <string name="data_usage_summary_title" msgid="4368024763485916986">"டேட்டா உபயோகம்"</string>
+    <string name="data_usage_app_summary_title" msgid="5012851696585421420">"பயன்பாட்டின் டேட்டா உபயோகம்"</string>
+    <string name="force_stop" msgid="2153183697014720520">"உடனே நிறுத்து"</string>
+    <string name="computing_size" msgid="5791407621793083965">"கணக்கிடுகிறது…"</string>
+    <plurals name="runtime_permissions_additional_count" formatted="false" msgid="3513360187065317613">
+      <item quantity="other"><xliff:g id="COUNT_1">%d</xliff:g> கூடுதல் அனுமதிகள்</item>
+      <item quantity="one"><xliff:g id="COUNT_0">%d</xliff:g> கூடுதல் அனுமதி</item>
+    </plurals>
+    <string name="system_setting_title" msgid="6864599341809463440">"சிஸ்டம்"</string>
+    <string name="system_update_settings_list_item_title" msgid="5182439376921868735">"இயங்குதளப் புதுப்பிப்புகள்"</string>
+    <string name="system_update_settings_list_item_summary" msgid="7395202602021608371"></string>
+    <string name="firmware_version" msgid="8491753744549309333">"Android பதிப்பு"</string>
+    <string name="security_patch" msgid="4794276590178386903">"Android பாதுகாப்பின் பேட்ச் நிலை"</string>
+    <string name="model_info" msgid="4966408071657934452">"மாடல்"</string>
+    <string name="baseband_version" msgid="2370088062235041897">"பேஸ்பேண்ட் பதிப்பு"</string>
+    <string name="kernel_version" msgid="7327212934187011508">"கர்னல் பதிப்பு"</string>
+    <string name="build_number" msgid="3997326631001009102">"பதிப்பு எண்"</string>
+    <string name="device_info_not_available" msgid="2095601973977376655">"கிடைக்கவில்லை"</string>
+    <string name="device_status_activity_title" msgid="4083567497305368200">"நிலை"</string>
+    <string name="device_status" msgid="267298179806290920">"நிலை"</string>
+    <string name="device_status_summary" product="tablet" msgid="600543254608862075">"பேட்டரியின் நிலை, நெட்வொர்க் மற்றும் பிற தகவல்"</string>
+    <string name="device_status_summary" product="default" msgid="9130360324418117815">"மொபைல் எண், சிக்னல், மேலும் பல"</string>
+    <string name="about_settings" msgid="4329457966672592345">"அறிமுகம்"</string>
+    <string name="about_summary" msgid="5374623866267691206">"Android <xliff:g id="VERSION">%1$s</xliff:g>"</string>
+    <string name="about_settings_summary" msgid="7975072809083281401">"சட்டத் தகவல், நிலை மற்றும் மென்பொருள் பதிப்பைக் காட்டு"</string>
+    <string name="legal_information" msgid="1838443759229784762">"சட்டத் தகவல்"</string>
+    <string name="contributors_title" msgid="7698463793409916113">"பங்களிப்பாளர்கள்"</string>
+    <string name="manual" msgid="4819839169843240804">"கைமுறை"</string>
+    <string name="regulatory_labels" msgid="3165587388499646779">"ஒழுங்குமுறை லேபிள்கள்"</string>
+    <string name="safety_and_regulatory_info" msgid="1204127697132067734">"பாதுகாப்பு &amp; ஒழுங்குமுறைக் கையேடு"</string>
+    <string name="copyright_title" msgid="4220237202917417876">"பதிப்புரிமை"</string>
+    <string name="license_title" msgid="936705938435249965">"உரிமம்"</string>
+    <string name="terms_title" msgid="5201471373602628765">"விதிமுறைகளும் நிபந்தனைகளும்"</string>
+    <string name="webview_license_title" msgid="2531829466541104826">"சிஸ்டம் WebView உரிமம்"</string>
+    <string name="wallpaper_attributions" msgid="9201272150014500697">"வால்பேப்பர்கள்"</string>
+    <string name="wallpaper_attributions_values" msgid="4292446851583307603">"சாட்டிலைட் படங்களை வழங்குபவர்கள்:\n©2014 CNES / Astrium, DigitalGlobe, Bluesky"</string>
+    <string name="settings_license_activity_title" msgid="8499293744313077709">"மூன்றாம் தரப்பு உரிமங்கள்"</string>
+    <string name="settings_license_activity_unavailable" msgid="6104592821991010350">"உரிமங்களை ஏற்றுவதில் சிக்கல்."</string>
+    <string name="settings_license_activity_loading" msgid="6163263123009681841">"ஏற்றுகிறது…"</string>
+    <string name="date_and_time_settings_title" msgid="4058492663544475485">"தேதி &amp; நேரம்"</string>
+    <string name="date_and_time_settings_title_setup_wizard" msgid="7580119979694174107">"தேதி மற்றும் நேரத்தை அமை"</string>
+    <string name="date_and_time_settings_summary" msgid="7669856855390804666">"தேதி, நேரம், நேரமண்டலம் &amp; வடிவங்களை அமை"</string>
+    <string name="date_time_auto" msgid="3570339569471779767">"தானியங்கு தேதி &amp; நேரம்"</string>
+    <string name="date_time_auto_summary" msgid="3311706425095342759">"நெட்வொர்க் வழங்கும் நேரத்தைப் பயன்படுத்து"</string>
+    <string name="zone_auto" msgid="3701878581920206160">"தானியங்கு நேர மண்டலம்"</string>
+    <string name="zone_auto_summary" msgid="4345856882906981864">"நெட்வொர்க் வழங்கும் நேர மண்டலத்தைப் பயன்படுத்து"</string>
+    <string name="date_time_24hour_title" msgid="3025576547136168692">"24 மணிநேர வடிவம்"</string>
+    <string name="date_time_24hour" msgid="1137618702556486913">"24 மணிநேர வடிவத்தைப் பயன்படுத்து"</string>
+    <string name="date_time_set_time_title" msgid="5884883050656937853">"நேரம்"</string>
+    <string name="date_time_set_time" msgid="6449555153906058248">"நேரத்தை அமை"</string>
+    <string name="date_time_set_timezone_title" msgid="3001779256157093425">"நேர மண்டலம்"</string>
+    <string name="date_time_set_timezone" msgid="4759353576185916944">"நேரமண்டலத்தை அமை"</string>
+    <string name="date_time_set_date_title" msgid="6834785820357051138">"தேதி"</string>
+    <string name="date_time_set_date" msgid="2537494485643283230">"தேதியை அமை"</string>
+    <string name="zone_list_menu_sort_alphabetically" msgid="7041628618528523514">"அகர வரிசைப்படி வரிசைப்படுத்து"</string>
+    <string name="zone_list_menu_sort_by_timezone" msgid="4944880536057914136">"நேர மண்டலத்தின்படி வரிசைப்படுத்து"</string>
+    <string name="date_picker_title" msgid="1533614225273770178">"தேதி"</string>
+    <string name="time_picker_title" msgid="7436045944320504639">"நேரம்"</string>
+    <string name="user_add_user_menu" msgid="5319151436895941496">"பயனரைச் சேர்"</string>
+    <string name="user_add_account_menu" msgid="6625351983590713721">"கணக்கைச் சேர்"</string>
+    <string name="user_delete_user_description" msgid="2300280525351142435">"பயனரை நீக்கும்"</string>
+    <string name="user_new_user_name" msgid="7115771396412339662">"புதிய பயனர்"</string>
+    <string name="user_guest" msgid="3465399481257448601">"விருந்தினர்"</string>
+    <string name="user_switch" msgid="6544839750534690781">"பயனரை மாற்றும்"</string>
+    <string name="current_user_name" msgid="3813671533249316823">"நீங்கள் (%1$s)"</string>
+    <string name="user_name_label" msgid="3210832645046206845">"பெயர்"</string>
+    <string name="user_summary_not_set_up" msgid="1473688119241224145">"அமைக்கவில்லை"</string>
+    <string name="edit_user_name_title" msgid="6890782937520262478">"பயனர் பெயரைத் திருத்தவும்"</string>
+    <string name="users_list_title" msgid="770764290290240909">"பயனர்கள்"</string>
+    <string name="accounts_settings_title" msgid="436190037084293471">"கணக்குகள்"</string>
+    <string name="user_details_title" msgid="1104762783367701498">"பயனர்"</string>
+    <string name="no_accounts_added" msgid="5148163140691096055">"கணக்குகள் எதுவும் சேர்க்கப்படவில்லை"</string>
+    <string name="account_list_title" msgid="7631588514613843065">"<xliff:g id="CURRENT_USER_NAME">%1$s</xliff:g> இன் கணக்குகள்"</string>
+    <string name="account_details_title" msgid="7529571432258448573">"கணக்குத் தகவல்"</string>
+    <string name="add_account_title" msgid="5988746086885210040">"கணக்கைச் சேர்க்கவும்"</string>
+    <string name="add_an_account" msgid="1072285034300995091">"கணக்கைச் சேர்"</string>
+    <string name="user_cannot_add_accounts_message" msgid="6775605884544906797">"வரையறுக்கப்பட்ட சுயவிவரங்களால் கணக்குகளைச் சேர்க்க முடியாது"</string>
+    <string name="remove_account_title" msgid="8840386525787836381">"கணக்கை அகற்று"</string>
+    <string name="really_remove_account_title" msgid="3555164432587924900">"கணக்கை அகற்றவா?"</string>
+    <string name="really_remove_account_message" msgid="4296769280849579900">"இந்தக் கணக்கை அகற்றினால், இதன் செய்திகள், தொடர்புகள், பிற தரவு ஆகியவை சாதனத்திலிருந்து நீக்கப்படும்!"</string>
+    <string name="remove_account_failed" msgid="7472511529086294087">"உங்கள் நிர்வாகி இந்த மாற்றத்தை அனுமதிக்கவில்லை"</string>
+    <string name="really_remove_user_title" msgid="4990029019291756762">"இந்தப் பயனரை அகற்றவா?"</string>
+    <string name="really_remove_user_message" msgid="3828090902833944533">"எல்லா ஆப்ஸும் தரவும் நீக்கப்படும்."</string>
+    <string name="remove_user_error_title" msgid="2038275458657689420">"பயனரை அகற்ற முடியவில்லை."</string>
+    <string name="remove_user_error_message" msgid="6803947507134323358">"மீண்டும் முயலவா?"</string>
+    <string name="remove_user_error_dismiss" msgid="4006591159426844335">"நிராகரி"</string>
+    <string name="remove_user_error_retry" msgid="8291692909396995093">"மீண்டும் முயலவும்"</string>
+    <string name="user_add_user_title" msgid="7458813670614932479">"புதிய பயனரைச் சேர்க்கவா?"</string>
+    <string name="user_add_user_message_setup" msgid="6030901156040053106">"புதிய பயனரைச் சேர்க்கும்போது, அவர் தனக்கான இடத்தை அமைக்க வேண்டும்."</string>
+    <string name="user_add_user_message_update" msgid="1528170913388932459">"எந்தவொரு பயனரும், மற்ற பயனர்களுக்காக ஆப்ஸைப் புதுப்பிக்கலாம்."</string>
+    <string name="security_settings_title" msgid="6955331714774709746">"பாதுகாப்பு"</string>
+    <string name="security_settings_subtitle" msgid="2244635550239273229">"திரைப் பூட்டு"</string>
+    <string name="security_lock_none" msgid="1054645093754839638">"எதுவுமில்லை"</string>
+    <string name="security_lock_pattern" msgid="1174352995619563104">"பேட்டர்ன்"</string>
+    <string name="security_lock_pin" msgid="4891899974369503200">"பின்"</string>
+    <string name="security_lock_password" msgid="4420203740048322494">"கடவுச்சொல்"</string>
+    <string name="lock_settings_picker_title" msgid="6590330165050361632">"பூட்டு வகை தேர்வுசெய்க"</string>
+    <string name="screen_lock_options" msgid="7023338635352915768">"திரைப் பூட்டு விருப்பங்கள்"</string>
+    <string name="lock_settings_enter_pattern" msgid="4826034565853171624">"பேட்டர்னை உள்ளிடுக"</string>
+    <string name="lockpattern_confirm_button_text" msgid="7784925958324484965">"உறுதிப்படுத்து"</string>
+    <string name="lockpattern_restart_button_text" msgid="9355771277617537">"மீண்டும் வரைக"</string>
+    <string name="continue_button_text" msgid="5129979170426836641">"தொடர்க"</string>
+    <string name="lockscreen_retry_button_text" msgid="5314212350698701242">"மீண்டும் முயலவும்"</string>
+    <string name="lockscreen_skip_button_text" msgid="3755748786396198091">"தவிர்"</string>
+    <string name="set_screen_lock" msgid="5239317292691332780">"திரைப் பூட்டை அமைக்கவும்"</string>
+    <string name="lockscreen_choose_your_pattern" msgid="6801175111142593404">"பேட்டர்னைத் தேர்வுசெய்யவும்"</string>
+    <string name="current_screen_lock" msgid="637651611145979587">"தற்போதைய திரைப் பூட்டு"</string>
+    <string name="choose_lock_pattern_message" msgid="6242765203541309524">"பாதுகாப்பிற்கு, பேட்டர்னை அமைக்கவும்"</string>
+    <string name="lockpattern_retry_button_text" msgid="4655398824001857843">"அழி"</string>
+    <string name="lockpattern_cancel_button_text" msgid="4068764595622381766">"ரத்துசெய்"</string>
+    <string name="lockpattern_pattern_confirmed" msgid="5984306638250515385">"திறப்பதற்கான புதிய பேட்டர்ன்"</string>
+    <string name="lockpattern_recording_intro_header" msgid="7864149726033694408">"திறப்பதற்கான பேட்டர்னை வரைக"</string>
+    <string name="lockpattern_recording_inprogress" msgid="1575019990484725964">"முடிந்ததும் விரலை எடுக்கவும்"</string>
+    <string name="lockpattern_pattern_entered" msgid="6103071005285320575">"பேட்டர்ன் பதிவுசெய்யப்பட்டது"</string>
+    <string name="lockpattern_need_to_confirm" msgid="4648070076022940382">"உறுதிப்படுத்த, மீண்டும் பேட்டர்னை வரைக"</string>
+    <string name="lockpattern_recording_incorrect_too_short" msgid="2417932185815083082">"குறைந்தது 4 புள்ளிகளை இணைக்கவும். மீண்டும் முயல்க."</string>
+    <string name="lockpattern_pattern_wrong" msgid="929223969555399363">"தவறான பேட்டர்ன்"</string>
+    <string name="lockpattern_settings_help_how_to_record" msgid="4436556875843192284">"திறப்பதற்கான பேட்டர்னை வரைவது எப்படி?"</string>
+    <string name="error_saving_lockpattern" msgid="2933512812768570130">"பேட்டர்னைச் சேமிப்பதில் பிழை"</string>
+    <string name="okay" msgid="4589873324439764349">"சரி"</string>
+    <string name="remove_screen_lock_title" msgid="1234382338764193387">"திரைப் பூட்டை அகற்றவா?"</string>
+    <string name="remove_screen_lock_message" msgid="6675850371585564965">"திரைப் பூட்டை அகற்றினால், அனைவருக்கும் அணுகல் கிடைக்கும்"</string>
+    <string name="lock_settings_enter_pin" msgid="1669172111244633904">"பின்னை உள்ளிடவும்"</string>
+    <string name="lock_settings_enter_password" msgid="2636669926649496367">"கடவுச்சொல்லை உள்ளிடவும்"</string>
+    <string name="choose_lock_pin_message" msgid="2963792070267774417">"பாதுகாப்பிற்கு, பின்னை அமைக்கவும்"</string>
+    <string name="confirm_your_pin_header" msgid="9096581288537156102">"பின்னை மீண்டும் உள்ளிடவும்"</string>
+    <string name="choose_lock_pin_hints" msgid="7362906249992020844">"குறைந்தது 4 இலக்கங்கள் இருக்க வேண்டும்"</string>
+    <string name="lockpin_invalid_pin" msgid="2149191577096327424">"பின் தவறானது, குறைந்தது 4 இலக்கங்கள் இருக்க வேண்டும்."</string>
+    <string name="confirm_pins_dont_match" msgid="4607110139373520720">"பின்கள் பொருந்தவில்லை"</string>
+    <string name="error_saving_lockpin" msgid="9011960139736000393">"பின்னைச் சேமிப்பதில் பிழை"</string>
+    <string name="lockscreen_wrong_pin" msgid="4922465731473805306">"தவறான பின்"</string>
+    <string name="lockscreen_wrong_password" msgid="5757087577162231825">"தவறான கடவுச்சொல்"</string>
+    <string name="choose_lock_password_message" msgid="6124341145027370784">"பாதுகாப்பிற்கு, கடவுச்சொல்லை அமைக்கவும்"</string>
+    <string name="confirm_your_password_header" msgid="7052891840366724938">"கடவுச்சொல்லை மீண்டும் உள்ளிடவும்"</string>
+    <string name="confirm_passwords_dont_match" msgid="7300229965206501753">"கடவுச்சொற்கள் பொருந்தவில்லை"</string>
+    <string name="lockpassword_clear_label" msgid="6363680971025188064">"அழி"</string>
+    <string name="lockpassword_cancel_label" msgid="5791237697404166450">"ரத்துசெய்"</string>
+    <string name="lockpassword_confirm_label" msgid="5918463281546146953">"உறுதிப்படுத்து"</string>
+    <string name="choose_lock_password_hints" msgid="1802962836351866087">"கடவுச்சொல்லில் குறைந்தது 1 எண்ணுடன் சேர்த்து, 4-8 வரையிலான எழுத்துகள் இருக்க வேண்டும்"</string>
+    <string name="lockpassword_password_too_short" msgid="6681218025001328405">"குறைந்தது <xliff:g id="COUNT">%d</xliff:g> எழுத்து இருக்க வேண்டும்"</string>
+    <string name="lockpassword_pin_too_short" msgid="6363004004424904218">"குறைந்தது <xliff:g id="COUNT">%d</xliff:g> இலக்கங்கள் இருக்க வேண்டும்"</string>
+    <string name="lockpassword_password_too_long" msgid="7530214940279491291">"<xliff:g id="NUMBER">%d</xliff:g>எழுத்தை விட குறைவாக இருக்கவேண்டும்"</string>
+    <string name="lockpassword_pin_too_long" msgid="62957683396974404">"<xliff:g id="NUMBER">%d</xliff:g> இலக்கங்களை விட குறைவாக இருக்க வேண்டும்"</string>
+    <string name="lockpassword_pin_contains_non_digits" msgid="3044526271686839923">"0-9 இலக்கங்கள் மட்டுமே இருக்க வேண்டும்."</string>
+    <string name="lockpassword_pin_recently_used" msgid="7901918311213276207">"சாதன நிர்வாகி சமீபத்திய பின்னைப் பயன்படுத்துவதை அனுமதிக்கவில்லை"</string>
+    <string name="lockpassword_pin_blacklisted_by_admin" msgid="7412709707800738442">"உங்கள் IT நிர்வாகி, பொதுவான பின்களைத் தடுத்துள்ளார். வேறு பின்னைப் பயன்படுத்திப் பார்க்கவும்."</string>
+    <string name="lockpassword_illegal_character" msgid="1984970060523635618">"இதில் தவறான எழுத்து இருக்கக்கூடாது."</string>
+    <string name="lockpassword_invalid_password" msgid="4987689810161043367">"கடவுச்சொல் தவறானது. இதில் 4-8 எழுத்துகள் இருக்க வேண்டும். குறைந்தது 1 இலக்கம், 1 எழுத்து இருக்க வேண்டும், இடைவெளி இருக்கக்கூடாது."</string>
+    <plurals name="lockpassword_password_requires_letters" formatted="false" msgid="424616259312760303">
+      <item quantity="other">குறைந்தது <xliff:g id="COUNT">%d</xliff:g> எழுத்துகள் இருக்க வேண்டும்</item>
+      <item quantity="one">குறைந்தது 1 எழுத்து இருக்க வேண்டும்</item>
+    </plurals>
+    <plurals name="lockpassword_password_requires_lowercase" formatted="false" msgid="2267487180744744833">
+      <item quantity="other">குறைந்தது <xliff:g id="COUNT">%d</xliff:g> சிற்றெழுத்துகள் இருக்க வேண்டும்</item>
+      <item quantity="one">குறைந்தது 1 சிற்றெழுத்து இருக்க வேண்டும்</item>
+    </plurals>
+    <plurals name="lockpassword_password_requires_uppercase" formatted="false" msgid="7999264563026517898">
+      <item quantity="other">குறைந்தது <xliff:g id="COUNT">%d</xliff:g> பேரெழுத்துகள் இருக்க வேண்டும்</item>
+      <item quantity="one">குறைந்தது 1 பேரெழுத்து இருக்க வேண்டும்</item>
+    </plurals>
+    <plurals name="lockpassword_password_requires_numeric" formatted="false" msgid="7935079851855168646">
+      <item quantity="other">குறைந்தது <xliff:g id="COUNT">%d</xliff:g> எண் இலக்கங்கள் இருக்க வேண்டும்</item>
+      <item quantity="one">குறைந்தது 1 எண் இலக்கம் இருக்க வேண்டும்</item>
+    </plurals>
+    <plurals name="lockpassword_password_requires_symbols" formatted="false" msgid="3994046435150094132">
+      <item quantity="other">குறைந்தது <xliff:g id="COUNT">%d</xliff:g> சிறப்புக் குறிகள் இருக்க வேண்டும்</item>
+      <item quantity="one">குறைந்தது 1 சிறப்புக் குறி இருக்க வேண்டும்</item>
+    </plurals>
+    <plurals name="lockpassword_password_requires_nonletter" formatted="false" msgid="6878486326748506524">
+      <item quantity="other">குறைந்தது எழுத்து அல்லாத <xliff:g id="COUNT">%d</xliff:g> குறிகள் இருக்க வேண்டும்</item>
+      <item quantity="one">குறைந்தது எழுத்து அல்லாத 1 குறி இருக்க வேண்டும்</item>
+    </plurals>
+    <string name="lockpassword_password_recently_used" msgid="8255729487108602924">"சாதன நிர்வாகி சமீபத்திய கடவுச்சொல்லைப் பயன்படுத்துவதை அனுமதிக்கவில்லை"</string>
+    <string name="error_saving_password" msgid="8334882262622500658">"கடவுச்சொல்லைச் சேமிப்பதில் பிழை"</string>
+    <string name="lockpassword_password_blacklisted_by_admin" msgid="7965893810326503891">"உங்கள் IT நிர்வாகி, பொதுவான கடவுச்சொற்களைத் தடுத்துள்ளார். வேறு கடவுச்சொல்லைப் பயன்படுத்திப் பார்க்கவும்."</string>
+    <string name="lockpassword_pin_no_sequential_digits" msgid="38813552228809240">"இலக்கங்கள் ஏறுவரிசையில், இறங்குவரிசையில் அல்லது ஒரே இலக்கத்தைத் தொடர்ந்து பயன்படுத்துவது அனுமதிக்கப்படாது."</string>
+    <string name="setup_lock_settings_options_button_label" msgid="3337845811029780896">"திரைப் பூட்டு விருப்பங்கள்"</string>
+    <string name="forget" msgid="3971143908183848527">"அகற்று"</string>
+    <string name="delete_button" msgid="5840500432614610850">"நீக்கு"</string>
+    <string name="remove_button" msgid="6664656962868194178">"அகற்று"</string>
+    <string name="cancel" msgid="750286395700355455">"ரத்துசெய்"</string>
+    <string name="backspace_key" msgid="1545590866688979099">"பேக்ஸ்பேஸ் விசை"</string>
+    <string name="enter_key" msgid="2121394305541579468">"என்டர் விசை"</string>
+    <string name="exit_retail_button_text" msgid="6093240315583384473">"டெமோவிலிருந்து வெளியேறு"</string>
+    <string name="exit_retail_mode_dialog_title" msgid="7970631760237469168">"டெமோ மோடிலிருந்து வெளியேறுதல்"</string>
+    <string name="exit_retail_mode_dialog_body" msgid="8314316171782527301">"இவ்வாறு செய்தால், டெமோ கணக்கு நீக்கப்படுவதோடு, சாதனமானது தரவின் ஆரம்பநிலைக்கு மீட்டமைக்கப்படும். எல்லாப் பயனர் தரவையும் இழப்பீர்கள்."</string>
+    <string name="exit_retail_mode_dialog_confirmation_button_text" msgid="3147249675355968649">"டெமோவிலிருந்து வெளியேறு"</string>
+    <string name="suggestion_primary_button" msgid="6421115494714083020">"அமைவை முடி"</string>
+    <string name="suggestion_secondary_button" msgid="7075088546904464681">"இப்போது வேண்டாம்"</string>
+    <string name="restricted_while_driving" msgid="6217369093121968299">"வாகனம் ஓட்டும்போது, இந்த அம்சத்தைப் பயன்படுத்த முடியாது."</string>
+    <!-- no translation found for add_user_restricted_while_driving (6384004350628271556) -->
+    <skip />
+</resources>

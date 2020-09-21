@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="system_tracing" msgid="4719188511746319848">"प्रणाली पत्ता लगाउने कार्य"</string>
+    <string name="record_system_activity" msgid="4339462312915377825">"कार्यसम्पादनमा सुधार गर्नाका लागि प्रणालीसम्बन्धी गतिविधि रेकर्ड गरी पछि त्यसको विश्लेषण गर्नुहोस्‌"</string>
+    <string name="record_trace" msgid="6416875085186661845">"ट्रेस रेकर्ड गर्नुहोस्‌"</string>
+    <string name="trace_debuggable_applications" msgid="7957069895298887899">"डिबग गर्न मिल्ने अनुप्रयोगहरू पत्ता लगाउनुहोस्"</string>
+    <string name="categories" msgid="2280163673538611008">"कोटिहरू"</string>
+    <string name="restore_default_categories" msgid="5090536794637169521">"पूर्वनिर्धारित कोटिहरू पुनर्स्थापना गर्नुहोस्"</string>
+    <string name="default_categories_restored" msgid="6861683793680564181">"पूर्वनिर्धारित कोटिहरू पुनर्स्थापना गरियो"</string>
+    <string name="applications" msgid="521776761270770549">"अनुप्रयोगहरू"</string>
+    <string name="no_debuggable_apps" msgid="4386209254520471208">"डिबग गर्न मिल्ने कुनै पनि अनुप्रयोग उपलब्ध छैन"</string>
+    <string name="buffer_size" msgid="3370134227980578569">"बफरको आकार"</string>
+    <string name="show_quick_settings_tile" msgid="4971147332635291585">"द्रुत सेटिङहरू नामक टाइल देखाउनुहोस्"</string>
+    <string name="saving_trace" msgid="1468692734770800541">"ट्रेस सुरक्षित गर्दै"</string>
+    <string name="trace_saved" msgid="5869970594780992309">"ट्रेस सुरक्षित गरियो"</string>
+    <string name="tap_to_share" msgid="6766732404489536899">"आफ्नो ट्रेस आदान प्रदान गर्न ट्याप गर्नुहोस्‌"</string>
+    <string name="stop_tracing" msgid="8916938308534164152">"ट्रेस गर्न छोड्नुहोस्"</string>
+    <string name="tracing_categories_unavailable" msgid="5609076391417077752">"ट्रेसिङका केही कोटिहरू अनुपलब्ध छन्:"</string>
+    <string name="trace_is_being_recorded" msgid="5947378146009337469">"ट्रेस रेकर्ड भइरहेको छ"</string>
+    <string name="tap_to_stop_tracing" msgid="6533282719573871806">"ट्रेस गर्न छोड्नका लागि ट्याप गर्नुहोस्‌"</string>
+    <string name="clear_saved_traces" msgid="4809195654452260944">"सुरक्षित गरिएका ट्रेसहरू खाली गर्नुहोस्"</string>
+    <string name="clear_saved_traces_question" msgid="2184026613055303818">"सुरक्षित गरिएका ट्रेसहरू खाली गर्ने हो?"</string>
+    <string name="all_traces_will_be_deleted" msgid="6646545462206955920">"/data/local/traces मा रहेका सबै ट्रेसहरू मेटाइने छन्"</string>
+    <string name="clear" msgid="5484761795406948056">"खाली गर्नुहोस्"</string>
+    <string name="keywords" msgid="736547007949049535">"systrace, ट्रेस, कार्यसम्पादन"</string>
+</resources>

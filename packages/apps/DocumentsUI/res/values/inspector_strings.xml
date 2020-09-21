@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2017 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- File properties dialog title. This dialog show fine grained details about a file. -->
+    <string name="inspector_title">Info</string>
+
+    <!-- File properties dialog error shown when information about a file could not be loaded-->
+    <string name="inspector_load_error">File info could not be loaded</string>
+
+    <!-- Title of inspector's debug information section. The contents of this section
+         features detailed "internal" information useful primarily to developers.
+         This section is only visible to developers or people running debug builds. [CHAR LIMIT=48] -->
+    <string name="inspector_debug_section">Debug info (dev only)</string>
+
+    <!-- Title of inspector's debug info metadata sub-section. [CHAR LIMIT=48] -->
+    <string name="inspector_debug_metadata_section">Raw metadata: <xliff:g id="metadataType" example="EXIF">%1$s</xliff:g></string>
+
+    <!-- Title of inspector's media details info section. Shows information related to camera, dimensions, and authors. -->
+    <string name="inspector_metadata_section">Media details</string>
+
+    <!-- File properties dialog section title. In this section we show information about the default handler application for this type of file.-->
+    <string name="handler_app_file_opens_with">This kind of file opens with</string>
+    <!-- File properties dialog section title. In this section we show information about the applicaiton that provides the file.
+         Examples of such applicaitons are: Box, Microsoft OneDrive, and Google Drive, etc)-->
+    <string name="handler_app_belongs_to">This file is supplied by</string>
+
+    <!-- File properties dialog user message if a default app has not been selected-->
+    <string name="handler_app_not_selected">Not selected</string>
+    <!-- File properties dialog user message if the default app is unknown-->
+    <string name="handler_app_unknown">Unknown</string>
+
+    <!-- The height and width of a photo. -->
+    <string name="metadata_dimensions">Dimensions</string>
+    <!-- The width and height of a photo, followed by a the "megapixel rating".
+         Cameras are frequently rated by "megapixels". In U.S. English the "megapixels" rating
+         of a camera is denoted by a number followed by "MP". E.g. 12.2MP or 8MP. -->
+    <string name="metadata_dimensions_format"><xliff:g id="width" example="1280">%1$d</xliff:g> x <xliff:g id="height" example="1024">%2$d</xliff:g> - <xliff:g id="megapixels" example="12.2">%3$,.1f</xliff:g>MP</string>
+    <!-- The location of where a photo was taken. -->
+    <string name="metadata_coordinates">Coordinates</string>
+    <!-- The location a photo was taken in the form of latitude/longitude coordinates. -->
+    <string name="metadata_coordinates_format"><xliff:g id="latitude" example="33.996">%1$,.3f</xliff:g>, <xliff:g id="longitude" example="-118.476">%2$,.3f</xliff:g></string>
+    <!-- The elevation a photo was taken. -->
+    <string name="metadata_altitude">Altitude</string>
+    <!-- The camera make and model. -->
+    <string name="metadata_camera">Camera</string>
+    <!-- The camera make and model. Where make is usually the company, and model is the individual camera model name. -->
+    <string name="metadata_camera_format"><xliff:g id="make" example="Sony">%1$s</xliff:g> <xliff:g id="model" example="Snazzy Snapper">%2$s</xliff:g></string>
+    <!-- The value of a photos aperture. Note that this is probably camera EXIF data.-->
+    <string name="metadata_aperture">Aperture</string>
+    <!-- The value of a photos shutter speed. Note that this is probably camera EXIF data.-->
+    <string name="metadata_shutter_speed">Shutter speed</string>
+    <!-- How long a video/audio file is.-->
+    <string name="metadata_duration">Duration</string>
+    <!-- When a photo was taken. Note that this is probably camera EXIF data.-->
+    <string name="metadata_date_time">Taken on</string>
+    <!-- Message presenting EXIF aperture information in the tradition "f/2.0" format familiar to users. This format is basically an industry standard that shouldn't be translated, so it is marked as not translatable. -->
+    <string name="metadata_aperture_format" translatable="false">f/<xliff:g id="aperture" example="2.0">%1$,.1f</xliff:g></string>
+    <!--The tag for the focal length of a camera. Note that this is probably camera EXIF data-->
+    <string name="metadata_focal_length">Focal length</string>
+    <!--The format for displaying the focal length of a camera. Note that this is probably camera EXIF data-->
+    <string name="metadata_focal_format"><xliff:g id="length" example="24">%1$.2f </xliff:g>mm</string>
+    <!--The tag for the ISO Speed of a camera. Note that this is probably camera EXIF data-->
+    <string name="metadata_iso_speed_ratings">ISO equivalent</string>
+    <!--The format for displaying ISO speed. Note that this is probably camera EXIF data-->
+    <string name="metadata_iso_format">ISO <xliff:g id="iso_speed" example="35">%1$d</xliff:g></string>
+    <!--The title of the audio file, Note this is probably MP3 ID3 tags.-->
+    <string name="metadata_artist">Artist</string>
+    <!--The composer for the audio file, Note this is probably MP3 ID3 tags-->
+    <string name="metadata_composer">Composer</string>
+    <!--The title of the album (i.e. collection of recordings) the song belongs to. Note this is probably MP3 ID3 tags-->
+    <string name="metadata_album">Album</string>
+    <!-- The address nearest to where a photo was taken -->
+    <string name="metadata_address">Location</string>
+
+    <!-- String label for developer/debug file details, specifying which stream types are available. -->
+    <string name="debug_stream_types">Stream types</string>
+    <!-- String label for developer/debug file details, specifying the size of the file in bytes. -->
+    <string name="debug_raw_size">Raw size (bytes)</string>
+    <!-- String label for developer/debug file details, specifying a file's uri/content address. -->
+    <string name="debug_content_uri" translatable="false">Uri</string>
+    <!-- String label for developer/debug file details, specifying document id. -->
+    <string name="debug_document_id" translatable="false">Document id</string>
+    <!-- String label for developer/debug file details, specifying mimetype. -->
+    <string name="debug_raw_mimetype" translatable="false">Raw mimetype</string>
+    <!-- String label for developer/debug file details, specifying that a file is an archive. -->
+    <string name="debug_is_archive" translatable="false">Is archive</string>
+    <!-- String label for developer/debug file details, specifying that a file is a container (like a folder or an archive). -->
+    <string name="debug_is_container" translatable="false">Is container</string>
+    <!-- String label for developer/debug file details, specifying that a file is partial (being downloaded). -->
+    <string name="debug_is_partial" translatable="false">Is partial</string>
+    <!-- String label for developer/debug file details, specifying that a file is virtual (has no byte representation). -->
+    <string name="debug_is_virtual" translatable="false">Is virtual</string>
+    <!-- String label for developer/debug file details, specifying that a file supports creating files within it. -->
+    <string name="debug_supports_create" translatable="false">Supports create</string>
+    <!-- String label for developer/debug file details, specifying that a file is deletable. -->
+    <string name="debug_supports_delete" translatable="false">Supports delete</string>
+    <!-- String label for developer/debug file details, specifying that a file has associated metadata. -->
+    <string name="debug_supports_metadata" translatable="false">Supports metadata</string>
+    <!-- String label for developer/debug file details, specifying that a file can be removed. -->
+    <string name="debug_supports_remove" translatable="false">Supports remove</string>
+    <!-- String label for developer/debug file details, specifying that a file can be renamed. -->
+    <string name="debug_supports_rename" translatable="false">Supports rename</string>
+    <!-- String label for developer/debug file details, specifying that a file supports the "settings" feature. -->
+    <string name="debug_supports_settings" translatable="false">Supports settings</string>
+    <!-- String label for developer/debug file details, specifying that a file has a viewable thumbnail. -->
+    <string name="debug_supports_thumbnail" translatable="false">Supports thumbnail</string>
+    <!-- String label for developer/debug file details, specifying that a file supports the "weblink" feature. -->
+    <string name="debug_supports_weblink" translatable="false">Supports weblink</string>
+    <!-- String label for developer/debug file details, specifying that a file is writable. -->
+    <string name="debug_supports_write" translatable="false">Supports write</string>
+
+</resources>

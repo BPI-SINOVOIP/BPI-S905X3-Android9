@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="js.kbars">
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-sdk android:minSdkVersion="19" android:targetSdkVersion="26" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <application android:theme="@style/AppTheme" android:label="@string/app_name" android:icon="@drawable/ic_launcher" android:debuggable="true" android:allowBackup="true">
+        <activity android:label="@string/app_name" android:name=".KBarsActivity" android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:label="DropShadowActivity" android:name=".DropShadowActivity">
+        </activity>
+        <activity android:label="(kbars-toast)" android:name=".ToastActivity" android:launchMode="singleTask">
+        </activity>
+        <service android:label="(kbars-dream)" android:name=".KBarsDream" android:exported="true">
+            <intent-filter>
+                <action android:name="android.service.dreams.DreamService" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
+        <activity android:label="(kbars-car)" android:name=".KBarsCar" android:exported="true" android:launchMode="singleTask">
+            <meta-data android:name="android.dock_home" android:value="true" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.CAR_DOCK" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

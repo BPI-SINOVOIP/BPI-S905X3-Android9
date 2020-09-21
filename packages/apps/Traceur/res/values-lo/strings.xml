@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="system_tracing" msgid="4719188511746319848">"ການຕິດຕາມລະບົບ"</string>
+    <string name="record_system_activity" msgid="4339462312915377825">"ບັນທຶກການເຄື່ອນໄຫວລະບົບ ແລະ ວິເຄາະມັນໃນພາຍຫຼັງເພື່ອປັບປຸງປະສິດທິພາບ"</string>
+    <string name="record_trace" msgid="6416875085186661845">"ບັນທຶກການຕິດຕາມ"</string>
+    <string name="trace_debuggable_applications" msgid="7957069895298887899">"ຕິດຕາມແອັບພລິເຄຊັນທີ່ດີບັກໄດ້."</string>
+    <string name="categories" msgid="2280163673538611008">"ໝວດໝູ່"</string>
+    <string name="restore_default_categories" msgid="5090536794637169521">"ກູ້ໝວດໝູ່ເລີ່ມຕົ້ນຄືນມາ"</string>
+    <string name="default_categories_restored" msgid="6861683793680564181">"ກູ້ໝວດໝູ່ເລີ່ມຕົ້ນຄືນມາແລ້ວ"</string>
+    <string name="applications" msgid="521776761270770549">"ແອັບພລິເຄຊັນ"</string>
+    <string name="no_debuggable_apps" msgid="4386209254520471208">"ບໍ່ມີແອັບພລິເຄຊັນທີ່ດີບັກໄດ້."</string>
+    <string name="buffer_size" msgid="3370134227980578569">"ຂະໜາດບັບເຟີ"</string>
+    <string name="show_quick_settings_tile" msgid="4971147332635291585">"ສະແດງໄທລ໌ການຕັ້ງຄ່າດ່ວນ"</string>
+    <string name="saving_trace" msgid="1468692734770800541">"ກຳລັງບັນທຶກການຕິດຕາມ"</string>
+    <string name="trace_saved" msgid="5869970594780992309">"ບັນທຶກການຕິດຕາມຂອງທ່ານແລ້ວ"</string>
+    <string name="tap_to_share" msgid="6766732404489536899">"ແຕະເພື່ອແບ່ງປັນການຕິດຕາມຂອງທ່ານ"</string>
+    <string name="stop_tracing" msgid="8916938308534164152">"Stop tracing"</string>
+    <string name="tracing_categories_unavailable" msgid="5609076391417077752">"ບໍ່ສາມາດໃຊ້ໝວດໝູ່ການຕິດຕາມບາງຢ່າງໄດ້:"</string>
+    <string name="trace_is_being_recorded" msgid="5947378146009337469">"Trace is being recorded"</string>
+    <string name="tap_to_stop_tracing" msgid="6533282719573871806">"Tap to stop tracing"</string>
+    <string name="clear_saved_traces" msgid="4809195654452260944">"Clear saved traces"</string>
+    <string name="clear_saved_traces_question" msgid="2184026613055303818">"ລຶບລ້າງການຕິດຕາມທີ່ບັນທຶກໄວ້"</string>
+    <string name="all_traces_will_be_deleted" msgid="6646545462206955920">"ການຕິດຕາມທັງໝົດຈະຖືກລຶບອອກຈາກ /data/local/traces"</string>
+    <string name="clear" msgid="5484761795406948056">"ລຶບ"</string>
+    <string name="keywords" msgid="736547007949049535">"systrace, ຕິດຕາມ, ປະສິດທິພາບ"</string>
+</resources>

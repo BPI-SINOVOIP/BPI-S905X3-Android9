@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ * Copyright (c) 2017, The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
+ -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="settings_label" msgid="5147911978211079839">"الإعدادات"</string>
+    <string name="more_settings_label" msgid="3867559443480110616">"المزيد"</string>
+    <string name="display_settings" msgid="5325515247739279185">"العرض"</string>
+    <string name="brightness" msgid="2919605130898772866">"مستوى السطوع"</string>
+    <string name="auto_brightness_title" msgid="9124647862844666581">"السطوع التكيُّفي"</string>
+    <string name="auto_brightness_summary" msgid="4741887033140384352">"تحسين مستوى السطوع بحسب الإضاءة المتوفرة"</string>
+    <string name="condition_night_display_title" msgid="3777509730126972675">"تم تفعيل الإضاءة الليلية."</string>
+    <string name="keywords_display" msgid="3978416985146943922">"شاشة، شاشة تعمل باللمس"</string>
+    <string name="keywords_display_brightness_level" msgid="3956411572536209195">"تعتيم شاشة، شاشة تعمل باللمس، بطارية"</string>
+    <string name="keywords_display_auto_brightness" msgid="2700310050333468752">"تعتيم شاشة، شاشة تعمل باللمس، بطارية"</string>
+    <string name="keywords_display_night_display" msgid="2922294576679769957">"تعتيم الشاشة، ليل، تلوين خفيف"</string>
+    <string name="night_mode_tile_label" msgid="6603597795502131664">"الوضع الليلي"</string>
+    <string name="wifi_settings" msgid="7701477685273103841">"Wi-Fi"</string>
+    <string name="wifi_settings_summary" msgid="6095898149997291025">"إعداد نقاط الدخول اللاسلكية وإدارتها"</string>
+    <string name="wifi_starting" msgid="473253087503153167">"جارٍ تفعيل Wi-Fi…"</string>
+    <string name="wifi_stopping" msgid="3534173972547890148">"جارٍ إيقاف Wi-Fi…"</string>
+    <string name="wifi_failed_forget_message" msgid="121732682699377206">"تعذّر حذف الشبكة."</string>
+    <string name="wifi_failed_connect_message" msgid="4447498225022147324">"تعذّر الاتصال بالشبكة."</string>
+    <string name="wifi_setup_add_network" msgid="3660498520389954620">"إضافة شبكة"</string>
+    <string name="wifi_disabled" msgid="5013262438128749950">"تم إيقاف Wi-Fi."</string>
+    <string name="wifi_setup_connect" msgid="3512399573397979101">"اتصال"</string>
+    <string name="wifi_password" msgid="5565632142720292397">"كلمة المرور"</string>
+    <string name="wifi_show_password" msgid="8423293211933521097">"عرض كلمة المرور"</string>
+    <string name="wifi_ssid" msgid="488604828159458741">"اسم الشبكة"</string>
+    <string name="wifi_security" msgid="158358046038876532">"الأمان"</string>
+    <string name="wifi_signal" msgid="1817579728350364549">"قوة الإشارة"</string>
+    <string name="wifi_status" msgid="5688013206066543952">"الحالة"</string>
+    <string name="wifi_speed" msgid="1650692446731850781">"سرعة الربط"</string>
+    <string name="wifi_frequency" msgid="8951455949682864922">"نطاق التردد"</string>
+    <string name="wifi_ip_address" msgid="3128140627890954061">"عنوان IP"</string>
+    <string name="access_point_tag_key" msgid="1517143378973053337">"access_point_tag_key"</string>
+  <string-array name="wifi_signals">
+    <item msgid="4897376984576812606">"ضعيفة"</item>
+    <item msgid="2032262610626057081">"متوسطة"</item>
+    <item msgid="3859756017461098953">"جيدة"</item>
+    <item msgid="1521103743353335724">"ممتازة"</item>
+  </string-array>
+    <string name="bluetooth_quick_toggle_title" msgid="637869245038061523">"بلوتوث"</string>
+    <string name="bluetooth_quick_toggle_summary" msgid="4390699431893305353">"تفعيل البلوتوث"</string>
+    <string name="bluetooth_settings" msgid="3878243366013638982">"بلوتوث"</string>
+    <string name="bluetooth_disabled" msgid="4187409401590350572">"تم إيقاف البلوتوث."</string>
+    <string name="bluetooth_settings_title" msgid="3794688574569688649">"بلوتوث"</string>
+    <string name="bluetooth_settings_summary" msgid="4023303473646769835">"إدارة الاتصالات وتعيين اسم الجهاز وقابلية الاكتشاف"</string>
+    <string name="bluetooth_talkback_computer" msgid="5223330129934365312">"جهاز الكمبيوتر"</string>
+    <string name="bluetooth_talkback_headset" msgid="6155254514321149935">"سماعة الرأس"</string>
+    <string name="bluetooth_talkback_phone" msgid="8833977851215000426">"هاتف"</string>
+    <string name="bluetooth_talkback_imaging" msgid="8762390801115154654">"تصوير"</string>
+    <string name="bluetooth_talkback_headphone" msgid="5362155791551671490">"سماعة الأذن"</string>
+    <string name="bluetooth_talkback_input_peripheral" msgid="868933277567862622">"جهاز إدخال طرفي"</string>
+    <string name="bluetooth_talkback_bluetooth" msgid="1715933297419387985">"بلوتوث"</string>
+    <string name="bluetooth_preference_paired_devices" msgid="5875643105380630583">"الأجهزة التي تم إقرانها"</string>
+    <string name="bluetooth_preference_found_devices" msgid="125155123214560511">"الأجهزة المتوفرة"</string>
+    <string name="bluetooth_preference_no_paired_devices" msgid="483742146117390001">"ليست هناك أجهزة تم إقرانها."</string>
+    <string name="bluetooth_preference_no_found_devices" msgid="1391812056491062262">"لا تتوفر أي أجهزة."</string>
+    <string name="bluetooth_preference_paired_dialog_title" msgid="2470829827455850904">"الجهاز الذي تم إقرانه"</string>
+    <string name="bluetooth_preference_paired_dialog_name_label" msgid="3528740139365123415">"الاسم"</string>
+    <string name="bluetooth_device_advanced_profile_header_title" msgid="8165093257483965783">"استخدام مع"</string>
+    <string name="wifi_ssid_hint" msgid="4155050863239489553">"غيِّر اسم جهاز البلوتوث."</string>
+    <string name="bluetooth_notif_ticker" msgid="7192577740198156792">"طلب إقران البلوتوث"</string>
+    <string name="bluetooth_device_context_pair_connect" msgid="3138105800372470422">"الإقران والاتصال"</string>
+    <string name="bluetooth" msgid="5235115159234688629">"بلوتوث"</string>
+    <string name="bluetooth_pairing_key_msg" msgid="5066825929751599037">"رمز إقران البلوتوث"</string>
+    <string name="bluetooth_enable_alphanumeric_pin" msgid="1636575922217263060">"يشتمل رقم التعريف الشخصي على أحرف أو رموز."</string>
+    <string name="bluetooth_enter_passkey_msg" msgid="5955236916732265593">"اكتب رمز الإقران، ثم اضغط على \"رجوع\" أو \"إدخال\"."</string>
+    <string name="bluetooth_pairing_request" msgid="4769675459526556801">"هل تريد الإقران مع <xliff:g id="DEVICE_NAME">%1$s</xliff:g>؟"</string>
+    <string name="bluetooth_pairing_shares_phonebook" msgid="2015966932886300630">"السماح للجهاز <xliff:g id="DEVICE_NAME">%1$s</xliff:g> بالدخول إلى جهات الاتصال وسجلّ المكالمات"</string>
+    <string name="bluetooth_enter_pin_other_device" msgid="7825091249522704764">"قد يلزم أيضًا كتابة رقم التعريف الشخصي هذا على الجهاز الآخر."</string>
+    <string name="bluetooth_enter_passkey_other_device" msgid="7147248221018865922">"قد يلزم أيضًا كتابة مفتاح المرور هذا على الجهاز الآخر."</string>
+    <string name="bluetooth_pin_values_hint_16_digits" msgid="418776900816984778">"يجب أن يتكّون من ١٦ رقمًا."</string>
+    <string name="bluetooth_pin_values_hint" msgid="1561325817559141687">"0000 أو 1234 عادة"</string>
+    <string name="bluetooth_notif_title" msgid="8374602799367803335">"طلب الإقران"</string>
+    <string name="bluetooth_notif_message" msgid="1060821000510108726">"انقر للإقران مع <xliff:g id="DEVICE_NAME">%1$s</xliff:g>."</string>
+    <string name="bluetooth_error_title" msgid="2341600997536511742"></string>
+    <string name="sound_settings" msgid="3072423952331872246">"صوت"</string>
+    <string name="ring_volume_title" msgid="3135241004980719442">"مستوى صوت الرنين"</string>
+    <string name="navi_volume_title" msgid="946292066759195165">"مستوى صوت التنقل"</string>
+    <string name="incoming_call_volume_title" msgid="6972117872424656876">"نغمة الرنين"</string>
+    <string name="notification_volume_title" msgid="6749411263197157876">"الإشعار"</string>
+    <string name="media_volume_title" msgid="6697416686272606865">"الوسائط"</string>
+    <string name="media_volume_summary" msgid="2961762827637127239">"تعيين مستوى الصوت للموسيقى والفيديوهات"</string>
+    <string name="alarm_volume_title" msgid="840384014895796587">"المنبّه"</string>
+    <string name="applications_settings" msgid="794261395191035632">"معلومات التطبيق"</string>
+    <string name="disable_text" msgid="4358165448648990820">"إيقاف"</string>
+    <string name="enable_text" msgid="1794971777861881238">"تفعيل"</string>
+    <string name="permissions_label" msgid="2701446753515612685">"الأذونات"</string>
+    <string name="application_version_label" msgid="8556889839783311649">"الإصدار: %1$s"</string>
+    <string name="runtime_permissions_summary_no_permissions_granted" msgid="6001439205270250021">"لم يتم منح أي أذونات."</string>
+    <string name="runtime_permissions_summary_no_permissions_requested" msgid="4074220596273432442">"لم يتم طلب أي أذونات."</string>
+    <string name="data_usage_summary_title" msgid="4368024763485916986">"استخدام البيانات"</string>
+    <string name="data_usage_app_summary_title" msgid="5012851696585421420">"استخدام بيانات التطبيق"</string>
+    <string name="force_stop" msgid="2153183697014720520">"فرض الإيقاف"</string>
+    <string name="computing_size" msgid="5791407621793083965">"جارٍ الحساب…"</string>
+    <plurals name="runtime_permissions_additional_count" formatted="false" msgid="3513360187065317613">
+      <item quantity="zero"><xliff:g id="COUNT_1">%d</xliff:g> إذن إضافي</item>
+      <item quantity="two">إذنان (<xliff:g id="COUNT_1">%d</xliff:g>) إضافيان</item>
+      <item quantity="few"><xliff:g id="COUNT_1">%d</xliff:g> أذونات إضافية</item>
+      <item quantity="many"><xliff:g id="COUNT_1">%d</xliff:g> إذنًا إضافيًا</item>
+      <item quantity="other"><xliff:g id="COUNT_1">%d</xliff:g> إذن إضافي</item>
+      <item quantity="one">إذن واحد إضافي (<xliff:g id="COUNT_0">%d</xliff:g>)</item>
+    </plurals>
+    <string name="system_setting_title" msgid="6864599341809463440">"النظام"</string>
+    <string name="system_update_settings_list_item_title" msgid="5182439376921868735">"تحديثات النظام"</string>
+    <string name="system_update_settings_list_item_summary" msgid="7395202602021608371"></string>
+    <string name="firmware_version" msgid="8491753744549309333">"إصدار Android"</string>
+    <string name="security_patch" msgid="4794276590178386903">"مستوى رمز تصحيح أمان Android"</string>
+    <string name="model_info" msgid="4966408071657934452">"الطراز"</string>
+    <string name="baseband_version" msgid="2370088062235041897">"إصدار النطاق الأساسي"</string>
+    <string name="kernel_version" msgid="7327212934187011508">"إصدار النواة"</string>
+    <string name="build_number" msgid="3997326631001009102">"رقم الإصدار"</string>
+    <string name="device_info_not_available" msgid="2095601973977376655">"غير متوفرة"</string>
+    <string name="device_status_activity_title" msgid="4083567497305368200">"الحالة"</string>
+    <string name="device_status" msgid="267298179806290920">"الحالة"</string>
+    <string name="device_status_summary" product="tablet" msgid="600543254608862075">"حالة البطارية والشبكة ومعلومات أخرى"</string>
+    <string name="device_status_summary" product="default" msgid="9130360324418117815">"رقم الهاتف والإشارة وما إلى ذلك"</string>
+    <string name="about_settings" msgid="4329457966672592345">"لمحة عن الهاتف"</string>
+    <string name="about_summary" msgid="5374623866267691206">"إصدار Android <xliff:g id="VERSION">%1$s</xliff:g>"</string>
+    <string name="about_settings_summary" msgid="7975072809083281401">"عرض المعلومات القانونية والحالة وإصدار البرنامج"</string>
+    <string name="legal_information" msgid="1838443759229784762">"المعلومات القانونية"</string>
+    <string name="contributors_title" msgid="7698463793409916113">"المساهمون"</string>
+    <string name="manual" msgid="4819839169843240804">"يدوي"</string>
+    <string name="regulatory_labels" msgid="3165587388499646779">"التصنيفات التنظيمية"</string>
+    <string name="safety_and_regulatory_info" msgid="1204127697132067734">"دليل السلامة والمعلومات التنظيمية"</string>
+    <string name="copyright_title" msgid="4220237202917417876">"حقوق الطبع والنشر"</string>
+    <string name="license_title" msgid="936705938435249965">"الترخيص"</string>
+    <string name="terms_title" msgid="5201471373602628765">"الأحكام والشروط"</string>
+    <string name="webview_license_title" msgid="2531829466541104826">"ترخيص WebView للنظام"</string>
+    <string name="wallpaper_attributions" msgid="9201272150014500697">"الخلفيات"</string>
+    <string name="wallpaper_attributions_values" msgid="4292446851583307603">"الشركات الموفرة لصور القمر الصناعي:\n©2014 CNES / Astrium وDigitalGlobe وBluesky"</string>
+    <string name="settings_license_activity_title" msgid="8499293744313077709">"تراخيص الأطراف الثالثة"</string>
+    <string name="settings_license_activity_unavailable" msgid="6104592821991010350">"حدثت مشكلة أثناء تحميل التراخيص."</string>
+    <string name="settings_license_activity_loading" msgid="6163263123009681841">"جارٍ التحميل…"</string>
+    <string name="date_and_time_settings_title" msgid="4058492663544475485">"التاريخ والوقت"</string>
+    <string name="date_and_time_settings_title_setup_wizard" msgid="7580119979694174107">"تعيين التاريخ والوقت"</string>
+    <string name="date_and_time_settings_summary" msgid="7669856855390804666">"تعيين التاريخ والوقت والمنطقة الزمنية والتنسيقات"</string>
+    <string name="date_time_auto" msgid="3570339569471779767">"التاريخ والوقت التلقائي"</string>
+    <string name="date_time_auto_summary" msgid="3311706425095342759">"استخدام وقت الشبكة"</string>
+    <string name="zone_auto" msgid="3701878581920206160">"المنطقة الزمنية التلقائية"</string>
+    <string name="zone_auto_summary" msgid="4345856882906981864">"استخدام المنطقة الزمنية للشبكة"</string>
+    <string name="date_time_24hour_title" msgid="3025576547136168692">"تنسيق ٢٤ ساعة"</string>
+    <string name="date_time_24hour" msgid="1137618702556486913">"استخدام تنسيق ٢٤ ساعة"</string>
+    <string name="date_time_set_time_title" msgid="5884883050656937853">"الوقت"</string>
+    <string name="date_time_set_time" msgid="6449555153906058248">"تعيين الوقت"</string>
+    <string name="date_time_set_timezone_title" msgid="3001779256157093425">"المنطقة الزمنية"</string>
+    <string name="date_time_set_timezone" msgid="4759353576185916944">"تحديد المنطقة الزمنية"</string>
+    <string name="date_time_set_date_title" msgid="6834785820357051138">"التاريخ"</string>
+    <string name="date_time_set_date" msgid="2537494485643283230">"تعيين التاريخ"</string>
+    <string name="zone_list_menu_sort_alphabetically" msgid="7041628618528523514">"ترتيب أبجدي"</string>
+    <string name="zone_list_menu_sort_by_timezone" msgid="4944880536057914136">"ترتيب بحسب المنطقة الزمنية"</string>
+    <string name="date_picker_title" msgid="1533614225273770178">"التاريخ"</string>
+    <string name="time_picker_title" msgid="7436045944320504639">"الوقت"</string>
+    <string name="user_add_user_menu" msgid="5319151436895941496">"إضافة مستخدم"</string>
+    <string name="user_add_account_menu" msgid="6625351983590713721">"إضافة حساب"</string>
+    <string name="user_delete_user_description" msgid="2300280525351142435">"حذف حساب مستخدم"</string>
+    <string name="user_new_user_name" msgid="7115771396412339662">"مستخدم جديد"</string>
+    <string name="user_guest" msgid="3465399481257448601">"الضيف"</string>
+    <string name="user_switch" msgid="6544839750534690781">"تبديل"</string>
+    <string name="current_user_name" msgid="3813671533249316823">"أنت (%1$s)"</string>
+    <string name="user_name_label" msgid="3210832645046206845">"الاسم"</string>
+    <string name="user_summary_not_set_up" msgid="1473688119241224145">"لم يتم الإعداد."</string>
+    <string name="edit_user_name_title" msgid="6890782937520262478">"تعديل اسم المستخدم"</string>
+    <string name="users_list_title" msgid="770764290290240909">"المستخدمون"</string>
+    <string name="accounts_settings_title" msgid="436190037084293471">"الحسابات"</string>
+    <string name="user_details_title" msgid="1104762783367701498">"المستخدم"</string>
+    <string name="no_accounts_added" msgid="5148163140691096055">"لم تتم إضافة أي حسابات."</string>
+    <string name="account_list_title" msgid="7631588514613843065">"حسابات <xliff:g id="CURRENT_USER_NAME">%1$s</xliff:g>"</string>
+    <string name="account_details_title" msgid="7529571432258448573">"معلومات الحساب"</string>
+    <string name="add_account_title" msgid="5988746086885210040">"إضافة حساب"</string>
+    <string name="add_an_account" msgid="1072285034300995091">"إضافة حساب"</string>
+    <string name="user_cannot_add_accounts_message" msgid="6775605884544906797">"لا يمكن للملفات الشخصية المقيَّدة إضافة حسابات."</string>
+    <string name="remove_account_title" msgid="8840386525787836381">"إزالة الحساب"</string>
+    <string name="really_remove_account_title" msgid="3555164432587924900">"هل تريد إزالة الحساب؟"</string>
+    <string name="really_remove_account_message" msgid="4296769280849579900">"ستؤدي إزالة هذا الحساب إلى حذف جميع الرسائل وجهات الاتصال والبيانات الأخرى من الجهاز."</string>
+    <string name="remove_account_failed" msgid="7472511529086294087">"لا يسمح المشرف بإجراء هذا التغيير."</string>
+    <string name="really_remove_user_title" msgid="4990029019291756762">"أتريد إزالة هذا المستخدم؟"</string>
+    <string name="really_remove_user_message" msgid="3828090902833944533">"سيتم حذف جميع التطبيقات والبيانات."</string>
+    <string name="remove_user_error_title" msgid="2038275458657689420">"تعذّرت إزالة المستخدم."</string>
+    <string name="remove_user_error_message" msgid="6803947507134323358">"إعادة المحاولة؟"</string>
+    <string name="remove_user_error_dismiss" msgid="4006591159426844335">"تجاهل"</string>
+    <string name="remove_user_error_retry" msgid="8291692909396995093">"إعادة المحاولة"</string>
+    <string name="user_add_user_title" msgid="7458813670614932479">"أتريد إضافة مستخدم جديد؟"</string>
+    <string name="user_add_user_message_setup" msgid="6030901156040053106">"عند إضافة مستخدم جديد، عليه إعداد مساحته."</string>
+    <string name="user_add_user_message_update" msgid="1528170913388932459">"يمكن لأي مستخدم تحديث التطبيقات لجميع المستخدمين الآخرين."</string>
+    <string name="security_settings_title" msgid="6955331714774709746">"الأمان"</string>
+    <string name="security_settings_subtitle" msgid="2244635550239273229">"قفل الشاشة"</string>
+    <string name="security_lock_none" msgid="1054645093754839638">"بدون"</string>
+    <string name="security_lock_pattern" msgid="1174352995619563104">"النقش"</string>
+    <string name="security_lock_pin" msgid="4891899974369503200">"رقم التعريف الشخصي"</string>
+    <string name="security_lock_password" msgid="4420203740048322494">"كلمة المرور"</string>
+    <string name="lock_settings_picker_title" msgid="6590330165050361632">"اختيار نوع القفل"</string>
+    <string name="screen_lock_options" msgid="7023338635352915768">"خيارات قفل الشاشة"</string>
+    <string name="lock_settings_enter_pattern" msgid="4826034565853171624">"أدخل النقش"</string>
+    <string name="lockpattern_confirm_button_text" msgid="7784925958324484965">"تأكيد"</string>
+    <string name="lockpattern_restart_button_text" msgid="9355771277617537">"إعادة رسم النقش"</string>
+    <string name="continue_button_text" msgid="5129979170426836641">"متابعة"</string>
+    <string name="lockscreen_retry_button_text" msgid="5314212350698701242">"إعادة المحاولة"</string>
+    <string name="lockscreen_skip_button_text" msgid="3755748786396198091">"تخطّي"</string>
+    <string name="set_screen_lock" msgid="5239317292691332780">"تعيين قفل شاشة"</string>
+    <string name="lockscreen_choose_your_pattern" msgid="6801175111142593404">"اختيار النّقش"</string>
+    <string name="current_screen_lock" msgid="637651611145979587">"قفل الشاشة الحالي"</string>
+    <string name="choose_lock_pattern_message" msgid="6242765203541309524">"للحفاظ على الأمان، يجب تعيين نقش."</string>
+    <string name="lockpattern_retry_button_text" msgid="4655398824001857843">"محو"</string>
+    <string name="lockpattern_cancel_button_text" msgid="4068764595622381766">"إلغاء"</string>
+    <string name="lockpattern_pattern_confirmed" msgid="5984306638250515385">"نقش فتح القفل الجديد"</string>
+    <string name="lockpattern_recording_intro_header" msgid="7864149726033694408">"ارسم نقش فتح القفل."</string>
+    <string name="lockpattern_recording_inprogress" msgid="1575019990484725964">"ارفع إصبعك عن الشاشة عند الانتهاء."</string>
+    <string name="lockpattern_pattern_entered" msgid="6103071005285320575">"تم تسجيل النقش."</string>
+    <string name="lockpattern_need_to_confirm" msgid="4648070076022940382">"ارسم النقش مرة أخرى للتأكيد."</string>
+    <string name="lockpattern_recording_incorrect_too_short" msgid="2417932185815083082">"صِل 4 نقاط على الأقل. أعد المحاولة."</string>
+    <string name="lockpattern_pattern_wrong" msgid="929223969555399363">"نقش غير صحيح"</string>
+    <string name="lockpattern_settings_help_how_to_record" msgid="4436556875843192284">"كيفية رسم نقش فتح القفل"</string>
+    <string name="error_saving_lockpattern" msgid="2933512812768570130">"حدث خطأ أثناء حفظ النقش."</string>
+    <string name="okay" msgid="4589873324439764349">"موافق"</string>
+    <string name="remove_screen_lock_title" msgid="1234382338764193387">"هل تريد إزالة قفل الشاشة؟"</string>
+    <string name="remove_screen_lock_message" msgid="6675850371585564965">"سيؤدي هذا الإجراء إلى السماح لأي شخص بالدخول إلى حسابك."</string>
+    <string name="lock_settings_enter_pin" msgid="1669172111244633904">"أدخل رقم التعريف الشخصي"</string>
+    <string name="lock_settings_enter_password" msgid="2636669926649496367">"أدخل كلمة المرور"</string>
+    <string name="choose_lock_pin_message" msgid="2963792070267774417">"للحفاظ على الأمان، يجب تعيين رقم PIN."</string>
+    <string name="confirm_your_pin_header" msgid="9096581288537156102">"إعادة إدخال رقم التعريف الشخصي"</string>
+    <string name="choose_lock_pin_hints" msgid="7362906249992020844">"يجب أن يكون رقم PIN‏ 4 أرقام على الأقل."</string>
+    <string name="lockpin_invalid_pin" msgid="2149191577096327424">"رقم التعريف الشخصي غير صالح لأنه يجب أن يحتوي على 4 أرقام على الأقل."</string>
+    <string name="confirm_pins_dont_match" msgid="4607110139373520720">"أرقام PIN غير متطابقة"</string>
+    <string name="error_saving_lockpin" msgid="9011960139736000393">"حدث خطأ أثناء حفظ رقم التعريف الشخصي."</string>
+    <string name="lockscreen_wrong_pin" msgid="4922465731473805306">"رقم تعريف شخصي خاطئ"</string>
+    <string name="lockscreen_wrong_password" msgid="5757087577162231825">"كلمة مرور غير صحيحة"</string>
+    <string name="choose_lock_password_message" msgid="6124341145027370784">"للحفاظ على الأمان، يجب تعيين كلمة مرور."</string>
+    <string name="confirm_your_password_header" msgid="7052891840366724938">"إعادة إدخال كلمة المرور"</string>
+    <string name="confirm_passwords_dont_match" msgid="7300229965206501753">"كلمات المرور غير متطابقة"</string>
+    <string name="lockpassword_clear_label" msgid="6363680971025188064">"محو"</string>
+    <string name="lockpassword_cancel_label" msgid="5791237697404166450">"إلغاء"</string>
+    <string name="lockpassword_confirm_label" msgid="5918463281546146953">"تأكيد"</string>
+    <string name="choose_lock_password_hints" msgid="1802962836351866087">"يجب أن تتكون كلمة المرور من 4 إلى 8 أحرف مع رقم واحد على الأقل"</string>
+    <string name="lockpassword_password_too_short" msgid="6681218025001328405">"يجب أن تحتوي على <xliff:g id="COUNT">%d</xliff:g> حرف على الأقل."</string>
+    <string name="lockpassword_pin_too_short" msgid="6363004004424904218">"يجب أن يحتوي PIN على <xliff:g id="COUNT">%d</xliff:g> رقم على الأقل."</string>
+    <string name="lockpassword_password_too_long" msgid="7530214940279491291">"يجب ألا تزيد كلمة المرور عن <xliff:g id="NUMBER">%d</xliff:g> حرف."</string>
+    <string name="lockpassword_pin_too_long" msgid="62957683396974404">"يجب ألا يزيد رقم التعريف الشخصي عن <xliff:g id="NUMBER">%d</xliff:g> رقم."</string>
+    <string name="lockpassword_pin_contains_non_digits" msgid="3044526271686839923">"يجب أن يحتوي رقم التعريف الشخصي على أرقام من ۰ إلى ٩ فقط."</string>
+    <string name="lockpassword_pin_recently_used" msgid="7901918311213276207">"لا يسمح مشرف الجهاز باستخدام رقم تعريف شخصي تم استخدامه مؤخرًا."</string>
+    <string name="lockpassword_pin_blacklisted_by_admin" msgid="7412709707800738442">"حظرَ مشرف تكنولوجيا المعلومات استخدام أرقام التعريف الشخصية الشائعة. جرِّب استخدام رقم تعريف شخصي مختلف."</string>
+    <string name="lockpassword_illegal_character" msgid="1984970060523635618">"يجب ألا تتضمّن كلمة المرور حرفًا غير صالح."</string>
+    <string name="lockpassword_invalid_password" msgid="4987689810161043367">"كلمة المرور غير صالحة لأنها يجب أن تتكّون من 4 إلى 8 أحرف، وأن تحتوي على رقم واحد على الأقل، مع عدم استخدام مسافة بيضاء."</string>
+    <plurals name="lockpassword_password_requires_letters" formatted="false" msgid="424616259312760303">
+      <item quantity="zero">يجب أن تحتوي كلمة المرور على <xliff:g id="COUNT">%d</xliff:g> حرف على الأقل.</item>
+      <item quantity="two">يجب أن تحتوي كلمة المرور على حرفين (<xliff:g id="COUNT">%d</xliff:g>) على الأقل.</item>
+      <item quantity="few">يجب أن تحتوي كلمة المرور على <xliff:g id="COUNT">%d</xliff:g> أحرف على الأقل.</item>
+      <item quantity="many">يجب أن تحتوي كلمة المرور على <xliff:g id="COUNT">%d</xliff:g> حرفًا على الأقل.</item>
+      <item quantity="other">يجب أن تحتوي كلمة المرور على <xliff:g id="COUNT">%d</xliff:g> حرف على الأقل.</item>
+      <item quantity="one">يجب أن تحتوي كلمة المرور على حرف واحد على الأقل.</item>
+    </plurals>
+    <plurals name="lockpassword_password_requires_lowercase" formatted="false" msgid="2267487180744744833">
+      <item quantity="zero">يجب أن تحتوي كلمة المرور على <xliff:g id="COUNT">%d</xliff:g> حرف صغير على الأقل.</item>
+      <item quantity="two">يجب أن تحتوي كلمة المرور على حرفين صغيرين (<xliff:g id="COUNT">%d</xliff:g>) على الأقل.</item>
+      <item quantity="few">يجب أن تحتوي كلمة المرور على <xliff:g id="COUNT">%d</xliff:g> أحرف صغيرة على الأقل.</item>
+      <item quantity="many">يجب أن تحتوي كلمة المرور على <xliff:g id="COUNT">%d</xliff:g> حرفًا صغيرًا على الأقل.</item>
+      <item quantity="other">يجب أن تحتوي كلمة المرور على <xliff:g id="COUNT">%d</xliff:g> حرف صغير على الأقل.</item>
+      <item quantity="one">يجب أن تحتوي كلمة المرور على حرف صغير واحد على الأقل.</item>
+    </plurals>
+    <plurals name="lockpassword_password_requires_uppercase" formatted="false" msgid="7999264563026517898">
+      <item quantity="zero">يجب أن تحتوي كلمة المرور على <xliff:g id="COUNT">%d</xliff:g> حرف كبير على الأقل.</item>
+      <item quantity="two">يجب أن تحتوي كلمة المرور على حرفين كبيرين (<xliff:g id="COUNT">%d</xliff:g>) على الأقل.</item>
+      <item quantity="few">يجب أن تحتوي كلمة المرور على <xliff:g id="COUNT">%d</xliff:g> أحرف كبيرة على الأقل.</item>
+      <item quantity="many">يجب أن تحتوي كلمة المرور على <xliff:g id="COUNT">%d</xliff:g> حرفًا كبيرًا على الأقل.</item>
+      <item quantity="other">يجب أن تحتوي كلمة المرور على <xliff:g id="COUNT">%d</xliff:g> حرف كبير على الأقل.</item>
+      <item quantity="one">يجب أن تحتوي كلمة المرور على حرف كبير واحد على الأقل.</item>
+    </plurals>
+    <plurals name="lockpassword_password_requires_numeric" formatted="false" msgid="7935079851855168646">
+      <item quantity="zero">يجب أن تحتوي كلمة المرور على <xliff:g id="COUNT">%d</xliff:g> رقم عددي على الأقل.</item>
+      <item quantity="two">يجب أن تحتوي كلمة المرور على رقمين عددين (<xliff:g id="COUNT">%d</xliff:g>) على الأقل.</item>
+      <item quantity="few">يجب أن تحتوي كلمة المرور على <xliff:g id="COUNT">%d</xliff:g> أرقام عددية على الأقل.</item>
+      <item quantity="many">يجب أن تحتوي كلمة المرور على <xliff:g id="COUNT">%d</xliff:g> رقمًا عدديًا على الأقل.</item>
+      <item quantity="other">يجب أن تحتوي كلمة المرور على <xliff:g id="COUNT">%d</xliff:g> رقم عددي على الأقل.</item>
+      <item quantity="one">يجب أن تحتوي كلمة المرور على رقم عددي واحد على الأقل.</item>
+    </plurals>
+    <plurals name="lockpassword_password_requires_symbols" formatted="false" msgid="3994046435150094132">
+      <item quantity="zero">يجب أن تحتوي كلمة المرور على <xliff:g id="COUNT">%d</xliff:g> رمز خاص على الأقل.</item>
+      <item quantity="two">يجب أن تحتوي كلمة المرور على رمزين خاصين (<xliff:g id="COUNT">%d</xliff:g>) على الأقل.</item>
+      <item quantity="few">يجب أن تحتوي كلمة المرور على <xliff:g id="COUNT">%d</xliff:g> رموز خاصة على الأقل.</item>
+      <item quantity="many">يجب أن تحتوي كلمة المرور على <xliff:g id="COUNT">%d</xliff:g> رمزًا خاصًا على الأقل.</item>
+      <item quantity="other">يجب أن تحتوي كلمة المرور على <xliff:g id="COUNT">%d</xliff:g> رمز خاص على الأقل.</item>
+      <item quantity="one">يجب أن تحتوي كلمة المرور على رمز خاص واحد على الأقل.</item>
+    </plurals>
+    <plurals name="lockpassword_password_requires_nonletter" formatted="false" msgid="6878486326748506524">
+      <item quantity="zero">يجب أن تحتوي كلمة المرور على <xliff:g id="COUNT">%d</xliff:g> حرف ليس من الأحرف الأبجدية على الأقل.</item>
+      <item quantity="two">يجب أن تحتوي كلمة المرور على حرفين (<xliff:g id="COUNT">%d</xliff:g>) ليسا من الأحرف الأبجدية على الأقل.</item>
+      <item quantity="few">يجب أن تحتوي كلمة المرور على <xliff:g id="COUNT">%d</xliff:g> أحرف ليست من الأحرف الأبجدية على الأقل.</item>
+      <item quantity="many">يجب أن تحتوي كلمة المرور على <xliff:g id="COUNT">%d</xliff:g> حرفًا ليس من الأحرف الأبجدية على الأقل.</item>
+      <item quantity="other">يجب أن تحتوي كلمة المرور على <xliff:g id="COUNT">%d</xliff:g> حرف ليس من الأحرف الأبجدية على الأقل.</item>
+      <item quantity="one">يجب أن تحتوي كلمة المرور على حرف واحد ليس من الأحرف الأبجدية على الأقل.</item>
+    </plurals>
+    <string name="lockpassword_password_recently_used" msgid="8255729487108602924">"لا يسمح مشرف الجهاز باستخدام كلمة مرور تم استخدامها مؤخرًا."</string>
+    <string name="error_saving_password" msgid="8334882262622500658">"حدث خطأ أثناء حفظ كلمة المرور."</string>
+    <string name="lockpassword_password_blacklisted_by_admin" msgid="7965893810326503891">"حظرَ مشرف تكنولوجيا المعلومات استخدام كلمات المرور الشائعة. جرِّب استخدام كلمة مرور مختلفة."</string>
+    <string name="lockpassword_pin_no_sequential_digits" msgid="38813552228809240">"لا يُسمح باستخدام الترتيب التصاعدي أو التنازلي أو المكرر للأرقام."</string>
+    <string name="setup_lock_settings_options_button_label" msgid="3337845811029780896">"خيارات قفل الشاشة"</string>
+    <string name="forget" msgid="3971143908183848527">"حذف"</string>
+    <string name="delete_button" msgid="5840500432614610850">"حذف"</string>
+    <string name="remove_button" msgid="6664656962868194178">"إزالة"</string>
+    <string name="cancel" msgid="750286395700355455">"إلغاء"</string>
+    <string name="backspace_key" msgid="1545590866688979099">"مفتاح Backspace"</string>
+    <string name="enter_key" msgid="2121394305541579468">"مفتاح Enter"</string>
+    <string name="exit_retail_button_text" msgid="6093240315583384473">"خروج من عرض توضيحي"</string>
+    <string name="exit_retail_mode_dialog_title" msgid="7970631760237469168">"خروج من وضع العرض التوضيحي"</string>
+    <string name="exit_retail_mode_dialog_body" msgid="8314316171782527301">"سيؤدي هذا إلى حذف حساب العرض التوضيحي وإعادة الضبط بحسب بيانات المصنع على النظام. سيتم فقد جميع بيانات المستخدم."</string>
+    <string name="exit_retail_mode_dialog_confirmation_button_text" msgid="3147249675355968649">"خروج من عرض توضيحي"</string>
+    <string name="suggestion_primary_button" msgid="6421115494714083020">"الانتهاء من الإعداد"</string>
+    <string name="suggestion_secondary_button" msgid="7075088546904464681">"ليس الآن"</string>
+    <string name="restricted_while_driving" msgid="6217369093121968299">"لا تتوفَّر الميزة أثناء القيادة."</string>
+    <!-- no translation found for add_user_restricted_while_driving (6384004350628271556) -->
+    <skip />
+</resources>

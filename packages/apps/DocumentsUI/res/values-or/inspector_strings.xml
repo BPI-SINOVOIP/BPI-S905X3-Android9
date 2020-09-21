@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  Copyright (C) 2017 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+ -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="inspector_title" msgid="1924760928091740238">"ସୂଚନା"</string>
+    <string name="inspector_load_error" msgid="7522190243413249291">"ଫାଇଲ୍‍ ସୂଚନା ଲୋଡ୍‍ କରିହେଲା ନାହିଁ"</string>
+    <string name="inspector_debug_section" msgid="2576052661505700421">"ଡିବଗ୍‍ ସୂଚନା (କେବଳ ଡିଭାଇସ୍‍)"</string>
+    <string name="inspector_debug_metadata_section" msgid="5875140675600744846">"ମୂଳ ମେଟାଡାଟା: <xliff:g id="METADATATYPE">%1$s</xliff:g>"</string>
+    <string name="inspector_metadata_section" msgid="6077622515328240575">"ମିଡିଆ ବିବରଣୀ"</string>
+    <string name="handler_app_file_opens_with" msgid="5272329600389613550">"ଏହି ପ୍ରକାରର ଫାଇଲ୍‍ ଏଥିରେ ଖୋଲେ"</string>
+    <string name="handler_app_belongs_to" msgid="5444507329303253553">"ଏହି ଫାଇଲ୍‌କୁ ଦେଇଛନ୍ତି"</string>
+    <string name="handler_app_not_selected" msgid="1294439257183908786">"ଚୟନ କରାଯାଇନାହିଁ"</string>
+    <string name="handler_app_unknown" msgid="5911661530593229287">"ଅଜଣା"</string>
+    <string name="metadata_dimensions" msgid="6112907724016659801">"ମାପ"</string>
+    <string name="metadata_dimensions_format" msgid="6138765871412005962">"<xliff:g id="WIDTH">%1$d</xliff:g> x <xliff:g id="HEIGHT">%2$d</xliff:g> - <xliff:g id="MEGAPIXELS">%3$,.1f</xliff:g>MP"</string>
+    <string name="metadata_coordinates" msgid="6897383227370702734">"ନିର୍ଦ୍ଦେଶାଙ୍କ"</string>
+    <string name="metadata_coordinates_format" msgid="1402724596764547761">"<xliff:g id="LATITUDE">%1$,.3f</xliff:g>, <xliff:g id="LONGITUDE">%2$,.3f</xliff:g>"</string>
+    <string name="metadata_altitude" msgid="8063792127436794294">"ଉଚ୍ଚତା"</string>
+    <string name="metadata_camera" msgid="2363009732801281319">"କ୍ୟାମେରା"</string>
+    <string name="metadata_camera_format" msgid="1494489751904311612">"<xliff:g id="MAKE">%1$s</xliff:g> <xliff:g id="MODEL">%2$s</xliff:g>"</string>
+    <string name="metadata_aperture" msgid="6538741952698935357">"ଆପାର୍ଚର୍‍"</string>
+    <string name="metadata_shutter_speed" msgid="8204739885103326131">"ଶଟର୍‌ ସ୍ପୀଡ୍‌"</string>
+    <string name="metadata_duration" msgid="3115494422055472715">"ଅବଧି"</string>
+    <string name="metadata_date_time" msgid="1090351199248114406">"ଫଟୋ ଉଠାଯାଇଥିବା ସମୟ"</string>
+    <string name="metadata_focal_length" msgid="3440735161407699893">"ଫୋକସ୍‌ ଦୈର୍ଘ୍ୟ"</string>
+    <string name="metadata_focal_format" msgid="8542211707962355623">"<xliff:g id="LENGTH">%1$.2f </xliff:g>ମିମି"</string>
+    <string name="metadata_iso_speed_ratings" msgid="1699781252899759058">"ISO ସମତୁଲ୍ୟ"</string>
+    <string name="metadata_iso_format" msgid="4153285204012694861">"ISO <xliff:g id="ISO_SPEED">%1$d</xliff:g>"</string>
+    <string name="metadata_artist" msgid="8972421485694988540">"କଳାକାର"</string>
+    <string name="metadata_composer" msgid="4696926808308256056">"କମ୍ପୋଜର୍‍"</string>
+    <string name="metadata_album" msgid="1661699531214720236">"ଆଲବମ୍"</string>
+    <string name="metadata_address" msgid="1849921023707744640">"ଲୋକେଶନ୍‌"</string>
+    <string name="debug_stream_types" msgid="2088565280360139333">"ଷ୍ଟ୍ରୀମ୍‍ର ପ୍ରକାର"</string>
+    <string name="debug_raw_size" msgid="7487139640175650185">"ମୂଳ ଆକାର (ବାଇଟ୍ସ)"</string>
+</resources>

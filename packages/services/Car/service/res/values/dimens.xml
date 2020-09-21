@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+** Copyright 2018, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+<resources>
+    <!-- Text size in ActivityBlockingActivity. -->
+    <dimen name="blocking_text_size">32sp</dimen>
+    <!-- Padding of ActivityBlockingActivity. -->
+    <dimen name="blocking_activity_padding">20dp</dimen>
+
+    <!-- Minimum height of exit button in ActivityBlockingActivity. -->
+    <dimen name="exit_button_min_height">56dp</dimen>
+    <!-- Minimum width of exit button in ActivityBlockingActivity. -->
+    <dimen name="exit_button_min_width">156dp</dimen>
+    <!-- Padding of exit button in ActivityBlockingActivity. -->
+    <dimen name="exit_button_padding">16dp</dimen>
+    <!-- Radius of exit button in ActivityBlockingActivity. -->
+    <dimen name="exit_button_radius">4dp</dimen>
+    <!-- Top margin of exit button. It should be half the height of
+         button (exit_button_min_height). -->
+    <dimen name="exit_button_top_margin">28dp</dimen>
+</resources>

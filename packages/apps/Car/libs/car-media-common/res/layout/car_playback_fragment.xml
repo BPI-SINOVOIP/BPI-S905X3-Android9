@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2018, The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    app:cardElevation="0dp"
+    app:cardCornerRadius="6dp">
+
+    <com.android.car.media.common.CrossfadeImageView
+        android:id="@+id/album_background"
+        android:background="@color/car_dark_blue_grey_800"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitStart" />
+
+    <View
+        android:id="@+id/playback_scrim"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/album_art_scrim"
+        android:alpha="@dimen/album_art_scrim_alpha"/>
+
+    <android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/playback_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/app_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/car_padding_4"
+            android:layout_marginLeft="@dimen/car_padding_4"
+            android:layout_marginRight="@dimen/car_padding_4"
+            android:textAppearance="@style/TextAppearance.Car.Body2.Light"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:includeFontPadding="false"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/app_icon"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageView
+            android:id="@+id/app_icon"
+            android:contentDescription="@string/album_art"
+            android:layout_marginRight="@dimen/car_padding_4"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintDimensionRatio="W,1:1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/app_name"
+            app:layout_constraintBottom_toBottomOf="@+id/app_name"/>
+
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/car_padding_4"
+            android:layout_marginLeft="@dimen/car_padding_4"
+            android:layout_marginRight="@dimen/car_padding_4"
+            android:textAppearance="@style/TextAppearance.Car.Body1.Light"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/app_name"/>
+
+        <TextView
+            android:id="@+id/subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/car_padding_4"
+            android:layout_marginLeft="@dimen/car_padding_4"
+            android:layout_marginRight="@dimen/car_padding_4"
+            android:textAppearance="@style/TextAppearance.Car.Body2.Light"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:includeFontPadding="false"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title"/>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_begin="600dp"
+            android:orientation="vertical"/>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/rightmost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_percent="1"
+            android:orientation="vertical"/>
+
+        <android.support.constraint.Barrier
+            android:id="@+id/barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="left"
+            app:constraint_referenced_ids="guideline,rightmost" />
+
+        <com.android.car.media.common.PlaybackControlsActionBar
+            android:id="@+id/playback_controls"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/car_padding_4"
+            android:layout_marginEnd="@dimen/car_padding_4"
+            android:layout_marginBottom="@dimen/car_padding_4"
+            app:columns="3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/barrier"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>

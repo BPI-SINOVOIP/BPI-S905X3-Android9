@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ * Copyright (c) 2017, The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
+ -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="settings_label" msgid="5147911978211079839">"Setelan"</string>
+    <string name="more_settings_label" msgid="3867559443480110616">"Lainnya"</string>
+    <string name="display_settings" msgid="5325515247739279185">"Tampilan"</string>
+    <string name="brightness" msgid="2919605130898772866">"Tingkat kecerahan"</string>
+    <string name="auto_brightness_title" msgid="9124647862844666581">"Kecerahan adaptif"</string>
+    <string name="auto_brightness_summary" msgid="4741887033140384352">"Mengoptimalkan tingkat kecerahan untuk cahaya yang tersedia"</string>
+    <string name="condition_night_display_title" msgid="3777509730126972675">"Mode Cahaya Malam aktif"</string>
+    <string name="keywords_display" msgid="3978416985146943922">"layar, layar sentuh"</string>
+    <string name="keywords_display_brightness_level" msgid="3956411572536209195">"layar redup, layar sentuh, baterai"</string>
+    <string name="keywords_display_auto_brightness" msgid="2700310050333468752">"layar redup, layar sentuh, baterai"</string>
+    <string name="keywords_display_night_display" msgid="2922294576679769957">"layar redup, malam, tint"</string>
+    <string name="night_mode_tile_label" msgid="6603597795502131664">"Mode malam"</string>
+    <string name="wifi_settings" msgid="7701477685273103841">"Wi-Fi"</string>
+    <string name="wifi_settings_summary" msgid="6095898149997291025">"Siapkan &amp; kelola titik akses nirkabel"</string>
+    <string name="wifi_starting" msgid="473253087503153167">"Mengaktifkan Wi-Fi..."</string>
+    <string name="wifi_stopping" msgid="3534173972547890148">"Menonaktifkan Wi-Fi..."</string>
+    <string name="wifi_failed_forget_message" msgid="121732682699377206">"Gagal melupakan jaringan"</string>
+    <string name="wifi_failed_connect_message" msgid="4447498225022147324">"Gagal menyambung ke jaringan"</string>
+    <string name="wifi_setup_add_network" msgid="3660498520389954620">"Tambahkan jaringan"</string>
+    <string name="wifi_disabled" msgid="5013262438128749950">"Wi-Fi dinonaktifkan"</string>
+    <string name="wifi_setup_connect" msgid="3512399573397979101">"Sambungkan"</string>
+    <string name="wifi_password" msgid="5565632142720292397">"Sandi"</string>
+    <string name="wifi_show_password" msgid="8423293211933521097">"Tampilkan sandi"</string>
+    <string name="wifi_ssid" msgid="488604828159458741">"Nama jaringan"</string>
+    <string name="wifi_security" msgid="158358046038876532">"Keamanan"</string>
+    <string name="wifi_signal" msgid="1817579728350364549">"Kekuatan sinyal"</string>
+    <string name="wifi_status" msgid="5688013206066543952">"Status"</string>
+    <string name="wifi_speed" msgid="1650692446731850781">"Kecepatan link"</string>
+    <string name="wifi_frequency" msgid="8951455949682864922">"Frekuensi"</string>
+    <string name="wifi_ip_address" msgid="3128140627890954061">"Alamat IP"</string>
+    <string name="access_point_tag_key" msgid="1517143378973053337">"access_point_tag_key"</string>
+  <string-array name="wifi_signals">
+    <item msgid="4897376984576812606">"Buruk"</item>
+    <item msgid="2032262610626057081">"Sedang"</item>
+    <item msgid="3859756017461098953">"Bagus"</item>
+    <item msgid="1521103743353335724">"Sangat bagus"</item>
+  </string-array>
+    <string name="bluetooth_quick_toggle_title" msgid="637869245038061523">"Bluetooth"</string>
+    <string name="bluetooth_quick_toggle_summary" msgid="4390699431893305353">"Aktifkan Bluetooth"</string>
+    <string name="bluetooth_settings" msgid="3878243366013638982">"Bluetooth"</string>
+    <string name="bluetooth_disabled" msgid="4187409401590350572">"Bluetooth dinonaktifkan"</string>
+    <string name="bluetooth_settings_title" msgid="3794688574569688649">"Bluetooth"</string>
+    <string name="bluetooth_settings_summary" msgid="4023303473646769835">"Mengelola sambungan, menyetel nama perangkat &amp; visibilitas"</string>
+    <string name="bluetooth_talkback_computer" msgid="5223330129934365312">"Komputer"</string>
+    <string name="bluetooth_talkback_headset" msgid="6155254514321149935">"Headset"</string>
+    <string name="bluetooth_talkback_phone" msgid="8833977851215000426">"Ponsel"</string>
+    <string name="bluetooth_talkback_imaging" msgid="8762390801115154654">"Pencitraan"</string>
+    <string name="bluetooth_talkback_headphone" msgid="5362155791551671490">"Headphone"</string>
+    <string name="bluetooth_talkback_input_peripheral" msgid="868933277567862622">"Periferal Masukan"</string>
+    <string name="bluetooth_talkback_bluetooth" msgid="1715933297419387985">"Bluetooth"</string>
+    <string name="bluetooth_preference_paired_devices" msgid="5875643105380630583">"Perangkat yang tersambung"</string>
+    <string name="bluetooth_preference_found_devices" msgid="125155123214560511">"Perangkat yang tersedia"</string>
+    <string name="bluetooth_preference_no_paired_devices" msgid="483742146117390001">"Tidak ada perangkat yang tersambung"</string>
+    <string name="bluetooth_preference_no_found_devices" msgid="1391812056491062262">"Perangkat tidak tersedia"</string>
+    <string name="bluetooth_preference_paired_dialog_title" msgid="2470829827455850904">"Perangkat yang tersambung"</string>
+    <string name="bluetooth_preference_paired_dialog_name_label" msgid="3528740139365123415">"Nama"</string>
+    <string name="bluetooth_device_advanced_profile_header_title" msgid="8165093257483965783">"Gunakan untuk"</string>
+    <string name="wifi_ssid_hint" msgid="4155050863239489553">"Ubah nama perangkat Bluetooth"</string>
+    <string name="bluetooth_notif_ticker" msgid="7192577740198156792">"Permintaan penyambungan Bluetooth"</string>
+    <string name="bluetooth_device_context_pair_connect" msgid="3138105800372470422">"Sambungkan &amp; hubungkan"</string>
+    <string name="bluetooth" msgid="5235115159234688629">"Bluetooth"</string>
+    <string name="bluetooth_pairing_key_msg" msgid="5066825929751599037">"Kode penyambungan Bluetooth"</string>
+    <string name="bluetooth_enable_alphanumeric_pin" msgid="1636575922217263060">"PIN berisi huruf atau simbol"</string>
+    <string name="bluetooth_enter_passkey_msg" msgid="5955236916732265593">"Ketik kode penghubung, lalu tekan Kembali atau Enter"</string>
+    <string name="bluetooth_pairing_request" msgid="4769675459526556801">"Sambungkan dengan <xliff:g id="DEVICE_NAME">%1$s</xliff:g>?"</string>
+    <string name="bluetooth_pairing_shares_phonebook" msgid="2015966932886300630">"Izinkan <xliff:g id="DEVICE_NAME">%1$s</xliff:g> mengakses kontak dan histori panggilan"</string>
+    <string name="bluetooth_enter_pin_other_device" msgid="7825091249522704764">"Anda mungkin juga perlu mengetikkan PIN ini ke perangkat lain."</string>
+    <string name="bluetooth_enter_passkey_other_device" msgid="7147248221018865922">"Anda mungkin juga perlu mengetikkan kode sandi ini ke perangkat lain."</string>
+    <string name="bluetooth_pin_values_hint_16_digits" msgid="418776900816984778">"Harus berisi 16 digit"</string>
+    <string name="bluetooth_pin_values_hint" msgid="1561325817559141687">"Biasanya 0000 atau 1234"</string>
+    <string name="bluetooth_notif_title" msgid="8374602799367803335">"Permintaan penyambungan"</string>
+    <string name="bluetooth_notif_message" msgid="1060821000510108726">"Tap untuk menyambungkan dengan <xliff:g id="DEVICE_NAME">%1$s</xliff:g>."</string>
+    <string name="bluetooth_error_title" msgid="2341600997536511742"></string>
+    <string name="sound_settings" msgid="3072423952331872246">"Suara"</string>
+    <string name="ring_volume_title" msgid="3135241004980719442">"Volume dering"</string>
+    <string name="navi_volume_title" msgid="946292066759195165">"Volume navigasi"</string>
+    <string name="incoming_call_volume_title" msgid="6972117872424656876">"Nada dering"</string>
+    <string name="notification_volume_title" msgid="6749411263197157876">"Notifikasi"</string>
+    <string name="media_volume_title" msgid="6697416686272606865">"Media"</string>
+    <string name="media_volume_summary" msgid="2961762827637127239">"Menyetel volume musik dan video"</string>
+    <string name="alarm_volume_title" msgid="840384014895796587">"Alarm"</string>
+    <string name="applications_settings" msgid="794261395191035632">"Info aplikasi"</string>
+    <string name="disable_text" msgid="4358165448648990820">"Nonaktifkan"</string>
+    <string name="enable_text" msgid="1794971777861881238">"Aktifkan"</string>
+    <string name="permissions_label" msgid="2701446753515612685">"Izin"</string>
+    <string name="application_version_label" msgid="8556889839783311649">"Versi: %1$s"</string>
+    <string name="runtime_permissions_summary_no_permissions_granted" msgid="6001439205270250021">"Tidak ada izin yang diberikan"</string>
+    <string name="runtime_permissions_summary_no_permissions_requested" msgid="4074220596273432442">"Tidak ada izin yang diminta"</string>
+    <string name="data_usage_summary_title" msgid="4368024763485916986">"Penggunaan data"</string>
+    <string name="data_usage_app_summary_title" msgid="5012851696585421420">"Penggunaan data aplikasi"</string>
+    <string name="force_stop" msgid="2153183697014720520">"Paksa berhenti"</string>
+    <string name="computing_size" msgid="5791407621793083965">"Menghitung..."</string>
+    <plurals name="runtime_permissions_additional_count" formatted="false" msgid="3513360187065317613">
+      <item quantity="other"><xliff:g id="COUNT_1">%d</xliff:g> izin tambahan</item>
+      <item quantity="one"><xliff:g id="COUNT_0">%d</xliff:g> izin tambahan</item>
+    </plurals>
+    <string name="system_setting_title" msgid="6864599341809463440">"Sistem"</string>
+    <string name="system_update_settings_list_item_title" msgid="5182439376921868735">"Update sistem"</string>
+    <string name="system_update_settings_list_item_summary" msgid="7395202602021608371"></string>
+    <string name="firmware_version" msgid="8491753744549309333">"Versi Android"</string>
+    <string name="security_patch" msgid="4794276590178386903">"Tingkat patch keamanan Android"</string>
+    <string name="model_info" msgid="4966408071657934452">"Model"</string>
+    <string name="baseband_version" msgid="2370088062235041897">"Versi pita basis"</string>
+    <string name="kernel_version" msgid="7327212934187011508">"Versi kernel"</string>
+    <string name="build_number" msgid="3997326631001009102">"Nomor versi"</string>
+    <string name="device_info_not_available" msgid="2095601973977376655">"Tidak tersedia"</string>
+    <string name="device_status_activity_title" msgid="4083567497305368200">"Status"</string>
+    <string name="device_status" msgid="267298179806290920">"Status"</string>
+    <string name="device_status_summary" product="tablet" msgid="600543254608862075">"Status baterai, jaringan, dan informasi lainnya"</string>
+    <string name="device_status_summary" product="default" msgid="9130360324418117815">"Nomor telepon, sinyal, dll."</string>
+    <string name="about_settings" msgid="4329457966672592345">"Tentang"</string>
+    <string name="about_summary" msgid="5374623866267691206">"Android <xliff:g id="VERSION">%1$s</xliff:g>"</string>
+    <string name="about_settings_summary" msgid="7975072809083281401">"Melihat info hukum, status, versi software"</string>
+    <string name="legal_information" msgid="1838443759229784762">"Informasi hukum"</string>
+    <string name="contributors_title" msgid="7698463793409916113">"Kontributor"</string>
+    <string name="manual" msgid="4819839169843240804">"Manual"</string>
+    <string name="regulatory_labels" msgid="3165587388499646779">"Label peraturan"</string>
+    <string name="safety_and_regulatory_info" msgid="1204127697132067734">"Manual keselamatan &amp; peraturan"</string>
+    <string name="copyright_title" msgid="4220237202917417876">"Hak Cipta"</string>
+    <string name="license_title" msgid="936705938435249965">"Lisensi"</string>
+    <string name="terms_title" msgid="5201471373602628765">"Persyaratan dan ketentuan"</string>
+    <string name="webview_license_title" msgid="2531829466541104826">"Lisensi WebView Sistem"</string>
+    <string name="wallpaper_attributions" msgid="9201272150014500697">"Wallpaper"</string>
+    <string name="wallpaper_attributions_values" msgid="4292446851583307603">"Penyedia citra satelit:\n©2014 CNES / Astrium, DigitalGlobe, Bluesky"</string>
+    <string name="settings_license_activity_title" msgid="8499293744313077709">"Lisensi pihak ketiga"</string>
+    <string name="settings_license_activity_unavailable" msgid="6104592821991010350">"Ada masalah saat memuat lisensi."</string>
+    <string name="settings_license_activity_loading" msgid="6163263123009681841">"Memuat…"</string>
+    <string name="date_and_time_settings_title" msgid="4058492663544475485">"Tanggal &amp; waktu"</string>
+    <string name="date_and_time_settings_title_setup_wizard" msgid="7580119979694174107">"Setel tanggal dan waktu"</string>
+    <string name="date_and_time_settings_summary" msgid="7669856855390804666">"Menyetel tanggal, waktu, zona waktu &amp; format"</string>
+    <string name="date_time_auto" msgid="3570339569471779767">"Tanggal &amp; waktu otomatis"</string>
+    <string name="date_time_auto_summary" msgid="3311706425095342759">"Gunakan waktu yang disediakan jaringan"</string>
+    <string name="zone_auto" msgid="3701878581920206160">"Zona waktu otomatis"</string>
+    <string name="zone_auto_summary" msgid="4345856882906981864">"Gunakan zona waktu yang disediakan jaringan"</string>
+    <string name="date_time_24hour_title" msgid="3025576547136168692">"Format 24 jam"</string>
+    <string name="date_time_24hour" msgid="1137618702556486913">"Gunakan format 24 jam"</string>
+    <string name="date_time_set_time_title" msgid="5884883050656937853">"Waktu"</string>
+    <string name="date_time_set_time" msgid="6449555153906058248">"Setel waktu"</string>
+    <string name="date_time_set_timezone_title" msgid="3001779256157093425">"Zona waktu"</string>
+    <string name="date_time_set_timezone" msgid="4759353576185916944">"Pilih zona waktu"</string>
+    <string name="date_time_set_date_title" msgid="6834785820357051138">"Tanggal"</string>
+    <string name="date_time_set_date" msgid="2537494485643283230">"Setel tanggal"</string>
+    <string name="zone_list_menu_sort_alphabetically" msgid="7041628618528523514">"Urutkan menurut abjad"</string>
+    <string name="zone_list_menu_sort_by_timezone" msgid="4944880536057914136">"Urutkan menurut zona waktu"</string>
+    <string name="date_picker_title" msgid="1533614225273770178">"Tanggal"</string>
+    <string name="time_picker_title" msgid="7436045944320504639">"Waktu"</string>
+    <string name="user_add_user_menu" msgid="5319151436895941496">"Tambahkan pengguna"</string>
+    <string name="user_add_account_menu" msgid="6625351983590713721">"Tambahkan akun"</string>
+    <string name="user_delete_user_description" msgid="2300280525351142435">"Menghapus pengguna"</string>
+    <string name="user_new_user_name" msgid="7115771396412339662">"Pengguna baru"</string>
+    <string name="user_guest" msgid="3465399481257448601">"Tamu"</string>
+    <string name="user_switch" msgid="6544839750534690781">"Ganti"</string>
+    <string name="current_user_name" msgid="3813671533249316823">"Anda (%1$s)"</string>
+    <string name="user_name_label" msgid="3210832645046206845">"Nama"</string>
+    <string name="user_summary_not_set_up" msgid="1473688119241224145">"Tidak disiapkan"</string>
+    <string name="edit_user_name_title" msgid="6890782937520262478">"Edit nama pengguna"</string>
+    <string name="users_list_title" msgid="770764290290240909">"Pengguna"</string>
+    <string name="accounts_settings_title" msgid="436190037084293471">"Akun"</string>
+    <string name="user_details_title" msgid="1104762783367701498">"Pengguna"</string>
+    <string name="no_accounts_added" msgid="5148163140691096055">"Tidak ada akun yang ditambahkan"</string>
+    <string name="account_list_title" msgid="7631588514613843065">"Akun untuk <xliff:g id="CURRENT_USER_NAME">%1$s</xliff:g>"</string>
+    <string name="account_details_title" msgid="7529571432258448573">"Info akun"</string>
+    <string name="add_account_title" msgid="5988746086885210040">"Tambahkan akun"</string>
+    <string name="add_an_account" msgid="1072285034300995091">"Tambahkan akun"</string>
+    <string name="user_cannot_add_accounts_message" msgid="6775605884544906797">"Profil yang dibatasi tidak dapat menambahkan akun"</string>
+    <string name="remove_account_title" msgid="8840386525787836381">"Hapus akun"</string>
+    <string name="really_remove_account_title" msgid="3555164432587924900">"Hapus akun?"</string>
+    <string name="really_remove_account_message" msgid="4296769280849579900">"Menghapus akun ini akan menghapus semua pesan, kontak, dan data lain akun tersebut dari perangkat."</string>
+    <string name="remove_account_failed" msgid="7472511529086294087">"Perubahan ini tidak diizinkan oleh admin"</string>
+    <string name="really_remove_user_title" msgid="4990029019291756762">"Hapus pengguna ini?"</string>
+    <string name="really_remove_user_message" msgid="3828090902833944533">"Semua aplikasi dan data akan dihapus."</string>
+    <string name="remove_user_error_title" msgid="2038275458657689420">"Gagal menghapus pengguna"</string>
+    <string name="remove_user_error_message" msgid="6803947507134323358">"Coba lagi?"</string>
+    <string name="remove_user_error_dismiss" msgid="4006591159426844335">"Tutup"</string>
+    <string name="remove_user_error_retry" msgid="8291692909396995093">"Coba lagi"</string>
+    <string name="user_add_user_title" msgid="7458813670614932479">"Tambahkan pengguna baru?"</string>
+    <string name="user_add_user_message_setup" msgid="6030901156040053106">"Saat Anda menambahkan pengguna baru, orang tersebut perlu menyiapkan ruang mereka sendiri."</string>
+    <string name="user_add_user_message_update" msgid="1528170913388932459">"Setiap pengguna dapat mengupdate aplikasi untuk semua pengguna lain."</string>
+    <string name="security_settings_title" msgid="6955331714774709746">"Keamanan"</string>
+    <string name="security_settings_subtitle" msgid="2244635550239273229">"Kunci layar"</string>
+    <string name="security_lock_none" msgid="1054645093754839638">"Tidak ada"</string>
+    <string name="security_lock_pattern" msgid="1174352995619563104">"Pola"</string>
+    <string name="security_lock_pin" msgid="4891899974369503200">"PIN"</string>
+    <string name="security_lock_password" msgid="4420203740048322494">"Sandi"</string>
+    <string name="lock_settings_picker_title" msgid="6590330165050361632">"Pilih jenis kunci"</string>
+    <string name="screen_lock_options" msgid="7023338635352915768">"Opsi kunci layar"</string>
+    <string name="lock_settings_enter_pattern" msgid="4826034565853171624">"Masukkan pola"</string>
+    <string name="lockpattern_confirm_button_text" msgid="7784925958324484965">"Konfirmasi"</string>
+    <string name="lockpattern_restart_button_text" msgid="9355771277617537">"Gambar ulang"</string>
+    <string name="continue_button_text" msgid="5129979170426836641">"Lanjutkan"</string>
+    <string name="lockscreen_retry_button_text" msgid="5314212350698701242">"Coba lagi"</string>
+    <string name="lockscreen_skip_button_text" msgid="3755748786396198091">"Lewati"</string>
+    <string name="set_screen_lock" msgid="5239317292691332780">"Setel kunci layar"</string>
+    <string name="lockscreen_choose_your_pattern" msgid="6801175111142593404">"Pilih pola Anda"</string>
+    <string name="current_screen_lock" msgid="637651611145979587">"Kunci layar saat ini"</string>
+    <string name="choose_lock_pattern_message" msgid="6242765203541309524">"Untuk keamanan, setel pola"</string>
+    <string name="lockpattern_retry_button_text" msgid="4655398824001857843">"Hapus"</string>
+    <string name="lockpattern_cancel_button_text" msgid="4068764595622381766">"Batal"</string>
+    <string name="lockpattern_pattern_confirmed" msgid="5984306638250515385">"Pola pembuka kunci baru Anda"</string>
+    <string name="lockpattern_recording_intro_header" msgid="7864149726033694408">"Buat pola pembuka kunci"</string>
+    <string name="lockpattern_recording_inprogress" msgid="1575019990484725964">"Angkat jari ketika selesai"</string>
+    <string name="lockpattern_pattern_entered" msgid="6103071005285320575">"Pola direkam"</string>
+    <string name="lockpattern_need_to_confirm" msgid="4648070076022940382">"Gambar pola lagi untuk mengonfirmasi"</string>
+    <string name="lockpattern_recording_incorrect_too_short" msgid="2417932185815083082">"Hubungkan minimal 4 titik. Coba lagi."</string>
+    <string name="lockpattern_pattern_wrong" msgid="929223969555399363">"Pola salah"</string>
+    <string name="lockpattern_settings_help_how_to_record" msgid="4436556875843192284">"Cara menggambar pola pembuka kunci"</string>
+    <string name="error_saving_lockpattern" msgid="2933512812768570130">"Error saat menyimpan pola"</string>
+    <string name="okay" msgid="4589873324439764349">"Oke"</string>
+    <string name="remove_screen_lock_title" msgid="1234382338764193387">"Hapus kunci layar?"</string>
+    <string name="remove_screen_lock_message" msgid="6675850371585564965">"Tindakan ini akan mengizinkan siapa pun mengakses akun Anda"</string>
+    <string name="lock_settings_enter_pin" msgid="1669172111244633904">"Masukkan PIN"</string>
+    <string name="lock_settings_enter_password" msgid="2636669926649496367">"Masukkan sandi"</string>
+    <string name="choose_lock_pin_message" msgid="2963792070267774417">"Untuk keamanan, setel PIN"</string>
+    <string name="confirm_your_pin_header" msgid="9096581288537156102">"Masukkan ulang PIN"</string>
+    <string name="choose_lock_pin_hints" msgid="7362906249992020844">"PIN harus minimal 4 digit"</string>
+    <string name="lockpin_invalid_pin" msgid="2149191577096327424">"PIN tidak valid, minimal 4 digit."</string>
+    <string name="confirm_pins_dont_match" msgid="4607110139373520720">"PIN tidak cocok"</string>
+    <string name="error_saving_lockpin" msgid="9011960139736000393">"Error saat menyimpan PIN"</string>
+    <string name="lockscreen_wrong_pin" msgid="4922465731473805306">"PIN Salah"</string>
+    <string name="lockscreen_wrong_password" msgid="5757087577162231825">"Sandi salah"</string>
+    <string name="choose_lock_password_message" msgid="6124341145027370784">"Untuk keamanan, setel sandi"</string>
+    <string name="confirm_your_password_header" msgid="7052891840366724938">"Masukkan ulang sandi"</string>
+    <string name="confirm_passwords_dont_match" msgid="7300229965206501753">"Sandi tidak cocok"</string>
+    <string name="lockpassword_clear_label" msgid="6363680971025188064">"Hapus"</string>
+    <string name="lockpassword_cancel_label" msgid="5791237697404166450">"Batal"</string>
+    <string name="lockpassword_confirm_label" msgid="5918463281546146953">"Konfirmasi"</string>
+    <string name="choose_lock_password_hints" msgid="1802962836351866087">"Sandi harus terdiri dari 4-8 karakter dengan minimal 1 angka"</string>
+    <string name="lockpassword_password_too_short" msgid="6681218025001328405">"Minimal berisi <xliff:g id="COUNT">%d</xliff:g> karakter"</string>
+    <string name="lockpassword_pin_too_short" msgid="6363004004424904218">"PIN minimal <xliff:g id="COUNT">%d</xliff:g> digit"</string>
+    <string name="lockpassword_password_too_long" msgid="7530214940279491291">"Harus kurang dari <xliff:g id="NUMBER">%d</xliff:g> karakter"</string>
+    <string name="lockpassword_pin_too_long" msgid="62957683396974404">"Harus kurang dari <xliff:g id="NUMBER">%d</xliff:g> digit"</string>
+    <string name="lockpassword_pin_contains_non_digits" msgid="3044526271686839923">"Hanya boleh berisi digit 0-9."</string>
+    <string name="lockpassword_pin_recently_used" msgid="7901918311213276207">"Admin perangkat tidak mengizinkan penggunaan PIN yang baru-baru ini digunakan"</string>
+    <string name="lockpassword_pin_blacklisted_by_admin" msgid="7412709707800738442">"PIN umum diblokir oleh admin IT. Coba PIN lain."</string>
+    <string name="lockpassword_illegal_character" msgid="1984970060523635618">"Tidak boleh berisi karakter yang tidak valid."</string>
+    <string name="lockpassword_invalid_password" msgid="4987689810161043367">"Sandi tidak valid, harus terdiri dari 4-8 karakter, minimal berisi 1 digit, 1 huruf, tanpa spasi kosong."</string>
+    <plurals name="lockpassword_password_requires_letters" formatted="false" msgid="424616259312760303">
+      <item quantity="other">Minimal berisi <xliff:g id="COUNT">%d</xliff:g> huruf</item>
+      <item quantity="one">Minimal berisi 1 huruf</item>
+    </plurals>
+    <plurals name="lockpassword_password_requires_lowercase" formatted="false" msgid="2267487180744744833">
+      <item quantity="other">Minimal berisi <xliff:g id="COUNT">%d</xliff:g> huruf kecil</item>
+      <item quantity="one">Minimal berisi 1 huruf kecil</item>
+    </plurals>
+    <plurals name="lockpassword_password_requires_uppercase" formatted="false" msgid="7999264563026517898">
+      <item quantity="other">Minimal berisi <xliff:g id="COUNT">%d</xliff:g> huruf besar</item>
+      <item quantity="one">Minimal berisi 1 huruf besar</item>
+    </plurals>
+    <plurals name="lockpassword_password_requires_numeric" formatted="false" msgid="7935079851855168646">
+      <item quantity="other">Minimal berisi <xliff:g id="COUNT">%d</xliff:g> digit angka</item>
+      <item quantity="one">Minimal berisi 1 digit angka</item>
+    </plurals>
+    <plurals name="lockpassword_password_requires_symbols" formatted="false" msgid="3994046435150094132">
+      <item quantity="other">Minimal berisi <xliff:g id="COUNT">%d</xliff:g> simbol khusus</item>
+      <item quantity="one">Minimal berisi 1 simbol khusus</item>
+    </plurals>
+    <plurals name="lockpassword_password_requires_nonletter" formatted="false" msgid="6878486326748506524">
+      <item quantity="other">Minimal berisi <xliff:g id="COUNT">%d</xliff:g> karakter bukan huruf</item>
+      <item quantity="one">Minimal berisi 1 karakter bukan huruf</item>
+    </plurals>
+    <string name="lockpassword_password_recently_used" msgid="8255729487108602924">"Admin perangkat tidak mengizinkan penggunaan sandi yang baru-baru ini digunakan"</string>
+    <string name="error_saving_password" msgid="8334882262622500658">"Error saat menyimpan sandi"</string>
+    <string name="lockpassword_password_blacklisted_by_admin" msgid="7965893810326503891">"Sandi umum diblokir oleh admin IT. Coba sandi lain."</string>
+    <string name="lockpassword_pin_no_sequential_digits" msgid="38813552228809240">"Urutan digit naik, turun, atau berulang tidak diizinkan."</string>
+    <string name="setup_lock_settings_options_button_label" msgid="3337845811029780896">"Opsi kunci layar"</string>
+    <string name="forget" msgid="3971143908183848527">"Lupakan"</string>
+    <string name="delete_button" msgid="5840500432614610850">"Hapus"</string>
+    <string name="remove_button" msgid="6664656962868194178">"Hapus"</string>
+    <string name="cancel" msgid="750286395700355455">"Batal"</string>
+    <string name="backspace_key" msgid="1545590866688979099">"Tombol backspace"</string>
+    <string name="enter_key" msgid="2121394305541579468">"Tombol enter"</string>
+    <string name="exit_retail_button_text" msgid="6093240315583384473">"Keluar dari Demo"</string>
+    <string name="exit_retail_mode_dialog_title" msgid="7970631760237469168">"Keluar dari mode demo"</string>
+    <string name="exit_retail_mode_dialog_body" msgid="8314316171782527301">"Tindakan ini akan menghapus akun demo dan mereset sistem ke setelan pabrik. Semua data pengguna akan hilang."</string>
+    <string name="exit_retail_mode_dialog_confirmation_button_text" msgid="3147249675355968649">"Keluar dari Demo"</string>
+    <string name="suggestion_primary_button" msgid="6421115494714083020">"selesaikan penyiapan"</string>
+    <string name="suggestion_secondary_button" msgid="7075088546904464681">"lain kali"</string>
+    <string name="restricted_while_driving" msgid="6217369093121968299">"Fitur tidak tersedia saat mengemudi."</string>
+    <!-- no translation found for add_user_restricted_while_driving (6384004350628271556) -->
+    <skip />
+</resources>

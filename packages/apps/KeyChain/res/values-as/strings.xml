@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  Copyright (C) 2011 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+ -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name" msgid="170210454004696382">"কী চ্চেইন"</string>
+    <string name="title_no_certs" msgid="8350009443064722873">"কোনো প্ৰমাণপত্ৰ পোৱা নগ\'ল"</string>
+    <string name="title_select_cert" msgid="3588447616418041699">"প্ৰমাণপত্ৰ নিৰ্বাচন কৰক"</string>
+    <string name="requesting_application" msgid="1589142627467598421">"%sএ এখন প্ৰমাণপত্ৰ বিচাৰিছে। আপুনি এখন প্ৰমাণপত্ৰ বাছনি কৰিলে এপটোৱে সেই পৰিচয়টো বৰ্তমান আৰু ভৱিষ্যতে ছাৰ্ভাৰৰ লগত যোগাযোগ কৰোতে ব্যৱহাৰ কৰিব।"</string>
+    <string name="requesting_server" msgid="5832565605998634370">"এপ্‌টোৱে অনুৰোধ কৰা ছাৰ্ভাৰটো %s হিচাপে চিহ্নিত কৰিছে, কিন্তু আপুনি এপ্‌টোক বিশ্বাস কৰিলেহে কেৱল এপ্‌টোক প্ৰমাণপত্ৰত প্ৰৱেশ কৰিবলৈ দিয়া উচিত।"</string>
+    <string name="install_new_cert_message" msgid="4451971501142085495">"আপুনি বাহ্যিক সঞ্চয়াগাৰত থকা %1$s বা %2$s এক্সটেনশ্বনযুক্ত এটা PKCS#12 ফাইলৰ পৰা প্ৰমাণপত্ৰসমূহ ইনষ্টল কৰিব পাৰে৷"</string>
+    <string name="install_new_cert_button_label" msgid="903474285774077171">"প্ৰমাণপত্ৰ ইনষ্টল কৰক"</string>
+    <string name="allow_button" msgid="3030990695030371561">"বাছনি কৰক"</string>
+    <string name="deny_button" msgid="3766539809121892584">"প্ৰত্যাখ্যান কৰক"</string>
+</resources>

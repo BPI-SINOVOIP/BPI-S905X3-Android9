@@ -1,0 +1,30 @@
+# Domain to run EmbeddedKitchenSink app (for test-purpose)
+type kitchensink_app, domain;
+app_domain(kitchensink_app);
+
+# Allow Car Service to be the client of Vehicle HAL
+hal_client_domain(kitchensink_app, hal_vehicle)
+
+# Keep alphabetically sorted.
+allow kitchensink_app {
+    accessibility_service
+    activity_service
+    autofill_service
+    connectivity_service
+    content_service
+    deviceidle_service
+    display_service
+    graphicsstats_service
+    input_method_service
+    input_service
+    location_service
+    network_management_service
+    power_service
+    sensorservice_service
+    surfaceflinger_service
+    uimode_service
+}:service_manager find;
+
+# Read and write /data/data subdirectory.
+allow kitchensink_app system_app_data_file:dir { create_dir_perms getattr };
+allow kitchensink_app system_app_data_file:{ file lnk_file } create_file_perms;

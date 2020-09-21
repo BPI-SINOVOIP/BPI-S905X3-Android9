@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="system_tracing" msgid="4719188511746319848">"Praćenje sistema"</string>
+    <string name="record_system_activity" msgid="4339462312915377825">"Bilježenje aktivnosti sistema i njihova analiza radi poboljšanja performansi"</string>
+    <string name="record_trace" msgid="6416875085186661845">"Snimi praćenje"</string>
+    <string name="trace_debuggable_applications" msgid="7957069895298887899">"Pratite aplikacije u načinu rada za otklanjanje grešaka"</string>
+    <string name="categories" msgid="2280163673538611008">"Kategorije"</string>
+    <string name="restore_default_categories" msgid="5090536794637169521">"Vrati zadane kategorije"</string>
+    <string name="default_categories_restored" msgid="6861683793680564181">"Zadane kategorije su vraćene"</string>
+    <string name="applications" msgid="521776761270770549">"Aplikacije"</string>
+    <string name="no_debuggable_apps" msgid="4386209254520471208">"Nema dostupnih aplikacija u načinu rada za otklanjanje grešaka"</string>
+    <string name="buffer_size" msgid="3370134227980578569">"Veličina međumemorije"</string>
+    <string name="show_quick_settings_tile" msgid="4971147332635291585">"Prikaži polje Brze postavke"</string>
+    <string name="saving_trace" msgid="1468692734770800541">"Pohranjivanje praćenja"</string>
+    <string name="trace_saved" msgid="5869970594780992309">"Praćenje je sačuvano"</string>
+    <string name="tap_to_share" msgid="6766732404489536899">"Dodirnite da biste podijelili praćenje"</string>
+    <string name="stop_tracing" msgid="8916938308534164152">"Zaustavi praćenje tragova"</string>
+    <string name="tracing_categories_unavailable" msgid="5609076391417077752">"Neke kategorije praćenja nisu dostupne:"</string>
+    <string name="trace_is_being_recorded" msgid="5947378146009337469">"Snimanje praćenja tragova"</string>
+    <string name="tap_to_stop_tracing" msgid="6533282719573871806">"Dodirnite da zaustavite praćenje tragova"</string>
+    <string name="clear_saved_traces" msgid="4809195654452260944">"Obriši sačuvane tragove"</string>
+    <string name="clear_saved_traces_question" msgid="2184026613055303818">"Obrisati sačuvane tragove?"</string>
+    <string name="all_traces_will_be_deleted" msgid="6646545462206955920">"Svi tragovi će se izbrisati iz /data/local/traces"</string>
+    <string name="clear" msgid="5484761795406948056">"Obriši"</string>
+    <string name="keywords" msgid="736547007949049535">"systrace, praćenje, performanse"</string>
+</resources>

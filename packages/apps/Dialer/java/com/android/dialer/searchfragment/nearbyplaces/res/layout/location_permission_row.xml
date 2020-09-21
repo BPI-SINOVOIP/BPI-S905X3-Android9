@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2017 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License
+  -->
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginTop="8dp"
+    app:cardElevation="2dp">
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:paddingStart="16dp"
+      android:paddingEnd="16dp"
+      android:paddingTop="16dp"
+      android:paddingBottom="12dp">
+
+    <ImageView
+        android:id="@+id/permission_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/business_asset"/>
+
+    <TextView
+        android:id="@+id/permission_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/permission_image"
+        android:minHeight="40dp"
+        android:text="@string/search_location_permission"
+        android:lineSpacingMultiplier="1.2"
+        android:textSize="16sp"
+        android:textColor="@color/dialer_secondary_text_color"/>
+
+    <Button
+        android:id="@+id/location_permission_allow"
+        android:layout_width="wrap_content"
+        android:layout_height="52dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/permission_text"
+        android:layout_marginTop="18dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:text="@string/nearby_places_allow"/>
+
+    <Button
+        android:id="@+id/location_permission_dismiss"
+        android:layout_width="wrap_content"
+        android:layout_height="52dp"
+        android:layout_toStartOf="@+id/location_permission_allow"
+        android:layout_below="@id/permission_text"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="18dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:text="@string/nearby_places_dismiss"
+        android:textColor="@color/dialer_theme_color"
+        style="@style/Widget.AppCompat.Button.Borderless"/>
+  </RelativeLayout>
+</android.support.v7.widget.CardView>

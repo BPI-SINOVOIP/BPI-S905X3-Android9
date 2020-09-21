@@ -1,0 +1,518 @@
+[
+    {
+        "timestamp": 1526063903356950016, 
+        "areaId": 1, 
+        "value": 1, 
+        "prop": 354419984
+    }, 
+    {
+        "timestamp": 1526063903357100032, 
+        "areaId": 4, 
+        "value": 1, 
+        "prop": 354419984
+    }, 
+    {
+        "timestamp": 1526063903757636096, 
+        "areaId": 0, 
+        "value": 1, 
+        "prop": 356517121
+    }, 
+    {
+        "timestamp": 1526063904959113984, 
+        "areaId": 0, 
+        "value": 28, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063905159528960, 
+        "areaId": 0, 
+        "value": 27, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063905359936000, 
+        "areaId": 0, 
+        "value": 26, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063905560376832, 
+        "areaId": 0, 
+        "value": 25, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063905760837120, 
+        "areaId": 0, 
+        "value": 24, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063905961300992, 
+        "areaId": 0, 
+        "value": 23, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063906362006016, 
+        "areaId": 0, 
+        "value": 1, 
+        "prop": 356517120
+    }, 
+    {
+        "timestamp": 1526063906562436096, 
+        "areaId": 0, 
+        "value": 2, 
+        "prop": 356517120
+    }, 
+    {
+        "timestamp": 1526063906762857984, 
+        "areaId": 0, 
+        "value": 3, 
+        "prop": 356517120
+    }, 
+    {
+        "timestamp": 1526063906963272960, 
+        "areaId": 0, 
+        "value": 4, 
+        "prop": 356517120
+    }, 
+    {
+        "timestamp": 1526063908364721920, 
+        "areaId": 0, 
+        "value": 1, 
+        "prop": 356517121
+    }, 
+    {
+        "timestamp": 1526063910066729984, 
+        "areaId": 0, 
+        "value": 4, 
+        "prop": 356517121
+    }, 
+    {
+        "timestamp": 1526063911268203008, 
+        "areaId": 0, 
+        "value": 22, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063911468478976, 
+        "areaId": 0, 
+        "value": 23, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063911668872192, 
+        "areaId": 0, 
+        "value": 24, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063911869281024, 
+        "areaId": 0, 
+        "value": 25, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063912069678080, 
+        "areaId": 0, 
+        "value": 26, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063912270088960, 
+        "areaId": 0, 
+        "value": 27, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063912670825984, 
+        "areaId": 0, 
+        "value": 5, 
+        "prop": 356517120
+    }, 
+    {
+        "timestamp": 1526063912871236096, 
+        "areaId": 0, 
+        "value": 4, 
+        "prop": 356517120
+    }, 
+    {
+        "timestamp": 1526063913071654912, 
+        "areaId": 0, 
+        "value": 3, 
+        "prop": 356517120
+    }, 
+    {
+        "timestamp": 1526063913272064000, 
+        "areaId": 0, 
+        "value": 2, 
+        "prop": 356517120
+    }, 
+    {
+        "timestamp": 1526063914373497856, 
+        "areaId": 0, 
+        "value": 1, 
+        "prop": 356517121
+    }, 
+    {
+        "timestamp": 1526063915574942976, 
+        "areaId": 0, 
+        "value": 28, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063915775356928, 
+        "areaId": 0, 
+        "value": 27, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063915975784960, 
+        "areaId": 0, 
+        "value": 26, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063916176208128, 
+        "areaId": 0, 
+        "value": 25, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063916376483840, 
+        "areaId": 0, 
+        "value": 24, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063916576890880, 
+        "areaId": 0, 
+        "value": 23, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063916977551872, 
+        "areaId": 0, 
+        "value": 1, 
+        "prop": 356517120
+    }, 
+    {
+        "timestamp": 1526063917177978112, 
+        "areaId": 0, 
+        "value": 2, 
+        "prop": 356517120
+    }, 
+    {
+        "timestamp": 1526063917378403072, 
+        "areaId": 0, 
+        "value": 3, 
+        "prop": 356517120
+    }, 
+    {
+        "timestamp": 1526063917578809856, 
+        "areaId": 0, 
+        "value": 4, 
+        "prop": 356517120
+    }, 
+    {
+        "timestamp": 1526063918980086016, 
+        "areaId": 0, 
+        "value": 1, 
+        "prop": 356517121
+    }, 
+    {
+        "timestamp": 1526063920681338112, 
+        "areaId": 0, 
+        "value": 4, 
+        "prop": 356517121
+    }, 
+    {
+        "timestamp": 1526063921882802944, 
+        "areaId": 0, 
+        "value": 22, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063922083273984, 
+        "areaId": 0, 
+        "value": 23, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063922283792896, 
+        "areaId": 0, 
+        "value": 24, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063922484265984, 
+        "areaId": 0, 
+        "value": 25, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063922684783872, 
+        "areaId": 0, 
+        "value": 26, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063922885256960, 
+        "areaId": 0, 
+        "value": 27, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063923285954048, 
+        "areaId": 0, 
+        "value": 5, 
+        "prop": 356517120
+    }, 
+    {
+        "timestamp": 1526063923486427136, 
+        "areaId": 0, 
+        "value": 4, 
+        "prop": 356517120
+    }, 
+    {
+        "timestamp": 1526063923686938880, 
+        "areaId": 0, 
+        "value": 3, 
+        "prop": 356517120
+    }, 
+    {
+        "timestamp": 1526063923887389952, 
+        "areaId": 0, 
+        "value": 2, 
+        "prop": 356517120
+    }, 
+    {
+        "timestamp": 1526063924988778240, 
+        "areaId": 0, 
+        "value": 1, 
+        "prop": 356517121
+    }, 
+    {
+        "timestamp": 1526063926190287104, 
+        "areaId": 0, 
+        "value": 28, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063926390775040, 
+        "areaId": 0, 
+        "value": 27, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063926591278080, 
+        "areaId": 0, 
+        "value": 26, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063926791796992, 
+        "areaId": 0, 
+        "value": 25, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063926992291840, 
+        "areaId": 0, 
+        "value": 24, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063927192840960, 
+        "areaId": 0, 
+        "value": 23, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063927593507072, 
+        "areaId": 0, 
+        "value": 1, 
+        "prop": 356517120
+    }, 
+    {
+        "timestamp": 1526063927793946112, 
+        "areaId": 0, 
+        "value": 2, 
+        "prop": 356517120
+    }, 
+    {
+        "timestamp": 1526063927994479872, 
+        "areaId": 0, 
+        "value": 3, 
+        "prop": 356517120
+    }, 
+    {
+        "timestamp": 1526063928194946048, 
+        "areaId": 0, 
+        "value": 4, 
+        "prop": 356517120
+    }, 
+    {
+        "timestamp": 1526063929596730112, 
+        "areaId": 0, 
+        "value": 1, 
+        "prop": 356517121
+    }, 
+    {
+        "timestamp": 1526063931298659072, 
+        "areaId": 0, 
+        "value": 4, 
+        "prop": 356517121
+    }, 
+    {
+        "timestamp": 1526063932500180992, 
+        "areaId": 0, 
+        "value": 22, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063932700491008, 
+        "areaId": 0, 
+        "value": 23, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063932900928000, 
+        "areaId": 0, 
+        "value": 24, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063933101340928, 
+        "areaId": 0, 
+        "value": 25, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063933301820160, 
+        "areaId": 0, 
+        "value": 26, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063933502290944, 
+        "areaId": 0, 
+        "value": 27, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063933903042048, 
+        "areaId": 0, 
+        "value": 5, 
+        "prop": 356517120
+    }, 
+    {
+        "timestamp": 1526063934103492864, 
+        "areaId": 0, 
+        "value": 4, 
+        "prop": 356517120
+    }, 
+    {
+        "timestamp": 1526063934303913984, 
+        "areaId": 0, 
+        "value": 3, 
+        "prop": 356517120
+    }, 
+    {
+        "timestamp": 1526063934504412928, 
+        "areaId": 0, 
+        "value": 2, 
+        "prop": 356517120
+    }, 
+    {
+        "timestamp": 1526063935606041856, 
+        "areaId": 0, 
+        "value": 1, 
+        "prop": 356517121
+    }, 
+    {
+        "timestamp": 1526063936807610880, 
+        "areaId": 0, 
+        "value": 28, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063937008130048, 
+        "areaId": 0, 
+        "value": 27, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063937208636160, 
+        "areaId": 0, 
+        "value": 26, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063937409096960, 
+        "areaId": 0, 
+        "value": 25, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063937609554176, 
+        "areaId": 0, 
+        "value": 24, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063937810017024, 
+        "areaId": 0, 
+        "value": 23, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063938210696960, 
+        "areaId": 0, 
+        "value": 1, 
+        "prop": 356517120
+    }, 
+    {
+        "timestamp": 1526063938411200000, 
+        "areaId": 0, 
+        "value": 2, 
+        "prop": 356517120
+    }, 
+    {
+        "timestamp": 1526063938611734016, 
+        "areaId": 0, 
+        "value": 3, 
+        "prop": 356517120
+    }, 
+    {
+        "timestamp": 1526063938812249856, 
+        "areaId": 0, 
+        "value": 4, 
+        "prop": 356517120
+    }, 
+    {
+        "timestamp": 1526063940214057984, 
+        "areaId": 0, 
+        "value": 1, 
+        "prop": 356517121
+    }, 
+    {
+        "timestamp": 1526063941916071936, 
+        "areaId": 0, 
+        "value": 4, 
+        "prop": 356517121
+    }, 
+    {
+        "timestamp": 1526063943123698944, 
+        "areaId": 0, 
+        "value": 22, 
+        "prop": 358614275
+    }, 
+    {
+        "timestamp": 1526063943323981056, 
+        "areaId": 0, 
+        "value": 23, 
+        "prop": 358614275
+    }
+]

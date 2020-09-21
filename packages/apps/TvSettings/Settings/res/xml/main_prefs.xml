@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (C) 2015 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License
+  -->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:title="@string/settings_app_name">
+    <PreferenceCategory
+        android:key="general_settings"
+        android:title="@string/header_category_general_settings"
+        android:layout="@layout/preference_category_compact_layout"
+        android:order="2">
+        <Preference
+            android:icon="@drawable/ic_network"
+            android:key="network"
+            android:title="@string/connectivity_network_category_title"
+            android:fragment="com.android.tv.settings.connectivity.NetworkFragment" />
+        <Preference
+            android:icon="@drawable/ic_add_an_account"
+            android:key="accounts_and_sign_in"
+            android:title="@string/accounts_category_title"
+            android:fragment="com.android.tv.settings.accounts.AccountsFragment" />
+        <Preference
+            android:icon="@drawable/ic_applications"
+            android:key="applications"
+            android:title="@string/applications_category_title"
+            android:fragment="com.android.tv.settings.device.apps.AppsFragment" />
+        <Preference
+            android:icon="@drawable/ic_device_prefs"
+            android:key="device_pref"
+            android:title="@string/device_pref_category_title"
+            android:fragment="com.android.tv.settings.device.DevicePrefFragment" />
+        <Preference
+            android:icon="@drawable/ic_remotes_and_accessories"
+            android:key="remotes_and_accessories"
+            android:title="@string/remotes_and_accessories_category_title"
+            android:fragment="com.android.tv.settings.accessories.AccessoriesFragment" >
+            <intent
+                android:targetClass="com.android.tv.settings.accessories.AddAccessoryActivity"
+                android:targetPackage="com.android.tv.settings"/>
+        </Preference>
+    </PreferenceCategory>
+</PreferenceScreen>

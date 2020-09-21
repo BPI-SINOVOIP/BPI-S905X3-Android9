@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+<string name="default_buffer_size">16384</string>
+
+<string-array name="buffer_size_values">
+    <item>4096</item>
+    <item>8192</item>
+    <item>@string/default_buffer_size</item>
+    <item>32768</item>
+    <item>65536</item>
+</string-array>
+
+</resources>

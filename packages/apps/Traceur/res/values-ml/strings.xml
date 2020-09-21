@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="system_tracing" msgid="4719188511746319848">"സിസ്‌റ്റം ട്രെയ്‌സിംഗ്"</string>
+    <string name="record_system_activity" msgid="4339462312915377825">"പ്രകടനം മെച്ചപ്പെടുത്താൻ സിസ്‌റ്റം ആക്റ്റിവിറ്റി റെക്കോർഡ് ചെയ്യുക, പിന്നീട് അത് വിശകലനം ചെയ്യുക"</string>
+    <string name="record_trace" msgid="6416875085186661845">"ട്രെയ്‌സ് റെക്കോർഡ് ചെയ്യുക"</string>
+    <string name="trace_debuggable_applications" msgid="7957069895298887899">"ഡീബഗ്ഗ് ചെയ്യാവുന്ന അപ്ലിക്കേഷനുകള്‍ പിന്തുടരുക"</string>
+    <string name="categories" msgid="2280163673538611008">"വിഭാഗങ്ങള്‍"</string>
+    <string name="restore_default_categories" msgid="5090536794637169521">"ഡിഫോൾട്ട് വിഭാഗങ്ങൾ പുനഃസ്ഥാപിക്കുക"</string>
+    <string name="default_categories_restored" msgid="6861683793680564181">"ഡിഫോൾട്ട് വിഭാഗങ്ങൾ പുനഃസ്ഥാപിച്ചു"</string>
+    <string name="applications" msgid="521776761270770549">"അപ്ലിക്കേഷനുകള്‍"</string>
+    <string name="no_debuggable_apps" msgid="4386209254520471208">"ഡീബഗ്ഗ് ചെയ്യാവുന്ന അപ്ലിക്കേഷനുകൾ ലഭ്യമല്ല"</string>
+    <string name="buffer_size" msgid="3370134227980578569">"ബഫർ വലുപ്പം"</string>
+    <string name="show_quick_settings_tile" msgid="4971147332635291585">"ദ്രുത ക്രമീകരണ ടൈൽ കാണിക്കുക"</string>
+    <string name="saving_trace" msgid="1468692734770800541">"ട്രെയ്‌സ് സംരക്ഷിക്കുന്നു"</string>
+    <string name="trace_saved" msgid="5869970594780992309">"ട്രെയ്‌സ് സംരക്ഷിച്ചു"</string>
+    <string name="tap_to_share" msgid="6766732404489536899">"നിങ്ങളുടെ ട്രെയ്‌സ് പങ്കിടാൻ ടാപ്പ് ചെയ്യുക"</string>
+    <string name="stop_tracing" msgid="8916938308534164152">"ട്രെയ്‌സിംഗ് നിർത്തുക"</string>
+    <string name="tracing_categories_unavailable" msgid="5609076391417077752">"ചില ട്രെയ്‌സിംഗ് വിഭാഗങ്ങൾ ലഭ്യമല്ല:"</string>
+    <string name="trace_is_being_recorded" msgid="5947378146009337469">"ട്രെയ്‌സ് റെക്കോർഡ് ചെയ്യുകയാണ്"</string>
+    <string name="tap_to_stop_tracing" msgid="6533282719573871806">"ട്രെയ്‌സിംഗ് നിർത്താൻ ടാപ്പ് ചെയ്യുക"</string>
+    <string name="clear_saved_traces" msgid="4809195654452260944">"സംരക്ഷിച്ച ട്രെയ്‌സുകൾ മായ്ക്കുക"</string>
+    <string name="clear_saved_traces_question" msgid="2184026613055303818">"സംരക്ഷിച്ച ട്രെയ്‌സുകൾ മായ്ക്കണോ?"</string>
+    <string name="all_traces_will_be_deleted" msgid="6646545462206955920">"ഡാറ്റ/ലോക്കൽ/ട്രെയ്‌സുകൾ എന്നിവയിൽ നിന്ന്, എല്ലാ ട്രെയ്‌സുകളും ഇല്ലാതാക്കപ്പെടും"</string>
+    <string name="clear" msgid="5484761795406948056">"മായ്ക്കുക"</string>
+    <string name="keywords" msgid="736547007949049535">"സിസ്ട്രേസ്, ട്രേസ്, പ്രകടനം"</string>
+</resources>

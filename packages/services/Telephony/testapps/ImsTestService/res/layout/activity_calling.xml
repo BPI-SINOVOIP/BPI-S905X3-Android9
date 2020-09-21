@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2017 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License
+  -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="4dp">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2" android:rowCount="2">
+
+        <CheckBox
+            android:id="@+id/call_cap_voice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_column="0"
+            android:layout_gravity="center" android:layout_row="0"
+            android:text="@string/calling_cap_voice"/>
+        <CheckBox
+            android:id="@+id/call_cap_video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_column="1"
+            android:layout_gravity="center" android:layout_row="0"
+            android:text="@string/calling_cap_video"/>
+        <CheckBox
+            android:id="@+id/call_cap_ut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_column="0"
+            android:layout_gravity="center" android:layout_row="1"
+            android:text="@string/calling_cap_ut"/>
+        <CheckBox
+            android:id="@+id/call_cap_sms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_column="1"
+            android:layout_gravity="center" android:layout_row="1"
+            android:text="@string/calling_cap_sms"/>
+    </GridLayout>
+    <Button
+        android:id="@+id/call_cap_change"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/calling_cap_change_button" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        android:paddingRight="4dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="@string/calling_cap_enabled_text"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/call_cap_enabled_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text=""/>
+
+
+</LinearLayout>
