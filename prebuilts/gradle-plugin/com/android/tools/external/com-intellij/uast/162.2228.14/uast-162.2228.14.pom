@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.android.tools.external.com-intellij</groupId>
+  <artifactId>uast</artifactId>
+  <version>162.2228.14</version>
+  <name>IntelliJ IDEA AST API (PSI) Subset</name>
+  <description>A subset of IntelliJ IDEA's AST APIs and implementation, focusing on the read-only aspects, intended for use by Android Lint when running outside of the IDE (typically from Gradle.). Based on IntelliJ IDEA tag idea/162.2228.14.</description>
+  <url>http://tools.android.com</url>
+  <inceptionYear>2007</inceptionYear>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <name>The Android Open Source Project</name>
+    </developer>
+  </developers>
+  <scm>
+    <connection>git://android.googlesource.com/platform/tools/base.git</connection>
+    <url>https://android.googlesource.com/platform/tools/base</url>
+  </scm>
+</project>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.android.tools.fakeadbserver</groupId>
+  <artifactId>fakeadbserver</artifactId>
+  <versioning>
+    <release>25.4.0-alpha7</release>
+    <versions>
+      <version>25.4.0-alpha3</version>
+      <version>25.4.0-alpha5</version>
+      <version>25.4.0-alpha6</version>
+      <version>25.5.0-alpha-preview-02</version>
+      <version>25.4.0-alpha7</version>
+    </versions>
+    <lastUpdated>20170501183444</lastUpdated>
+  </versioning>
+</metadata>
