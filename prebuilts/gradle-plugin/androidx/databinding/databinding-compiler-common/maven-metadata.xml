@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>androidx.databinding</groupId>
+  <artifactId>databinding-compiler-common</artifactId>
+  <versioning>
+    <release>3.2.0-alpha16</release>
+    <versions>
+      <version>3.2.0-alpha16</version>
+    </versions>
+    <lastUpdated>20180518180909</lastUpdated>
+  </versioning>
+</metadata>

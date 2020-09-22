@@ -1,0 +1,16 @@
+java_import_host {
+    name: "metalava-gradle-plugin-deps",
+    jars: [
+        "com/android/tools/lint/lint-api/26.2.0-alpha16/lint-api-26.2.0-alpha16.jar",
+        "com/android/tools/lint/lint-checks/26.2.0-alpha16/lint-checks-26.2.0-alpha16.jar",
+        "com/android/tools/lint/lint/26.2.0-alpha16/lint-26.2.0-alpha16.jar",
+        "com/android/tools/lint/lint-kotlin/26.2.0-alpha16/lint-kotlin-26.2.0-alpha16.jar",
+        "com/android/tools/lint/lint-gradle/26.2.0-alpha16/lint-gradle-26.2.0-alpha16.jar",
+        "com/android/tools/common/26.2.0-alpha16/common-26.2.0-alpha16.jar",
+        "com/android/tools/sdk-common/26.2.0-alpha16/sdk-common-26.2.0-alpha16.jar",
+        "com/android/tools/sdklib/26.2.0-alpha16/sdklib-26.2.0-alpha16.jar",
+        "com/android/tools/external/org-jetbrains/uast/26.2.0-alpha16/uast-26.2.0-alpha16.jar",
+        "com/android/tools/external/com-intellij/intellij-core/26.2.0-alpha16/intellij-core-26.2.0-alpha16.jar",
+        "com/android/tools/external/com-intellij/kotlin-compiler/26.2.0-alpha16/kotlin-compiler-26.2.0-alpha16.jar",
+    ],
+}
