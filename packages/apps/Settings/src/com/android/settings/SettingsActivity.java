@@ -293,7 +293,7 @@ public class SettingsActivity extends SettingsDrawerActivity
 
         if (mIsShowingDashboard) {
             findViewById(R.id.search_bar).setVisibility(View.VISIBLE);
-            findViewById(R.id.action_bar).setVisibility(View.GONE);
+            //findViewById(R.id.action_bar).setVisibility(View.GONE);
             final Toolbar toolbar = findViewById(R.id.search_action_bar);
             FeatureFactory.getFactory(this).getSearchFeatureProvider()
                     .initSearchToolbar(this, toolbar);

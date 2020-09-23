@@ -41,4 +41,8 @@
             android:key="picture_in_picture"
             android:title="@string/picture_in_picture_title"
             android:fragment="com.android.tv.settings.device.apps.specialaccess.PictureInPicture" />
+    <Preference
+            android:key="directory_access"
+            android:title="@string/directory_access"
+            android:fragment="com.android.tv.settings.device.apps.specialaccess.DirectoryAccess" />
 </PreferenceScreen>

@@ -219,6 +219,117 @@ status_t BufferLayerConsumer::updateTexImage(BufferRejecter* rejecter, const Dis
     return err;
 }
 
+status_t BufferLayerConsumer::updateNoTexImage(
+        BufferRejecter* rejecter, const DispSync& dispSync,
+        bool* autoRefresh, bool* queuedBuffer, uint64_t maxFrameNumber)
+{
+    ATRACE_CALL();
+    BLC_LOGV("updateAndReleaseNoTextureBuffer");
+    Mutex::Autolock lock(mMutex);
+
+    if (mAbandoned) {
+        BLC_LOGE("updateAndReleaseNoTextureBuffer: BufferLayerConsumer is abandoned!");
+        return NO_INIT;
+    }
+
+    BufferItem item;
+
+    // Acquire the next buffer.
+    // In asynchronous mode the list is guaranteed to be one buffer
+    // deep, while in synchronous mode we use the oldest buffer.
+    status_t err = acquireBufferLocked(&item, computeExpectedPresent(dispSync), maxFrameNumber);
+    if (err != NO_ERROR) {
+        if (err == BufferQueue::NO_BUFFER_AVAILABLE) {
+            err = NO_ERROR;
+        } else if (err == BufferQueue::PRESENT_LATER) {
+            // return the error, without logging
+        } else {
+            BLC_LOGE("updateAndReleaseNoTextureBuffer: acquire failed: %s (%d)", strerror(-err), err);
+        }
+        return err;
+    }
+
+    if (autoRefresh) {
+        *autoRefresh = item.mAutoRefresh;
+    }
+
+    if (queuedBuffer) {
+        *queuedBuffer = item.mQueuedBuffer;
+    }
+
+    // We call the rejecter here, in case the caller has a reason to
+    // not accept this buffer.  This is used by SurfaceFlinger to
+    // reject buffers which have the wrong size
+    int slot = item.mSlot;
+    if (rejecter && rejecter->reject(mSlots[slot].mGraphicBuffer, item)) {
+        releaseBufferLocked(slot, mSlots[slot].mGraphicBuffer);
+        return BUFFER_REJECTED;
+    }
+
+    // Release the previous buffer.
+    err = releaseNoTextureLocked(item, &mPendingRelease);
+    if (err != NO_ERROR) {
+        return err;
+    }
+
+    return err;
+}
+
+status_t BufferLayerConsumer::releaseNoTextureLocked(const BufferItem& item,
+                                                     PendingRelease* pendingRelease) {
+    status_t err = NO_ERROR;
+
+    int slot = item.mSlot;
+
+
+    BLC_LOGV("releaseNoTextureLocked: (slot=%d buf=%p) -> (slot=%d buf=%p)", mCurrentTexture,
+             mCurrentTextureImage != nullptr ? mCurrentTextureImage->graphicBufferHandle() : 0,
+             slot, mSlots[slot].mGraphicBuffer->handle);
+
+    // Hang onto the pointer so that it isn't freed in the call to
+    // releaseBufferLocked() if we're in shared buffer mode and both buffers are
+    // the same.
+    sp<Image> nextTextureImage = mImages[slot];
+
+    // release old buffer
+    if (mCurrentTexture != BufferQueue::INVALID_BUFFER_SLOT) {
+        if (pendingRelease == nullptr) {
+            status_t status =
+                    releaseBufferLocked(mCurrentTexture, mCurrentTextureImage->graphicBuffer());
+            if (status < NO_ERROR) {
+                BLC_LOGE("releaseNoTextureLocked: failed to release buffer: %s (%d)", strerror(-status),
+                         status);
+                err = status;
+                // keep going, with error raised [?]
+            }
+        } else {
+            pendingRelease->currentTexture = mCurrentTexture;
+            pendingRelease->graphicBuffer = mCurrentTextureImage->graphicBuffer();
+            pendingRelease->isPending = true;
+        }
+    }
+
+    // Update the BufferLayerConsumer state.
+    mCurrentTexture = slot;
+    mCurrentTextureImage = nextTextureImage;
+    mCurrentCrop = item.mCrop;
+    mCurrentTransform = item.mTransform;
+    mCurrentScalingMode = item.mScalingMode;
+    mCurrentTimestamp = item.mTimestamp;
+    mCurrentDataSpace = static_cast<ui::Dataspace>(item.mDataSpace);
+    mCurrentHdrMetadata = item.mHdrMetadata;
+    mCurrentFence = item.mFence;
+    mCurrentFenceTime = item.mFenceTime;
+    mCurrentFrameNumber = item.mFrameNumber;
+
+    mCurrentApi = item.mApi;
+
+    computeCurrentTransformMatrixLocked();
+
+    return err;
+}
+
+
 status_t BufferLayerConsumer::bindTextureImage() {
     Mutex::Autolock lock(mMutex);
     return bindTextureImageLocked();

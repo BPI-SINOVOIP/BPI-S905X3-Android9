@@ -76,6 +76,8 @@ public class Watchdog extends Thread {
 
     // Which native processes to dump into dropbox's stack traces
     public static final String[] NATIVE_STACKS_OF_INTEREST = new String[] {
+        "/vendor/bin/systemcontrol",
+        "/system/bin/servicemanager",
         "/system/bin/audioserver",
         "/system/bin/cameraserver",
         "/system/bin/drmserver",
@@ -87,7 +89,11 @@ public class Watchdog extends Thread {
         "media.metrics", // system/bin/mediametrics
         "media.codec", // vendor/bin/hw/android.hardware.media.omx@1.0-service
         "com.android.bluetooth",  // Bluetooth service
-        "statsd",  // Stats daemon
+        "/vendor/bin/tvserver",
+        "com.droidlogic.tvinput",
+        "com.android.tv",
+        "/vendor/bin/hw/android.hardware.tv.input@1.0-service",
+        "/vendor/bin/hdmicecd",
     };
 
     public static final List<String> HAL_INTERFACES_OF_INTEREST = Arrays.asList(

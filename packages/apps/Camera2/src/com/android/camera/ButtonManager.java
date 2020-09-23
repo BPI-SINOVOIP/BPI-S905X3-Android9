@@ -99,6 +99,7 @@ public class ButtonManager implements SettingsManager.OnSettingChangedListener {
     private boolean mIsCameraButtonBlocked;
 
     private final AppController mAppController;
+    private Context mContext;
 
     /**
      * Get a new global ButtonManager.
@@ -106,8 +107,8 @@ public class ButtonManager implements SettingsManager.OnSettingChangedListener {
     public ButtonManager(AppController app) {
         mAppController = app;
 
-        Context context = app.getAndroidContext();
-        sGcamIndex = context.getResources().getInteger(R.integer.camera_mode_gcam);
+        mContext = app.getAndroidContext();
+        sGcamIndex = mContext.getResources().getInteger(R.integer.camera_mode_gcam);
 
         mSettingsManager = app.getSettingsManager();
         mSettingsManager.addListener(this);
@@ -177,6 +178,9 @@ public class ButtonManager implements SettingsManager.OnSettingChangedListener {
         mModeOptions = (ModeOptions) root.findViewById(R.id.mode_options);
 
         mButtonCountdown = (MultiToggleImageButton) root.findViewById(R.id.countdown_toggle_button);
+        mButtonCountdown.setFocusable(true);
+        mButtonCountdown.requestFocus();
+        //mButtonCountdown.setFocusableInTouchMode(true);
     }
 
     @Override

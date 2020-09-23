@@ -12,7 +12,21 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *
+ *  (C) 2018 Dolby Laboratories, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
 
 //#define LOG_NDEBUG 0
 #define LOG_TAG "MetaDataUtils"
@@ -23,6 +37,26 @@
 #include <media/stagefright/MetaDataUtils.h>
 
 namespace android {
+
+#ifdef DLB_VISION
+  sp<MetaData> MakeHEVCCodecSpecificData(const sp<ABuffer> &buffer) {
+      const uint8_t *data = buffer->data();
+      size_t size = buffer->size();
+
+      if(data == NULL || size == 0) {
+          return NULL;
+      }
+
+      sp<MetaData> meta = new MetaData;
+      meta->setCString(kKeyMIMEType, MEDIA_MIMETYPE_VIDEO_HEVC);
+
+      //Don't know the real dimension so far, just set it to QCIF...
+      meta->setInt32(kKeyWidth, 176);
+      meta->setInt32(kKeyHeight, 144);
+
+      return meta;
+  }
+#endif
 
 bool MakeAVCCodecSpecificData(MetaDataBase &meta, const uint8_t *data, size_t size) {
     int32_t width;

@@ -16,7 +16,83 @@
 #include "wpa_supplicant_i.h"
 #include "driver_i.h"
 #include "p2p_supplicant.h"
+#ifdef MULTI_WIFI_SUPPORT
+#include <dlfcn.h>
+static const char SUPP_CONFIG_TEMPLATE[]= "/vendor/etc/wifi/wpa_supplicant.conf";
+static const char P2P_CONFIG_FILE[]     = "/data/vendor/wifi/wpa/p2p_supplicant.conf";
+static int is_wifi_driver_loaded(const char *module_tag)
+{
+    FILE *proc;
+    char line[sizeof(module_tag)+10];
 
+    /*
+     * If the property says the driver is loaded, check to
+     * make sure that the property setting isn't just left
+     * over from a previous manual shutdown or a runtime
+     * crash.
+     */
+    if ((proc = fopen("/proc/modules", "r")) == NULL) {
+        return 0;
+    }
+    while ((fgets(line, sizeof(line), proc)) != NULL) {
+        if (strncmp(line, module_tag, strlen(module_tag)) == 0) {
+            fclose(proc);
+            return 1;
+        }
+    }
+    fclose(proc);
+    return 0;
+}
+
+int ensure_config_file_exists(const char *config_file)
+{
+    char buf[2048];
+    int srcfd, destfd;
+    int nread;
+    int ret;
+
+    ret = access(config_file, R_OK|W_OK);
+    if ((ret == 0) || (errno == EACCES)) {
+        if (ret != 0) {
+            wpa_printf(MSG_ERROR,"Cannot set RW to \"%s\": %s", config_file, strerror(errno));
+            return -1;
+        }
+        return 0;
+    } else if (errno != ENOENT) {
+        wpa_printf(MSG_ERROR,"Cannot access \"%s\": %s", config_file, strerror(errno));
+        return -1;
+    }
+    srcfd = TEMP_FAILURE_RETRY(open(SUPP_CONFIG_TEMPLATE, O_RDONLY));
+    if (srcfd < 0) {
+       wpa_printf(MSG_ERROR,"Cannot open \"%s\": %s", SUPP_CONFIG_TEMPLATE, strerror(errno));
+       return -1;
+    }
+
+    destfd = TEMP_FAILURE_RETRY(open(config_file, O_CREAT|O_RDWR, 0660));
+    if (destfd < 0) {
+        close(srcfd);
+        wpa_printf(MSG_ERROR,"Cannot create \"%s\": %s", config_file, strerror(errno));
+        return -1;
+    }
+
+    while ((nread = TEMP_FAILURE_RETRY(read(srcfd, buf, sizeof(buf)))) != 0) {
+        if (nread < 0) {
+            wpa_printf(MSG_ERROR,"Error reading \"%s\": %s", SUPP_CONFIG_TEMPLATE, strerror(errno));
+            close(srcfd);
+            close(destfd);
+            unlink(config_file);
+            return -1;
+        }
+        TEMP_FAILURE_RETRY(write(destfd, buf, nread));
+    }
+
+    close(destfd);
+    close(srcfd);
+
+    return 0;
+}
+
+#endif
 
 static void usage(void)
 {
@@ -211,9 +287,22 @@ int main(int argc, char *argv[])
 		case 'B':
 			params.daemonize++;
 			break;
+#ifdef MULTI_WIFI_SUPPORT
+                case 'c':
+                        if (!is_wifi_driver_loaded("dhd") && !is_wifi_driver_loaded("bcmdhd")) {
+				if (!ensure_config_file_exists(P2P_CONFIG_FILE))
+                                	iface->confname = "/data/vendor/wifi/wpa/p2p_supplicant.conf";
+				else
+					wpa_printf(MSG_ERROR, "p2p_supplicant conf not exit");
+                        } else {
+                                iface->confname = optarg;
+                        }
+                        break;
+#else
 		case 'c':
 			iface->confname = optarg;
 			break;
+#endif
 		case 'C':
 			iface->ctrl_interface = optarg;
 			break;
@@ -248,9 +337,19 @@ int main(int argc, char *argv[])
 			usage();
 			exitcode = 0;
 			goto out;
+#ifdef MULTI_WIFI_SUPPORT
 		case 'i':
-			iface->ifname = optarg;
+			if (!is_wifi_driver_loaded("dhd") && !is_wifi_driver_loaded("bcmdhd")) {
+				iface->ifname = "p2p0";
+			} else {
+				iface->ifname = optarg;
+			}
 			break;
+#else
+                case 'i':
+                        iface->ifname = optarg;
+                        break;
+#endif
 		case 'I':
 			iface->confanother = optarg;
 			break;
@@ -262,9 +361,16 @@ int main(int argc, char *argv[])
 			exitcode = 0;
 			goto out;
 #ifdef CONFIG_P2P
+#ifdef MULTI_WIFI_SUPPORT
 		case 'm':
-			params.conf_p2p_dev = optarg;
+			if (is_wifi_driver_loaded("dhd") == 1 || is_wifi_driver_loaded("bcmdhd") == 1)
+			    params.conf_p2p_dev = optarg;
 			break;
+#else
+                case 'm':
+                        params.conf_p2p_dev = optarg;
+                        break;
+#endif
 #endif /* CONFIG_P2P */
 		case 'o':
 			params.override_driver = optarg;
@@ -272,9 +378,16 @@ int main(int argc, char *argv[])
 		case 'O':
 			params.override_ctrl_interface = optarg;
 			break;
+#ifdef MULTI_WIFI_SUPPORT
 		case 'p':
-			iface->driver_param = optarg;
+			if (is_wifi_driver_loaded("dhd") == 1 || is_wifi_driver_loaded("bcmdhd") == 1)
+			    iface->driver_param = optarg;
 			break;
+#else
+                case 'p':
+                        iface->driver_param = optarg;
+                        break;
+#endif
 		case 'P':
 			os_free(params.pid_file);
 			params.pid_file = os_rel2abs_path(optarg);

@@ -110,15 +110,14 @@ amm-info@iis.fraunhofer.de
 #define MAX_BUFSIZE_BYTES (0x10000000)
 
 typedef struct {
-  UINT ValidBits;
-  UINT ReadOffset;
-  UINT WriteOffset;
-  UINT BitCnt;
-  UINT BitNdx;
+  UINT64 ValidBits;
+  UINT64 ReadOffset;
+  UINT64 WriteOffset;
+  UINT64 BitNdx;
 
   UCHAR *Buffer;
-  UINT bufSize;
-  UINT bufBits;
+  UINT64 bufSize;
+  UINT64 bufBits;
 } FDK_BITBUF;
 
 typedef FDK_BITBUF *HANDLE_FDK_BITBUF;
@@ -159,14 +158,9 @@ void FDK_pushBack(HANDLE_FDK_BITBUF hBitBuffer, const UINT numberOfBits,
 void FDK_pushForward(HANDLE_FDK_BITBUF hBitBuffer, const UINT numberOfBits,
                      UCHAR config);
 
-void FDK_byteAlign(HANDLE_FDK_BITBUF hBitBuffer, UCHAR config);
-
 UINT FDK_getValidBits(HANDLE_FDK_BITBUF hBitBuffer);
 
 INT FDK_getFreeBits(HANDLE_FDK_BITBUF hBitBuffer);
-
-void FDK_setBitCnt(HANDLE_FDK_BITBUF hBitBuffer, const UINT value);
-INT FDK_getBitCnt(HANDLE_FDK_BITBUF hBitBuffer);
 
 void FDK_Feed(HANDLE_FDK_BITBUF hBitBuffer, const UCHAR inputBuffer[],
               const UINT bufferSize, UINT *bytesValid);

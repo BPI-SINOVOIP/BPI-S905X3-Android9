@@ -42,6 +42,9 @@
 #include "StagefrightMetadataRetriever.h"
 #include "MediaPlayerFactory.h"
 
+#include <dlfcn.h>
+
+
 namespace android {
 
 MetadataRetrieverClient::MetadataRetrieverClient(pid_t pid)
@@ -80,9 +83,45 @@ void MetadataRetrieverClient::disconnect()
     IPCThreadState::self()->flushCommands();
 }
 
+static sp<MediaMetadataRetrieverBase> getExtendMetadataRetriever()
+{
+     void *libHandle = dlopen("libmetadataretriever_ext.so", RTLD_NOW|RTLD_NODELETE);
+
+    if (libHandle == NULL) {
+        ALOGE("unable to dlopen metadata_retriever extension: %s", dlerror());
+
+        return NULL;
+    }
+
+    typedef MediaMetadataRetrieverBase *(*GetExtendMetadataRetrieverFunc)();
+
+    GetExtendMetadataRetrieverFunc getExtendMetadataRetriever =
+        (GetExtendMetadataRetrieverFunc)dlsym(
+                libHandle,
+                "_Z26getExtendMetadataRetrieverv");
+
+    if (getExtendMetadataRetriever == NULL) {
+        dlclose(libHandle);
+        libHandle = NULL;
+
+        return NULL;
+    }
+
+    return getExtendMetadataRetriever();
+}
+
+
+
 static sp<MediaMetadataRetrieverBase> createRetriever(player_type playerType)
 {
     sp<MediaMetadataRetrieverBase> p;
+    if (playerType == 112) {
+        p = getExtendMetadataRetriever();
+        if (p == NULL) {
+            p = new StagefrightMetadataRetriever;
+        }
+        return p;
+    }
     switch (playerType) {
         case STAGEFRIGHT_PLAYER:
         case NU_PLAYER:
@@ -98,6 +137,9 @@ static sp<MediaMetadataRetrieverBase> createRetriever(player_type playerType)
     }
     if (p == NULL) {
         ALOGE("failed to create a retriever object");
+        if (playerType == 112) {
+           p = new StagefrightMetadataRetriever;
+        }
     }
     return p;
 }

@@ -40,10 +40,17 @@
 #include "HWComposer.h"
 #include "../SurfaceFlinger.h"
 
+#include <android/hardware/configstore/1.0/ISurfaceFlingerConfigs.h>
+#include <android/hardware/configstore/1.1/ISurfaceFlingerConfigs.h>
+#include <android/hardware/configstore/1.1/types.h>
+#include <configstore/Utils.h>
+
 // ----------------------------------------------------------------------------
 namespace android {
 // ----------------------------------------------------------------------------
 
+using namespace android::hardware::configstore;
+using namespace android::hardware::configstore::V1_0;
 using ui::Dataspace;
 
 /*
@@ -68,12 +75,32 @@ FramebufferSurface::FramebufferSurface(HWComposer& hwc, int disp,
 
     mName = "FramebufferSurface";
     mConsumer->setConsumerName(mName);
-    mConsumer->setConsumerUsageBits(GRALLOC_USAGE_HW_FB |
-                                       GRALLOC_USAGE_HW_RENDER |
-                                       GRALLOC_USAGE_HW_COMPOSER);
+    if (disp > 0)
+        mConsumer->setConsumerUsageBits(GRALLOC_USAGE_HW_FB |
+                                           GRALLOC_USAGE_HW_RENDER |
+                                           GRALLOC_USAGE_EXTERNAL_DISP |
+                                           GRALLOC_USAGE_HW_COMPOSER);
+    else
+        mConsumer->setConsumerUsageBits(GRALLOC_USAGE_HW_FB |
+                                           GRALLOC_USAGE_HW_RENDER |
+                                           GRALLOC_USAGE_HW_COMPOSER);
+
+#ifdef USE_AML_REAL_MODE
+    int width = getInt32< ISurfaceFlingerConfigs,
+            &ISurfaceFlingerConfigs::primaryDisplayFramebufferWidth>(1920);
+
+    int height = getInt32< ISurfaceFlingerConfigs,
+            &ISurfaceFlingerConfigs::primaryDisplayFramebufferHeight>(1080);
+
+    ALOGD("get framebuffer size (%d, %d) from configStore", width, height);
+    mConsumer->setDefaultBufferSize(width, height);
+#else
+    ALOGD("get framebuffer size from hwc");
     const auto& activeConfig = mHwc.getActiveConfig(disp);
     mConsumer->setDefaultBufferSize(activeConfig->getWidth(),
             activeConfig->getHeight());
+#endif
+
     mConsumer->setMaxAcquiredBufferCount(
             SurfaceFlinger::maxFrameBufferAcquiredBuffers - 1);
 }

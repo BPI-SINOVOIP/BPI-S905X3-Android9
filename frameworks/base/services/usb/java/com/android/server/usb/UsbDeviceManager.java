@@ -736,7 +736,7 @@ public class UsbDeviceManager implements ActivityManagerInternal.ScreenObserver 
                         Long.highestOneBit(remainingFunctions)), true);
                 remainingFunctions -= Long.highestOneBit(remainingFunctions);
             }
-
+            /*
             // send broadcast intent only if the USB state has changed
             if (!isUsbStateChanged(intent)) {
                 if (DEBUG) {
@@ -744,7 +744,7 @@ public class UsbDeviceManager implements ActivityManagerInternal.ScreenObserver 
                 }
                 return;
             }
-
+            */
             if (DEBUG) Slog.d(TAG, "broadcasting " + intent + " extras: " + intent.getExtras());
             sendStickyBroadcast(intent);
             mBroadcastedIntent = intent;
@@ -823,7 +823,7 @@ public class UsbDeviceManager implements ActivityManagerInternal.ScreenObserver 
                                     && mScreenUnlockedFunctions != UsbManager.FUNCTION_NONE) {
                                 setScreenUnlockedFunctions();
                             } else {
-                                setEnabledFunctions(UsbManager.FUNCTION_NONE, false);
+                                setEnabledFunctions(mCurrentFunctions, false);
                             }
                         }
                         updateUsbFunctions();

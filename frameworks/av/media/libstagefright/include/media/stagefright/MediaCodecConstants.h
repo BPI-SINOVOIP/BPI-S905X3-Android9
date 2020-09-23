@@ -151,6 +151,37 @@ constexpr int32_t VP9Level6  = 0x800;
 constexpr int32_t VP9Level61 = 0x1000;
 constexpr int32_t VP9Level62 = 0x2000;
 
+constexpr int32_t AV1ProfileMain8 = 0x1;
+constexpr int32_t AV1ProfileMain10 = 0x2;
+constexpr int32_t AV1ProfileMain10HDR10 = 0x1000;
+constexpr int32_t AV1ProfileMain10HDR10Plus = 0x2000;
+
+constexpr int32_t AV1Level2  = 0x1;
+constexpr int32_t AV1Level21 = 0x2;
+constexpr int32_t AV1Level22 = 0x4;
+constexpr int32_t AV1Level23 = 0x8;
+constexpr int32_t AV1Level3  = 0x10;
+constexpr int32_t AV1Level31 = 0x20;
+constexpr int32_t AV1Level32 = 0x40;
+constexpr int32_t AV1Level33 = 0x80;
+constexpr int32_t AV1Level4  = 0x100;
+constexpr int32_t AV1Level41 = 0x200;
+constexpr int32_t AV1Level42 = 0x400;
+constexpr int32_t AV1Level43 = 0x800;
+constexpr int32_t AV1Level5  = 0x1000;
+constexpr int32_t AV1Level51 = 0x2000;
+constexpr int32_t AV1Level52 = 0x4000;
+constexpr int32_t AV1Level53 = 0x8000;
+constexpr int32_t AV1Level6  = 0x10000;
+constexpr int32_t AV1Level61 = 0x20000;
+constexpr int32_t AV1Level62 = 0x40000;
+constexpr int32_t AV1Level63 = 0x80000;
+constexpr int32_t AV1Level7  = 0x100000;
+constexpr int32_t AV1Level71 = 0x200000;
+constexpr int32_t AV1Level72 = 0x400000;
+constexpr int32_t AV1Level73 = 0x800000;
+
+
 constexpr int32_t HEVCProfileMain        = 0x01;
 constexpr int32_t HEVCProfileMain10      = 0x02;
 constexpr int32_t HEVCProfileMainStill   = 0x04;

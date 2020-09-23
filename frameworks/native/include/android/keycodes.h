@@ -769,7 +769,32 @@ enum {
     /** all apps */
     AKEYCODE_ALL_APPS = 284,
     /** refresh key */
-    AKEYCODE_REFRESH = 285
+    AKEYCODE_REFRESH = 285,
+    /** youtube */
+    AKEYCODE_YOUTUBE = 286,
+    
+    /**droidlogic add key define:start.*/
+    AKEYCODE_TV_SHORTCUTKEY_GLOBALSETUP = 2001,
+    AKEYCODE_TV_SHORTCUTKEY_SOURCE_LIST = 2002,
+    AKEYCODE_TV_SHORTCUTKEY_3DMODE = 2003,
+    AKEYCODE_TV_SHORTCUTKEY_DISPAYMODE = 2004,
+    AKEYCODE_TV_SHORTCUTKEY_VIEWMODE = 2005,
+    AKEYCODE_TV_SHORTCUTKEY_VOICEMODE = 2006,
+    AKEYCODE_TV_SHORTCUTKEY_TVINFO = 2007,
+    AKEYCODE_EARLY_POWER = 2008,
+    AKEYCODE_TV_SLEEP = 2009,
+    AKEYCODE_TV_SOUND_CHANNEL = 2010,
+    AKEYCODE_TV_REPEAT = 2011,
+    AKEYCODE_TV_SUBTITLE = 2012,
+    AKEYCODE_TV_SWITCH = 2013,
+    AKEYCODE_TV_WASU = 2014,
+    AKEYCODE_TV_VTION = 2015,
+    AKEYCODE_TV_BROWSER = 2016,
+    AKEYCODE_TV_ALTERNATE = 2017,
+    AKEYCODE_FAV = 2018,
+    AKEYCODE_LIST = 2019,
+    AKEYCODE_MEDIA_AUDIO_CONTROL = 2020
+    /**droidlogic add key define:end.*/
 
     // NOTE: If you add a new keycode here you must also add it to several other files.
     //       Refer to frameworks/base/core/java/android/view/KeyEvent.java for the full list.

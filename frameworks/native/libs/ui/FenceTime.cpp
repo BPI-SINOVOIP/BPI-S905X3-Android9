@@ -291,8 +291,8 @@ void FenceTimeline::push(const std::shared_ptr<FenceTime>& fence) {
 }
 
 void FenceTimeline::updateSignalTimes() {
+    std::lock_guard<std::mutex> lock(mMutex);
     while (!mQueue.empty()) {
-        std::lock_guard<std::mutex> lock(mMutex);
         std::shared_ptr<FenceTime> fence = mQueue.front().lock();
         if (!fence) {
             // The shared_ptr no longer exists and no one cares about the

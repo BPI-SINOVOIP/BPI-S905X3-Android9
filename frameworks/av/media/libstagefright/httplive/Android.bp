@@ -17,6 +17,7 @@ cc_library {
     cflags: [
         "-Werror",
         "-Wall",
+        "-DDLB_VISION=1"
     ],
 
     sanitize: {

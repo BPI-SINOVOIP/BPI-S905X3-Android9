@@ -2352,19 +2352,25 @@ bool l2cu_lcb_disconnecting(void) {
  ******************************************************************************/
 
 bool l2cu_set_acl_priority(const RawAddress& bd_addr, uint8_t priority,
-                           bool reset_after_rs) {
+                           bool reset_after_rs, uint8_t direction) {
   tL2C_LCB* p_lcb;
   uint8_t* pp;
-  uint8_t command[HCI_BRCM_ACL_PRIORITY_PARAM_SIZE];
+  uint8_t command[HCI_BRCM_ACL_PRIORITY_EXT_PARAM_SIZE];
   uint8_t vs_param;
 
-  APPL_TRACE_EVENT("SET ACL PRIORITY %d", priority);
+  APPL_TRACE_EVENT("SET ACL PRIORITY %d, direction %d", priority, direction);
 
   /* Find the link control block for the acl channel */
   p_lcb = l2cu_find_lcb_by_bd_addr(bd_addr, BT_TRANSPORT_BR_EDR);
   if (p_lcb == NULL) {
     L2CAP_TRACE_WARNING("L2CAP - no LCB for L2CA_SetAclPriority");
     return (false);
+  }
+
+  if (direction != L2CAP_DIRECTION_DATA_SOURCE &&
+		  direction != L2CAP_DIRECTION_DATA_SINK) {
+	  L2CAP_TRACE_ERROR("L2CAP - direction not valid %d", direction);
+	  return (false);
   }
 
   if (BTM_IS_BRCM_CONTROLLER()) {
@@ -2380,15 +2386,23 @@ bool l2cu_set_acl_priority(const RawAddress& bd_addr, uint8_t priority,
       UINT16_TO_STREAM(pp, p_lcb->handle);
       UINT8_TO_STREAM(pp, vs_param);
 
-      BTM_VendorSpecificCommand(HCI_BRCM_SET_ACL_PRIORITY,
-                                HCI_BRCM_ACL_PRIORITY_PARAM_SIZE, command,
-                                NULL);
+	  if (direction == L2CAP_DIRECTION_DATA_SOURCE) {
+		BTM_VendorSpecificCommand(HCI_BRCM_SET_ACL_PRIORITY,
+                                  HCI_BRCM_ACL_PRIORITY_PARAM_SIZE, command,
+                                  NULL);
+	  } else {
+		  UINT8_TO_STREAM(pp, HCI_BRCM_A2DP_SINK);
+		  BTM_VendorSpecificCommand(HCI_BRCM_SET_ACL_PRIORITY_EXT,
+				  HCI_BRCM_ACL_PRIORITY_EXT_PARAM_SIZE, command,
+				  NULL);
+	  }
     }
   }
 
   /* Adjust lmp buffer allocation for this channel if priority changed */
   if (p_lcb->acl_priority != priority) {
     p_lcb->acl_priority = priority;
+	p_lcb->a2dp_direction = direction;
     l2c_link_adjust_allocation();
   }
   return (true);

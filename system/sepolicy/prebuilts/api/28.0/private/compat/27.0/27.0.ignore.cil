@@ -71,6 +71,11 @@
     perfetto_traces_data_file
     perfprofd_service
     property_info
+    screen_control
+    screen_control_exec
+    screen_control_service
+    screen_control_tmpfs
+    screencontrol_hwservice
     secure_element
     secure_element_device
     secure_element_service

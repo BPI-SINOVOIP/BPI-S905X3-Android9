@@ -1607,6 +1607,13 @@
         They will also be able to dismiss notifications or trigger action buttons they contain.
     </string>
 
+    <!-- Title of directory access screen in settings [CHAR LIMIT=30] -->
+    <string name="directory_access">Directory access</string>
+    <!-- Description of the directory access setting [CHAR LIMIT=NONE] -->
+    <string name="directory_access_description">These apps have permission to access certain directories.</string>
+    <!-- String used to describe the name of a directory in a volume; it must show both names, with the directory name wrapped in parenthesis -->
+    <string name="directory_on_volume"><xliff:g id="volume" example="SD Card">%1$s</xliff:g> (<xliff:g id="directory" example="Movies">%2$s</xliff:g>)</string>
+
     <!-- Settings title in main settings screen for SYSTEM_ALERT_WINDOW [CHAR LIMIT=45] -->
     <string name="system_alert_window_settings">Display over other apps</string>
     <!-- Label for setting which controls whether app can display over other apps [CHAR LIMIT=45] -->

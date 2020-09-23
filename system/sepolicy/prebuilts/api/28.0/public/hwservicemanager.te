@@ -18,5 +18,11 @@ allow hwservicemanager system_file:dir r_dir_perms;
 # Read hwservice_contexts
 allow hwservicemanager hwservice_contexts_file:file r_file_perms;
 
+# add screen_control
+allow hwservicemanager screen_control:binder { call transfer };
+allow hwservicemanager screen_control:dir { search };
+allow hwservicemanager screen_control:file { read open };
+allow hwservicemanager screen_control:process { getattr };
+
 # Check SELinux permissions.
 selinux_check_access(hwservicemanager)

@@ -147,8 +147,8 @@ final class LogicalDisplay {
                 mInfo.rotation = mOverrideDisplayInfo.rotation;
                 mInfo.displayCutout = mOverrideDisplayInfo.displayCutout;
                 mInfo.logicalDensityDpi = mOverrideDisplayInfo.logicalDensityDpi;
-                mInfo.physicalXDpi = mOverrideDisplayInfo.physicalXDpi;
-                mInfo.physicalYDpi = mOverrideDisplayInfo.physicalYDpi;
+                mInfo.physicalXDpi = mBaseDisplayInfo.physicalXDpi;
+                mInfo.physicalYDpi = mBaseDisplayInfo.physicalYDpi;
             }
         }
         return mInfo;

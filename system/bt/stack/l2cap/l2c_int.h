@@ -415,6 +415,8 @@ typedef struct t_l2c_linkcb {
   BT_HDR* p_hcit_rcv_acl;   /* Current HCIT ACL buf being rcvd */
   uint16_t idle_timeout_sv; /* Save current Idle timeout */
   uint8_t acl_priority;     /* L2C_PRIORITY_NORMAL or L2C_PRIORITY_HIGH */
+  uint8_t a2dp_direction;   /* L2CAP_DIRECTION_DATA_SOURCE or
+							   L2CAP_DIRECTION_DATA_SINK */
   tL2CA_NOCP_CB* p_nocp_cb; /* Num Cmpl pkts callback */
 
 #if (L2CAP_NUM_FIXED_CHNLS > 0)
@@ -597,7 +599,7 @@ extern void l2cu_update_lcb_4_bonding(const RawAddress& p_bd_addr,
 
 extern uint8_t l2cu_get_conn_role(tL2C_LCB* p_this_lcb);
 extern bool l2cu_set_acl_priority(const RawAddress& bd_addr, uint8_t priority,
-                                  bool reset_after_rs);
+                                  bool reset_after_rs, uint8_t direction);
 
 extern void l2cu_enqueue_ccb(tL2C_CCB* p_ccb);
 extern void l2cu_dequeue_ccb(tL2C_CCB* p_ccb);

@@ -81,13 +81,24 @@ SoftAAC2::SoftAAC2(
       mOutputBufferCount(0),
       mSignalledError(false),
       mLastInHeader(NULL),
+      mSbrChanged(false),
+      mSfIndex(0),
       mOutputPortSettingsChange(NONE) {
     initPorts();
+    //store codecconfig data,used for aacDecoder_ConfigRaw when mSbrChanged
+    mInBuffer[0] = (UCHAR *)malloc(FILEREAD_MAX_LAYERS);
+    if (mInBuffer[0]== NULL) {
+        ALOGE("mInBuffer malloc failed");
+    }
     CHECK_EQ(initDecoder(), (status_t)OK);
 }
 
 SoftAAC2::~SoftAAC2() {
     aacDecoder_Close(mAACDecoder);
+    if (mInBuffer[0] != NULL) {
+        free(mInBuffer[0]);
+        mInBuffer[0] = NULL;
+    }
     delete[] mOutputDelayRingBuffer;
 }
 
@@ -614,7 +625,7 @@ void SoftAAC2::onQueueFilled(OMX_U32 /* portIndex */) {
     UCHAR* inBuffer[FILEREAD_MAX_LAYERS];
     UINT inBufferLength[FILEREAD_MAX_LAYERS] = {0};
     UINT bytesValid[FILEREAD_MAX_LAYERS] = {0};
-
+    uint8_t profile, sf_index, channel;
     List<BufferInfo *> &inQueue = getPortQueue(0);
     List<BufferInfo *> &outQueue = getPortQueue(1);
 
@@ -636,7 +647,7 @@ void SoftAAC2::onQueueFilled(OMX_U32 /* portIndex */) {
 
                 inBuffer[0] = inHeader->pBuffer + inHeader->nOffset;
                 inBufferLength[0] = inHeader->nFilledLen;
-
+                mSfIndex = ((inBuffer[0][0]&0x3) << 1) | (inBuffer[0][1]&0x80 >>7);
                 AAC_DECODER_ERROR decoderErr =
                     aacDecoder_ConfigRaw(mAACDecoder,
                                          inBuffer,
@@ -681,6 +692,46 @@ void SoftAAC2::onQueueFilled(OMX_U32 /* portIndex */) {
                 inHeader = NULL;
                 continue;
             }
+            if (mSbrChanged) {
+				if (mAACDecoder)
+				    aacDecoder_Close(mAACDecoder);
+				delete[] mOutputDelayRingBuffer;
+                initDecoder();
+                onReset();
+                UINT tmpinBufferLength[FILEREAD_MAX_LAYERS]= {2};
+                AAC_DECODER_ERROR decoderErr =
+                aacDecoder_ConfigRaw(mAACDecoder,
+                                     mInBuffer,
+                                     tmpinBufferLength);
+                if (decoderErr != AAC_DEC_OK) {
+                    ALOGW("aacDecoder_ConfigRaw decoderErr = 0x%4.4x", decoderErr);
+                    mSignalledError = true;
+                    notify(OMX_EventError, OMX_ErrorUndefined, decoderErr, NULL);
+                    continue;
+                }
+
+                mInputBufferCount++;
+                mOutputBufferCount++; // fake increase of outputBufferCount to keep the counters aligned
+
+                inInfo->mOwnedByUs = false;
+                inQueue.erase(inQueue.begin());
+                mLastInHeader = NULL;
+                inInfo = NULL;
+                notifyEmptyBufferDone(inHeader);
+                inHeader = NULL;
+                //configureDownmix();
+                // Only send out port settings changed event if both sample rate
+                // and numChannels are valid.
+                if (mStreamInfo->sampleRate && mStreamInfo->numChannels) {
+                    ALOGI("Initially configuring decoder: %d Hz, %d channels",
+                    mStreamInfo->sampleRate,
+                    mStreamInfo->numChannels);
+                    notify(OMX_EventPortSettingsChanged, 1, 0, NULL);
+                    mOutputPortSettingsChange = AWAITING_DISABLED;
+                 }
+                 mSbrChanged = false;
+                 continue;
+              }
 
             if (mIsADTS) {
                 size_t adtsHeaderSize = 0;
@@ -696,20 +747,34 @@ void SoftAAC2::onQueueFilled(OMX_U32 /* portIndex */) {
                     hexdump(adtsHeader, inHeader->nFilledLen);
                     signalError = true;
                 } else {
+                    //ALOGI("adts head %0x%0x%0x%0x%0x%0x%0x",adtsHeader[0],adtsHeader[1],adtsHeader[2],adtsHeader[3],adtsHeader[4],adtsHeader[5],adtsHeader[6]);
                     bool protectionAbsent = (adtsHeader[1] & 1);
 
                     unsigned aac_frame_length =
                         ((adtsHeader[3] & 3) << 11)
                         | (adtsHeader[4] << 3)
                         | (adtsHeader[5] >> 5);
-
+                    sf_index =(adtsHeader[2] >>2)&0xf;
+                    profile = (adtsHeader[2] >> 6) & 0x3;
+                    channel = (adtsHeader[2] & 0x1) << 2 | (adtsHeader[3] >> 6);
+                    if (sf_index != mSfIndex) {
+                       mSbrChanged =true;
+                       ALOGI("msbrchange:sf_index:%d,mSfIndex:%d",sf_index,mSfIndex);
+                       mInBuffer[0][0]=((profile + 1) << 3) | (sf_index >> 1);
+                       mInBuffer[0][1]=((sf_index << 7) & 0x80) | (channel << 3);
+                       mSfIndex = sf_index;
+                       continue;
+                    }
                     if (inHeader->nFilledLen < aac_frame_length) {
                         ALOGE("Not enough audio data for the complete frame. "
                                 "Got %d bytes, frame size according to the ADTS "
                                 "header is %u bytes.",
                                 inHeader->nFilledLen, aac_frame_length);
                         hexdump(adtsHeader, inHeader->nFilledLen);
-                        signalError = true;
+                        //signalError = true;
+                        //if the frame is invalid ,skip it.
+                        inHeader->nOffset += inHeader->nFilledLen;
+                        inHeader->nFilledLen = 0;
                     } else {
                         adtsHeaderSize = (protectionAbsent ? 7 : 9);
                         if (aac_frame_length < adtsHeaderSize) {

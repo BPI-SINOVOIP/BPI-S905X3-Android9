@@ -291,7 +291,7 @@ status_t FrameDecoder::extractInternal() {
             }
             sp<MediaCodecBuffer> codecBuffer;
             err = mDecoder->getInputBuffer(index, &codecBuffer);
-            if (err != OK) {
+            if (err != OK || codecBuffer == NULL) {
                 ALOGE("failed to get input buffer %zu", index);
                 break;
             }
@@ -300,11 +300,14 @@ status_t FrameDecoder::extractInternal() {
 
             err = mSource->read(&mediaBuffer, &mReadOptions);
             mReadOptions.clearSeekTo();
-            if (err != OK) {
-                ALOGW("Input Error or EOS");
+            if (err != OK || mediaBuffer == NULL) {
                 mHaveMoreInputs = false;
                 if (!mFirstSample && err == ERROR_END_OF_STREAM) {
+                    (void)mDecoder->queueInputBuffer(
+                            index, 0, 0, 0, MediaCodec::BUFFER_FLAG_EOS);
                     err = OK;
+                } else {
+                    ALOGW("Input Error: err=%d", err);
                 }
                 break;
             }

@@ -48,7 +48,210 @@
 #include <stdlib.h>
 #include <mutex>
 
+#ifdef REDUCE_VIDEO_WORKLOAD
+#include "OmxUtil.h"
+#include <am_gralloc_ext.h>
+#endif
+
 namespace android {
+
+#ifdef REDUCE_VIDEO_WORKLOAD
+#define OMX_NOSIDEBAND_NUM (10)
+class  HwcSidebandAgent : public Thread{
+public:
+    HwcSidebandAgent(BufferLayer* layer);
+    ~HwcSidebandAgent();
+
+public:
+    void startConsume();
+    bool isConsuming();
+
+    bool preProcess(sp<GraphicBuffer> buffer);
+    bool wakeUp();
+    void exit();
+
+    bool isOmxVideoFrame(sp<GraphicBuffer> activeBuffer);
+    void setOmxPTS(sp<GraphicBuffer> activeBuffer);
+
+    void dump(String8& result);
+
+protected:
+    void notify();
+
+private:
+    bool    threadLoop();
+
+private:
+    enum WorkMode {
+        STANDBY_MODE = 0,
+        RUNNING_MODE,
+        EXIT_MODE
+    };
+
+    BufferLayer* mClientLayer;
+    mutable Mutex mStatLock;
+    Condition mStateCondition;
+    WorkMode mMode;
+    int32_t mOmxVideoHandle;
+    char mName[64];
+};
+
+HwcSidebandAgent::HwcSidebandAgent(BufferLayer* layer) {
+    mClientLayer = layer;
+    mMode = STANDBY_MODE;
+    mOmxVideoHandle = 0;
+    sprintf(mName, "HwcAgt-%p", mClientLayer);
+}
+
+HwcSidebandAgent::~HwcSidebandAgent() {
+    if (mOmxVideoHandle != 0) {
+        closeamvideo();
+        mOmxVideoHandle  = 0;
+    }
+}
+
+void HwcSidebandAgent::startConsume() {
+    Mutex::Autolock lock(mStatLock);
+    mMode = RUNNING_MODE;
+
+    if (!isRunning()) {
+        run(mName, PRIORITY_URGENT_DISPLAY + PRIORITY_MORE_FAVORABLE);
+    }
+
+    mStateCondition.broadcast();
+}
+
+bool HwcSidebandAgent::isConsuming() {
+    Mutex::Autolock lock(mStatLock);
+    if (mMode == RUNNING_MODE)
+        return true;
+    return false;
+}
+
+void HwcSidebandAgent::exit() {
+    {
+        Mutex::Autolock lock(mStatLock);
+        mMode = EXIT_MODE;
+        mStateCondition.broadcast();
+    }
+    requestExitAndWait();
+}
+
+void HwcSidebandAgent::notify() {
+    Mutex::Autolock lock(mStatLock);
+    mStateCondition.broadcast();
+}
+
+bool HwcSidebandAgent::wakeUp() {
+    if (isConsuming()) {
+        notify();
+        return true;
+    }
+
+    return false;
+}
+
+bool HwcSidebandAgent::preProcess(sp<GraphicBuffer> buffer) {
+    if (isOmxVideoFrame(buffer)) {
+       setOmxPTS(buffer);
+    }
+
+    return true;
+}
+
+bool HwcSidebandAgent::isOmxVideoFrame(sp<GraphicBuffer> activeBuffer) {
+   char value[PROPERTY_VALUE_MAX] = {};
+   int skip_omx_enabled = 0;
+
+   if (property_get("media.sf.omxvideo-optmize", value, "0") > 0)
+       skip_omx_enabled = atoi(value);
+
+   if (skip_omx_enabled)
+       return false;
+
+    if (activeBuffer != 0) {
+        bool ret = am_gralloc_is_omx_metadata_producer(activeBuffer->getUsage());
+#if 0
+        ALOGE("preProcess buf: overlay %d, width %d, height %d", ret,
+                    activeBuffer.get() ? activeBuffer->getWidth() : 0,
+                    activeBuffer.get() ?activeBuffer->getHeight() : 0);
+#endif
+        return ret;
+     }
+
+    return false;
+}
+
+void HwcSidebandAgent::setOmxPTS(sp<GraphicBuffer> activeBuffer) {
+    if (activeBuffer != NULL) {
+        void* vaddr = 0;
+        activeBuffer->lock(activeBuffer->getUsage() | GRALLOC_USAGE_SW_READ_MASK, &vaddr);
+        set_omx_pts((char*)vaddr, &mOmxVideoHandle);
+        activeBuffer->unlock();
+    }
+}
+
+void HwcSidebandAgent::dump(String8& result) {
+    Mutex::Autolock lock(mStatLock);
+    result.appendFormat("HwcSidebandAgent (%s) Working mode: %d. \n", mName, mMode);
+}
+
+bool HwcSidebandAgent::threadLoop() {
+    {
+        Mutex::Autolock lock(mStatLock);
+        if (mMode == EXIT_MODE) {
+            return false;
+        }
+
+        if (mMode == STANDBY_MODE) {
+            mStateCondition.waitRelative(mStatLock, ms2ns(200));
+            return true;
+        }
+    }
+
+    //consuming buffer.
+    nsecs_t dequeueReadyTime = systemTime();
+    mClientLayer->releasePendingBuffer(dequeueReadyTime);
+
+    bool bExitSidebandMode = false;
+    sp<GraphicBuffer> buffer;
+    if (mClientLayer->getQueuedBuffer(buffer)) {
+        if (!buffer.get()) {
+            ALOGV("Layer (%s) meet a osd layer.", mName);
+            bExitSidebandMode = true;
+        } else if (isOmxVideoFrame(buffer)) {
+            //consume buffer.
+            status_t updateResult = 0;
+            if (mClientLayer->consumeOmxFrame(updateResult)) {
+                ALOGV("Layer (%s) hwcAgent consume buffer ok.", mName);
+            } else if (updateResult == BufferQueue::PRESENT_LATER) {
+                ALOGV("Layer (%s) BufferQueue Present Later.", mName);
+                mClientLayer->waitNextVsync();
+            } else {
+                ALOGV("Layer (%s) Meet text failed, exit sideband mode.", mName);
+                bExitSidebandMode = true;
+            }
+        } else {
+            ALOGV("Layer (%s) Meet no omx video frame, exit sideband mode.", mName);
+            bExitSidebandMode = true;
+        }
+
+        if (bExitSidebandMode) {
+            //exit sideband mode.
+            Mutex::Autolock lock(mStatLock);
+            ALOGV("Layer (%s) Exit hwcagent consume mode.", mName);
+            mMode = STANDBY_MODE;
+            mClientLayer->returnGpuMode();
+        }
+    } else {
+        Mutex::Autolock lock(mStatLock);
+        ALOGV("Layer (%s) No valid buffer now, waiting for new buffer.", mName);
+        mStateCondition.waitRelative(mStatLock, ms2ns(200));
+    }
+
+    return true;
+}
+#endif
 
 BufferLayer::BufferLayer(SurfaceFlinger* flinger, const sp<Client>& client, const String8& name,
                          uint32_t w, uint32_t h, uint32_t flags)
@@ -60,6 +263,12 @@ BufferLayer::BufferLayer(SurfaceFlinger* flinger, const sp<Client>& client, cons
         mBufferLatched(false),
         mPreviousFrameNumber(0),
         mUpdateTexImageFailed(false),
+#ifdef REDUCE_VIDEO_WORKLOAD
+        mOmxOverlayLayer(false),
+        mOmxFrameCount(0),
+        mOmxFrameCountLock(),
+        mRecomputeVisibleLock(),
+#endif
         mRefreshPending(false) {
     ALOGV("Creating Layer %s", name.string());
 
@@ -75,6 +284,12 @@ BufferLayer::BufferLayer(SurfaceFlinger* flinger, const sp<Client>& client, cons
 }
 
 BufferLayer::~BufferLayer() {
+
+#ifdef REDUCE_VIDEO_WORKLOAD
+    mHwcAgent->exit();
+    mHwcAgent.clear();
+#endif
+
     mFlinger->deleteTextureAsync(mTextureName);
 
     if (!getBE().mHwcLayers.empty()) {
@@ -399,6 +614,19 @@ Region BufferLayer::latchBuffer(bool& recomputeVisibleRegions, nsecs_t latchTime
         return outDirtyRegion;
     }
 
+#ifdef REDUCE_VIDEO_WORKLOAD
+    // if this layer is omx layer overlay, we return directly
+    if (mOmxOverlayLayer) {
+        if (mHwcAgent->isConsuming()) {
+            return outDirtyRegion;
+        } else {//when HwcAgent exit consume, will run to here.
+            Mutex::Autolock lock(mOmxFrameCountLock);
+            android_atomic_and(0, &mOmxFrameCount);
+            mOmxOverlayLayer = false;
+        }
+    }
+#endif
+
     // if we've already called updateTexImage() without going through
     // a composition step, we have to skip this layer at this point
     // because we cannot call updateTeximage() without a corresponding
@@ -486,6 +714,17 @@ Region BufferLayer::latchBuffer(bool& recomputeVisibleRegions, nsecs_t latchTime
             mQueueItems.removeAt(0);
             android_atomic_dec(&mQueuedFrames);
         }
+
+        #ifdef REDUCE_VIDEO_WORKLOAD
+            if (mHwcAgent->isOmxVideoFrame(mQueueItems[0].mGraphicBuffer)) {
+                Mutex::Autolock lock(mOmxFrameCountLock);
+                android_atomic_inc(&mOmxFrameCount);
+                if (mOmxFrameCount >= OMX_NOSIDEBAND_NUM) {
+                    mOmxOverlayLayer = true;
+                    mHwcAgent->startConsume();
+                }
+            }
+        #endif
 
         const std::string layerName(getName().c_str());
         mTimeStats.setAcquireFence(layerName, currentFrameNumber, mQueueItems[0].mFenceTime);
@@ -695,6 +934,13 @@ bool BufferLayer::isOpaque(const Layer::State& s) const {
         return false;
     }
 
+#ifdef REDUCE_VIDEO_WORKLOAD
+    if (getBE().compositionInfo.mBuffer &&
+        am_gralloc_is_omx_metadata_producer(getBE().compositionInfo.mBuffer->getUsage())) {
+        return true;
+    }
+#endif
+
     // if the layer has the opaque flag, then we're always opaque,
     // otherwise we use the current buffer's format.
     return ((s.flags & layer_state_t::eLayerOpaque) != 0) || mCurrentOpacity;
@@ -718,6 +964,9 @@ void BufferLayer::onFirstRef() {
 
     const sp<const DisplayDevice> hw(mFlinger->getDefaultDisplayDevice());
     updateTransformHint(hw);
+#ifdef REDUCE_VIDEO_WORKLOAD
+    mHwcAgent = new HwcSidebandAgent(this);
+#endif
 }
 
 // ---------------------------------------------------------------------------
@@ -745,6 +994,10 @@ void BufferLayer::onFrameAvailable(const BufferItem& item) {
                 ALOGE("[%s] Timed out waiting on callback", mName.string());
             }
         }
+#ifdef REDUCE_VIDEO_WORKLOAD
+        const sp<GraphicBuffer>& buf(item.mGraphicBuffer);
+        mHwcAgent->preProcess(buf);
+#endif
 
         mQueueItems.push_back(item);
         android_atomic_inc(&mQueuedFrames);
@@ -753,6 +1006,11 @@ void BufferLayer::onFrameAvailable(const BufferItem& item) {
         mLastFrameNumberReceived = item.mFrameNumber;
         mQueueItemCondition.broadcast();
     }
+#ifdef REDUCE_VIDEO_WORKLOAD
+    if (mHwcAgent->wakeUp()) {
+        return;
+    }
+#endif
 
     mFlinger->signalLayerUpdate();
 }
@@ -994,6 +1252,155 @@ bool BufferLayer::allTransactionsSignaled() {
     }
     return !matchingFramesFound || allTransactionsApplied;
 }
+
+#ifdef REDUCE_VIDEO_WORKLOAD
+bool BufferLayer::getQueuedBuffer(sp<GraphicBuffer>& buffer) {
+    Mutex::Autolock lock(mQueueItemLock);
+    if (mQueuedFrames > 0) {
+        buffer = mQueueItems[0].mGraphicBuffer;
+        return true;
+    } else {
+        return false;
+    }
+}
+
+void BufferLayer::waitNextVsync() {
+    struct timespec spec;
+    nsecs_t nextRefreshTime = mFlinger->mPrimaryDispSync.computeNextRefresh(0);
+    spec.tv_sec  = nextRefreshTime / 1000000000;
+    spec.tv_nsec = nextRefreshTime % 1000000000;
+    clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME, &spec, NULL);
+}
+
+void BufferLayer::returnGpuMode() {
+    mFlinger->signalLayerUpdate();
+}
+
+bool BufferLayer::consumeOmxFrame(status_t &updateResult) {
+    // If the head buffer's acquire fence hasn't signaled yet, return and
+    // try again later
+    if (!headFenceHasSignaled()) {
+        updateResult = BufferQueue::PRESENT_LATER;
+        return false;
+    }
+
+    bool recomputeVisibleRegions = false;
+    LayerRejecter r(mDrawingState, getCurrentState(), recomputeVisibleRegions,
+        getProducerStickyTransform() != 0, mName.string(),
+        mOverrideScalingMode, mFreezeGeometryUpdates);
+
+    // This boolean is used to make sure that SurfaceFlinger's shadow copy
+    // of the buffer queue isn't modified when the buffer queue is returning
+    // BufferItem's that weren't actually queued. This can happen in shared
+    // buffer mode.
+    bool queuedBuffer = false;
+    updateResult =
+        mConsumer->updateNoTexImage(&r,
+                mFlinger->mPrimaryDispSync, &mAutoRefresh, &queuedBuffer,
+                mLastFrameNumberReceived);
+    if (updateResult == BufferQueue::PRESENT_LATER) {
+        // Producer doesn't want buffer to be displayed yet.  Signal a
+        // layer update so we check again at the next opportunity.
+        return false;
+    } else if (updateResult == BufferLayerConsumer::BUFFER_REJECTED) {
+        // If the buffer has been rejected, remove it from the shadow queue
+        // and return early
+        if (queuedBuffer) {
+            Mutex::Autolock lock(mQueueItemLock);
+            mQueueItems.removeAt(0);
+            android_atomic_dec(&mQueuedFrames);
+        }
+        return true;
+    } else if (updateResult != NO_ERROR || mUpdateTexImageFailed) {
+        // This can occur if something goes wrong when trying to create the
+        // EGLImage for this buffer. If this happens, the buffer has already
+        // been released, so we need to clean up the queue and bug out
+        // early.
+        if (queuedBuffer) {
+            Mutex::Autolock lock(mQueueItemLock);
+            mQueueItems.clear();
+            android_atomic_and(0, &mQueuedFrames);
+        }
+
+        // Once we have hit this state, the shadow queue may no longer
+        // correctly reflect the incoming BufferQueue's contents, so even if
+        // updateTexImage starts working, the only safe course of action is
+        // to continue to ignore updates.
+        mUpdateTexImageFailed = true;
+        return false;
+    }
+
+    {
+        Mutex::Autolock lock(mRecomputeVisibleLock);
+        // Capture the old state of the layer for comparisons later
+        const State& s(getDrawingState());
+        const bool oldOpacity = isOpaque(s);
+        sp<GraphicBuffer> oldBuffer = getBE().compositionInfo.mBuffer;
+
+        if (oldBuffer == nullptr) {
+            // the first time we receive a buffer, we need to trigger a
+            // geometry invalidation.
+            recomputeVisibleRegions = true;
+        }
+
+        Rect crop(mConsumer->getCurrentCrop());
+        const uint32_t transform(mConsumer->getCurrentTransform());
+        const uint32_t scalingMode(mConsumer->getCurrentScalingMode());
+        if ((crop != mCurrentCrop) ||
+            (transform != mCurrentTransform) ||
+            (scalingMode != mCurrentScalingMode)) {
+            mCurrentCrop = crop;
+            mCurrentTransform = transform;
+            mCurrentScalingMode = scalingMode;
+            recomputeVisibleRegions = true;
+        }
+
+        if (oldBuffer != nullptr) {
+            uint32_t bufWidth = getBE().compositionInfo.mBuffer->getWidth();
+            uint32_t bufHeight = getBE().compositionInfo.mBuffer->getHeight();
+            if (bufWidth != uint32_t(oldBuffer->width) ||
+                bufHeight != uint32_t(oldBuffer->height)) {
+                recomputeVisibleRegions = true;
+            }
+        }
+
+        mCurrentOpacity = getOpacityForFormat(getBE().compositionInfo.mBuffer->format);
+        if (oldOpacity != isOpaque(s)) {
+            recomputeVisibleRegions = true;
+        }
+
+        if (recomputeVisibleRegions) {
+            mFlinger->invalidateHwcGeometry();
+        }
+    }
+
+    if (queuedBuffer) {
+        // Autolock scope
+        auto currentFrameNumber = mConsumer->getFrameNumber();
+
+        Mutex::Autolock lock(mQueueItemLock);
+
+        // Remove any stale buffers that have been dropped during
+        // updateTexImage
+        while (mQueueItems[0].mFrameNumber != currentFrameNumber) {
+            mQueueItems.removeAt(0);
+            android_atomic_dec(&mQueuedFrames);
+        }
+
+        mQueueItems.removeAt(0);
+        android_atomic_dec(&mQueuedFrames);
+    }
+
+    // update the active buffer
+    getBE().compositionInfo.mBuffer =
+            mConsumer->getCurrentBuffer(&getBE().compositionInfo.mBufferSlot);
+    // replicated in LayerBE until FE/BE is ready to be synchronized
+    mActiveBuffer = getBE().compositionInfo.mBuffer;
+
+    return true;
+}
+
+#endif
 
 } // namespace android
 

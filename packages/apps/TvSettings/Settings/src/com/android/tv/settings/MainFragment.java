@@ -71,6 +71,8 @@ public class MainFragment extends PreferenceControllerFragment implements
     @VisibleForTesting
     static final String KEY_QUICK_SETTINGS = "quick_settings";
 
+    private static final String BROADCAST_ACTION = "android.action.updateui";
+
     @VisibleForTesting
     ConnectivityListener mConnectivityListener;
     @VisibleForTesting
@@ -94,7 +96,13 @@ public class MainFragment extends PreferenceControllerFragment implements
     private final BroadcastReceiver mBCMReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            updateAccessoryPref();
+            if (intent.getAction().equals(BROADCAST_ACTION)) {
+                Log.d(TAG, "BROADCAST_ACTION");
+                mConnectivityListener.updateConnectivityStatus();
+                updateWifi();
+            } else {
+                updateAccessoryPref();
+            }
         }
     };
 
@@ -381,6 +389,8 @@ public class MainFragment extends PreferenceControllerFragment implements
         super.onResume();
         updateAccountPref();
         updateAccessoryPref();
+        mConnectivityListener.updateConnectivityStatus();
+        updateWifi();
     }
 
     private boolean isRestricted() {
@@ -429,11 +439,12 @@ public class MainFragment extends PreferenceControllerFragment implements
     @Override
     public void onStart() {
         super.onStart();
-        IntentFilter btChangeFilter = new IntentFilter();
-        btChangeFilter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
-        btChangeFilter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
-        btChangeFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
-        getContext().registerReceiver(mBCMReceiver, btChangeFilter);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
+        filter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
+        filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
+        filter.addAction(BROADCAST_ACTION);
+        getContext().registerReceiver(mBCMReceiver, filter);
     }
 
     @Override

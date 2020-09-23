@@ -589,7 +589,8 @@ void SoftHEVC::onQueueFilled(OMX_U32 portIndex) {
 
             bool resChanged = (IVD_RES_CHANGED == (s_dec_op.u4_error_code & 0xFF));
 
-            getVUIParams();
+            if (getVUIParams() == false)
+                return;
 
             GETTIME(&mTimeEnd, NULL);
             /* Compute time taken for decode() */

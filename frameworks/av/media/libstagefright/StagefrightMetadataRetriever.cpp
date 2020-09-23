@@ -35,6 +35,7 @@
 #include <media/stagefright/MediaExtractorFactory.h>
 #include <media/stagefright/MetaData.h>
 #include <media/CharacterEncodingDetector.h>
+#include <cutils/properties.h>
 
 namespace android {
 
@@ -297,6 +298,19 @@ status_t StagefrightMetadataRetriever::getFrameInternal(
     sp<MetaData> trackMeta = mExtractor->getTrackMetaData(
             i, MediaExtractor::kIncludeExtensiveMetaData);
 
+    char value[PROPERTY_VALUE_MAX];
+    if (property_get("media.metadataretriver.disable-8k", value, NULL) > 0) {
+        if (!strcmp(value, "1") || !strcmp(value, "true")) {
+            int width = 0, height = 0;
+            trackMeta->findInt32(kKeyWidth, &width);
+            trackMeta->findInt32(kKeyHeight, &height);
+            if ((((unsigned int)width) * ((unsigned int)height)) > (4096 * 2304)) {
+                ALOGI("8k[%d x %d] will not use soft compoment decoder frame for metadataretriver", width, height);
+                return UNKNOWN_ERROR;
+            }
+        }
+    }
+
     if (metaOnly) {
         if (outFrame != NULL) {
             *outFrame = FrameDecoder::getMetadataOnly(trackMeta, colorFormat);
@@ -334,6 +348,10 @@ status_t StagefrightMetadataRetriever::getFrameInternal(
 
     for (size_t i = 0; i < matchingCodecs.size(); ++i) {
         const AString &componentName = matchingCodecs[i];
+        if (!componentName.startsWithIgnoreCase("OMX.google.")
+            && !componentName.endsWithIgnoreCase(".sw")) {
+            break;
+        }
         VideoFrameDecoder decoder(componentName, trackMeta, source);
         if (decoder.init(timeUs, numFrames, option, colorFormat) == OK) {
             if (outFrame != NULL) {
@@ -526,8 +544,12 @@ void StagefrightMetadataRetriever::parseMetaData() {
             } else if (!hasVideo && !strncasecmp("video/", mime, 6)) {
                 hasVideo = true;
 
-                CHECK(trackMeta->findInt32(kKeyWidth, &videoWidth));
-                CHECK(trackMeta->findInt32(kKeyHeight, &videoHeight));
+                if (!trackMeta->findInt32(kKeyWidth, &videoWidth)) {
+                    videoWidth = 0;
+                }
+                if (!trackMeta->findInt32(kKeyHeight, &videoHeight)) {
+                    videoHeight = 0;
+                }
                 if (!trackMeta->findInt32(kKeyRotation, &rotationAngle)) {
                     rotationAngle = 0;
                 }

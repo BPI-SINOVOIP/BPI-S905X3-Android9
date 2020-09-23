@@ -175,6 +175,12 @@ MediaScanResult MediaScanner::doProcessDirectoryEntry(
     struct stat statbuf;
     const char* name = entry->d_name;
 
+    char value[PROPERTY_VALUE_MAX];
+    if (property_get("sys.shutdown.requested", value, NULL) > 0) {
+        ALOGW("detected system shutdown: %s, exit MediaScaner!!", value);
+        return MEDIA_SCAN_RESULT_ERROR;
+    }
+
     // ignore "." and ".."
     if (name[0] == '.' && (name[1] == 0 || (name[1] == '.' && name[2] == 0))) {
         return MEDIA_SCAN_RESULT_SKIPPED;

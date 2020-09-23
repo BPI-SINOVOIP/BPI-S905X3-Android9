@@ -12,7 +12,22 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *
+ *  (C) 2018 Dolby Laboratories, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
+
 
 //#define LOG_NDEBUG 0
 #define LOG_TAG "ESQueue"
@@ -26,6 +41,9 @@
 #include <media/stagefright/foundation/AMessage.h>
 #include <media/stagefright/foundation/ByteUtils.h>
 #include <media/stagefright/foundation/avc_utils.h>
+#ifdef DLB_VISION
+#include "include/HevcUtils.h"
+#endif
 #include <media/stagefright/MediaErrors.h>
 #include <media/stagefright/MediaDefs.h>
 #include <media/stagefright/MetaData.h>
@@ -56,6 +74,22 @@ ElementaryStreamQueue::ElementaryStreamQueue(Mode mode, uint32_t flags)
 sp<MetaData> ElementaryStreamQueue::getFormat() {
     return mFormat;
 }
+#ifdef DLB_VISION
+void ElementaryStreamQueue::setDoViDescriptor(const uint8_t *data) {
+    memcpy(mDoviDescriptor, data, 5);
+}
+void ElementaryStreamQueue::sendDoViDescriptor() {
+    if (mFormat == NULL) {
+        mFormat = new MetaData;
+    }
+    mFormat->setCString(kKeyMIMEType, MEDIA_MIMETYPE_VIDEO_DOLBY_VISION);
+    //Set the fake width/height...
+    mFormat->setInt32(kKeyWidth, 1280);
+    mFormat->setInt32(kKeyHeight, 720);
+    mFormat->setData(kKeyDVCC, kTypeDVCC, mDoviDescriptor, 5);
+
+}
+#endif
 
 void ElementaryStreamQueue::clear(bool clearFormat) {
     if (mBuffer != NULL) {
@@ -282,6 +316,10 @@ status_t ElementaryStreamQueue::appendData(
     if (mBuffer == NULL || mBuffer->size() == 0) {
         switch (mMode) {
             case H264:
+#ifdef DLB_VISION
+            case H265:
+            case DOVI:
+#endif
             case MPEG_VIDEO:
             {
 #if 0
@@ -614,7 +652,11 @@ sp<ABuffer> ElementaryStreamQueue::dequeueScrambledAccessUnit() {
 }
 
 sp<ABuffer> ElementaryStreamQueue::dequeueAccessUnit() {
+#ifdef DLB_VISION
+    if (((mFlags & kFlag_AlignedData) && mMode == H264 && !isScrambled()) || mMode == H265 || mMode == DOVI) {
+#else
     if ((mFlags & kFlag_AlignedData) && mMode == H264 && !isScrambled()) {
+#endif
         if (mRangeInfos.empty()) {
             return NULL;
         }
@@ -633,10 +675,24 @@ sp<ABuffer> ElementaryStreamQueue::dequeueAccessUnit() {
         mBuffer->setRange(0, mBuffer->size() - info.mLength);
 
         if (mFormat == NULL) {
-            mFormat = new MetaData;
+          mFormat = new MetaData;
+#ifdef DLB_VISION
+          if (mMode == H264) {
             if (!MakeAVCCodecSpecificData(*mFormat, accessUnit->data(), accessUnit->size())) {
                 mFormat.clear();
             }
+          } else if (mMode == H265) {
+              ALOGV("find h265");
+              mFormat = MakeHEVCCodecSpecificData(accessUnit);
+          } else if (mMode == DOVI) {
+              ALOGV("find dovi");
+              sendDoViDescriptor();
+          }
+#else
+            if (!MakeAVCCodecSpecificData(*mFormat, accessUnit->data(), accessUnit->size())) {
+                mFormat.clear();
+            }
+#endif
         }
 
         return accessUnit;
@@ -645,6 +701,12 @@ sp<ABuffer> ElementaryStreamQueue::dequeueAccessUnit() {
     switch (mMode) {
         case H264:
             return dequeueAccessUnitH264();
+#ifdef DLB_VISION
+        case H265:
+            return dequeueAccessUnitH265();
+        case DOVI:
+            return dequeueAccessUnitDoVi();
+#endif
         case AAC:
             return dequeueAccessUnitAAC();
         case AC3:
@@ -1209,7 +1271,17 @@ sp<ABuffer> ElementaryStreamQueue::dequeueAccessUnitH264() {
 
     return NULL;
 }
+#ifdef DLB_VISION
+sp<ABuffer> ElementaryStreamQueue::dequeueAccessUnitDoVi() {
+    ALOGE("dequeue DoVi: should not be here");
+    return NULL;
+}
 
+sp<ABuffer> ElementaryStreamQueue::dequeueAccessUnitH265() {
+    ALOGE("dequeue h265: should not be here");
+    return NULL;
+}
+#endif
 sp<ABuffer> ElementaryStreamQueue::dequeueAccessUnitMPEGAudio() {
     const uint8_t *data = mBuffer->data();
     size_t size = mBuffer->size();

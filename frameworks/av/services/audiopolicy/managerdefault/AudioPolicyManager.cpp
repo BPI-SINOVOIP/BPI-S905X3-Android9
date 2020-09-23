@@ -38,6 +38,7 @@
 #include <utils/Log.h>
 #include <media/AudioParameter.h>
 #include <media/AudioPolicyHelper.h>
+#include <media/AudioSystem.h>
 #include <soundtrigger/SoundTrigger.h>
 #include <system/audio.h>
 #include <audio_policy_conf.h>
@@ -149,6 +150,10 @@ status_t AudioPolicyManager::setDeviceConnectionStateInt(audio_devices_t device,
                     return INVALID_OPERATION;
                 }
                 mAvailableOutputDevices[index]->attach(module);
+                if (device == AUDIO_DEVICE_OUT_USB_HEADSET) {
+                    String8 speakerMute("speaker_mute=1");
+                    AudioSystem::setParameters(speakerMute);
+                }
             } else {
                 return NO_MEMORY;
             }
@@ -188,6 +193,11 @@ status_t AudioPolicyManager::setDeviceConnectionStateInt(audio_devices_t device,
 
             // remove device from available output devices
             mAvailableOutputDevices.remove(devDesc);
+            if (device == AUDIO_DEVICE_OUT_USB_HEADSET &&
+                    (!(getDevicesForStream(AUDIO_STREAM_MUSIC) & AUDIO_DEVICE_OUT_HDMI_ARC))) {
+                String8 speakerUnmute("speaker_mute=0");
+                AudioSystem::setParameters(speakerUnmute);
+            }
 
             checkOutputsForDevice(devDesc, state, outputs, devDesc->mAddress);
 
@@ -3890,7 +3900,16 @@ static status_t deserializeAudioPolicyXmlConfig(AudioPolicyConfig &config) {
         // A2DP offload supported but disabled: try to use special XML file
         fileNames.push_back(AUDIO_POLICY_A2DP_OFFLOAD_DISABLED_XML_CONFIG_FILE_NAME);
     }
-    fileNames.push_back(AUDIO_POLICY_XML_CONFIG_FILE_NAME);
+
+    if (access("/vendor/etc/audio_policy_configuration_dolby_ms12.xml", R_OK) == 0 &&
+        (access("/vendor/lib/libdolbyms12.so", R_OK) == 0 ||
+        access("/system/lib/libdolbyms12.so", R_OK) == 0)) {
+        fileNames.push_back("audio_policy_configuration_dolby_ms12.xml");
+        ALOGI("loading audio_policy_configuration_dolby_ms12.xml");
+    } else {
+        fileNames.push_back(AUDIO_POLICY_XML_CONFIG_FILE_NAME);
+        ALOGI("loading %s", AUDIO_POLICY_XML_CONFIG_FILE_NAME);
+    }
 
     for (const char* fileName : fileNames) {
         for (int i = 0; i < kConfigLocationListSize; i++) {
@@ -3955,6 +3974,8 @@ void AudioPolicyManager::loadConfig() {
 
 status_t AudioPolicyManager::initialize() {
     mVolumeCurves->initializeVolumeCurves(getConfig().isSpeakerDrcEnabled());
+
+    mIsPlatformTelevision = property_get_bool("ro.vendor.platform.is.tv", false /* default_value */);
 
     // Once policy config has been parsed, retrieve an instance of the engine and initialize it.
     audio_policy::EngineInstance *engineInstance = audio_policy::EngineInstance::getInstance();
@@ -5646,6 +5667,40 @@ status_t AudioPolicyManager::checkAndSetVolume(audio_stream_type_t stream,
         volumeDb = 0.0f;
     }
 
+    if (mIsPlatformTelevision) {
+        audio_devices_t curDevice = Volume::getDeviceForVolume(getDevicesForStream(AUDIO_STREAM_MUSIC));
+        bool speakerGainApplied = false;
+        bool bootVideoRunning = property_get_int32("service.bootvideo.exit", 0) == 1;
+        if (((curDevice == AUDIO_DEVICE_OUT_HDMI && property_get_bool("ro.vendor.platform.is.stb", false))
+                || curDevice == AUDIO_DEVICE_OUT_SPEAKER) &&
+                        (outputDesc->isStreamActive(stream) || bootVideoRunning)) {
+            //ignoring the "index" passed as argument and always use MUSIC stream index
+            //for all stream types works on TV because all stream types are aliases of MUSIC.
+            int volumeIndex = mVolumeCurves->getVolumeIndex(AUDIO_STREAM_MUSIC, curDevice);
+            int volumeMaxIndex = mVolumeCurves->getVolumeIndexMax(AUDIO_STREAM_MUSIC);
+
+            float musicVolumeDb = mVolumeCurves->volIndexToDb(AUDIO_STREAM_MUSIC,
+                                        Volume::getDeviceCategory(curDevice), volumeIndex);
+            float maxMusicVolumeDb = mVolumeCurves->volIndexToDb(AUDIO_STREAM_MUSIC,
+                                        Volume::getDeviceCategory(curDevice), volumeMaxIndex);
+            float minMusicVolumeDb = mVolumeCurves->volIndexToDb(AUDIO_STREAM_MUSIC,
+                                        Volume::getDeviceCategory(curDevice),
+                                        mVolumeCurves->getVolumeIndexMin(AUDIO_STREAM_MUSIC));
+            if (bootVideoRunning) {
+                maxMusicVolumeDb = 0.0f;
+                minMusicVolumeDb = -10000.0f;
+                musicVolumeDb = -1837.0f;
+            }
+            speakerGainApplied = outputDesc->updateGain(curDevice,
+                                        musicVolumeDb, minMusicVolumeDb, maxMusicVolumeDb);
+        }
+        if (curDevice == AUDIO_DEVICE_OUT_HDMI_ARC ||
+                curDevice == AUDIO_DEVICE_OUT_WIRED_HEADPHONE ||
+            (speakerGainApplied && (curDevice & AUDIO_DEVICE_OUT_SPEAKER) != 0)) {
+            volumeDb = 0.0f;
+        }
+    }
+
     outputDesc->setVolume(volumeDb, stream, device, delayMs, force);
 
     if (stream == AUDIO_STREAM_VOICE_CALL ||
@@ -5937,7 +5992,7 @@ void AudioPolicyManager::cleanUpForDevice(const sp<DeviceDescriptor>& deviceDesc
 void AudioPolicyManager::filterSurroundFormats(FormatVector *formatsPtr) {
     FormatVector &formats = *formatsPtr;
     // TODO Set this based on Config properties.
-    const bool alwaysForceAC3 = true;
+    const bool alwaysForceAC3 = false;
 
     audio_policy_forced_cfg_t forceUse = mEngine->getForceUse(
             AUDIO_POLICY_FORCE_FOR_ENCODED_SURROUND);

@@ -81,7 +81,7 @@ bool TimeCheck::TimeCheckThread::threadLoop()
             status = mCond.waitRelative(mMutex, waitTimeNs);
         }
     }
-    LOG_ALWAYS_FATAL_IF(status != NO_ERROR, "TimeCheck timeout for %s", tag);
+    //LOG_ALWAYS_FATAL_IF(status != NO_ERROR, "TimeCheck timeout for %s", tag);
     return true;
 }
 

@@ -27,6 +27,9 @@ import com.android.settingslib.bluetooth.LocalBluetoothManager;
 import com.android.settingslib.bluetooth.CachedBluetoothDevice;
 import android.support.v7.preference.Preference;
 
+import com.android.settingslib.bluetooth.LocalBluetoothProfile;
+import com.android.settingslib.bluetooth.A2dpProfile;
+
 /**
  * Controller to maintain available media Bluetooth devices
  */
@@ -34,7 +37,7 @@ public class AvailableMediaBluetoothDeviceUpdater extends BluetoothDeviceUpdater
         implements Preference.OnPreferenceClickListener {
 
     private static final String TAG = "AvailableMediaBluetoothDeviceUpdater";
-    private static final boolean DBG = false;
+    private static final boolean DBG = true;
 
     private final AudioManager mAudioManager;
 
@@ -81,16 +84,31 @@ public class AvailableMediaBluetoothDeviceUpdater extends BluetoothDeviceUpdater
     public boolean isFilterMatched(CachedBluetoothDevice cachedDevice) {
         final int audioMode = mAudioManager.getMode();
         final int currentAudioProfile;
+        boolean profileConnected = false;
+        boolean a2dpProfile = false;
+        for (LocalBluetoothProfile profile : cachedDevice.getProfiles()) {
+            int connectionStatus = cachedDevice.getProfileConnectionState(profile);
+            switch (connectionStatus) {
+                case BluetoothProfile.STATE_CONNECTED:
+                    profileConnected = true;
+                    if (profile.isProfileReady()) {
+                        if (profile instanceof A2dpProfile)
+                            a2dpProfile = true;
+                    }
+            break;
+            }
+        }
 
         if (audioMode == AudioManager.MODE_RINGTONE
                 || audioMode == AudioManager.MODE_IN_CALL
                 || audioMode == AudioManager.MODE_IN_COMMUNICATION) {
             // in phone call
             currentAudioProfile = BluetoothProfile.HEADSET;
-        } else {
+        } else if (a2dpProfile) {
             // without phone call
             currentAudioProfile = BluetoothProfile.A2DP;
-        }
+        } else
+            currentAudioProfile = 0;
 
         boolean isFilterMatched = false;
         if (isDeviceConnected(cachedDevice)) {
@@ -104,12 +122,15 @@ public class AvailableMediaBluetoothDeviceUpdater extends BluetoothDeviceUpdater
             // If current audio profile is headset,
             // show the bluetooth device that have headset profile.
             switch (currentAudioProfile) {
-                case BluetoothProfile.A2DP:
-                    isFilterMatched = cachedDevice.isA2dpDevice();
+                 case BluetoothProfile.A2DP:
+                     isFilterMatched = cachedDevice.isA2dpDevice();
                     break;
                 case BluetoothProfile.HEADSET:
                     isFilterMatched = cachedDevice.isHfpDevice();
                     break;
+                default:
+                    isFilterMatched= profileConnected;
+                break;
             }
             if (DBG) {
                 Log.d(TAG, "isFilterMatched() device : " +

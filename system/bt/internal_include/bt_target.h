@@ -541,7 +541,7 @@
 
 /* Whether link wants to be the master or the slave. */
 #ifndef L2CAP_DESIRED_LINK_ROLE
-#define L2CAP_DESIRED_LINK_ROLE HCI_ROLE_SLAVE
+#define L2CAP_DESIRED_LINK_ROLE HCI_ROLE_MASTER
 #endif
 
 /* Include Non-Flushable Packet Boundary Flag feature of Lisbon */
@@ -1212,6 +1212,11 @@
 #define AVCT_NUM_CONN 14  // 2 * MaxDevices + 2
 #endif
 
+/* add avctp control function */
+#ifndef ADD_AVCTP_CONTROL
+#define ADD_AVCTP_CONTROL  FALSE
+#endif
+
 /******************************************************************************
  *
  * AVRCP
@@ -1383,6 +1388,17 @@ single PDU.
 #ifndef BTSNOOP_MEM
 #define BTSNOOP_MEM TRUE
 #endif
+
+/******************************************************************************
+ *
+ * Patch: auto patch macro
+ *
+ *****************************************************************************/
+/* wifi/bt coexistence.bug:SWPL-3628 */
+#ifndef MASTER_LATENCY
+#define MASTER_LATENCY TRUE
+#endif
+
 
 #include "bt_trace.h"
 

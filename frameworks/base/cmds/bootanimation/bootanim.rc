@@ -1,7 +1,7 @@
 service bootanim /system/bin/bootanimation
     class core animation
     user graphics
-    group graphics audio
+    group graphics audio input
     disabled
     oneshot
     writepid /dev/stune/top-app/tasks

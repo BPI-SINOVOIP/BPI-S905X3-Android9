@@ -1006,6 +1006,7 @@ static inline bool audio_device_is_digital(audio_devices_t device) {
         // input
         return (~AUDIO_DEVICE_BIT_IN & device & (AUDIO_DEVICE_IN_ALL_USB |
                           AUDIO_DEVICE_IN_HDMI |
+                          AUDIO_DEVICE_IN_HDMI_ARC |
                           AUDIO_DEVICE_IN_SPDIF |
                           AUDIO_DEVICE_IN_IP |
                           AUDIO_DEVICE_IN_BUS)) != 0;

@@ -88,12 +88,12 @@ status_t StreamHalLocal::getParameters(const String8& keys, String8 *values) {
 }
 
 status_t StreamHalLocal::addEffect(sp<EffectHalInterface>) {
-    LOG_ALWAYS_FATAL("Local streams can not have effects");
+    //LOG_ALWAYS_FATAL("Local streams can not have effects");
     return INVALID_OPERATION;
 }
 
 status_t StreamHalLocal::removeEffect(sp<EffectHalInterface>) {
-    LOG_ALWAYS_FATAL("Local streams can not have effects");
+    //LOG_ALWAYS_FATAL("Local streams can not have effects");
     return INVALID_OPERATION;
 }
 

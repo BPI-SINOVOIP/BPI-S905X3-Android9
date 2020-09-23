@@ -161,25 +161,27 @@ void Device::onHotplug(hwc2_display_t displayId, Connection connection) {
         if (oldDisplay != nullptr && oldDisplay->isConnected()) {
             ALOGI("Hotplug connecting an already connected display."
                     " Clearing old display state.");
-        }
-        mDisplays.erase(displayId);
+            oldDisplay->setConnected(true);
+        } else {
+            mDisplays.erase(displayId);
 
-        DisplayType displayType;
-        auto intError = mComposer->getDisplayType(displayId,
-                reinterpret_cast<Hwc2::IComposerClient::DisplayType *>(
-                        &displayType));
-        auto error = static_cast<Error>(intError);
-        if (error != Error::None) {
-            ALOGE("getDisplayType(%" PRIu64 ") failed: %s (%d). "
-                    "Aborting hotplug attempt.",
-                    displayId, to_string(error).c_str(), intError);
-            return;
-        }
+            DisplayType displayType;
+            auto intError = mComposer->getDisplayType(displayId,
+                    reinterpret_cast<Hwc2::IComposerClient::DisplayType *>(
+                            &displayType));
+            auto error = static_cast<Error>(intError);
+            if (error != Error::None) {
+                ALOGE("getDisplayType(%" PRIu64 ") failed: %s (%d). "
+                        "Aborting hotplug attempt.",
+                        displayId, to_string(error).c_str(), intError);
+                return;
+            }
 
-        auto newDisplay = std::make_unique<Display>(
-                *mComposer.get(), mCapabilities, displayId, displayType);
-        newDisplay->setConnected(true);
-        mDisplays.emplace(displayId, std::move(newDisplay));
+            auto newDisplay = std::make_unique<Display>(
+                    *mComposer.get(), mCapabilities, displayId, displayType);
+            newDisplay->setConnected(true);
+            mDisplays.emplace(displayId, std::move(newDisplay));
+        }
     } else if (connection == Connection::Disconnected) {
         // The display will later be destroyed by a call to
         // destroyDisplay(). For now we just mark it disconnected.
@@ -317,6 +319,9 @@ Error Display::getActiveConfig(
 {
     ALOGV("[%" PRIu64 "] getActiveConfig", mId);
     hwc2_config_t configId = 0;
+#ifdef USE_AML_HW_ACTIVE_MODE
+    android::Mutex::Autolock autolock(mConfigLock);
+#endif
     auto intError = mComposer.getActiveConfig(mId, &configId);
     auto error = static_cast<Error>(intError);
 
@@ -342,6 +347,9 @@ Error Display::getActiveConfig(
 Error Display::getActiveConfigIndex(int* outIndex) const {
     ALOGV("[%" PRIu64 "] getActiveConfigIndex", mId);
     hwc2_config_t configId = 0;
+#ifdef USE_AML_HW_ACTIVE_MODE
+    android::Mutex::Autolock autolock(mConfigLock);
+#endif
     auto intError = mComposer.getActiveConfig(mId, &configId);
     auto error = static_cast<Error>(intError);
 
@@ -454,9 +462,13 @@ Error Display::getDataspaceSaturationMatrix(Dataspace dataspace, android::mat4* 
 std::vector<std::shared_ptr<const Display::Config>> Display::getConfigs() const
 {
     std::vector<std::shared_ptr<const Config>> configs;
+#ifdef USE_AML_HW_ACTIVE_MODE
+    android::Mutex::Autolock autolock(mConfigLock);
+#endif
     for (const auto& element : mConfigs) {
         configs.emplace_back(element.second);
     }
+
     return configs;
 }
 
@@ -683,7 +695,7 @@ Error Display::presentOrValidate(uint32_t* outNumTypes, uint32_t* outNumRequests
 // For use by Device
 
 void Display::setConnected(bool connected) {
-    if (!mIsConnected && connected) {
+    if (connected) {
         mComposer.setClientTargetSlotCount(mId);
         if (mType == DisplayType::Physical) {
             loadConfigs();
@@ -691,6 +703,19 @@ void Display::setConnected(bool connected) {
     }
     mIsConnected = connected;
 }
+
+#ifdef USE_AML_HW_ACTIVE_MODE
+void Display::syncConfigs() {
+    /* During hotplugs, there is a window where plaform and surfaceflinger may
+     * not be in sync. During this time, if resyncToHardwareVsync() call happens,
+     * it will call getActiveConfig() which will return an invalid config causing
+     * a SF crash. This call is provided to ensure that platform and SF are always
+     * in sync, and SF never gets an invalid config in the getActiveConfig() call
+     * or getActiveConfigIndex() calls.
+     */
+    loadConfigs();
+}
+#endif
 
 int32_t Display::getAttribute(hwc2_config_t configId, Attribute attribute)
 {
@@ -726,6 +751,10 @@ void Display::loadConfigs()
 {
     ALOGV("[%" PRIu64 "] loadConfigs", mId);
 
+#ifdef USE_AML_HW_ACTIVE_MODE
+    android::Mutex::Autolock autolock(mConfigLock);
+#endif
+
     std::vector<Hwc2::Config> configIds;
     auto intError = mComposer.getDisplayConfigs(mId, &configIds);
     auto error = static_cast<Error>(intError);
@@ -734,6 +763,13 @@ void Display::loadConfigs()
                 to_string(error).c_str(), intError);
         return;
     }
+
+#ifdef USE_AML_HW_ACTIVE_MODE
+    // Primary display need update configs when hotplug happens.
+    if (mId == HWC_DISPLAY_PRIMARY) {
+        mConfigs.clear();
+    }
+#endif
 
     for (auto configId : configIds) {
         loadConfig(configId);

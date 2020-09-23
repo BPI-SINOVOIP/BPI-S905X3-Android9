@@ -574,16 +574,29 @@ int pcm_read(struct pcm *pcm, void *data, unsigned int count)
             }
         }
         if (ioctl(pcm->fd, SNDRV_PCM_IOCTL_READI_FRAMES, &x)) {
-            pcm->prepared = 0;
-            pcm->running = 0;
+            if(!(pcm->flags & PCM_NONEBLOCK)) {
+                pcm->prepared = 0;
+                pcm->running = 0;
+            }
             if (errno == EPIPE) {
                     /* we failed to make our window -- try to restart */
+                if (pcm->flags & PCM_NONEBLOCK) {
+                    pcm->prepared = 0;
+                    pcm->running = 0; 
+                }
                 pcm->underruns++;
                 continue;
             }
-            return oops(pcm, errno, "cannot read stream data");
+            if (errno == EAGAIN && (pcm->flags & PCM_NONEBLOCK)) {
+                return -EAGAIN;
+            }            
+            //return oops(pcm, errno, "cannot read stream data");
         }
-        return 0;
+        if (!(pcm->flags & PCM_NONEBLOCK)) {
+            return 0;
+        }
+        return x.result;
+
     }
 }
 
@@ -900,11 +913,12 @@ struct pcm *pcm_open(unsigned int card, unsigned int device,
         oops(pcm, errno, "cannot open device '%s'", fn);
         return pcm;
     }
-
-    if (fcntl(pcm->fd, F_SETFL, fcntl(pcm->fd, F_GETFL) &
+    if (!(flags&PCM_NONEBLOCK)) {
+    	if (fcntl(pcm->fd, F_SETFL, fcntl(pcm->fd, F_GETFL) &
               ~O_NONBLOCK) < 0) {
-        oops(pcm, errno, "failed to reset blocking mode '%s'", fn);
-        goto fail_close;
+        	oops(pcm, errno, "failed to reset blocking mode '%s'", fn);
+        	goto fail_close;
+    	}
     }
 
     if (ioctl(pcm->fd, SNDRV_PCM_IOCTL_INFO, &info)) {

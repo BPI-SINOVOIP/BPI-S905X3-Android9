@@ -1946,6 +1946,9 @@ void btm_ble_conn_complete(uint8_t* p, UNUSED_ATTR uint16_t evt_len,
     STREAM_TO_UINT16(conn_latency, p);
     STREAM_TO_UINT16(conn_timeout, p);
     handle = HCID_GET_HANDLE(handle);
+#if (MASTER_LATENCY == TRUE)
+	btsnd_hcic_write_le_master_latency(handle,0x05,0xF);
+#endif
 
 #if (BLE_PRIVACY_SPT == TRUE)
     peer_addr_type = bda_type;

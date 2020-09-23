@@ -451,7 +451,7 @@ tGATT_STATUS GATTS_HandleValueIndication(uint16_t conn_id, uint16_t attr_handle,
 
       if (cmd_status == GATT_SUCCESS || cmd_status == GATT_CONGESTED) {
         p_tcb->indicate_handle = indication.handle;
-        gatt_start_conf_timer(p_tcb);
+       // gatt_start_conf_timer(p_tcb);
       }
     }
   }

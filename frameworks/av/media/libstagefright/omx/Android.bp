@@ -70,6 +70,7 @@ cc_library_shared {
         "-Wall",
         "-Wno-unused-parameter",
         "-Wno-documentation",
+        "-DDLB_VISION=1",
     ],
 
     sanitize: {
@@ -118,7 +119,7 @@ cc_library_shared {
             cfi: true,
         },
     },
-    cflags: ["-Wall", "-Werror"],
+    cflags: ["-Wall", "-Werror", "-DDLB_VISION=1"],
 }
 
 //###############################################################################

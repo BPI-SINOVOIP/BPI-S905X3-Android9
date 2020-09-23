@@ -90,6 +90,11 @@ abstract class SystemAudioAction extends HdmiCecFeatureAction {
     }
 
     private void sendSystemAudioModeRequestInternal() {
+        if (!tv().isSystemAudioControlFeatureEnabled()) {
+            HdmiLogger.debug("Ignoring <System Audio Mode Request> message "
+                    + "because the System Audio Control feature is disabled.");
+            return;
+        }
         HdmiCecMessage command = HdmiCecMessageBuilder.buildSystemAudioModeRequest(
                 getSourceAddress(),
                 mAvrLogicalAddress, getSystemAudioModeRequestParam(), mTargetAudioStatus);
@@ -98,7 +103,7 @@ abstract class SystemAudioAction extends HdmiCecFeatureAction {
             public void onSendCompleted(int error) {
                 if (error != SendMessageResult.SUCCESS) {
                     HdmiLogger.debug("Failed to send <System Audio Mode Request>:" + error);
-                    setSystemAudioMode(false);
+                    //setSystemAudioMode(false);
                     finishWithCallback(HdmiControlManager.RESULT_COMMUNICATION_FAILED);
                 }
             }

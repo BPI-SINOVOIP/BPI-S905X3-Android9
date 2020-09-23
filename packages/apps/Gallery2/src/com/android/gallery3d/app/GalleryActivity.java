@@ -24,13 +24,16 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.InputDevice;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.android.gallery3d.R;
+import com.android.gallery3d.ui.GLRootView;
 import com.android.gallery3d.common.Utils;
 import com.android.gallery3d.data.DataManager;
 import com.android.gallery3d.data.MediaItem;
@@ -38,6 +41,8 @@ import com.android.gallery3d.data.MediaSet;
 import com.android.gallery3d.data.Path;
 import com.android.gallery3d.picasasource.PicasaSource;
 import com.android.gallery3d.util.GalleryUtils;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 public final class GalleryActivity extends AbstractGalleryActivity implements OnCancelListener {
     public static final String EXTRA_SLIDESHOW = "slideshow";
@@ -136,6 +141,56 @@ public final class GalleryActivity extends AbstractGalleryActivity implements On
         } catch (Throwable t) {
             Log.w(TAG, "get type fail", t);
             return null;
+        }
+    }
+
+    @Override
+    public boolean dispatchKeyEvent ( KeyEvent event ) {
+        if ( event.getKeyCode() == KeyEvent.KEYCODE_MENU ) {
+            if (event.getAction() == KeyEvent.ACTION_UP ) {
+                displayMoreMenu();
+            }
+            return false;
+        }
+        if ( event.getAction() == KeyEvent.ACTION_DOWN ) {
+            View cv = getWindow().getDecorView();
+            int vgcId, vgbId;
+            try {
+                Class c = Class.forName ( "com.android.internal.R$id" );
+                Object obj = c.newInstance();
+                Field field = c.getField ( "action_bar_container" );
+                vgbId = field.getInt ( obj );
+                GLRootView vgc = ( GLRootView ) cv.findViewById ( R.id.gl_root_view );
+                ViewGroup vgb = ( ViewGroup ) cv.findViewById ( vgbId );
+                if ( vgc.hasFocus() && !vgc.dispatchKey ( event ) ) {
+                    vgc.requestFocusAtPos0 ( false );
+                    vgb.requestFocus();
+                } else  if ( vgb.hasFocus() && event.getKeyCode() == KeyEvent.KEYCODE_DPAD_DOWN ) {
+                    vgc.setFocusable ( true );
+                    vgc.requestFocus();
+                    vgc.requestFocusAtPos0 ( true );
+                }
+            } catch ( Exception e ) {
+                e.printStackTrace();
+            }
+        }
+        return super.dispatchKeyEvent ( event );
+    }
+
+    private void displayMoreMenu(){
+        View mDecor = getWindow().getDecorView();
+        int vgcId, vgbId;
+        try {
+            Class docor = Class.forName ( "com.android.internal.widget.ActionBarOverlayLayout" );
+            Class c = Class.forName ( "com.android.internal.R$id" );
+            Object obj = c.newInstance();
+            Field field = c.getField ( "decor_content_parent" );
+            vgbId = field.getInt ( obj );
+            Object vgb =  mDecor.findViewById ( vgbId );
+            Method show = docor.getMethod("showOverflowMenu");
+            show.invoke(vgb);
+        } catch ( Exception e ) {
+            e.printStackTrace();
         }
     }
 

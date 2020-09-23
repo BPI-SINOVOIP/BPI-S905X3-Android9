@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.format.Formatter;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -307,6 +308,11 @@ public class ManageCachePage extends ActivityState implements
             @Override
             public void onSingleTapUp(int slotIndex) {
                 ManageCachePage.this.onSingleTapUp(slotIndex);
+            }
+
+            @Override
+            public boolean onKeyeventProcess ( KeyEvent keyEvent,  boolean requestFocus ) {
+                return true;
             }
         });
         mRootPane.addComponent(mSlotView);

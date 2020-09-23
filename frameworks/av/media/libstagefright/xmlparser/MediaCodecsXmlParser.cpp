@@ -27,6 +27,7 @@
 
 #include <cctype>
 #include <algorithm>
+#include <stagefright/AVExtensions.h>
 
 namespace android {
 
@@ -121,6 +122,7 @@ MediaCodecsXmlParser::MediaCodecsXmlParser(
     mUpdate(false),
     mCodecCounter(0) {
     std::string path;
+    AVUtils::get()->addExtendXML(this);
     if (findFileInDirs(searchDirs, mainXmlName, &path)) {
         parseTopLevelXMLFile(path.c_str(), false);
     } else {
@@ -138,6 +140,7 @@ MediaCodecsXmlParser::MediaCodecsXmlParser(
 bool MediaCodecsXmlParser::parseTopLevelXMLFile(
         const char *codecs_xml,
         bool ignore_errors) {
+    ALOGI("parseTopLevelXMLFile %s\n", codecs_xml);
     // get href_base
     const char *href_base_end = strrchr(codecs_xml, '/');
     if (href_base_end != nullptr) {
@@ -985,7 +988,7 @@ void MediaCodecsXmlParser::generateRoleMap() const {
         const auto& typeMap = codec.second.typeMap;
         for (const auto& type : typeMap) {
             const auto& typeName = type.first;
-            const char* roleName = GetComponentRole(isEncoder, typeName.data());
+            const char* roleName = AVUtils::get()->getComponentRole(isEncoder, typeName.data());
             if (roleName == nullptr) {
                 ALOGE("Cannot find the role for %s of type %s",
                         isEncoder ? "an encoder" : "a decoder",

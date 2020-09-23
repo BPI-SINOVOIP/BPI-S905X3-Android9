@@ -381,4 +381,7 @@
     <!-- Label for the notification channel containing notifications for embedded app operations [CHAR LIMIT=40] -->
     <string name="wear_app_channel">Installing/uninstalling wear apps</string>
 
+   <!-- <drawable name="clr_normal">#ff6501</drawable> -->
+   <drawable name="clr_focused">#999999</drawable>
+
 </resources>

@@ -33,6 +33,7 @@
 #include <android-base/strings.h>
 
 #include "autosuspend_ops.h"
+#include "vadwake.h"
 
 #define BASE_SLEEP_TIME 100000
 #define MAX_SLEEP_TIME 60000000
@@ -47,11 +48,13 @@ using android::base::WriteStringToFd;
 static pthread_t suspend_thread;
 static sem_t suspend_lockout;
 static constexpr char sleep_state[] = "mem";
+static constexpr char freeze_state[] = "freeze";
 static void (*wakeup_func)(bool success) = NULL;
 static int sleep_time = BASE_SLEEP_TIME;
 static constexpr char sys_power_state[] = "/sys/power/state";
 static constexpr char sys_power_wakeup_count[] = "/sys/power/wakeup_count";
 static bool autosuspend_is_init = false;
+static bool is_vadwake_support = false;
 
 static void update_sleep_time(bool success) {
     if (success) {
@@ -92,8 +95,9 @@ static void* suspend_thread_func(void* arg __attribute__((unused))) {
 
         LOG(VERBOSE) << "write " << wakeup_count << " to wakeup_count";
         if (WriteStringToFd(wakeup_count, wakeup_count_fd)) {
-            LOG(VERBOSE) << "write " << sleep_state << " to " << sys_power_state;
-            success = WriteStringToFd(sleep_state, state_fd);
+            LOG(VERBOSE) << "write " << (is_vadwake_support?freeze_state:sleep_state)
+                    << " to " << sys_power_state;
+            success = WriteStringToFd((is_vadwake_support?freeze_state:sleep_state), state_fd);
 
             void (*func)(bool success) = wakeup_func;
             if (func != NULL) {
@@ -156,6 +160,8 @@ static int autosuspend_init(void) {
         goto err_pthread_create;
     }
 
+    is_vadwake_support = vadwake_support();
+
     LOG(VERBOSE) << "autosuspend_init success";
     autosuspend_is_init = true;
     return 0;
@@ -182,6 +188,9 @@ static int autosuspend_wakeup_count_enable(void) {
         PLOG(ERROR) << "error changing semaphore";
     }
 
+    if (is_vadwake_support)
+        vadwake_enable(1);
+
     LOG(VERBOSE) << "autosuspend_wakeup_count_enable done";
 
     return ret;
@@ -200,6 +209,9 @@ static int autosuspend_wakeup_count_disable(void) {
         PLOG(ERROR) << "error changing semaphore";
     }
 
+    if (is_vadwake_support)
+        vadwake_enable(0);
+
     LOG(VERBOSE) << "autosuspend_wakeup_count_disable done";
 
     return ret;
@@ -213,7 +225,7 @@ static int force_suspend(int timeout_ms) {
         return ret;
     }
 
-    return WriteStringToFd(sleep_state, state_fd) ? 0 : -1;
+    return WriteStringToFd((is_vadwake_support?freeze_state:sleep_state), state_fd) ? 0 : -1;
 }
 
 static void autosuspend_set_wakeup_callback(void (*func)(bool success)) {

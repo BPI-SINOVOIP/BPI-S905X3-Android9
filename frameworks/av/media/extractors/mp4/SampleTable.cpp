@@ -798,7 +798,7 @@ status_t SampleTable::findSampleAtTime(
 }
 
 status_t SampleTable::findSyncSampleNear(
-        uint32_t start_sample_index, uint32_t *sample_index, uint32_t flags) {
+        uint32_t start_sample_index, uint32_t *sample_index, uint32_t flags, bool is_video) {
     Mutex::Autolock autoLock(mLock);
 
     *sample_index = 0;
@@ -811,6 +811,17 @@ status_t SampleTable::findSyncSampleNear(
 
     if (mNumSyncSamples == 0) {
         *sample_index = 0;
+        return OK;
+    }
+
+    //mov's stss is wrong sometimes,
+    if (is_video &&
+        (mNumSyncSamples == 0 || (mNumSyncSamples == 1 && mSyncSamples[0] == 0))
+       ) {
+        //there is not Sync-Sample
+        //or only the first sample is Sync-Smaple
+        ALOGI("mov's stss is wrong sometimes, there is not Sync-Sample or only the first sample is Sync-Smaple");
+        *sample_index = start_sample_index;
         return OK;
     }
 

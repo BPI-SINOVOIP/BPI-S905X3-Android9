@@ -26,6 +26,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.annotation.SystemApi;
 import android.annotation.SystemService;
+import android.os.SystemProperties;
 import android.os.RemoteException;
 import android.util.ArrayMap;
 import android.util.Log;
@@ -262,6 +263,8 @@ public final class HdmiControlManager {
     private final boolean mHasPlaybackDevice;
     // True if we have a logical device of type TV hosted in the system.
     private final boolean mHasTvDevice;
+    // True if we have a logical device of type AudioSystem hosted in the system.
+    private final boolean mHasAudioSystemDevice;
 
     /**
      * {@hide} - hide this constructor because it has a parameter of type IHdmiControlService,
@@ -280,6 +283,7 @@ public final class HdmiControlManager {
         }
         mHasTvDevice = hasDeviceType(types, HdmiDeviceInfo.DEVICE_TV);
         mHasPlaybackDevice = hasDeviceType(types, HdmiDeviceInfo.DEVICE_PLAYBACK);
+        mHasAudioSystemDevice = hasDeviceType(types, HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM);
     }
 
     private static boolean hasDeviceType(int[] types, int type) {
@@ -306,13 +310,17 @@ public final class HdmiControlManager {
     @SuppressLint("Doclava125")
     public HdmiClient getClient(int type) {
         if (mService == null) {
+            Log.e(TAG, "getClient hdmi service null!");
             return null;
         }
+        Log.d(TAG, "getClient type " + type);
         switch (type) {
             case HdmiDeviceInfo.DEVICE_TV:
                 return mHasTvDevice ? new HdmiTvClient(mService) : null;
             case HdmiDeviceInfo.DEVICE_PLAYBACK:
                 return mHasPlaybackDevice ? new HdmiPlaybackClient(mService) : null;
+            case HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM:
+                return mHasAudioSystemDevice ? new HdmiAudioSystemClient(mService) : null;
             default:
                 return null;
         }
@@ -346,6 +354,21 @@ public final class HdmiControlManager {
     @SuppressLint("Doclava125")
     public HdmiTvClient getTvClient() {
         return (HdmiTvClient) getClient(HdmiDeviceInfo.DEVICE_TV);
+    }
+
+    /**
+     * Gets an object that represents an HDMI-CEC logical device of type AudioSystem on the system.
+     *
+     * <p>Used to send HDMI control messages to other devices and manage them through
+     * HDMI bus. It is also possible to communicate with other logical devices hosted in the same
+     * system if the system is configured to host more than one type of HDMI-CEC logical devices.
+     *
+     * @return {@link HdmiTvClient} instance. {@code null} on failure.
+     */
+    @Nullable
+    @SuppressLint("Doclava125")
+    public HdmiTvClient getAudioSystemClient() {
+        return (HdmiTvClient) getClient(HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM);
     }
 
     /**

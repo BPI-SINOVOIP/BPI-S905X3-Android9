@@ -27,5 +27,5 @@ using android::hardware::tv::input::V1_0::ITvInput;
 using android::hardware::defaultPassthroughServiceImplementation;
 
 int main() {
-    return defaultPassthroughServiceImplementation<ITvInput>();
+    return defaultPassthroughServiceImplementation<ITvInput>(4);
 }

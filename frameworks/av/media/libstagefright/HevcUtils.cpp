@@ -12,7 +12,22 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *
+ *  (C) 2018 Dolby Laboratories, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
+
 
 //#define LOG_NDEBUG 0
 #define LOG_TAG "HevcUtils"
@@ -27,18 +42,60 @@
 #include <media/stagefright/foundation/ADebug.h>
 #include <media/stagefright/foundation/AMessage.h>
 #include <media/stagefright/foundation/avc_utils.h>
+#ifdef DLB_VISION
+#include <media/stagefright/foundation/MediaDefs.h>
+#endif
 #include <media/stagefright/MediaErrors.h>
 #include <media/stagefright/Utils.h>
 
 namespace android {
 
+#ifdef DLB_VISION
+static const uint8_t kHevcNalUnitTypes[8] = {
+    kHevcNalUnitTypeIDRw,
+    kHevcNalUnitTypeIDRn,
+    kHevcNalUnitTypeCRA,
+#else
 static const uint8_t kHevcNalUnitTypes[5] = {
+#endif
     kHevcNalUnitTypeVps,
     kHevcNalUnitTypeSps,
     kHevcNalUnitTypePps,
     kHevcNalUnitTypePrefixSei,
     kHevcNalUnitTypeSuffixSei,
 };
+
+#ifdef DLB_VISION
+bool IsHevcIDR(const sp<ABuffer> &buffer) {
+    const uint8_t *data = buffer->data();
+    size_t size = buffer->size();
+
+    if(data == NULL || size == 0) {
+        ALOGE("HEVC Nal data error");
+        return false;
+    }
+
+    bool flagIDR = false;
+    const uint8_t *nalStart;
+    size_t nalSize;
+    while (!flagIDR && getNextNALUnit(&data, &size, &nalStart, &nalSize, true) == OK) {
+        if (nalSize == 0) {
+            return false;
+        }
+
+        uint8_t nalUnitType = (nalStart[0] & 0x7e) >> 1;
+        if ( (nalUnitType == kHevcNalUnitTypeIDRw) ||
+             (nalUnitType == kHevcNalUnitTypeIDRn) ||
+             (nalUnitType == kHevcNalUnitTypeCRA) ) {
+            flagIDR = true;
+            break;
+        }
+    }
+
+    return flagIDR;
+}
+// Moved MakeHEVCCodecSpecificData to MetaDataUtils.cpp
+#endif
 
 HevcParameterSets::HevcParameterSets()
     : mInfo(kInfoNone) {

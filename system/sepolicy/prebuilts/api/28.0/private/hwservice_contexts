@@ -69,3 +69,4 @@ android.hidl.token::ITokenManager                               u:object_r:hidl_
 android.system.net.netd::INetd                                  u:object_r:system_net_netd_hwservice:s0
 android.system.wifi.keystore::IKeystore                         u:object_r:system_wifi_keystore_hwservice:s0
 *                                                               u:object_r:default_android_hwservice:s0
+vendor.amlogic.hardware.screencontrol::IScreenControl           u:object_r:screencontrol_hwservice:s0

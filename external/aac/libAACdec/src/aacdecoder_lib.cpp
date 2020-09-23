@@ -101,7 +101,7 @@ amm-info@iis.fraunhofer.de
 *******************************************************************************/
 
 #include "aacdecoder_lib.h"
-
+#include <cutils/properties.h>
 #include "aac_ram.h"
 #include "aacdecoder.h"
 #include "tpdec_lib.h"
@@ -130,6 +130,7 @@ amm-info@iis.fraunhofer.de
 #define AACDECODER_LIB_BUILD_TIME __TIME__
 #endif
 
+#define PROPERTY_FILTER_HEAAC "media.filter.heaac"
 static AAC_DECODER_ERROR setConcealMethod(const HANDLE_AACDECODER self,
                                           const INT method);
 
@@ -917,7 +918,6 @@ LINKSPEC_CPP HANDLE_AACDECODER aacDecoder_Open(TRANSPORT_TYPE transportFmt,
   HANDLE_TRANSPORTDEC pIn;
   int err = 0;
   int stereoConfigIndex = -1;
-
   UINT nrOfLayers_min = fMin(nrOfLayers, (UINT)1);
 
   /* Allocate transport layer struct. */
@@ -1015,6 +1015,7 @@ bail:
     aacDecoder_Close(aacDec);
     aacDec = NULL;
   }
+  aacDec->filterheaac = property_get_bool(PROPERTY_FILTER_HEAAC, false);
   return aacDec;
 }
 
@@ -1916,7 +1917,11 @@ bail:
       self->streamInfo.numChannels * self->streamInfo.frameSize) {
     ErrorStatus = AAC_DEC_OUTPUT_BUFFER_TOO_SMALL;
   }
-
+  if (self->sbrEnabled && self->filterheaac) {
+      FDKmemclear(pTimeData_extern,
+                timeDataSize_extern * sizeof(*pTimeData_extern));
+      return ErrorStatus;
+  } 
   /* Update external output buffer. */
   if (IS_OUTPUT_VALID(ErrorStatus)) {
     FDKmemcpy(pTimeData_extern, pTimeData,

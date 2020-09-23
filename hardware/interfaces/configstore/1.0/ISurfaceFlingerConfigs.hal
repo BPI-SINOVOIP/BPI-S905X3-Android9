@@ -114,4 +114,10 @@ interface ISurfaceFlingerConfigs {
      * hardware.graphics.allocator@2.0::IAllocator service.
      */
     startGraphicsAllocatorService() generates(OptionalBool value);
+
+    /**
+     * Returns the primary framebuffer width and height
+     */
+    primaryDisplayFramebufferWidth() generates(OptionalInt32 value);
+    primaryDisplayFramebufferHeight() generates(OptionalInt32 value);
 };

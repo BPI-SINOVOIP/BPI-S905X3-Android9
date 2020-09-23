@@ -18,6 +18,12 @@ allow servicemanager {
 }:binder transfer;
 
 allow servicemanager service_contexts_file:file r_file_perms;
+allow servicemanager screen_control:dir { search };
+allow servicemanager screen_control:file { read open };
+allow servicemanager screen_control:process { getattr };
+allow servicemanager dnsmasq:dir { search };
+allow servicemanager dnsmasq:file { read open };
+allow servicemanager dnsmasq:process { getattr };
 # nonplat_service_contexts only accessible on non full-treble devices
 not_full_treble(`allow servicemanager nonplat_service_contexts_file:file r_file_perms;')
 

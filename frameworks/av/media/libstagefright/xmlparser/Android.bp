@@ -19,6 +19,28 @@ cc_library_shared {
         "libstagefright_omx_utils",
     ],
 
+    static_libs: [
+        "libavextensions",
+    ],
+
+    header_libs: [
+        "media_plugin_headers",
+        "libstagefright_headers",
+        "libavextensions_headers",
+        "libmedia_headers",
+    ],
+
+    export_header_lib_headers: [
+        "media_plugin_headers",
+        "libstagefright_headers",
+        "libavextensions_headers"
+    ],
+
+    include_dirs: [
+         "frameworks/av/include",
+         "frameworks/av/media/libmediaplayerservice/include",
+    ],
+
     cflags: [
         "-Werror",
         "-Wall",

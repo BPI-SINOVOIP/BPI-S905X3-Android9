@@ -35,8 +35,8 @@
 
 using namespace android;
 
-const int64_t kTimeoutWaitForOutputUs = 500000; // 0.5 seconds
-const int64_t kTimeoutWaitForInputUs = 5000; // 5 milliseconds
+const int64_t kTimeoutWaitForOutputUs = 5000; // 0.005 seconds
+const int64_t kTimeoutWaitForInputUs = 1000; // 1 milliseconds
 
 //static
 sp<SimpleDecodingSource> SimpleDecodingSource::Create(
@@ -219,7 +219,6 @@ status_t SimpleDecodingSource::read(
 
     return res;
 }
-
 status_t SimpleDecodingSource::doRead(
         Mutexed<ProtectedState>::Locked &me, MediaBufferBase **buffer, const ReadOptions *options) {
     // |me| is always locked on entry, but is allowed to be unlocked on exit

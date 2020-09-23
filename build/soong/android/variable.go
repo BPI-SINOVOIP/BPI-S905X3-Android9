@@ -63,6 +63,10 @@ type variableProperties struct {
 			Cflags []string
 		}
 
+		Hwc_enable_real_mode struct {
+			Cflags []string
+		}
+
 		Override_rs_driver struct {
 			Cflags []string
 		}
@@ -180,6 +184,7 @@ type productVariables struct {
 	Debuggable                 *bool `json:",omitempty"`
 	Eng                        *bool `json:",omitempty"`
 	Device_uses_hwc2           *bool `json:",omitempty"`
+	Hwc_enable_real_mode       *bool `json:",omitempty"`
 	Treble_linker_namespaces   *bool `json:",omitempty"`
 	Sepolicy_split             *bool `json:",omitempty"`
 	Enforce_vintf_manifest     *bool `json:",omitempty"`

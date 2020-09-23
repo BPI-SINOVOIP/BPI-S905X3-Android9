@@ -33,6 +33,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -1530,4 +1531,23 @@ public abstract class PhotoPage extends ActivityState implements
         }
     }
 
+    @Override
+    public void onKeyDown ( KeyEvent KeyEvent ) {
+        int keyCode = KeyEvent.getKeyCode();
+        if ( keyCode == KeyEvent.KEYCODE_DPAD_CENTER || keyCode == KeyEvent.KEYCODE_ENTER ) {
+            MediaItem item = mModel.getMediaItem ( 0 );
+            if ( item == null || item == mScreenNailItem ) {
+                return;
+            }
+            if ( "Photo".equals ( getMediaTypeString ( item ) ) ) {
+                if ( mMediaSet != null ) {
+                    Menu menu = mActionBar.getMenu();
+                    MenuItem mitem = menu.findItem ( R.id.action_slideshow );
+                    mActivity.onOptionsItemSelected ( mitem );
+                }
+            } else if ( "Video".equals ( getMediaTypeString ( item ) ) ) {
+                playVideo ( mActivity, item.getPlayUri(), item.getName() );
+            }
+        }
+    }
 }

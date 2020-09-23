@@ -383,6 +383,7 @@ public class WebViewBrowserActivity extends Activity implements PopupMenu.OnMenu
         settings.setGeolocationEnabled(true);
         settings.setDatabaseEnabled(true);
         settings.setDomStorageEnabled(true);
+        settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
     }
 
     private void about() {

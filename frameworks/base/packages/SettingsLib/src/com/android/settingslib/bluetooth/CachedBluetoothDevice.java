@@ -1200,4 +1200,13 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
         return mProfileManager.getHeadsetProfile().getConnectionStatus(mDevice) ==
                 BluetoothProfile.STATE_CONNECTED;
     }
+
+    /**
+     * @return {@code true} if {@code cachedBluetoothDevice} is a2dpsink device
+     */
+    public boolean isA2dpSinkDevice() {
+        return mProfileManager.getA2dpSinkProfile().getConnectionStatus(mDevice) ==
+                BluetoothProfile.STATE_CONNECTED;
+    }
+
 }

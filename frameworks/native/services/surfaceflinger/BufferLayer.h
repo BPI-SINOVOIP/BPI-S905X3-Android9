@@ -47,6 +47,10 @@
 
 namespace android {
 
+#ifdef REDUCE_VIDEO_WORKLOAD
+class HwcSidebandAgent;
+#endif
+
 /*
  * A new BufferQueue and a new BufferLayerConsumer are created when the
  * BufferLayer is first referenced.
@@ -134,6 +138,12 @@ public:
     void setPerFrameData(const sp<const DisplayDevice>& displayDevice) override;
 
     bool isOpaque(const Layer::State& s) const override;
+#ifdef REDUCE_VIDEO_WORKLOAD
+    virtual bool consumeOmxFrame(status_t &updateResult);
+    bool getQueuedBuffer(sp<GraphicBuffer>& buffer);
+    void waitNextVsync();
+    void returnGpuMode();
+#endif
 
 private:
     void onFirstRef() override;
@@ -192,7 +202,19 @@ private:
     mutable Texture mTexture;
 
     bool mUpdateTexImageFailed; // This is only accessed on the main thread.
+
+#ifdef REDUCE_VIDEO_WORKLOAD
+    bool mOmxOverlayLayer;
+    sp<HwcSidebandAgent> mHwcAgent;
+
+    // thread-safe
+    volatile int32_t mOmxFrameCount;
+    mutable Mutex mOmxFrameCountLock;
+    mutable Mutex mRecomputeVisibleLock;
+#endif
+
     bool mRefreshPending;
+
 };
 
 } // namespace android

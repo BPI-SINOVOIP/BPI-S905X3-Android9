@@ -153,6 +153,10 @@ class AvrcpVolumeManager extends AudioDeviceCallback {
                 foundDevice = true;
                 break;
             }
+            if (addedDevices[i].getType() == AudioDeviceInfo.TYPE_WIRED_HEADSET) {
+                foundDevice = true;
+                break;
+            }
         }
 
         if (!foundDevice) {

@@ -10,6 +10,7 @@ cc_library {
     srcs: [
         "autosuspend.c",
         "autosuspend_wakeup_count.cpp",
+        "vadwake.c",
     ],
     export_include_dirs: ["include"],
     local_include_dirs: ["include"],
@@ -17,6 +18,7 @@ cc_library {
         "libbase",
         "liblog",
         "libcutils",
+        "libtinyalsa",
     ],
     cflags: [
         "-Werror",

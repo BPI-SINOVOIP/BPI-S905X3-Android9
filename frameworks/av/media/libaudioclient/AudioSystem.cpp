@@ -28,6 +28,8 @@
 #include <math.h>
 
 #include <system/audio.h>
+#include <cutils/properties.h>
+#include <cutils/str_parms.h>
 
 // ----------------------------------------------------------------------------
 
@@ -1091,6 +1093,63 @@ bool AudioSystem::isOffloadSupported(const audio_offload_info_t& info)
     if (aps == 0) return false;
     return aps->isOffloadSupported(info);
 }
+#define PRIMARY_AUDIO_DEVICE   (AUDIO_DEVICE_OUT_WIRED_HEADPHONE|AUDIO_DEVICE_OUT_SPEAKER| \
+                                AUDIO_DEVICE_OUT_HDMI_ARC|AUDIO_DEVICE_OUT_SPDIF|AUDIO_DEVICE_OUT_HDMI)
+
+bool AudioSystem::isPassthroughSupported(const audio_format_t audioFormat)
+{
+    ALOGV("isPassthroughSupported()");
+
+    const sp<IAudioPolicyService>& aps = AudioSystem::get_audio_policy_service();
+    if (aps == 0) return false;
+    String8 mString = String8("");
+    struct str_parms *parms;
+    int hdmi_format = 0;
+    mString = getParameters(AUDIO_IO_HANDLE_NONE, String8("hdmi_format"));
+    if (!mString.isEmpty()) {
+      parms = str_parms_create_str (mString);
+      str_parms_get_int (parms, "hdmi_format", &hdmi_format);
+      ALOGI("hdmi_format:%d",hdmi_format);
+    } else {
+      hdmi_format = 0;
+    }
+
+    if (hdmi_format == 4) {
+       if (audioFormat == AUDIO_FORMAT_AC3 || audioFormat == AUDIO_FORMAT_DTS)
+           return true;
+       else
+           return false;
+    }
+    if (!property_get_bool("ro.vendor.platform.is.tv", false /* default_value */) 
+        || property_get_bool("ro.vendor.platform.is.stb", false)) {
+       hdmi_format = 5;
+    }
+    if (hdmi_format == 0) {
+        return false;
+    } else {
+        if (!(AudioSystem::getDevicesForStream(AUDIO_STREAM_MUSIC) & PRIMARY_AUDIO_DEVICE)) {
+            ALOGI("PRIMARY_AUDIO_DEVICE NULL");   
+             return false;
+        } else {
+            unsigned int numSurroundFormats;
+            bool surroundFormatsEnabled[10];
+            bool reported = false;
+            audio_format_t surroundFormats[10];
+            if (NO_ERROR == aps->getSurroundFormats(
+                  &numSurroundFormats, surroundFormats, surroundFormatsEnabled, reported)) {
+                ALOGI("numSurroundFormats %d ",numSurroundFormats);
+               for (size_t i = 0; i < (size_t)numSurroundFormats; i++) {
+                   ALOGI("surroundFormats[i] %0x surroundFormatsEnabled[i] %d",surroundFormats[i],surroundFormatsEnabled[i]);
+                   if (audioFormat == surroundFormats[i] && surroundFormatsEnabled[i]) {
+                       return true;
+                   }
+               }
+            }
+        }
+    }
+    return false;
+}
+
 
 status_t AudioSystem::listAudioPorts(audio_port_role_t role,
                                      audio_port_type_t type,

@@ -304,6 +304,36 @@ status_t Disk::readMetadata() {
     return OK;
 }
 
+bool Disk::isEntireDiskAsPartition(const int part) {
+    int iPos = mSysPath.find("/block/");
+    if (iPos < 0 || part < 1) {
+        return false;
+    }
+
+    std::string physicalDev = StringPrintf("/dev/block/%s",
+                                   mSysPath.substr(iPos + 7).c_str());
+
+    if (access(physicalDev.c_str(), F_OK)) {
+        return false;
+    }
+
+    std::string partDevName;
+    for (int i = 1; i <= part; i++) {
+        if (mFlags & Flags::kUsb) {
+            partDevName = StringPrintf("%s%d", physicalDev.c_str(), i);
+        } else if (mFlags & Flags::kSd) {
+            partDevName = StringPrintf("%sp%d", physicalDev.c_str(), i);
+        }
+
+        if (!access(partDevName.c_str(), F_OK)) {
+            return false;
+        }
+    }
+
+    LOG(INFO) << "physical dev: " << physicalDev << "[1-" << part << "] doesn't exist";
+    return true;
+}
+
 status_t Disk::readPartitions() {
     int maxMinors = getMaxMinors();
     if (maxMinors < 0) {
@@ -365,6 +395,12 @@ status_t Disk::readPartitions() {
                 if (!android::base::ParseInt("0x" + *it, &type)) {
                     LOG(WARNING) << "Invalid partition type " << *it;
                     continue;
+                }
+
+                if (isEntireDiskAsPartition(i)) {
+                    LOG(INFO) << "don't create public:xx,xx for physical device!";
+                    foundParts = false;
+                    break;
                 }
 
                 switch (type) {

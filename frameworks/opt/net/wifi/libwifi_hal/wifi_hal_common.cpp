@@ -23,10 +23,113 @@
 #include <android-base/logging.h>
 #include <cutils/misc.h>
 #include <cutils/properties.h>
-#include <sys/syscall.h>
 
 extern "C" int init_module(void *, unsigned long, const char *);
 extern "C" int delete_module(const char *, unsigned int);
+
+#include <sys/syscall.h>
+#define finit_module(fd, opts, flags) syscall(SYS_finit_module, fd, opts, flags)
+
+#ifdef MULTI_WIFI_SUPPORT
+#include <dlfcn.h>
+typedef int (*WIFI_LOAD_DRIVER) ();
+typedef int (*WIFI_UNLOAD_DRIVER) ();
+typedef int (*WIFI_CHANGE_FW_PATH) (const char *fwpath);
+typedef const char * (*WIFI_GET_FW_PATH) (int fw_type);
+typedef const char * (*WIFI_GET_VENDOR_NAME) ();
+
+void* pHandle = NULL;
+void* init_multi_wifi_handle() {
+    if (NULL == pHandle) {
+        pHandle = dlopen("libwifi-hal-common-ext.so", RTLD_NOW);
+        if (NULL == pHandle) {
+            PLOG(ERROR) << "Unable to get multi wifi so";
+            return NULL;
+        }
+    }
+    return pHandle;
+}
+
+void release_multi_wifi_handle() {
+    if (NULL != pHandle) {
+        dlclose(pHandle);
+        pHandle = NULL;
+    }
+}
+
+int wifi_load_driver_ext() {
+    void* handle = init_multi_wifi_handle();
+    if (NULL != handle) {
+        WIFI_LOAD_DRIVER pfunc = (WIFI_LOAD_DRIVER)dlsym(handle, "_Z20wifi_load_driver_extv");
+        if (NULL == pfunc) {
+            LOG(ERROR) << "Unable to get multi wifi wifi_load_driver_ext function";
+            return -1;
+        }
+        return pfunc();
+    }
+
+    return -1;
+}
+
+int wifi_unload_driver_ext() {
+    void* handle = init_multi_wifi_handle();
+    if (NULL != handle) {
+        WIFI_UNLOAD_DRIVER pfunc = (WIFI_UNLOAD_DRIVER)dlsym(handle, "_Z22wifi_unload_driver_extv");
+        if (NULL == pfunc) {
+            LOG(ERROR) << "Unable to get multi wifi wifi_unload_driver_ext function";
+            return -1;
+        }
+
+        int ret = pfunc();
+        release_multi_wifi_handle();
+        return ret;
+    }
+
+    return -1;
+}
+
+const char *wifi_get_fw_path_ext(int fw_type) {
+    void* handle = init_multi_wifi_handle();
+    if (NULL != handle) {
+        WIFI_GET_FW_PATH pfunc = (WIFI_GET_FW_PATH)dlsym(handle, "_Z20wifi_get_fw_path_exti");
+        if (NULL == pfunc) {
+            LOG(ERROR) << "Unable to get multi wifi wifi_get_fw_path_ext function";
+            return NULL;
+        }
+        return pfunc(fw_type);
+    }
+
+    return NULL;
+}
+
+int wifi_change_fw_path_ext(const char *fwpath) {
+    void* handle = init_multi_wifi_handle();
+    if (NULL != handle) {
+        WIFI_CHANGE_FW_PATH pfunc = (WIFI_CHANGE_FW_PATH)dlsym(handle, "_Z23wifi_change_fw_path_extPKc");
+        if (NULL == pfunc) {
+            LOG(ERROR) << "Unable to get multi wifi wifi_get_fw_path_ext function";
+            return -1;
+        }
+        return pfunc(fwpath);
+    }
+
+    return -1;
+}
+
+const char *get_wifi_vendor_name() {
+    void* handle = init_multi_wifi_handle();
+    if (NULL != handle) {
+        WIFI_GET_VENDOR_NAME pfunc = (WIFI_GET_VENDOR_NAME)dlsym(handle, "_Z20get_wifi_vendor_namev");
+        if (NULL == pfunc) {
+            LOG(ERROR) << "Unable to get multi wifi get_wifi_vendor_name function";
+            return NULL;
+        }
+        return pfunc();
+    }
+
+    return NULL;
+}
+#endif
 
 #ifndef WIFI_DRIVER_FW_PATH_STA
 #define WIFI_DRIVER_FW_PATH_STA NULL
@@ -52,21 +155,17 @@ static const char MODULE_FILE[] = "/proc/modules";
 #endif
 
 static int insmod(const char *filename, const char *args) {
+  void *module;
+  unsigned int size;
   int ret;
-  int fd;
 
-  fd = TEMP_FAILURE_RETRY(open(filename, O_RDONLY | O_CLOEXEC | O_NOFOLLOW));
-  if (fd < 0) {
-    PLOG(ERROR) << "Failed to open " << filename;
-    return -1;
-  }
+  module = load_file(filename, &size);
+  if (!module) return -1;
 
-  ret = syscall(__NR_finit_module, fd, args, 0);
+  //ret = init_module(module, size, args);
+  ret = finit_module(module, args, 0);
 
-  close(fd);
-  if (ret < 0) {
-    PLOG(ERROR) << "finit_module return: " << ret;
-  }
+  free(module);
 
   return ret;
 }
@@ -149,6 +248,17 @@ int is_wifi_driver_loaded() {
 
 int wifi_load_driver() {
 #ifdef WIFI_DRIVER_MODULE_PATH
+#ifdef MULTI_WIFI_SUPPORT
+  if (wifi_load_driver_ext() != 0) {
+    return -1;
+  } else {
+   if (strncmp(get_wifi_vendor_name(), "bcm", 3) == 0)
+      property_set(DRIVER_PROP_NAME, "ok");
+
+   return 0;
+  } 
+#endif
+
   if (is_wifi_driver_loaded()) {
     return 0;
   }
@@ -168,6 +278,12 @@ int wifi_load_driver() {
 }
 
 int wifi_unload_driver() {
+#ifdef MULTI_WIFI_SUPPORT
+    wifi_unload_driver_ext();
+    property_set(DRIVER_PROP_NAME, "unloaded");
+    return 0;
+#endif
+
   if (!is_wifi_driver_loaded()) {
     return 0;
   }
@@ -198,6 +314,10 @@ int wifi_unload_driver() {
 }
 
 const char *wifi_get_fw_path(int fw_type) {
+#ifdef MULTI_WIFI_SUPPORT
+    return wifi_get_fw_path_ext(fw_type);
+#endif
+
   switch (fw_type) {
     case WIFI_GET_FW_PATH_STA:
       return WIFI_DRIVER_FW_PATH_STA;
@@ -213,6 +333,9 @@ int wifi_change_fw_path(const char *fwpath) {
   int len;
   int fd;
   int ret = 0;
+#ifdef MULTI_WIFI_SUPPORT
+    return wifi_change_fw_path_ext(fwpath);
+#endif
 
   if (!fwpath) return ret;
   fd = TEMP_FAILURE_RETRY(open(WIFI_DRIVER_FW_PATH_PARAM, O_WRONLY));

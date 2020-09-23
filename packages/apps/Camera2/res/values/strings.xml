@@ -960,4 +960,6 @@
 
     <!-- Shown to the user while an image/video is being saved to disk. -->
     <string name="session_saving_image">Saving\u2026</string>
+
+    <string name="video_quality_not_support">This quality is not supported!</string>
  </resources>

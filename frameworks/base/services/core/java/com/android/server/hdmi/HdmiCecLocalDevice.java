@@ -129,7 +129,7 @@ abstract class HdmiCecLocalDevice {
     // Note that access to this collection should happen in service thread.
     private final ArrayList<HdmiCecFeatureAction> mActions = new ArrayList<>();
 
-    private final Handler mHandler = new Handler () {
+    protected final Handler mHandler = new Handler () {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -167,6 +167,8 @@ abstract class HdmiCecLocalDevice {
             return new HdmiCecLocalDeviceTv(service);
         case HdmiDeviceInfo.DEVICE_PLAYBACK:
             return new HdmiCecLocalDevicePlayback(service);
+        case HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM:
+            return new HdmiCecLocalDeviceAudioSystem(service);
         default:
             return null;
         }
@@ -899,6 +901,7 @@ abstract class HdmiCecLocalDevice {
     @ServiceThreadOnly
     protected void sendKeyEvent(int keyCode, boolean isPressed) {
         assertRunOnServiceThread();
+        HdmiLogger.debug("sendKeyEvent keyCode:  " + keyCode);
         if (!HdmiCecKeycode.isSupportedKeycode(keyCode)) {
             Slog.w(TAG, "Unsupported key: " + keyCode);
             return;
@@ -944,5 +947,8 @@ abstract class HdmiCecLocalDevice {
         pw.println("mDeviceInfo: " + mDeviceInfo);
         pw.println("mActiveSource: " + mActiveSource);
         pw.println(String.format("mActiveRoutingPath: 0x%04x", mActiveRoutingPath));
+        for (HdmiCecFeatureAction action : mActions) {
+            pw.println("action: " + action.getClass().getSimpleName());
+        }
     }
 }

@@ -145,6 +145,8 @@ public class Camera2OneCameraManagerImpl implements OneCameraManager {
         String cameraId = findFirstCameraIdFacing(CameraCharacteristics.LENS_FACING_FRONT);
         if (cameraId == null) {
             Log.w(TAG, "No front-facing camera found.");
+            Log.w(TAG, "use usb external camera for front-facing");
+            cameraId = findFirstCameraIdFacing(CameraCharacteristics.LENS_FACING_EXTERNAL);
         }
         return cameraId;
     }

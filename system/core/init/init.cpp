@@ -356,6 +356,8 @@ static void import_kernel_nv(const std::string& key, const std::string& value, b
         strlcpy(qemu, value.c_str(), sizeof(qemu));
     } else if (android::base::StartsWith(key, "androidboot.")) {
         property_set("ro.boot." + key.substr(12), value);
+    } else if (key == "mem_size") {
+        property_set("ro.mem_size", value);
     }
 }
 

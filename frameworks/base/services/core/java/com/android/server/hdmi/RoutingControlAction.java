@@ -66,7 +66,7 @@ final class RoutingControlAction extends HdmiCecFeatureAction {
     // <Inactive Source> command.
     private final boolean mNotifyInputChange;
 
-    @Nullable private final IHdmiControlCallback mCallback;
+    @Nullable private IHdmiControlCallback mCallback;
 
     // The latest routing path. Updated by each <Routing Information> from CEC switches.
     private int mCurrentRoutingPath;
@@ -88,6 +88,10 @@ final class RoutingControlAction extends HdmiCecFeatureAction {
     public boolean start() {
         mState = STATE_WAIT_FOR_ROUTING_INFORMATION;
         addTimer(mState, TIMEOUT_ROUTING_INFORMATION_MS);
+        tv().setPrevPortId(tv().getActivePortId());
+        tv().setActivePath(mCurrentRoutingPath);
+        finishWithCallback(HdmiControlManager.RESULT_SUCCESS);
+        mCallback = null;
         return true;
     }
 
@@ -105,6 +109,7 @@ final class RoutingControlAction extends HdmiCecFeatureAction {
                 return true;
             }
             mCurrentRoutingPath = routingPath;
+            tv().setActivePath(mCurrentRoutingPath);
             // Stop possible previous routing change sequence if in progress.
             removeActionExcept(RoutingControlAction.class, this);
             addTimer(mState, TIMEOUT_ROUTING_INFORMATION_MS);
@@ -128,9 +133,7 @@ final class RoutingControlAction extends HdmiCecFeatureAction {
     }
 
     private void updateActiveInput() {
-        HdmiCecLocalDeviceTv tv = tv();
-        tv.setPrevPortId(tv.getActivePortId());
-        tv.updateActiveInput(mCurrentRoutingPath, mNotifyInputChange);
+        tv().updateActiveInput(mCurrentRoutingPath, mNotifyInputChange);
     }
 
     private int getTvPowerStatus() {

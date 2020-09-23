@@ -48,7 +48,8 @@ LOCAL_SHARED_LIBRARIES := \
     libcutils \
     libutils \
     liblog \
-    libsoundtrigger
+    libsoundtrigger \
+    libaudioclient
 
 ifeq ($(USE_CONFIGURABLE_AUDIO_POLICY), 1)
 
@@ -74,7 +75,8 @@ endif # ifeq ($(USE_CONFIGURABLE_AUDIO_POLICY), 1)
 LOCAL_C_INCLUDES += \
     frameworks/av/services/audiopolicy/common/include \
     frameworks/av/services/audiopolicy/engine/interface \
-    frameworks/av/services/audiopolicy/utilities
+    frameworks/av/services/audiopolicy/utilities \
+    frameworks/av/media/libaudioclient/include
 
 LOCAL_STATIC_LIBRARIES := \
     libaudiopolicycomponents

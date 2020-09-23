@@ -90,6 +90,7 @@ typedef enum OMX_VIDEO_CODINGTYPE {
     OMX_VIDEO_CodingHEVC,       /**< ITU H.265/HEVC */
     OMX_VIDEO_CodingDolbyVision,/**< Dolby Vision */
     OMX_VIDEO_CodingImageHEIC,  /**< HEIF image encoded with HEVC */
+    OMX_VIDEO_CodingAV1,        /**< AV1 */
     OMX_VIDEO_CodingKhronosExtensions = 0x6F000000, /**< Reserved region for introducing Khronos Standard Extensions */
     OMX_VIDEO_CodingVendorStartUnused = 0x7F000000, /**< Reserved region for introducing Vendor Extensions */
     OMX_VIDEO_CodingMax = 0x7FFFFFFF

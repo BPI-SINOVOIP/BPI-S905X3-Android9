@@ -81,7 +81,7 @@ public:
 
     status_t findSyncSampleNear(
             uint32_t start_sample_index, uint32_t *sample_index,
-            uint32_t flags);
+            uint32_t flags, bool is_video);
 
     status_t findThumbnailSample(uint32_t *sample_index);
 

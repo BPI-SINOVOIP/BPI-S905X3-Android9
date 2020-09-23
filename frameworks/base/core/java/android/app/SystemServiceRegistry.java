@@ -118,6 +118,7 @@ import android.os.ISystemUpdateManager;
 import android.os.IUserManager;
 import android.os.IncidentManager;
 import android.os.PowerManager;
+import android.os.Process;
 import android.os.RecoverySystem;
 import android.os.ServiceManager;
 import android.os.ServiceManager.ServiceNotFoundException;
@@ -782,12 +783,12 @@ final class SystemServiceRegistry {
             }});
 
         registerService(Context.TV_INPUT_SERVICE, TvInputManager.class,
-                new CachedServiceFetcher<TvInputManager>() {
+                new StaticServiceFetcher<TvInputManager>() {
             @Override
-            public TvInputManager createService(ContextImpl ctx) throws ServiceNotFoundException {
+            public TvInputManager createService() throws ServiceNotFoundException {
                 IBinder iBinder = ServiceManager.getServiceOrThrow(Context.TV_INPUT_SERVICE);
                 ITvInputManager service = ITvInputManager.Stub.asInterface(iBinder);
-                return new TvInputManager(service, ctx.getUserId());
+                return new TvInputManager(service, UserHandle.getUserId(Process.myUid()));
             }});
 
         registerService(Context.NETWORK_SCORE_SERVICE, NetworkScoreManager.class,
@@ -1100,7 +1101,7 @@ final class SystemServiceRegistry {
 
                     } catch (ServiceNotFoundException e) {
                         onServiceNotFound(e);
-
+                        newState = ContextImpl.STATE_READY; // makesure, this process can check later
                     } finally {
                         synchronized (cache) {
                             cache[mCacheIndex] = service;

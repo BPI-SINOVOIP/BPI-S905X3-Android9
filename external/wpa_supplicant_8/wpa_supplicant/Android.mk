@@ -16,7 +16,9 @@ include $(LOCAL_PATH)/android.config
 
 # To ignore possible wrong network configurations
 L_CFLAGS = -DWPA_IGNORE_CONFIG_ERRORS
-
+ifeq ($(MULTI_WIFI_SUPPORT), true)
+L_CFLAGS += -DMULTI_WIFI_SUPPORT
+endif
 L_CFLAGS += -DVERSION_STR_POSTFIX=\"-$(PLATFORM_VERSION)\"
 
 # Set Android log name

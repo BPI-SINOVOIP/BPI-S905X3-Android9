@@ -23,19 +23,23 @@
 #include <log/log.h>
 #include <sys/uio.h>
 #include <unistd.h>
+#include <mutex>
 
 namespace android {
 namespace hardware {
 namespace bluetooth {
 namespace hci {
+std::timed_mutex mtx;
 
 size_t H4Protocol::Send(uint8_t type, const uint8_t* data, size_t length) {
   struct iovec iov[] = {{&type, sizeof(type)},
                         {const_cast<uint8_t*>(data), length}};
   ssize_t ret = 0;
+  mtx.try_lock_for(std::chrono::milliseconds(100));
   do {
     ret = TEMP_FAILURE_RETRY(writev(uart_fd_, iov, sizeof(iov) / sizeof(iov[0])));
   } while (-1 == ret && EAGAIN == errno);
+  mtx.unlock();
 
   if (ret == -1) {
     ALOGE("%s error writing to UART (%s)", __func__, strerror(errno));

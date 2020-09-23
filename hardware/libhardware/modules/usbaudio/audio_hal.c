@@ -46,7 +46,9 @@
 
 /* Lock play & record samples rates at or above this threshold */
 #define RATELOCK_THRESHOLD 96000
-
+#if defined(AUDIO_EFFECT_EXTERN_DEVICE)
+#define VAL_LEN 64
+#endif
 struct audio_device {
     struct audio_hw_device hw_device;
 
@@ -67,7 +69,12 @@ struct audio_device {
     bool mic_muted;
 
     bool standby;
-
+#if defined(AUDIO_EFFECT_EXTERN_DEVICE)
+    float usb_gain ;
+    int32_t  usb_unmute ;
+    float right_gain;
+    float left_gain;
+#endif
     int32_t inputs_open; /* number of input streams currently open. */
 };
 
@@ -480,9 +487,51 @@ static ssize_t out_write(struct audio_stream_out *stream, const void* buffer, si
                                 sample_size_in_bytes, num_write_buff_bytes);
         write_buff = out->conversion_buffer;
     }
-
+#if defined(AUDIO_EFFECT_EXTERN_DEVICE)
+    float tmp;
+    const audio_format_t audio_format = out_get_format(&(out->stream.common));
+#endif
     if (write_buff != NULL && num_write_buff_bytes != 0) {
-        proxy_write(&out->proxy, write_buff, num_write_buff_bytes);
+#if defined(AUDIO_EFFECT_EXTERN_DEVICE)
+      if (audio_format == AUDIO_FORMAT_PCM_16_BIT) {
+        int16_t * out_buffer = (int16_t *)write_buff;
+        if (num_device_channels == 2) {
+          for (int i = 0; i < num_write_buff_bytes / 2; i++) {
+            if (i % 2 == 0) {
+              tmp = (float)(out_buffer[i] * out->adev->usb_gain * out->adev->usb_unmute * out->adev->left_gain);
+              out_buffer[i] = (int16_t)tmp;
+            } else {
+              tmp = (float)(out_buffer[i] * out->adev->usb_gain * out->adev->usb_unmute * out->adev->right_gain);
+              out_buffer[i] = (int16_t)tmp;
+            }
+          }
+        } else {
+          for (int i = 0; i < num_write_buff_bytes /2; i++) {
+            tmp = (float)(out_buffer[i] * out->adev->usb_gain * out->adev->usb_unmute);
+            out_buffer[i] = (int16_t)tmp;
+          }
+        }
+      } else if (audio_format == AUDIO_FORMAT_PCM_32_BIT) {
+        int32_t * out_buffer = (int32_t *)write_buff;
+        if (num_device_channels == 2) {
+          for (int i = 0; i < num_write_buff_bytes /4; i++) {
+            if (i % 2 == 0) {
+              tmp = (float)(out_buffer[i] * out->adev->usb_gain * out->adev->usb_unmute * out->adev->left_gain);
+              out_buffer[i] = (int16_t)tmp;
+            } else {
+              tmp = (float)(out_buffer[i] * out->adev->usb_gain * out->adev->usb_unmute * out->adev->right_gain);
+              out_buffer[i] = (int16_t)tmp;
+            }
+          }
+        } else {
+          for (int i = 0; i < num_write_buff_bytes /4; i++) {
+            tmp = (float)(out_buffer[i] * out->adev->usb_gain * out->adev->usb_unmute);
+            out_buffer[i] = (int16_t)tmp;
+          }
+        }
+      }
+#endif
+      proxy_write(&out->proxy, write_buff, num_write_buff_bytes);
     }
 
     stream_unlock(&out->lock);
@@ -1144,7 +1193,63 @@ static void adev_close_input_stream(struct audio_hw_device *hw_dev,
  */
 static int adev_set_parameters(struct audio_hw_device *hw_dev, const char *kvpairs)
 {
+#if defined(AUDIO_EFFECT_EXTERN_DEVICE)
+    struct str_parms *parms;
+    struct audio_device * adev = (struct audio_device *)hw_dev;
+    char value[VAL_LEN];
+    int ret = 0;
+
+    ALOGI("%s(kv: %s)", __FUNCTION__, kvpairs);
+    parms = str_parms_create_str(kvpairs);
+    ret = str_parms_get_str(parms, "USB_GAIN", value, sizeof(value));
+    if (ret >= 0) {
+      sscanf(value, "%f", &adev->usb_gain);
+      ALOGI("%s() audio usb gain: %f", __func__,adev->usb_gain);
+      goto exit;
+    }
+    parms = str_parms_create_str(kvpairs);
+    ret = str_parms_get_str(parms, "USB_MUTE", value, sizeof(value));
+    if (ret >= 0) {
+      sscanf(value, "%d", &adev->usb_unmute);
+      ALOGI("%s() audio usb mute: %d", __func__,adev->usb_unmute);
+      goto exit;
+    }
+
+    ret = str_parms_get_str(parms, "USB_GAIN_RIGHT", value, sizeof(value));
+    if (ret >= 0) {
+      sscanf(value, "%f %f", &adev->right_gain,&adev->left_gain);
+      ALOGI("%s() audio usb right gain: %f left gain is %f", __func__,adev->right_gain, adev->left_gain);
+      goto exit;
+    }
+
+    ret = str_parms_get_str(parms, "USB_GAIN_LEFT", value, sizeof(value));
+    if (ret >= 0) {
+      sscanf(value, "%f %f", &adev->left_gain,&adev->right_gain);
+      ALOGI("%s() audio usb left gain: %f and right gain is %f", __func__, adev->left_gain, adev->right_gain);
+      goto exit;
+    }
+exit:
+    str_parms_destroy(parms);
+
+    // VTS regards 0 as success, so if we setting parameter successfully,
+    // zero should be returned instead of data length.
+    // To pass VTS test, ret must be Result::OK (0) or Result::NOT_SUPPORTED (4).
+    if (kvpairs == NULL) {
+      ALOGE("Amlogic_HAL - %s: kvpairs points to NULL. Abort function and return 0.", __FUNCTION__);
+      return 0;
+    }
+    if (ret > 0 || (strlen(kvpairs) == 0)) {
+      ALOGI("Amlogic_HAL - %s: return 0 instead of length of data be copied.", __FUNCTION__);
+      ret = 0;
+    } else if (ret < 0) {
+      ALOGI("Amlogic_HAL - %s: return Result::NOT_SUPPORTED (4) instead of other error code.", __FUNCTION__);
+      //ALOGI ("Amlogic_HAL - %s: return Result::OK (0) instead of other error code.", __FUNCTION__);
+      ret = 4;
+    }
+    return ret;
+#else
     return 0;
+#endif
 }
 
 static char * adev_get_parameters(const struct audio_hw_device *hw_dev, const char *keys)
@@ -1254,7 +1359,12 @@ static int adev_open(const hw_module_t* module, const char* name, hw_device_t** 
 
     list_init(&adev->output_stream_list);
     list_init(&adev->input_stream_list);
-
+#if defined(AUDIO_EFFECT_EXTERN_DEVICE)
+    adev->right_gain = 1;
+    adev->usb_gain = 1;
+    adev->usb_unmute = 1;
+    adev->left_gain = 1;
+#endif
     adev->hw_device.common.tag = HARDWARE_DEVICE_TAG;
     adev->hw_device.common.version = AUDIO_DEVICE_API_VERSION_2_0;
     adev->hw_device.common.module = (struct hw_module_t *)module;

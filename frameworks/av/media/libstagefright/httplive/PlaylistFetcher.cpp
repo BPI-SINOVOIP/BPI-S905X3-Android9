@@ -12,7 +12,22 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *
+ *  (C) 2018 Dolby Laboratories, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
+
 
 //#define LOG_NDEBUG 0
 #define LOG_TAG "PlaylistFetcher"
@@ -24,6 +39,9 @@
 #include "LiveSession.h"
 #include "M3UParser.h"
 #include "include/ID3.h"
+#ifdef DLB_VISION
+#include "include/HevcUtils.h"
+#endif
 #include "mpeg2ts/AnotherPacketSource.h"
 #include "mpeg2ts/HlsSampleDecryptor.h"
 
@@ -1820,9 +1838,21 @@ status_t PlaylistFetcher::extractAndQueueAccessUnitsFromTs(const sp<ABuffer> &bu
 
         const char *mime;
         sp<MetaData> format  = source->getFormat();
+#ifdef DLB_VISION
+        bool isAvc = false;
+        bool isHevc = false;
+
+        if(format != NULL && format->findCString(kKeyMIMEType, &mime)) {
+            if(!strcasecmp(mime, MEDIA_MIMETYPE_VIDEO_AVC)) {
+                isAvc = true;
+            } else if (!strcasecmp(mime, MEDIA_MIMETYPE_VIDEO_HEVC)) {
+                isHevc = true;
+            }
+        }
+#else
         bool isAvc = format != NULL && format->findCString(kKeyMIMEType, &mime)
                 && !strcasecmp(mime, MEDIA_MIMETYPE_VIDEO_AVC);
-
+#endif
         sp<ABuffer> accessUnit;
         status_t finalResult;
         while (source->hasBufferAvailable(&finalResult)
@@ -1853,6 +1883,19 @@ status_t PlaylistFetcher::extractAndQueueAccessUnitsFromTs(const sp<ABuffer> &bu
                             FSLOGV(stream, "saving AVC video AccessUnit");
                         }
                     }
+#ifdef DLB_VISION
+                     else if (isHevc){
+                       if (IsHevcIDR(accessUnit)) {
+                            mVideoBuffer->clear();
+                            FSLOGV(stream, "found IDR, clear mVideoBuffer");
+                            mIDRFound = true;
+                        }
+                        if (mIDRFound && mStartTimeUsRelative && !startTimeReached) {
+                            mVideoBuffer->queueAccessUnit(accessUnit);
+                            FSLOGV(stream, "saving HEVC video AccessUnit");
+                        }
+                     }
+#endif
                     if (!startTimeReached || (isAvc && !mIDRFound)) {
                         continue;
                     }

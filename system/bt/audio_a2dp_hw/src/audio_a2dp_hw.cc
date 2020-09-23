@@ -38,11 +38,14 @@
 #include <unistd.h>
 
 #include <mutex>
+#include <cutils/properties.h>
 
 #include <hardware/audio.h>
 #include <hardware/hardware.h>
 #include <system/audio.h>
-
+#if defined(AUDIO_EFFECT_EXTERN_DEVICE)
+#include <cutils/str_parms.h>
+#endif
 #include "osi/include/hash_map_utils.h"
 #include "osi/include/log.h"
 #include "osi/include/osi.h"
@@ -62,7 +65,9 @@
 #define SEC_TO_NS 1000000000
 #define MS_TO_NS 1000000
 #define DELAY_TO_NS 100000
-
+#if defined(AUDIO_EFFECT_EXTERN_DEVICE)
+#define VAL_LEN 64
+#endif
 #define MIN_DELAY_MS 100
 #define MAX_DELAY_MS 1000
 
@@ -107,7 +112,17 @@ struct a2dp_audio_device {
   std::recursive_mutex* mutex;  // See note below on mutex acquisition order.
   struct a2dp_stream_in* input;
   struct a2dp_stream_out* output;
+
 };
+
+typedef struct ring_buffer {
+    pthread_mutex_t lock;
+    unsigned char *start_addr;
+    unsigned char *rd;
+    unsigned char *wr;
+    int size;
+    int last_is_write;
+}ring_buffer_t;
 
 struct a2dp_config {
   uint32_t rate;
@@ -132,6 +147,16 @@ struct a2dp_stream_out {
   struct a2dp_stream_common common;
   uint64_t frames_presented;  // frames written, never reset
   uint64_t frames_rendered;   // frames written, reset on standby
+#if defined(AUDIO_EFFECT_EXTERN_DEVICE)
+  float bt_gain;
+  float right_gain;
+  float left_gain;
+  int bt_unmute;
+#endif
+
+    ring_buffer_t  stRingBuf;
+    bool  bExitThread;
+    pthread_t threadID;
 };
 
 struct a2dp_stream_in {
@@ -910,18 +935,443 @@ static int suspend_audio_datapath(struct a2dp_stream_common* common,
   return 0;
 }
 
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <errno.h>
+#include <string.h>
+#include <cutils/log.h>
+#include <pthread.h>
+
+#define UNCOVER_WRITE    0
+#define COVER_WRITE      1
+
+/*************************************************
+Function: get_write_space
+Description: get the space can be written
+Input: write_point: write pointer
+       read_point:  read pointer
+       buffer_size: total buffer size
+Output:
+Return: the space can be written in byte
+*************************************************/
+static int get_write_space(unsigned char *write_point, unsigned char *read_point,
+        int buffer_size, int last_is_write)
+{
+    int bytes = 0;
+
+    if (write_point > read_point) {
+        bytes = buffer_size + read_point - write_point;
+    } else if (write_point < read_point) {
+        bytes = read_point - write_point;
+    } else if (!last_is_write) {
+        bytes = buffer_size;
+    }
+
+    return bytes;
+}
+
+/*************************************************
+Function: get_read_space
+Description: get the date space can be read
+Input: write_point: write pointer
+       read_point:  read pointer
+       buffer_size: total buffer size
+Output:
+Return: the data space can be read in byte
+*************************************************/
+static size_t get_read_space(unsigned char *write_point, unsigned char *read_point,
+        int buffer_size, int last_is_write) {
+    int bytes = 0;
+
+    if (write_point > read_point) {
+        bytes = write_point - read_point;
+    } else if (write_point < read_point) {
+        bytes = buffer_size + write_point - read_point;
+    } else if (last_is_write) {
+        bytes = buffer_size;
+    }
+
+    return bytes;
+}
+
+/*************************************************
+Function: write_to_buffer
+Description: write data to ring buffer
+Input: current_pointer: the current write pointer
+       data:  data to be written
+       bytes: the space of data to be written
+       start_addr: dest buffer
+       total_size: dest buffer size
+Output:
+Return: 0 for success
+*************************************************/
+static int write_to_buffer(unsigned char *current_pointer, unsigned char *data, int bytes,
+        unsigned char *start_addr, int total_size)
+{
+    int left_bytes = start_addr + total_size - current_pointer;
+
+    if (left_bytes >= bytes) {
+        memcpy(current_pointer, data, bytes);
+    } else {
+        memcpy(current_pointer, data, left_bytes);
+        memcpy(start_addr, data + left_bytes, bytes - left_bytes);
+    }
+
+    return 0;
+}
+
+/*************************************************
+Function: read_from_buffer
+Description: read data to ring buffer
+Input: current_pointer: the current read pointer
+       buffer:  buffer for the data to be read
+       bytes: the space of data to be read
+       start_addr: dest buffer
+       total_size: dest buffer size
+Output: read data
+Return: 0 for success
+*************************************************/
+static int read_from_buffer(unsigned char *current_pointer, unsigned char *buffer, int bytes,
+        unsigned char *start_addr, int total_size)
+{
+    int left_bytes = start_addr + total_size - current_pointer;
+
+    if (left_bytes >= bytes) {
+        memcpy(buffer, current_pointer, bytes);
+    } else {
+        memcpy(buffer, current_pointer, left_bytes);
+        memcpy(buffer + left_bytes, start_addr, bytes - left_bytes);
+    }
+
+    return 0;
+}
+
+/*************************************************
+Function: update_pointer
+Description: update read/write pointer of ring buffer
+Input: current_pointer: the current read/write pointer
+       bytes: data space has been written/read
+       start_addr: ring buffer
+       total_size: ring buffer size
+Output:
+Return: the updated pointer
+*************************************************/
+static inline void* update_pointer(unsigned char *current_pointer, int bytes,
+        unsigned char *start_addr, int total_size)
+{
+    current_pointer += bytes;
+
+    if (current_pointer >= start_addr + total_size) {
+        current_pointer -= total_size;
+    }
+
+    return current_pointer;
+}
+
+/*************************************************
+Function: ring_buffer_write
+Description: write data to ring buffer
+Input: rbuffer: the dest ring buffer
+       data: data to be written
+       bytes: data space in byte
+       cover: whether or not to cover the data if over run
+Output:
+Return: data space has been written
+*************************************************/
+size_t ring_buffer_write(struct ring_buffer *rbuffer, unsigned char* data, size_t bytes, int cover)
+{
+    struct ring_buffer *buf = rbuffer;
+    size_t write_space, written_bytes;
+
+    pthread_mutex_lock(&buf->lock);
+
+    if (buf->start_addr == NULL || buf->rd == NULL || buf->wr == NULL || buf->size == 0) {
+        ALOGE("%s, Buffer malloc fail!\n", __FUNCTION__);
+        pthread_mutex_unlock(&buf->lock);
+        return 0;
+    }
+
+    write_space = get_write_space(buf->wr, buf->rd, buf->size, buf->last_is_write);
+    if (write_space < bytes) {
+        if (UNCOVER_WRITE == cover) {
+            written_bytes = write_space;
+        } else {
+            written_bytes = bytes;
+        }
+    } else {
+        written_bytes = bytes;
+    }
+
+    write_to_buffer(buf->wr, data, written_bytes, buf->start_addr, buf->size);
+    buf->wr = (unsigned char*)update_pointer(buf->wr, written_bytes, buf->start_addr, buf->size);
+    if (written_bytes)
+        buf->last_is_write = 1;
+
+    pthread_mutex_unlock(&buf->lock);
+
+    return written_bytes;
+}
+
+/*************************************************
+Function: ring_buffer_read
+Description: read data from ring buffer
+Input: rbuffer: the source ring buffer
+       buffer: buffer for the read data
+       bytes: data space in byte
+Output: data has been read
+Return: data space has been read
+*************************************************/
+size_t ring_buffer_read(struct ring_buffer *rbuffer, unsigned char* buffer, size_t bytes)
+{
+    struct ring_buffer *buf = rbuffer;
+    size_t readable_space, read_bytes;
+
+    pthread_mutex_lock(&buf->lock);
+
+    if (buf->start_addr == NULL || buf->rd == NULL || buf->wr == NULL
+            || buf->size == 0) {
+        ALOGE("%s, Buffer malloc fail!\n", __FUNCTION__);
+        pthread_mutex_unlock(&buf->lock);
+        return 0;
+    }
+
+    readable_space = get_read_space(buf->wr, buf->rd, buf->size, buf->last_is_write);
+    if (readable_space < bytes) {
+        read_bytes = readable_space;
+    } else {
+        read_bytes = bytes;
+    }
+
+    read_from_buffer(buf->rd, buffer, read_bytes, buf->start_addr, buf->size);
+    buf->rd = (unsigned char*)update_pointer(buf->rd, read_bytes, buf->start_addr, buf->size);
+    if (read_bytes)
+        buf->last_is_write = 0;
+    pthread_mutex_unlock(&buf->lock);
+
+    return read_bytes;
+}
+
+/*************************************************
+Function: ring_buffer_init
+Description: initialize ring buffer
+Input: rbuffer: the ring buffer to be initialized
+       buffer_size: total size of ring buffer
+Output:
+Return: 0 for success, otherwise fail
+*************************************************/
+int ring_buffer_init(struct ring_buffer *rbuffer, int buffer_size)
+{
+    struct ring_buffer *buf = rbuffer;
+
+    pthread_mutex_lock(&buf->lock);
+
+    buf->size = buffer_size;
+    buf->start_addr = (unsigned char*)malloc(buffer_size * sizeof(unsigned char));
+    if (buf->start_addr == NULL) {
+        ALOGD("%s, Malloc android out buffer error!\n", __FUNCTION__);
+        pthread_mutex_unlock(&buf->lock);
+        return -1;
+    }
+
+    memset(buf->start_addr, 0, buffer_size);
+    buf->rd = buf->start_addr;
+    buf->wr = buf->start_addr;
+    buf->last_is_write = 0;
+    pthread_mutex_unlock(&buf->lock);
+
+    return 0;
+}
+
+/*************************************************
+Function: ring_buffer_release
+Description: release ring buffer
+Input: rbuffer: the ring buffer to be released
+Output:
+Return: 0 for success, otherwise fail
+*************************************************/
+int ring_buffer_release(struct ring_buffer *rbuffer)
+{
+    struct ring_buffer *buf = rbuffer;
+
+    pthread_mutex_lock(&buf->lock);
+
+    if (buf->start_addr != NULL) {
+        free(buf->start_addr);
+        buf->start_addr = NULL;
+    }
+
+    buf->rd = NULL;
+    buf->wr = NULL;
+    buf->size = 0;
+    buf->last_is_write = 0;
+
+    pthread_mutex_unlock(&buf->lock);
+
+    return 0;
+}
+
+/*************************************************
+Function: ring_buffer_reset
+Description: reset ring buffer
+Input: rbuffer: the ring buffer to be reset
+Output:
+Return: 0 for success, otherwise fail
+*************************************************/
+int ring_buffer_reset(struct ring_buffer *rbuffer)
+{
+    struct ring_buffer *buf = rbuffer;
+
+    pthread_mutex_lock(&buf->lock);
+    memset(buf->start_addr, 0, buf->size);
+    buf->rd = buf->wr = buf->start_addr;
+    buf->last_is_write = 0;
+    /*
+     * if (buf->rd >= (buf->start_addr + buf->size))
+     *    buf->rd -= buf->size;
+     */
+    pthread_mutex_unlock(&buf->lock);
+
+    return 0;
+}
+
+/*************************************************
+Function: ring_buffer_reset_size
+Description: reset ring buffer and change the size
+Input: rbuffer: the ring buffer to be reset
+       buffer_size: new size for ring buffer
+Output:
+Return: 0 for success, otherwise fail
+*************************************************/
+int ring_buffer_reset_size(struct ring_buffer *rbuffer, int buffer_size)
+{
+    if (buffer_size > rbuffer->size) {
+        ALOGW("resized buffer size exceed largest buffer size, max %d, cur %d\n", \
+              rbuffer->size, buffer_size);
+        ring_buffer_release(rbuffer);
+        rbuffer->size = buffer_size;
+        return ring_buffer_init(rbuffer, buffer_size);
+    }
+
+    ALOGI("reset buffer size from %d to %d\n", rbuffer->size, buffer_size);
+
+    pthread_mutex_lock(&rbuffer->lock);
+
+    rbuffer->size = buffer_size;
+    memset(rbuffer->start_addr, 0, buffer_size);
+    rbuffer->rd = rbuffer->start_addr;
+    rbuffer->wr = rbuffer->start_addr;
+
+    pthread_mutex_unlock(&rbuffer->lock);
+
+    return 0;
+}
+
+/*************************************************
+Function: get_buffer_read_space
+Description: get the data space for reading in the buffer
+Input: rbuffer: the ring buffer with data
+Output:
+Return: data space for success, otherwise < 0
+*************************************************/
+int get_buffer_read_space(struct ring_buffer *rbuffer)
+{
+    size_t read_space = 0;
+
+    pthread_mutex_lock(&rbuffer->lock);
+    if (rbuffer->start_addr == NULL || rbuffer->wr == NULL || rbuffer->rd == NULL
+            || rbuffer->size == 0) {
+        ALOGE("%s, Buffer malloc fail!\n", __FUNCTION__);
+        pthread_mutex_unlock(&rbuffer->lock);
+        return -1;
+    }
+
+    read_space = get_read_space(rbuffer->wr, rbuffer->rd, rbuffer->size, rbuffer->last_is_write);
+    pthread_mutex_unlock(&rbuffer->lock);
+
+    return read_space;
+}
+
+/*************************************************
+Function: get_buffer_write_space
+Description: get the space for writing in the buffer
+Input: rbuffer: the ring buffer to be written
+Output:
+Return: data space for success, otherwise < 0
+*************************************************/
+int get_buffer_write_space(struct ring_buffer *rbuffer)
+{
+    size_t write_space = 0;
+
+    pthread_mutex_lock(&rbuffer->lock);
+    if (rbuffer->start_addr == NULL || rbuffer->wr == NULL || rbuffer->wr == NULL
+        || rbuffer->size == 0) {
+        ALOGE("%s, Buffer malloc fail!\n", __FUNCTION__);
+        pthread_mutex_unlock(&rbuffer->lock);
+        return -1;
+    }
+
+    write_space = get_write_space(rbuffer->wr, rbuffer->rd, rbuffer->size, rbuffer->last_is_write);
+    pthread_mutex_unlock(&rbuffer->lock);
+
+    return write_space;
+}
+
+#define THREAD_WRITE_BYTE_SIZE (1024)
+
+void *threadloop(void *data) {
+    struct a2dp_stream_out* out = (struct a2dp_stream_out*)data;
+
+    unsigned char *pBuf = (unsigned char *) malloc (THREAD_WRITE_BYTE_SIZE);
+
+    while(false == out->bExitThread){
+        int s32FreeSize = get_buffer_read_space(&out->stRingBuf);
+        if (s32FreeSize < THREAD_WRITE_BYTE_SIZE) {
+            continue;
+        }
+        ring_buffer_read(&out->stRingBuf, pBuf, THREAD_WRITE_BYTE_SIZE);
+        skt_write(out->common.audio_fd, pBuf, THREAD_WRITE_BYTE_SIZE);
+    }
+    free(pBuf);
+    return NULL;
+}
+
+int aml_getprop_bool(const char * path)
+{
+    char buf[1024];
+    int ret = -1;
+
+    ret = property_get(path, buf, NULL);
+    if (ret > 0) {
+        if (strcasecmp(buf, "true") == 0 || strcmp(buf, "1") == 0)
+            return 1;
+    }
+
+    return 0;
+}
+
 /*****************************************************************************
  *
  *  audio output callbacks
  *
  ****************************************************************************/
-
 static ssize_t out_write(struct audio_stream_out* stream, const void* buffer,
                          size_t bytes) {
   struct a2dp_stream_out* out = (struct a2dp_stream_out*)stream;
   int sent = -1;
   size_t write_bytes = bytes;
+  long long s64TimeUs = 0;
+  size_t freeSpace = 0;
+  size_t cnt =   0;
+  static struct timespec preTime;
 
+#if defined(AUDIO_EFFECT_EXTERN_DEVICE)
+  int16_t *outbuff;
+  int32_t *outbuff1;
+  float tmp = 0;
+  int chan_num = audio_channel_count_from_out_mask(out->common.cfg.channel_mask);
+#endif
   DEBUG("write %zu bytes (fd %d)", bytes, out->common.audio_fd);
 
   std::unique_lock<std::recursive_mutex> lock(*out->common.mutex);
@@ -956,9 +1406,116 @@ static ssize_t out_write(struct audio_stream_out* stream, const void* buffer,
   }
 
   lock.unlock();
-  sent = skt_write(out->common.audio_fd, buffer, write_bytes);
-  lock.lock();
+#if defined(AUDIO_EFFECT_EXTERN_DEVICE)
+  if (out->common.cfg.format == AUDIO_FORMAT_PCM_16_BIT) {
+    outbuff = (int16_t *)buffer;
+    outbuff1 = NULL;
+    if (chan_num == 2) {
+      for (unsigned int i = 0; i < write_bytes/2; i++) {
+        if (i % 2 == 0) {
+          tmp = (float)(outbuff[i] * out->bt_gain * out->bt_unmute * out->left_gain);
+          outbuff[i] = (int16_t)tmp;
+        } else {
+          tmp = (float)(outbuff[i] * out->bt_gain * out->bt_unmute * out->right_gain);
+          outbuff[i] = (int16_t)tmp;
+        }
+      }
+    } else {
+      for (unsigned int i = 0; i < write_bytes/2; i++) {
+        tmp = (float)(outbuff[i] * out->bt_gain * out->bt_unmute);
+        outbuff[i] = (int16_t)tmp;
+      }
+    }
+  }
 
+  if (out->common.cfg.format == AUDIO_FORMAT_PCM_32_BIT) {
+    outbuff1 = (int32_t *)buffer;
+    outbuff = NULL;
+    if (chan_num == 2) {
+      for (unsigned int i = 0; i < write_bytes/4; i++) {
+        if (i % 2 == 0) {
+          tmp = (float)(outbuff1[i] * out->bt_gain * out->bt_unmute * out->left_gain);
+          outbuff1[i] = (int32_t)tmp;
+        } else {
+          tmp = (float)(outbuff1[i] * out->bt_gain * out->bt_unmute * out->right_gain);
+          outbuff[i] = (int32_t)tmp;
+        }
+      }
+    } else {
+      for (unsigned int i = 0; i < write_bytes/4; i++) {
+        tmp = (float)(outbuff1[i] * out->bt_gain * out->bt_unmute);
+        outbuff1[i] = (int32_t)tmp;
+      }
+    }
+  }
+#endif
+
+    {
+        struct timespec currTime;
+        long long u64CurTimeUs = 0;
+        long long u64PreTimeUs = 0;
+        static long long s64SpeedUpTimeUs = 0; // cumulative acceleration time (us).
+
+        clock_gettime(CLOCK_MONOTONIC, &currTime);
+        u64CurTimeUs = currTime.tv_sec * 1000000 + currTime.tv_nsec/1000;
+        u64PreTimeUs = preTime.tv_sec * 1000000 + preTime.tv_nsec/1000;
+        // A period of time (us). eg: 44.1k s64TimeUs = 20317 us;
+        s64TimeUs = (bytes*1000*1000/audio_stream_out_frame_size(stream))/44100;
+
+        long long s64SleepTimeUs = s64TimeUs-(u64CurTimeUs-u64PreTimeUs);
+        // write data speed too fast, and delay is required.
+        if (s64SleepTimeUs >= 0) {
+            long long s64ExpediteTimeUs = 0;
+            // speed up 5 milliseconds at a time.
+            if (s64SpeedUpTimeUs >= 5000) {
+                s64SpeedUpTimeUs -= 5000;
+                s64ExpediteTimeUs = 5000;
+            } else {
+                s64ExpediteTimeUs = s64SpeedUpTimeUs;
+                s64SpeedUpTimeUs = 0;
+            }
+            if (s64SleepTimeUs >= (s64ExpediteTimeUs + 500) ) {
+                // 1. speed up s64ExpediteTimeUs (us).
+                // 2. reserve 500 microseconds for AudioFlinger.
+                s64SleepTimeUs -= s64ExpediteTimeUs + 500;
+            }
+            usleep(s64SleepTimeUs);
+            DEBUG("Total speed up time:%lld us,now seepd up:%lld us, sleep:%lld us",
+                s64SpeedUpTimeUs, s64ExpediteTimeUs, s64SleepTimeUs - s64ExpediteTimeUs);
+        } else {  // write data speed too slow, need to speed up next time.
+            // there is no speed-up if the two write times differ by more than 200 milliseconds.
+            // notes: s64SleepTimeUs is negative
+            if (s64SleepTimeUs > -200000) {
+                s64SpeedUpTimeUs -= s64SleepTimeUs;
+            }
+        }
+        preTime = currTime;
+    }
+
+    freeSpace = get_buffer_write_space(&out->stRingBuf);
+    // override data directly after a timeout of 50 * 3 ms.
+    while (write_bytes > freeSpace && cnt < 50) {
+        usleep(3000);
+        cnt++;
+        freeSpace = get_buffer_write_space(&out->stRingBuf);
+        if (cnt >= 50) {
+            WARN("out of free space, write timeout, write_bytes:%d > free space:%d", write_bytes, freeSpace);
+        }
+    }
+
+  ring_buffer_write(&out->stRingBuf, (unsigned char*)buffer, write_bytes, UNCOVER_WRITE);
+  sent = write_bytes;
+  lock.lock();
+  //skt_write(out->common.audio_fd, buffer, write_bytes);
+
+  clock_gettime(CLOCK_MONOTONIC, &preTime);
+  if (aml_getprop_bool("media.audiohal.outdump")) {
+      FILE *fp1 = fopen("/data/audio/audio_bt.pcm", "a+");
+      if (fp1) {
+          fwrite((char *)buffer, 1, write_bytes, fp1);
+          fclose(fp1);
+      }
+  }
   if (sent == -1) {
     skt_disconnect(out->common.audio_fd);
     out->common.audio_fd = AUDIO_SKT_DISCONNECTED;
@@ -1659,6 +2216,16 @@ static int adev_open_output_stream(struct audio_hw_device* dev,
   }
   *stream_out = &out->stream;
   a2dp_dev->output = out;
+#if defined(AUDIO_EFFECT_EXTERN_DEVICE)
+  a2dp_dev->output->bt_gain = 1;
+  a2dp_dev->output->bt_unmute = 1;
+  a2dp_dev->output->left_gain = 1;
+  a2dp_dev->output->right_gain = 1;
+#endif
+
+  out->bExitThread = false;
+  ring_buffer_init(&out->stRingBuf, 1024*8);
+  pthread_create(&out->threadID, NULL, &threadloop, out);
 
   DEBUG("success");
   /* Delay to ensure Headset is in proper state when START is initiated from
@@ -1699,6 +2266,10 @@ static void adev_close_output_stream(struct audio_hw_device* dev,
   free(stream);
   a2dp_dev->output = NULL;
 
+  out->bExitThread = true;
+  pthread_join(out->threadID, NULL);
+  ring_buffer_release(&out->stRingBuf);
+
   DEBUG("done");
 }
 
@@ -1706,18 +2277,54 @@ static int adev_set_parameters(struct audio_hw_device* dev,
                                const char* kvpairs) {
   struct a2dp_audio_device* a2dp_dev = (struct a2dp_audio_device*)dev;
   int retval = 0;
-
+#if defined(AUDIO_EFFECT_EXTERN_DEVICE)
+  struct str_parms *parms;
+  int ret = 0;
+  char value[VAL_LEN];
+  ALOGI("%s(kv: %s)", __FUNCTION__, kvpairs);
+  parms = str_parms_create_str(kvpairs);
+#endif
   // prevent interference with adev_close_output_stream
   std::lock_guard<std::recursive_mutex> lock(*a2dp_dev->mutex);
   struct a2dp_stream_out* out = a2dp_dev->output;
-
   if (out == NULL) return retval;
-
   INFO("state %d", out->common.state);
+#if defined(AUDIO_EFFECT_EXTERN_DEVICE)
+  ret = str_parms_get_str(parms, "BT_GAIN", value, sizeof(value));
+  if (ret >= 0) {
+      sscanf(value, "%f", &out->bt_gain);
+      ALOGI("%s() audio bt gain: %f", __func__,out->bt_gain);
+      goto exit;
+    }
 
+  ret = str_parms_get_str(parms, "BT_MUTE", value, sizeof(value));
+  if (ret >= 0) {
+    sscanf(value, "%d", &out->bt_unmute);
+    ALOGI("%s() audio bt unmute: %d", __func__,out->bt_unmute);
+    goto exit;
+  }
+
+  ret = str_parms_get_str(parms, "BT_GAIN_RIGHT", value, sizeof(value));
+  if (ret >= 0) {
+    sscanf(value, "%f %f", &out->right_gain,&out->left_gain);
+    ALOGI("%s() audio bt right gain: %f left gain is %f", __func__,out->right_gain, out->left_gain);
+    goto exit;
+  }
+
+  ret = str_parms_get_str(parms, "BT_GAIN_LEFT", value, sizeof(value));
+  if (ret >= 0) {
+    sscanf(value, "%f %f", &out->left_gain,&out->right_gain);
+    ALOGI("%s() audio bt left gain: %f right gain is %f", __func__,out->left_gain, out->right_gain);
+    goto exit;
+  }
+
+exit:
+#endif
   retval =
       out->stream.common.set_parameters((struct audio_stream*)out, kvpairs);
-
+#if defined(AUDIO_EFFECT_EXTERN_DEVICE)
+  str_parms_destroy (parms);
+#endif
   return retval;
 }
 
@@ -1871,6 +2478,16 @@ static int adev_dump(UNUSED_ATTR const audio_hw_device_t* device,
                      UNUSED_ATTR int fd) {
   FNLOG();
 
+  struct a2dp_audio_device* a2dp_dev = (struct a2dp_audio_device*)device;
+  dprintf(fd, "\n----------------------------[AML_A2DP] a2dp hal[dev:%p]------------------------------------\n", device);
+  if (a2dp_dev->output && a2dp_dev->output->stRingBuf.size != 0) {
+      uint32_t u32FreeBuffer = get_buffer_write_space(&a2dp_dev->output->stRingBuf);
+      dprintf(fd, "[AML_A2DP]      RingBuf   size: %10d Byte|  UnusedBuf:%10d Byte(%d%%)\n",
+      a2dp_dev->output->stRingBuf.size, u32FreeBuffer, u32FreeBuffer* 100 / a2dp_dev->output->stRingBuf.size);
+  } else {
+      dprintf(fd, "[AML_A2DP]      RingBuf    : buffer size is 0\n");
+  }
+
   return 0;
 }
 
@@ -1881,6 +2498,7 @@ static int adev_close(hw_device_t* device) {
   delete a2dp_dev->mutex;
   a2dp_dev->mutex = nullptr;
   free(device);
+
   return 0;
 }
 

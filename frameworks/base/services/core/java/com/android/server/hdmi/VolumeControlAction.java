@@ -97,6 +97,7 @@ final class VolumeControlAction extends HdmiCecFeatureAction {
         sendCommand(HdmiCecMessageBuilder.buildUserControlPressed(getSourceAddress(), mAvrAddress,
                 mIsVolumeUp ? HdmiCecKeycode.CEC_KEYCODE_VOLUME_UP
                         : HdmiCecKeycode.CEC_KEYCODE_VOLUME_DOWN));
+        sendCommand(HdmiCecMessageBuilder.buildGiveAudioStatus(getSourceAddress(), mAvrAddress));
         mSentKeyPressed = true;
     }
 

@@ -21,6 +21,19 @@
 static struct dhcp_lease *leases = NULL, *old_leases = NULL;
 static int dns_dirty, file_dirty, leases_left;
 
+/**
+* Send broadcast when use for miracast wifi p2p act a go allocate ip address to system
+*/
+static void am_send_broadcast(char * ipaddr, char * hwmac)
+{
+    if (!ipaddr || !hwmac)
+        return;
+    char sendCommand[1024] = { 0 };
+    sprintf(sendCommand, "am broadcast -a android.net.wifi.p2p.IPADDR_INFORMATION --user 0 --es IP_EXTRA %s --es MAC_EXTRA %s", ipaddr, hwmac);
+    if (system(sendCommand) == -1)
+        my_syslog(LOG_ERR, "am broadcast send failed");
+}
+
 void lease_init(time_t now)
 {
   unsigned long ei;
@@ -44,7 +57,7 @@ void lease_init(time_t now)
 	 lease database. */
 #ifdef HAVE_SCRIPT
       if (daemon->lease_change_command)
-	{
+    {
 	  strcpy(daemon->dhcp_buff, daemon->lease_change_command);
 	  strcat(daemon->dhcp_buff, " init");
 	  leasestream = popen(daemon->dhcp_buff, "r");
@@ -76,6 +89,8 @@ void lease_init(time_t now)
 		  &ei, daemon->dhcp_buff2, daemon->namebuff, 
 		  daemon->dhcp_buff, daemon->packet) == 5)
       {
+        //if (daemon->namebuff && daemon->dhcp_buff2)
+            //am_send_broadcast(daemon->namebuff, daemon->dhcp_buff2);
 	hw_len = parse_hex(daemon->dhcp_buff2, (unsigned char *)daemon->dhcp_buff2, DHCP_CHADDR_MAX, NULL, &hw_type);
 	/* For backwards compatibility, no explict MAC address type means ether. */
 	if (hw_type == 0 && hw_len != 0)
@@ -209,8 +224,22 @@ void lease_update_file(time_t now)
 	      ourprintf(&err, "%.2x\n", lease->clid[i]);
 	    }
 	  else
-	    ourprintf(&err, "*\n");	  
-	}
+	    ourprintf(&err, "*\n");
+    if (lease->hwaddr_type == ARPHRD_ETHER && lease->hwaddr_len > 0) {
+        char hwaddr[256] = { 0 };
+        int off = 0;
+        for (i = 0; i < lease->hwaddr_len; i++)
+        {
+          sprintf(hwaddr + off, "%.2x", lease->hwaddr[i]);
+          off += 2;
+          if (i != lease->hwaddr_len - 1) {
+              sprintf(hwaddr + off, ":");
+               off += 1;
+          }
+        }
+        am_send_broadcast(inet_ntoa(lease->addr), hwaddr);
+    }
+    }
       
       if (fflush(daemon->lease_stream) != 0 ||
 	  fsync(fileno(daemon->lease_stream)) < 0)

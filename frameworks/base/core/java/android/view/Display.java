@@ -94,6 +94,10 @@ public final class Display {
     private int mCachedAppHeightCompat;
 
     /**
+    * Default dpi.
+    */
+    public static final float DEFAULT_DPI = 160.0f;
+    /**
      * The default Display id, which is the id of the built-in primary display
      * assuming there is one.
      */
@@ -1165,6 +1169,8 @@ public final class Display {
         private final int mWidth;
         private final int mHeight;
         private final float mRefreshRate;
+        private final float mXDpi;
+        private final float mYDpi;
 
         /**
          * @hide
@@ -1174,7 +1180,18 @@ public final class Display {
             mWidth = width;
             mHeight = height;
             mRefreshRate = refreshRate;
+			mXDpi = mYDpi = DEFAULT_DPI;
         }
+        public Mode(int modeId, int width, int height, float refreshRate,
+                float xDpi, float yDpi ) {
+	        mModeId = modeId;
+	        mWidth = width;
+	        mHeight = height;
+	        mRefreshRate = refreshRate;
+	        mXDpi = xDpi;
+	        mYDpi = yDpi;
+        }
+
 
         /**
          * Returns this mode's id.
@@ -1222,6 +1239,19 @@ public final class Display {
             return mRefreshRate;
         }
 
+        /**
+         *Returns the dpi x.
+         **/
+        public float getXDpi(){
+            return mXDpi;
+        }
+
+        /**
+         *Returns the dpi x.
+         **/
+        public float getYDpi(){
+            return mYDpi;
+        }
         /**
          * Returns {@code true} if this mode matches the given parameters.
          *

@@ -85,7 +85,7 @@ abstract class RequestArcAction extends HdmiCecFeatureAction {
             return;
         }
         HdmiLogger.debug("[T] RequestArcAction.");
-        disableArcTransmission();
+        //disableArcTransmission();
         finish();
     }
 }

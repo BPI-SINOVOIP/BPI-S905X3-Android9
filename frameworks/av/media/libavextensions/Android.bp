@@ -1,0 +1,63 @@
+// AV  media utils extention
+// ########################################################
+cc_library_headers {
+    name: "libavextensions_headers",
+    export_include_dirs: ["include"],
+    vendor_available: true,
+}
+
+cc_library_static {
+    name: "libavextensions",
+    vendor_available: true,
+    vndk: {
+        enabled: true,
+    },
+
+    srcs: [
+         "stagefright/AVUtils.cpp",
+    ],
+
+    shared_libs: [
+         "libhidlbase",
+         "liblog",
+         "libui",
+         "libgui",
+         "libcutils",
+         "libutils",
+         "libnativewindow",
+//         "libstagefright",
+         "libcrypto",
+         "android.hardware.media.omx@1.0",
+         "libhidlbase",
+         "libhidlmemory",
+         "android.hidl.allocator@1.0",
+         "android.hidl.memory@1.0",
+    ],
+
+    header_libs: [
+        "media_plugin_headers",
+        "libstagefright_headers",
+    ],
+
+    export_header_lib_headers: [
+        "media_plugin_headers",
+        "libstagefright_headers",
+    ],
+
+    export_include_dirs: [
+         "common",
+         "include",
+    ],
+
+    include_dirs: [
+         "frameworks/av/media/libstagefright/omx/include",
+         "frameworks/av/media/libstagefright/xmlparser/include",
+         "frameworks/av/media/libmedia/include",
+         "frameworks/av/include",
+    ],
+
+    cflags: [
+        "-Wno-multichar",
+        "-Werror",
+    ],
+}

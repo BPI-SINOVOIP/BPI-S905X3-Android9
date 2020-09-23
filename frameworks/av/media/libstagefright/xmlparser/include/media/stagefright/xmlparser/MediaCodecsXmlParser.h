@@ -116,6 +116,8 @@ public:
 
     status_t getParsingStatus() const;
 
+    bool parseTopLevelXMLFile(const char *path, bool ignore_errors = false);
+
 private:
     enum Section {
         SECTION_TOPLEVEL,
@@ -153,7 +155,8 @@ private:
     // Computed longest common prefix
     mutable std::string mCommonPrefix;
 
-    bool parseTopLevelXMLFile(const char *path, bool ignore_errors = false);
+    //move to public for media ext
+    //bool parseTopLevelXMLFile(const char *path, bool ignore_errors = false);
 
     void parseXMLFile(const char *path);
 

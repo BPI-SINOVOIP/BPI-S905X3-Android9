@@ -21,6 +21,16 @@
             android:gravity="center"
             android:src="@drawable/ic_grid_on_disabled" />
     </item>
+    <item android:state_focused="true">
+        <layer-list>
+           <item android:drawable="@drawable/bg_options_indicator_focus" />
+           <item>
+               <bitmap
+                    android:gravity="center"
+                    android:src="@drawable/ic_grid_on_normal" />
+           </item>
+        </layer-list>
+    </item>
     <item android:state_pressed="true">
         <layer-list>
            <item android:drawable="@drawable/button_background_pressed_dark" />

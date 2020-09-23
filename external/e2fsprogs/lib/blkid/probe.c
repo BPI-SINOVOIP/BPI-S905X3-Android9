@@ -21,6 +21,10 @@
 #include <fcntl.h>
 #include <ctype.h>
 #include <sys/types.h>
+#ifdef HAVE_DLOPEN
+#include <dlfcn.h>
+#endif
+#include <unicode/ucnv.h>
 #ifdef HAVE_SYS_STAT_H
 #include <sys/stat.h>
 #endif
@@ -36,6 +40,49 @@
 #include "blkidP.h"
 #include "uuid/uuid.h"
 #include "probe.h"
+
+static void unicode_16le_to_utf8(unsigned char *str, int out_len,
+				 const unsigned char *buf, int in_len);
+
+#ifdef HAVE_DLOPEN
+typedef int (*ICU_CONVERT_FUNC)(const char *toConverterName,
+        const char *fromConverterName, char *target, int32_t targetCapacity,
+        const char *source, int32_t sourceLength, UErrorCode *pErrorCode);
+
+static int charset_convert(
+			  const char *from_charset, const char *to_charset,
+			  const char *inbuf, int32_t inlen, char *outbuf, int32_t outlen)
+{
+    UErrorCode errorCode = U_ZERO_ERROR;
+    static ICU_CONVERT_FUNC func = NULL;
+    static int initialized = 0;
+
+    if (!initialized) {
+        void *handle = dlopen("libicuuc.so", RTLD_LAZY);
+        if (!handle)
+            return -1;
+
+        setenv("ICU_DATA", "/system/usr/icu", 1);
+        func = dlsym(handle, "ucnv_convert_60");
+        if (!func)
+            return -1;
+
+        initialized = 1;
+    }
+
+    func(to_charset, from_charset,
+            outbuf, outlen, inbuf, inlen, &errorCode);
+
+    return U_FAILURE(errorCode);
+}
+
+int gbk2utf8(const char *inbuf, int32_t inlen, char *outbuf, int32_t outlen)
+{
+	const char *from_charset = "gbk";
+	const char *to_charset = "utf-8";
+	return charset_convert(from_charset, to_charset, inbuf, inlen, outbuf, outlen);
+}
+#endif
 
 static int figure_label_len(const unsigned char *label, int len)
 {
@@ -626,6 +673,20 @@ static int probe_fat(struct blkid_probe *probe,
 	sprintf(serno, "%02X%02X-%02X%02X", vol_serno[3], vol_serno[2],
 		vol_serno[1], vol_serno[0]);
 
+#ifdef HAVE_DLOPEN
+    if (label != 0) {
+        const char *inbuf = (char *)label;
+        char outbuf[512] = {0};
+        int32_t inlen = label_len;
+        int32_t outlen = sizeof(outbuf);
+        if (!gbk2utf8(inbuf, inlen, outbuf, outlen)) {
+            label = outbuf;
+            label_len = sizeof(outbuf) - outlen;
+        }
+    }
+   printf("HAVE_DLOPEN -->fat usb label = %s\n", label);
+#endif
+
 	blkid_set_tag(probe->dev, "LABEL", (const char *) label, label_len);
 	blkid_set_tag(probe->dev, "UUID", serno, sizeof(serno)-1);
 
@@ -686,10 +747,10 @@ static int probe_ntfs(struct blkid_probe *probe,
 	struct ntfs_super_block *ns;
 	struct master_file_table_record *mft;
 	struct file_attribute *attr;
-	char		uuid_str[17], label_str[129], *cp;
+	char		uuid_str[17], label_str[129];
 	int		bytes_per_sector, sectors_per_cluster;
 	int		mft_record_size, attr_off, attr_len;
-	unsigned int	i, attr_type, val_len;
+	unsigned int attr_type, val_len;
 	int		val_off;
 	__u64		nr_clusters;
 	blkid_loff_t off;
@@ -769,13 +830,9 @@ static int probe_ntfs(struct blkid_probe *probe,
 			if (val_len > sizeof(label_str))
 				val_len = sizeof(label_str)-1;
 
-			for (i=0, cp=label_str; i < val_len; i+=2,cp++) {
-				val = ((__u8 *) attr) + val_off + i;
-				*cp = val[0];
-				if (val[1])
-					*cp = '?';
-			}
-			*cp = 0;
+			val = ((__u8 *) attr) + val_off;
+			memset(label_str, 0, sizeof(label_str));
+			unicode_16le_to_utf8((unsigned char *)label_str, sizeof(label_str), (const unsigned char *)val, val_len);
 		}
 	}
 

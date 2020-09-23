@@ -1,4 +1,4 @@
-type hal_audio_default, domain;
+type hal_audio_default, domain, socket_between_core_and_vendor_violators;
 hal_server_domain(hal_audio_default, hal_audio)
 
 type hal_audio_default_exec, exec_type, vendor_file_type, file_type;
@@ -6,3 +6,4 @@ init_daemon_domain(hal_audio_default)
 
 hal_client_domain(hal_audio_default, hal_allocator)
 
+allow hal_audio_default bluetooth:unix_stream_socket connectto;

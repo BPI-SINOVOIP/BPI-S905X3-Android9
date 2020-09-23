@@ -473,11 +473,6 @@ final class BondStateMachine extends StateMachine {
         if (pbapClientService != null) {
             pbapClientService.setPriority(device, BluetoothProfile.PRIORITY_UNDEFINED);
         }
-
-        // Clear Absolute Volume black list
-        if (a2dpService != null) {
-            a2dpService.resetAvrcpBlacklist(device);
-        }
     }
 
     private String state2str(int state) {

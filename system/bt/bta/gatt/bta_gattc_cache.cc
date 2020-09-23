@@ -43,6 +43,7 @@
 #include "sdp_api.h"
 #include "sdpdefs.h"
 #include "utl.h"
+#include "device/include/controller.h"
 
 using bluetooth::Uuid;
 using base::StringPrintf;
@@ -1065,6 +1066,24 @@ bool bta_gattc_cache_load(tBTA_GATTC_CLCB* p_clcb) {
   if (fread(attr, sizeof(tBTA_GATTC_NV_ATTR), num_attr, fd) != num_attr) {
     LOG(ERROR) << __func__ << "s: can't read GATT attributes: " << fname;
     goto done;
+  }
+
+  LOG(ERROR) << __func__ << ": manufacturer: " << controller_get_interface()-> \
+      get_bt_version()->manufacturer << " :BTM_IS_BRCM_CONTROLLER: " << BTM_IS_BRCM_CONTROLLER();
+  if(BTM_IS_BRCM_CONTROLLER()) {
+    tBTA_GATTC_NV_ATTR* p_attr = NULL;
+    uint16_t tmp_num = 0;
+    p_attr = attr;
+    tmp_num = num_attr;
+    while( tmp_num > 0 && p_attr != NULL) {
+      if ( (p_attr->uuid.As16Bit() == 0x9999) || (p_attr->uuid.As16Bit() == 0x9995)) {
+        LOG(ERROR) << __func__ << ": find cts verifier test, rediscovery!";
+        success = false;
+        goto done;
+      }
+      p_attr++;
+      tmp_num--;
+    }
   }
 
   bta_gattc_rebuild_cache(p_clcb->p_srcb, num_attr, attr);

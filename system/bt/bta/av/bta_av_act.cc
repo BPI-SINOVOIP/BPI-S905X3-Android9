@@ -304,7 +304,7 @@ static void bta_av_rc_msg_cback(uint8_t handle, uint8_t label, uint8_t opcode,
  ******************************************************************************/
 uint8_t bta_av_rc_create(tBTA_AV_CB* p_cb, uint8_t role, uint8_t shdl,
                          uint8_t lidx) {
-  if (is_new_avrcp_enabled()) {
+  if (!is_new_avrcp_enabled() || ADD_AVCTP_CONTROL == FALSE) {
     APPL_TRACE_WARNING("%s: Skipping RC creation for the old AVRCP profile",
                        __func__);
     return BTA_AV_RC_HANDLE_NONE;
@@ -1074,19 +1074,21 @@ static uint8_t bta_av_get_shdl(tBTA_AV_SCB* p_scb) {
  ******************************************************************************/
 void bta_av_stream_chg(tBTA_AV_SCB* p_scb, bool started) {
   uint8_t started_msk = BTA_AV_HNDL_TO_MSK(p_scb->hdi);
-
+  uint8_t direction;
   APPL_TRACE_DEBUG("%s: peer %s started:%s started_msk:0x%x", __func__,
                    p_scb->PeerAddress().ToString().c_str(),
                    logbool(started).c_str(), started_msk);
-
+  direction = (p_scb->seps[p_scb->sep_idx].tsep == AVDT_TSEP_SRC)
+	  ? L2CAP_DIRECTION_DATA_SOURCE
+	  : L2CAP_DIRECTION_DATA_SINK;
   if (started) {
     bta_av_cb.audio_streams |= started_msk;
     /* Let L2CAP know this channel is processed with high priority */
-    L2CA_SetAclPriority(p_scb->PeerAddress(), L2CAP_PRIORITY_HIGH);
+    L2CA_SetAclPriority(p_scb->PeerAddress(), L2CAP_PRIORITY_HIGH, direction);
   } else {
     bta_av_cb.audio_streams &= ~started_msk;
     /* Let L2CAP know this channel is processed with low priority */
-    L2CA_SetAclPriority(p_scb->PeerAddress(), L2CAP_PRIORITY_NORMAL);
+    L2CA_SetAclPriority(p_scb->PeerAddress(), L2CAP_PRIORITY_NORMAL, direction);
   }
 }
 

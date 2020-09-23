@@ -465,7 +465,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
             }
         }
 
-        mColorFadeEnabled = !ActivityManager.isLowRamDeviceStatic();
+        mColorFadeEnabled = true;//!ActivityManager.isLowRamDeviceStatic();
         mColorFadeFadesConfig = resources.getBoolean(
                 com.android.internal.R.bool.config_animateScreenLights);
 

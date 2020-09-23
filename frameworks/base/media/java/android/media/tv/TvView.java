@@ -108,6 +108,9 @@ public class TvView extends ViewGroup {
     private int mSurfaceViewBottom;
     private TimeShiftPositionCallback mTimeShiftPositionCallback;
 
+    /** @hide */
+    public static final String EVENT_TUNE_FINISHED = "event_tune_finished";
+
     private final SurfaceHolder.Callback mSurfaceHolderCallback = new SurfaceHolder.Callback() {
         @Override
         public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
@@ -318,6 +321,12 @@ public class TvView extends ViewGroup {
         if (mSessionCallback != null && TextUtils.equals(mSessionCallback.mInputId, inputId)) {
             if (mSession != null) {
                 mSession.tune(channelUri, params);
+                if (DEBUG) {
+                    Log.d(TAG, "send tune finished event");
+                }
+                if (mCallback != null) {
+                    mCallback.onEvent(inputId, EVENT_TUNE_FINISHED, null);
+                }
             } else {
                 // createSession() was called but the actual session for the given inputId has not
                 // yet been created. Just replace the existing tuning params in the callback with
@@ -1115,6 +1124,12 @@ public class TvView extends ViewGroup {
                     mSession.timeShiftPlay(mRecordedProgramUri);
                 }
                 ensurePositionTracking();
+                if (DEBUG) {
+                    Log.d(TAG, "send tune after creat session event");
+                }
+                if (mCallback != null) {
+                    mCallback.onEvent(mInputId, EVENT_TUNE_FINISHED, null);
+                }
             } else {
                 mSessionCallback = null;
                 if (mCallback != null) {

@@ -28,6 +28,7 @@ cc_defaults {
         "-Werror",
         "-Wall",
         "-fvisibility=hidden",
+        "-DDLB_VISION=1",
     ],
     version_script: "exports.lds",
     relative_install_path: "extractors",

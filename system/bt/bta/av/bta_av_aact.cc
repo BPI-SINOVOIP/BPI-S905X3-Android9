@@ -3005,7 +3005,7 @@ void bta_av_open_rc(tBTA_AV_SCB* p_scb, tBTA_AV_DATA* p_data) {
       }
     } else {
       /* use main SM for AVRC SDP activities */
-      if (is_new_avrcp_enabled()) {
+      if (!is_new_avrcp_enabled() || ADD_AVCTP_CONTROL == FALSE) {
         APPL_TRACE_WARNING("%s: Using the new AVRCP Profile", __func__);
         bluetooth::avrcp::AvrcpService::Get()->ConnectDevice(
             p_scb->PeerAddress());

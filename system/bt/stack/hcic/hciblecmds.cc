@@ -28,10 +28,31 @@
 #include "btu.h"
 #include "hcidefs.h"
 #include "hcimsgs.h"
+#if (MASTER_LATENCY == TRUE)
+#include "btm_api.h"
+#endif
 
 #include <base/bind.h>
 #include <stddef.h>
 #include <string.h>
+
+#if (MASTER_LATENCY == TRUE)
+uint8_t btsnd_hcic_write_le_master_latency(uint16_t handle,uint16_t master_latency, uint16_t master_latency_timeout){
+
+    uint8_t               *pp;
+    uint8_t             command[HCIC_PARAM_SIZE_WRITE_LE_MASTER_LATENCY];
+    pp = command;
+
+    UINT16_TO_STREAM (pp, handle);
+
+    UINT16_TO_STREAM (pp, master_latency);
+    UINT16_TO_STREAM (pp, master_latency_timeout);
+
+    BTM_VendorSpecificCommand (HCI_BLE_WRITE_LE_MASTER_LATENCY, HCIC_PARAM_SIZE_WRITE_LE_MASTER_LATENCY, command, NULL);
+
+    return (TRUE);
+}
+#endif
 
 void btsnd_hcic_ble_set_local_used_feat(uint8_t feat_set[8]) {
   BT_HDR* p = (BT_HDR*)osi_malloc(HCI_CMD_BUF_SIZE);

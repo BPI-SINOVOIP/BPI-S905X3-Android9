@@ -52,7 +52,7 @@
 /(vendor|system/vendor)/bin/hw/hostapd                                        u:object_r:hal_wifi_hostapd_default_exec:s0
 /(vendor|system/vendor)/bin/hw/wpa_supplicant                                 u:object_r:hal_wifi_supplicant_default_exec:s0
 /(vendor|system/vendor)/bin/vndservicemanager                                 u:object_r:vndservicemanager_exec:s0
-
+/(vendor|system/vendor)/bin/hw/android\.hardware\.neuralnetworks@1\.1-service-ovx-driver    u:object_r:hal_neuralnetworks_default_exec:s0
 #############################
 # Same process HALs installed by platform into /vendor
 #

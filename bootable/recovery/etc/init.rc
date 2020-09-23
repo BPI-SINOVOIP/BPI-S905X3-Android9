@@ -27,6 +27,8 @@ on init
     chown root shell /tmp
     chmod 0775 /tmp
 
+    write /proc/sys/vm/watermark_scale_factor 30
+    write /proc/sys/vm/min_free_kbytes 12288
     write /proc/sys/kernel/panic_on_oops 1
     write /proc/sys/vm/max_map_count 1000000
 

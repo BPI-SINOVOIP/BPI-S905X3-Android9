@@ -294,7 +294,7 @@ public class ConnectivityListener implements WifiTracker.WifiListener, Lifecycle
         mWifiManager.setWifiEnabled(enable);
     }
 
-    private void updateConnectivityStatus() {
+    public void updateConnectivityStatus() {
         NetworkInfo networkInfo = mConnectivityManager.getActiveNetworkInfo();
         if (networkInfo == null) {
             mNetworkType = ConnectivityManager.TYPE_NONE;

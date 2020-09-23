@@ -122,9 +122,6 @@ public final class TvInputHardwareInfo implements Parcelable {
     }
 
     public int getHdmiPortId() {
-        if (mType != TV_INPUT_TYPE_HDMI) {
-            throw new IllegalStateException();
-        }
         return mHdmiPortId;
     }
 

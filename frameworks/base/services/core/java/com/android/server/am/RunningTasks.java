@@ -26,9 +26,12 @@ import android.util.SparseArray;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.Vector;
 
 /**
  * Class for resolving the set of running tasks in the system.
@@ -41,8 +44,9 @@ class RunningTasks {
 
     private final TaskRecord.TaskActivitiesReport mTmpReport =
             new TaskRecord.TaskActivitiesReport();
-    private final TreeSet<TaskRecord> mTmpSortedSet = new TreeSet<>(LAST_ACTIVE_TIME_COMPARATOR);
-    private final ArrayList<TaskRecord> mTmpStackTasks = new ArrayList<>();
+    private final SortedSet<TaskRecord> mTmpSortedSet =
+        Collections.synchronizedSortedSet(new TreeSet<>(LAST_ACTIVE_TIME_COMPARATOR));
+    private final Vector<TaskRecord> mTmpStackTasks = new Vector<>();
 
     void getTasks(int maxNum, List<RunningTaskInfo> list, @ActivityType int ignoreActivityType,
             @WindowingMode int ignoreWindowingMode, SparseArray<ActivityDisplay> activityDisplays,
@@ -54,30 +58,30 @@ class RunningTasks {
 
         // Gather all of the tasks across all of the tasks, and add them to the sorted set
         mTmpSortedSet.clear();
-        mTmpStackTasks.clear();
         final int numDisplays = activityDisplays.size();
         for (int displayNdx = 0; displayNdx < numDisplays; ++displayNdx) {
             final ActivityDisplay display = activityDisplays.valueAt(displayNdx);
             for (int stackNdx = display.getChildCount() - 1; stackNdx >= 0; --stackNdx) {
+                mTmpStackTasks.clear();
                 final ActivityStack stack = display.getChildAt(stackNdx);
                 stack.getRunningTasks(mTmpStackTasks, ignoreActivityType, ignoreWindowingMode,
                         callingUid, allowed);
-                for (int i = mTmpStackTasks.size() - 1; i >= 0; i--) {
-                    mTmpSortedSet.addAll(mTmpStackTasks);
-                }
+                mTmpSortedSet.addAll(mTmpStackTasks);
             }
         }
 
         // Take the first {@param maxNum} tasks and create running task infos for them
-        final Iterator<TaskRecord> iter = mTmpSortedSet.iterator();
-        while (iter.hasNext()) {
-            if (maxNum == 0) {
-                break;
-            }
+        synchronized(mTmpSortedSet) {
+            final Iterator<TaskRecord> iter = mTmpSortedSet.iterator();
+            while (iter.hasNext()) {
+                if (maxNum == 0) {
+                    break;
+                }
 
-            final TaskRecord task = iter.next();
-            list.add(createRunningTaskInfo(task));
-            maxNum--;
+                final TaskRecord task = iter.next();
+                list.add(createRunningTaskInfo(task));
+                maxNum--;
+            }
         }
     }
 

@@ -344,6 +344,7 @@ This structure is allocated once for each CPE. */
   FDK_SignalDelay usacResidualDelay; /*!< Delay residual signal to compensate
                                         for eSBR delay of DMX signal in case of
                                         stereoConfigIndex==2. */
+  bool filterheaac; 
 };
 
 #define AAC_DEBUG_EXTHLP \

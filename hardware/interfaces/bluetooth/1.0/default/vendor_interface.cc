@@ -32,6 +32,7 @@ static const char* VENDOR_LIBRARY_SYMBOL_NAME =
     "BLUETOOTH_VENDOR_LIB_INTERFACE";
 
 static const int INVALID_FD = -1;
+#define HCI_VSC_READ_RAM 0xFC4D
 
 namespace {
 
@@ -50,6 +51,7 @@ bool recent_activity_flag;
 
 VendorInterface* g_vendor_interface = nullptr;
 std::mutex wakeup_mutex_;
+std::mutex init_mutex_;
 
 HC_BT_HDR* WrapPacketAndCopy(uint16_t event, const hidl_vec<uint8_t>& data) {
   size_t packet_size = data.size() + sizeof(HC_BT_HDR);
@@ -163,6 +165,7 @@ bool VendorInterface::Initialize(
     InitializeCompleteCallback initialize_complete_cb,
     PacketReadCallback event_cb, PacketReadCallback acl_cb,
     PacketReadCallback sco_cb) {
+    std::unique_lock<std::mutex> lock(init_mutex_);
   if (g_vendor_interface) {
     ALOGE("%s: No previous Shutdown()?", __func__);
     return false;
@@ -173,6 +176,7 @@ bool VendorInterface::Initialize(
 }
 
 void VendorInterface::Shutdown() {
+  std::unique_lock<std::mutex> lock(init_mutex_);
   LOG_ALWAYS_FATAL_IF(!g_vendor_interface, "%s: No Vendor interface!",
                       __func__);
   g_vendor_interface->Close();
@@ -368,6 +372,15 @@ void VendorInterface::HandleIncomingEvent(const hidl_vec<uint8_t>& hci_packet) {
   if (internal_command.cb != nullptr &&
       internal_command_event_match(hci_packet)) {
     HC_BT_HDR* bt_hdr = WrapPacketAndCopy(HCI_PACKET_TYPE_EVENT, hci_packet);
+
+    // Here to send hardware error to restart stack if VSC status is non-zero
+    uint16_t opcode = hci_packet[3] | (hci_packet[3 + 1] << 8);
+    if(opcode == HCI_VSC_READ_RAM  && hci_packet[6] != 0 )
+    {
+        ALOGE("Send a fake hardware error to stack");
+        hidl_vec<uint8_t> hardware_error_packet = {0x10,0x01,0x00};
+        event_cb_(hardware_error_packet);
+    }
 
     // The callbacks can send new commands, so don't zero after calling.
     tINT_CMD_CBACK saved_cb = internal_command.cb;

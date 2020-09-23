@@ -29,9 +29,9 @@
     <!-- Example format: id = keycode to handle globally. component = component which will handle
          this key. -->
     <key keyCode="KEYCODE_DVR" component="com.google.android.tv/.receiver.GlobalKeyReceiver" />
-    <key keyCode="KEYCODE_GUIDE" component="com.google.android.tv/.receiver.GlobalKeyReceiver" />
+    <!-- <key keyCode="KEYCODE_GUIDE" component="com.google.android.tv/.receiver.GlobalKeyReceiver" /> -->
     <key keyCode="KEYCODE_TV" component="com.google.android.tv/.receiver.GlobalKeyReceiver" />
-    <key keyCode="KEYCODE_TV_INPUT" component="com.google.android.tv/.receiver.GlobalKeyReceiver" />
+    <!-- <key keyCode="KEYCODE_TV_INPUT" component="com.google.android.tv/.receiver.GlobalKeyReceiver" /> -->
 
     <!-- OEMs might want to add more custom global key handlings for TV specific key codes. -->
 </global_keys>

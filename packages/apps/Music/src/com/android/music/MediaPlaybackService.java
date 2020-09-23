@@ -55,7 +55,13 @@ public class MediaPlaybackService extends MediaBrowserService implements Playbac
     public static final String CMD_REPEAT = "CMD_PAUSE";
     public static final String REPEAT_MODE = "REPEAT_MODE";
 
+    public static final String CMD_SHUFFLE = "CMD_SHUFFLE";
+    public static final String SHUFFLE_MODE = "SHUFFLE_MODE";
+
     public enum RepeatMode { REPEAT_NONE, REPEAT_ALL, REPEAT_CURRENT }
+
+    // add shuffle mode SHUFFLE_NONE, SHUFFLE_AUTO
+    public enum ShuffleMode { SHUFFLE_NONE, SHUFFLE_AUTO }
 
     // Music catalog manager
     private MusicProvider mMusicProvider;
@@ -70,6 +76,9 @@ public class MediaPlaybackService extends MediaBrowserService implements Playbac
     private Playback mPlayback;
     // Default mode is repeat none
     private RepeatMode mRepeatMode = RepeatMode.REPEAT_NONE;
+
+    // Default mode is shuffle off
+    private ShuffleMode mShuffleMode = ShuffleMode.SHUFFLE_NONE;
     // Extra information for this session
     private Bundle mExtras;
 
@@ -89,6 +98,7 @@ public class MediaPlaybackService extends MediaBrowserService implements Playbac
         // Set extra information
         mExtras = new Bundle();
         mExtras.putInt(REPEAT_MODE, mRepeatMode.ordinal());
+        mExtras.putInt(SHUFFLE_MODE, mShuffleMode.ordinal());
         mSession.setExtras(mExtras);
         // Enable callbacks from MediaButtons and TransportControls
         mSession.setFlags(MediaSession.FLAG_HANDLES_MEDIA_BUTTONS
@@ -479,6 +489,12 @@ public class MediaPlaybackService extends MediaBrowserService implements Playbac
                     mSession.setExtras(mExtras);
                     LogHelper.d(TAG, "modified repeatMode=", mRepeatMode);
                     break;
+                case CMD_SHUFFLE:
+                    mShuffleMode = ShuffleMode.values()[extras.getInt(SHUFFLE_MODE)];
+                    mExtras.putInt(SHUFFLE_MODE, mShuffleMode.ordinal());
+                    mSession.setExtras(mExtras);
+                    LogHelper.d(TAG, "modified shuffleMode=", mShuffleMode);
+                    break;
                 default:
                     LogHelper.d(TAG, "Unkown action=", action);
                     break;
@@ -685,9 +701,20 @@ public class MediaPlaybackService extends MediaBrowserService implements Playbac
      */
     @Override
     public void onCompletion() {
+        LogHelper.d(TAG, "[onCompletion]mRepeatMode:"+mRepeatMode + ",mCurrentIndexOnQueue:" + mCurrentIndexOnQueue
+            + ",mPlayingQueue.size():" + mPlayingQueue.size());
         // The media player finished playing the current song, so we go ahead
         // and start the next.
         if (mPlayingQueue != null && !mPlayingQueue.isEmpty()) {
+            if (mShuffleMode == ShuffleMode.SHUFFLE_AUTO) {
+                mCurrentIndexOnQueue = getRandomMusicIndex();
+                LogHelper.d(TAG, "onCompletion, mShuffleMode=" + mShuffleMode + ",mCurrentIndexOnQueue:" + mCurrentIndexOnQueue);
+                if (mCurrentIndexOnQueue >= mPlayingQueue.size()) {
+                    mCurrentIndexOnQueue = 0;
+                }
+                handlePlayRequest();
+                return;
+            }
             switch (mRepeatMode) {
                 case REPEAT_ALL:
                     // Increase the index
@@ -716,6 +743,18 @@ public class MediaPlaybackService extends MediaBrowserService implements Playbac
             // If there is nothing to play, we stop and release the resources:
             handleStopRequest(null);
         }
+    }
+
+    /**
+     * get Random playQueue index
+     */
+    public int getRandomMusicIndex() {
+        if (mPlayingQueue != null) {
+            Random rand = new Random();
+            return rand.nextInt(mPlayingQueue.size());
+        }
+        return 0;
+
     }
 
     @Override

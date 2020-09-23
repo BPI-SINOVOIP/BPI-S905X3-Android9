@@ -3,3 +3,5 @@
 ###
 
 type platform_app, domain;
+allow platform_app screencontrol_hwservice:hwservice_manager { find };
+allow platform_app screen_control:binder { call };

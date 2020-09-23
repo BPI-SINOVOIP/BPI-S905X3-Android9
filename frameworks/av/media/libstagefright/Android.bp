@@ -12,6 +12,7 @@ cc_library_static {
     cflags: [
         "-Werror",
         "-Wall",
+        "-DDLB_VISION=1",
     ],
     sanitize: {
         misc_undefined: [
@@ -34,6 +35,7 @@ cc_library_static {
     cflags: [
         "-Werror",
         "-Wall",
+        "-DDLB_VISION=1",
     ],
     sanitize: {
         misc_undefined: [
@@ -62,6 +64,7 @@ cc_library_shared {
     cflags: [
         "-Werror",
         "-Wall",
+        "-DDLB_VISION=1",
     ],
 
     shared_libs: [
@@ -189,6 +192,10 @@ cc_library_shared {
         "libFLAC",
     ],
 
+    whole_static_libs: [
+        "libavextensions"
+    ],
+
     export_shared_lib_headers: [
         "libmedia",
         "android.hidl.allocator@1.0",
@@ -203,6 +210,7 @@ cc_library_shared {
         "-Werror",
         "-Wno-error=deprecated-declarations",
         "-Wall",
+        "-DDLB_VISION=1",
     ],
 
     version_script: "exports.lds",
@@ -289,6 +297,8 @@ cc_library {
         "-Werror",
         "-Wno-error=deprecated-declarations",
         "-Wall",
+        "-DDLB_VISION=1",
+        "-DSTAGEFRIGHT_PLAYER2"
     ],
 
     product_variables: {

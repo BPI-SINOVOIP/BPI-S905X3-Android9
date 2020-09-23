@@ -120,6 +120,18 @@ public class HdmiCecMessageBuilder {
     }
 
     /**
+     * Build &lt;Get Menu Language &gt; command.
+     *
+     * <p>This is a  message sent to the tv device on the bus.
+     *
+     * @param src source address of command
+     * @return newly created {@link HdmiCecMessage}
+     */
+    static HdmiCecMessage buildGetMenuLanguageCommand(int src) {
+        return buildCommand(src, Constants.ADDR_TV, Constants.MESSAGE_GET_MENU_LANGUAGE);
+    }
+
+    /**
      * Build &lt;Set Osd Name &gt; command.
      *
      * @param src source address of command
@@ -264,6 +276,16 @@ public class HdmiCecMessageBuilder {
     static HdmiCecMessage buildActiveSource(int src, int physicalAddress) {
         return buildCommand(src, Constants.ADDR_BROADCAST, Constants.MESSAGE_ACTIVE_SOURCE,
                 physicalAddressToParam(physicalAddress));
+    }
+
+    /**
+     * Build &lt;Request Active Source&gt; command.
+     *
+     * @param src source address of command
+     * @return newly created {@link HdmiCecMessage}
+     */
+    static HdmiCecMessage buildRequestActiveSource(int src) {
+        return buildCommand(src, Constants.ADDR_BROADCAST, Constants.MESSAGE_REQUEST_ACTIVE_SOURCE);
     }
 
     /**
@@ -468,6 +490,20 @@ public class HdmiCecMessageBuilder {
         params[2] = (byte) (vendorId & 0xFF);
         System.arraycopy(operands, 0, params, 3, operands.length);
         return buildCommand(src, dest, Constants.MESSAGE_VENDOR_COMMAND_WITH_ID, params);
+    }
+
+     /**
+     * Build &lt;Routing Information&gt; command.
+     *
+     * <p>This is a broadcast message sent to all devices on the bus.
+     *
+     * @param src source address of command
+     * @param physicalAddress physical address of the new active routing path
+     * @return newly created {@link HdmiCecMessage}
+     */
+    static HdmiCecMessage buildRoutingInformation(int src, int physicalAddress) {
+        return buildCommand(src, Constants.ADDR_BROADCAST,
+            Constants.MESSAGE_ROUTING_INFORMATION, physicalAddressToParam(physicalAddress));
     }
 
     /**

@@ -29,6 +29,7 @@
 #include <AudioPort.h>
 #include <IOProfile.h>
 #include <policy.h>
+#include <cutils/properties.h>
 #include <utils/String8.h>
 #include <utils/Log.h>
 
@@ -533,6 +534,15 @@ audio_devices_t Engine::getDeviceForStrategyInt(routing_strategy strategy,
             (mForceUse[AUDIO_POLICY_FORCE_FOR_MEDIA] == AUDIO_POLICY_FORCE_SPEAKER)) {
             device2 = availableOutputDevicesType & AUDIO_DEVICE_OUT_SPEAKER;
         }
+        //changed by amlogic for force spdif/hdmi-arc audio output
+        if ((device2 == AUDIO_DEVICE_NONE) &&
+            (mForceUse[AUDIO_POLICY_FORCE_FOR_MEDIA] == AUDIO_POLICY_FORCE_HDMI_ARC)) {
+            device2 = availableOutputDevicesType & AUDIO_DEVICE_OUT_HDMI_ARC;
+        }
+        if ((device2 == AUDIO_DEVICE_NONE) &&
+            (mForceUse[AUDIO_POLICY_FORCE_FOR_MEDIA] == AUDIO_POLICY_FORCE_SPDIF)) {
+            device2 = availableOutputDevicesType & AUDIO_DEVICE_OUT_SPDIF;
+        }
         if (device2 == AUDIO_DEVICE_NONE) {
             device2 = availableOutputDevicesType & AUDIO_DEVICE_OUT_WIRED_HEADPHONE;
         }
@@ -569,7 +579,8 @@ audio_devices_t Engine::getDeviceForStrategyInt(routing_strategy strategy,
         if (strategy == STRATEGY_MEDIA) {
             // ARC, SPDIF and AUX_LINE can co-exist with others.
             device3 = availableOutputDevicesType & AUDIO_DEVICE_OUT_HDMI_ARC;
-            device3 |= (availableOutputDevicesType & AUDIO_DEVICE_OUT_SPDIF);
+            //modified by amlogic,if SPDIF are co-exist with others.
+            //device3 |= (availableOutputDevicesType & AUDIO_DEVICE_OUT_SPDIF);
             device3 |= (availableOutputDevicesType & AUDIO_DEVICE_OUT_AUX_LINE);
         }
 
@@ -579,10 +590,23 @@ audio_devices_t Engine::getDeviceForStrategyInt(routing_strategy strategy,
         device |= device2;
 
         // If hdmi system audio mode is on, remove speaker out of output list.
-        if ((strategy == STRATEGY_MEDIA) &&
+        //modified by amlogic,if HDMI ARC are co-exist with AUDIO_DEVICE_OUT_SPEAKER
+        /* if ((strategy == STRATEGY_MEDIA) &&
             (mForceUse[AUDIO_POLICY_FORCE_FOR_HDMI_SYSTEM_AUDIO] ==
                 AUDIO_POLICY_FORCE_HDMI_SYSTEM_AUDIO_ENFORCED)) {
             device &= ~AUDIO_DEVICE_OUT_SPEAKER;
+        } */
+        bool hasBluetoothOrUsbDevices = (device & AUDIO_DEVICE_OUT_BLUETOOTH_A2DP) ||
+                (device & AUDIO_DEVICE_OUT_BLUETOOTH_A2DP_HEADPHONES) ||
+                (device & AUDIO_DEVICE_OUT_BLUETOOTH_A2DP_SPEAKER) ||
+                (device & AUDIO_DEVICE_OUT_BLUETOOTH_SCO) ||
+                (device & AUDIO_DEVICE_OUT_BLUETOOTH_SCO_CARKIT) ||
+                (device & AUDIO_DEVICE_OUT_BLUETOOTH_SCO_HEADSET) ||
+                (device & AUDIO_DEVICE_OUT_USB_HEADSET) ||
+                (device & AUDIO_DEVICE_OUT_USB_ACCESSORY) ||
+                (device & AUDIO_DEVICE_OUT_USB_DEVICE);
+        if ((strategy == STRATEGY_MEDIA) && hasBluetoothOrUsbDevices) {
+            device &= ~AUDIO_DEVICE_OUT_HDMI_ARC;
         }
 
         // for STRATEGY_SONIFICATION:
@@ -696,7 +720,12 @@ audio_devices_t Engine::getDeviceForInputSource(audio_source_t inputSource) cons
             break;
 
         case AUDIO_POLICY_FORCE_SPEAKER:
-            if (availableDeviceTypes & AUDIO_DEVICE_IN_BACK_MIC) {
+            /* for usb audio voice comminication app, USB need as first primary usb in device */
+            /* here ingore AUDIO_POLICY_FORCE_SPEAKER */
+            if (availableDeviceTypes & AUDIO_DEVICE_IN_USB_DEVICE) {
+                ALOGI("USB in audio,ingore AUDIO_POLICY_FORCE_SPEAKER\n");
+                device = AUDIO_DEVICE_IN_USB_DEVICE;
+            } else if (availableDeviceTypes & AUDIO_DEVICE_IN_BACK_MIC) {
                 device = AUDIO_DEVICE_IN_BACK_MIC;
             } else if (availableDeviceTypes & AUDIO_DEVICE_IN_BUILTIN_MIC) {
                 device = AUDIO_DEVICE_IN_BUILTIN_MIC;
@@ -722,7 +751,9 @@ audio_devices_t Engine::getDeviceForInputSource(audio_source_t inputSource) cons
         }
         break;
     case AUDIO_SOURCE_CAMCORDER:
-        if (availableDeviceTypes & AUDIO_DEVICE_IN_BACK_MIC) {
+        if (availableDeviceTypes & AUDIO_DEVICE_IN_USB_DEVICE) {
+            device = AUDIO_DEVICE_IN_USB_DEVICE;
+        }else if (availableDeviceTypes & AUDIO_DEVICE_IN_BACK_MIC) {
             device = AUDIO_DEVICE_IN_BACK_MIC;
         } else if (availableDeviceTypes & AUDIO_DEVICE_IN_BUILTIN_MIC) {
             device = AUDIO_DEVICE_IN_BUILTIN_MIC;

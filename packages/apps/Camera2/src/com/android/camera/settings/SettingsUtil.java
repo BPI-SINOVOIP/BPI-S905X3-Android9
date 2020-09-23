@@ -30,6 +30,7 @@ import com.android.camera.util.Size;
 import com.android.camera2.R;
 import com.android.ex.camera2.portability.CameraDeviceInfo;
 import com.android.ex.camera2.portability.CameraSettings;
+import android.hardware.Camera;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -98,7 +99,15 @@ public class SettingsUtil {
         public int large = -1;
         public int medium = -1;
         public int small = -1;
+        public boolean largeEnabled;
+        public boolean mediumEnabled;
+        public boolean smallEnabled;
 
+        public void init() {
+            largeEnabled = true;
+            mediumEnabled = true;
+            smallEnabled = true;
+        }
         public int getFromSetting(String sizeSetting) {
             // Sanitize the value to be either small, medium or large. Default
             // to the latter.
@@ -114,12 +123,21 @@ public class SettingsUtil {
                 return small;
             }
         }
+        public int getDefaultQuality() {
+            if (largeEnabled) {
+                return large;
+            } else if (mediumEnabled) {
+                return medium;
+            } else {
+                return small;
+            }
+        }
     }
 
     private static final Log.Tag TAG = new Log.Tag("SettingsUtil");
 
     /** Enable debug output. */
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     private static final String SIZE_LARGE = "large";
     private static final String SIZE_MEDIUM = "medium";
@@ -291,6 +309,41 @@ public class SettingsUtil {
         return selectedSizes;
     }
 
+    public static int getVideoQuality(String qualitySetting, int cameraId, List<Size> supported) {
+        SelectedVideoQualities selectedQualities = getSelectedVideoQualities(cameraId);
+        int quality = selectedQualities.getFromSetting(qualitySetting);
+        CamcorderProfile mProfile = CamcorderProfile.get(cameraId, quality);
+        if (profileValid(cameraId, quality, supported)) {
+            return quality;
+        } else {
+            if (profileValid(cameraId, selectedQualities.large, supported))
+                return selectedQualities.large;
+            else
+                selectedQualities.largeEnabled = false;
+            if (profileValid(cameraId, selectedQualities.medium, supported))
+                return selectedQualities.medium;
+            else
+                selectedQualities.mediumEnabled = false;
+            if (profileValid(cameraId, selectedQualities.small, supported))
+                return selectedQualities.small;
+            else
+                selectedQualities.smallEnabled = false;
+        }
+        return quality;
+    }
+
+    private static boolean profileValid(int cameraId, int quality, List<Size> supported) {
+        boolean isValid = false;
+        CamcorderProfile mProfile = CamcorderProfile.get(cameraId, quality);
+        for (Size sz: supported) {
+           if (sz.width() == mProfile.videoFrameWidth && sz.height() == mProfile.videoFrameHeight) {
+               isValid = true;
+               break;
+           }
+        }
+        return isValid;
+    }
+
     /**
      * Determines the video quality for large/medium/small for the given camera.
      * Returns the one matching the given setting. Defaults to 'large' of the
@@ -319,13 +372,40 @@ public class SettingsUtil {
         int largeIndex = getNextSupportedVideoQualityIndex(cameraId, -1);
         int mediumIndex = getNextSupportedVideoQualityIndex(cameraId, largeIndex);
         int smallIndex = getNextSupportedVideoQualityIndex(cameraId, mediumIndex);
-
         SelectedVideoQualities selectedQualities = new SelectedVideoQualities();
         selectedQualities.large = sVideoQualities[largeIndex];
         selectedQualities.medium = sVideoQualities[mediumIndex];
         selectedQualities.small = sVideoQualities[smallIndex];
         sCachedSelectedVideoQualities.put(cameraId, selectedQualities);
         return selectedQualities;
+    }
+
+    public static boolean supportQuality(int cameraId, int quality) {
+        if (quality < 0)
+            return false;
+        Camera thisCamera;
+        try {
+            thisCamera = Camera.open(cameraId);
+        } catch (RuntimeException e) {
+            // Camera open will fail if already open.
+            return false;
+        }
+        List<Size> sizes = null;
+        if (thisCamera != null) {
+            sizes = Size.buildListFromCameraSizes(thisCamera.getParameters()
+                .getSupportedVideoSizes());
+            thisCamera.release();
+        }
+        CamcorderProfile mProfile = CamcorderProfile.get(cameraId, quality);
+        if (sizes != null && mProfile != null) {
+            for (Size sz :  sizes) {
+                if (sz.width() == mProfile.videoFrameWidth &&
+                    sz.height() == mProfile.videoFrameHeight) {
+                        return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**

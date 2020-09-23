@@ -1575,8 +1575,8 @@ public class SubscriptionManager {
      * {@hide}
      */
     public static int getSimStateForSlotIndex(int slotIndex) {
-        int simState = TelephonyManager.SIM_STATE_UNKNOWN;
-
+        int simState = TelephonyManager.SIM_STATE_ABSENT;
+        //ott add tv donot have isub service, reset default state to absent
         try {
             ISub iSub = ISub.Stub.asInterface(ServiceManager.getService("isub"));
             if (iSub != null) {

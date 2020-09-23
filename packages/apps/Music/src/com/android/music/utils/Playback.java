@@ -107,6 +107,7 @@ public class Playback implements AudioManager.OnAudioFocusChangeListener, OnComp
             mCallback.onPlaybackStatusChanged(mState);
         }
         mCurrentPosition = getCurrentStreamPosition();
+        Log.d(TAG, "stop,mCurrentPosition:" + mCurrentPosition);
         // Give up Audio focus
         giveUpAudioFocus();
         unregisterAudioNoisyReceiver();
@@ -134,6 +135,7 @@ public class Playback implements AudioManager.OnAudioFocusChangeListener, OnComp
     }
 
     public int getCurrentStreamPosition() {
+        Log.d(TAG, "getCurrentStreamPosition,mCurrentPosition:" + mCurrentPosition);
         return mMediaPlayer != null ? mMediaPlayer.getCurrentPosition() : mCurrentPosition;
     }
 
@@ -143,14 +145,17 @@ public class Playback implements AudioManager.OnAudioFocusChangeListener, OnComp
         registerAudioNoisyReceiver();
         String mediaId = item.getDescription().getMediaId();
         boolean mediaHasChanged = !TextUtils.equals(mediaId, mCurrentMediaId);
+        Log.i(TAG,"[play]mediaHasChanged:" +mediaHasChanged);
         if (mediaHasChanged) {
             mCurrentPosition = 0;
             mCurrentMediaId = mediaId;
         }
 
         if (mState == PlaybackState.STATE_PAUSED && !mediaHasChanged && mMediaPlayer != null) {
+            Log.i(TAG,"[play]--1--:");
             configMediaPlayerState();
         } else {
+            Log.i(TAG,"[play]--2--:");
             mState = PlaybackState.STATE_STOPPED;
             relaxResources(false); // release everything except MediaPlayer
             MediaMetadata track =
@@ -200,6 +205,7 @@ public class Playback implements AudioManager.OnAudioFocusChangeListener, OnComp
             if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
                 mMediaPlayer.pause();
                 mCurrentPosition = mMediaPlayer.getCurrentPosition();
+                Log.d(TAG, "pause,mCurrentPosition:" + mCurrentPosition);
             }
             // while paused, retain the MediaPlayer but give up audio focus
             relaxResources(false);
@@ -218,6 +224,7 @@ public class Playback implements AudioManager.OnAudioFocusChangeListener, OnComp
         if (mMediaPlayer == null) {
             // If we do not have a current media player, simply update the current position
             mCurrentPosition = position;
+            Log.d(TAG, "seekTo,mCurrentPosition:" + mCurrentPosition);
         } else {
             if (mMediaPlayer.isPlaying()) {
                 mState = PlaybackState.STATE_BUFFERING;
@@ -270,7 +277,7 @@ public class Playback implements AudioManager.OnAudioFocusChangeListener, OnComp
      * you are sure this is the case.
      */
     private void configMediaPlayerState() {
-        Log.d(TAG, "configMediaPlayerState. mAudioFocus=" + mAudioFocus);
+        Log.d(TAG, "configMediaPlayerState. mAudioFocus=" + mAudioFocus +",mCurrentPosition:" + mCurrentPosition);
         if (mAudioFocus == AUDIO_NO_FOCUS_NO_DUCK) {
             // If we don't have audio focus and can't duck, we have to pause,
             if (mState == PlaybackState.STATE_PLAYING) {
@@ -289,14 +296,14 @@ public class Playback implements AudioManager.OnAudioFocusChangeListener, OnComp
                 if (mMediaPlayer != null && !mMediaPlayer.isPlaying()) {
                     Log.d(TAG,
                             "configMediaPlayerState startMediaPlayer. seeking to "
-                                    + mCurrentPosition);
-                    if (mCurrentPosition == mMediaPlayer.getCurrentPosition()) {
-                        mMediaPlayer.start();
-                        mState = PlaybackState.STATE_PLAYING;
-                    } else {
-                        mMediaPlayer.seekTo(mCurrentPosition);
-                        mState = PlaybackState.STATE_BUFFERING;
-                    }
+                                    + mCurrentPosition + ",getCurrentPosition:" + mMediaPlayer.getCurrentPosition());
+                    //if (mCurrentPosition == mMediaPlayer.getCurrentPosition()) {
+                    mMediaPlayer.start();
+                    mState = PlaybackState.STATE_PLAYING;
+                    //} else {
+                        //mMediaPlayer.seekTo(mCurrentPosition);
+                        //mState = PlaybackState.STATE_BUFFERING;
+                    //}
                 }
                 mPlayOnFocusGain = false;
             }

@@ -18,6 +18,7 @@ package com.android.gallery3d.ui;
 
 import android.graphics.Rect;
 import android.os.SystemClock;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 
 import com.android.gallery3d.anim.CanvasAnimation;
@@ -305,6 +306,44 @@ public class GLView {
             }
             event.offsetLocation(left, top);
         }
+        return false;
+    }
+
+    protected boolean dispatchKeyEvent ( GLRootView glRootView, KeyEvent keyEvent ) {
+        if ( keyEvent.getAction() == KeyEvent.ACTION_DOWN ) {
+            int i = -1 + getComponentCount();
+            if ( i >= 0 ) {
+                GLView localGLView = getComponent ( i );
+                if ( localGLView.getVisibility() == 0 ) {
+                    i--;
+                    if ( ( localGLView instanceof GLView ) ) {
+                        return localGLView.dispatchKeyEvent ( glRootView, keyEvent );
+                    }
+                }
+            }
+            return onKeyDown ( glRootView, keyEvent );
+        }
+        return false;
+    }
+
+    protected void requestFocus ( boolean request ) {
+        int i = -1 + getComponentCount();
+        if ( i >= 0 ) {
+            GLView localGLView = getComponent ( i );
+            if ( localGLView.getVisibility() == 0 ) {
+                i--;
+                if ( ( localGLView instanceof GLView ) ) {
+                    localGLView.requestFocusAtPos0 ( request );
+                }
+            }
+        }
+        requestFocusAtPos0 ( request );
+    }
+
+    protected void requestFocusAtPos0 ( boolean request ) {
+    }
+
+    protected boolean onKeyDown ( GLRootView GLRootView, KeyEvent KeyEvent ) {
         return false;
     }
 

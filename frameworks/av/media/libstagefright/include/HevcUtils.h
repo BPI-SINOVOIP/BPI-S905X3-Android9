@@ -12,7 +12,22 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *
+ *  (C) 2018 Dolby Laboratories, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
+
 
 #ifndef HEVC_UTILS_H_
 
@@ -30,6 +45,11 @@
 namespace android {
 
 enum {
+#ifdef DLB_VISION
+    kHevcNalUnitTypeIDRw = 19,
+    kHevcNalUnitTypeIDRn = 20,
+    kHevcNalUnitTypeCRA  = 21,
+#endif
     kHevcNalUnitTypeVps = 32,
     kHevcNalUnitTypeSps = 33,
     kHevcNalUnitTypePps = 34,
@@ -65,6 +85,10 @@ enum {
     // uint8_t
     kMatrixCoeffs,
 };
+
+#ifdef DLB_VISION
+bool IsHevcIDR(const sp<ABuffer> &buffer);
+#endif
 
 class HevcParameterSets {
 public:

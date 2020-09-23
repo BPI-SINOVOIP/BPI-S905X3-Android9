@@ -1,0 +1,5 @@
+typeattribute screen_control coredomain;
+
+init_daemon_domain(screen_control)
+allow screen_control hal_allocator_default:fd { use };
+allow screen_control hal_allocator_default:binder { call };

@@ -19,6 +19,7 @@ package com.android.gallery3d.ui;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.animation.DecelerateInterpolator;
 
@@ -43,6 +44,7 @@ public class SlotView extends GLView {
         public void onSingleTapUp(int index);
         public void onLongTap(int index);
         public void onScrollPositionChanged(int position, int total);
+        public boolean onKeyeventProcess( KeyEvent keyEvent, boolean requestFocus);
     }
 
     public static class SimpleListener implements Listener {
@@ -51,6 +53,7 @@ public class SlotView extends GLView {
         @Override public void onSingleTapUp(int index) {}
         @Override public void onLongTap(int index) {}
         @Override public void onScrollPositionChanged(int position, int total) {}
+        @Override public boolean onKeyeventProcess( KeyEvent keyEvent,  boolean requestFocus) {return false;}
     }
 
     public static interface SlotRenderer {
@@ -736,6 +739,41 @@ public class SlotView extends GLView {
 
     public int getScrollY() {
         return mScrollY;
+    }
+
+    public void onKeyScroll( boolean scroll, boolean isLeft ) {
+        int visibleStart = getVisibleStart();
+        int visibleEnd = getVisibleEnd();
+        int rowsLand = mLayout.mSpec.rowsLand;
+        int slotWidth = mLayout.getSlotWidth();
+        int distance = slotWidth * ( (visibleEnd - visibleStart) / rowsLand );
+        if ( scroll && !isLeft ) {
+            mScroller.startScroll( distance, 0, mLayout.getScrollLimit() );
+        } else if ( scroll && isLeft ) {
+            mScroller.startScroll( -distance, 0, mLayout.getScrollLimit() );
+        } else if ( !scroll && isLeft ) {
+            mPaper.overScroll( -distance );
+            mPaper.onRelease();
+        } else if ( !scroll && !isLeft ) {
+            mPaper.overScroll( distance );
+            mPaper.onRelease();
+        }
+        invalidate();
+    }
+
+    @Override
+    protected boolean onKeyDown ( GLRootView glRootView, KeyEvent keyEvent ) {
+        if ( mListener != null ) {
+            return mListener.onKeyeventProcess ( keyEvent, false ) || super.onKeyDown ( glRootView, keyEvent );
+        }
+        return super.onKeyDown ( glRootView, keyEvent );
+    }
+
+    @Override
+    protected void requestFocusAtPos0 ( boolean request ) {
+        if ( mListener != null ) {
+            mListener.onKeyeventProcess ( null, request );
+        }
     }
 
     public Rect getSlotRect(int slotIndex, GLView rootPane) {

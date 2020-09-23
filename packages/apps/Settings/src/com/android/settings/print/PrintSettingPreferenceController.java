@@ -26,6 +26,7 @@ import android.print.PrintManager;
 import android.printservice.PrintServiceInfo;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceScreen;
+import android.util.Log;
 
 import com.android.settings.R;
 import com.android.settings.core.BasePreferenceController;
@@ -43,6 +44,7 @@ public class PrintSettingPreferenceController extends BasePreferenceController i
         LifecycleObserver, OnStart, OnStop, PrintManager.PrintJobStateChangeListener {
 
     private static final String KEY_PRINTING_SETTINGS = "connected_device_printing";
+    private static final String TAG = "PrintSetting";
 
     private final PackageManager mPackageManager;
     private final PrintManager mPrintManager;
@@ -54,6 +56,7 @@ public class PrintSettingPreferenceController extends BasePreferenceController i
         mPackageManager = context.getPackageManager();
         mPrintManager = ((PrintManager) context.getSystemService(Context.PRINT_SERVICE))
                 .getGlobalPrintManagerForUser(context.getUserId());
+        Log.d(TAG, "PrintSettingPreferenceController mPrintManager=" + mPrintManager);
     }
 
     @Override
@@ -70,12 +73,16 @@ public class PrintSettingPreferenceController extends BasePreferenceController i
 
     @Override
     public void onStart() {
-        mPrintManager.addPrintJobStateChangeListener(this);
+        if (mPrintManager != null) {
+            mPrintManager.addPrintJobStateChangeListener(this);
+        }
     }
 
     @Override
     public void onStop() {
-        mPrintManager.removePrintJobStateChangeListener(this);
+        if (mPrintManager != null) {
+            mPrintManager.removePrintJobStateChangeListener(this);
+        }
     }
 
     @Override
@@ -92,6 +99,10 @@ public class PrintSettingPreferenceController extends BasePreferenceController i
 
     @Override
     public CharSequence getSummary() {
+        if (mPrintManager == null) {
+            Log.i(TAG, "getSummary mPrintManager is null");
+            return mContext.getText(R.string.print_settings_summary_no_service);
+        }
         final List<PrintJob> printJobs = mPrintManager.getPrintJobs();
 
         int numActivePrintJobs = 0;

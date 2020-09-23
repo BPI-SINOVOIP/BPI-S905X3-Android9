@@ -213,7 +213,9 @@ public class MusicUtils {
             View v = ll.getChildAt(i);
             boolean isActive = (v.getId() == highlight);
             if (isActive) {
-                ll.setCurrentTab(i);
+                //if setCurrentTab,  will cause uable to focus and switch TAB, because of ll.getChildAt(0), stay on tab 0 forever.
+                //it will trigger if switch tab.and will switch tab 0.
+                ll.focusCurrentTab(i);
                 sActiveTabIndex = i;
             }
             v.setTag(i);

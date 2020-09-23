@@ -36,6 +36,7 @@ import com.android.internal.annotations.GuardedBy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.lang.Math;
 
 
 /**
@@ -316,6 +317,11 @@ public final class BluetoothA2dp implements BluetoothProfile {
      * @hide
      */
     public boolean connect(BluetoothDevice device) {
+	 try {
+	     Thread.sleep(1000);
+	     } catch (InterruptedException e) {
+	         e.printStackTrace();
+        }
         if (DBG) log("connect(" + device + ")");
         try {
             mServiceLock.readLock().lock();

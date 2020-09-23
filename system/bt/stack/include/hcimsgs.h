@@ -688,6 +688,9 @@ extern void btsnd_hcic_vendor_spec_cmd(void* buffer, uint16_t opcode,
 #define HCIC_PARAM_SIZE_BLE_READ_REMOTE_FEAT 2
 #define HCIC_PARAM_SIZE_BLE_ENCRYPT 32
 #define HCIC_PARAM_SIZE_WRITE_LE_HOST_SUPPORTED 2
+#if (MASTER_LATENCY == TRUE)
+#define HCIC_PARAM_SIZE_WRITE_LE_MASTER_LATENCY 6
+#endif
 
 #define HCIC_BLE_RAND_DI_SIZE 8
 #define HCIC_BLE_ENCRYT_KEY_SIZE 16
@@ -766,6 +769,11 @@ extern void btsnd_hcic_ble_add_white_list(uint8_t addr_type,
 
 extern void btsnd_hcic_ble_remove_from_white_list(uint8_t addr_type,
                                                   const RawAddress& bda);
+
+#if (MASTER_LATENCY == TRUE)
+extern uint8_t btsnd_hcic_write_le_master_latency(uint16_t handle,uint16_t master_latency,
+		uint16_t master_latency_timeout);
+#endif
 
 extern void btsnd_hcic_ble_upd_ll_conn_params(
     uint16_t handle, uint16_t conn_int_min, uint16_t conn_int_max,

@@ -55,6 +55,8 @@ allow mediaserver rpmsg_device:chr_file rw_file_perms;
 # Inter System processes communicate over named pipe (FIFO)
 allow mediaserver system_server:fifo_file r_file_perms;
 
+allow mediaserver screen_control:binder { transfer };
+
 r_dir_file(mediaserver, media_rw_data_file)
 
 # Grant access to read files on appfuse.

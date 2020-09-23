@@ -93,6 +93,11 @@ final class OneTouchPlayAction extends HdmiCecFeatureAction {
                 mTargetAddress));
     }
 
+    private void sendOTPCommand() {
+        sendCommand(HdmiCecMessageBuilder.buildActiveSource(getSourceAddress(), getSourcePath()));
+        sendCommand(HdmiCecMessageBuilder.buildTextViewOn(getSourceAddress(), mTargetAddress));
+    }
+
     @Override
     boolean processCommand(HdmiCecMessage cmd) {
         if (mState != STATE_WAITING_FOR_REPORT_POWER_STATUS
@@ -102,6 +107,7 @@ final class OneTouchPlayAction extends HdmiCecFeatureAction {
         if (cmd.getOpcode() == Constants.MESSAGE_REPORT_POWER_STATUS) {
             int status = cmd.getParams()[0];
             if (status == HdmiControlManager.POWER_STATUS_ON) {
+                Slog.d(TAG, "processCommand tv power status ok");
                 broadcastActiveSource();
                 invokeCallback(HdmiControlManager.RESULT_SUCCESS);
                 finish();
@@ -118,6 +124,8 @@ final class OneTouchPlayAction extends HdmiCecFeatureAction {
         }
         if (state == STATE_WAITING_FOR_REPORT_POWER_STATUS) {
             if (mPowerStatusCounter++ < LOOP_COUNTER_MAX) {
+                Slog.e(TAG, "handleTimerEvent tv power status is not ok, continue to query.");
+                sendOTPCommand();
                 queryDevicePowerStatus();
                 addTimer(mState, HdmiConfig.TIMEOUT_MS);
             } else {

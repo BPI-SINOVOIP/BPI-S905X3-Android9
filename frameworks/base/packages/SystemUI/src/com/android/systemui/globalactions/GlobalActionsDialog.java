@@ -1416,6 +1416,9 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                 v.setOnLongClickListener(view ->
                         mLongClickListener.onItemLongClick(null, v, pos, 0));
                 mListView.addView(v);
+                if (i == 0) {
+                   v.requestFocus();
+                }
             }
         }
 

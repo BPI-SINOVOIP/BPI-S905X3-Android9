@@ -18,6 +18,7 @@ package com.android.server.hdmi;
 
 import android.hardware.hdmi.HdmiControlManager;
 import android.hardware.hdmi.IHdmiControlCallback;
+import android.hardware.hdmi.HdmiDeviceInfo;
 import android.os.RemoteException;
 import android.util.Slog;
 
@@ -128,6 +129,16 @@ public class SelectRequestBuffer {
         mRequest = request;
     }
 
+    public boolean hasId(HdmiDeviceInfo deviceInfo) {
+        if (mRequest == null) {
+            Slog.d(TAG, "hasId mRequest null");
+            return false;
+        }
+        Slog.d(TAG, "hasId mId " + mRequest.mId + " deviceId " + deviceInfo.getId() + " portId " + deviceInfo.getPortId());
+        return mRequest instanceof DeviceSelectRequest && (deviceInfo.getId() == mRequest.mId)
+            || (mRequest instanceof PortSelectRequest && deviceInfo.getPortId() == mRequest.mId);
+    }
+
     public void process() {
         if (mRequest != null) {
             mRequest.process();
@@ -136,6 +147,7 @@ public class SelectRequestBuffer {
     }
 
     public void clear() {
+        Slog.d(TAG, "SelectRequestBuffer clear");
         mRequest = null;
     }
 }

@@ -62,11 +62,11 @@ private:
     /**
      * Maximum CPU load allocated to audio effects in 0.1 MIPS (ARMv5TE, 0 WS memory) units
      */
-    static const uint32_t MAX_EFFECTS_CPU_LOAD = 1000;
+    static const uint32_t MAX_EFFECTS_CPU_LOAD = 1500;//1000;
     /**
      * Maximum memory allocated to audio effects in KB
      */
-    static const uint32_t MAX_EFFECTS_MEMORY = 512;
+    static const uint32_t MAX_EFFECTS_MEMORY = 1024;//512;
 };
 
 } // namespace android

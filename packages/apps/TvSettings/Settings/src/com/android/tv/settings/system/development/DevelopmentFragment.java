@@ -1253,7 +1253,7 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
             int index = 0;
             long functions = manager.getCurrentFunctions();
             for (int i = 0; i < titles.length; i++) {
-                if ((functions | UsbManager.usbFunctionsFromString(values[i])) != 0) {
+                if (manager.isFunctionEnabled(values[i])) {
                     index = i;
                     break;
                 }

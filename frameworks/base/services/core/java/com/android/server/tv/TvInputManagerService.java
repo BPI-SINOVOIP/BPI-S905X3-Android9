@@ -672,6 +672,7 @@ public final class TvInputManagerService extends SystemService {
                 if (sessionToken == userState.mainSessionToken) {
                     setMainLocked(sessionToken, false, callingUid, userId);
                 }
+                sessionState.session.asBinder().unlinkToDeath(sessionState, 0);
                 sessionState.session.release();
             }
         } catch (RemoteException | SessionNotFoundException e) {
@@ -697,6 +698,7 @@ public final class TvInputManagerService extends SystemService {
         SessionState sessionState = userState.sessionStateMap.remove(sessionToken);
 
         if (sessionState == null) {
+            Slog.e(TAG, "sessionState null, no more remove session action!");
             return;
         }
 
@@ -707,6 +709,7 @@ public final class TvInputManagerService extends SystemService {
             clientState.sessionTokens.remove(sessionToken);
             if (clientState.isEmpty()) {
                 userState.clientStateMap.remove(sessionState.client.asBinder());
+                clientState.clientToken.unlinkToDeath(clientState, 0);
             }
         }
 
@@ -827,6 +830,10 @@ public final class TvInputManagerService extends SystemService {
     private void setStateLocked(String inputId, int state, int userId) {
         UserState userState = getOrCreateUserStateLocked(userId);
         TvInputState inputState = userState.inputMap.get(inputId);
+        if (inputState == null ||inputState.info == null) {
+            Slog.d(TAG,"Can't get input info,exit!!!!!");
+            return;
+        }
         ServiceState serviceState = userState.serviceStateMap.get(inputState.info.getComponent());
         int oldState = inputState.state;
         inputState.state = state;
@@ -2171,8 +2178,16 @@ public final class TvInputManagerService extends SystemService {
                 ClientState clientState = userState.clientStateMap.get(clientToken);
                 if (clientState != null) {
                     while (clientState.sessionTokens.size() > 0) {
+                        IBinder sessionToken = clientState.sessionTokens.get(0);
                         releaseSessionLocked(
-                                clientState.sessionTokens.get(0), Process.SYSTEM_UID, userId);
+                                sessionToken, Process.SYSTEM_UID, userId);
+                        // the releaseSessionLocked function may return before the sessionToken
+                        // is removed if the related sessionState is null. So need to check again
+                        // to avoid death curculation.
+                        if (clientState.sessionTokens.contains(sessionToken)) {
+                            Slog.d(TAG, "remove sessionToken " + sessionToken + " for " + clientToken);
+                            clientState.sessionTokens.remove(sessionToken);
+                        }
                     }
                 }
                 clientToken = null;

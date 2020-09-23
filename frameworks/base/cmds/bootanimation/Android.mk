@@ -83,6 +83,8 @@ LOCAL_SHARED_LIBRARIES := \
     libtinyalsa \
     libbase
 
+LOCAL_SHARED_LIBRARIES += libmedia
+
 ifeq ($(PRODUCT_IOT),true)
 
 LOCAL_INIT_RC := iot/bootanim_iot.rc

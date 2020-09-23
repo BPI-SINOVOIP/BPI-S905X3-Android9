@@ -134,6 +134,13 @@ abstract class DisplayAdapter {
                 NEXT_DISPLAY_MODE_ID.getAndIncrement(), width, height, refreshRate);
     }
 
+    public static Display.Mode createMode(int width,int height,float refreshRate,
+            float xDpi, float yDpi) {
+        return new Display.Mode(
+                NEXT_DISPLAY_MODE_ID.getAndIncrement(), width, height, refreshRate, xDpi, yDpi);
+    }
+
+
     public interface Listener {
         public void onDisplayDeviceEvent(DisplayDevice device, int event);
         public void onTraversalRequested();

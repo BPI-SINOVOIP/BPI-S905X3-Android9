@@ -144,6 +144,7 @@ public class VideoModule extends CameraModule
     private int mOriginalRingerMode;
 
     private boolean mSwitchingCamera;
+    private Size nearestSize = null;
     private boolean mMediaRecorderRecording = false;
     private long mRecordingStartTime;
     private boolean mRecordingTimeCountsDown = false;
@@ -735,7 +736,9 @@ public class VideoModule extends CameraModule
             : Keys.KEY_VIDEO_QUALITY_BACK;
         String videoQuality = settingsManager
                 .getString(SettingsManager.SCOPE_GLOBAL, videoQualityKey);
-        int quality = SettingsUtil.getVideoQuality(videoQuality, mCameraId);
+        List<Size> sizes = Size.convert(mCameraCapabilities.getSupportedVideoSizes());
+        int quality = SettingsUtil.getVideoQuality(videoQuality, mCameraId, sizes);
+        //int quality = SettingsUtil.getVideoQuality(videoQuality, mCameraId);
         Log.d(TAG, "Selected video quality for '" + videoQuality + "' is " + quality);
 
         // Set video quality.
@@ -1144,7 +1147,11 @@ public class VideoModule extends CameraModule
         mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
         mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
         mMediaRecorder.setProfile(mProfile);
-        mMediaRecorder.setVideoSize(mProfile.videoFrameWidth, mProfile.videoFrameHeight);
+        if (nearestSize != null) {
+            mMediaRecorder.setVideoSize(nearestSize.width(), nearestSize.height());
+            Log.d(TAG, "Trace_videosize, near width:" + nearestSize.width() + " near height:" + nearestSize.height());
+        }
+        //mMediaRecorder.setVideoSize(mProfile.videoFrameWidth, mProfile.videoFrameHeight);
         mMediaRecorder.setMaxDuration(mMaxVideoDurationInMs);
 
         setRecordLocation();
@@ -1192,6 +1199,25 @@ public class VideoModule extends CameraModule
 
         mMediaRecorder.setOnErrorListener(this);
         mMediaRecorder.setOnInfoListener(this);
+    }
+
+    private Size getNearestSize(int w, int h) {
+        List<Size> supportedVideo = Size.convert(mCameraCapabilities.getSupportedVideoSizes());
+        int minWidth = 10000;
+        int targetWidth = -1;
+        for (Size sz : supportedVideo) {
+            if (h == sz.height()) {
+                int d = Math.abs(sz.width() - w);
+                if (d < minWidth) {
+                    minWidth = d;
+                    targetWidth = sz.width();
+                }
+            }
+        }
+        if (targetWidth < 0) {
+           return null;
+        }
+        return new Size(targetWidth, h);
     }
 
     private static void setCaptureRate(MediaRecorder recorder, double fps) {
@@ -1341,6 +1367,11 @@ public class VideoModule extends CameraModule
     }
 
     private void startVideoRecording() {
+        nearestSize = getNearestSize(mProfile.videoFrameWidth, mProfile.videoFrameHeight);
+        if (nearestSize == null) {
+            Toast.makeText(mActivity, R.string.video_quality_not_support, Toast.LENGTH_SHORT).show();
+            return;
+        }
         Log.i(TAG, "startVideoRecording: " + Thread.currentThread());
         mUI.cancelAnimations();
         mUI.setSwipingEnabled(false);

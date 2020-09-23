@@ -1048,6 +1048,7 @@ bool LogBuffer::clear(log_id_t id, uid_t uid) {
             // otherwise, lets be a good citizen and preserve the slow
             // readers and let the clear run (below) deal with determining
             // if we are still blocked and return an error code to caller.
+            /*
             if (busy) {
                 LogTimeEntry::wrlock();
                 LastLogTimes::iterator times = mTimes.begin();
@@ -1061,11 +1062,15 @@ bool LogBuffer::clear(log_id_t id, uid_t uid) {
                 }
                 LogTimeEntry::unlock();
             }
+            */
+            busy = false;
+            break;
         }
         wrlock();
         busy = prune(id, ULONG_MAX, uid);
         unlock();
         if (!busy || !--retry) {
+            if (retry == 0) busy = false;
             break;
         }
         sleep(1);  // Let reader(s) catch up after notification
@@ -1186,17 +1191,18 @@ log_time LogBuffer::flushTo(SocketClient* reader, const log_time& start,
                 (element->getDropped() && !sameTid) ? 0 : element->getTid();
         }
 
-        unlock();
+        //unlock();
 
         // range locking in LastLogTimes looks after us
         curr = element->flushTo(reader, this, privileged, sameTid);
 
         if (curr == element->FLUSH_ERROR) {
+            unlock();
             return curr;
         }
 
         skip = maxSkip;
-        rdlock();
+        //rdlock();
     }
     unlock();
 

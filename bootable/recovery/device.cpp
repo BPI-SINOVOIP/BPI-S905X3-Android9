@@ -20,11 +20,14 @@ static const char* MENU_ITEMS[] = {
   "Reboot system now",
   "Reboot to bootloader",
   "Apply update from ADB",
-  "Apply update from SD card",
+  "Apply update from EXT",
   "Wipe data/factory reset",
 #ifndef AB_OTA_UPDATER
   "Wipe cache partition",
 #endif  // !AB_OTA_UPDATER
+#ifdef RECOVERY_HAS_PARAM
+  "Wipe param partition",
+#endif
   "Mount /system",
   "View recovery logs",
   "Run graphics test",
@@ -37,11 +40,14 @@ static const Device::BuiltinAction MENU_ACTIONS[] = {
   Device::REBOOT,
   Device::REBOOT_BOOTLOADER,
   Device::APPLY_ADB_SIDELOAD,
-  Device::APPLY_SDCARD,
+  Device::APPLY_EXT,
   Device::WIPE_DATA,
 #ifndef AB_OTA_UPDATER
   Device::WIPE_CACHE,
 #endif  // !AB_OTA_UPDATER
+#ifdef RECOVERY_HAS_PARAM
+  Device::WIPE_PARAM,
+#endif
   Device::MOUNT_SYSTEM,
   Device::VIEW_RECOVERY_LOGS,
   Device::RUN_GRAPHICS_TEST,

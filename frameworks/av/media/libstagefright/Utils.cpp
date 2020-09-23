@@ -12,6 +12,24 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * This file was modified by Dolby Laboratories, Inc. The portions of the
+ * code that are surrounded by "DOLBY..." are copyrighted and
+ * licensed separately, as follows:
+ *
+ *  (C) 2017 Dolby Laboratories, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 //#define LOG_NDEBUG 0
@@ -38,12 +56,17 @@
 #include <media/stagefright/foundation/AMessage.h>
 #include <media/stagefright/foundation/ByteUtils.h>
 #include <media/stagefright/MetaData.h>
+#include <media/stagefright/MediaCodecConstants.h>
 #include <media/stagefright/MediaDefs.h>
 #include <media/AudioSystem.h>
 #include <media/MediaPlayerInterface.h>
 #include <media/stagefright/Utils.h>
 #include <media/AudioParameter.h>
 #include <system/audio.h>
+
+#ifndef STAGEFRIGHT_PLAYER2
+#include <stagefright/AVExtensions.h>
+#endif
 
 namespace android {
 
@@ -220,6 +243,75 @@ static void parseAvcProfileLevelFromAvcc(const uint8_t *ptr, size_t size, sp<AMe
         }
     }
 }
+#ifdef DLB_VISION
+static void parseDolbyVisionProfileLevelFromDvcc(const uint8_t *ptr, size_t size, sp<AMessage> &format)
+{
+    if (size < 4 || ptr[0] != 1 || ptr[1] != 0) {  // dv_major_version == 1, dv_minor_version == 0
+        return;
+    }
+
+    const uint8_t profile = ptr[2] >> 1;
+    const uint8_t level = ((ptr[2] & 0x1) << 5) | ((ptr[3] >> 3) & 0x1f);
+    const uint8_t rpu_present_flag = (ptr[3] >> 2) & 0x01;
+    const uint8_t el_present_flag = (ptr[3] >> 1) & 0x01;
+    const uint8_t bl_present_flag = (ptr[3] & 0x01);
+
+
+    int32_t bl_compatibility_id = 0;
+    if (size == 4) {
+        bl_compatibility_id = (int32_t)(ptr[4] >> 4);
+    }
+
+    ALOGV("%s profile-level-compatibility value in dv(c|v)c box %d-%d-%d", __FUNCTION__,
+                                                profile, level, bl_compatibility_id);
+
+    ALOGV("%s profile-level value in dv(c|v)c box %d-%d", __FUNCTION__, profile, level);
+    /* All Dolby Profiles will have profile and level info in MediaFormat
+        Profile 8 and 9 will have bl_compatibility_id too.
+    */
+    const static ALookup<uint8_t, OMX_VIDEO_DOLBYVISIONPROFILETYPE> profiles {
+        { 1, OMX_VIDEO_DolbyVisionProfileDvavPen },
+        { 3, OMX_VIDEO_DolbyVisionProfileDvheDen },
+        { 4, OMX_VIDEO_DolbyVisionProfileDvheDtr },
+        { 5, OMX_VIDEO_DolbyVisionProfileDvheStn },
+        { 6, OMX_VIDEO_DolbyVisionProfileDvheDth },
+        { 7, OMX_VIDEO_DolbyVisionProfileDvheDtb },
+        { 8, OMX_VIDEO_DolbyVisionProfileDvheSt },
+        { 9, OMX_VIDEO_DolbyVisionProfileDvavSe },
+    };
+
+    const static ALookup<uint8_t, OMX_VIDEO_DOLBYVISIONLEVELTYPE> levels {
+        { 0, OMX_VIDEO_DolbyVisionLevelUnknown },
+        { 1, OMX_VIDEO_DolbyVisionLevelHd24 },
+        { 2, OMX_VIDEO_DolbyVisionLevelHd30 },
+        { 3, OMX_VIDEO_DolbyVisionLevelFhd24 },
+        { 4, OMX_VIDEO_DolbyVisionLevelFhd30 },
+        { 5, OMX_VIDEO_DolbyVisionLevelFhd60 },
+        { 6, OMX_VIDEO_DolbyVisionLevelUhd24 },
+        { 7, OMX_VIDEO_DolbyVisionLevelUhd30 },
+        { 8, OMX_VIDEO_DolbyVisionLevelUhd48 },
+        { 9, OMX_VIDEO_DolbyVisionLevelUhd60 },
+    };
+    //set rpuAssoc
+    if (rpu_present_flag && el_present_flag && !bl_present_flag)
+    {
+         format->setInt32("rpuAssoc", 1);
+    }
+    // set profile & level if they are recognized
+    OMX_VIDEO_DOLBYVISIONPROFILETYPE codecProfile;
+    OMX_VIDEO_DOLBYVISIONLEVELTYPE codecLevel;
+    if (profiles.map(profile, &codecProfile)) {
+        format->setInt32("profile", codecProfile);
+        if(codecProfile == OMX_VIDEO_DolbyVisionProfileDvheSt ||
+           codecProfile == OMX_VIDEO_DolbyVisionProfileDvavSe){
+            format->setInt32("bl_compatibility_id", bl_compatibility_id);
+        }
+        if (levels.map(level, &codecLevel)) {
+            format->setInt32("level", codecLevel);
+        }
+    }
+}
+#endif
 
 static void parseH263ProfileLevelFromD263(const uint8_t *ptr, size_t size, sp<AMessage> &format) {
     if (size < 7) {
@@ -568,6 +660,68 @@ static void parseVp9ProfileLevelFromCsd(const sp<ABuffer> &csd, sp<AMessage> &fo
     }
 }
 
+static void parseAV1ProfileLevelFromCsd(const sp<ABuffer> &csd, sp<AMessage> &format) {
+    // Parse CSD structure to extract profile level information
+    // https://aomediacodec.github.io/av1-isobmff/#av1codecconfigurationbox
+    const uint8_t *data = csd->data();
+    size_t remaining = csd->size();
+    if (remaining < 4 || data[0] != 0x81) {  // configurationVersion == 1
+        return;
+    }
+    uint8_t profileData = (data[1] & 0xE0) >> 5;
+    uint8_t levelData = data[1] & 0x1F;
+    uint8_t highBitDepth = (data[2] & 0x40) >> 6;
+
+    const static ALookup<std::pair<uint8_t, uint8_t>, int32_t> profiles {
+        { { 0, 0 }, AV1ProfileMain8 },
+        { { 1, 0 }, AV1ProfileMain10 },
+    };
+
+    int32_t profile;
+    if (profiles.map(std::make_pair(highBitDepth, profileData), &profile)) {
+        // bump to HDR profile
+        if (isHdr(format) && profile == AV1ProfileMain10) {
+            if (format->contains("hdr10-plus-info")) {
+                profile = AV1ProfileMain10HDR10Plus;
+            } else {
+                profile = AV1ProfileMain10HDR10;
+            }
+        }
+        format->setInt32("profile", profile);
+    }
+    const static ALookup<uint8_t, int32_t> levels {
+        { 0, AV1Level2   },
+        { 1, AV1Level21  },
+        { 2, AV1Level22  },
+        { 3, AV1Level23  },
+        { 4, AV1Level3   },
+        { 5, AV1Level31  },
+        { 6, AV1Level32  },
+        { 7, AV1Level33  },
+        { 8, AV1Level4   },
+        { 9, AV1Level41  },
+        { 10, AV1Level42  },
+        { 11, AV1Level43  },
+        { 12, AV1Level5   },
+        { 13, AV1Level51  },
+        { 14, AV1Level52  },
+        { 15, AV1Level53  },
+        { 16, AV1Level6   },
+        { 17, AV1Level61  },
+        { 18, AV1Level62  },
+        { 19, AV1Level63  },
+        { 20, AV1Level7   },
+        { 21, AV1Level71  },
+        { 22, AV1Level72  },
+        { 23, AV1Level73  },
+    };
+
+    int32_t level;
+    if (levels.map(levelData, &level)) {
+        format->setInt32("level", level);
+    }
+}
+
 status_t convertMetaDataToMessage(
         const sp<MetaData> &meta, sp<AMessage> *format) {
 
@@ -637,7 +791,7 @@ status_t convertMetaDataToMessage(
     if (meta->findInt32(kKeyTrackID, &trackID)) {
         msg->setInt32("track-id", trackID);
     }
-
+    
     const char *lang;
     if (meta->findCString(kKeyMediaLanguage, &lang)) {
         msg->setString("language", lang);
@@ -750,6 +904,11 @@ status_t convertMetaDataToMessage(
         int32_t pcmEncoding;
         if (meta->findInt32(kKeyPcmEncoding, &pcmEncoding)) {
             msg->setInt32("pcm-encoding", pcmEncoding);
+        }
+        int32_t isPassthroughEnable;
+        if (meta->findInt32(kKeyIsPtenable, &isPassthroughEnable)) {
+           ALOGI("isPassthroughEnable %d",isPassthroughEnable);
+           msg->setInt32("is_passthrough_enable", isPassthroughEnable); 
         }
     }
 
@@ -951,6 +1110,17 @@ status_t convertMetaDataToMessage(
         }
 
         parseHevcProfileLevelFromHvcc((const uint8_t *)data, dataSize, msg);
+    }else if (meta->findData(kKeyAV1C, &type, &data, &size)) {
+        sp<ABuffer> buffer = new (std::nothrow) ABuffer(size);
+        if (buffer.get() == NULL || buffer->base() == NULL) {
+            return NO_MEMORY;
+        }
+        memcpy(buffer->data(), data, size);
+
+        buffer->meta()->setInt32("csd", true);
+        buffer->meta()->setInt64("timeUs", 0);
+        msg->setBuffer("csd-0", buffer);
+        parseAV1ProfileLevelFromCsd(buffer, msg);
     } else if (meta->findData(kKeyESDS, &type, &data, &size)) {
         ESDS esds((const char *)data, size);
         if (esds.InitCheck() != (status_t)OK) {
@@ -1086,7 +1256,13 @@ status_t convertMetaDataToMessage(
 
         parseVp9ProfileLevelFromCsd(buffer, msg);
     }
-
+#ifdef DLB_VISION
+    if (meta->findData(kKeyDVCC, &type, &data, &size)) {
+        const uint8_t *ptr = (const uint8_t *)data;
+        ALOGV("%s DV: calling parseDolbyVisionProfileLevelFromDvcc", __FUNCTION__);
+        parseDolbyVisionProfileLevelFromDvcc(ptr, size, msg);
+    }
+#endif
     // TODO expose "crypto-key"/kKeyCryptoKey through public api
     if (meta->findData(kKeyCryptoKey, &type, &data, &size)) {
         sp<ABuffer> buffer = new (std::nothrow) ABuffer(size);
@@ -1094,6 +1270,9 @@ status_t convertMetaDataToMessage(
         memcpy(buffer->data(), data, size);
     }
 
+#ifndef STAGEFRIGHT_PLAYER2
+    AVUtils::get()->convertMetaDataToMessage(meta, msg);
+#endif
     *format = msg;
 
     return OK;
@@ -1481,7 +1660,15 @@ void convertMessageToMetaData(const sp<AMessage> &msg, sp<MetaData> &meta) {
             std::vector<uint8_t> hvcc(csd0size + 1024);
             size_t outsize = reassembleHVCC(csd0, hvcc.data(), hvcc.size(), 4);
             meta->setData(kKeyHVCC, kKeyHVCC, hvcc.data(), outsize);
-        } else if (mime == MEDIA_MIMETYPE_VIDEO_VP9) {
+        } else if (mime == MEDIA_MIMETYPE_VIDEO_AV1) {
+            meta->setData(kKeyAV1C, 0, csd0->data(), csd0->size());
+#ifdef DLB_VISION
+        } else if (mime ==  MEDIA_MIMETYPE_VIDEO_DOLBY_VISION) {
+            uint8_t dvcc[1024];
+            size_t outsize = reassembleHVCC(csd0, dvcc, 1024, 4);
+            meta->setData(kKeyDVCC, kKeyDVCC, dvcc, outsize);
+#endif
+        }  else if (mime == MEDIA_MIMETYPE_VIDEO_VP9) {
             meta->setData(kKeyVp9CodecPrivate, 0, csd0->data(), csd0->size());
         } else if (mime == MEDIA_MIMETYPE_AUDIO_OPUS) {
             meta->setData(kKeyOpusHeader, 0, csd0->data(), csd0->size());
@@ -1867,4 +2054,3 @@ AString nameForFd(int fd) {
 }
 
 }  // namespace android
-

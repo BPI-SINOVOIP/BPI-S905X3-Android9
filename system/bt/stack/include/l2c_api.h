@@ -59,6 +59,11 @@
 #define L2CAP_PRIORITY_NORMAL 0
 #define L2CAP_PRIORITY_HIGH 1
 
+#define L2CAP_DIRECTION_IGNORE 0 /* Set ACL priority direction as ignore */
+#define L2CAP_DIRECTION_DATA_SOURCE 1
+                                 /* Set ACL priority direction as source */
+#define L2CAP_DIRECTION_DATA_SINK 2 /* Set ACL priority direction as sink */
+
 /* Values for priority parameter to L2CA_SetTxPriority */
 #define L2CAP_CHNL_PRIORITY_HIGH 0
 #define L2CAP_CHNL_PRIORITY_MEDIUM 1
@@ -751,7 +756,8 @@ extern uint16_t L2CA_FlushChannel(uint16_t lcid, uint16_t num_to_flush);
  * Returns          true if a valid channel, else false
  *
  ******************************************************************************/
-extern bool L2CA_SetAclPriority(const RawAddress& bd_addr, uint8_t priority);
+extern bool L2CA_SetAclPriority(const RawAddress& bd_addr, uint8_t priority,
+		                        uint8_t direction);
 
 /*******************************************************************************
  *

@@ -757,11 +757,17 @@ void load_recovery_id_prop() {
 }
 
 void load_system_props() {
+    std::string ddrMode = android::base::GetProperty("ro.mem_size", "2g");
+
     load_properties_from_file("/system/build.prop", NULL);
     load_properties_from_file("/odm/build.prop", NULL);
     load_properties_from_file("/vendor/build.prop", NULL);
     load_properties_from_file("/factory/factory.prop", "ro.*");
     load_recovery_id_prop();
+
+    if (ddrMode == "1g") {
+        load_properties_from_file("/vendor/etc/mem_1g_ro.prop", NULL);
+    }
 }
 
 static int SelinuxAuditCallback(void* data, security_class_t /*cls*/, char* buf, size_t len) {

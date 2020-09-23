@@ -246,9 +246,6 @@ public class ITvInputSessionWrapper extends ITvInputSession.Stub implements Hand
 
     @Override
     public void release() {
-        if (!mIsRecordingSession) {
-            mTvInputSessionImpl.scheduleOverlayViewCleanup();
-        }
         mCaller.executeOrSendMessage(mCaller.obtainMessage(DO_RELEASE));
     }
 

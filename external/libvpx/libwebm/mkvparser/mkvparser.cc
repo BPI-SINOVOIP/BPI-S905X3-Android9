@@ -5475,8 +5475,10 @@ long AudioTrack::Parse(Segment* pSegment, const Info& info,
     } else if (id == libwebm::kMkvBitDepth) {
       bit_depth = UnserializeUInt(pReader, pos, size);
 
-      if (bit_depth <= 0)
+      if (bit_depth < 0)
         return E_FILE_FORMAT_INVALID;
+      else if (bit_depth == 0)
+        bit_depth = 16;
     }
 
     pos += size;  // consume payload

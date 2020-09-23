@@ -67,6 +67,7 @@ public class ModeListView extends FrameLayout
         PreviewStatusListener.PreviewAreaChangedListener {
 
     private static final Log.Tag TAG = new Log.Tag("ModeListView");
+    private int mFocusId = 0;
 
     // Animation Durations
     private static final int DEFAULT_DURATION_MS = 200;
@@ -1163,6 +1164,16 @@ public class ModeListView extends FrameLayout
         mTotalModes = mSupportedModes.size();
         initializeModeSelectorItems();
         mSettingsButton = findViewById(R.id.settings_button);
+        mSettingsButton.setOnFocusChangeListener( new OnFocusChangeListener( ){
+            @Override
+            public void onFocusChange ( View arg0, boolean hasFocus ) {
+                if ( hasFocus ) {
+                    mSettingsButton.setBackgroundDrawable ( getResources().getDrawable ( R.drawable.bg_options_indicator_focus ) );
+                } else {
+                    mSettingsButton.setBackgroundDrawable ( getResources().getDrawable ( R.drawable.bg_options_indicator ) );
+                }
+            }
+        });
         mSettingsButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1195,6 +1206,13 @@ public class ModeListView extends FrameLayout
         mScreenShotProvider = provider;
     }
 
+    public boolean settingsButtonRequestFocus(){
+        mSettingsButton.setFocusable(true);
+        //mSettingsButton.setFocusableInTouchMode(true);
+        mSettingsButton.requestFocus();
+        return true;
+    }
+
     private void initializeModeSelectorItems() {
         mModeSelectorItems = new ModeSelectorItem[mTotalModes];
         // Inflate the mode selector items and add them to a linear layout
@@ -1218,7 +1236,17 @@ public class ModeListView extends FrameLayout
             int modeId = getModeIndex(i);
             selectorItem.setHighlightColor(getResources()
                     .getColor(CameraUtil.getCameraThemeColorId(modeId, getContext())));
-
+            selectorItem.setOnFocusChangeListener ( new OnFocusChangeListener() {
+                @Override
+                public void onFocusChange ( View arg0, boolean hasFocus ) {
+                    if ( hasFocus ) {
+                        mFocusId = modeId;
+                        arg0.setBackgroundColor ( 0xFF33B5E5 );
+                    } else {
+                        arg0.setBackgroundColor ( android.graphics.Color.TRANSPARENT );
+                    }
+                }
+            } );
             // Set image
             selectorItem.setImageResource(CameraUtil.getCameraModeIconResId(modeId, getContext()));
 
@@ -1519,6 +1547,9 @@ public class ModeListView extends FrameLayout
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
+        if ( hasFocus ) {
+            onMenuPressed();
+        }
         mCurrentStateManager.getCurrentState().onWindowFocusChanged(hasFocus);
     }
 
@@ -2207,6 +2238,20 @@ public class ModeListView extends FrameLayout
             } else {
                 mPeepHoleAnimator.cancel();
                 return true;
+            }
+        }
+    }
+
+    /**
+    *Add function switch between video camera and so on
+    */
+    public void switchItem ( boolean click, boolean inc ) {
+        if ( click && mFocusId > -1 ) {
+            onItemSelected ( mModeSelectorItems[mFocusId] );
+            return;
+        } else {
+            if ( ( !inc && mFocusId == ( mModeSelectorItems.length - 1 ) ) || ( inc && mFocusId == 0 ) ) {
+                settingsButtonRequestFocus();
             }
         }
     }

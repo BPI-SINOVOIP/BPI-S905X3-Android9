@@ -313,5 +313,8 @@ public class TrackBrowserActivity extends ListActivity {
         if (item.isPlayable()) {
             getMediaController().getTransportControls().playFromMediaId(item.getMediaId(), null);
         }
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent = new Intent(this, MediaPlaybackActivity.class);
+        this.startActivity(intent);
     }
 }

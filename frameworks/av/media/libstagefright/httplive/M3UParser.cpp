@@ -12,7 +12,22 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *
+ *  (C) 2018 Dolby Laboratories, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
+
 
 //#define LOG_NDEBUG 0
 #define LOG_TAG "M3UParser"
@@ -1394,6 +1409,12 @@ bool M3UParser::codecIsType(const AString &codec, const char *type) {
         case 'CFHD':
         case 'civd':
         case 'DV10':
+#ifdef DLB_VISION
+        case 'dva1':
+        case 'dvav':
+        case 'dvh1':
+        case 'dvhe':
+#endif
         case 'dvh5':
         case 'dvh6':
         case 'dvhp':
@@ -1403,9 +1424,15 @@ bool M3UParser::codecIsType(const AString &codec, const char *type) {
         case 'DVVT':
         case 'flic':
         case 'gif ':
+#ifdef DLB_VISION
+        case 'hev1':
+#endif
         case 'h261':
         case 'h263':
         case 'HD10':
+#ifdef DLB_VISION
+        case 'hvc1':
+#endif
         case 'jpeg':
         case 'M105':
         case 'mjpa':

@@ -92,7 +92,7 @@
 
     <TextView
         android:id="@+id/nowplayingtab"
-        android:focusable="false"
+        android:focusable="true"
         android:background="@drawable/buttonbarbackground"
         android:drawableTop="@drawable/ic_tab_playback"
         android:text="@string/nowplaying_title"

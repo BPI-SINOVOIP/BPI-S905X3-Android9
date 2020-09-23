@@ -21,7 +21,18 @@ cc_library {
     ],
     shared_libs: ["libext2_uuid"],
 
+    include_dirs: [
+        "external/icu/icu4c/source/common",
+    ],
     target: {
+        android: {
+            host_ldlibs: ["-ldl"],
+            shared_libs: ["libicuuc"],
+            cflags: [
+                "-DHAVE_DLOPEN",
+                "-ldl",
+            ],
+        },
         windows: {
             include_dirs: [ "external/e2fsprogs/include/mingw" ],
             cflags: [

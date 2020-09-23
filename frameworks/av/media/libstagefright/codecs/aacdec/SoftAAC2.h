@@ -64,6 +64,9 @@ private:
     Vector<int64_t> mBufferTimestamps;
 
     CDrcPresModeWrapper mDrcWrap;
+    bool mSbrChanged;
+    uint8_t  mSfIndex;
+    UCHAR* mInBuffer[2];
 
     enum {
         NONE,

@@ -272,6 +272,7 @@ public class SurfaceView extends View implements ViewRootImpl.WindowStoppedCallb
         if (mPendingReportDraws > 0) {
             mDrawFinished = true;
             if (mAttachedToWindow) {
+                mParent.requestTransparentRegion(SurfaceView.this);
                 notifyDrawFinished();
                 invalidate();
             }

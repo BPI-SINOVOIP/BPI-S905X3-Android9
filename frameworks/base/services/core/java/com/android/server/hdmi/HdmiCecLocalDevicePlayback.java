@@ -47,7 +47,10 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
             SystemProperties.getBoolean(Constants.PROPERTY_WAKE_ON_HOTPLUG, true);
 
     private static final boolean SET_MENU_LANGUAGE =
-            SystemProperties.getBoolean(Constants.PROPERTY_SET_MENU_LANGUAGE, false);
+            SystemProperties.getBoolean(Constants.PROPERTY_SET_MENU_LANGUAGE, true);
+
+    private static final Locale HONG_KONG = new Locale("zh", "HK");
+    private static final Locale MACAU = new Locale("zh", "MO");
 
     private boolean mIsActiveSource = false;
 
@@ -80,7 +83,24 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
                 mAddress, mService.getPhysicalAddress(), mDeviceType));
         mService.sendCecCommand(HdmiCecMessageBuilder.buildDeviceVendorIdCommand(
                 mAddress, mService.getVendorId()));
+        mService.sendCecCommand(HdmiCecMessageBuilder.buildGiveDeviceVendorIdCommand(
+                mAddress, Constants.ADDR_TV));
+        mService.sendCecCommand(HdmiCecMessageBuilder.buildGetMenuLanguageCommand(
+                mAddress));
         startQueuedActions();
+        boolean isOneTouchPlayEnabled =
+            mService.readBooleanSetting("hdmi_control_one_touch_play_enabled", true);
+        Slog.d(TAG, "onAddressAllocated " + logicalAddress + " " + reason + " isOneTouchPlayEnabled " + isOneTouchPlayEnabled);
+        if (isOneTouchPlayEnabled) {
+            oneTouchPlay(new IHdmiControlCallback.Stub() {
+                    @Override
+                    public void onComplete(int result) {
+                        if (result != HdmiControlManager.RESULT_SUCCESS) {
+                            Slog.w(TAG, "Failed to complete 'one touch play' after retrying for 20s. result=" + result);
+                        }
+                    }
+                });
+        }
     }
 
     @Override
@@ -157,6 +177,8 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
             mService.wakeUp();
         }
         if (!connected) {
+            Slog.d(TAG, "onHotplug activeness reset to unkown");
+            HdmiCecActiveness.enableState(mService.getContext(), true);
             getWakeLock().release();
         }
     }
@@ -191,6 +213,26 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
     @ServiceThreadOnly
     void setActiveSource(boolean on) {
         assertRunOnServiceThread();
+
+        boolean isConnected = mService.isConenctedToCecTv(mAddress);
+        // When the device is not connected to tv, the state should be "unkown" although the active
+        // State in here is true. Then when the devices is actually connected and active, we should
+        // Change the state of activeness.
+        boolean connectedActive = isConnected && on && !HdmiCecActiveness.mActive;
+        // When changes from active to inactive state or inverse, We should notify to
+        // Change the activeness state. Other situations should not be concerning.
+        boolean changesToActive = isConnected && on && !mIsActiveSource;
+        boolean changesToInActive = mIsActiveSource && !on;
+        Slog.d(TAG, "setIsActiveSource isConnected " + isConnected
+                + " connectedActive " + connectedActive
+                + " changesToActive " + changesToActive
+                + " changesToInActive " + changesToInActive);
+
+        if (connectedActive || changesToActive || changesToInActive) {
+            Slog.d(TAG, "activeness change to " + on);
+            HdmiCecActiveness.notifyState(mService.getContext(), on);
+        }
+
         mIsActiveSource = on;
         if (on) {
             getWakeLock().acquire();
@@ -232,14 +274,8 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
     protected boolean handleActiveSource(HdmiCecMessage message) {
         assertRunOnServiceThread();
         int physicalAddress = HdmiUtils.twoBytesToInt(message.getParams());
-        mayResetActiveSource(physicalAddress);
+        setActiveSource(physicalAddress == mService.getPhysicalAddress());
         return true;  // Broadcast message.
-    }
-
-    private void mayResetActiveSource(int physicalAddress) {
-        if (physicalAddress != mService.getPhysicalAddress()) {
-            setActiveSource(false);
-        }
     }
 
     @ServiceThreadOnly
@@ -269,6 +305,9 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
         assertRunOnServiceThread();
         int newPath = HdmiUtils.twoBytesToInt(message.getParams(), 2);
         maySetActiveSource(newPath);
+        if (newPath == mService.getPhysicalAddress()) {
+            maySendActiveSource(message.getSource());
+        }
         return true;  // Broadcast message.
     }
 
@@ -318,16 +357,19 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
     protected boolean handleSetMenuLanguage(HdmiCecMessage message) {
         assertRunOnServiceThread();
         if (!SET_MENU_LANGUAGE) {
+            Slog.e(TAG, "handleSetMenuLanguage not support set menu language");
             return false;
         }
-
         try {
             String iso3Language = new String(message.getParams(), 0, 3, "US-ASCII");
             Locale currentLocale = mService.getContext().getResources().getConfiguration().locale;
-            if (currentLocale.getISO3Language().equals(iso3Language)) {
+            String curIso3Language = getLocaleIso3Language(currentLocale);
+            HdmiLogger.debug("handleSetMenuLanguage " + iso3Language + " cur:" + curIso3Language);
+            if (curIso3Language.equals(iso3Language)) {
                 // Do not switch language if the new language is the same as the current one.
                 // This helps avoid accidental country variant switching from en_US to en_AU
                 // due to the limitation of CEC. See the warning below.
+                Slog.d(TAG, "handleSetMenuLanguage same language and no need to change");
                 return true;
             }
 
@@ -336,7 +378,7 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
             final List<LocaleInfo> localeInfos = LocalePicker.getAllAssetLocales(
                     mService.getContext(), false);
             for (LocaleInfo localeInfo : localeInfos) {
-                if (localeInfo.getLocale().getISO3Language().equals(iso3Language)) {
+                if (getLocaleIso3Language(localeInfo.getLocale()).equals(iso3Language)) {
                     // WARNING: CEC adopts ISO/FDIS-2 for language code, while Android requires
                     // additional country variant to pinpoint the locale. This keeps the right
                     // locale from being chosen. 'eng' in the CEC command, for instance,
@@ -351,6 +393,21 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
         } catch (UnsupportedEncodingException e) {
             Slog.w(TAG, "Can't handle <Set Menu Language>", e);
             return false;
+        }
+    }
+
+    private String getLocaleIso3Language(Locale locale) {
+        if (null == locale) {
+            Slog.e(TAG, "getLocaleIso3Language locale null!");
+            return "";
+        }
+        if (locale.equals(Locale.TAIWAN) || locale.equals(HONG_KONG) || locale.equals(MACAU)) {
+            // Android always returns "zho" for all Chinese variants.
+            // Use "bibliographic" code defined in CEC639-2 for traditional
+            // Chinese used in Taiwan/Hong Kong/Macau.
+            return "chi";
+        } else {
+            return locale.getISO3Language();
         }
     }
 

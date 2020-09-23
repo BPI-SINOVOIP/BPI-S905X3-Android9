@@ -23,6 +23,7 @@ import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View.MeasureSpec;
 import android.view.animation.AccelerateInterpolator;
@@ -131,6 +132,7 @@ public class PhotoView extends GLView {
         public void onFilmModeChanged(boolean enabled);
         public void onPictureCenter(boolean isCamera);
         public void onUndoBarVisibilityChanged(boolean visible);
+        public void onKeyDown(KeyEvent KeyEvent);
     }
 
     // The rules about orientation locking:
@@ -1853,5 +1855,30 @@ public class PhotoView extends GLView {
             effect.addEntry(item.getPath(), rect, texture);
         }
         return effect;
+    }
+
+    @Override
+    protected boolean onKeyDown ( GLRootView GLRootView, KeyEvent KeyEvent ) {
+        int keyCode = KeyEvent.getKeyCode();
+        if ( keyCode == KeyEvent.KEYCODE_DPAD_CENTER || keyCode == KeyEvent.KEYCODE_ENTER ) {
+            if ( mListener != null ) {
+                mListener.onKeyDown ( KeyEvent );
+                return true;
+            }
+        } else if ( keyCode == KeyEvent.KEYCODE_DPAD_RIGHT ) {
+            slideToNextPicture();
+            return true;
+        } else if ( keyCode == KeyEvent.KEYCODE_DPAD_LEFT ) {
+            slideToPrevPicture();
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    protected void requestFocusAtPos0 ( boolean request ) {
+        if ( request ) {
+            switchToFirstImage();
+        }
     }
 }

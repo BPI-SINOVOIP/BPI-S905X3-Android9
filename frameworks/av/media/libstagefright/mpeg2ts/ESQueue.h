@@ -12,7 +12,22 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *
+ *  (C) 2018 Dolby Laboratories, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
+
 
 #ifndef ES_QUEUE_H_
 
@@ -36,6 +51,10 @@ struct ElementaryStreamQueue {
     enum Mode {
         INVALID = 0,
         H264,
+#ifdef DLB_VISION
+        H265,
+        DOVI,
+#endif
         AAC,
         AC3,
         MPEG_AUDIO,
@@ -74,6 +93,11 @@ struct ElementaryStreamQueue {
     void setCasInfo(int32_t systemId, const std::vector<uint8_t> &sessionId);
 
     void signalNewSampleAesKey(const sp<AMessage> &keyItem);
+
+#ifdef DLB_VISION
+    void setDoViDescriptor(const uint8_t *data);
+    void sendDoViDescriptor();
+#endif
 
 private:
     struct RangeInfo {
@@ -114,6 +138,10 @@ private:
     }
 
     sp<ABuffer> dequeueAccessUnitH264();
+#ifdef DLB_VISION
+    sp<ABuffer> dequeueAccessUnitH265();
+    sp<ABuffer> dequeueAccessUnitDoVi();
+#endif
     sp<ABuffer> dequeueAccessUnitAAC();
     sp<ABuffer> dequeueAccessUnitAC3();
     sp<ABuffer> dequeueAccessUnitMPEGAudio();
@@ -129,6 +157,10 @@ private:
             int32_t *pesScramblingControl = NULL);
 
     sp<ABuffer> dequeueScrambledAccessUnit();
+
+#ifdef DLB_VISION
+  uint8_t mDoviDescriptor[5];
+#endif
 
     DISALLOW_EVIL_CONSTRUCTORS(ElementaryStreamQueue);
 };

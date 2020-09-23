@@ -27,6 +27,7 @@ import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.android.gallery3d.R;
@@ -145,12 +146,28 @@ public class GLRootView extends GLSurfaceView
         mAnimations.add(animation);
     }
 
+    public boolean dispatchKey ( KeyEvent paramKeyEvent ) {
+        if (!isEnabled()) return false;
+        mRenderLock.lock();
+        try {
+            // If this has been detached from root, we don't need to handle event
+            boolean handled = mContentView != null && mContentView.dispatchKeyEvent(this, paramKeyEvent);
+            return handled;
+        } finally {
+            mRenderLock.unlock();
+        }
+    }
+
     @Override
     public void addOnGLIdleListener(OnGLIdleListener listener) {
         synchronized (mIdleListeners) {
             mIdleListeners.addLast(listener);
             mIdleRunner.enable();
         }
+    }
+
+    public void requestFocusAtPos0 ( boolean request ) {
+        mContentView.requestFocus ( request );
     }
 
     @Override

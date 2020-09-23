@@ -96,6 +96,106 @@ size_t InputMessage::size() const {
     return sizeof(Header);
 }
 
+/**
+ * There could be non-zero bytes in-between InputMessage fields. Force-initialize the entire
+ * memory to zero, then only copy the valid bytes on a per-field basis.
+ */
+void InputMessage::getSanitizedCopy(InputMessage* msg) const {
+    memset(msg, 0, sizeof(*msg));
+
+    // Write the header
+    msg->header.type = header.type;
+
+    // Write the body
+    switch(header.type) {
+        case InputMessage::TYPE_KEY: {
+            // uint32_t seq
+            msg->body.key.seq = body.key.seq;
+            // nsecs_t eventTime
+            msg->body.key.eventTime = body.key.eventTime;
+            // int32_t deviceId
+            msg->body.key.deviceId = body.key.deviceId;
+            // int32_t source
+            msg->body.key.source = body.key.source;
+            // int32_t displayId
+            msg->body.key.displayId = body.key.displayId;
+            // int32_t action
+            msg->body.key.action = body.key.action;
+            // int32_t flags
+            msg->body.key.flags = body.key.flags;
+            // int32_t keyCode
+            msg->body.key.keyCode = body.key.keyCode;
+            // int32_t scanCode
+            msg->body.key.scanCode = body.key.scanCode;
+            // int32_t metaState
+            msg->body.key.metaState = body.key.metaState;
+            // int32_t repeatCount
+            msg->body.key.repeatCount = body.key.repeatCount;
+            // nsecs_t downTime
+            msg->body.key.downTime = body.key.downTime;
+            break;
+        }
+        case InputMessage::TYPE_MOTION: {
+            // uint32_t seq
+            msg->body.motion.seq = body.motion.seq;
+            // nsecs_t eventTime
+            msg->body.motion.eventTime = body.motion.eventTime;
+            // int32_t deviceId
+            msg->body.motion.deviceId = body.motion.deviceId;
+            // int32_t source
+            msg->body.motion.source = body.motion.source;
+            // int32_t displayId
+            msg->body.motion.displayId = body.motion.displayId;
+            // int32_t action
+            msg->body.motion.action = body.motion.action;
+            // int32_t actionButton
+            msg->body.motion.actionButton = body.motion.actionButton;
+            // int32_t flags
+            msg->body.motion.flags = body.motion.flags;
+            // int32_t metaState
+            msg->body.motion.metaState = body.motion.metaState;
+            // int32_t buttonState
+            msg->body.motion.buttonState = body.motion.buttonState;
+            // int32_t edgeFlags
+            msg->body.motion.edgeFlags = body.motion.edgeFlags;
+            // nsecs_t downTime
+            msg->body.motion.downTime = body.motion.downTime;
+            // float xOffset
+            msg->body.motion.xOffset = body.motion.xOffset;
+            // float yOffset
+            msg->body.motion.yOffset = body.motion.yOffset;
+            // float xPrecision
+            msg->body.motion.xPrecision = body.motion.xPrecision;
+            // float yPrecision
+            msg->body.motion.yPrecision = body.motion.yPrecision;
+            // uint32_t pointerCount
+            msg->body.motion.pointerCount = body.motion.pointerCount;
+            //struct Pointer pointers[MAX_POINTERS]
+            for (size_t i = 0; i < body.motion.pointerCount; i++) {
+                // PointerProperties properties
+                msg->body.motion.pointers[i].properties.id = body.motion.pointers[i].properties.id;
+                msg->body.motion.pointers[i].properties.toolType =
+                        body.motion.pointers[i].properties.toolType,
+                // PointerCoords coords
+                msg->body.motion.pointers[i].coords.bits = body.motion.pointers[i].coords.bits;
+                const uint32_t count = BitSet64::count(body.motion.pointers[i].coords.bits);
+                memcpy(&msg->body.motion.pointers[i].coords.values[0],
+                        &body.motion.pointers[i].coords.values[0],
+                        count * (sizeof(body.motion.pointers[i].coords.values[0])));
+            }
+            break;
+        }
+        case InputMessage::TYPE_FINISHED: {
+            msg->body.finished.seq = body.finished.seq;
+            msg->body.finished.handled = body.finished.handled;
+            break;
+        }
+        default: {
+            LOG_FATAL("Unexpected message type %i", header.type);
+            break;
+        }
+    }
+}
 
 // --- InputChannel ---
 
@@ -149,10 +249,12 @@ status_t InputChannel::openInputChannelPair(const std::string& name,
 }
 
 status_t InputChannel::sendMessage(const InputMessage* msg) {
-    size_t msgLength = msg->size();
+    const size_t msgLength = msg->size();
+    InputMessage cleanMsg;
+    msg->getSanitizedCopy(&cleanMsg);
     ssize_t nWrite;
     do {
-        nWrite = ::send(mFd, msg, msgLength, MSG_DONTWAIT | MSG_NOSIGNAL);
+        nWrite = ::send(mFd, &cleanMsg, msgLength, MSG_DONTWAIT | MSG_NOSIGNAL);
     } while (nWrite == -1 && errno == EINTR);
 
     if (nWrite < 0) {

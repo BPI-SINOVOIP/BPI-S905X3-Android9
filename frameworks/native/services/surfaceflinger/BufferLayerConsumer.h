@@ -96,6 +96,9 @@ public:
     status_t updateTexImage(BufferRejecter* rejecter, const DispSync& dispSync, bool* autoRefresh,
                             bool* queuedBuffer, uint64_t maxFrameNumber);
 
+    status_t updateNoTexImage(BufferRejecter* rejecter, const DispSync& dispSync, bool* autoRefresh,
+                            bool* queuedBuffer, uint64_t maxFrameNumber = 0);
+
     // See BufferLayerConsumer::bindTextureImageLocked().
     status_t bindTextureImage();
 
@@ -209,6 +212,10 @@ protected:
     // it may call releaseBufferLocked itself later.
     status_t updateAndReleaseLocked(const BufferItem& item,
                                     PendingRelease* pendingRelease = nullptr);
+
+    status_t releaseNoTextureLocked(const BufferItem& item,
+                                                     PendingRelease* pendingRelease);
+
 
     // Binds mTexName and the current buffer to TEXTURE_EXTERNAL target.  Uses
     // mCurrentTexture if it's set, mCurrentTextureImage if not.  If the

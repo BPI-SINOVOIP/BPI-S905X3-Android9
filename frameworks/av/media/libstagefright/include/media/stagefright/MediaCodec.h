@@ -372,6 +372,7 @@ private:
     bool mHaveInputSurface;
     bool mHavePendingInputBuffers;
     bool mCpuBoostRequested;
+    bool mReclaiming;
 
     std::shared_ptr<BufferChannelBase> mBufferChannel;
 

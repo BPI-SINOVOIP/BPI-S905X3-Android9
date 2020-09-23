@@ -121,7 +121,12 @@ enum {
     eTraversalNeeded          = 0x02,
     eDisplayTransactionNeeded = 0x04,
     eDisplayLayerStackChanged = 0x08,
-    eTransactionMask          = 0x0f,
+#ifndef USE_AML_HW_ACTIVE_MODE
+    eTransactionMask          = 0x07 
+#else
+    ePrimaryHotplugTranscation = 0x10,
+    eTransactionMask		   = 0x1f
+#endif
 };
 
 enum class DisplayColorSetting : int32_t {

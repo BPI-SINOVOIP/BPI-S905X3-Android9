@@ -191,6 +191,26 @@ Return<void> SurfaceFlingerConfigs::primaryDisplayOrientation(
     return Void();
 }
 
+Return<void> SurfaceFlingerConfigs::primaryDisplayFramebufferWidth(
+        primaryDisplayFramebufferWidth_cb _hidl_cb) {
+#ifdef CONFIGSTORE_PRIMAY_FRAMEBUFFER_WIDTH
+    _hidl_cb({true, CONFIGSTORE_PRIMAY_FRAMEBUFFER_WIDTH});
+#else
+    _hidl_cb({false, 0});
+#endif
+    return Void();
+}
+
+Return<void> SurfaceFlingerConfigs::primaryDisplayFramebufferHeight(
+        primaryDisplayFramebufferHeight_cb _hidl_cb) {
+#ifdef CONFIGSTORE_PRIMAY_FRAMEBUFFER_HEIGHT
+    _hidl_cb({true, CONFIGSTORE_PRIMAY_FRAMEBUFFER_HEIGHT});
+#else
+    _hidl_cb({false, 0});
+#endif
+    return Void();
+}
+
 // Methods from ::android::hidl::base::V1_0::IBase follow.
 
 }  // namespace implementation

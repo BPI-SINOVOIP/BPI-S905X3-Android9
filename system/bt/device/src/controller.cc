@@ -30,8 +30,15 @@
 #include "osi/include/future.h"
 #include "stack/include/btm_ble_api.h"
 
-const bt_event_mask_t BLE_EVENT_MASK = {
-    {0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x1E, 0x7f}};
+const bt_event_mask_t BLE_EVENT_MASK = {{0x00, 0x00, 0x00, 0x00, 0x00, 0x02,
+#if (BLE_PRIVACY_SPT == TRUE)
+                                         0x1E,
+#else
+                                         /* Disable "LE Enhanced Connection
+                                            Complete" when privacy is off */
+                                         0x1C,
+#endif
+                                         0x7f}};
 
 const bt_event_mask_t CLASSIC_EVENT_MASK = {HCI_DUMO_EVENT_MASK_EXT};
 

@@ -1283,7 +1283,19 @@ void SurfaceFlinger::resyncToHardwareVsync(bool makeAvailable) {
         return;
     }
 
-    const auto& activeConfig = getBE().mHwc->getActiveConfig(HWC_DISPLAY_PRIMARY);
+    auto activeConfig = getBE().mHwc->getActiveConfig(HWC_DISPLAY_PRIMARY);
+#ifdef USE_AML_HW_ACTIVE_MODE
+    if (!activeConfig) {
+        // There is always a small window where plaform and surfaceflinger
+        // may not sync. So try again.
+        activeConfig = getBE().mHwc->getActiveConfig(HWC_DISPLAY_PRIMARY);
+        if (!activeConfig) {
+            ALOGE("resyncToHardwareVsync get null ActiveConfig");
+            return;
+        }
+    }
+#endif
+
     const nsecs_t period = activeConfig->getVsyncPeriod();
 
     mPrimaryDispSync.reset();
@@ -2243,8 +2255,25 @@ void SurfaceFlinger::processDisplayHotplugEventsLocked() {
                         "Built-in Screen" : "External Screen";
                 mCurrentState.displays.add(mBuiltinDisplays[displayType], info);
                 mInterceptor->saveDisplayCreation(info);
+                }
+#ifdef USE_AML_HW_ACTIVE_MODE
+            else if (displayType == DisplayDevice::DISPLAY_PRIMARY) {
+                disableHardwareVsync(false);
+                resyncToHardwareVsync(true);
+
+                auto& displayDevice = mDisplays[displayType];
+                displayDevice->setActiveConfig(getHwComposer().getActiveConfigIndex(displayType));
+                mEventThread->onHotplugReceived(DisplayDevice::DISPLAY_PRIMARY, true);
             }
+#endif
         } else {
+#ifdef USE_AML_HW_ACTIVE_MODE
+            // Disable hardware VSync if disconnect on primary display
+            if (displayType == DisplayDevice::DISPLAY_PRIMARY) {
+                disableHardwareVsync(true);
+                continue;
+            }
+#endif
             ALOGV("Removing built in display %d", displayType);
 
             ssize_t idx = mCurrentState.displays.indexOfKey(mBuiltinDisplays[displayType]);
@@ -2808,7 +2837,7 @@ void SurfaceFlinger::invalidateLayerStack(const sp<const Layer>& layer, const Re
 bool SurfaceFlinger::handlePageFlip()
 {
     ALOGV("handlePageFlip");
-
+    Mutex::Autolock _l(mStateLock);
     nsecs_t latchTime = systemTime();
 
     bool visibleRegions = false;

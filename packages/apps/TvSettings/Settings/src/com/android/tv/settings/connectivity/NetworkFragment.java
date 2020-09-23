@@ -17,6 +17,9 @@
 package com.android.tv.settings.connectivity;
 
 import android.content.Context;
+import android.content.BroadcastReceiver;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.wifi.WifiConfiguration;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,6 +29,8 @@ import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceCategory;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.preference.TwoStatePreference;
+import android.util.Log;
+import android.text.TextUtils;
 
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.settingslib.wifi.AccessPoint;
@@ -44,6 +49,8 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
         ConnectivityListener.Listener, ConnectivityListener.WifiNetworkListener,
         AccessPoint.AccessPointListener {
 
+    private static final String TAG = "NetworkFragment";
+
     private static final String KEY_WIFI_ENABLE = "wifi_enable";
     private static final String KEY_WIFI_LIST = "wifi_list";
     private static final String KEY_WIFI_COLLAPSE = "wifi_collapse";
@@ -56,6 +63,8 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
     private static final String KEY_ETHERNET_DHCP = "ethernet_dhcp";
 
     private static final int INITIAL_UPDATE_DELAY = 500;
+
+    private static final String BROADCAST_ACTION = "android.action.updateui";
 
     private ConnectivityListener mConnectivityListener;
     private AccessPointPreference.UserBadgeCache mUserBadgeCache;
@@ -80,6 +89,17 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
         }
     };
 
+    private final BroadcastReceiver mUIReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(BROADCAST_ACTION)) {
+                Log.d(TAG, "BROADCAST_ACTION");
+                mConnectivityListener.updateConnectivityStatus();
+                updateConnectivity();
+            }
+        }
+    };
+
     public static NetworkFragment newInstance() {
         return new NetworkFragment();
     }
@@ -95,6 +115,10 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
     @Override
     public void onStart() {
         super.onStart();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BROADCAST_ACTION);
+        getContext().registerReceiver(mUIReceiver, filter);
+
         mConnectivityListener.setWifiListener(this);
         mNoWifiUpdateBeforeMillis = SystemClock.elapsedRealtime() + INITIAL_UPDATE_DELAY;
         updateWifiList();
@@ -105,7 +129,14 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
         super.onResume();
         // There doesn't seem to be an API to listen to everything this could cover, so
         // tickle it here and hope for the best.
+        mConnectivityListener.updateConnectivityStatus();
         updateConnectivity();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        getContext().unregisterReceiver(mUIReceiver);
     }
 
     @Override
@@ -205,9 +236,13 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
         if (ethernetAvailable) {
             final boolean ethernetConnected =
                     mConnectivityListener.isEthernetConnected();
-            mEthernetStatusPref.setTitle(ethernetConnected
-                    ? R.string.connected : R.string.not_connected);
-            mEthernetStatusPref.setSummary(mConnectivityListener.getEthernetIpAddress());
+            String ethernetIpAddress = mConnectivityListener.getEthernetIpAddress();
+            if (ethernetConnected || !TextUtils.isEmpty(ethernetIpAddress)) {
+                mEthernetStatusPref.setTitle(R.string.connected);
+            } else {
+                mEthernetStatusPref.setTitle(R.string.not_connected);
+            }
+            mEthernetStatusPref.setSummary(ethernetIpAddress);
         }
     }
 

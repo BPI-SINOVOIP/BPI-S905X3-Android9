@@ -1440,6 +1440,15 @@ void MatroskaExtractor::addTracks() {
                               kKeyVp9CodecPrivate, 0, codecPrivate,
                               codecPrivateSize);
                     }
+                } else if (!strcmp("V_AV1", codecID)) {
+                    meta.setCString(kKeyMIMEType, MEDIA_MIMETYPE_VIDEO_AV1);
+                    if (codecPrivateSize > 0) {
+                      // 'csd-0' for AV1 is the Blob of Codec Private data as
+                      // specified in https://aomediacodec.github.io/av1-isobmff/.
+                        meta.setData(
+                              kKeyAV1C, kTypeAV1C, codecPrivate,
+                              codecPrivateSize);
+                    }
                 } else {
                     ALOGW("%s is not supported.", codecID);
                     continue;

@@ -93,7 +93,6 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.Vector;
 
-
 /**
  * MediaPlayer class can be used to control playback
  * of audio/video files and streams. An example on how to use the methods in
@@ -651,6 +650,20 @@ public class MediaPlayer extends PlayerBase
     private boolean mPrepareDrmInProgress;
     private ProvisioningThread mDrmProvisioningThread;
 
+
+    private final static String TAGEXO = "MediaPlayerExo";
+    private boolean mExoIsPlaying = false;
+    private Looper looper = null;
+    private boolean mUseExoPlayer = false;
+    private MediaPlayerExo mExoPlayerInstance = null;
+    private int mExoTotalDuration;
+    private int mExoCurPosition;
+    private int mExoVideoWidth;
+    private int mExoVideoHeight;
+    private boolean mExoBuffering;
+    private boolean mExoBufferNotifyStart;
+
+
     /**
      * Default constructor. Consider using one of the create() methods for
      * synchronously instantiating a MediaPlayer from a Uri or resource.
@@ -661,8 +674,7 @@ public class MediaPlayer extends PlayerBase
     public MediaPlayer() {
         super(new AudioAttributes.Builder().build(),
                 AudioPlaybackConfiguration.PLAYER_TYPE_JAM_MEDIAPLAYER);
-
-        Looper looper;
+        //Looper looper;
         if ((looper = Looper.myLooper()) != null) {
             mEventHandler = new EventHandler(this, looper);
         } else if ((looper = Looper.getMainLooper()) != null) {
@@ -712,6 +724,10 @@ public class MediaPlayer extends PlayerBase
      */
     public Parcel newRequest() {
         Parcel parcel = Parcel.obtain();
+        if (mUseExoPlayer) {
+            Log.i(TAGEXO, "newRequest not implement now");
+            return parcel;
+        }
         parcel.writeInterfaceToken(IMEDIA_PLAYER);
         return parcel;
     }
@@ -731,6 +747,10 @@ public class MediaPlayer extends PlayerBase
      * {@hide}
      */
     public void invoke(Parcel request, Parcel reply) {
+        if (mUseExoPlayer) {
+            Log.i(TAGEXO, "invoke not implement now");
+            return;
+        }
         int retcode = native_invoke(request, reply);
         reply.setDataPosition(0);
         if (retcode != 0) {
@@ -754,6 +774,14 @@ public class MediaPlayer extends PlayerBase
      */
     public void setDisplay(SurfaceHolder sh) {
         mSurfaceHolder = sh;
+        if (mUseExoPlayer) {
+            Log.i(TAGEXO, "call setDisplay");
+            if (mExoPlayerInstance != null) {
+                mExoPlayerInstance.setVideoSurfaceHolder(sh);
+                updateSurfaceScreenOn();
+            }
+            return;
+        }
         Surface surface;
         if (sh != null) {
             surface = sh.getSurface();
@@ -789,7 +817,14 @@ public class MediaPlayer extends PlayerBase
             Log.w(TAG, "setScreenOnWhilePlaying(true) is ineffective for Surface");
         }
         mSurfaceHolder = null;
-        _setVideoSurface(surface);
+        if (mUseExoPlayer) {
+            Log.i(TAG, "call setSurface");
+            if (mExoPlayerInstance != null) {
+                mExoPlayerInstance.setSurface(surface);
+            }
+        } else {
+            _setVideoSurface(surface);
+        }
         updateSurfaceScreenOn();
     }
 
@@ -837,6 +872,12 @@ public class MediaPlayer extends PlayerBase
         if (!isVideoScalingModeSupported(mode)) {
             final String msg = "Scaling mode " + mode + " is not supported";
             throw new IllegalArgumentException(msg);
+        }
+        if (mUseExoPlayer) {
+            Log.i(TAG, "call setVideoScalingMode");
+            if (mExoPlayerInstance != null)
+                mExoPlayerInstance.setVideoScalingMode(mode);
+            return;
         }
         Parcel request = Parcel.obtain();
         Parcel reply = Parcel.obtain();
@@ -902,6 +943,13 @@ public class MediaPlayer extends PlayerBase
      *     see {@link AudioManager#generateAudioSessionId()} to obtain a new session.
      * @return a MediaPlayer object, or null if creation failed
      */
+
+    private void setExoPlayerSupport(boolean support) {
+        mUseExoPlayer = support;
+        if (support == true && mExoPlayerInstance == null)
+            mExoPlayerInstance = new MediaPlayerExo(this, looper, mEventHandler);
+    }
+
     public static MediaPlayer create(Context context, Uri uri, SurfaceHolder holder,
             AudioAttributes audioAttributes, int audioSessionId) {
 
@@ -1036,6 +1084,16 @@ public class MediaPlayer extends PlayerBase
     public void setDataSource(@NonNull Context context, @NonNull Uri uri,
             @Nullable Map<String, String> headers, @Nullable List<HttpCookie> cookies)
             throws IOException {
+        if (MediaPlayerExo.getIsFormatSupport(uri)) {
+            Log.i(TAGEXO, "ExoPlayer support this uri we choose exoplayer");
+            setExoPlayerSupport(true);
+            if (mExoPlayerInstance != null) {
+                mExoPlayerInstance.initVideo(context, uri, headers, cookies);
+            } else {
+                Log.i(TAGEXO, "ExoPlayer mExoPlayerInstance is null");
+            }
+            return;
+        }
         if (context == null) {
             throw new NullPointerException("context param can not be null.");
         }
@@ -1100,6 +1158,17 @@ public class MediaPlayer extends PlayerBase
     public void setDataSource(@NonNull Context context, @NonNull Uri uri,
             @Nullable Map<String, String> headers)
             throws IOException, IllegalArgumentException, SecurityException, IllegalStateException {
+        if (MediaPlayerExo.getIsFormatSupport(uri)) {
+            Log.i(TAGEXO, "ExoPlayer support this uri we choose exoplayer");
+            setExoPlayerSupport(true);
+            if (mExoPlayerInstance != null) {
+                Log.i(TAG, "[exo-setDataSource]uri-path:" + uri.getPath());
+                mExoPlayerInstance.initVideo(context, uri, headers, null);
+            } else {
+                Log.i(TAGEXO, "ExoPlayer mExoPlayerInstance is null");
+            }
+            return;
+        }
         setDataSource(context, uri, headers, null);
     }
 
@@ -1128,6 +1197,10 @@ public class MediaPlayer extends PlayerBase
      */
     public void setDataSource(String path)
             throws IOException, IllegalArgumentException, SecurityException, IllegalStateException {
+        if (mUseExoPlayer) {
+            Log.i(TAG, "[exo-setDataSource] only path, exo not support this way!");
+            return;
+        }
         setDataSource(path, null, null);
     }
 
@@ -1172,6 +1245,12 @@ public class MediaPlayer extends PlayerBase
         if ("file".equals(scheme)) {
             path = uri.getPath();
         } else if (scheme != null) {
+            if (scheme.contains("http")) {
+                Uri exoUri = Uri.parse(path);
+                if (MediaPlayerExo.getIsFormatSupport(exoUri)) {
+                    Log.i(TAGEXO ,"Maybe should use exoplayer we now not implement this setDataSource");
+                }
+            }
             // handle non-file sources
             nativeSetDataSource(
                 MediaHTTPService.createHttpServiceBinderIfNecessary(path, cookies),
@@ -1208,6 +1287,10 @@ public class MediaPlayer extends PlayerBase
      */
     public void setDataSource(@NonNull AssetFileDescriptor afd)
             throws IOException, IllegalArgumentException, IllegalStateException {
+        if (mUseExoPlayer) {
+            Log.i(TAGEXO, "[exo-setDataSource] now, exo not support this way, AssetFileDescriptor!");
+            return;
+        }
         Preconditions.checkNotNull(afd);
         // Note: using getDeclaredLength so that our behavior is the same
         // as previous versions when the content provider is returning
@@ -1248,6 +1331,10 @@ public class MediaPlayer extends PlayerBase
      */
     public void setDataSource(FileDescriptor fd, long offset, long length)
             throws IOException, IllegalArgumentException, IllegalStateException {
+        if (mUseExoPlayer) {
+            Log.i(TAG, "[exo-setDataSource] now, exo not support this way, FileDescriptor!");
+            return;
+        }
         _setDataSource(fd, offset, length);
     }
 
@@ -1263,6 +1350,10 @@ public class MediaPlayer extends PlayerBase
      */
     public void setDataSource(MediaDataSource dataSource)
             throws IllegalArgumentException, IllegalStateException {
+        if (mUseExoPlayer) {
+            Log.i(TAG, "[exo-setDataSource] now, exo not support this way, MediaDataSource!");
+            return;
+        }
         _setDataSource(dataSource);
     }
 
@@ -1279,6 +1370,17 @@ public class MediaPlayer extends PlayerBase
      * @throws IllegalStateException if it is called in an invalid state
      */
     public void prepare() throws IOException, IllegalStateException {
+        if (mUseExoPlayer) {
+            if (mExoPlayerInstance!= null) {
+                Log.i(TAGEXO, "exo-prepare");
+                mExoPlayerInstance.prepare();
+                if (mSurfaceHolder != null) {
+                    Log.i(TAGEXO, "exo-setVideoSurfaceHolder");
+                    mExoPlayerInstance.setVideoSurfaceHolder(mSurfaceHolder);
+                }
+            }
+            return;
+        }
         _prepare();
         scanInternalSubtitleTracks();
 
@@ -1300,7 +1402,22 @@ public class MediaPlayer extends PlayerBase
      *
      * @throws IllegalStateException if it is called in an invalid state
      */
-    public native void prepareAsync() throws IllegalStateException;
+    private native void _prepareAsync() throws IllegalStateException;
+
+    public void prepareAsync() throws IllegalStateException {
+        if (mUseExoPlayer) {
+            if (mExoPlayerInstance != null) {
+                Log.i(TAGEXO, "exo-prepareAsync");
+                mExoPlayerInstance.prepareAsync();
+                if (mSurfaceHolder != null) {
+                    Log.i(TAGEXO, "exo-setVideoSurfaceHolder");
+                    mExoPlayerInstance.setVideoSurfaceHolder(mSurfaceHolder);
+                }
+            }
+            return;
+        }
+        _prepareAsync();
+    }
 
     /**
      * Starts or resumes playback. If playback had previously been paused,
@@ -1311,6 +1428,13 @@ public class MediaPlayer extends PlayerBase
      * @throws IllegalStateException if it is called in an invalid state
      */
     public void start() throws IllegalStateException {
+        if (mUseExoPlayer) {
+            if (mExoPlayerInstance != null) {
+                Log.i(TAG, "[exo-start]");
+                mExoPlayerInstance.start();
+            }
+            return;
+        }
         //FIXME use lambda to pass startImpl to superclass
         final int delay = getStartDelayMs();
         if (delay == 0) {
@@ -1346,6 +1470,9 @@ public class MediaPlayer extends PlayerBase
 
 
     private int getAudioStreamType() {
+        if (mUseExoPlayer) {
+            return mStreamType;
+        }
         if (mStreamType == AudioManager.USE_DEFAULT_STREAM_TYPE) {
             mStreamType = _getAudioStreamType();
         }
@@ -1362,6 +1489,13 @@ public class MediaPlayer extends PlayerBase
      */
     public void stop() throws IllegalStateException {
         stayAwake(false);
+        if (mUseExoPlayer) {
+            Log.i(TAGEXO, "stop");
+            if (mExoPlayerInstance != null)
+                mExoPlayerInstance.stop();
+            baseStop();
+            return;
+        }
         _stop();
         baseStop();
     }
@@ -1376,6 +1510,13 @@ public class MediaPlayer extends PlayerBase
      */
     public void pause() throws IllegalStateException {
         stayAwake(false);
+        if (mUseExoPlayer) {
+            Log.i(TAGEXO, "pause");
+            if (mExoPlayerInstance != null)
+                mExoPlayerInstance.pause();
+            basePause();
+            return;
+        }
         _pause();
         basePause();
     }
@@ -1401,11 +1542,19 @@ public class MediaPlayer extends PlayerBase
     /* package */ int playerApplyVolumeShaper(
             @NonNull VolumeShaper.Configuration configuration,
             @NonNull VolumeShaper.Operation operation) {
+        if (mUseExoPlayer) {
+            Log.i(TAGEXO, "playerApplyVolumeShaper now we not implment for exoplayer mode");
+            return 0;
+        }
         return native_applyVolumeShaper(configuration, operation);
     }
 
     @Override
     /* package */ @Nullable VolumeShaper.State playerGetVolumeShaperState(int id) {
+        if (mUseExoPlayer) {
+            Log.i(TAGEXO, "playerGetVolumeShaperState now we not implment for exoplayer mode");
+            return null;
+        }
         return native_getVolumeShaperState(id);
     }
 
@@ -1436,6 +1585,10 @@ public class MediaPlayer extends PlayerBase
      */
     @Override
     public boolean setPreferredDevice(AudioDeviceInfo deviceInfo) {
+        if (mUseExoPlayer) {
+            Log.i(TAGEXO, "setPreferredDevice now we not implment for exoplayer mode");
+            return false;
+        }
         if (deviceInfo != null && !deviceInfo.isSink()) {
             return false;
         }
@@ -1455,6 +1608,10 @@ public class MediaPlayer extends PlayerBase
      */
     @Override
     public AudioDeviceInfo getPreferredDevice() {
+        if (mUseExoPlayer) {
+            Log.i(TAGEXO, "getPreferredDevice now we not implment for exoplayer mode");
+            return null;
+        }
         synchronized (this) {
             return mPreferredDevice;
         }
@@ -1468,6 +1625,10 @@ public class MediaPlayer extends PlayerBase
      */
     @Override
     public AudioDeviceInfo getRoutedDevice() {
+        if (mUseExoPlayer) {
+            Log.i(TAGEXO, "getRoutedDevice now we not implment for exoplayer mode");
+            return null;
+        }
         int deviceId = native_getRoutedDeviceId();
         if (deviceId == 0) {
             return null;
@@ -1512,6 +1673,10 @@ public class MediaPlayer extends PlayerBase
     @Override
     public void addOnRoutingChangedListener(AudioRouting.OnRoutingChangedListener listener,
             Handler handler) {
+        if (mUseExoPlayer) {
+            Log.i(TAGEXO, "addOnRoutingChangedListener now we not implment for exoplayer mode");
+            return;
+        }
         synchronized (mRoutingChangeListeners) {
             if (listener != null && !mRoutingChangeListeners.containsKey(listener)) {
                 enableNativeRoutingCallbacksLocked(true);
@@ -1530,6 +1695,10 @@ public class MediaPlayer extends PlayerBase
      */
     @Override
     public void removeOnRoutingChangedListener(AudioRouting.OnRoutingChangedListener listener) {
+        if (mUseExoPlayer) {
+            Log.i(TAGEXO, "removeOnRoutingChangedListener now we not implment for exoplayer mode");
+            return;
+        }
         synchronized (mRoutingChangeListeners) {
             if (mRoutingChangeListeners.containsKey(listener)) {
                 mRoutingChangeListeners.remove(listener);
@@ -1631,7 +1800,22 @@ public class MediaPlayer extends PlayerBase
      * {@link #setOnVideoSizeChangedListener(OnVideoSizeChangedListener)}
      * to provide a notification when the width is available.
      */
-    public native int getVideoWidth();
+    private native int _getVideoWidth();
+
+    public int getVideoWidth() {
+        if (mUseExoPlayer) {
+            if (mExoPlayerInstance != null) {
+                Log.i(TAGEXO, "exo-getVideoWidth");
+                if (mEventHandler != null) {
+                    Log.i(TAGEXO, "exo-send-EXO_MEDIA_INFO");
+                    Message m = mEventHandler.obtainMessage(EXO_MEDIA_INFO, 0, 0, null);
+                    mEventHandler.sendMessage(m);
+                }
+            }
+            return mExoVideoWidth;
+        }
+        return _getVideoWidth();
+    }
 
     /**
      * Returns the height of the video.
@@ -1642,7 +1826,22 @@ public class MediaPlayer extends PlayerBase
      * {@link #setOnVideoSizeChangedListener(OnVideoSizeChangedListener)}
      * to provide a notification when the height is available.
      */
-    public native int getVideoHeight();
+    private native int _getVideoHeight();
+
+    public int getVideoHeight() {
+        if (mUseExoPlayer) {
+            if (mExoPlayerInstance != null) {
+                Log.i(TAGEXO, "exo-getVideoHeight");
+                if (mEventHandler != null) {
+                    Log.i(TAGEXO, "exo-send-EXO_MEDIA_INFO");
+                    Message m = mEventHandler.obtainMessage(EXO_MEDIA_INFO, 0, 0, null);
+                    mEventHandler.sendMessage(m);
+                }
+            }
+            return mExoVideoHeight;
+        }
+        return _getVideoHeight();
+    }
 
     /**
      * Return Metrics data about the current player.
@@ -1655,6 +1854,10 @@ public class MediaPlayer extends PlayerBase
      *  the return value.
      */
     public PersistableBundle getMetrics() {
+        if (mUseExoPlayer) {
+            Log.i(TAGEXO, "getMetrics now we not implment for exoplayer mode");
+            return null;
+        }
         PersistableBundle bundle = native_getMetrics();
         return bundle;
     }
@@ -1668,7 +1871,18 @@ public class MediaPlayer extends PlayerBase
      * @throws IllegalStateException if the internal player engine has not been
      * initialized or has been released.
      */
-    public native boolean isPlaying();
+    private native boolean _isPlaying();
+
+    public boolean isPlaying() {
+        if (mUseExoPlayer) {
+            if (mEventHandler != null) {
+                Message m = mEventHandler.obtainMessage(EXO_MEDIA_IS_PLAYING, 0, 0, null);
+                mEventHandler.sendMessage(m);
+            }
+            return mExoIsPlaying;
+        }
+        return _isPlaying();
+    }
 
     /**
      * Gets the current buffering management params used by the source component.
@@ -1683,7 +1897,6 @@ public class MediaPlayer extends PlayerBase
     @NonNull
     @TestApi
     public native BufferingParams getBufferingParams();
-
     /**
      * Sets buffering management params.
      * The object sets its internal BufferingParams to the input, except that the input is
@@ -1700,7 +1913,6 @@ public class MediaPlayer extends PlayerBase
      */
     @TestApi
     public native void setBufferingParams(@NonNull BufferingParams params);
-
     /**
      * Change playback speed of audio by resampling the audio.
      * <p>
@@ -1802,8 +2014,24 @@ public class MediaPlayer extends PlayerBase
      * initialized or has been released.
      * @throws IllegalArgumentException if params is not supported.
      */
-    public native void setPlaybackParams(@NonNull PlaybackParams params);
+    private native void _setPlaybackParams(@NonNull PlaybackParams params);
 
+    public void setPlaybackParams(@NonNull PlaybackParams params) {
+        if (mUseExoPlayer) {
+            Log.i(TAGEXO, "call setPlaybackParams");
+            if (mExoPlayerInstance != null) {
+                if (mEventHandler != null) {
+                    Log.i(TAGEXO, "exo-send-MEDIA_EXO_EXTEND_SET_PLAYBACK_PARAMS");
+                    Message m = mEventHandler.obtainMessage(MEDIA_EXO_EXTEND_SET_PLAYBACK_PARAMS, 0, 0, null);
+                    mEventHandler.sendMessage(m);
+                }
+            }
+            else
+                Log.i(TAGEXO, "setPlaybackParams ExoPlayerInstance is null");
+            return;
+        }
+        _setPlaybackParams(params);
+    }
     /**
      * Gets the playback params, containing the current playback rate.
      *
@@ -1812,8 +2040,15 @@ public class MediaPlayer extends PlayerBase
      * initialized.
      */
     @NonNull
-    public native PlaybackParams getPlaybackParams();
+    private native PlaybackParams _getPlaybackParams();
 
+    public PlaybackParams getPlaybackParams() {
+        if (mUseExoPlayer) {
+            Log.i(TAGEXO, "now getPlaybackParams now implement");
+            return null;
+        }
+        return _getPlaybackParams();
+    }
     /**
      * Sets A/V sync mode.
      *
@@ -1823,8 +2058,14 @@ public class MediaPlayer extends PlayerBase
      * initialized.
      * @throws IllegalArgumentException if params are not supported.
      */
-    public native void setSyncParams(@NonNull SyncParams params);
-
+    private native void _setSyncParams(@NonNull SyncParams params);
+    public void setSyncParams(@NonNull SyncParams params) {
+        if (mUseExoPlayer) {
+            Log.i(TAGEXO, "now setSyncParams now implement");
+            return;
+        }
+        _setSyncParams(params);
+    }
     /**
      * Gets the A/V sync mode.
      *
@@ -1834,8 +2075,14 @@ public class MediaPlayer extends PlayerBase
      * initialized.
      */
     @NonNull
-    public native SyncParams getSyncParams();
-
+    private native SyncParams _getSyncParams();
+    public SyncParams getSyncParams() {
+        if (mUseExoPlayer) {
+            Log.i(TAGEXO, "now getSyncParams now implement");
+            return null;
+        }
+        return _getSyncParams();
+    }
     /**
      * Seek modes used in method seekTo(long, int) to move media position
      * to a specified location.
@@ -1920,6 +2167,13 @@ public class MediaPlayer extends PlayerBase
      * @throws IllegalArgumentException if the mode is invalid.
      */
     public void seekTo(long msec, @SeekMode int mode) {
+        if (mUseExoPlayer) {
+            if (mExoPlayerInstance != null) {
+                Log.i(TAG, "[exo-seekTo]");
+                mExoPlayerInstance.seekTo((int)msec, mode);
+            }
+            return;
+        }
         if (mode < SEEK_PREVIOUS_SYNC || mode > SEEK_CLOSEST) {
             final String msg = "Illegal seek mode: " + mode;
             throw new IllegalArgumentException(msg);
@@ -1944,6 +2198,13 @@ public class MediaPlayer extends PlayerBase
      * initialized
      */
     public void seekTo(int msec) throws IllegalStateException {
+        if (mUseExoPlayer) {
+            if (mExoPlayerInstance != null) {
+                Log.i(TAG, "[exo-seekTo]");
+                mExoPlayerInstance.seekTo(SEEK_PREVIOUS_SYNC, msec);
+            }
+            return;
+        }
         seekTo(msec, SEEK_PREVIOUS_SYNC /* mode */);
     }
 
@@ -1984,7 +2245,21 @@ public class MediaPlayer extends PlayerBase
      *
      * @return the current position in milliseconds
      */
-    public native int getCurrentPosition();
+    private native int _getCurrentPosition();
+
+    public int getCurrentPosition() {
+        if (mUseExoPlayer) {
+            if (mExoPlayerInstance!= null && isPlaying()) {
+                if (mEventHandler != null) {
+                    Log.i(TAG, "exo-send-EXO_MEDIA_UPDATE_PROCESS");
+                    Message m = mEventHandler.obtainMessage(EXO_MEDIA_UPDATE_PROCESS, 0, 0, null);
+                    mEventHandler.sendMessage(m);
+                }
+            }
+            return mExoCurPosition;
+        }
+        return _getCurrentPosition();
+    }
 
     /**
      * Gets the duration of the file.
@@ -1992,7 +2267,15 @@ public class MediaPlayer extends PlayerBase
      * @return the duration in milliseconds, if no duration is available
      *         (for example, if streaming live content), -1 is returned.
      */
-    public native int getDuration();
+    private native int _getDuration();
+
+    public int getDuration() {
+        if (mUseExoPlayer) {
+            Log.i(TAG, "exo-getDuration -1-");
+            return mExoPlayerInstance.getDuration();
+        }
+        return _getDuration();
+    }
 
     /**
      * Gets the media metadata.
@@ -2012,6 +2295,10 @@ public class MediaPlayer extends PlayerBase
      */
     public Metadata getMetadata(final boolean update_only,
                                 final boolean apply_filter) {
+        if (mUseExoPlayer) {
+            Log.i(TAGEXO, "getMetadata now we not implment for exoplayer mode");
+            return null;
+        }
         Parcel reply = Parcel.obtain();
         Metadata data = new Metadata();
 
@@ -2049,6 +2336,10 @@ public class MediaPlayer extends PlayerBase
      * {@hide}
      */
     public int setMetadataFilter(Set<Integer> allow, Set<Integer> block) {
+        if (mUseExoPlayer) {
+            Log.i(TAGEXO, "setMetadataFilter now we not implment for exoplayer mode");
+            return 0;
+        }
         // Do our serialization manually instead of calling
         // Parcel.writeArray since the sets are made of the same type
         // we avoid paying the price of calling writeValue (used by
@@ -2095,8 +2386,15 @@ public class MediaPlayer extends PlayerBase
      * @param next the player to start after this one completes playback.
      *
      */
-    public native void setNextMediaPlayer(MediaPlayer next);
+    private native void _setNextMediaPlayer(MediaPlayer next);
 
+    public void setNextMediaPlayer(MediaPlayer next) {
+        if (mUseExoPlayer) {
+            Log.i(TAGEXO, "setMetadataFilter now we not implment for exoplayer mode");
+            return;
+        }
+        _setNextMediaPlayer(next);
+    }
     /**
      * Releases resources associated with this MediaPlayer object.
      * It is considered good practice to call this method when you're
@@ -2143,9 +2441,16 @@ public class MediaPlayer extends PlayerBase
         mOnDrmConfigHelper = null;
         mOnDrmInfoHandlerDelegate = null;
         mOnDrmPreparedHandlerDelegate = null;
-        resetDrmState();
-
-        _release();
+        if (mUseExoPlayer) {
+            Log.i(TAGEXO, "release");
+            mUseExoPlayer = false;
+            if (mExoPlayerInstance != null)
+                mExoPlayerInstance.release();
+            mExoPlayerInstance = null;
+        } else {
+            resetDrmState();
+            _release();
+        }
     }
 
     private native void _release();
@@ -2175,7 +2480,13 @@ public class MediaPlayer extends PlayerBase
         }
 
         stayAwake(false);
-        _reset();
+        if (mUseExoPlayer) {
+            Log.i(TAGEXO, "reset");
+            if (mExoPlayerInstance != null)
+                mExoPlayerInstance.reset();
+        } else {
+            _reset();
+        }
         // make sure none of the listeners get called anymore
         if (mEventHandler != null) {
             mEventHandler.removeCallbacksAndMessages(null);
@@ -2185,8 +2496,8 @@ public class MediaPlayer extends PlayerBase
             mIndexTrackPairs.clear();
             mInbandTrackIndices.clear();
         };
-
-        resetDrmState();
+        if (mUseExoPlayer == false)
+            resetDrmState();
     }
 
     private native void _reset();
@@ -2200,6 +2511,10 @@ public class MediaPlayer extends PlayerBase
      * @hide
      */
     public void notifyAt(long mediaTimeUs) {
+        if (mUseExoPlayer) {
+            Log.i(TAGEXO, "notifyAt now we not implment for exoplayer mode " + mediaTimeUs);
+            return;
+        }
         _notifyAt(mediaTimeUs);
     }
 
@@ -2219,7 +2534,13 @@ public class MediaPlayer extends PlayerBase
         deprecateStreamTypeForPlayback(streamtype, "MediaPlayer", "setAudioStreamType()");
         baseUpdateAudioAttributes(
                 new AudioAttributes.Builder().setInternalLegacyStreamType(streamtype).build());
-        _setAudioStreamType(streamtype);
+        if (mUseExoPlayer) {
+            Log.i(TAGEXO, "call setAudioStreamType streamtype " + streamtype);
+            if (mExoPlayerInstance != null)
+                mExoPlayerInstance.setAudioStreamType(streamtype);
+        } else {
+            _setAudioStreamType(streamtype);
+        }
         mStreamType = streamtype;
     }
 
@@ -2227,6 +2548,9 @@ public class MediaPlayer extends PlayerBase
 
     // Keep KEY_PARAMETER_* in sync with include/media/mediaplayer.h
     private final static int KEY_PARAMETER_AUDIO_ATTRIBUTES = 1400;
+    private final static int KEY_PARAMETER_START_PLAYBACK_POSITION = 2600;
+    private static final int KEY_PARAMETER_LA_URL = 2700;
+    private static final int KEY_PARAMETER_CUSTOM_DATA = 2800;
     /**
      * Sets the parameter indicated by key.
      * @param key key indicates the parameter to be set.
@@ -2234,8 +2558,59 @@ public class MediaPlayer extends PlayerBase
      * @return true if the parameter is set successfully, false otherwise
      * {@hide}
      */
-    private native boolean setParameter(int key, Parcel value);
+    private native boolean _setParameter(int key, Parcel value);
+    //If need can be set to public we now set private first
+    private boolean setParameter(int key, Parcel value) {
+        boolean ret = false;
+        if (key == KEY_PARAMETER_START_PLAYBACK_POSITION) {
+            if (mExoPlayerInstance == null)
+                setExoPlayerSupport(true);
+            ret = mExoPlayerInstance.setParameter(key, value);
+        } else {
+            ret = _setParameter(key, value);
+        }
+        return ret;
+    }
 
+    public boolean setParameter(int key, int value) {
+        boolean ret = false;
+        if (mExoPlayerInstance != null) {
+            ret = mExoPlayerInstance.setParameter(key, value);
+        }
+        return ret;
+    }
+
+    public boolean setParameter(int key, String value) {
+        boolean ret = false;
+        if (key == KEY_PARAMETER_LA_URL || key == KEY_PARAMETER_CUSTOM_DATA) {
+            if (mExoPlayerInstance == null)
+                setExoPlayerSupport(true);
+        }
+        if (mExoPlayerInstance != null) {
+            ret = mExoPlayerInstance.setParameter(key, value);
+        }
+        return ret;
+    }
+
+    public Parcel getParcelParameter(int key) {
+        Parcel parcel = null;
+        if (mExoPlayerInstance != null) {
+            parcel = mExoPlayerInstance.getParcelParameter(key);
+        } else {
+            Log.e(TAG, " getParcelParameter should not carry out here");
+        }
+        return parcel;
+    }
+
+    public int getIntParameter(int key) {
+        int ret = -1;
+        if (mExoPlayerInstance != null) {
+            ret = mExoPlayerInstance.getIntParameter(key);
+        } else {
+           Log.e(TAG, " getParcelParameter should not carry out here");
+        }
+        return ret;
+    }
     /**
      * Sets the audio attributes for this MediaPlayer.
      * See {@link AudioAttributes} for how to build and configure an instance of this class.
@@ -2263,14 +2638,31 @@ public class MediaPlayer extends PlayerBase
      *
      * @param looping whether to loop or not
      */
-    public native void setLooping(boolean looping);
-
+    private native void _setLooping(boolean looping);
+    public void setLooping(boolean looping) {
+        if (mUseExoPlayer) {
+            if (mExoPlayerInstance != null)
+               mExoPlayerInstance.setLooping(looping);
+            return;
+        }
+        _setLooping(looping);
+    }
     /**
      * Checks whether the MediaPlayer is looping or non-looping.
      *
      * @return true if the MediaPlayer is currently looping, false otherwise
      */
-    public native boolean isLooping();
+    private native boolean _isLooping();
+    public boolean isLooping() {
+        boolean ret = false;
+        if (mUseExoPlayer) {
+            if (mExoPlayerInstance != null)
+               ret = mExoPlayerInstance.getLooping();
+            return ret;
+        }
+        ret = _isLooping();
+        return ret;
+    }
 
     /**
      * Sets the volume on this player.
@@ -2290,6 +2682,13 @@ public class MediaPlayer extends PlayerBase
      * to be set independently.
      */
     public void setVolume(float leftVolume, float rightVolume) {
+        if (mUseExoPlayer) {
+            if (mExoPlayerInstance!= null) {
+                Log.i(TAG, "[exo-setVolume2]");
+                mExoPlayerInstance.setVolume(leftVolume, rightVolume);
+            }
+            return;
+        }
         baseSetVolume(leftVolume, rightVolume);
     }
 
@@ -2305,6 +2704,13 @@ public class MediaPlayer extends PlayerBase
      * @hide
      */
     public void setVolume(float volume) {
+        if (mUseExoPlayer) {
+            if (mExoPlayerInstance!= null) {
+                Log.i(TAG, "[exo-setVolume]");
+                mExoPlayerInstance.setVolume(volume, volume);
+            }
+            return;
+        }
         setVolume(volume, volume);
     }
 
@@ -2324,16 +2730,29 @@ public class MediaPlayer extends PlayerBase
      * This method must be called before one of the overloaded <code> setDataSource </code> methods.
      * @throws IllegalStateException if it is called in an invalid state
      */
-    public native void setAudioSessionId(int sessionId)  throws IllegalArgumentException, IllegalStateException;
+    private native void _setAudioSessionId(int sessionId)  throws IllegalArgumentException, IllegalStateException;
 
+    public void setAudioSessionId(int sessionId) throws IllegalArgumentException, IllegalStateException {
+        if (mUseExoPlayer) {
+            Log.i(TAGEXO, "setAudioSessionId now we not implment for exoplayer mode");
+            return;
+        }
+        _setAudioSessionId(sessionId);
+    }
     /**
      * Returns the audio session ID.
      *
      * @return the audio session ID. {@see #setAudioSessionId(int)}
      * Note that the audio session ID is 0 only if a problem occured when the MediaPlayer was contructed.
      */
-    public native int getAudioSessionId();
-
+    private native int _getAudioSessionId();
+    public int getAudioSessionId(){
+        if (mUseExoPlayer) {
+            Log.i(TAGEXO, "getAudioSessionId now we not implment for exoplayer mode");
+            return 0;
+        }
+        return _getAudioSessionId();
+    }
     /**
      * Attaches an auxiliary effect to the player. A typical auxiliary effect is a reverberation
      * effect which can be applied on any sound source that directs a certain amount of its
@@ -2348,8 +2767,14 @@ public class MediaPlayer extends PlayerBase
      * methods.
      * @param effectId system wide unique id of the effect to attach
      */
-    public native void attachAuxEffect(int effectId);
-
+    private native void _attachAuxEffect(int effectId);
+    public void attachAuxEffect(int effectId) {
+        if (mUseExoPlayer) {
+            Log.i(TAGEXO, "attachAuxEffect now we not implment for exoplayer mode");
+            return;
+        }
+        _attachAuxEffect(effectId);
+    }
 
     /**
      * Sets the send level of the player to the attached auxiliary effect.
@@ -2490,6 +2915,9 @@ public class MediaPlayer extends PlayerBase
             }
         }
 
+        static public TrackInfo build(int type, MediaFormat format) {
+            return new TrackInfo(type, format);
+        }
         /** @hide */
         TrackInfo(int type, MediaFormat format) {
             mTrackType = type;
@@ -2584,6 +3012,12 @@ public class MediaPlayer extends PlayerBase
      * @throws IllegalStateException if it is called in an invalid state.
      */
     public TrackInfo[] getTrackInfo() throws IllegalStateException {
+        if (mUseExoPlayer) {
+            if (mExoPlayerInstance != null) {
+                return mExoPlayerInstance.getTrackInfo();
+            }
+            return null;
+        }
         TrackInfo trackInfo[] = getInbandTrackInfo();
         // add out-of-band tracks
         synchronized (mIndexTrackPairs) {
@@ -3154,6 +3588,9 @@ public class MediaPlayer extends PlayerBase
      * @see android.media.MediaPlayer#getTrackInfo
      */
     public void selectTrack(int index) throws IllegalStateException {
+        if (mUseExoPlayer) {
+            return;
+        }
         selectOrDeselectTrack(index, true /* select */);
     }
 
@@ -3324,6 +3761,14 @@ public class MediaPlayer extends PlayerBase
     private static final int MEDIA_TIME_DISCONTINUITY = 211;
     private static final int MEDIA_AUDIO_ROUTING_CHANGED = 10000;
 
+    private static final int EXO_MEDIA_UPDATE_PROCESS = 300;
+    private static final int EXO_MEDIA_INFO = 301;
+    private static final int EXO_MEDIA_IS_PLAYING = 302;
+    private static final int EXO_MEDIA_UPDATE_BUFFER_PROCESS = 303;
+
+    private static final int MEDIA_EXO_EXTEND_SET_PLAYBACK_PARAMS = 4004;
+    private static final int MEDIA_EXO_EXTEND_GET_PLAYBACK_PARAMS = 4005;
+
     private TimeProvider mTimeProvider;
 
     /** @hide */
@@ -3350,7 +3795,70 @@ public class MediaPlayer extends PlayerBase
                 return;
             }
             switch(msg.what) {
+            case EXO_MEDIA_IS_PLAYING:
+                if (mUseExoPlayer) {
+                    if (mExoPlayerInstance != null) {
+                        mExoIsPlaying = mExoPlayerInstance.isPlaying();
+                        Log.w(TAGEXO, "mExoIsPlaying:" + mExoIsPlaying);
+                    }
+                }
+                break;
+            case EXO_MEDIA_INFO:
+                Log.w(TAG, "exo-EXO_MEDIA_INFO ");
+                if (mUseExoPlayer) {
+                    if (mExoPlayerInstance != null) {
+                          mExoVideoHeight = mExoPlayerInstance.getVideoHeight();
+                          mExoVideoWidth = mExoPlayerInstance.getVideoWidth();
+                          Log.w(TAG, "mExoVideoWidth:" + mExoVideoWidth + ",mExoVideoHeight:" + mExoVideoHeight);
+                    }
+                }
+                break;
+            case MEDIA_EXO_EXTEND_SET_PLAYBACK_PARAMS:
+                Log.i(TAGEXO, "exo-MEDIA_EXO_EXTEND_SET_PLAYBACK_PARAMS ");
+                if (mUseExoPlayer == true && mExoPlayerInstance != null) {
+                    //mExoPlayerInstance.setPlaybackParams(msg.obj);
+                }
+            case MEDIA_EXO_EXTEND_GET_PLAYBACK_PARAMS:
+                Log.i(TAGEXO, "now now implement MEDIA_EXO_EXTEND_GET_PLAYBACK_PARAMS ");
+                //if (mUseExoPlayer == true && mExoPlayerInstance != null) {
+                    //mExoPlaybackParams = mExoPlayerInstance.getPlaybackParams();
+                //}
+                break;
+            case EXO_MEDIA_UPDATE_PROCESS:
+                //Log.w(TAG, "exo-EXO_MEDIA_UPDATE_PROCESS ");
+                if (mUseExoPlayer) {
+                    if (mExoPlayerInstance!= null) {
+                          mExoTotalDuration = mExoPlayerInstance.getDuration();
+                          mExoCurPosition = mExoPlayerInstance.getCurrentPosition();
+                          //Log.w(TAG, "mExoTotalDuration:" + mExoTotalDuration + ",mExoCurPosition:" + mExoCurPosition);
+                          msg = mEventHandler.obtainMessage (EXO_MEDIA_UPDATE_PROCESS, 0, 0, null);
+                          mEventHandler.sendMessageDelayed (msg, 1000 - (mExoCurPosition % 1000));
+                    }
+                }
+                break;
+            case EXO_MEDIA_UPDATE_BUFFER_PROCESS:
+                if (mUseExoPlayer) {
+                    if (mExoPlayerInstance != null && mExoBuffering == true) {
+                        int mCurrentBufferTime = (int)mExoPlayerInstance.getBufferedPosition();
+                        if (mCurrentBufferTime > 0) {
+                            msg = mEventHandler.obtainMessage(MEDIA_BUFFERING_UPDATE, mCurrentBufferTime, 0, null);
+                            mEventHandler.sendMessage(msg);
+                        }
+                        msg = mEventHandler.obtainMessage(EXO_MEDIA_UPDATE_BUFFER_PROCESS, 0, 0, null);
+                        mEventHandler.sendMessageDelayed(msg, 1000);
+                    }
+                }
+                break;
             case MEDIA_PREPARED:
+                if (mUseExoPlayer) {
+                    if (mExoPlayerInstance != null) {
+                        Log.i(TAG, "[exo-onPrepared]");
+                        OnPreparedListener onPreparedListener = mOnPreparedListener;
+                        if (onPreparedListener != null)
+                            onPreparedListener.onPrepared(mMediaPlayer);
+                        }
+                    return;
+                }
                 try {
                     scanInternalSubtitleTracks();
                 } catch (RuntimeException e) {
@@ -3395,6 +3903,16 @@ public class MediaPlayer extends PlayerBase
                 return;
 
             case MEDIA_PLAYBACK_COMPLETE:
+                        Log.i(TAG, "[exo-MEDIA_PLAYBACK_COMPLETE]-receive");
+                if (mUseExoPlayer) {
+                    if (mExoPlayerInstance != null) {
+                        Log.i(TAG, "[exo-MEDIA_PLAYBACK_COMPLETE]");
+                        OnCompletionListener onCompletionListener = mOnCompletionListener;
+                        if (onCompletionListener != null)
+                            onCompletionListener.onCompletion(mMediaPlayer);
+                        return;
+                    }
+                }
                 {
                     mOnCompletionInternalListener.onCompletion(mMediaPlayer);
                     OnCompletionListener onCompletionListener = mOnCompletionListener;
@@ -3461,7 +3979,9 @@ public class MediaPlayer extends PlayerBase
                     error_was_handled = onErrorListener.onError(mMediaPlayer, msg.arg1, msg.arg2);
                 }
                 {
-                    mOnCompletionInternalListener.onCompletion(mMediaPlayer);
+                    if (!mUseExoPlayer) {
+                        mOnCompletionInternalListener.onCompletion(mMediaPlayer);
+                    }
                     OnCompletionListener onCompletionListener = mOnCompletionListener;
                     if (onCompletionListener != null && ! error_was_handled) {
                         onCompletionListener.onCompletion(mMediaPlayer);
@@ -3471,6 +3991,7 @@ public class MediaPlayer extends PlayerBase
                 return;
 
             case MEDIA_INFO:
+                    Log.i(TAG, "Info (" + msg.arg1 + "," + msg.arg2 + ")");
                 switch (msg.arg1) {
                 case MEDIA_INFO_VIDEO_TRACK_LAGGING:
                     Log.i(TAG, "Info (" + msg.arg1 + "," + msg.arg2 + ")");
@@ -3494,15 +4015,44 @@ public class MediaPlayer extends PlayerBase
                     break;
                 case MEDIA_INFO_BUFFERING_START:
                 case MEDIA_INFO_BUFFERING_END:
+                    Log.i(TAG, "Info =============");
                     TimeProvider timeProvider = mTimeProvider;
                     if (timeProvider != null) {
                         timeProvider.onBuffering(msg.arg1 == MEDIA_INFO_BUFFERING_START);
                     }
+                    if (mUseExoPlayer) {
+                        if (msg.arg1 == MEDIA_INFO_BUFFERING_START) {
+                            mExoBuffering = true;
+                            if (mExoBufferNotifyStart == false) {
+                                mExoBufferNotifyStart = true;
+                                msg = mEventHandler.obtainMessage(EXO_MEDIA_UPDATE_BUFFER_PROCESS, 0, 0, null);
+                                mEventHandler.sendMessage(msg);
+                            }
+                        } else {
+                            mExoBuffering = false;
+                        }
+                    }
+                    break;
+                case MEDIA_INFO_VIDEO_TRACK_BITRATE:
+                    msg.arg1 = MEDIA_INFO_VIDEO_TRACK_BITRATE;
+                    Log.i(TAG, "Info ============= MEDIA_INFO_VIDEO_TRACK_BITRATE is " + msg.arg2);
+                    break;
+                case MEDIA_INFO_AUDIO_LANGUAGE:
+                    msg.arg1 = MEDIA_INFO_AUDIO_LANGUAGE;
+                    Log.i(TAG, "Info ============= MEDIA_INFO_AUDIO_LANGUAGE is " + msg.arg2);
+                    break;
+                case MEDIA_INFO_VIDEO_TRACK_BITRATE_CHANGE:
+                    msg.arg1 = MEDIA_INFO_VIDEO_TRACK_BITRATE_CHANGE;
+                    Log.i(TAG, "Info ============= MEDIA_INFO_VIDEO_TRACK_BITRATE_CHANGE is " + msg.arg2);
+                    break;
+                case MEDIA_INFO_BUFFER_DURATION:
+                    msg.arg1 = MEDIA_INFO_BUFFER_DURATION;
+                    Log.i(TAG, "Info ============= MEDIA_INFO_BUFFER_DURATION is " + msg.arg2);
                     break;
                 }
-
                 OnInfoListener onInfoListener = mOnInfoListener;
                 if (onInfoListener != null) {
+                    Log.i(TAG, "=callback=Info (" + msg.arg1 + "," + msg.arg2 + ")");
                     onInfoListener.onInfo(mMediaPlayer, msg.arg1, msg.arg2);
                 }
                 // No real default action so far.
@@ -4262,6 +4812,10 @@ public class MediaPlayer extends PlayerBase
      */
     public static final int MEDIA_INFO_SUBTITLE_TIMED_OUT = 902;
 
+    public static final int MEDIA_INFO_VIDEO_TRACK_BITRATE = 856;
+    public static final int MEDIA_INFO_VIDEO_TRACK_BITRATE_CHANGE = 857;
+    public static final int MEDIA_INFO_BUFFER_DURATION = 861;
+    public static final int MEDIA_INFO_AUDIO_LANGUAGE = 864;
     /**
      * Interface definition of a callback to be invoked to communicate some
      * info and/or warning about the media or its playback.

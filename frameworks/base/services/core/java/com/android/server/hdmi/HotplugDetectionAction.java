@@ -85,7 +85,7 @@ final class HotplugDetectionAction extends HdmiCecFeatureAction {
 
     @Override
     void handleTimerEvent(int state) {
-        if (mState != state) {
+        if (STATE_NONE == mState || mState != state) {
             return;
         }
 
@@ -124,11 +124,15 @@ final class HotplugDetectionAction extends HdmiCecFeatureAction {
     }
 
     private void pollAllDevices() {
-        Slog.v(TAG, "Poll all devices.");
+        Slog.v(TAG, "Poll all devices." + this + " mSource " + tv());
 
         pollDevices(new DevicePollingCallback() {
             @Override
             public void onPollingFinished(List<Integer> ackedAddress) {
+                if (STATE_NONE == mState) {
+                    Slog.e(TAG, "action has been removed.");
+                    return;
+                }
                 checkHotplug(ackedAddress, false);
             }
         }, Constants.POLL_ITERATION_IN_ORDER
@@ -141,6 +145,10 @@ final class HotplugDetectionAction extends HdmiCecFeatureAction {
         pollDevices(new DevicePollingCallback() {
             @Override
             public void onPollingFinished(List<Integer> ackedAddress) {
+                if (STATE_NONE == mState) {
+                    Slog.e(TAG, "action has been removed.");
+                    return;
+                }
                 checkHotplug(ackedAddress, true);
             }
         }, Constants.POLL_ITERATION_IN_ORDER

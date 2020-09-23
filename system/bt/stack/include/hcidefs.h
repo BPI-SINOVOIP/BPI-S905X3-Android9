@@ -414,6 +414,10 @@
 /* Energy info OCF */
 #define HCI_BLE_ENERGY_INFO_OCF (0x0159 | HCI_GRP_VENDOR_SPECIFIC)
 
+#if (MASTER_LATENCY == TRUE)
+#define HCI_BLE_WRITE_LE_MASTER_LATENCY (0x01C7 | HCI_GRP_VENDOR_SPECIFIC)
+#endif
+
 /* Extended BLE Scan parameters OCF */
 #define HCI_BLE_EXTENDED_SCAN_PARAMS_OCF (0x015A | HCI_GRP_VENDOR_SPECIFIC)
 
@@ -788,12 +792,7 @@ constexpr uint8_t HCI_LE_STATES_INIT_MASTER_SLAVE_BIT = 41;
     0x0000000000200000 Connectionless Broadcast Channel Map Change Event
     0x0000000000400000 Inquiry Response Notification Event
 */
-#if (BLE_PRIVACY_SPT == TRUE)
-/* BLE event mask */
-#define HCI_BLE_EVENT_MASK_DEF "\x00\x00\x00\x00\x00\x00\x07\xff"
-#else
-#define HCI_BLE_EVENT_MASK_DEF "\x00\x00\x00\x00\x00\x00\x00\x7f"
-#endif
+
 /*
  * Definitions for packet type masks (BT1.2 and BT2.0 definitions)
 */
@@ -1240,6 +1239,12 @@ typedef struct {
 #define HCI_BRCM_ACL_PRIORITY_LOW 0x00
 #define HCI_BRCM_ACL_PRIORITY_HIGH 0xFF
 #define HCI_BRCM_SET_ACL_PRIORITY (0x0057 | HCI_GRP_VENDOR_SPECIFIC)
+
+/* Set ACL Priority Extended (with direction param) */
+#define HCI_BRCM_A2DP_SOURCE 0x00
+#define HCI_BRCM_A2DP_SINK 0x01
+#define HCI_BRCM_ACL_PRIORITY_EXT_PARAM_SIZE 4
+#define HCI_BRCM_SET_ACL_PRIORITY_EXT (0x011A | HCI_GRP_VENDOR_SPECIFIC)
 
 /* Define values for LMP Test Control parameters
  * Test Scenario, Hopping Mode, Power Control Mode

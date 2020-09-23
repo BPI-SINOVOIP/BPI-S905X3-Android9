@@ -39,6 +39,7 @@ cc_library_shared {
         "-Werror",
         "-Wall",
         "-fvisibility=hidden",
+        "-DDLB_VISION=1",
     ],
     version_script: "exports.lds",
 

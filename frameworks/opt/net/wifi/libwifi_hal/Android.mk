@@ -60,6 +60,9 @@ ifdef WIFI_DRIVER_STATE_OFF
 wifi_hal_cflags += -DWIFI_DRIVER_STATE_OFF=\"$(WIFI_DRIVER_STATE_OFF)\"
 endif
 
+ifeq ($(MULTI_WIFI_SUPPORT), true)
+wifi_hal_cflags += -DMULTI_WIFI_SUPPORT
+endif
 # Common code shared between the HALs.
 # ============================================================
 include $(CLEAR_VARS)
@@ -99,8 +102,6 @@ else ifeq ($(BOARD_WLAN_DEVICE), mrvl)
 else ifeq ($(BOARD_WLAN_DEVICE), MediaTek)
   # support MTK WIFI HAL
   LIB_WIFI_HAL := libwifi-hal-mt66xx
-else ifeq ($(BOARD_WLAN_DEVICE), emulator)
-  LIB_WIFI_HAL := libwifi-hal-emu
 endif
 
 # The WiFi HAL that you should be linking.

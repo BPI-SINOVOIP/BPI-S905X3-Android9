@@ -12,7 +12,22 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *
+ *  (C) 2018 Dolby Laboratories, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
+
 
 //#define LOG_NDEBUG 0
 #define LOG_TAG "ATSParser"
@@ -35,6 +50,9 @@
 #include <media/stagefright/foundation/ByteUtils.h>
 #include <media/stagefright/foundation/MediaKeys.h>
 #include <media/stagefright/foundation/avc_utils.h>
+#ifdef DLB_VISION
+#include "include/HevcUtils.h"
+#endif
 #include <media/stagefright/foundation/hexdump.h>
 #include <media/stagefright/MediaDefs.h>
 #include <media/stagefright/MediaErrors.h>
@@ -115,10 +133,18 @@ struct ATSParser::Program : public RefBase {
     void updateCasSessions();
 
     void signalNewSampleAesKey(const sp<AMessage> &keyItem);
+#ifdef DLB_VISION
+    void setDoViFlag(bool flag);
+    bool isDoVi();
+    void getDoViDescriptor(uint8_t *data);
+#endif
 
 private:
     struct StreamInfo {
         unsigned mType;
+#ifdef DLB_VISION
+        unsigned mTypeExt;
+#endif // DOLBY_VISION_END
         unsigned mPID;
         int32_t mCASystemId;
     };
@@ -127,6 +153,9 @@ private:
     unsigned mProgramNumber;
     unsigned mProgramMapPID;
     KeyedVector<unsigned, sp<Stream> > mStreams;
+#ifdef DLB_VISION
+    bool mDoVi;
+#endif
     bool mFirstPTSValid;
     uint64_t mFirstPTS;
     int64_t mLastRecoveredPTS;
@@ -135,9 +164,17 @@ private:
     status_t parseProgramMap(ABitReader *br);
     int64_t recoverPTS(uint64_t PTS_33bit);
     bool findCADescriptor(
-            ABitReader *br, unsigned infoLength, CADescriptor *caDescriptor);
+#ifdef DLB_VISION
+            ABitReader *br, unsigned infoLength, CADescriptor *caDescriptor,
+            unsigned *pStreamTypeExt);
+#else
+       ABitReader *br, unsigned infoLength, CADescriptor *caDescriptor);
+#endif
     bool switchPIDs(const Vector<StreamInfo> &infos);
 
+#ifdef DLB_VISION
+    uint8_t mDoViDescriptor[5];
+#endif
     DISALLOW_EVIL_CONSTRUCTORS(Program);
 };
 
@@ -145,10 +182,16 @@ struct ATSParser::Stream : public RefBase {
     Stream(Program *program,
            unsigned elementaryPID,
            unsigned streamType,
+#ifdef DLB_VISION
+         unsigned streamTypeExt,
+#endif // DOLBY_VISION_END
            unsigned PCR_PID,
            int32_t CA_system_ID);
 
     unsigned type() const { return mStreamType; }
+#ifdef DLB_VISION
+    unsigned typeExt() const { return mStreamTypeExt; }
+#endif // DOLBY_VISION_END
     unsigned pid() const { return mElementaryPID; }
     void setPID(unsigned pid) { mElementaryPID = pid; }
 
@@ -194,6 +237,9 @@ private:
     Program *mProgram;
     unsigned mElementaryPID;
     unsigned mStreamType;
+#ifdef DLB_VISION
+    unsigned mStreamTypeExt;
+#endif // DOLBY_VISION_END
     unsigned mPCR_PID;
     int32_t mExpectedContinuityCounter;
 
@@ -299,11 +345,27 @@ ATSParser::Program::Program(
     : mParser(parser),
       mProgramNumber(programNumber),
       mProgramMapPID(programMapPID),
+#ifdef DLB_VISION
+      mDoVi(false),
+#endif
       mFirstPTSValid(false),
       mFirstPTS(0),
       mLastRecoveredPTS(lastRecoveredPTS) {
     ALOGV("new program number %u", programNumber);
 }
+
+#ifdef DLB_VISION
+void ATSParser::Program::setDoViFlag(bool flag) {
+    mDoVi = flag;
+}
+
+bool ATSParser::Program::isDoVi() {
+    return mDoVi;
+}
+void ATSParser::Program::getDoViDescriptor(uint8_t *data) {
+    memcpy(data, mDoViDescriptor, 5);
+}
+#endif
 
 bool ATSParser::Program::parsePSISection(
         unsigned pid, ABitReader *br, status_t *err) {
@@ -434,7 +496,11 @@ bool ATSParser::Program::switchPIDs(const Vector<StreamInfo> &infos) {
 
 bool ATSParser::Program::findCADescriptor(
         ABitReader *br, unsigned infoLength,
-        ATSParser::CADescriptor *caDescriptor) {
+#ifdef DLB_VISION
+        ATSParser::CADescriptor *caDescriptor, unsigned *pStreamTypeExt) {
+#else
+         ATSParser::CADescriptor *caDescriptor) {
+#endif
     bool found = false;
     while (infoLength > 2) {
         unsigned descriptor_tag = br->getBits(8);
@@ -455,7 +521,19 @@ bool ATSParser::Program::findCADescriptor(
             caDescriptor->mPrivateData.assign(
                     br->data(), br->data() + descriptor_length - 4);
             break;
-        } else {
+        }
+#ifdef DLB_VISION
+         else if (pStreamTypeExt != NULL && descriptor_tag == STREAMTYPE_EXT_DOVI) {
+            ALOGV("find dovi descriptor ...");
+            setDoViFlag(true);
+            *pStreamTypeExt = STREAMTYPE_EXT_DOVI;
+            memcpy(mDoViDescriptor, br->data(), descriptor_length);
+            infoLength -= descriptor_length;
+            br->skipBits(descriptor_length * 8);
+            break;
+         }
+#endif
+        else {
             infoLength -= descriptor_length;
             br->skipBits(descriptor_length * 8);
         }
@@ -502,7 +580,11 @@ status_t ATSParser::Program::parseProgramMap(ABitReader *br) {
 
     // descriptors
     CADescriptor programCA;
-    bool hasProgramCA = findCADescriptor(br, program_info_length, &programCA);
+#ifdef DLB_VISION
+    bool hasProgramCA = findCADescriptor(br, program_info_length, &programCA,NULL);
+#else
+     bool hasProgramCA = findCADescriptor(br, program_info_length, &programCA);
+#endif //DOLBY_VISION_END
     if (hasProgramCA && !mParser->mCasManager->addProgram(
             mProgramNumber, programCA)) {
         return ERROR_MALFORMED;
@@ -529,15 +611,25 @@ status_t ATSParser::Program::parseProgramMap(ABitReader *br) {
 
         unsigned ES_info_length = br->getBits(12);
         ALOGV("    ES_info_length = %u", ES_info_length);
+#ifdef DLB_VISION
+        unsigned streamTypeExt = STREAMTYPE_EXT_RESERVED;
+#endif // DOLBY_VISION_END
 
         CADescriptor streamCA;
-        bool hasStreamCA = findCADescriptor(br, ES_info_length, &streamCA);
+#ifdef DLB_VISION
+        bool hasStreamCA = findCADescriptor(br, ES_info_length, &streamCA,&streamTypeExt);
+#else
+         bool hasStreamCA = findCADescriptor(br, ES_info_length, &streamCA);
+#endif
         if (hasStreamCA && !mParser->mCasManager->addStream(
                 mProgramNumber, elementaryPID, streamCA)) {
             return ERROR_MALFORMED;
         }
         StreamInfo info;
         info.mType = streamType;
+#ifdef DLB_VISION
+        info.mTypeExt = streamTypeExt;
+#endif
         info.mPID = elementaryPID;
         info.mCASystemId = hasProgramCA ? programCA.mSystemID :
                            hasStreamCA ? streamCA.mSystemID  : -1;
@@ -602,7 +694,12 @@ status_t ATSParser::Program::parseProgramMap(ABitReader *br) {
 
         if (index < 0) {
             sp<Stream> stream = new Stream(
-                    this, info.mPID, info.mType, PCR_PID, info.mCASystemId);
+#ifdef DLB_VISION
+              this, info.mPID, info.mType, info.mTypeExt, PCR_PID, info.mCASystemId);
+#else
+              this, info.mPID, info.mType, PCR_PID, info.mCASystemId);
+#endif
+
 
             if (mSampleAesKeyItem != NULL) {
                 stream->signalNewSampleAesKey(mSampleAesKeyItem);
@@ -720,11 +817,17 @@ ATSParser::Stream::Stream(
         Program *program,
         unsigned elementaryPID,
         unsigned streamType,
+#ifdef DLB_VISION
+        unsigned streamTypeExt,
+#endif // DLB_VISION_END
         unsigned PCR_PID,
         int32_t CA_system_ID)
     : mProgram(program),
       mElementaryPID(elementaryPID),
       mStreamType(streamType),
+#ifdef DLB_VISION
+      mStreamTypeExt(streamTypeExt),
+#endif // DLB_VISION_END
       mPCR_PID(PCR_PID),
       mExpectedContinuityCounter(-1),
       mPayloadStarted(false),
@@ -751,7 +854,16 @@ ATSParser::Stream::Stream(
     switch (mStreamType) {
         case STREAMTYPE_H264:
         case STREAMTYPE_H264_ENCRYPTED:
-            mode = ElementaryStreamQueue::H264;
+#ifdef DLB_VISION
+            if(mProgram->isDoVi())
+            {
+                mode = ElementaryStreamQueue::DOVI;
+            } else {
+                mode = ElementaryStreamQueue::H264;
+            }
+#else
+             mode = ElementaryStreamQueue::H264;
+#endif
             flags |= (mProgram->parserFlags() & ALIGNED_VIDEO_DATA) ?
                     ElementaryStreamQueue::kFlag_AlignedData : 0;
             break;
@@ -780,7 +892,28 @@ ATSParser::Stream::Stream(
         case STREAMTYPE_AC3_ENCRYPTED:
             mode = ElementaryStreamQueue::AC3;
             break;
+#ifdef DLB_VISION
+        case STREAMTYPE_H265:
+            if(mProgram->isDoVi())
+            {
+                mode = ElementaryStreamQueue::DOVI;
+            } else {
+                mode = ElementaryStreamQueue::H265;
+            }
+            flags |= (mProgram->parserFlags() & ALIGNED_VIDEO_DATA) ?
+                    ElementaryStreamQueue::kFlag_AlignedData : 0;
+            break;
 
+        case STREAMTYPE_PES_PRIVATE_DATA:
+            if(mStreamTypeExt == STREAMTYPE_EXT_DOVI) {
+              mode = ElementaryStreamQueue::DOVI;
+              ALOGV("DoVi stream type found!");
+            }else
+            {
+              ALOGE("Gone Wrong with STREAMTYPE_PES_PRIVATE_DATA");
+            }
+            break;
+#endif
         case STREAMTYPE_METADATA:
             mode = ElementaryStreamQueue::METADATA;
             break;
@@ -799,7 +932,13 @@ ATSParser::Stream::Stream(
         }
 
         ensureBufferCapacity(kInitialStreamBufferSize);
-
+#ifdef DLB_VISION
+        if (mode == ElementaryStreamQueue::DOVI) {
+            uint8_t data[5] = {0,};
+            mProgram->getDoViDescriptor(data);
+            mQueue->setDoViDescriptor(data);
+        }
+#endif
         if (mScrambled && (isAudio() || isVideo())) {
             // Set initial format to scrambled
             sp<MetaData> meta = new MetaData();
@@ -972,8 +1111,17 @@ bool ATSParser::Stream::isVideo() const {
         case STREAMTYPE_MPEG1_VIDEO:
         case STREAMTYPE_MPEG2_VIDEO:
         case STREAMTYPE_MPEG4_VIDEO:
+#ifdef DLB_VISION
+        case STREAMTYPE_H265:
+          ALOGV("stream type is: %d", mStreamType);
+#endif
             return true;
 
+#ifdef DLB_VISION
+        case STREAMTYPE_PES_PRIVATE_DATA:
+          ALOGV("stream type is: %d", mStreamType);
+          return mStreamTypeExt == STREAMTYPE_EXT_DOVI? true : false;
+#endif
         default:
             return false;
     }

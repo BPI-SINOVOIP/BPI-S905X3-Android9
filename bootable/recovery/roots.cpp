@@ -45,6 +45,8 @@ static struct fstab* fstab = nullptr;
 
 extern struct selabel_handle* sehandle;
 
+extern int ensure_path_mounted_extra(Volume *v);
+
 void load_volume_table() {
   fstab = fs_mgr_read_fstab_default();
   if (!fstab) {
@@ -124,6 +126,12 @@ int ensure_path_mounted_at(const char* path, const char* mount_point) {
   }
 
   mkdir(mount_point, 0755);  // in case it doesn't already exist
+
+    //add usb device(/dev/sd##) mount
+    int ret = ensure_path_mounted_extra(v);
+    if (ret != 2) {
+        return ret;
+    }
 
   if (strcmp(v->fs_type, "ext4") == 0 || strcmp(v->fs_type, "squashfs") == 0 ||
       strcmp(v->fs_type, "vfat") == 0) {

@@ -47,6 +47,12 @@ class RecoveryUI {
     IGNORE
   };
 
+    struct KeyMapItem_t {
+        const char* type;
+        int value;
+        int key[6];
+    };
+
   RecoveryUI();
 
   virtual ~RecoveryUI() {}
@@ -168,6 +174,30 @@ class RecoveryUI {
     int count;
   };
 
+  int num_keys;
+  KeyMapItem_t* keys_map;
+
+  KeyMapItem_t g_default_keymap[3] = {
+      { "select", KEY_ENTER, {KEY_ENTER, KEY_TAB, KEY_BACK, -1, -1, -1} },
+      { "down", KEY_DOWN, {KEY_DOWN, KEY_VOLUMEDOWN, KEY_PAGEDOWN, -1, -1, -1} },
+      { "up", KEY_UP, {KEY_UP, KEY_VOLUMEUP, KEY_PAGEUP, -1, -1, -1} },
+  };
+
+  #define NUM_DEFAULT_KEY_MAP 3
+
+  struct CtrlInfo_t {
+      const char *type;
+      int value;
+  };
+
+  CtrlInfo_t g_ctrlinfo[3] = {
+      { "select", KEY_ENTER },
+      { "down", KEY_DOWN },
+      { "up", KEY_UP },
+  };
+
+  #define NUM_CTRLINFO 3
+
   // The sensitivity when detecting a swipe.
   const int kTouchLowThreshold;
   const int kTouchHighThreshold;
@@ -181,7 +211,9 @@ class RecoveryUI {
 
   static void* time_key_helper(void* cookie);
   void time_key(int key_code, int count);
-
+  int getKey(char *key);
+  void load_key_map();
+  int getMapKey(int key);
   bool InitScreensaver();
 
   // Key event input queue

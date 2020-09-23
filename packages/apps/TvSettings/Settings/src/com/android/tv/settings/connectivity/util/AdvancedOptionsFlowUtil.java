@@ -80,6 +80,27 @@ public class AdvancedOptionsFlowUtil {
     }
 
     /**
+     * Process Proxy Settings.
+     *
+     * @param activity the activity that calls this method.
+     * @param proxySettings the proxySettings that to be set.
+     * @param httpProxy the httpProxy that to be set.
+     * @return 0 if successful, or other different values based on the result.
+     */
+    public static int processProxySettings(FragmentActivity activity, boolean bReset) {
+
+        AdvancedOptionsFlowInfo flowInfo = ViewModelProviders
+                .of(activity)
+                .get(AdvancedOptionsFlowInfo.class);
+        IpConfiguration mIpConfiguration = flowInfo.getIpConfiguration();
+
+        mIpConfiguration.setProxySettings(bReset?IpConfiguration.ProxySettings.NONE:mIpConfiguration.getProxySettings());
+		mIpConfiguration.setHttpProxy(bReset?null:mIpConfiguration.getHttpProxy());		
+
+        return 0;
+    }
+
+    /**
      * Process Ip Settings.
      *
      * @param activity the activity that calls this method.

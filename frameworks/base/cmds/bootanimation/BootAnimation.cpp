@@ -98,7 +98,680 @@ static const int ANIM_ENTRY_NAME_MAX = 256;
 static constexpr size_t TEXT_POS_LEN_MAX = 16;
 
 // ---------------------------------------------------------------------------
+static const char DEVICE_INPUT_PATH[] = "/dev/input";
+static const char BOOT_VIDEO_SYS_PROP_NAME[] = "persist.sys.bootvideo";
+static const char BOOT_VIDEO_VENDOR_PROP_NAME[] = "persist.vendor.media.bootvideo";
+static const char BOOT_VIDEO_RUNNING_STATUS_PROP_NAME[] = "service.bootvideo.exit";
+static const char BOOT_VIDEO_DATA_FILE[] = "/data/bootvideo";
+static const char BOOT_VIDEO_VENDOR_FILE[] = "/vendor/etc/bootvideo";
+static const char BOOT_VIDEO_VOL_SYSTEM_FILE[] = "/system/media/bootvideo.zip";
+static const char BOOT_VIDEO_VOL_VENDOR_FILE[] = "/vendor/etc/bootvideo.zip";
+static const char BOOT_VIDEO_OMX_DISPLAY_MODE_PROP_NAME[] = "media.omx.display_mode";
+static const char BOOT_VIDEO_FRAME_COUNT[] = "/sys/module/amvideo/parameters/new_frame_count";
 
+static const int HIDE_VOL_UI_WAIT_SLEEP_MS = 4000;
+static const int BOOT_VIDEO_VOL_MAX = 100;
+
+static const int LAYER_VIDEO = 0x30000000;
+static const int LAYER_VIDEO_VOL_UI_SHOW = 0x40000000;
+static const int LAYER_VIDEO_VOL_UI_HIDE = 0x20000000;
+
+static const int CONFIG_BOOTANIM = 0;
+static const int CONFIG_BOOTANIM_BOOTVIDEO = 1;
+static const int CONFIG_BOOTVIDEO_BOOTANIM = 2;
+static const int CONFIG_BOOTVIDEO = 3;
+
+static struct pollfd *ufds;
+static char **device_names;
+static int nfds;
+struct label {
+    const char *name;
+    int value;
+};
+
+#define LABEL(constant) { #constant, constant }
+#define LABEL_END { NULL, -1 }
+
+#define UP      0
+#define DOWN    1
+#define REPEAT  2
+
+static struct label key_labels[] = {
+    LABEL(KEY_VOLUMEUP),
+    LABEL(KEY_VOLUMEDOWN),
+    LABEL(KEY_MUTE),
+    LABEL_END,
+};
+
+static struct label key_value_labels[] = {
+    LABEL(UP),
+    LABEL(DOWN),
+    LABEL(REPEAT),
+    LABEL_END,
+};
+
+int get_video_frame_count(const char *path) {
+    int fd = -1;
+    int ret = 0;
+    char bcmd[16] = {0};
+
+    fd = open(path, O_RDONLY);
+    if (fd >= 0) {
+        read(fd, bcmd, sizeof(bcmd));
+        ret = strtol(bcmd, NULL, 16);
+        close(fd);
+        return ret > 0;
+    } else {
+        ALOGE("%s, open %s failed", __FUNCTION__, path);
+    }
+
+    return 0;
+}
+
+void property_set_int(const char* key, int defaultValue) {
+    char property_val[PROPERTY_VALUE_MAX] = {0};
+
+    snprintf(property_val, sizeof(property_val), "%d", defaultValue);
+    property_set(key, property_val);
+}
+
+int property_get_int(const char* key, int defaultValue) {
+    char buf[PROPERTY_VALUE_MAX] = {
+            '\0',
+    };
+
+    if (property_get(key, buf, "") > 0) {
+        return atoi(buf);
+    }
+    return defaultValue;
+}
+
+void BootAnimation::bootVideoSetVolume(int status) {
+    float vol = 0.5f;
+
+    switch (status) {
+        case UP:
+            if (mVol < BOOT_VIDEO_VOL_MAX) {
+                mVol++;
+            }
+            break;
+        case DOWN:
+            if (mVol > 0) {
+                mVol--;
+            }
+            break;
+    }
+
+    if (mMediaPlayer != NULL) {
+        vol =1.00f * mVol / BOOT_VIDEO_VOL_MAX;
+        mMediaPlayer->setVolume(vol, vol);
+    }
+
+    property_set_int(BOOT_VIDEO_SYS_PROP_NAME, mVol);
+    ALOGD("%s, Volume %s, mVol=%d, vol=%f", __FUNCTION__, status == UP ? "UP":"DOWN", mVol, vol);
+}
+
+bool BootAnimation::bootVideoVolumeUI(sp<BootVideoListener> listener) {
+    String8 mBootVideoVolFileName;
+
+    static const char* bootVideoVolFiles[] =
+                {BOOT_VIDEO_VOL_SYSTEM_FILE, BOOT_VIDEO_VOL_VENDOR_FILE};
+    for (const char* f : bootVideoVolFiles) {
+        if (access(f, R_OK) == 0) {
+            mBootVideoVolFileName = f;
+            break;
+        }
+    }
+    if (mBootVideoVolFileName.isEmpty()) {
+        ALOGE("%s bootvideo file check failed", __FUNCTION__);
+        return false;
+    }
+    ALOGD("%s, mBootVideoVolFileName=%s", __FUNCTION__, mBootVideoVolFileName.string());
+    Animation* animation = loadAnimation(mBootVideoVolFileName);
+    if (animation == NULL)
+        return false;
+
+    // Blend required to draw time on top of animation frames.
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glShadeModel(GL_FLAT);
+    glDisable(GL_DITHER);
+    glDisable(GL_SCISSOR_TEST);
+    glDisable(GL_BLEND);
+
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glEnable(GL_TEXTURE_2D);
+    glTexEnvx(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+    glTexParameterx(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameterx(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameterx(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameterx(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    const size_t pcount = animation->parts.size();
+    nsecs_t frameDuration = s2ns(1) / animation->fps;
+    const int animationX = (mWidth - animation->width) / 2;
+    const int animationY = mHeight - animation->height;
+    int index = mVol;
+    int64_t hideVolUIStartTime = -1;
+
+    ALOGD("BootAnimation::playAnimation pcount=%d, animationX=%d, animationY=%d", pcount, animationX, animationY);
+    ALOGD("BootAnimation::playAnimation mWidth=%d,mHeight=%d,animation->width=%d, animation->height=%d", mWidth, mHeight, animation->width,  animation->height);
+
+    const Animation::Part& part(animation->parts[0]);
+    const size_t fcount = part.frames.size();
+    int displayed[fcount];
+    memset(displayed, 0, sizeof(displayed));
+    ALOGD("%s, fcount=%d, part.count=%d", __FUNCTION__, fcount, part.count);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glClearColor(
+        part.backgroundColor[0],
+        part.backgroundColor[1],
+        part.backgroundColor[2],
+        0.0f);
+
+    SurfaceComposerClient::Transaction t;
+
+    while(!listener->isPlayCompleted) {
+        if (index != mVol) {
+            ALOGD("%s, pcount=%d, mVol=%d, name=%s", __FUNCTION__, pcount, mVol, part.frames[mVol].name.string());
+            hideVolUIStartTime = elapsedRealtime();
+
+            const Animation::Frame& frame(part.frames[mVol]);
+            if (displayed[mVol] == 0) {
+                glGenTextures(1, &frame.tid);
+                glBindTexture(GL_TEXTURE_2D, frame.tid);
+                glTexParameterx(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+                glTexParameterx(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+                int w, h;
+                initTexture(frame.map, &w, &h);
+                displayed[mVol] = 1;
+            } else {
+                glBindTexture(GL_TEXTURE_2D, frame.tid);
+            }
+
+            const int xc = animationX + frame.trimX;
+            const int yc = animationY + frame.trimY;
+
+            Region clearReg(Rect(mWidth, mHeight));
+            clearReg.subtractSelf(Rect(xc, yc, xc+frame.trimWidth, yc+frame.trimHeight));
+            if (!clearReg.isEmpty()) {
+                Region::const_iterator head(clearReg.begin());
+                Region::const_iterator tail(clearReg.end());
+                glEnable(GL_SCISSOR_TEST);
+                while (head != tail) {
+                    const Rect& r2(*head++);
+                    glScissor(r2.left, mHeight - r2.bottom, r2.width(), r2.height());
+                    glClear(GL_COLOR_BUFFER_BIT);
+                }
+                glDisable(GL_SCISSOR_TEST);
+            }
+            // specify the y center as ceiling((mHeight - frame.trimHeight) / 2)
+            // which is equivalent to mHeight - (yc + frame.trimHeight)
+            glDrawTexiOES(xc, mHeight - (yc + frame.trimHeight),
+                          0, frame.trimWidth, frame.trimHeight);
+
+            handleViewport(frameDuration);
+
+            eglSwapBuffers(mDisplay, mSurface);
+            t.setLayer(mFlingerSurfaceControl, LAYER_VIDEO_VOL_UI_SHOW)
+                .apply();
+            index = mVol;
+        }
+        usleep(20000);
+        if (hideVolUIStartTime != -1) {
+            if ((elapsedRealtime() - hideVolUIStartTime) > HIDE_VOL_UI_WAIT_SLEEP_MS){
+                ALOGD("%s, hide vol ui", __FUNCTION__);
+                hideVolUIStartTime = -1;
+                t.setLayer(mFlingerSurfaceControl, LAYER_VIDEO_VOL_UI_HIDE)
+                    .apply();
+            }
+        }
+    }
+
+    t.setLayer(mFlingerSurfaceControl, LAYER_VIDEO_VOL_UI_HIDE)
+        .apply();
+
+    // Free textures created for looping parts now that the animation is done.
+    for (const Animation::Part& part : animation->parts) {
+        if (part.count != 1) {
+            const size_t fcount = part.frames.size();
+            for (size_t j = 0; j < fcount; j++) {
+                const Animation::Frame& frame(part.frames[j]);
+                glDeleteTextures(1, &frame.tid);
+            }
+        }
+    }
+
+    releaseAnimation(animation);
+
+    return true;
+}
+
+void waitForMediaPlayerService() {
+    int64_t waitStartTime = elapsedRealtime();
+    sp<IServiceManager> sm = defaultServiceManager();
+    const String16 name("media.player");
+    const int SERVICE_WAIT_SLEEP_MS = 100;
+    const int LOG_PER_RETRIES = 10;
+    int retry = 0;
+    while (sm->checkService(name) == nullptr) {
+        retry++;
+        if ((retry % LOG_PER_RETRIES) == 0) {
+            ALOGW("Waiting for MediaPlayerService, waited for %" PRId64 " ms",
+                  elapsedRealtime() - waitStartTime);
+        }
+        usleep(SERVICE_WAIT_SLEEP_MS * 1000);
+    };
+    int64_t totalWaited = elapsedRealtime() - waitStartTime;
+    if (totalWaited > SERVICE_WAIT_SLEEP_MS) {
+        ALOGI("Waiting for MediaPlayerService took %" PRId64 " ms", totalWaited);
+    }
+}
+
+BootAnimation::BootVideoListener::BootVideoListener() : isPlayCompleted(false) {
+}
+
+BootAnimation::BootVideoListener::~BootVideoListener() {
+
+}
+
+void BootAnimation::BootVideoListener::notify(int msg, int ext1, int ext2, const Parcel *obj) {
+    ALOGD("BootVideoListener msg=%d,ext1=%d, ext2=%d, obj=%p", msg, ext1, ext2, obj);
+    switch (msg) {
+        case MEDIA_PLAYBACK_COMPLETE:
+        case MEDIA_ERROR:
+            isPlayCompleted = true;
+            break;
+        default:
+            break;
+    }
+}
+
+bool BootAnimation::bootVideo() {
+    const float MAX_FPS = 60.0f;
+    const float CHECK_DELAY = ns2us(s2ns(1) / MAX_FPS);
+
+    String8 mBootVideoFileName;
+
+    static const char* bootVideoFiles[] =
+                {BOOT_VIDEO_DATA_FILE, BOOT_VIDEO_VENDOR_FILE};
+    for (const char* f : bootVideoFiles) {
+        if (access(f, R_OK) == 0) {
+            mBootVideoFileName = f;
+            break;
+        }
+    }
+
+    if (mBootVideoFileName.isEmpty()) {
+        ALOGE("%s bootvideo file check failed", __FUNCTION__);
+        return false;
+    }
+    ALOGD("%s, mBootVideoFileName=%s", __FUNCTION__, mBootVideoFileName.string());
+    sp<IBinder> dtoken(SurfaceComposerClient::getBuiltInDisplay(
+            ISurfaceComposer::eDisplayIdMain));
+    DisplayInfo dinfo;
+    status_t status = SurfaceComposerClient::getDisplayInfo(dtoken, &dinfo);
+    if (status)
+        return -1;
+
+    // create the native surface
+    sp<SurfaceControl> control = session()->createSurface(String8("BootVideo"),
+            dinfo.w, dinfo.h, PIXEL_FORMAT_RGB_565);
+
+    SurfaceComposerClient::Transaction t;
+    t.setLayer(control, LAYER_VIDEO)
+        .apply();
+
+    sp<Surface> s = control->getSurface();
+    sp<IGraphicBufferProducer> new_st = s->getIGraphicBufferProducer();
+
+    waitForMediaPlayerService();
+    int mBootVideoFd = open(mBootVideoFileName, O_RDONLY);
+    if (mBootVideoFd < 0) {
+        ALOGE("%s, open %s failed", __FUNCTION__, mBootVideoFileName.string());
+        return false;
+    }
+
+    mMediaPlayer = new MediaPlayer();
+    sp<BootVideoListener> listener = new BootVideoListener();
+    mMediaPlayer->setListener(listener);
+    mMediaPlayer->reset();
+    mMediaPlayer->setDataSource(mBootVideoFd, 0, 0x7ffffffffffffffL);
+    mMediaPlayer->setLooping(false);
+    mMediaPlayer->setVideoSurfaceTexture(new_st);
+    mMediaPlayer->setAudioStreamType(AUDIO_STREAM_SYSTEM);
+
+    ALOGD("bootVideo start mVol=%d", mVol);
+    if(mMediaPlayer->prepare() == 0) {
+        float vol = 1.00f * mVol / BOOT_VIDEO_VOL_MAX;
+        ALOGD("bootVideo vol=%f", vol);
+        mMediaPlayer->setVolume(vol, vol);
+        mMediaPlayer->start();
+
+        int mDisplayMode = property_get_int(BOOT_VIDEO_OMX_DISPLAY_MODE_PROP_NAME, 0);
+        //property_set(BOOT_VIDEO_OMX_DISPLAY_MODE_PROP_NAME, "1");
+        ALOGD("bootVideo mDisplayMode=%d", mDisplayMode);
+
+        if (mDisplayMode == 1) {
+            while (!get_video_frame_count(BOOT_VIDEO_FRAME_COUNT) && !listener->isPlayCompleted ) {
+                usleep(CHECK_DELAY);
+            }
+        }
+
+        if ((mConfig == CONFIG_BOOTVIDEO_BOOTANIM) || (mConfig == CONFIG_BOOTVIDEO)) {
+            if (mDisplayMode == 1) {
+                t.setLayer(mFlingerSurfaceControl, LAYER_VIDEO_VOL_UI_SHOW)
+                    .apply();
+            }
+        } else {
+            t.setLayer(mFlingerSurfaceControl, LAYER_VIDEO_VOL_UI_HIDE)
+                .apply();
+        }
+
+        if (mDisplayMode == 1) {
+            eglSwapBuffers(mDisplay, mSurface);
+        }
+
+        mInputReaderThread = new InputReaderThread(this);
+        mInputReaderThread->run("BootAnimation::InputReaderThread", PRIORITY_NORMAL);
+        bool r = bootVideoVolumeUI(listener);
+        ALOGD("bootVideo bootVideoVolumeUI r=%d", r);
+        if (!r) {
+            if (mInputReaderThread != nullptr) {
+                mInputReaderThread->close_device(DEVICE_INPUT_PATH);
+                mInputReaderThread->requestExit();
+                mInputReaderThread = nullptr;
+            }
+            while ( !listener->isPlayCompleted){
+                usleep(CHECK_DELAY);
+            }
+        }
+
+        while ((mConfig == CONFIG_BOOTANIM_BOOTVIDEO) || (mConfig == CONFIG_BOOTVIDEO)) {
+            char value[PROPERTY_VALUE_MAX];
+            property_get(EXIT_PROP_NAME, value, "0");
+            int exitnow = atoi(value);
+            if (exitnow) {
+                break;
+            }
+            usleep(CHECK_DELAY);
+        }
+    }
+
+    if (mInputReaderThread != nullptr) {
+        mInputReaderThread->close_device(DEVICE_INPUT_PATH);
+        mInputReaderThread->requestExit();
+        mInputReaderThread = nullptr;
+    }
+
+    mMediaPlayer->reset();
+    mMediaPlayer->stop();
+
+    listener=NULL;
+    mMediaPlayer=NULL;
+    close(mBootVideoFd);
+
+    if (mConfig == CONFIG_BOOTVIDEO_BOOTANIM) {
+        t.setLayer(mFlingerSurfaceControl, LAYER_VIDEO_VOL_UI_SHOW)
+            .apply();
+        movie();
+    }
+
+    return false;
+}
+
+static char *get_label(const struct label *labels, int value) {
+    while (labels->name && value != labels->value)
+        labels++;
+
+    return (char *)labels->name;
+}
+
+int key_action_done(const int last_code, const int last_value,
+        const int code, const int value) {
+    ALOGD("%s, last_code=%d, code=%d, last_value=%d, value=%d", __FUNCTION__, last_code, code, last_value, value);
+    if (last_code == code) {
+        if (last_value == DOWN && value == UP){
+            return 1;
+        }else if (last_value == REPEAT){
+            return 1;
+      }
+    }
+
+    return 0;
+}
+
+int BootAnimation::InputReaderThread::open_device(const char *device) {
+    int fd = -1;
+    char name[80] = {0,};
+    char location[80] = {0,};
+    char idstr[80] = {0,};
+    struct pollfd *new_ufds = NULL;
+    char **new_device_names;
+
+    ALOGD("[%s]device: %s", __FUNCTION__, device);
+    fd = open(device, O_RDWR);
+    if (fd < 0) {
+        ALOGD("[%s]open device failed", __FUNCTION__);
+        return -1;
+    }
+    // "aml_keypad"
+    name[sizeof(name) - 1] = '\0';
+    location[sizeof(location) - 1] = '\0';
+    idstr[sizeof(idstr) - 1] = '\0';
+    if (ioctl(fd, EVIOCGNAME(sizeof(name) - 1), &name) < 1)
+        name[0] = '\0';
+    if (ioctl(fd, EVIOCGPHYS(sizeof(location) - 1), &location) < 1)
+        location[0] = '\0';
+    if (ioctl(fd, EVIOCGUNIQ(sizeof(idstr) - 1), &idstr) < 1)
+        idstr[0] = '\0';
+
+    new_ufds = (struct pollfd *)realloc(ufds, sizeof(ufds[0]) * (nfds + 1));
+    if (new_ufds == NULL) {
+        ALOGD("[%s]out of memory", __FUNCTION__);
+        return -1;
+    }
+    ufds = new_ufds;
+    new_device_names = (char **)realloc(device_names, sizeof(device_names[0]) * (nfds + 1));
+    if (new_device_names == NULL) {
+        ALOGD("[%s]out of memory", __FUNCTION__);
+        return -1;
+    }
+    device_names = new_device_names;
+
+    ufds[nfds].fd = fd;
+    ufds[nfds].events = POLLIN;
+    device_names[nfds] = strdup(device);
+    nfds++;
+
+    return 0;
+}
+
+int BootAnimation::InputReaderThread::close_device(const char *device) {
+    int i = 0;
+    ALOGD("%s device=%s", __FUNCTION__, device);
+    for (i = 1; i < nfds; i++) {
+        if (strcmp(device_names[i], device) == 0) {
+            int count = nfds - i - 1;
+            free(device_names[i]);
+            memmove(device_names + i, device_names + i + 1, sizeof(device_names[0]) * count);
+            memmove(ufds + i, ufds + i + 1, sizeof(ufds[0]) * count);
+            nfds--;
+            return 0;
+        }
+    }
+
+    return -1;
+}
+
+int BootAnimation::InputReaderThread::scan_dir(const char *dirname) {
+    char devname[PATH_MAX] = {0,};
+    char *filename = NULL;
+    DIR *dir = NULL;
+    struct dirent *de = NULL;
+
+    ALOGD("%s dirname=%s", __FUNCTION__, dirname);
+    dir = opendir(dirname);
+    if (dir == NULL)
+        return -1;
+
+    strcpy(devname, dirname);
+    filename = devname + strlen(devname);
+    *filename++ = '/';
+    while ((de = readdir(dir)) != NULL) {
+        if (de->d_name[0] == '.' &&
+            (de->d_name[1] == '\0' ||
+             (de->d_name[1] == '.' && de->d_name[2] == '\0')))
+            continue;
+
+        strcpy(filename, de->d_name);
+        open_device(devname);
+    }
+    closedir(dir);
+
+    return 0;
+}
+
+int BootAnimation::InputReaderThread::read_notify(const char *dirname, int nfd) {
+    int res;
+    char event_buf[512] = {0,};
+    struct inotify_event *event = NULL;
+    char devname[PATH_MAX] = {0,};
+    char *filename = NULL;
+    int event_size = 0;
+    int event_pos = 0;
+
+    ALOGD("%s dirname=%s, nfd: %d", __FUNCTION__, dirname, nfd);
+    res = read(nfd, event_buf, sizeof(event_buf));
+    if (res < (int)sizeof(*event)) {
+        if (errno == EINTR)
+            return 0;
+        ALOGD("[%s]cound not get event", __FUNCTION__);
+        return -1;
+    }
+
+    strcpy(devname, dirname);
+    filename = devname + strlen(devname);
+    *filename++ = '/';
+
+    while (res >= (int)sizeof(*event)) {
+        event = (struct inotify_event *)(event_buf + event_pos);
+        if (event->len) {
+            strcpy(filename, event->name);
+            if (event->mask & IN_CREATE)
+                open_device(devname);
+            else
+                close_device(devname);
+        }
+        event_size = sizeof(*event) + event->len;
+        res -= event_size;
+        event_pos += event_size;
+    }
+
+    return 0;
+}
+
+BootAnimation::InputReaderThread::InputReaderThread(BootAnimation* bootAnimation) : Thread(false),
+    mInotifyFd(-1), mLastKeyCode(-1), mLastKeyValue(-1), mBootAnimation(bootAnimation) {}
+
+BootAnimation::InputReaderThread::~InputReaderThread() {
+    ALOGD("InputReaderThread %s", __FUNCTION__);
+    // mInotifyFd may be -1 but that's ok since we're not at risk of attempting to close a valid FD.
+    close(mInotifyFd);
+}
+
+bool BootAnimation::InputReaderThread::threadLoop() {
+    ALOGD("InputReaderThread %s", __FUNCTION__);
+
+    bool shouldLoop = doThreadLoop();
+    if (!shouldLoop) {
+        close(mInotifyFd);
+        mInotifyFd = -1;
+    }
+
+    return true;
+}
+
+bool BootAnimation::InputReaderThread::doThreadLoop() {
+    // Poll instead of doing a blocking read so the Thread can exit if requested.
+    /*
+    ssize_t pollResult = poll(ufds, nfds, -1);
+    if (ufds[0].revents & POLLIN) {
+        read_notify(DEVICE_INPUT_PATH, ufds[0].fd);
+    }*/
+    ALOGD("InputReaderThread %s, nfds=%d\n", __FUNCTION__, nfds);
+    int i,res;
+    char *code_label = NULL;
+    char *value_label = NULL;
+    struct input_event inputEvent;
+    while (1) {
+        poll(ufds, nfds, -1);
+        if (ufds[0].revents & POLLIN) {
+            read_notify(DEVICE_INPUT_PATH, ufds[0].fd);
+        }
+        for (i = 1; i < nfds; i++) {
+            if (ufds[i].revents) {
+                if (ufds[i].revents & POLLIN) {
+                    res = read(ufds[i].fd, &inputEvent, sizeof(inputEvent));
+                    if (res < (int)sizeof(inputEvent)) {
+                        ALOGD("%s, cound not get event", __FUNCTION__);
+                        res = -1;
+                    }
+                    //ALOGE("inputEvent.type:%d\n", inputEvent.type);
+                    switch (inputEvent.type) {
+                        case EV_KEY:
+                            ALOGD("inputEvent.code=%d", inputEvent.code);
+                            code_label = get_label(key_labels, inputEvent.code);
+                            value_label = get_label(key_value_labels, inputEvent.value);
+                            if ((inputEvent.code == KEY_VOLUMEUP || inputEvent.code == KEY_PAGEUP) &&
+                                    key_action_done(mLastKeyCode, mLastKeyValue, inputEvent.code, inputEvent.value)) {
+                                mBootAnimation->bootVideoSetVolume(UP);
+                            } else if ((inputEvent.code == KEY_VOLUMEDOWN || inputEvent.code == KEY_PAGEDOWN) &&
+                                    key_action_done(mLastKeyCode, mLastKeyValue, inputEvent.code, inputEvent.value)) {
+                                mBootAnimation->bootVideoSetVolume(DOWN);
+                            } else if (inputEvent.code == KEY_MUTE &&
+                                    key_action_done(mLastKeyCode, mLastKeyValue, inputEvent.code, inputEvent.value)) {
+                            }
+                            mLastKeyCode = inputEvent.code;
+                            mLastKeyValue = inputEvent.value;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+    }
+    ALOGD("InputReaderThread %s exit", __FUNCTION__);
+
+    return true;
+}
+
+status_t BootAnimation::InputReaderThread::readyToRun() {
+    ALOGD("InputReaderThread %s", __FUNCTION__);
+    nfds = 1;
+    ufds = (struct pollfd *)calloc(1, sizeof(ufds[0]));
+    ufds[0].fd = inotify_init();
+    ufds[0].events = POLLIN;
+    mInotifyFd = inotify_init();
+    if (mInotifyFd < 0) {
+        ALOGE("Could not initialize inotify fd");
+        return NO_INIT;
+    }
+
+    int res = inotify_add_watch(ufds[0].fd, DEVICE_INPUT_PATH, IN_DELETE | IN_CREATE);
+    if (res < 0) {
+        close(res);
+        mInotifyFd = -1;
+        ALOGE("Could not add watch for %s", DEVICE_INPUT_PATH);
+        return NO_INIT;
+    }
+
+    scan_dir(DEVICE_INPUT_PATH);
+
+    return NO_ERROR;
+}
+// ---------------------------------------------------------------------------------
 BootAnimation::BootAnimation(sp<Callbacks> callbacks)
         : Thread(false), mClockEnabled(true), mTimeIsAccurate(false),
         mTimeFormat12Hour(false), mTimeCheckThread(NULL), mCallbacks(callbacks) {
@@ -261,7 +934,7 @@ status_t BootAnimation::readyToRun() {
 
     // create the native surface
     sp<SurfaceControl> control = session()->createSurface(String8("BootAnimation"),
-            dinfo.w, dinfo.h, PIXEL_FORMAT_RGB_565);
+            dinfo.w, dinfo.h, PIXEL_FORMAT_RGBA_8888);
 
     SurfaceComposerClient::Transaction t;
     t.setLayer(control, 0x40000000)
@@ -275,6 +948,7 @@ status_t BootAnimation::readyToRun() {
             EGL_GREEN_SIZE, 8,
             EGL_BLUE_SIZE,  8,
             EGL_DEPTH_SIZE, 0,
+            EGL_ALPHA_SIZE, 8,
             EGL_NONE
     };
     EGLint w, h;
@@ -302,6 +976,7 @@ status_t BootAnimation::readyToRun() {
     mHeight = h;
     mFlingerSurfaceControl = control;
     mFlingerSurface = s;
+    mTargetInset = -1;
 
     // If the device has encryption turned on or is in process
     // of being encrypted we show the encrypted boot animation.
@@ -337,15 +1012,49 @@ status_t BootAnimation::readyToRun() {
 
 bool BootAnimation::threadLoop()
 {
-    bool r;
+    bool r = false;
     // We have no bootanimation file, so we use the stock android logo
     // animation.
+    ALOGD("BootAnimation::threadLoop");
+    property_set(BOOT_VIDEO_RUNNING_STATUS_PROP_NAME, "1");
     if (mZipFileName.isEmpty()) {
         r = android();
     } else {
-        r = movie();
+        //vendor prop to sys prop
+        mVol = property_get_int(BOOT_VIDEO_VENDOR_PROP_NAME, -1);
+        mConfig =mVol / 1000;
+        int mSysPropVol = property_get_int(BOOT_VIDEO_SYS_PROP_NAME, -1);
+        if (mVol != -1 && mSysPropVol == -1) {
+            mVol = mVol % 1000;
+            char property_val[PROPERTY_VALUE_MAX] = {0};
+            snprintf(property_val, sizeof(property_val), "%d", mVol);
+            property_set(BOOT_VIDEO_SYS_PROP_NAME, property_val);
+        } else {
+            mVol = mSysPropVol;
+        }
+        ALOGD("mVol=%d, mSysPropVol=%d, mConfig=%d", mVol, mSysPropVol, mConfig);
+        if (mVol == -1) {
+            r = movie();
+        } else {
+            switch (mConfig) {
+                case CONFIG_BOOTANIM_BOOTVIDEO:
+                    r = movie();
+                    r = bootVideo();
+                    break;
+                case CONFIG_BOOTVIDEO_BOOTANIM:
+                    r = bootVideo();
+                    //r = movie();
+                    break;
+                case CONFIG_BOOTVIDEO:
+                    r = bootVideo();
+                    break;
+                case CONFIG_BOOTANIM:
+                default:
+                    r = movie();
+            }
+        }
     }
-
+    property_set(BOOT_VIDEO_RUNNING_STATUS_PROP_NAME, "0");
     eglMakeCurrent(mDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
     eglDestroyContext(mDisplay, mContext);
     eglDestroySurface(mDisplay, mSurface);
@@ -942,6 +1651,7 @@ bool BootAnimation::playAnimation(const Animation& animation)
                 if (mClockEnabled && mTimeIsAccurate && validClock(part)) {
                     drawClock(animation.clockFont, part.clockPosX, part.clockPosY);
                 }
+                handleViewport(frameDuration);
 
                 eglSwapBuffers(mDisplay, mSurface);
 
@@ -966,7 +1676,7 @@ bool BootAnimation::playAnimation(const Animation& animation)
             usleep(part.pause * ns2us(frameDuration));
 
             // For infinite parts, we've now played them at least once, so perhaps exit
-            if(exitPending() && !part.count)
+            if(exitPending() && !part.count && mCurrentInset >= mTargetInset)
                 break;
         }
 
@@ -984,6 +1694,51 @@ bool BootAnimation::playAnimation(const Animation& animation)
     }
 
     return true;
+}
+
+void BootAnimation::handleViewport(nsecs_t timestep) {
+    if (mShuttingDown || !mFlingerSurfaceControl || mTargetInset == 0) {
+        return;
+    }
+    if (mTargetInset < 0) {
+        // Poll the amount for the top display inset. This will return -1 until persistent properties
+        // have been loaded.
+        mTargetInset = android::base::GetIntProperty("persist.sys.displayinset.top",
+                -1 /* default */, -1 /* min */, mHeight / 2 /* max */);
+    }
+    if (mTargetInset <= 0) {
+        return;
+    }
+
+    if (mCurrentInset < mTargetInset) {
+        // After the device boots, the inset will effectively be cropped away. We animate this here.
+        float fraction = static_cast<float>(mCurrentInset) / mTargetInset;
+        int interpolatedInset = (cosf((fraction + 1) * M_PI) / 2.0f + 0.5f) * mTargetInset;
+
+        SurfaceComposerClient::Transaction()
+                .setCrop(mFlingerSurfaceControl, Rect(0, interpolatedInset, mWidth, mHeight))
+                .apply();
+    } else {
+        // At the end of the animation, we switch to the viewport that DisplayManager will apply
+        // later. This changes the coordinate system, and means we must move the surface up by
+        // the inset amount.
+        sp<IBinder> dtoken(SurfaceComposerClient::getBuiltInDisplay(
+                ISurfaceComposer::eDisplayIdMain));
+
+        Rect layerStackRect(0, 0, mWidth, mHeight - mTargetInset);
+        Rect displayRect(0, mTargetInset, mWidth, mHeight);
+
+        SurfaceComposerClient::Transaction t;
+        t.setPosition(mFlingerSurfaceControl, 0, -mTargetInset)
+                .setCrop(mFlingerSurfaceControl, Rect(0, mTargetInset, mWidth, mHeight));
+        t.setDisplayProjection(dtoken, 0 /* orientation */, layerStackRect, displayRect);
+        t.apply();
+
+        mTargetInset = mCurrentInset = 0;
+    }
+
+    int delta = timestep * mTargetInset / ms2ns(200);
+    mCurrentInset += delta;
 }
 
 void BootAnimation::releaseAnimation(Animation* animation) const

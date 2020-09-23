@@ -137,7 +137,7 @@ public class ProxySettingsState implements State {
             mAdvancedOptionsFlowInfo.put(AdvancedOptionsFlowInfo.PROXY_HOSTNAME,
                     action.getTitle());
             if (action.getId() == WIFI_ACTION_PROXY_NONE) {
-                AdvancedOptionsFlowUtil.processIpSettings(getActivity());
+                AdvancedOptionsFlowUtil.processProxySettings(getActivity(),true);
                 if (mAdvancedOptionsFlowInfo.isSettingsFlow()) {
                     mStateMachine.getListener().onComplete(StateMachine.ADVANCED_FLOW_COMPLETE);
                 } else {

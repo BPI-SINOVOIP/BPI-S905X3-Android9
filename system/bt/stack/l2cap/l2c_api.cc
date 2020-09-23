@@ -1291,10 +1291,12 @@ uint16_t L2CA_LocalLoopbackReq(uint16_t psm, uint16_t handle,
  * Returns          true if a valid channel, else false
  *
  ******************************************************************************/
-bool L2CA_SetAclPriority(const RawAddress& bd_addr, uint8_t priority) {
+bool L2CA_SetAclPriority(const RawAddress& bd_addr, uint8_t priority,
+		                 uint8_t direction) {
   VLOG(1) << __func__ << " BDA: " << bd_addr
-          << ", priority: " << std::to_string(priority);
-  return (l2cu_set_acl_priority(bd_addr, priority, false));
+          << ", priority: " << std::to_string(priority)
+		  << ", direction: " << direction;
+  return (l2cu_set_acl_priority(bd_addr, priority, false, direction));
 }
 
 /*******************************************************************************

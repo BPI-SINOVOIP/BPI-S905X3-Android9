@@ -37,7 +37,6 @@ import android.util.Log;
 
 import com.android.bluetooth.BluetoothMetricsProto;
 import com.android.bluetooth.Utils;
-import com.android.bluetooth.avrcp.Avrcp;
 import com.android.bluetooth.avrcp.AvrcpTargetService;
 import com.android.bluetooth.btservice.AdapterService;
 import com.android.bluetooth.btservice.MetricsLogger;
@@ -63,7 +62,6 @@ public class A2dpService extends ProfileService {
     private BluetoothAdapter mAdapter;
     private AdapterService mAdapterService;
     private HandlerThread mStateMachinesThread;
-    private Avrcp mAvrcp;
 
     @VisibleForTesting
     A2dpNativeInterface mA2dpNativeInterface;
@@ -118,28 +116,25 @@ public class A2dpService extends ProfileService {
         mMaxConnectedAudioDevices = mAdapterService.getMaxConnectedAudioDevices();
         Log.i(TAG, "Max connected audio devices set to " + mMaxConnectedAudioDevices);
 
-        // Step 3: Setup AVRCP
-        mAvrcp = Avrcp.make(this);
-
-        // Step 4: Start handler thread for state machines
+        // Step 3: Start handler thread for state machines
         mStateMachines.clear();
         mStateMachinesThread = new HandlerThread("A2dpService.StateMachines");
         mStateMachinesThread.start();
 
-        // Step 5: Setup codec config
+        // Step 4: Setup codec config
         mA2dpCodecConfig = new A2dpCodecConfig(this, mA2dpNativeInterface);
 
-        // Step 6: Initialize native interface
+        // Step 5: Initialize native interface
         mA2dpNativeInterface.init(mMaxConnectedAudioDevices,
                                   mA2dpCodecConfig.codecConfigPriorities());
 
-        // Step 7: Check if A2DP is in offload mode
+        // Step 6: Check if A2DP is in offload mode
         mA2dpOffloadEnabled = mAdapterService.isA2dpOffloadEnabled();
         if (DBG) {
             Log.d(TAG, "A2DP offload flag set to " + mA2dpOffloadEnabled);
         }
 
-        // Step 8: Setup broadcast receivers
+        // Step 7: Setup broadcast receivers
         IntentFilter filter = new IntentFilter();
         filter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
         mBondStateChangedReceiver = new BondStateChangedReceiver();
@@ -149,10 +144,10 @@ public class A2dpService extends ProfileService {
         mConnectionStateChangedReceiver = new ConnectionStateChangedReceiver();
         registerReceiver(mConnectionStateChangedReceiver, filter);
 
-        // Step 9: Mark service as started
+        // Step 8: Mark service as started
         setA2dpService(this);
 
-        // Step 10: Clear active device
+        // Step 9: Clear active device
         setActiveDevice(null);
 
         return true;
@@ -200,11 +195,6 @@ public class A2dpService extends ProfileService {
         }
         mStateMachinesThread.quitSafely();
         mStateMachinesThread = null;
-
-        // Step 3: Cleanup AVRCP
-        mAvrcp.doQuit();
-        mAvrcp.cleanup();
-        mAvrcp = null;
 
         // Step 2: Reset maximum number of connected audio devices
         mMaxConnectedAudioDevices = 1;
@@ -580,10 +570,11 @@ public class A2dpService extends ProfileService {
         return priority;
     }
 
-    /* Absolute volume implementation */
     public boolean isAvrcpAbsoluteVolumeSupported() {
-        return mAvrcp.isAbsoluteVolumeSupported();
+        // TODO (apanicke): Add a hook here for the AvrcpTargetService.
+        return false;
     }
+
 
     public void setAvrcpAbsoluteVolume(int volume) {
         // TODO (apanicke): Instead of using A2DP as a middleman for volume changes, add a binder
@@ -591,18 +582,6 @@ public class A2dpService extends ProfileService {
         if (AvrcpTargetService.get() != null) {
             AvrcpTargetService.get().sendVolumeChanged(volume);
             return;
-        }
-
-        mAvrcp.setAbsoluteVolume(volume);
-    }
-
-    public void setAvrcpAudioState(int state) {
-        mAvrcp.setA2dpAudioState(state);
-    }
-
-    public void resetAvrcpBlacklist(BluetoothDevice device) {
-        if (mAvrcp != null) {
-            mAvrcp.resetBlackList(device.getAddress());
         }
     }
 
@@ -1206,9 +1185,6 @@ public class A2dpService extends ProfileService {
         ProfileService.println(sb, "mActiveDevice: " + mActiveDevice);
         for (A2dpStateMachine sm : mStateMachines.values()) {
             sm.dump(sb);
-        }
-        if (mAvrcp != null) {
-            mAvrcp.dump(sb);
         }
     }
 }

@@ -48,6 +48,7 @@
 #include <vintf/VintfObjectRecovery.h>
 #include <ziparchive/zip_archive.h>
 
+#include "bootloader.h"
 #include "common.h"
 #include "otautil/SysUtil.h"
 #include "otautil/ThermalUtil.h"
@@ -56,6 +57,10 @@
 #include "roots.h"
 #include "ui.h"
 #include "verifier.h"
+
+#define  CACHE_ZIPINFO   "/cache/recovery/zipinfo"
+#define  EMMC_DEVICE      "/dev/block/mmcblk0"
+#define  COPY_SIZE           (10*1024*1024)
 
 using namespace std::chrono_literals;
 
@@ -561,9 +566,149 @@ bool verify_package_compatibility(ZipArchiveHandle package_zip) {
   return false;
 }
 
+int try_recovery_by_zipinfo() {
+    int len = 0;
+    int matches = 0;
+    char buf[256] = {0};
+    char filename[256] = {0};
+    int offset = 0;
+    int filesize = 0;
+
+    //open zipinfo
+    FILE *pf = fopen(CACHE_ZIPINFO, "r");
+    if (pf == NULL) {
+        printf("fopen %s failed!\n", CACHE_ZIPINFO);
+        return -1;
+    }
+
+    //fread data from zipinfo
+    len = fread(buf, 1, 256, pf);
+    fclose(pf);
+    if (len <= 0) {
+        printf("fread %s failed!\n", CACHE_ZIPINFO);
+        return -1;
+    }
+
+    //parse zipinfo
+    matches = sscanf(buf, "%s %d %d", filename, &offset, &filesize);
+    if (matches != 3) {
+        printf("fread %s error data!\n", CACHE_ZIPINFO);
+        return -1;
+    }
+
+    printf("recovery from %s offset(%d*M) length(%d) to %s\n",EMMC_DEVICE, offset, filesize, filename);
+    //open /dev/block/mmcblk0
+    int fd = 0;
+    fd = open(EMMC_DEVICE, O_RDONLY);
+    if (fd <= 0) {
+	printf("open %s failed!\n", EMMC_DEVICE);
+	return -1;
+    }
+
+    //update.zip stored offset offset
+    lseek(fd, offset*1024*1024, SEEK_SET);
+
+    //open /data/update.zip
+    pf = fopen("/data/update.zip", "w+");
+    if (pf == NULL) {
+	printf("fopen %s failed!\n", filename);
+	close(fd);
+	return -1;
+    }
+
+    //malloc buffer
+    unsigned char *tmp = (unsigned char *)malloc(COPY_SIZE);
+    if (tmp == NULL) {
+        printf("malloc 10M failed!\n");
+        close(fd);
+        fclose(pf);
+        return -1;
+    }
+
+    //data copy
+    int write_total = 0;
+    int read_one = 0;
+    printf("start to recovery update.zip!\n");
+    while(write_total < filesize) {
+	memset(tmp, 0, COPY_SIZE);
+	read_one = (filesize - write_total > COPY_SIZE) ? COPY_SIZE : filesize - write_total;
+	read(fd, tmp, read_one);
+	fwrite(tmp, 1, read_one, pf);
+	write_total += read_one;
+	printf("recovery update.zip size:%d\n", write_total);
+    }
+
+    close(fd);
+    fflush(pf);
+    fclose(pf);
+    ensure_path_unmounted("/data");
+
+    return 0;
+}
+
+static void set_new_package_path(void ) {
+    struct bootloader_message boot {};
+    std::string err;
+
+    read_bootloader_message(&boot,  &err);
+
+    printf("boot.command: %s\n", boot.command);
+    printf("boot.recovery: %s\n", boot.recovery);
+
+    strcpy(boot.recovery, "recovery\n--update_package=/data/update.zip");
+
+    printf("boot.recovery: %s\n", boot.recovery);
+
+    printf("write_bootloader_message \n");
+    if (!write_bootloader_message(boot, &err)) {
+        printf("%s\n", err.c_str());
+        printf("write_bootloader_message failed!\n");
+    }
+}
+
+static int try_recovery_update_package(void) {
+   int ret = 0;
+   struct stat st;
+
+    if (stat(CACHE_ZIPINFO, &st) == -1) {
+        printf("no need to recovery update.zip");
+        return -1;
+    }
+
+   ret = ensure_path_mounted("/data");
+   if (ret != 0 ) {
+       printf("mount /data failed, start to format!\n");
+       format_volume("/data");
+       ret = ensure_path_mounted("/data");
+       if (ret != 0) {
+           printf("mount /data after format failed!");
+           return -1;
+       }
+   }
+
+   ret = try_recovery_by_zipinfo();
+   if (ret < 0) {
+       printf("try recovery update package by zipinfo failed!\n");
+       return -1;
+   }
+
+   ret = ensure_path_mounted("/data");
+   if (ret != 0) {
+       printf("mount /data after recovery failed!");
+       return -1;
+   }
+
+   set_new_package_path();
+   unlink(CACHE_ZIPINFO);
+
+   return 0;
+}
+
 static int really_install_package(const std::string& path, bool* wipe_cache, bool needs_mount,
                                   std::vector<std::string>* log_buffer, int retry_count,
                                   int* max_temperature) {
+  int update_flag = 0;
+  std::string new_path("/data/update.zip");
   ui->SetBackground(RecoveryUI::INSTALLING_UPDATE);
   ui->Print("Finding update package...\n");
   // Give verification half the progress bar...
@@ -576,17 +721,31 @@ static int really_install_package(const std::string& path, bool* wipe_cache, boo
 
   if (needs_mount) {
     if (path[0] == '@') {
-      ensure_path_mounted(path.substr(1).c_str());
+      int ret = 0;
+      ret = try_recovery_update_package();
+      if (ret == 0) {
+          update_flag = 1;
+      } else {
+          ensure_path_mounted(path.substr(1).c_str());
+      }
     } else {
-      ensure_path_mounted(path.c_str());
+        ensure_path_mounted(path.c_str());
     }
   }
 
   MemMapping map;
-  if (!map.MapFile(path)) {
-    LOG(ERROR) << "failed to map file";
-    log_buffer->push_back(android::base::StringPrintf("error: %d", kMapFileFailure));
-    return INSTALL_CORRUPT;
+  if (update_flag == 1) {
+    if (!map.MapFile(new_path)) {
+      LOG(ERROR) << "failed to map file";
+      log_buffer->push_back(android::base::StringPrintf("error: %d", kMapFileFailure));
+      return INSTALL_CORRUPT;
+    }
+  } else {
+    if (!map.MapFile(path)) {
+      LOG(ERROR) << "failed to map file";
+      log_buffer->push_back(android::base::StringPrintf("error: %d", kMapFileFailure));
+      return INSTALL_CORRUPT;
+    }
   }
 
   // Verify package.
@@ -597,7 +756,12 @@ static int really_install_package(const std::string& path, bool* wipe_cache, boo
 
   // Try to open the package.
   ZipArchiveHandle zip;
-  int err = OpenArchiveFromMemory(map.addr, map.length, path.c_str(), &zip);
+  int err = 0;
+  if (update_flag == 1) {
+      err = OpenArchiveFromMemory(map.addr, map.length, new_path.c_str(), &zip);
+  } else {
+      err = OpenArchiveFromMemory(map.addr, map.length, path.c_str(), &zip);
+  }
   if (err != 0) {
     LOG(ERROR) << "Can't open " << path << " : " << ErrorCodeString(err);
     log_buffer->push_back(android::base::StringPrintf("error: %d", kZipOpenFailure));
@@ -619,7 +783,12 @@ static int really_install_package(const std::string& path, bool* wipe_cache, boo
     ui->Print("Retry attempt: %d\n", retry_count);
   }
   ui->SetEnableReboot(false);
-  int result = try_update_binary(path, zip, wipe_cache, log_buffer, retry_count, max_temperature);
+  int result = 0;
+  if (update_flag == 1) {
+      result = try_update_binary(new_path, zip, wipe_cache, log_buffer, retry_count, max_temperature);
+  } else {
+      result = try_update_binary(path, zip, wipe_cache, log_buffer, retry_count, max_temperature);
+  }
   ui->SetEnableReboot(true);
   ui->Print("\n");
 

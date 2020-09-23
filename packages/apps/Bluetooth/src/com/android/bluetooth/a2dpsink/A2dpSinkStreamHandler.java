@@ -51,7 +51,7 @@ import java.util.List;
  * restored.
  */
 public class A2dpSinkStreamHandler extends Handler {
-    private static final boolean DBG = false;
+    private static final boolean DBG = true;
     private static final String TAG = "A2dpSinkStreamHandler";
 
     // Configuration Variables
@@ -108,9 +108,15 @@ public class A2dpSinkStreamHandler extends Handler {
         if (DBG) {
             Log.d(TAG, " process message: " + message.what);
             Log.d(TAG, " audioFocus =  " + mAudioFocus);
+            Log.d(TAG, " AUDIOFOCUS_NONE =  " + AudioManager.AUDIOFOCUS_NONE);
         }
         switch (message.what) {
             case SRC_STR_START:
+                if (mAudioFocus == AudioManager.AUDIOFOCUS_NONE) {
+                   requestAudioFocus();
+                }
+                startAvrcpUpdates();
+                // Audio stream has started, stop it if we don't have focus.
                 mStreamAvailable = true;
                 // Always request audio focus if on TV.
                 if (isTvDevice()) {
@@ -133,8 +139,12 @@ public class A2dpSinkStreamHandler extends Handler {
                 break;
 
             case SNK_PLAY:
-                // Local play command, gain focus and start avrcp updates.
                 if (mAudioFocus == AudioManager.AUDIOFOCUS_NONE) {
+                    requestAudioFocus();
+               }
+               startAvrcpUpdates();
+               // Local play command, gain focus and start avrcp updates.
+               if (mAudioFocus == AudioManager.AUDIOFOCUS_NONE) {
                     requestAudioFocus();
                 }
                 startAvrcpUpdates();

@@ -35,8 +35,10 @@ import java.util.List;
  * @hide
  */
 @SystemApi
-public final class HdmiTvClient extends HdmiClient {
+public class HdmiTvClient extends HdmiClient {
     private static final String TAG = "HdmiTvClient";
+
+    IHdmiInputChangeListener mInputChangeListener;
 
     /**
      * Size of MHL register for vendor command
@@ -143,13 +145,29 @@ public final class HdmiTvClient extends HdmiClient {
         }
     }
 
-    private static IHdmiInputChangeListener getListenerWrapper(final InputChangeListener listener) {
-        return new IHdmiInputChangeListener.Stub() {
+    /**
+     * Remove the listener used to get informed of the input change event.
+     *
+     * @param listener listener object
+     */
+    public void removeInputChangeListener() {
+        if (mInputChangeListener != null) {
+            try {
+                mService.removeInputChangeListener(mInputChangeListener);
+            } catch (RemoteException e) {
+                Log.e("TAG", "Failed to remove InputChangeListener:", e);
+            }
+        }
+    }
+
+    private IHdmiInputChangeListener getListenerWrapper(final InputChangeListener listener) {
+        mInputChangeListener = new IHdmiInputChangeListener.Stub() {
             @Override
             public void onChanged(HdmiDeviceInfo info) {
                 listener.onChanged(info);
             }
         };
+        return mInputChangeListener;
     }
 
     /**
@@ -239,7 +257,7 @@ public final class HdmiTvClient extends HdmiClient {
         }
     }
 
-    private static IHdmiRecordListener getListenerWrapper(final HdmiRecordListener callback) {
+    private IHdmiRecordListener getListenerWrapper(final HdmiRecordListener callback) {
         return new IHdmiRecordListener.Stub() {
             @Override
             public byte[] getOneTouchRecordSource(int recorderAddress) {

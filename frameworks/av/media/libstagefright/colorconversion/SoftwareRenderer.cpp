@@ -127,8 +127,8 @@ void SoftwareRenderer::resetFormatIfChanged(
             case OMX_TI_COLOR_FormatYUV420PackedSemiPlanar:
             {
                 halFormat = HAL_PIXEL_FORMAT_YV12;
-                bufWidth = (mCropWidth + 1) & ~1;
-                bufHeight = (mCropHeight + 1) & ~1;
+                bufWidth = (mCropWidth + 7) & ~7;
+                bufHeight = (mCropHeight + 7) & ~7;
                 break;
             }
             case OMX_COLOR_Format24bitRGB888:

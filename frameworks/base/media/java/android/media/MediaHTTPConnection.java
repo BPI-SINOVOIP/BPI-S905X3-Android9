@@ -290,6 +290,23 @@ public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
                 throw new IOException();
             } else {
                 mTotalSize = mConnection.getContentLength();
+                if (mTotalSize <=0) {
+                    String mine = null;
+                    String mineKey = null;
+                    for (int i = 0;; i++) {
+                        mine = mConnection.getHeaderField(i);
+                        if (mine == null)
+                            break;
+                        mineKey = mConnection.getHeaderFieldKey(i);
+                        if (mineKey != null && mineKey.compareToIgnoreCase("Content-Length") == 0) {
+                            try {
+                                mTotalSize = Long.parseLong(mine.trim());
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
             }
 
             if (offset > 0 && response != HttpURLConnection.HTTP_PARTIAL) {

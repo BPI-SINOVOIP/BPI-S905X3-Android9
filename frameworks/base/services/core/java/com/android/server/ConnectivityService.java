@@ -1827,7 +1827,26 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mHandler.sendMessage(mHandler.obtainMessage(EVENT_SYSTEM_READY));
 
         mPermissionMonitor.startMonitoring();
+        IntentFilter fl = new IntentFilter(Intent.ACTION_SCREEN_OFF);
+        mContext.registerReceiver(mSuspendReceiver, fl);
     }
+
+    // release lock.
+    private BroadcastReceiver mSuspendReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            synchronized (this) {
+                if (!mNetTransitionWakeLock.isHeld()) {
+                    return; // expiry message released the lock first.
+                }
+            }
+            log("SuspendReceiver --> sendMessage to realse lock");
+            mHandler.removeMessages(EVENT_EXPIRE_NET_TRANSITION_WAKELOCK);
+            Message msg = mHandler.obtainMessage(EVENT_CLEAR_NET_TRANSITION_WAKELOCK);
+            mHandler.sendMessage(msg);
+        }
+    };
+
 
     /**
      * Setup data activity tracking for the given network.

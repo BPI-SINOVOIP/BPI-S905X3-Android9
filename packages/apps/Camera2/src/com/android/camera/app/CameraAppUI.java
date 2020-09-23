@@ -1810,6 +1810,9 @@ public class CameraAppUI implements ModeListView.ModeSwitchListener,
         mModeOptionsOverlay.setVisibility(View.INVISIBLE);
     }
 
+   public boolean isModeOptionVisible() {
+        return mModeOptionsOverlay.isModeOptionVisible();
+   }
     /****************************Bottom bar api ******************************/
 
     /**
@@ -2287,9 +2290,14 @@ public class CameraAppUI implements ModeListView.ModeSwitchListener,
 
     public void hideFilmstrip() {
         mFilmstripLayout.hideFilmstrip();
+        mModeOptionsOverlay.closeModeOptions();
     }
 
     public int getFilmstripVisibility() {
         return mFilmstripLayout.getVisibility();
+    }
+
+    public boolean setCaptureOnfocus(){
+        return mBottomBar.setCaptureOnfocus();
     }
 }

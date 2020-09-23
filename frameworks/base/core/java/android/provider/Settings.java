@@ -8949,6 +8949,15 @@ public final class Settings {
                 "hdmi_system_audio_control_enabled";
 
         /**
+         * Whether HDMI System Audio Status is enabled. If enabled, audio stream will
+         * be played on AVR instead of TV spaeker  if there's a connected CEC-enabled AV Receiver.
+         * If disabled, the system audio mode will never be activated.
+         * @hide
+         */
+         public static final String HDMI_SYSTEM_AUDIO_STATUS_ENABLED =
+                 "hdmi_system_audio_status_enabled";
+
+        /**
          * Whether TV will automatically turn on upon reception of the CEC command
          * &lt;Text View On&gt; or &lt;Image View On&gt;. (0 = false, 1 = true)
          *

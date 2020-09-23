@@ -18,6 +18,7 @@
 #include "Utils.h"
 #include "VolumeManager.h"
 #include "fs/Exfat.h"
+#include "fs/Ntfs.h"
 #include "fs/Vfat.h"
 
 #include <android-base/stringprintf.h>
@@ -106,6 +107,11 @@ status_t PublicVolume::doMount() {
             LOG(ERROR) << getId() << " failed filesystem check";
             return -EIO;
         }
+    } else if (mFsType == "ntfs" && ntfs::IsSupported()) {
+        if (ntfs::Check(mDevPath)) {
+            LOG(ERROR) << getId() << " failed filesystem check";
+            return -EIO;
+        }
     } else {
         LOG(ERROR) << getId() << " unsupported filesystem " << mFsType;
         return -EIO;
@@ -143,6 +149,12 @@ status_t PublicVolume::doMount() {
         }
     } else if (mFsType == "exfat") {
         if (exfat::Mount(mDevPath, mRawPath, AID_MEDIA_RW, AID_MEDIA_RW, 0007)) {
+            PLOG(ERROR) << getId() << " failed to mount " << mDevPath;
+            return -EIO;
+        }
+    } else if (mFsType == "ntfs") {
+        if (ntfs::Mount(mDevPath, mRawPath, false, false,
+                            AID_MEDIA_RW, AID_MEDIA_RW, 0007, true)) {
             PLOG(ERROR) << getId() << " failed to mount " << mDevPath;
             return -EIO;
         }
@@ -265,6 +277,14 @@ status_t PublicVolume::doFormat(const std::string& fsType) {
         }
         if (exfat::Format(mDevPath)) {
             LOG(ERROR) << getId() << " failed to format";
+            return -errno;
+        }
+    } else if ((fsType == "ntfs" || fsType == "auto") && ntfs::IsSupported()) {
+        if (WipeBlockDevice(mDevPath) != OK) {
+            LOG(WARNING) << getId() << " " << fsType << " failed to wipe";
+        }
+        if (ntfs::Format(mDevPath)) {
+            LOG(ERROR) << getId() << " " << fsType << " failed to format";
             return -errno;
         }
     } else {

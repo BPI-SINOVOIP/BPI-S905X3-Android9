@@ -865,7 +865,8 @@ void l2c_link_role_changed(const RawAddress* bd_addr, uint8_t new_role,
 
       /* Reset high priority link if needed */
       if (hci_status == HCI_SUCCESS)
-        l2cu_set_acl_priority(*bd_addr, p_lcb->acl_priority, true);
+        l2cu_set_acl_priority(*bd_addr, p_lcb->acl_priority, true,
+				              p_lcb->a2dp_direction);
     }
   }
 

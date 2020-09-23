@@ -5,3 +5,5 @@
 ###
 
 type system_app, domain;
+allow system_app screencontrol_hwservice:hwservice_manager { find };
+allow system_app screen_control:binder { call };

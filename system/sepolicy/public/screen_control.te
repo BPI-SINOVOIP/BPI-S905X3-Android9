@@ -1,0 +1,44 @@
+type screen_control, domain;
+
+type screen_control_exec, exec_type, file_type;
+
+allow screen_control mediacodec:binder { call transfer };
+
+allow screen_control hwservicemanager:binder { call transfer };
+allow screen_control { screencontrol_hwservice hidl_base_hwservice }:hwservice_manager { add };
+
+allow screen_control hidl_memory_hwservice:hwservice_manager find;
+allow screen_control hidl_allocator_hwservice:hwservice_manager find;
+allow screen_control hal_omx_hwservice:hwservice_manager find;
+
+allow screen_control video_device:chr_file { read write open ioctl getattr };
+#allow screen_control media_prop:file {open read getattr };
+allow screen_control sdcardfs:dir { read open search write add_name };
+allow screen_control sdcardfs:file { create read open getattr write};
+
+allow screen_control media_rw_data_file:dir { read open write add_name search };
+allow screen_control media_rw_data_file:file { create open read getattr setattr write};
+allow screen_control system_file:dir { read open search };
+
+allow screen_control storage_file:dir { search read write };
+allow screen_control storage_file:file { write read open getattr};
+
+allow screen_control servicemanager:binder { call transfer };
+allow screen_control servicemanager:dir { search };
+
+allow screen_control mediaserver:binder { call transfer };
+allow screen_control mediaserver_service:service_manager { find };
+allow screen_control system_server:binder { call };
+allow screen_control mediametrics:binder { call };
+allow screen_control mediametrics_service:service_manager { find };
+
+allow screen_control init:process sigchld;
+
+set_prop(screen_control, hwservicemanager_prop)
+get_prop(screen_control, hwservicemanager_prop)
+
+get_prop(screen_control, safemode_prop)
+set_prop(screen_control, ctl_default_prop)
+get_prop(screen_control, vendor_default_prop)
+
+allow screen_control system_app:binder { call };

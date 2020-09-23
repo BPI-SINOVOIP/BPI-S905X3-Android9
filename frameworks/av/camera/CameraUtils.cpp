@@ -52,7 +52,8 @@ status_t CameraUtils::getRotationTransform(const CameraMetadata& staticInfo,
 
     int32_t& flags = *transform;
 
-    bool mirror = (entryFacing.data.u8[0] == ANDROID_LENS_FACING_FRONT);
+    bool mirror = (entryFacing.data.u8[0] == ANDROID_LENS_FACING_FRONT)
+           || (entryFacing.data.u8[0] == ANDROID_LENS_FACING_EXTERNAL);
     int orientation = entry.data.i32[0];
     if (!mirror) {
         switch (orientation) {

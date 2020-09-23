@@ -18,6 +18,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/mode_selector_item_height"
+    android:focusable="true"
     android:paddingLeft="16dp"
     android:paddingTop="6dp"
     android:paddingBottom="6dp"

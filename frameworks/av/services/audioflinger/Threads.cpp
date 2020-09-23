@@ -5309,7 +5309,8 @@ AudioFlinger::PlaybackThread::mixer_state AudioFlinger::DirectOutputThread::prep
                 }
 
                 int64_t framesWritten = mBytesWritten / mFrameSize;
-                if (mStandby || !last ||
+                bool need_remove = track->isTerminated()||track->isStopped();
+                if (mStandby || !last || need_remove ||
                         track->presentationComplete(framesWritten, audioHALFrames)) {
                     if (track->isStopping_2()) {
                         track->mState = TrackBase::STOPPED;

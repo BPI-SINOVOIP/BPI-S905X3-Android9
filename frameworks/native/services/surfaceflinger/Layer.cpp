@@ -59,6 +59,11 @@
 #include <mutex>
 #include "LayerProtoHelper.h"
 
+#ifdef REDUCE_VIDEO_WORKLOAD
+#include "OmxUtil.h"
+#include <am_gralloc_ext.h>
+#endif
+
 #define DEBUG_RESIZE 0
 
 namespace android {
@@ -541,6 +546,7 @@ void Layer::setGeometry(const sp<const DisplayDevice>& displayDevice, uint32_t z
 
     // computeBounds returns a FloatRect to provide more accuracy during the
     // transformation. We then round upon constructing 'frame'.
+    FloatRect sourceCrop = computeCrop(displayDevice);
     Rect frame{t.transform(computeBounds(activeTransparentRegion))};
     if (!s.finalCrop.isEmpty()) {
         if (!frame.intersect(s.finalCrop, &frame)) {
@@ -552,7 +558,18 @@ void Layer::setGeometry(const sp<const DisplayDevice>& displayDevice, uint32_t z
     }
     const Transform& tr(displayDevice->getTransform());
     Rect transformedFrame = tr.transform(frame);
-    error = hwcLayer->setDisplayFrame(transformedFrame);
+
+    if (sourceCrop.getWidth() > 0 && sourceCrop.getHeight() > 0 ) {
+        error = hwcLayer->setDisplayFrame(transformedFrame);
+    } else {
+        Rect fullrect(s.active.w, s.active.h);
+        Transform t = getTransform();
+        fullrect = t.transform(fullrect);
+        ALOGE("layer [%s] computeScreenBounds - NO PARENT [%d, %d, %d, %d]",
+            mName.string(), fullrect.left, fullrect.top, fullrect.right, fullrect.bottom);
+        error = hwcLayer->setDisplayFrame(fullrect);
+    }
+
     if (error != HWC2::Error::None) {
         ALOGE("[%s] Failed to set display frame [%d, %d, %d, %d]: %s (%d)", mName.string(),
               transformedFrame.left, transformedFrame.top, transformedFrame.right,
@@ -561,7 +578,6 @@ void Layer::setGeometry(const sp<const DisplayDevice>& displayDevice, uint32_t z
         hwcInfo.displayFrame = transformedFrame;
     }
 
-    FloatRect sourceCrop = computeCrop(displayDevice);
     error = hwcLayer->setSourceCrop(sourceCrop);
     if (error != HWC2::Error::None) {
         ALOGE("[%s] Failed to set source crop [%.3f, %.3f, %.3f, %.3f]: "
@@ -1230,6 +1246,13 @@ bool Layer::setAlpha(float alpha) {
     if (mCurrentState.color.a == alpha) return false;
     mCurrentState.sequence++;
     mCurrentState.color.a = alpha;
+#ifdef REDUCE_VIDEO_WORKLOAD
+    if (getBE().compositionInfo.mBuffer &&
+        am_gralloc_is_omx_metadata_producer(getBE().compositionInfo.mBuffer->getUsage())) {
+        mCurrentState.color.a = 1.0_hf;
+    }
+#endif
+
     mCurrentState.modified = true;
     setTransactionFlags(eTransactionNeeded);
     return true;
@@ -1875,6 +1898,13 @@ Transform Layer::getTransform() const {
 
 half Layer::getAlpha() const {
     const auto& p = mDrawingParent.promote();
+
+#ifdef REDUCE_VIDEO_WORKLOAD
+        if (getBE().compositionInfo.mBuffer &&
+            am_gralloc_is_omx_metadata_producer(getBE().compositionInfo.mBuffer->getUsage())) {
+            return 1.0_hf;
+        }
+#endif
 
     half parentAlpha = (p != nullptr) ? p->getAlpha() : 1.0_hf;
     return parentAlpha * getDrawingState().color.a;

@@ -117,6 +117,8 @@ static bool isResourceError(status_t err) {
 static const int kMaxRetry = 2;
 static const int kMaxReclaimWaitTimeInUs = 500000;  // 0.5s
 static const int kNumBuffersAlign = 16;
+static const int kStopMaxRetry = 4;
+static const int kMaxStopWaitTimeInUs = 500000;  // 0.5s
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -531,6 +533,7 @@ MediaCodec::MediaCodec(const sp<ALooper> &looper, pid_t pid, uid_t uid)
       mHaveInputSurface(false),
       mHavePendingInputBuffers(false),
       mCpuBoostRequested(false),
+      mReclaiming(false),
       mLatencyUnknown(0) {
     if (uid == kNoUid) {
         mUid = IPCThreadState::self()->getCallingUid();
@@ -1255,9 +1258,25 @@ status_t MediaCodec::start() {
 
 status_t MediaCodec::stop() {
     sp<AMessage> msg = new AMessage(kWhatStop, this);
+    status_t result;
 
     sp<AMessage> response;
-    return PostAndAwaitResponse(msg, &response);
+    result = PostAndAwaitResponse(msg, &response);
+    int retry_count = 0;
+    while (result == WOULD_BLOCK) {
+        ALOGD("Wait for the reclaim completed");
+        usleep(kMaxStopWaitTimeInUs);
+        ALOGD("Try to stop again.");
+        result = PostAndAwaitResponse(msg, &response);
+        retry_count++;
+        ALOGD("stop: retry_count =%d", retry_count);
+        if (retry_count > kStopMaxRetry) {
+            ALOGE("stop: retry timeout");
+            break;
+        }
+    }
+
+    return result;
 }
 
 bool MediaCodec::hasPendingBuffer(int portIndex) {
@@ -1275,6 +1294,7 @@ status_t MediaCodec::reclaim(bool force) {
     sp<AMessage> msg = new AMessage(kWhatRelease, this);
     msg->setInt32("reclaimed", 1);
     msg->setInt32("force", force ? 1 : 0);
+    mReclaiming = true;
 
     sp<AMessage> response;
     status_t ret = PostAndAwaitResponse(msg, &response);
@@ -1282,6 +1302,7 @@ status_t MediaCodec::reclaim(bool force) {
         ALOGD("MediaCodec looper is gone, skip reclaim");
         ret = OK;
     }
+    mReclaiming = false;
     return ret;
 }
 
@@ -2573,8 +2594,10 @@ void MediaCodec::onMessageReceived(const sp<AMessage> &msg) {
 
                 int32_t force = 0;
                 msg->findInt32("force", &force);
-                if (!force && hasPendingBuffer()) {
-                    ALOGW("Can't reclaim codec right now due to pending buffers.");
+                if (!force &&(hasPendingBuffer()|| mState == STOPPING)) {
+                    ALOGW("Can't reclaim codec right now due to pending buffers or STOPPING");
+                    mReleasedByResourceManager = false;
+                    ALOGW("amlogic:reclaim fail need set mReleasedByResourceManager false");
 
                     // return WOULD_BLOCK to ask resource manager to retry later.
                     sp<AMessage> response = new AMessage;
@@ -2594,6 +2617,7 @@ void MediaCodec::onMessageReceived(const sp<AMessage> &msg) {
             if (!isReleasingAllocatedComponent // See 1
                     && mState != INITIALIZED
                     && mState != CONFIGURED && !isExecuting()) {
+                ALOGW("stop: state is not INITIALIZED: mState=%d, mReclaiming=%d", mState, mReclaiming);
                 // 1) Permit release to shut down the component if allocated.
                 //
                 // 2) We may be in "UNINITIALIZED" state already and
@@ -2611,6 +2635,9 @@ void MediaCodec::onMessageReceived(const sp<AMessage> &msg) {
                 if (err == OK && targetState == UNINITIALIZED) {
                     mComponentName.clear();
                 }
+                if (mReclaiming && (msg->what() == kWhatStop)) {
+                    response->setInt32("err", WOULD_BLOCK);
+                }
                 response->postReply(replyID);
                 break;
             }
@@ -2619,7 +2646,9 @@ void MediaCodec::onMessageReceived(const sp<AMessage> &msg) {
             // request, post the reply for the pending call first, and consider
             // it done. The reply token will be replaced after this, and we'll
             // no longer be able to reply.
-            if (mState == FLUSHING || mState == STOPPING) {
+            if (mState == FLUSHING || mState == STOPPING ||
+                (msg->what() == kWhatRelease && mState == RELEASING)) {
+                ALOGI("already in state %d, post reply for the pending call first!",mState);
                 (new AMessage)->postReply(mReplyID);
             }
 

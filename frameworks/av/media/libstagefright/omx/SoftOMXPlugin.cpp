@@ -60,6 +60,7 @@ static const struct {
     { "OMX.google.opus.decoder", "opusdec", "audio_decoder.opus" },
     { "OMX.google.vp8.decoder", "vpxdec", "video_decoder.vp8" },
     { "OMX.google.vp9.decoder", "vpxdec", "video_decoder.vp9" },
+    { "OMX.google.av1.decoder", "av1dec", "video_decoder.av1" },
     { "OMX.google.vp8.encoder", "vpxenc", "video_encoder.vp8" },
     { "OMX.google.vp9.encoder", "vpxenc", "video_encoder.vp9" },
     { "OMX.google.raw.decoder", "rawdec", "audio_decoder.raw" },

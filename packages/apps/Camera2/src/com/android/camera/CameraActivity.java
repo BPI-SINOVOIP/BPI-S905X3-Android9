@@ -171,6 +171,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import android.hardware.usb.UsbAccessory;
+import android.hardware.usb.UsbConstants;
+import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbInterface;
+import android.hardware.usb.UsbManager;
+
+import com.android.camera.settings.CameraPictureSizesCacher;
+
 public class CameraActivity extends QuickActivity
         implements AppController, CameraAgent.CameraOpenCallback,
         ShareActionProvider.OnShareTargetSelectedListener {
@@ -214,6 +222,7 @@ public class CameraActivity extends QuickActivity
     /**
      * This data adapter is used by FilmStripView.
      */
+    private OneCameraManager mCameraManager;
     private VideoItemFactory mVideoItemFactory;
     private PhotoItemFactory mPhotoItemFactory;
     private LocalFilmstripDataAdapter mDataAdapter;
@@ -311,6 +320,41 @@ public class CameraActivity extends QuickActivity
         @Override
         public void onReceive(Context context, Intent intent) {
             finish();
+        }
+    };
+
+    private final BroadcastReceiver mUsbDeviceReceiver = new BroadcastReceiver() {
+
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (UsbManager.ACTION_USB_DEVICE_ATTACHED.equals(action)) {
+
+            } else if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(action)) {
+                UsbDevice device = (UsbDevice)intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+                if (isUsbCamera(device))
+                    cleanPictureSizesForCamera();
+            }
+        }
+
+        private boolean isUsbCamera(UsbDevice device) {
+            int count = device.getInterfaceCount();
+
+            for (int i = 0; i < count; i++) {
+                UsbInterface intf = device.getInterface(i);
+                if (intf.getInterfaceClass() == UsbConstants.USB_CLASS_VIDEO) {
+                    return true;
+                }
+            }
+            return false;
+       }
+    };
+
+    private final ActionBar.OnMenuVisibilityListener mOnMenuVisibilityListener =
+            new ActionBar.OnMenuVisibilityListener() {
+        @Override
+        public void onMenuVisibilityChanged(boolean isVisible) {
+            // TODO: Remove this or bring back the original implementation: cancel
+            // auto-hide actionbar.
         }
     };
 
@@ -501,6 +545,15 @@ public class CameraActivity extends QuickActivity
                 }
             };
 
+    private void updatePictureSizesForCamera() {
+        CameraPictureSizesCacher.updatePictureSizesForCamera(
+            CameraActivity.this, mCameraController.getCurrentCamera());
+    }
+
+    private void cleanPictureSizesForCamera() {
+        CameraPictureSizesCacher.cleanPictureSizesForCamera(CameraActivity.this, mCameraController.getCurrentCamera());
+    }
+
     @Override
     public void onCameraOpened(CameraAgent.CameraProxy camera) {
         Log.v(TAG, "onCameraOpened");
@@ -532,6 +585,7 @@ public class CameraActivity extends QuickActivity
         }
         Log.v(TAG, "invoking onChangeCamera");
         mCameraAppUI.onChangeCamera();
+        cleanPictureSizesForCamera();
     }
 
     private void resetExposureCompensationToDefault(CameraAgent.CameraProxy camera) {
@@ -1428,6 +1482,9 @@ public class CameraActivity extends QuickActivity
 
     @Override
     public void onCreateTasks(Bundle state) {
+        IntentFilter usbFilter = new IntentFilter(UsbManager.ACTION_USB_DEVICE_ATTACHED);
+        usbFilter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
+        registerReceiver(mUsbDeviceReceiver, usbFilter);
         Profile profile = mProfiler.create("CameraActivity.onCreateTasks").start();
         CameraPerformanceTracker.onEvent(CameraPerformanceTracker.ACTIVITY_START);
         mOnCreateTime = System.currentTimeMillis();
@@ -2157,6 +2214,7 @@ public class CameraActivity extends QuickActivity
 
     @Override
     public void onDestroyTasks() {
+        unregisterReceiver(mUsbDeviceReceiver);
         if (mSecureCamera) {
             unregisterReceiver(mShutdownReceiver);
         }
@@ -2212,6 +2270,34 @@ public class CameraActivity extends QuickActivity
     }
 
     @Override
+    public boolean dispatchKeyEvent ( KeyEvent event ) {
+        if ( event.getAction() == KeyEvent.ACTION_UP ) {
+            return super.dispatchKeyEvent ( event );
+        } else if ( event.getKeyCode() == KeyEvent.KEYCODE_DPAD_RIGHT ) {
+            if ( mModeListVisible ) {
+                mModeListView.onBackPressed();
+                mModeListView.settingsButtonRequestFocus();
+            } else if ( !mModeListVisible && mCameraAppUI.setCaptureOnfocus() ) {
+                mCameraAppUI.showFilmstrip();
+            }
+        } else if ( event.getKeyCode() == KeyEvent.KEYCODE_DPAD_LEFT ) {
+            if ( event.getKeyCode() == KeyEvent.KEYCODE_MENU
+                || event.getKeyCode() == KeyEvent.KEYCODE_DPAD_LEFT ) {
+                if ( !mModeListVisible && !mCameraAppUI.setCaptureOnfocus() ) {
+                    mCameraAppUI.openModeList();
+                }
+            }
+        } else if ( event.getKeyCode() == KeyEvent.KEYCODE_DPAD_UP &&
+            mModeListVisible ) {
+            mModeListView.switchItem ( false, true );
+        } else if ( event.getKeyCode() == KeyEvent.KEYCODE_DPAD_DOWN &&
+            mModeListVisible ) {
+            mModeListView.switchItem ( false, false );
+        }
+        return super.dispatchKeyEvent ( event );
+    }
+
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (!mFilmstripVisible) {
             if (mCurrentModule.onKeyDown(keyCode, event)) {
@@ -2236,13 +2322,8 @@ public class CameraActivity extends QuickActivity
             // consume the key event.
             if (mCurrentModule.onKeyUp(keyCode, event)) {
                 return true;
-            } else if (keyCode == KeyEvent.KEYCODE_MENU
-                    || keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
-                // Let the mode list view consume the event.
-                mCameraAppUI.openModeList();
-                return true;
-            } else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
-                mCameraAppUI.showFilmstrip();
+            }else if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER && mModeListVisible) {
+                mModeListView.switchItem(true, false);
                 return true;
             }
         } else {

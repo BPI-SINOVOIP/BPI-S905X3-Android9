@@ -318,10 +318,16 @@ Supplicant::addInterfaceInternal(const IfaceInfo& iface_info)
 SupplicantStatus Supplicant::removeInterfaceInternal(
     const IfaceInfo& iface_info)
 {
+	bool remove_p2p;	
 	struct wpa_supplicant* wpa_s =
 	    wpa_supplicant_get_iface(wpa_global_, iface_info.name.c_str());
 	if (!wpa_s) {
 		return {SupplicantStatusCode::FAILURE_IFACE_UNKNOWN, ""};
+	}
+    
+	if (os_strncmp(wpa_s->ifname, "p2p", 3) == 0) {
+		wpa_printf(MSG_ERROR, "bcm wifi not removeInterfaceInternal");
+		return {SupplicantStatusCode::SUCCESS, ""};
 	}
 	if (wpa_supplicant_remove_iface(wpa_global_, wpa_s, 0)) {
 		return {SupplicantStatusCode::FAILURE_UNKNOWN, ""};

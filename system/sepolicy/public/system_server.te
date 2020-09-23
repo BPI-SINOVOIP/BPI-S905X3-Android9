@@ -3,3 +3,7 @@
 # Most of the framework services run in this process.
 #
 type system_server, domain;
+allow system_server screen_control:dir { search };
+allow system_server screen_control:file { read getattr open };
+allow system_server netd:fifo_file { read getattr open };
+allow system_server dnsmasq:binder { call };

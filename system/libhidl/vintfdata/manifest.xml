@@ -81,6 +81,15 @@
         </interface>
     </hal>
     <hal>
+        <name>vendor.amlogic.hardware.screencontrol</name>
+        <transport>hwbinder</transport>
+        <version>1.0</version>
+        <interface>
+            <name>IScreenControl</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal>
       <name>android.hardware.graphics.composer</name>
       <transport>hwbinder</transport>
       <version>2.1</version>

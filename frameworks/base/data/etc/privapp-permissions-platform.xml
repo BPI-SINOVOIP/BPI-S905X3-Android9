@@ -396,6 +396,7 @@ applications that come with the platform
         <permission name="android.permission.HDMI_CEC"/>
         <permission name="android.permission.MODIFY_PARENTAL_CONTROLS"/>
         <permission name="android.permission.READ_CONTENT_RATING_SYSTEMS"/>
+        <permission name="android.permission.WRITE_SECURE_SETTINGS"/>
         <permission name="com.android.providers.tv.permission.ACCESS_ALL_EPG_DATA"/>
         <permission name="com.android.providers.tv.permission.ACCESS_WATCHED_PROGRAMS"/>
     </privapp-permissions>

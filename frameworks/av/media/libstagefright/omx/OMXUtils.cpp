@@ -149,6 +149,8 @@ const char *GetComponentRole(bool isEncoder, const char *mime) {
             "video_decoder.vp8", "video_encoder.vp8" },
         { MEDIA_MIMETYPE_VIDEO_VP9,
             "video_decoder.vp9", "video_encoder.vp9" },
+        { MEDIA_MIMETYPE_VIDEO_AV1,
+            "video_decoder.av1", "video_encoder.av1" },
         { MEDIA_MIMETYPE_AUDIO_RAW,
             "audio_decoder.raw", "audio_encoder.raw" },
         { MEDIA_MIMETYPE_VIDEO_DOLBY_VISION,
@@ -383,4 +385,3 @@ bool IsFlexibleColorFormat(
 }
 
 }  // namespace android
-

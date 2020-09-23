@@ -26,7 +26,8 @@
     android:gravity="center"
     android:orientation="vertical"
     android:paddingEnd="4dip"
-    android:paddingStart="4dip">
+    android:paddingStart="4dip"
+    android:background="@drawable/powerkey_long_press_selector">
 
     <ImageView
         android:id="@*android:id/icon"

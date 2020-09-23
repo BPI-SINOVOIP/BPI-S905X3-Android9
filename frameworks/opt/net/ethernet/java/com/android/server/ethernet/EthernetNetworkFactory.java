@@ -183,6 +183,8 @@ public class EthernetNetworkFactory extends NetworkFactory {
         NetworkInterfaceState network = mTrackingInterfaces.get(iface);
         if (network != null) {
             network.setIpConfig(ipConfiguration);
+            network.stop();
+            network.start();
         }
     }
 
@@ -284,6 +286,10 @@ public class EthernetNetworkFactory extends NetworkFactory {
                 if (DBG) Log.d(TAG, "IpClient already started");
                 return;
             }
+
+            if(mLinkUp == false)
+                return;
+
             if (DBG) {
                 Log.d(TAG, String.format("starting IpClient(%s): mNetworkInfo=%s", name,
                         mNetworkInfo));

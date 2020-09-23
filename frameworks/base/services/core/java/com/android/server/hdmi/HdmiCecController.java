@@ -35,6 +35,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.CountDownLatch;
 import libcore.util.EmptyArray;
 import sun.util.locale.LanguageTag;
 
@@ -412,6 +413,7 @@ final class HdmiCecController {
     private List<Integer> pickPollCandidates(int pickStrategy) {
         int strategy = pickStrategy & Constants.POLL_STRATEGY_MASK;
         Predicate<Integer> pickPredicate = null;
+        int CommonUsedCandidates[] = {0x0, 0x3, 0x4, 0x5, 0x8, 0xb, 0xe};
         switch (strategy) {
             case Constants.POLL_STRATEGY_SYSTEM_AUDIO:
                 pickPredicate = mSystemAudioAddressPredicate;
@@ -426,17 +428,17 @@ final class HdmiCecController {
         LinkedList<Integer> pollingCandidates = new LinkedList<>();
         switch (iterationStrategy) {
             case Constants.POLL_ITERATION_IN_ORDER:
-                for (int i = Constants.ADDR_TV; i <= Constants.ADDR_SPECIFIC_USE; ++i) {
-                    if (pickPredicate.test(i)) {
-                        pollingCandidates.add(i);
+                for (int i = Constants.ADDR_TV; i <= CommonUsedCandidates.length - 1; ++i) {
+                    if (pickPredicate.test(CommonUsedCandidates[i])) {
+                        pollingCandidates.add(CommonUsedCandidates[i]);
                     }
                 }
                 break;
             case Constants.POLL_ITERATION_REVERSE_ORDER:
             default:  // The default is reverse order.
-                for (int i = Constants.ADDR_SPECIFIC_USE; i >= Constants.ADDR_TV; --i) {
-                    if (pickPredicate.test(i)) {
-                        pollingCandidates.add(i);
+                for (int i = CommonUsedCandidates.length - 1; i >= Constants.ADDR_TV; --i) {
+                    if (pickPredicate.test(CommonUsedCandidates[i])) {
+                        pollingCandidates.add(CommonUsedCandidates[i]);
                     }
                 }
                 break;
@@ -486,6 +488,35 @@ final class HdmiCecController {
                 });
             }
         });
+    }
+
+    @ServiceThreadOnly
+    boolean isConenctedToCecTv(final int sourceAddress) {
+        final CountDownLatch latch = new CountDownLatch(1);
+        final PollResult pollResult = new PollResult();
+        runOnIoThread(new Runnable() {
+            @Override
+            public void run() {
+                boolean connected = sendPollMessage(sourceAddress, Constants.ADDR_TV, 1);
+                Slog.d(TAG, "isConenctedToCecTv " + connected);
+                pollResult.result = connected;
+                latch.countDown();
+            }
+        });
+
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            Slog.e(TAG, "latch await fail " + e);
+        }
+
+        Slog.d(TAG, "isConenctedToCecTv pollResult.result " + pollResult.result);
+
+        return pollResult.result;
+    }
+
+    private class PollResult {
+        boolean result;
     }
 
     @IoThreadOnly
@@ -554,6 +585,9 @@ final class HdmiCecController {
     private void onReceiveCommand(HdmiCecMessage message) {
         assertRunOnServiceThread();
         if (isAcceptableAddress(message.getDestination()) && mService.handleCecCommand(message)) {
+            return;
+        }
+        if (message.getOpcode() == Constants.MESSAGE_REPORT_SHORT_AUDIO_DESCRIPTOR) {
             return;
         }
         // Not handled message, so we will reply it with <Feature Abort>.

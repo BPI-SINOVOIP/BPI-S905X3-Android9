@@ -154,6 +154,7 @@ import static com.android.server.wm.WindowManagerPolicyProto.WINDOW_MANAGER_DRAW
 
 import android.annotation.Nullable;
 import android.app.ActivityManager;
+import android.app.ActivityManager.RunningTaskInfo;
 import android.app.ActivityManagerInternal;
 import android.app.ActivityManagerInternal.SleepToken;
 import android.app.ActivityThread;
@@ -165,6 +166,7 @@ import android.app.StatusBarManager;
 import android.app.UiModeManager;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -172,6 +174,7 @@ import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageInfo;
 import android.content.pm.ResolveInfo;
 import android.content.res.CompatibilityInfo;
 import android.content.res.Configuration;
@@ -194,6 +197,7 @@ import android.media.AudioManagerInternal;
 import android.media.AudioSystem;
 import android.media.IAudioService;
 import android.media.session.MediaSessionLegacyHelper;
+import android.net.Uri;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.FactoryTest;
@@ -269,13 +273,14 @@ import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto;
 import com.android.internal.policy.IKeyguardDismissCallback;
 import com.android.internal.policy.IShortcutService;
-import com.android.internal.policy.KeyguardDismissCallback;
 import com.android.internal.policy.PhoneWindow;
 import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.ScreenshotHelper;
 import com.android.internal.util.ScreenShapeHelper;
 import com.android.internal.widget.PointerLocationView;
+import com.android.server.ExtconStateObserver;
+import com.android.server.ExtconUEventObserver;
 import com.android.server.GestureLauncherService;
 import com.android.server.LocalServices;
 import com.android.server.SystemServiceManager;
@@ -290,10 +295,13 @@ import com.android.server.wm.WindowManagerInternal;
 import com.android.server.wm.WindowManagerInternal.AppTransitionListener;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import android.app.ActivityManager.RunningTaskInfo;
+import android.content.ComponentName;
 
 /**
  * WindowManagerPolicy implementation for the Android phone UI.  This
@@ -376,7 +384,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     static public final String SYSTEM_DIALOG_REASON_HOME_KEY = "homekey";
     static public final String SYSTEM_DIALOG_REASON_ASSIST = "assist";
     static public final String SYSTEM_DIALOG_REASON_SCREENSHOT = "screenshot";
-
     /**
      * These are the system UI flags that, when changing, can cause the layout
      * of the screen to change.
@@ -1386,7 +1393,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             if (interactive) {
                 // When interactive, we're already awake.
                 // Wait for a long press or for the button to be released to decide what to do.
-                if (hasLongPressOnPowerBehavior()) {
+                if ((hasLongPressOnPowerBehavior() && !SystemProperties.getBoolean("ro.platform.has.tvuimode", false) )
+                        ||(whichPowerKeyDefinition() == POWER_KEY_SHUTDOWN)) {
                     if ((event.getFlags() & KeyEvent.FLAG_LONG_PRESS) != 0) {
                         powerLongPress();
                     } else {
@@ -1434,7 +1442,15 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             }
         }
     }
+    private static final String POWER_KEY_DEFINITION = "power_key_definition";
+    static final int POWER_KEY_SUSPEND = 0;
+    static final int POWER_KEY_SHUTDOWN = 1;
+    static final int POWER_KEY_RESTART = 2;
 
+    private int whichPowerKeyDefinition() {
+        int default_value = POWER_KEY_SUSPEND;
+        return Settings.System.getInt(mContext.getContentResolver(), POWER_KEY_DEFINITION, default_value);
+    }
     private void interceptPowerKeyUp(KeyEvent event, boolean interactive, boolean canceled) {
         final boolean handled = canceled || mPowerKeyHandled;
         mScreenshotChordPowerKeyTriggered = false;
@@ -1499,7 +1515,15 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         Slog.d(TAG, "powerPress: eventTime=" + eventTime + " interactive=" + interactive
                 + " count=" + count + " beganFromNonInteractive=" + mBeganFromNonInteractive +
                 " mShortPressOnPowerBehavior=" + mShortPressOnPowerBehavior);
-
+        int definedPowerKey = whichPowerKeyDefinition();
+        if (definedPowerKey == POWER_KEY_SHUTDOWN) {
+            mPowerManager.shutdown(false,"userrequested",false);
+            return;
+        }
+        if (definedPowerKey == POWER_KEY_RESTART) {
+            mPowerManager.reboot("");
+            return;
+        }
         if (count == 2) {
             powerMultiPressAction(eventTime, interactive, mDoublePressOnPowerBehavior);
         } else if (count == 3) {
@@ -4397,17 +4421,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             if (isKeyguardShowingAndNotOccluded()) {
                 // don't launch home if keyguard showing
                 return;
-            } else if (mKeyguardOccluded && mKeyguardDelegate.isShowing()) {
-                mKeyguardDelegate.dismiss(new KeyguardDismissCallback() {
-                    @Override
-                    public void onDismissSucceeded() throws RemoteException {
-                        mHandler.post(() -> {
-                            startDockOrHome(true /*fromHomeKey*/, awakenFromDreams);
-                        });
-                    }
-                }, null /* message */);
-                return;
-            } else if (!mKeyguardOccluded && mKeyguardDelegate.isInputRestricted()) {
+            }
+
+            if (!mKeyguardOccluded && mKeyguardDelegate.isInputRestricted()) {
                 // when in keyguard restricted mode, must first verify unlock
                 // before launching home
                 mKeyguardDelegate.verifyUnlock(new OnKeyguardExitResult() {
@@ -6006,6 +6022,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     }
                 }
             }
+        } else if (ExtconUEventObserver.extconExists()) {
+            HdmiVideoExtconUEventObserver observer = new HdmiVideoExtconUEventObserver();
+            plugged = observer.init();
         }
         // This dance forces the code in setHdmiPlugged to run.
         // Always do this so the sticky intent is stuck (to false) if there is no hdmi.
@@ -6398,6 +6417,107 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
                 break;
             }
+            case KeyEvent.KEYCODE_YOUTUBE: {
+                boolean isWakeup = !mAwake;
+                result &= ~ACTION_PASS_TO_USER;
+                isWakeKey = false;
+                if (down) {
+                    wakeUp(event.getEventTime(), mAllowTheaterModeWakeFromPowerKey, "android.policy:KEY");
+                    if (isAvilible(mContext,"com.google.android.youtube.tv")) {
+                        boolean isYoutubeRunning = false;
+                        try {
+                            List<RunningTaskInfo> tasks = ActivityManager.getService().getTasks(1);
+                            ComponentName componentInfo = tasks.get(0).topActivity;
+                            if (componentInfo.getPackageName().equals("com.google.android.youtube.tv")) {
+                                isYoutubeRunning = true;
+                            }
+                        } catch (Exception e) {}
+
+                        Log.i(TAG, "Youtube running: " + isYoutubeRunning + ", isWakeup: " + isWakeup);
+                        if (isYoutubeRunning) {
+                            Log.i(TAG, "Youtube running:");
+                            break;
+                        } else {
+                            String package_name = "com.google.android.youtube.tv";
+                            String activity_path = "com.google.android.apps.youtube.tv.activity.MainActivity";
+                            Intent intent = new Intent();
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            ComponentName comp = new ComponentName(package_name,activity_path);
+                            intent.setComponent(comp);
+                            mContext.startActivity(intent);
+                        }
+                    }
+                }
+                break;
+            }
+            case KeyEvent.KEYCODE_SETTINGS: {
+                boolean isWakeup = !mAwake;
+                result &= ~ACTION_PASS_TO_USER;
+                isWakeKey = false;
+                if (down) {
+                    wakeUp(event.getEventTime(), mAllowTheaterModeWakeFromPowerKey, "android.policy:KEY");
+                    if (isAvilible(mContext,"com.android.tv.settings")) {
+                        boolean isSettingsRunning = false;
+                        try {
+                            List<RunningTaskInfo> tasks = ActivityManager.getService().getTasks(1);
+                            ComponentName componentInfo = tasks.get(0).topActivity;
+                            if (componentInfo.getPackageName().equals("com.android.tv.settings")) {
+                                isSettingsRunning = true;
+                            }
+                        } catch (Exception e) {}
+
+                        Log.i(TAG, "SETTINGS running: " + isSettingsRunning + ", isWakeup: " + isWakeup);
+                        if (isSettingsRunning) {
+                            Log.i(TAG, "SETTINGS running:");
+                            break;
+                        } else {
+                            String package_name = "com.android.tv.settings";
+                            String activity_path = "com.android.tv.settings.MainSettings";
+                            Intent intent = new Intent();
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            ComponentName comp = new ComponentName(package_name,activity_path);
+                            intent.setComponent(comp);
+                            mContext.startActivity(intent);
+                        }
+                    }
+                }
+                break;
+            }
+            case KeyEvent.KEYCODE_STEM_1: {
+                boolean isWakeup = !mAwake;
+                result &= ~ACTION_PASS_TO_USER;
+                isWakeKey = false;
+                if (down) {
+                    wakeUp(event.getEventTime(), mAllowTheaterModeWakeFromPowerKey, "android.policy:KEY");
+                    if (mContext.getPackageManager().hasSystemFeature("droidlogic.software.netflix")) {
+                        boolean isNeflixRunning = false;
+                        try {
+                            List<RunningTaskInfo> tasks = ActivityManager.getService().getTasks(1);
+                            ComponentName componentInfo = tasks.get(0).topActivity;
+                            if (componentInfo.getPackageName().equals("com.netflix.ninja")) {
+                                isNeflixRunning = true;
+                            }
+                        } catch (Exception e) {}
+
+                        Log.i(TAG, "Netflix running: " + isNeflixRunning + ", isWakeup: " + isWakeup);
+                        if (isNeflixRunning) {
+                            Intent netflixIntent = new Intent();
+                            netflixIntent.setAction("com.netflix.ninja.intent.action.NETFLIX_KEY");
+                            netflixIntent.putExtra("power_on", isWakeup);
+                            netflixIntent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+                            netflixIntent.addFlags(Intent.FLAG_RECEIVER_INCLUDE_BACKGROUND);
+                            mContext.sendBroadcast(netflixIntent,"com.netflix.ninja.permission.NETFLIX_KEY");
+                        } else {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("nflx://www.netflix.com/"));
+                            intent.putExtra("deeplink", "&source_type=" + (isWakeup ? 19 : 1)); // 19 - power on
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+                            mContext.startActivity(intent);
+                        }
+                    }
+                }
+                break;
+            }
         }
 
         if (useHapticFeedback) {
@@ -6410,7 +6530,17 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
         return result;
     }
-
+    private boolean isAvilible( Context context, String packageName ){
+        final PackageManager packageManager = context.getPackageManager();
+        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);
+        for ( int i = 0; i < pinfo.size(); i++ )
+        {
+                if (pinfo.get(i).packageName.equalsIgnoreCase(packageName)) {
+                    return true;
+                }
+        }
+        return false;
+    }
     /**
      * Handle statusbar expansion events.
      * @param event
@@ -6936,7 +7066,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             } else {
                 if (DEBUG_WAKEUP) Slog.d(TAG,
                         "null mKeyguardDelegate: setting mKeyguardDrawComplete.");
-                finishKeyguardDrawn();
+                mHandler.sendEmptyMessage(MSG_KEYGUARD_DRAWN_COMPLETE);
             }
         }
     }
@@ -8997,5 +9127,40 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             return true;
         }
         return false;
+    }
+
+    private class HdmiVideoExtconUEventObserver extends ExtconStateObserver<Boolean> {
+        private static final String HDMI_EXIST = "HDMI=1";
+        private final ExtconInfo mHdmi = new ExtconInfo("hdmi");
+
+        private boolean init() {
+            boolean plugged = false;
+            try {
+                plugged = parseStateFromFile(mHdmi);
+            } catch (FileNotFoundException e) {
+                Slog.w(TAG, mHdmi.getStatePath()
+                        + " not found while attempting to determine initial state", e);
+            } catch (IOException e) {
+                Slog.e(
+                        TAG,
+                        "Error reading " + mHdmi.getStatePath()
+                                + " while attempting to determine initial state",
+                        e);
+            }
+            startObserving(mHdmi);
+            return plugged;
+        }
+
+        @Override
+        public void updateState(ExtconInfo extconInfo, String eventName, Boolean state) {
+            setHdmiPlugged(state);
+        }
+
+        @Override
+        public Boolean parseState(ExtconInfo extconIfno, String state) {
+            // extcon event state changes from kernel4.9
+            // new state will be like STATE=HDMI=1
+            return state.contains(HDMI_EXIST);
+         }
     }
 }

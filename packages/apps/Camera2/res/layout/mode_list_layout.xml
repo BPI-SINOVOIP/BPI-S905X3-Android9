@@ -26,6 +26,7 @@
     <LinearLayout
         android:id="@+id/mode_list"
         android:orientation="vertical"
+        android:focusable="false"
         android:layout_gravity="top|left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

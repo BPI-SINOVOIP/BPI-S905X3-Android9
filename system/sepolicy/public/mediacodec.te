@@ -31,6 +31,8 @@ allow mediacodec video_device:dir search;
 allow mediacodec ion_device:chr_file rw_file_perms;
 allow mediacodec hal_camera:fd use;
 
+allow mediacodec screen_control:binder { call transfer };
+
 crash_dump_fallback(mediacodec)
 
 add_hwservice(mediacodec, hal_codec2_hwservice)

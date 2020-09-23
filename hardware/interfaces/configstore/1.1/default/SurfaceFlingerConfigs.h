@@ -36,6 +36,9 @@ struct SurfaceFlingerConfigs : public ISurfaceFlingerConfigs {
     // ::android::hardware::configstore::V1_1::ISurfaceFlingerConfigs follow.
     Return<void> primaryDisplayOrientation(primaryDisplayOrientation_cb _hidl_cb) override;
 
+    Return<void> primaryDisplayFramebufferWidth(primaryDisplayFramebufferWidth_cb _hidl_cb) override;
+    Return<void> primaryDisplayFramebufferHeight(primaryDisplayFramebufferHeight_cb _hidl_cb) override;
+
     // Methods from ::android::hidl::base::V1_0::IBase follow.
 };
 

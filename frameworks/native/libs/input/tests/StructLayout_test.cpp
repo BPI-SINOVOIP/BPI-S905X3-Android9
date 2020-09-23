@@ -65,6 +65,9 @@ void TestInputMessageAlignment() {
   CHECK_OFFSET(InputMessage::Body::Motion, yPrecision, 76);
   CHECK_OFFSET(InputMessage::Body::Motion, pointerCount, 80);
   CHECK_OFFSET(InputMessage::Body::Motion, pointers, 88);
+
+  CHECK_OFFSET(InputMessage::Body::Finished, seq, 0);
+  CHECK_OFFSET(InputMessage::Body::Finished, handled, 4);
 }
 
 } // namespace android

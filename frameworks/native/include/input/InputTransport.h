@@ -41,6 +41,13 @@ namespace android {
  *
  * Note that this structure is used for IPCs so its layout must be identical
  * on 64 and 32 bit processes. This is tested in StructLayout_test.cpp.
+ *
+ * Since the struct must be aligned to an 8-byte boundary, there could be uninitialized bytes
+ * in-between the defined fields. This padding data should be explicitly accounted for by adding
+ * "empty" fields into the struct. This data is memset to zero before sending the struct across
+ * the socket. Adding the explicit fields ensures that the memset is not optimized away by the
+ * compiler. When a new field is added to the struct, the corresponding change
+ * in StructLayout_test should be made.
  */
 struct InputMessage {
     enum {
@@ -61,6 +68,7 @@ struct InputMessage {
     union Body {
         struct Key {
             uint32_t seq;
+            uint32_t empty1;
             nsecs_t eventTime __attribute__((aligned(8)));
             int32_t deviceId;
             int32_t source;
@@ -71,6 +79,7 @@ struct InputMessage {
             int32_t scanCode;
             int32_t metaState;
             int32_t repeatCount;
+            uint32_t empty2;
             nsecs_t downTime __attribute__((aligned(8)));
 
             inline size_t size() const {
@@ -80,6 +89,7 @@ struct InputMessage {
 
         struct Motion {
             uint32_t seq;
+            uint32_t empty1;
             nsecs_t eventTime __attribute__((aligned(8)));
             int32_t deviceId;
             int32_t source;
@@ -90,12 +100,14 @@ struct InputMessage {
             int32_t metaState;
             int32_t buttonState;
             int32_t edgeFlags;
+            uint32_t empty2;
             nsecs_t downTime __attribute__((aligned(8)));
             float xOffset;
             float yOffset;
             float xPrecision;
             float yPrecision;
             uint32_t pointerCount;
+            uint32_t empty3;
             // Note that PointerCoords requires 8 byte alignment.
             struct Pointer {
                 PointerProperties properties;
@@ -126,6 +138,7 @@ struct InputMessage {
 
     bool isValid(size_t actualSize) const;
     size_t size() const;
+    void getSanitizedCopy(InputMessage* msg) const;
 };
 
 /*

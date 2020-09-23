@@ -17,6 +17,8 @@
  */
 -->
 <resources>
+    <color name="power_long_press_focus">#dcdcdc</color>
+    <color name="power_long_press_selected">#808080</color>
     <drawable name="notification_number_text_color">#ffffffff</drawable>
     <drawable name="ticker_background_color">#ff1d1d1d</drawable>
     <drawable name="system_bar_background">@color/system_bar_background_opaque</drawable>
