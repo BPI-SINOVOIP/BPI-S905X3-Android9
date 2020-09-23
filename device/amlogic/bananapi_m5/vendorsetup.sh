@@ -1,0 +1,3 @@
+add_lunch_combo bananapi_m5-eng
+add_lunch_combo bananapi_m5-user
+add_lunch_combo bananapi_m5-userdebug

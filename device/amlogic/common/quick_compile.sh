@@ -40,7 +40,8 @@ project[24]="Newton"       ;soc[24]="S905X3"        ;hardware[24]="AC214"       
 project[25]="Neumann"      ;soc[25]="S905D3"        ;hardware[25]="AC200"       ; module[25]="neumann"      ;uboot[25]="sm1_ac200_v1"        ;tdk[25]="g12a/bl32.img"
 project[26]="P281"         ;soc[26]="S905W"         ;hardware[26]="P281"        ; module[26]="p281"         ;uboot[26]="gxl_p281_v1"         ;tdk[26]="gx/bl32.img"
 project[27]="T962x3_t312"  ;soc[27]="T962X3"        ;hardware[27]="T312"        ; module[27]="t962x3_t312"  ;uboot[27]="tm2_t962x3_t312_v1"  ;tdk[27]="tm2/bl32.img"
-project[28]="AC214"        ;soc[28]="S905X3"        ;hardware[28]="AC214"       ; module[28]="ac214"        ;uboot[28]="sm1_ac214_v1"         ;tdk[28]="g12a/bl32.img"
+project[28]="AC214"        ;soc[28]="S905X3"        ;hardware[28]="AC214"       ; module[28]="ac214"        ;uboot[28]="sm1_ac214_v1"        ;tdk[28]="g12a/bl32.img"
+project[29]="bananapi_m5"  ;soc[29]="S905X3"        ;hardware[29]="BANANAPI_M5" ; module[29]="bananapi_m5"  ;uboot[29]="bananapi_m5_v1"      ;tdk[29]="g12a/bl32.img"
 
 platform_avb_param=""
 platform_type=1
