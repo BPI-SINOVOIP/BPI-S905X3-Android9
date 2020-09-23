@@ -163,10 +163,10 @@ LOCAL_PRELINK_MODULE := false
 # version
 ifeq ($(strip $(BOARD_TVAPI_NO_VERSION)),)
   $(shell cd $(LOCAL_PATH);touch version/version.cpp)
-  LIBTVSERVICE_GIT_VERSION="$(shell cd $(LOCAL_PATH);git log | grep commit -m 1 | cut -d' ' -f 2)"
-  LIBTVSERVICE_GIT_UNCOMMIT_FILE_NUM=$(shell cd $(LOCAL_PATH);git diff | grep +++ -c)
-  LIBTVSERVICE_GIT_BRANCH="$(shell cd $(LOCAL_PATH);git branch | grep \* -m 1)"
-  LIBTVSERVICE_LAST_CHANGED="$(shell cd $(LOCAL_PATH);git log | grep Date -m 1)"
+  LIBTVSERVICE_GIT_VERSION="ab8e2836dbf857b2248048e11d3aabf4d82c826c"
+  LIBTVSERVICE_GIT_UNCOMMIT_FILE_NUM=0
+  LIBTVSERVICE_GIT_BRANCH="* (no branch)"
+  LIBTVSERVICE_LAST_CHANGED="Date:   Tue Nov 12 19:13:46 2019 +0800"
   LIBTVSERVICE_BUILD_TIME=" $(shell date)"
   LIBTVSERVICE_BUILD_NAME=" $(shell echo ${LOGNAME})"
 

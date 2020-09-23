@@ -20,10 +20,10 @@ LOCAL_PRELINK_MODULE := false
 
 ifeq ($(strip $(BOARD_DVB_NO_VERSION)),)
     $(shell cd $(LOCAL_PATH);touch am_ver.c)
-    LIBDVB_GIT_VERSION="$(shell cd $(LOCAL_PATH);git log | grep commit -m 1 | cut -d' ' -f 2)"
-    LIBDVB_GIT_UNCOMMIT_FILE_NUM=$(shell cd $(LOCAL_PATH);git diff | grep +++ -c)
-    LIBDVB_GIT_BRANCH="$(shell cd $(LOCAL_PATH);git branch | grep \* -m 1)"
-    LIBDVB_LAST_CHANGED="$(shell cd $(LOCAL_PATH);git log | grep Date -m 1)"
+    LIBDVB_GIT_VERSION="f76cf85efd2c4fd462ed85ace3ebfed2ad54fc38"
+    LIBDVB_GIT_UNCOMMIT_FILE_NUM=0
+    LIBDVB_GIT_BRANCH="* (no branch)"
+    LIBDVB_LAST_CHANGED="Date:   Thu May 7 17:37:29 2020 +0800"
     LIBDVB_BUILD_TIME=" $(shell date)"
     LIBDVB_BUILD_NAME=" $(shell echo ${LOGNAME})"
 
