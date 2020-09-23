@@ -1,0 +1,116 @@
+From f654716485db25efa48ad1a97ec8e5e201326cff Mon Sep 17 00:00:00 2001
+From: Leif Hendrik Wilden <leifhendrik@google.com>
+Date: Fri, 20 Jul 2018 11:10:39 -0700
+Subject: [PATCH] Add PICTURE_IN_PICTURE_SETTINGS and
+ LOCATION_SCANNING_SETTINGS intents.
+
+Bug: 111134274
+Test: atest CtsContentTestCases
+Change-Id: I6445cd5b12520a2d78c8fa6f59749473834dd8e4
+---
+ Settings/AndroidManifest.xml                       | 16 ++++++
+ .../specialaccess/PictureInPictureActivity.java    | 58 ++++++++++++++++++++++
+ 2 files changed, 74 insertions(+)
+ create mode 100644 Settings/src/com/android/tv/settings/device/apps/specialaccess/PictureInPictureActivity.java
+
+diff --git a/Settings/AndroidManifest.xml b/Settings/AndroidManifest.xml
+index fd1dde2..fb0fa27 100644
+--- a/Settings/AndroidManifest.xml
++++ b/Settings/AndroidManifest.xml
+@@ -189,6 +189,17 @@
+             </intent-filter>
+         </activity>
+ 
++        <activity android:name=".device.apps.specialaccess.PictureInPictureActivity"
++                  android:theme="@style/Theme.Settings.Transparent"
++                  android:taskAffinity=""
++                  android:excludeFromRecents="true"
++                  android:exported="true">
++            <intent-filter android:priority="1">
++                <category android:name="android.intent.category.DEFAULT" />
++                <action android:name="android.settings.PICTURE_IN_PICTURE_SETTINGS" />
++            </intent-filter>
++        </activity>
++
+         <activity
+             android:name=".device.apps.AppManagementActivity"
+             android:theme="@style/Theme.Settings.Transparent"
+@@ -244,6 +255,11 @@
+                 <category android:name="android.intent.category.DEFAULT" />
+                 <category android:name="android.intent.category.LEANBACK_SETTINGS" />
+             </intent-filter>
++
++            <intent-filter android:priority="1">
++                <action android:name="android.settings.LOCATION_SCANNING_SETTINGS" />
++                <category android:name="android.intent.category.DEFAULT" />
++            </intent-filter>
+         </activity>
+         <activity
+             android:name=".system.SecurityActivity"
+diff --git a/Settings/src/com/android/tv/settings/device/apps/specialaccess/PictureInPictureActivity.java b/Settings/src/com/android/tv/settings/device/apps/specialaccess/PictureInPictureActivity.java
+new file mode 100644
+index 0000000..99046f3
+--- /dev/null
++++ b/Settings/src/com/android/tv/settings/device/apps/specialaccess/PictureInPictureActivity.java
+@@ -0,0 +1,58 @@
++/*
++ * Copyright (C) 2017 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.tv.settings.device.apps.specialaccess;
++
++import android.app.Fragment;
++
++import com.android.tv.settings.BaseSettingsFragment;
++import com.android.tv.settings.TvSettingsActivity;
++import com.android.tv.settings.system.SecurityFragment;
++
++/**
++ * Wrapper activity for {@link PictureInPicture}
++ */
++public class PictureInPictureActivity extends TvSettingsActivity {
++
++    @Override
++    protected Fragment createSettingsFragment() {
++        if (SecurityFragment.isRestrictedProfileInEffect(this)) {
++            finish();
++            return null;
++        } else {
++            return SettingsFragment.newInstance();
++        }
++    }
++
++    /**
++     * Wrapper fragment for PictureInPicture
++     */
++    public static class SettingsFragment extends BaseSettingsFragment {
++
++        /**
++         * @return new instance of {@link SettingsFragment}
++         */
++        public static SettingsFragment newInstance() {
++            return new SettingsFragment();
++        }
++
++        @Override
++        public void onPreferenceStartInitialScreen() {
++            final PictureInPicture fragment = new PictureInPicture();
++            startPreferenceFragment(fragment);
++        }
++    }
++}
+-- 
+1.9.1
+

@@ -1,0 +1,32 @@
+From 2000b202c2ae28ae00e648472e01ea62df02b8a9 Mon Sep 17 00:00:00 2001
+From: yu fang <yu.fang@amlogic.com>
+Date: Tue, 11 Sep 2018 13:37:33 +0800
+Subject: [PATCH] LiveTv: delete global key configurations of KEYCODE_GUIDE and
+ KEYCODE_TV_INPUT.[1/1]
+
+PD# 173398
+
+Change-Id: Iaf0a468a93a56dfb261d1df05929facf39ed9456
+---
+ overlay/frameworks/base/core/res/res/xml/global_keys.xml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/overlay/frameworks/base/core/res/res/xml/global_keys.xml b/overlay/frameworks/base/core/res/res/xml/global_keys.xml
+index 4c0ab10..1dfd6ac 100644
+--- a/overlay/frameworks/base/core/res/res/xml/global_keys.xml
++++ b/overlay/frameworks/base/core/res/res/xml/global_keys.xml
+@@ -29,9 +29,9 @@
+     <!-- Example format: id = keycode to handle globally. component = component which will handle
+          this key. -->
+     <key keyCode="KEYCODE_DVR" component="com.google.android.tv/.receiver.GlobalKeyReceiver" />
+-    <key keyCode="KEYCODE_GUIDE" component="com.google.android.tv/.receiver.GlobalKeyReceiver" />
++    <!-- <key keyCode="KEYCODE_GUIDE" component="com.google.android.tv/.receiver.GlobalKeyReceiver" /> -->
+     <key keyCode="KEYCODE_TV" component="com.google.android.tv/.receiver.GlobalKeyReceiver" />
+-    <key keyCode="KEYCODE_TV_INPUT" component="com.google.android.tv/.receiver.GlobalKeyReceiver" />
++    <!-- <key keyCode="KEYCODE_TV_INPUT" component="com.google.android.tv/.receiver.GlobalKeyReceiver" /> -->
+
+     <!-- OEMs might want to add more custom global key handlings for TV specific key codes. -->
+ </global_keys>
+--
+1.9.1
+

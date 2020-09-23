@@ -1,0 +1,68 @@
+From 8bea35164a5b12be6407d4929165969d56dc08a4 Mon Sep 17 00:00:00 2001
+From: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date: Tue, 20 Aug 2019 21:34:20 +0800
+Subject: [PATCH] Tvinput: delay update audio sink when a2dp enabled [1/1]
+
+PD# SWPL-12234
+
+Problem:
+urn off the BT switch and turn on the BT switch.
+The BT speaker has no sound output
+
+Solution:
+tif delay update audio sink when a2dp enabled
+
+Verify:
+verify by x301
+
+Change-Id: I382f36a6b666c2bd61f14efa7445a19dfa08baf4
+Signed-off-by: Chaomin Zheng <chaomin.zheng@amlogic.com>
+---
+ .../android/server/tv/TvInputHardwareManager.java  | 22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
+
+diff --git a/services/core/java/com/android/server/tv/TvInputHardwareManager.java b/services/core/java/com/android/server/tv/TvInputHardwareManager.java
+index 6924a08..202673e 100644
+--- a/services/core/java/com/android/server/tv/TvInputHardwareManager.java
++++ b/services/core/java/com/android/server/tv/TvInputHardwareManager.java
+@@ -108,6 +108,7 @@ class TvInputHardwareManager implements TvInputHal.Callback {
+             handleVolumeChange(context, intent);
+         }
+     };
++    private Runnable mHandleAudioSinkUpdatedRunnable;
+     private IAudioService mAudioService;
+     private AudioRoutesInfo mCurAudioRoutesInfo;
+     final IAudioRoutesObserver.Stub mAudioRoutesObserver = new IAudioRoutesObserver.Stub() {
+@@ -116,13 +117,24 @@ class TvInputHardwareManager implements TvInputHal.Callback {
+             if ((newRoutes.mainType != mCurAudioRoutesInfo.mainType) ||
+                         (!newRoutes.toString().equals(mCurAudioRoutesInfo.toString()))) {
+                 mCurAudioRoutesInfo = newRoutes;
+-                synchronized (mLock) {
+-                    for (int i = 0; i < mConnections.size(); ++i) {
+-                        TvInputHardwareImpl impl = mConnections.valueAt(i).getHardwareImplLocked();
+-                        if (impl != null) {
+-                            impl.handleAudioSinkUpdated();
++                mHandler.removeCallbacks(mHandleAudioSinkUpdatedRunnable);
++                mHandleAudioSinkUpdatedRunnable = new Runnable() {
++                    public void run() {
++                        synchronized (mLock) {
++                            for (int i = 0; i < mConnections.size(); ++i) {
++                                TvInputHardwareImpl impl = mConnections.valueAt(i).getHardwareImplLocked();
++                                if (impl != null) {
++                                    impl.handleAudioSinkUpdated();
++                                }
++                            }
+                         }
+                     }
++                };
++                try {
++                    mHandler.postDelayed(mHandleAudioSinkUpdatedRunnable,
++                            mAudioService.isBluetoothA2dpOn() ? 2000 : 0);
++                } catch (RemoteException e) {
++                    e.printStackTrace();
+                 }
+             }
+         }
+-- 
+2.7.4
+

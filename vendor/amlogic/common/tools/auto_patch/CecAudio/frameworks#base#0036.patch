@@ -1,0 +1,64 @@
+From 13aac817db8ed0b69a89f1ba51c6160db6a8c1f5 Mon Sep 17 00:00:00 2001
+From: "an.xi" <an.xi@amlogic.com>
+Date: Fri, 25 Oct 2019 17:16:19 +0800
+Subject: [PATCH] SystemServer: fix arc no sound when hotplug bluetooth audio
+ devices [1/1]
+
+PD#SWPL-11766
+
+Problem:
+arc no sound when hotplug bluetooth audio devices
+
+Solution:
+update the skip switch when the audio system status changes
+
+Verify:
+verify it on Marconi
+
+Change-Id: If28b75beb62376ea4be0f1e78f760d850abe1959
+Signed-off-by: an.xi <an.xi@amlogic.com>
+---
+ services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java | 5 +++++
+ 1 file changed, 5 insertions(+)
+ mode change 100644 => 100755 services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
+
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java b/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
+old mode 100644
+new mode 100755
+index aaa88fe..9499c76
+--- a/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
++++ b/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
+@@ -958,9 +958,11 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+         if (isBluetoothOrUsbOutDevices() && on) return;
+         int device = mService.getAudioManager().setHdmiSystemAudioSupported(on);
+         HdmiLogger.debug("[A]UpdateSystemAudio mode[on=%b] output=[%X]", on, device);
++        mSkipSendRequestSystemAudioMode = !on;
+     }
+ 
+     private void updateAudioDevicesStatus(boolean on) {
++        HdmiLogger.debug("updateAudioDevicesStatus " + on);
+         mService.writeBooleanSetting(
+             "sound_output_device"/* OutputModeManager.SOUND_OUTPUT_DEVICE */, on);
+         if (!on && getActivePath() != HdmiDeviceInfo.PATH_INTERNAL &&
+@@ -987,8 +989,10 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+     }
+ 
+     private void sendSystemAudioModeRequest(boolean enableSystemAudio) {
++        HdmiLogger.debug("sendSystemAudioModeRequest skip " + mSkipSendRequestSystemAudioMode);
+         HdmiDeviceInfo avr = getAvrDeviceInfo();
+         if (avr == null || mSkipSendRequestSystemAudioMode) {
++            Slog.e(TAG, "sendSystemAudioModeRequest arc not enabled no send system audio request");
+             enableSystemAudio = false;
+             return;
+         }
+@@ -1025,6 +1029,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+                 startRequestShortAudioDescriptorAction(getAvrDeviceInfo());
+             }
+             mSystemAudioActivated = on;
++            // ? is it need to update again?
+             mService.writeBooleanSetting(Global.HDMI_SYSTEM_AUDIO_STATUS_ENABLED, on);
+             updateAudioDevicesStatus(on);
+         }
+-- 
+2.7.4
+

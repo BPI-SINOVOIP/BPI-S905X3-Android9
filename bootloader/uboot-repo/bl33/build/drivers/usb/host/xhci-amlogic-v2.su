@@ -1,0 +1,3 @@
+xhci-amlogic-v2.c:354:6:dwc3_set_mode	0	static
+xhci-amlogic-v2.c:508:5:xhci_hcd_init	112	static
+xhci-amlogic-v2.c:547:6:xhci_hcd_stop	0	static

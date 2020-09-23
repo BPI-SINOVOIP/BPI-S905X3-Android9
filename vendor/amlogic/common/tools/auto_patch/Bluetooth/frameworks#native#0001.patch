@@ -1,0 +1,48 @@
+From e06adb50d520e30527a674441fea6a4d89ec073b Mon Sep 17 00:00:00 2001
+From: "qiu.zeng" <qiu.zeng@amlogic.com>
+Date: Wed, 9 Oct 2019 11:16:31 +0800
+Subject: [PATCH] BT: add app button and number button [1/3]
+
+PD#SWPL-14855
+
+Change-Id: I1282aa05ed11edd715fb45bdb15caf4d901a434e
+Signed-off-by: qiu.zeng <qiu.zeng@amlogic.com>
+---
+ include/android/keycodes.h       | 6 ++++--
+ include/input/InputEventLabels.h | 3 ++-
+ 2 files changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/include/android/keycodes.h b/include/android/keycodes.h
+index 59d67f3..81419f3 100644
+--- a/include/android/keycodes.h
++++ b/include/android/keycodes.h
+@@ -769,8 +769,10 @@ enum {
+     /** all apps */
+     AKEYCODE_ALL_APPS = 284,
+     /** refresh key */
+-    AKEYCODE_REFRESH = 285
+-
++    AKEYCODE_REFRESH = 285,
++    /** youtube */
++    AKEYCODE_YOUTUBE = 286,
++    
+     // NOTE: If you add a new keycode here you must also add it to several other files.
+     //       Refer to frameworks/base/core/java/android/view/KeyEvent.java for the full list.
+ };
+diff --git a/include/input/InputEventLabels.h b/include/input/InputEventLabels.h
+index 4b33a96..9b74e11 100644
+--- a/include/input/InputEventLabels.h
++++ b/include/input/InputEventLabels.h
+@@ -325,7 +325,8 @@ static const InputEventLabel KEYCODES[] = {
+     DEFINE_KEYCODE(SYSTEM_NAVIGATION_RIGHT),
+     DEFINE_KEYCODE(ALL_APPS),
+     DEFINE_KEYCODE(REFRESH),
+-
++    DEFINE_KEYCODE(YOUTUBE),
++    
+     { NULL, 0 }
+ };
+ 
+-- 
+1.9.1
+

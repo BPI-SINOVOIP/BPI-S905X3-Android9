@@ -1,0 +1,193 @@
+From c0c0a2a4116fbf8bedd775a722fa3bc309ea5100 Mon Sep 17 00:00:00 2001
+From: yu fang <yu.fang@amlogic.com>
+Date: Wed, 9 Jan 2019 11:02:58 +0800
+Subject: [PATCH] TvSettings: Refresh ethernet connections when connectivity
+ changed. [1/2]
+
+PD#SWPL-3852
+
+Problem:
+Didn't refresh UI when ethernet connections status changed.
+
+Solution:
+Refresh the status of ethernet connections in real time
+when connectivity changed.
+
+Verify:
+verified on all platforms.
+
+Change-Id: Id8dd1f5c6aeeb488faab0576921542b5db3efbbb
+Signed-off-by: yu fang <yu.fang@amlogic.com>
+---
+ .../src/com/android/tv/settings/MainFragment.java  | 21 +++++++----
+ .../connectivity/ConnectivityListener.java         |  2 +-
+ .../tv/settings/connectivity/NetworkFragment.java  | 41 ++++++++++++++++++++--
+ 3 files changed, 54 insertions(+), 10 deletions(-)
+
+diff --git a/Settings/src/com/android/tv/settings/MainFragment.java b/Settings/src/com/android/tv/settings/MainFragment.java
+index 2a61f65..33406ba 100644
+--- a/Settings/src/com/android/tv/settings/MainFragment.java
++++ b/Settings/src/com/android/tv/settings/MainFragment.java
+@@ -71,6 +71,8 @@ public class MainFragment extends PreferenceControllerFragment implements
+     @VisibleForTesting
+     static final String KEY_QUICK_SETTINGS = "quick_settings";
+
++    private static final String BROADCAST_ACTION = "android.action.updateui";
++
+     @VisibleForTesting
+     ConnectivityListener mConnectivityListener;
+     @VisibleForTesting
+@@ -94,7 +96,13 @@ public class MainFragment extends PreferenceControllerFragment implements
+     private final BroadcastReceiver mBCMReceiver = new BroadcastReceiver() {
+         @Override
+         public void onReceive(Context context, Intent intent) {
+-            updateAccessoryPref();
++            if (intent.getAction().equals(BROADCAST_ACTION)) {
++                Log.d(TAG, "BROADCAST_ACTION");
++                mConnectivityListener.updateConnectivityStatus();
++                updateWifi();
++            } else {
++                updateAccessoryPref();
++            }
+         }
+     };
+
+@@ -429,11 +437,12 @@ public class MainFragment extends PreferenceControllerFragment implements
+     @Override
+     public void onStart() {
+         super.onStart();
+-        IntentFilter btChangeFilter = new IntentFilter();
+-        btChangeFilter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
+-        btChangeFilter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
+-        btChangeFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
+-        getContext().registerReceiver(mBCMReceiver, btChangeFilter);
++        IntentFilter filter = new IntentFilter();
++        filter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
++        filter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
++        filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
++        filter.addAction(BROADCAST_ACTION);
++        getContext().registerReceiver(mBCMReceiver, filter);
+     }
+
+     @Override
+diff --git a/Settings/src/com/android/tv/settings/connectivity/ConnectivityListener.java b/Settings/src/com/android/tv/settings/connectivity/ConnectivityListener.java
+index 81147e8..9e9edd2 100644
+--- a/Settings/src/com/android/tv/settings/connectivity/ConnectivityListener.java
++++ b/Settings/src/com/android/tv/settings/connectivity/ConnectivityListener.java
+@@ -294,7 +294,7 @@ public class ConnectivityListener implements WifiTracker.WifiListener, Lifecycle
+         mWifiManager.setWifiEnabled(enable);
+     }
+
+-    private void updateConnectivityStatus() {
++    public void updateConnectivityStatus() {
+         NetworkInfo networkInfo = mConnectivityManager.getActiveNetworkInfo();
+         if (networkInfo == null) {
+             mNetworkType = ConnectivityManager.TYPE_NONE;
+diff --git a/Settings/src/com/android/tv/settings/connectivity/NetworkFragment.java b/Settings/src/com/android/tv/settings/connectivity/NetworkFragment.java
+index d367fdf..7dfb939 100644
+--- a/Settings/src/com/android/tv/settings/connectivity/NetworkFragment.java
++++ b/Settings/src/com/android/tv/settings/connectivity/NetworkFragment.java
+@@ -17,6 +17,9 @@
+ package com.android.tv.settings.connectivity;
+
+ import android.content.Context;
++import android.content.BroadcastReceiver;
++import android.content.Intent;
++import android.content.IntentFilter;
+ import android.net.wifi.WifiConfiguration;
+ import android.os.Bundle;
+ import android.os.Handler;
+@@ -26,6 +29,8 @@ import android.support.v7.preference.Preference;
+ import android.support.v7.preference.PreferenceCategory;
+ import android.support.v7.preference.PreferenceManager;
+ import android.support.v7.preference.TwoStatePreference;
++import android.util.Log;
++import android.text.TextUtils;
+
+ import com.android.internal.logging.nano.MetricsProto;
+ import com.android.settingslib.wifi.AccessPoint;
+@@ -44,6 +49,8 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
+         ConnectivityListener.Listener, ConnectivityListener.WifiNetworkListener,
+         AccessPoint.AccessPointListener {
+
++    private static final String TAG = "NetworkFragment";
++
+     private static final String KEY_WIFI_ENABLE = "wifi_enable";
+     private static final String KEY_WIFI_LIST = "wifi_list";
+     private static final String KEY_WIFI_COLLAPSE = "wifi_collapse";
+@@ -57,6 +64,8 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
+
+     private static final int INITIAL_UPDATE_DELAY = 500;
+
++    private static final String BROADCAST_ACTION = "android.action.updateui";
++
+     private ConnectivityListener mConnectivityListener;
+     private AccessPointPreference.UserBadgeCache mUserBadgeCache;
+
+@@ -80,6 +89,17 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
+         }
+     };
+
++    private final BroadcastReceiver mUIReceiver = new BroadcastReceiver() {
++        @Override
++        public void onReceive(Context context, Intent intent) {
++            if (intent.getAction().equals(BROADCAST_ACTION)) {
++                Log.d(TAG, "BROADCAST_ACTION");
++                mConnectivityListener.updateConnectivityStatus();
++                updateConnectivity();
++            }
++        }
++    };
++
+     public static NetworkFragment newInstance() {
+         return new NetworkFragment();
+     }
+@@ -95,6 +115,10 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
+     @Override
+     public void onStart() {
+         super.onStart();
++        IntentFilter filter = new IntentFilter();
++        filter.addAction(BROADCAST_ACTION);
++        getContext().registerReceiver(mUIReceiver, filter);
++
+         mConnectivityListener.setWifiListener(this);
+         mNoWifiUpdateBeforeMillis = SystemClock.elapsedRealtime() + INITIAL_UPDATE_DELAY;
+         updateWifiList();
+@@ -105,10 +129,17 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
+         super.onResume();
+         // There doesn't seem to be an API to listen to everything this could cover, so
+         // tickle it here and hope for the best.
++        mConnectivityListener.updateConnectivityStatus();
+         updateConnectivity();
+     }
+
+     @Override
++    public void onStop() {
++        super.onStop();
++        getContext().unregisterReceiver(mUIReceiver);
++    }
++
++    @Override
+     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+         getPreferenceManager().setPreferenceComparisonCallback(
+                 new PreferenceManager.SimplePreferenceComparisonCallback());
+@@ -205,9 +236,13 @@ public class NetworkFragment extends SettingsPreferenceFragment implements
+         if (ethernetAvailable) {
+             final boolean ethernetConnected =
+                     mConnectivityListener.isEthernetConnected();
+-            mEthernetStatusPref.setTitle(ethernetConnected
+-                    ? R.string.connected : R.string.not_connected);
+-            mEthernetStatusPref.setSummary(mConnectivityListener.getEthernetIpAddress());
++            String ethernetIpAddress = mConnectivityListener.getEthernetIpAddress();
++            if (ethernetConnected || !TextUtils.isEmpty(ethernetIpAddress)) {
++                mEthernetStatusPref.setTitle(R.string.connected);
++            } else {
++                mEthernetStatusPref.setTitle(R.string.not_connected);
++            }
++            mEthernetStatusPref.setSummary(ethernetIpAddress);
+         }
+     }
+
+--
+1.9.1
+

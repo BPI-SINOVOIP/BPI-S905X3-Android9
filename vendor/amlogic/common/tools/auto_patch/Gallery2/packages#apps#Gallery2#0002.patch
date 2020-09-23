@@ -1,0 +1,43 @@
+From c466c2da119934d434fce62e5ec01f1fcfca7622 Mon Sep 17 00:00:00 2001
+From: xi an <an.xi@amlogic.com>
+Date: Fri, 22 Mar 2019 10:57:33 +0800
+Subject: [PATCH] Gallery2: fix a crash about pick album [1/1]
+
+PD#SWPL-6173
+
+Problem:
+not check the adapter data's validity when pick album
+
+Solution:
+check the adapter data's validity when pick album
+
+Verify:
+Ampere
+
+Change-Id: I5ecbf68339da3ccf691a9d99be88dd7853e63e9f
+Signed-off-by: xi an <an.xi@amlogic.com>
+---
+ src/com/android/gallery3d/app/AlbumSetPage.java | 4 ++++
+ 1 file changed, 4 insertions(+)
+ mode change 100644 => 100755 src/com/android/gallery3d/app/AlbumSetPage.java
+
+diff --git a/src/com/android/gallery3d/app/AlbumSetPage.java b/src/com/android/gallery3d/app/AlbumSetPage.java
+old mode 100644
+new mode 100755
+index bd04752..a99074e
+--- a/src/com/android/gallery3d/app/AlbumSetPage.java
++++ b/src/com/android/gallery3d/app/AlbumSetPage.java
+@@ -238,6 +238,10 @@ public class AlbumSetPage extends ActivityState implements
+ 
+     private void pickAlbum(int slotIndex) {
+         if (!mIsActive) return;
++        if (!mAlbumSetDataAdapter.isActive(slotIndex)) {
++            Log.e(TAG, "pickAlbum data adapter is not active with index " + slotIndex);
++            return;
++        }
+ 
+         MediaSet targetSet = mAlbumSetDataAdapter.getMediaSet(slotIndex);
+         if (targetSet == null) return; // Content is dirty, we shall reload soon
+-- 
+1.9.1
+

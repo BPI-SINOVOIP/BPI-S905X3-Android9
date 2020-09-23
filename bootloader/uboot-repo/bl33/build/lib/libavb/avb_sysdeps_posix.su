@@ -1,0 +1,11 @@
+avb_sysdeps_posix.c:33:5:avb_memcmp	0	static
+avb_sysdeps_posix.c:37:7:avb_memcpy	0	static
+avb_sysdeps_posix.c:41:7:avb_memset	0	static
+avb_sysdeps_posix.c:45:5:avb_strcmp	0	static
+avb_sysdeps_posix.c:49:8:avb_strlen	0	static
+avb_sysdeps_posix.c:53:6:avb_abort	16	static
+avb_sysdeps_posix.c:58:6:avb_print	0	static
+avb_sysdeps_posix.c:62:6:avb_printv	256	static
+avb_sysdeps_posix.c:73:7:avb_malloc_	0	static
+avb_sysdeps_posix.c:77:6:avb_free	0	static
+avb_sysdeps_posix.c:81:10:avb_div_by_10	0	static

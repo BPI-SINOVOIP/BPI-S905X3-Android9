@@ -1,0 +1,59 @@
+From ab83e00aee1c2943cf318003ace22a56d9d4772c Mon Sep 17 00:00:00 2001
+From: xi an <an.xi@amlogic.com>
+Date: Wed, 27 Mar 2019 17:02:31 +0800
+Subject: [PATCH] SystemServer: fix a death circulation in
+ TvInputManagerService [1/1]
+
+PD#SWPL-6385
+
+Problem:
+death lock in SystemServer causes watchdog
+
+Solution:
+add proper logic to avoid the dead lock in TvInputManagerService
+
+Verify:
+verify it on Marconi
+
+Change-Id: I9bd79fbc49b8283691870f1e745b324d1322b292
+Signed-off-by: an.xi <an.xi@amlogic.com>
+---
+ .../java/com/android/server/tv/TvInputManagerService.java     | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+ mode change 100644 => 100755 services/core/java/com/android/server/tv/TvInputManagerService.java
+
+diff --git a/services/core/java/com/android/server/tv/TvInputManagerService.java b/services/core/java/com/android/server/tv/TvInputManagerService.java
+old mode 100644
+new mode 100755
+index d5e59c8..572edc5
+--- a/services/core/java/com/android/server/tv/TvInputManagerService.java
++++ b/services/core/java/com/android/server/tv/TvInputManagerService.java
+@@ -697,6 +697,7 @@ public final class TvInputManagerService extends SystemService {
+         SessionState sessionState = userState.sessionStateMap.remove(sessionToken);
+ 
+         if (sessionState == null) {
++            Slog.e(TAG, "sessionState null, no more remove session action!");
+             return;
+         }
+ 
+@@ -2171,8 +2172,16 @@ public final class TvInputManagerService extends SystemService {
+                 ClientState clientState = userState.clientStateMap.get(clientToken);
+                 if (clientState != null) {
+                     while (clientState.sessionTokens.size() > 0) {
++                        IBinder sessionToken = clientState.sessionTokens.get(0);
+                         releaseSessionLocked(
+-                                clientState.sessionTokens.get(0), Process.SYSTEM_UID, userId);
++                                sessionToken, Process.SYSTEM_UID, userId);
++                        // the releaseSessionLocked function may return before the sessionToken
++                        // is removed if the related sessionState is null. So need to check again
++                        // to avoid death curculation.
++                        if (clientState.sessionTokens.contains(sessionToken)) {
++                            Slog.d(TAG, "remove sessionToken " + sessionToken + " for " + clientToken);
++                            clientState.sessionTokens.remove(sessionToken);
++                        }
+                     }
+                 }
+                 clientToken = null;
+-- 
+1.9.1
+

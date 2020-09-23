@@ -1,0 +1,54 @@
+From dfd02e35bca7ef5e031c39b3dbdef58b8c7abfd0 Mon Sep 17 00:00:00 2001
+From: yinqingsong <qingsong.yin@amlogic.com>
+Date: Wed, 28 Aug 2019 20:47:02 +0800
+Subject: [PATCH] framework: enable get the video duration on exoplayer [1/1]
+
+PD#OTT-5864
+
+Problem:
+Cannot get the video duration information when play video
+
+Solution:
+modify framework about the mediaPlayer getDuration()
+
+Verify:
+local
+
+Change-Id: I5a0fd38bab3527db3bf25932dfc95c66bbaf6563
+Signed-off-by: yinqingsong <qingsong.yin@amlogic.com>
+---
+ media/java/android/media/MediaPlayer.java | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
+
+diff --git a/media/java/android/media/MediaPlayer.java b/media/java/android/media/MediaPlayer.java
+index 5b59781..bbfa9c1 100644
+--- a/media/java/android/media/MediaPlayer.java
++++ b/media/java/android/media/MediaPlayer.java
+@@ -663,6 +663,7 @@ public class MediaPlayer extends PlayerBase
+     private boolean mExoBuffering;
+     private boolean mExoBufferNotifyStart;
+ 
++
+     /**
+      * Default constructor. Consider using one of the create() methods for
+      * synchronously instantiating a MediaPlayer from a Uri or resource.
+@@ -2271,15 +2272,7 @@ public class MediaPlayer extends PlayerBase
+     public int getDuration() {
+         if (mUseExoPlayer) {
+             Log.i(TAG, "exo-getDuration -1-");
+-            if (mExoPlayerInstance != null && isPlaying()) {
+-                Log.i(TAG, "exo-getDuration");
+-                if (mEventHandler != null) {
+-                    Log.i(TAG, "exo-send-EXO_MEDIA_UPDATE_PROCESS");
+-                    Message m = mEventHandler.obtainMessage(EXO_MEDIA_UPDATE_PROCESS, 0, 0, null);
+-                    mEventHandler.sendMessage(m);
+-                }
+-            }
+-            return mExoTotalDuration;
++            return mExoPlayerInstance.getDuration();
+         }
+         return _getDuration();
+     }
+-- 
+2.7.4
+

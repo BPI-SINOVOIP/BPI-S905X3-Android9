@@ -1,0 +1,4 @@
+image-android-dt.c:18:6:android_dt_check_header	0	static
+image-android-dt.c:30:5:android_dt_get_totalsize	0	static
+image-android-dt.c:52:6:android_dt_get_fdt_by_index	16	static
+image-android-dt.c:113:6:android_dt_print_contents	112	static

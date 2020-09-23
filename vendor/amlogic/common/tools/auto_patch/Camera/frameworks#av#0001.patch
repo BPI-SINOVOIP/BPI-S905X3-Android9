@@ -1,0 +1,47 @@
+From 8a52b895906b3b7f211f6928bcea1d451695c37c Mon Sep 17 00:00:00 2001
+From: "jie.yuan" <jie.yuan@amlogic.com>
+Date: Tue, 12 Feb 2019 11:08:53 +0800
+Subject: [PATCH] audio: transport audio policy engine [1/1]
+
+PD# SWPL-3912
+
+modify policy engine of camcorder
+
+Change-Id: I55a5d235d6b02281b7b7cd9108ced397802931a9
+Signed-off-by: jie.yuan <jie.yuan@amlogic.com>
+---
+ services/audiopolicy/enginedefault/src/Engine.cpp | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/services/audiopolicy/enginedefault/src/Engine.cpp b/services/audiopolicy/enginedefault/src/Engine.cpp
+index ba5a9ca..a30eb48 100644
+--- a/services/audiopolicy/enginedefault/src/Engine.cpp
++++ b/services/audiopolicy/enginedefault/src/Engine.cpp
+@@ -720,7 +720,12 @@ audio_devices_t Engine::getDeviceForInputSource(audio_source_t inputSource) cons
+             break;
+ 
+         case AUDIO_POLICY_FORCE_SPEAKER:
+-            if (availableDeviceTypes & AUDIO_DEVICE_IN_BACK_MIC) {
++            /* for usb audio voice comminication app, USB need as first primary usb in device */
++            /* here ingore AUDIO_POLICY_FORCE_SPEAKER */
++            if (availableDeviceTypes & AUDIO_DEVICE_IN_USB_DEVICE) {
++                ALOGI("USB in audio,ingore AUDIO_POLICY_FORCE_SPEAKER\n");
++                device = AUDIO_DEVICE_IN_USB_DEVICE;
++            } else if (availableDeviceTypes & AUDIO_DEVICE_IN_BACK_MIC) {
+                 device = AUDIO_DEVICE_IN_BACK_MIC;
+             } else if (availableDeviceTypes & AUDIO_DEVICE_IN_BUILTIN_MIC) {
+                 device = AUDIO_DEVICE_IN_BUILTIN_MIC;
+@@ -746,7 +751,9 @@ audio_devices_t Engine::getDeviceForInputSource(audio_source_t inputSource) cons
+         }
+         break;
+     case AUDIO_SOURCE_CAMCORDER:
+-        if (availableDeviceTypes & AUDIO_DEVICE_IN_BACK_MIC) {
++        if (availableDeviceTypes & AUDIO_DEVICE_IN_USB_DEVICE) {
++            device = AUDIO_DEVICE_IN_USB_DEVICE;
++        }else if (availableDeviceTypes & AUDIO_DEVICE_IN_BACK_MIC) {
+             device = AUDIO_DEVICE_IN_BACK_MIC;
+         } else if (availableDeviceTypes & AUDIO_DEVICE_IN_BUILTIN_MIC) {
+             device = AUDIO_DEVICE_IN_BUILTIN_MIC;
+-- 
+2.7.4
+

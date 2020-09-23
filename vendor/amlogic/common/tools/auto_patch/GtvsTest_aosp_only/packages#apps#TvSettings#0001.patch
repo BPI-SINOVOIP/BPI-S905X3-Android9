@@ -1,0 +1,727 @@
+From 50b1cb5371fd0b6df6d8e9076be74b0da37fe2f5 Mon Sep 17 00:00:00 2001
+From: Leif Hendrik Wilden <leifhendrik@google.com>
+Date: Sun, 10 Jun 2018 10:53:45 -0700
+Subject: [PATCH] Support directory access settings.
+
+Bug: 109850086
+Test: Manually tested.
+Change-Id: I65d3a1f5a837ab8c86343f681a7f4263e53f9ff3
+---
+ Settings/AndroidManifest.xml                       |  14 +-
+ Settings/res/values/strings.xml                    |   7 +
+ Settings/res/xml/directory_access.xml              |  24 ++
+ Settings/res/xml/directory_access_details.xml      |  20 ++
+ Settings/res/xml/special_app_access.xml            |   4 +
+ .../device/apps/specialaccess/DirectoryAccess.java | 141 ++++++++
+ .../specialaccess/DirectoryAccessActivity.java     |  58 ++++
+ .../apps/specialaccess/DirectoryAccessDetails.java | 359 +++++++++++++++++++++
+ 8 files changed, 626 insertions(+), 1 deletion(-)
+ create mode 100644 Settings/res/xml/directory_access.xml
+ create mode 100644 Settings/res/xml/directory_access_details.xml
+ create mode 100644 Settings/src/com/android/tv/settings/device/apps/specialaccess/DirectoryAccess.java
+ create mode 100644 Settings/src/com/android/tv/settings/device/apps/specialaccess/DirectoryAccessActivity.java
+ create mode 100644 Settings/src/com/android/tv/settings/device/apps/specialaccess/DirectoryAccessDetails.java
+
+diff --git a/Settings/AndroidManifest.xml b/Settings/AndroidManifest.xml
+index 160f97b..fd1dde2 100644
+--- a/Settings/AndroidManifest.xml
++++ b/Settings/AndroidManifest.xml
+@@ -23,6 +23,7 @@
+     <uses-permission android:name="android.permission.INJECT_EVENTS" />
+     <uses-permission android:name="android.permission.INTERNET" />
+     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
++    <uses-permission android:name="android.permission.MANAGE_SCOPED_ACCESS_DIRECTORY_PERMISSIONS" />
+     <uses-permission android:name="android.permission.MANAGE_USERS" />
+     <uses-permission android:name="android.permission.NETWORK_SETTINGS" />
+     <uses-permission android:name="android.permission.OVERRIDE_WIFI_CONFIG" />
+@@ -171,12 +172,23 @@
+                 <action android:name="android.intent.action.MAIN" />
+                 <action android:name="android.settings.APPLICATION_SETTINGS" />
+                 <action android:name="android.settings.MANAGE_ALL_APPLICATIONS_SETTINGS" />
+-
+                 <category android:name="android.intent.category.DEFAULT" />
+                 <category android:name="android.intent.category.VOICE_LAUNCH" />
+                 <category android:name="com.android.settings.SHORTCUT" />
+             </intent-filter>
+         </activity>
++
++        <activity android:name=".device.apps.specialaccess.DirectoryAccessActivity"
++                  android:theme="@style/Theme.Settings.Transparent"
++                  android:taskAffinity=""
++                  android:excludeFromRecents="true"
++                  android:exported="true">
++            <intent-filter android:priority="1">
++                <category android:name="android.intent.category.DEFAULT" />
++                <action android:name="android.settings.STORAGE_VOLUME_ACCESS_SETTINGS" />
++            </intent-filter>
++        </activity>
++
+         <activity
+             android:name=".device.apps.AppManagementActivity"
+             android:theme="@style/Theme.Settings.Transparent"
+diff --git a/Settings/res/values/strings.xml b/Settings/res/values/strings.xml
+index 79112f7..0540db0 100644
+--- a/Settings/res/values/strings.xml
++++ b/Settings/res/values/strings.xml
+@@ -1607,6 +1607,13 @@
+         They will also be able to dismiss notifications or trigger action buttons they contain.
+     </string>
+ 
++    <!-- Title of directory access screen in settings [CHAR LIMIT=30] -->
++    <string name="directory_access">Directory access</string>
++    <!-- Description of the directory access setting [CHAR LIMIT=NONE] -->
++    <string name="directory_access_description">These apps have permission to access certain directories.</string>
++    <!-- String used to describe the name of a directory in a volume; it must show both names, with the directory name wrapped in parenthesis -->
++    <string name="directory_on_volume"><xliff:g id="volume" example="SD Card">%1$s</xliff:g> (<xliff:g id="directory" example="Movies">%2$s</xliff:g>)</string>
++
+     <!-- Settings title in main settings screen for SYSTEM_ALERT_WINDOW [CHAR LIMIT=45] -->
+     <string name="system_alert_window_settings">Display over other apps</string>
+     <!-- Label for setting which controls whether app can display over other apps [CHAR LIMIT=45] -->
+diff --git a/Settings/res/xml/directory_access.xml b/Settings/res/xml/directory_access.xml
+new file mode 100644
+index 0000000..58a9765
+--- /dev/null
++++ b/Settings/res/xml/directory_access.xml
+@@ -0,0 +1,24 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  Copyright (C) 2018 The Android Open Source Project
++
++  Licensed under the Apache License, Version 2.0 (the "License");
++  you may not use this file except in compliance with the License.
++  You may obtain a copy of the License at
++
++       http://www.apache.org/licenses/LICENSE-2.0
++
++  Unless required by applicable law or agreed to in writing, software
++  distributed under the License is distributed on an "AS IS" BASIS,
++  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  See the License for the specific language governing permissions and
++  limitations under the License.
++  -->
++
++<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
++        android:title="@string/directory_access">
++    <Preference
++            android:key="header"
++            android:title="@string/directory_access_description"
++            android:singleLineTitle="false"/>
++</PreferenceScreen>
+diff --git a/Settings/res/xml/directory_access_details.xml b/Settings/res/xml/directory_access_details.xml
+new file mode 100644
+index 0000000..9178b21
+--- /dev/null
++++ b/Settings/res/xml/directory_access_details.xml
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Copyright (C) 2018 The Android Open Source Project
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++
++<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
++                  xmlns:settings="http://schemas.android.com/apk/res-auto"
++                  android:key="directory_access_details"
++                  android:title="@string/directory_access"/>
+diff --git a/Settings/res/xml/special_app_access.xml b/Settings/res/xml/special_app_access.xml
+index d2ad857..93ea030 100644
+--- a/Settings/res/xml/special_app_access.xml
++++ b/Settings/res/xml/special_app_access.xml
+@@ -41,4 +41,8 @@
+             android:key="picture_in_picture"
+             android:title="@string/picture_in_picture_title"
+             android:fragment="com.android.tv.settings.device.apps.specialaccess.PictureInPicture" />
++    <Preference
++            android:key="directory_access"
++            android:title="@string/directory_access"
++            android:fragment="com.android.tv.settings.device.apps.specialaccess.DirectoryAccess" />
+ </PreferenceScreen>
+diff --git a/Settings/src/com/android/tv/settings/device/apps/specialaccess/DirectoryAccess.java b/Settings/src/com/android/tv/settings/device/apps/specialaccess/DirectoryAccess.java
+new file mode 100644
+index 0000000..de2f7ea
+--- /dev/null
++++ b/Settings/src/com/android/tv/settings/device/apps/specialaccess/DirectoryAccess.java
+@@ -0,0 +1,141 @@
++/*
++ * Copyright (C) 2018 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.tv.settings.device.apps.specialaccess;
++
++import static android.os.storage.StorageVolume.ScopedAccessProviderContract.AUTHORITY;
++import static android.os.storage.StorageVolume.ScopedAccessProviderContract.TABLE_PACKAGES;
++import static android.os.storage.StorageVolume.ScopedAccessProviderContract.TABLE_PACKAGES_COLUMNS;
++import static android.os.storage.StorageVolume.ScopedAccessProviderContract.TABLE_PACKAGES_COL_PACKAGE;
++
++import android.Manifest;
++import android.app.AppOpsManager;
++import android.content.ContentResolver;
++import android.content.Context;
++import android.database.Cursor;
++import android.net.Uri;
++import android.os.Bundle;
++import android.support.v7.preference.Preference;
++import android.support.v7.preference.PreferenceGroup;
++import android.util.ArraySet;
++import android.util.Log;
++
++import com.android.internal.logging.nano.MetricsProto;
++import com.android.settingslib.applications.ApplicationsState.AppEntry;
++import com.android.settingslib.applications.ApplicationsState.AppFilter;
++import com.android.tv.settings.R;
++
++import java.util.Set;
++
++/**
++ * Fragment for controlling if apps can access directories.
++ */
++public class DirectoryAccess extends ManageAppOp {
++
++    private static final String TAG = "DirectoryAccess";
++    private static final boolean DEBUG = false;
++
++    private static final AppFilter FILTER_APP_HAS_DIRECTORY_ACCESS = new AppFilter() {
++
++        private Set<String> mPackages;
++
++        @Override
++        public void init() {
++            throw new UnsupportedOperationException("Need to call constructor that takes context");
++        }
++
++        @Override
++        public void init(Context context) {
++            mPackages = null;
++            final Uri providerUri = new Uri.Builder().scheme(ContentResolver.SCHEME_CONTENT)
++                    .authority(AUTHORITY).appendPath(TABLE_PACKAGES).appendPath("*")
++                    .build();
++            try (Cursor cursor = context.getContentResolver().query(providerUri,
++                    TABLE_PACKAGES_COLUMNS, null, null)) {
++                if (cursor == null) {
++                    Log.w(TAG, "Didn't get cursor for " + providerUri);
++                    return;
++                }
++                final int count = cursor.getCount();
++                if (count == 0) {
++                    if (DEBUG) {
++                        Log.d(TAG, "No packages anymore (was " + mPackages + ")");
++                    }
++                    return;
++                }
++                mPackages = new ArraySet<>(count);
++                while (cursor.moveToNext()) {
++                    mPackages.add(cursor.getString(TABLE_PACKAGES_COL_PACKAGE));
++                }
++                if (DEBUG) {
++                    Log.d(TAG, "init(): " + mPackages);
++                }
++            }
++        }
++
++
++        @Override
++        public boolean filterApp(AppEntry info) {
++            return mPackages != null && mPackages.contains(info.info.packageName);
++        }
++    };
++
++    @Override
++    public AppFilter getAppFilter() {
++        return FILTER_APP_HAS_DIRECTORY_ACCESS;
++    }
++
++    @Override
++    public int getAppOpsOpCode() {
++        return AppOpsManager.OP_NONE;
++    }
++
++    @Override
++    public String getPermission() {
++        return Manifest.permission.MANAGE_SCOPED_ACCESS_DIRECTORY_PERMISSIONS;
++    }
++
++    @Override
++    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
++        setPreferencesFromResource(R.xml.directory_access, null);
++    }
++
++    @Override
++    public int getMetricsCategory() {
++        return MetricsProto.MetricsEvent.DIRECTORY_ACCESS;
++    }
++
++    @Override
++    public Preference bindPreference(Preference preference, AppEntry entry) {
++        preference.setTitle(entry.label);
++        preference.setKey(entry.info.packageName);
++        preference.setIcon(entry.icon);
++        preference.setFragment(DirectoryAccessDetails.class.getCanonicalName());
++        preference.getExtras().putString(DirectoryAccessDetails.ARG_PACKAGE_NAME,
++                entry.info.packageName);
++        return preference;
++    }
++
++    @Override
++    public Preference createAppPreference() {
++        return new Preference(getPreferenceManager().getContext());
++    }
++
++    @Override
++    public PreferenceGroup getAppPreferenceGroup() {
++        return getPreferenceScreen();
++    }
++}
+diff --git a/Settings/src/com/android/tv/settings/device/apps/specialaccess/DirectoryAccessActivity.java b/Settings/src/com/android/tv/settings/device/apps/specialaccess/DirectoryAccessActivity.java
+new file mode 100644
+index 0000000..5234df8
+--- /dev/null
++++ b/Settings/src/com/android/tv/settings/device/apps/specialaccess/DirectoryAccessActivity.java
+@@ -0,0 +1,58 @@
++/*
++ * Copyright (C) 2018 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.tv.settings.device.apps.specialaccess;
++
++import android.app.Fragment;
++
++import com.android.tv.settings.BaseSettingsFragment;
++import com.android.tv.settings.TvSettingsActivity;
++import com.android.tv.settings.system.SecurityFragment;
++
++/**
++ * Wrapper activity for {@link DirectoryAccess}
++ */
++public class DirectoryAccessActivity extends TvSettingsActivity {
++
++    @Override
++    protected Fragment createSettingsFragment() {
++        if (SecurityFragment.isRestrictedProfileInEffect(this)) {
++            finish();
++            return null;
++        } else {
++            return DirectoryAccessActivity.SettingsFragment.newInstance();
++        }
++    }
++
++    /**
++     * Wrapper fragment for DirectoryAccess
++     */
++    public static class SettingsFragment extends BaseSettingsFragment {
++
++        /**
++         * @return new instance of {@link DirectoryAccessActivity.SettingsFragment}
++         */
++        public static DirectoryAccessActivity.SettingsFragment newInstance() {
++            return new DirectoryAccessActivity.SettingsFragment();
++        }
++
++        @Override
++        public void onPreferenceStartInitialScreen() {
++            final DirectoryAccess fragment = new DirectoryAccess();
++            startPreferenceFragment(fragment);
++        }
++    }
++}
+diff --git a/Settings/src/com/android/tv/settings/device/apps/specialaccess/DirectoryAccessDetails.java b/Settings/src/com/android/tv/settings/device/apps/specialaccess/DirectoryAccessDetails.java
+new file mode 100644
+index 0000000..d5f1bca
+--- /dev/null
++++ b/Settings/src/com/android/tv/settings/device/apps/specialaccess/DirectoryAccessDetails.java
+@@ -0,0 +1,359 @@
++/*
++ * Copyright (C) 2018 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.tv.settings.device.apps.specialaccess;
++
++import static android.os.storage.StorageVolume.ScopedAccessProviderContract.AUTHORITY;
++import static android.os.storage.StorageVolume.ScopedAccessProviderContract.COL_GRANTED;
++import static android.os.storage.StorageVolume.ScopedAccessProviderContract.TABLE_PERMISSIONS;
++import static android.os.storage.StorageVolume.ScopedAccessProviderContract
++        .TABLE_PERMISSIONS_COLUMNS;
++import static android.os.storage.StorageVolume.ScopedAccessProviderContract
++        .TABLE_PERMISSIONS_COL_DIRECTORY;
++import static android.os.storage.StorageVolume.ScopedAccessProviderContract
++        .TABLE_PERMISSIONS_COL_GRANTED;
++import static android.os.storage.StorageVolume.ScopedAccessProviderContract
++        .TABLE_PERMISSIONS_COL_PACKAGE;
++import static android.os.storage.StorageVolume.ScopedAccessProviderContract
++        .TABLE_PERMISSIONS_COL_VOLUME_UUID;
++
++import android.annotation.Nullable;
++import android.content.ContentResolver;
++import android.content.ContentValues;
++import android.content.Context;
++import android.content.Intent;
++import android.content.pm.PackageInfo;
++import android.content.pm.PackageManager;
++import android.database.Cursor;
++import android.net.Uri;
++import android.os.Bundle;
++import android.os.UserHandle;
++import android.os.storage.StorageManager;
++import android.os.storage.VolumeInfo;
++import android.support.v14.preference.SwitchPreference;
++import android.support.v7.preference.Preference;
++import android.support.v7.preference.PreferenceCategory;
++import android.support.v7.preference.PreferenceScreen;
++import android.util.Log;
++import android.util.Pair;
++
++import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
++import com.android.settingslib.applications.ApplicationsState;
++import com.android.tv.settings.R;
++import com.android.tv.settings.SettingsPreferenceFragment;
++
++import java.util.ArrayList;
++import java.util.HashMap;
++import java.util.HashSet;
++import java.util.List;
++import java.util.Map;
++import java.util.Set;
++
++/**
++ * Detailed settings for an app's directory access permissions (A.K.A Scoped Directory Access).
++ *
++ * <p>Currently, it shows the entry for which the user denied access with the "Do not ask again"
++ * flag checked on: the user than can use the settings toggle to reset that deniel.
++ *
++ * <p>This fragments dynamically lists all such permissions, starting with one preference per
++ * directory in the primary storage, then adding additional entries for the external volumes (one
++ * entry for the whole volume).
++ */
++// TODO(b/72055774): add unit tests
++public class DirectoryAccessDetails extends SettingsPreferenceFragment {
++
++    @SuppressWarnings("hiding")
++    private static final String TAG = "DirectoryAccessDetails";
++
++    private static final boolean DEBUG = false;
++    private static final boolean VERBOSE = false;
++    public static final String ARG_PACKAGE_NAME = "package";
++
++    private boolean mCreated;
++    private PackageInfo mPackageInfo;
++    private PackageManager mPm;
++    private String mPackageName;
++    private int mUserId;
++    private ApplicationsState.AppEntry mAppEntry;
++    private ApplicationsState mState;
++
++    @Override
++    public void onActivityCreated(Bundle savedInstanceState) {
++        super.onActivityCreated(savedInstanceState);
++
++        if (mCreated) {
++            Log.w(TAG, "onActivityCreated(): ignoring duplicate call");
++            return;
++        }
++        mCreated = true;
++        mPm = getActivity().getPackageManager();
++        mState = ApplicationsState.getInstance(getActivity().getApplication());
++        retrieveAppEntry();
++        if (mPackageInfo == null) {
++            Log.w(TAG, "onActivityCreated(): no package info");
++            return;
++        }
++
++        final Preference pref = new PreferenceCategory(getPrefContext(), null);
++        getPreferenceScreen().addPreference(pref);
++        refreshUi();
++    }
++
++    @Override
++    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
++        addPreferencesFromResource(R.xml.directory_access_details);
++    }
++
++    private Context getPrefContext() {
++        return getPreferenceManager().getContext();
++    }
++
++    protected Intent getIntent() {
++        if (getActivity() == null) {
++            return null;
++        }
++        return getActivity().getIntent();
++    }
++
++    protected String retrieveAppEntry() {
++        final Bundle args = getArguments();
++        mPackageName = (args != null) ? args.getString(ARG_PACKAGE_NAME) : null;
++        Intent intent = (args == null)
++                ? getIntent() : (Intent) args.getParcelable("intent");
++        if (mPackageName == null) {
++            if (intent != null && intent.getData() != null) {
++                mPackageName = intent.getData().getSchemeSpecificPart();
++            }
++        }
++        if (intent != null && intent.hasExtra(Intent.EXTRA_USER_HANDLE)) {
++            mUserId = ((UserHandle) intent.getParcelableExtra(
++                    Intent.EXTRA_USER_HANDLE)).getIdentifier();
++        } else {
++            mUserId = UserHandle.myUserId();
++        }
++        mAppEntry = mState.getEntry(mPackageName, mUserId);
++        if (mAppEntry != null) {
++            // Get application info again to refresh changed properties of application
++            try {
++                mPackageInfo = mPm.getPackageInfoAsUser(mAppEntry.info.packageName,
++                        PackageManager.MATCH_DISABLED_COMPONENTS
++                                | PackageManager.GET_SIGNING_CERTIFICATES
++                                | PackageManager.GET_PERMISSIONS, mUserId);
++            } catch (PackageManager.NameNotFoundException e) {
++                Log.e(TAG, "Exception when retrieving package:" + mAppEntry.info.packageName, e);
++            }
++        } else {
++            Log.w(TAG, "Missing AppEntry; maybe reinstalling?");
++            mPackageInfo = null;
++        }
++
++        return mPackageName;
++    }
++
++    protected boolean refreshUi() {
++        final Context context = getPrefContext();
++        final PreferenceScreen prefsGroup = getPreferenceScreen();
++        prefsGroup.removeAll();
++
++        final Map<String, ExternalVolume> externalVolumes = new HashMap<>();
++
++        final Uri providerUri = new Uri.Builder().scheme(ContentResolver.SCHEME_CONTENT)
++                .authority(AUTHORITY).appendPath(TABLE_PERMISSIONS).appendPath("*")
++                .build();
++        // Query provider for entries.
++        try (Cursor cursor = context.getContentResolver().query(providerUri,
++                TABLE_PERMISSIONS_COLUMNS, null, new String[]{mPackageName}, null)) {
++            if (cursor == null) {
++                Log.w(TAG, "Didn't get cursor for " + mPackageName);
++                return true;
++            }
++            final int count = cursor.getCount();
++            if (count == 0) {
++                // This setting screen should not be reached if there was no permission, so just
++                // ignore it
++                Log.w(TAG, "No permissions for " + mPackageName);
++                return true;
++            }
++
++            while (cursor.moveToNext()) {
++                final String pkg = cursor.getString(TABLE_PERMISSIONS_COL_PACKAGE);
++                final String uuid = cursor.getString(TABLE_PERMISSIONS_COL_VOLUME_UUID);
++                final String dir = cursor.getString(TABLE_PERMISSIONS_COL_DIRECTORY);
++                final boolean granted = cursor.getInt(TABLE_PERMISSIONS_COL_GRANTED) == 1;
++                if (VERBOSE) {
++                    Log.v(TAG, "Pkg:" + pkg + " uuid: " + uuid + " dir: " + dir
++                            + " granted:" + granted);
++                }
++
++                if (!mPackageName.equals(pkg)) {
++                    // Sanity check, shouldn't happen
++                    Log.w(TAG, "Ignoring " + uuid + "/" + dir + " due to package mismatch: "
++                            + "expected " + mPackageName + ", got " + pkg);
++                    continue;
++                }
++
++                if (uuid == null) {
++                    if (dir == null) {
++                        // Sanity check, shouldn't happen
++                        Log.wtf(TAG, "Ignoring permission on primary storage root");
++                    } else {
++                        // Primary storage entry: add right away
++                        prefsGroup.addPreference(newPreference(context, dir, providerUri,
++                                /* uuid= */ null, dir, granted, /* children= */ null));
++                    }
++                } else {
++                    // External volume entry: save it for later.
++                    ExternalVolume externalVolume = externalVolumes.get(uuid);
++                    if (externalVolume == null) {
++                        externalVolume = new ExternalVolume(uuid);
++                        externalVolumes.put(uuid, externalVolume);
++                    }
++                    if (dir == null) {
++                        // Whole volume
++                        externalVolume.mGranted = granted;
++                    } else {
++                        // Directory only
++                        externalVolume.mChildren.add(new Pair<>(dir, granted));
++                    }
++                }
++            }
++        }
++
++        if (VERBOSE) {
++            Log.v(TAG, "external volumes: " + externalVolumes);
++        }
++
++        if (externalVolumes.isEmpty()) {
++            // We're done!
++            return true;
++        }
++
++        // Add entries from external volumes
++
++        // Query StorageManager to get the user-friendly volume names.
++        final StorageManager sm = context.getSystemService(StorageManager.class);
++        final List<VolumeInfo> volumes = sm.getVolumes();
++        if (volumes.isEmpty()) {
++            Log.w(TAG, "StorageManager returned no secondary volumes");
++            return true;
++        }
++        final Map<String, String> volumeNames = new HashMap<>(volumes.size());
++        for (VolumeInfo volume : volumes) {
++            final String uuid = volume.getFsUuid();
++            if (uuid == null) continue; // Primary storage; not used.
++
++            String name = sm.getBestVolumeDescription(volume);
++            if (name == null) {
++                Log.w(TAG, "No description for " + volume + "; using uuid instead: " + uuid);
++                name = uuid;
++            }
++            volumeNames.put(uuid, name);
++        }
++        if (VERBOSE) {
++            Log.v(TAG, "UUID -> name mapping: " + volumeNames);
++        }
++
++        for (ExternalVolume volume : externalVolumes.values()) {
++            final String volumeName = volumeNames.get(volume.mUuid);
++            if (volumeName == null) {
++                Log.w(TAG, "Ignoring entry for invalid UUID: " + volume.mUuid);
++                continue;
++            }
++            // First add the pref for the whole volume...
++            final PreferenceCategory category = new PreferenceCategory(context);
++            prefsGroup.addPreference(category);
++            final Set<SwitchPreference> children = new HashSet<>(volume.mChildren.size());
++            category.addPreference(newPreference(context, volumeName, providerUri, volume.mUuid,
++                    /* dir= */ null, volume.mGranted, children));
++
++            // ... then the children prefs
++            volume.mChildren.forEach((pair) -> {
++                final String dir = pair.first;
++                final String name = context.getResources()
++                        .getString(R.string.directory_on_volume, volumeName, dir);
++                final SwitchPreference childPref =
++                        newPreference(context, name, providerUri, volume.mUuid, dir, pair.second,
++                                /* children= */ null);
++                category.addPreference(childPref);
++                children.add(childPref);
++            });
++        }
++        return true;
++    }
++
++    private SwitchPreference newPreference(Context context, String title, Uri providerUri,
++            String uuid, String dir, boolean granted, @Nullable Set<SwitchPreference> children) {
++        final SwitchPreference pref = new SwitchPreference(context);
++        pref.setKey(String.format("%s:%s", uuid, dir));
++        pref.setTitle(title);
++        pref.setChecked(granted);
++        pref.setOnPreferenceChangeListener((unused, value) -> {
++            if (!Boolean.class.isInstance(value)) {
++                // Sanity check
++                Log.wtf(TAG, "Invalid value from switch: " + value);
++                return true;
++            }
++            final boolean newValue = ((Boolean) value).booleanValue();
++
++            resetDoNotAskAgain(context, newValue, providerUri, uuid, dir);
++            if (children != null) {
++                // When parent is granted, children should be hidden; and vice versa
++                final boolean newChildValue = !newValue;
++                for (SwitchPreference child : children) {
++                    child.setVisible(newChildValue);
++                }
++            }
++            return true;
++        });
++        return pref;
++    }
++
++    private void resetDoNotAskAgain(Context context, boolean newValue, Uri providerUri,
++            @Nullable String uuid, @Nullable String directory) {
++        if (DEBUG) {
++            Log.d(TAG, "Asking " + providerUri + " to update " + uuid + "/" + directory + " to "
++                    + newValue);
++        }
++        final ContentValues values = new ContentValues(1);
++        values.put(COL_GRANTED, newValue);
++        final int updated = context.getContentResolver().update(providerUri, values,
++                null, new String[]{mPackageName, uuid, directory});
++        if (DEBUG) {
++            Log.d(TAG, "Updated " + updated + " entries for " + uuid + "/" + directory);
++        }
++    }
++
++    @Override
++    public int getMetricsCategory() {
++        return MetricsEvent.APPLICATIONS_DIRECTORY_ACCESS_DETAIL;
++    }
++
++    private static class ExternalVolume {
++        final String mUuid;
++        final List<Pair<String, Boolean>> mChildren = new ArrayList<>();
++        boolean mGranted;
++
++        ExternalVolume(String uuid) {
++            mUuid = uuid;
++        }
++
++        @Override
++        public String toString() {
++            return "ExternalVolume: [uuid=" + mUuid + ", granted=" + mGranted
++                    + ", children=" + mChildren + "]";
++        }
++    }
++}
+-- 
+1.9.1
+

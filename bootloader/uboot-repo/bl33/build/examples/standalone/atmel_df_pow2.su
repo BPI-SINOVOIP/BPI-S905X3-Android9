@@ -1,0 +1,3 @@
+atmel_df_pow2.c:23:12:flash_status	32	static
+atmel_df_pow2.c:76:14:getline	64	static
+atmel_df_pow2.c:118:5:atmel_df_pow2	80	static

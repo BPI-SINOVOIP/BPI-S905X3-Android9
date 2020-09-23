@@ -1,0 +1,181 @@
+From 723b3f3e49b7fef372f1f7b22a3d863e02631f9d Mon Sep 17 00:00:00 2001
+From: "hongchao.yin" <hongchao.yin@amlogic.com>
+Date: Fri, 13 Sep 2019 21:06:42 +0800
+Subject: [PATCH] a2dp_hal: fixed audio output rate is not stable [1/1]
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+PD#SWPL-13184
+
+Problem:
+{Score:4}{BT}{audio}connect BT speaker,the sound was not smooth in all
+source.(5/5，none)
+
+Solution:
+steady output rate
+
+Verify:
+verify by x301
+
+Change-Id: I0055ee5ca2d52f2f1286f535d7d9e28172542714
+Signed-off-by: hongchao.yin <hongchao.yin@amlogic.com>
+---
+ audio_a2dp_hw/src/audio_a2dp_hw.cc | 97 ++++++++++++++++++++++++++++++--------
+ 1 file changed, 77 insertions(+), 20 deletions(-)
+
+diff --git a/audio_a2dp_hw/src/audio_a2dp_hw.cc b/audio_a2dp_hw/src/audio_a2dp_hw.cc
+index 8a198e8..4807d93 100644
+--- a/audio_a2dp_hw/src/audio_a2dp_hw.cc
++++ b/audio_a2dp_hw/src/audio_a2dp_hw.cc
+@@ -38,6 +38,7 @@
+ #include <unistd.h>
+ 
+ #include <mutex>
++#include <cutils/properties.h>
+ 
+ #include <hardware/audio.h>
+ #include <hardware/hardware.h>
+@@ -1336,6 +1337,20 @@ void *threadloop(void *data) {
+     return NULL;
+ }
+ 
++int aml_getprop_bool(const char * path)
++{
++    char buf[1024];
++    int ret = -1;
++
++    ret = property_get(path, buf, NULL);
++    if (ret > 0) {
++        if (strcasecmp(buf, "true") == 0 || strcmp(buf, "1") == 0)
++            return 1;
++    }
++
++    return 0;
++}
++
+ /*****************************************************************************
+  *
+  *  audio output callbacks
+@@ -1346,11 +1361,10 @@ static ssize_t out_write(struct audio_stream_out* stream, const void* buffer,
+   struct a2dp_stream_out* out = (struct a2dp_stream_out*)stream;
+   int sent = -1;
+   size_t write_bytes = bytes;
+-
+-    static long s64RemainFrameSize = 0;
+-    long s64AdjFrameSize = 0;
+-    long long s64TimeUs = 0;
+-
++  long long s64TimeUs = 0;
++  size_t freeSpace = 0;
++  size_t cnt =   0;
++  static struct timespec preTime;
+ 
+ #if defined(AUDIO_EFFECT_EXTERN_DEVICE)
+   int16_t *outbuff;
+@@ -1438,9 +1452,9 @@ static ssize_t out_write(struct audio_stream_out* stream, const void* buffer,
+ 
+     {
+         struct timespec currTime;
+-        static struct timespec preTime;
+         long long u64CurTimeUs = 0;
+         long long u64PreTimeUs = 0;
++        static long long s64SpeedUpTimeUs = 0; // cumulative acceleration time (us).
+ 
+         clock_gettime(CLOCK_MONOTONIC, &currTime);
+         u64CurTimeUs = currTime.tv_sec * 1000000 + currTime.tv_nsec/1000;
+@@ -1448,27 +1462,60 @@ static ssize_t out_write(struct audio_stream_out* stream, const void* buffer,
+         // A period of time (us). eg: 44.1k s64TimeUs = 20317 us;
+         s64TimeUs = (bytes*1000*1000/audio_stream_out_frame_size(stream))/44100;
+ 
+-        if ((u64CurTimeUs-u64PreTimeUs) < s64TimeUs) {
+-            long long u64SleepTimeUs = s64TimeUs-(u64CurTimeUs-u64PreTimeUs);
+-            s64AdjFrameSize = u64SleepTimeUs*44100/1000000;
+-            s64RemainFrameSize += s64AdjFrameSize;
+-            if (u64SleepTimeUs<20000) {
+-                usleep(u64SleepTimeUs);
++        long long s64SleepTimeUs = s64TimeUs-(u64CurTimeUs-u64PreTimeUs);
++        // write data speed too fast, and delay is required.
++        if (s64SleepTimeUs >= 0) {
++            long long s64ExpediteTimeUs = 0;
++            // speed up 5 milliseconds at a time.
++            if (s64SpeedUpTimeUs >= 5000) {
++                s64SpeedUpTimeUs -= 5000;
++                s64ExpediteTimeUs = 5000;
++            } else {
++                s64ExpediteTimeUs = s64SpeedUpTimeUs;
++                s64SpeedUpTimeUs = 0;
++            }
++            if (s64SleepTimeUs >= (s64ExpediteTimeUs + 500) ) {
++                // 1. speed up s64ExpediteTimeUs (us).
++                // 2. reserve 500 microseconds for AudioFlinger.
++                s64SleepTimeUs -= s64ExpediteTimeUs + 500;
++            }
++            usleep(s64SleepTimeUs);
++            DEBUG("Total speed up time:%lld us,now seepd up:%lld us, sleep:%lld us",
++                s64SpeedUpTimeUs, s64ExpediteTimeUs, s64SleepTimeUs - s64ExpediteTimeUs);
++        } else {  // write data speed too slow, need to speed up next time.
++            // there is no speed-up if the two write times differ by more than 200 milliseconds.
++            // notes: s64SleepTimeUs is negative
++            if (s64SleepTimeUs > -200000) {
++                s64SpeedUpTimeUs -= s64SleepTimeUs;
+             }
+-        } else {
+-            long long u64SleepTimeUs = s64TimeUs-(u64CurTimeUs-u64PreTimeUs);
+-            s64AdjFrameSize = u64SleepTimeUs*44100/1000000;
+-            s64RemainFrameSize += s64AdjFrameSize;
+         }
+         preTime = currTime;
+     }
+ 
+-    ring_buffer_write(&out->stRingBuf, (unsigned char*)buffer, write_bytes, UNCOVER_WRITE);
+-    usleep(s64TimeUs-1000);
+-    sent = write_bytes;
++    freeSpace = get_buffer_write_space(&out->stRingBuf);
++    // override data directly after a timeout of 50 * 3 ms.
++    while (write_bytes > freeSpace && cnt < 50) {
++        usleep(3000);
++        cnt++;
++        freeSpace = get_buffer_write_space(&out->stRingBuf);
++        if (cnt >= 50) {
++            WARN("out of free space, write timeout, write_bytes:%d > free space:%d", write_bytes, freeSpace);
++        }
++    }
+ 
++  ring_buffer_write(&out->stRingBuf, (unsigned char*)buffer, write_bytes, UNCOVER_WRITE);
++  sent = write_bytes;
+   lock.lock();
+-
++  //skt_write(out->common.audio_fd, buffer, write_bytes);
++
++  clock_gettime(CLOCK_MONOTONIC, &preTime);
++  if (aml_getprop_bool("media.audiohal.outdump")) {
++      FILE *fp1 = fopen("/data/audio/audio_bt.pcm", "a+");
++      if (fp1) {
++          fwrite((char *)buffer, 1, write_bytes, fp1);
++          fclose(fp1);
++      }
++  }
+   if (sent == -1) {
+     skt_disconnect(out->common.audio_fd);
+     out->common.audio_fd = AUDIO_SKT_DISCONNECTED;
+@@ -2431,6 +2478,16 @@ static int adev_dump(UNUSED_ATTR const audio_hw_device_t* device,
+                      UNUSED_ATTR int fd) {
+   FNLOG();
+ 
++  struct a2dp_audio_device* a2dp_dev = (struct a2dp_audio_device*)device;
++  dprintf(fd, "\n----------------------------[AML_A2DP] a2dp hal[dev:%p]------------------------------------\n", device);
++  if (a2dp_dev->output && a2dp_dev->output->stRingBuf.size != 0) {
++      uint32_t u32FreeBuffer = get_buffer_write_space(&a2dp_dev->output->stRingBuf);
++      dprintf(fd, "[AML_A2DP]      RingBuf   size: %10d Byte|  UnusedBuf:%10d Byte(%d%%)\n",
++      a2dp_dev->output->stRingBuf.size, u32FreeBuffer, u32FreeBuffer* 100 / a2dp_dev->output->stRingBuf.size);
++  } else {
++      dprintf(fd, "[AML_A2DP]      RingBuf    : buffer size is 0\n");
++  }
++
+   return 0;
+ }
+ 
+-- 
+1.9.1
+

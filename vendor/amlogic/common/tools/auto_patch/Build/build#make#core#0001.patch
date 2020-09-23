@@ -1,0 +1,49 @@
+From 61f783fb6c72fbab3fd40e106508dd656bf63b8c Mon Sep 17 00:00:00 2001
+From: Liang Ji <liang.ji@amlogic.com>
+Date: Thu, 31 Jan 2019 18:56:07 +0800
+Subject: [PATCH] build:Enable avb and recovery.img in ota.zip is corrupted
+ [1/1]
+
+PD#SWPL-4615
+
+Problem:
+Enable avb and recovery.img in ota.zip is corrupted
+
+Solution:
+Google has fixed this problem
+merge code from google
+google bug no:113253526
+
+Verify:
+verify it on Ampere
+
+Change-Id: I8fa365ead023adb6a4321971dc441ca407174f24
+Signed-off-by: Liang Ji <liang.ji@amlogic.com>
+---
+ core/Makefile | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/core/Makefile b/core/Makefile
+index 0a2f6e3..a028aba 100644
+--- a/core/Makefile
++++ b/core/Makefile
+@@ -2541,6 +2541,7 @@ $(BUILT_TARGET_FILES_PACKAGE): \
+ 		$(INSTALLED_ANDROID_INFO_TXT_TARGET) \
+ 		$(INSTALLED_KERNEL_TARGET) \
+ 		$(INSTALLED_2NDBOOTLOADER_TARGET) \
++		$(BOARD_PREBUILT_DTBOIMAGE) \
+ 		$(PRODUCTS.$(INTERNAL_PRODUCT).PRODUCT_SYSTEM_BASE_FS_PATH) \
+ 		$(PRODUCTS.$(INTERNAL_PRODUCT).PRODUCT_VENDOR_BASE_FS_PATH) \
+ 		$(PRODUCTS.$(INTERNAL_PRODUCT).PRODUCT_PRODUCT_BASE_FS_PATH) \
+@@ -2571,7 +2572,7 @@ ifdef INSTALLED_2NDBOOTLOADER_TARGET
+ 	$(hide) cp $(INSTALLED_2NDBOOTLOADER_TARGET) $(zip_root)/$(PRIVATE_RECOVERY_OUT)/second
+ endif
+ ifdef BOARD_INCLUDE_RECOVERY_DTBO
+-	$(hide) cp $(INSTALLED_DTBOIMAGE_TARGET) $(zip_root)/$(PRIVATE_RECOVERY_OUT)/recovery_dtbo
++	$(hide) cp $(BOARD_PREBUILT_DTBOIMAGE) $(zip_root)/$(PRIVATE_RECOVERY_OUT)/recovery_dtbo
+ endif
+ ifdef INTERNAL_KERNEL_CMDLINE
+ 	$(hide) echo "$(INTERNAL_KERNEL_CMDLINE)" > $(zip_root)/$(PRIVATE_RECOVERY_OUT)/cmdline
+-- 
+2.7.4
+

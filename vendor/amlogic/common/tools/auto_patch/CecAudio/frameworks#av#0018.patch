@@ -1,0 +1,47 @@
+From 445594abe13a5deee6b6fd6d80d81f32334aea30 Mon Sep 17 00:00:00 2001
+From: "hongchao.yin" <hongchao.yin@amlogic.com>
+Date: Mon, 23 Sep 2019 14:59:24 +0800
+Subject: [PATCH] AudioPolicyManager: add dynamic switch audio_policy xml [1/1]
+
+PD#SWPL-13851
+
+Problem:
+Add Special audio policy for MS12
+
+Solution:
+add dynamic switch audio_policy xml feature
+
+Verify:
+verify by franklin
+
+Change-Id: I634f5414f7c35a0ce93a0bfde6813565eb644403
+Signed-off-by: hongchao.yin <hongchao.yin@amlogic.com>
+---
+ services/audiopolicy/managerdefault/AudioPolicyManager.cpp | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/services/audiopolicy/managerdefault/AudioPolicyManager.cpp b/services/audiopolicy/managerdefault/AudioPolicyManager.cpp
+index 36f7bb9..04573eb 100644
+--- a/services/audiopolicy/managerdefault/AudioPolicyManager.cpp
++++ b/services/audiopolicy/managerdefault/AudioPolicyManager.cpp
+@@ -4080,7 +4080,16 @@ static status_t deserializeAudioPolicyXmlConfig(AudioPolicyConfig &config) {
+         // A2DP offload supported but disabled: try to use special XML file
+         fileNames.push_back(AUDIO_POLICY_A2DP_OFFLOAD_DISABLED_XML_CONFIG_FILE_NAME);
+     }
+-    fileNames.push_back(AUDIO_POLICY_XML_CONFIG_FILE_NAME);
++
++    if (access("/vendor/etc/audio_policy_configuration_dolby_ms12.xml", R_OK) == 0 &&
++        (access("/vendor/lib/libdolbyms12.so", R_OK) == 0 ||
++        access("/system/lib/libdolbyms12.so", R_OK) == 0)) {
++        fileNames.push_back("audio_policy_configuration_dolby_ms12.xml");
++        ALOGI("loading audio_policy_configuration_dolby_ms12.xml");
++    } else {
++        fileNames.push_back(AUDIO_POLICY_XML_CONFIG_FILE_NAME);
++        ALOGI("loading %s", AUDIO_POLICY_XML_CONFIG_FILE_NAME);
++    }
+ 
+     for (const char* fileName : fileNames) {
+         for (int i = 0; i < kConfigLocationListSize; i++) {
+-- 
+1.9.1
+

@@ -1,0 +1,122 @@
+From 13db44f878ac0b84d3452b16eb2e3e0927d40344 Mon Sep 17 00:00:00 2001
+From: Gongwei Chen <gongwei.chen@amlogic.com>
+Date: Mon, 13 Apr 2020 14:43:59 +0800
+Subject: [PATCH] modify allow and deny permission button background [1/1]
+
+PD#SWPL-23958
+
+Problem:
+allow and deny permission button background
+
+Solution:
+modify allow and deny permission button background
+
+Verify:
+verify by newton
+
+Change-Id: I3de3c394f8bf384007f6ccd61b49f6f52ee6c1e9
+Signed-off-by: gongwei.chen@amlogic.com
+---
+ res/drawable/button_selector.xml |  4 ++++
+ res/drawable/text_color.xml      |  6 ++++++
+ res/drawable/top_button_shap.xml | 14 ++++++++++++++
+ res/layout/grant_permissions.xml | 18 ++++++++++++------
+ res/values/strings.xml           |  3 +++
+ 5 files changed, 39 insertions(+), 6 deletions(-)
+ create mode 100755 res/drawable/button_selector.xml
+ create mode 100644 res/drawable/text_color.xml
+ create mode 100644 res/drawable/top_button_shap.xml
+
+diff --git a/res/drawable/button_selector.xml b/res/drawable/button_selector.xml
+new file mode 100755
+index 00000000..5a258a72
+--- /dev/null
++++ b/res/drawable/button_selector.xml
+@@ -0,0 +1,4 @@
++<selector xmlns:android="http://schemas.android.com/apk/res/android">
++        <!-- <item android:drawable="@drawable/clr_normal" android:state_focused="false"/> -->
++        <item android:drawable="@drawable/clr_focused" android:state_focused="true"/>
++</selector>
+\ No newline at end of file
+diff --git a/res/drawable/text_color.xml b/res/drawable/text_color.xml
+new file mode 100644
+index 00000000..1f7ecd86
+--- /dev/null
++++ b/res/drawable/text_color.xml
+@@ -0,0 +1,6 @@
++<selector xmlns:android="http://schemas.android.com/apk/res/android" >
++    <item android:state_pressed="true" android:color="#ffff00"/>
++    <item android:state_selected="true" android:color="#ffff00"/>
++    <item android:state_focused="true" android:color="#ffff00"/>
++    <!-- <item android:color="#000000"/> -->
++</selector>
+\ No newline at end of file
+diff --git a/res/drawable/top_button_shap.xml b/res/drawable/top_button_shap.xml
+new file mode 100644
+index 00000000..99bd9fb7
+--- /dev/null
++++ b/res/drawable/top_button_shap.xml
+@@ -0,0 +1,14 @@
++<?xml version="1.0" encoding="utf-8"?>
++<selector xmlns:android="http://schemas.android.com/apk/res/android">
++	<item android:state_focused="true">
++	    <shape>
++			<stroke
++				android:width="3dp"
++				android:color="#ffffff"/>
++			<corners 
++				android:radius="10dp" />
++			<solid
++				android:color="#404040"/>
++		</shape>
++	</item>
++</selector>
+diff --git a/res/layout/grant_permissions.xml b/res/layout/grant_permissions.xml
+index ee531d25..586ec55f 100644
+--- a/res/layout/grant_permissions.xml
++++ b/res/layout/grant_permissions.xml
+@@ -131,17 +131,23 @@
+                         android:id="@+id/permission_deny_button"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+-                        style="?android:attr/buttonBarButtonStyle"
+-                        android:text="@string/grant_dialog_button_deny" >
+-                    </Button>
++                        android:text="@string/grant_dialog_button_deny" 
++                        android:background="@drawable/button_selector"
++                        style="?android:attr/buttonBarButtonStyle" />
++                        <!-- android:background="@drawable/top_button_shap" -->
++                        <!-- android:background="@drawable/button_selector" -->
++                        <!-- android:textColor="@drawable/text_color" -->
+ 
+                     <Button
+                         android:id="@+id/permission_allow_button"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+-                        style="?android:attr/buttonBarButtonStyle"
+-                        android:text="@string/grant_dialog_button_allow" >
+-                    </Button>
++                        android:text="@string/grant_dialog_button_allow" 
++                        android:background="@drawable/button_selector"
++                        style="?android:attr/buttonBarButtonStyle" />
++                        <!-- android:background="@drawable/top_button_shap" -->
++                        <!-- android:background="@drawable/button_selector" -->
++                        <!-- android:textColor="@drawable/text_color" -->
+ 
+                 </com.android.packageinstaller.permission.ui.ButtonBarLayout>
+ 
+diff --git a/res/values/strings.xml b/res/values/strings.xml
+index 8a2f878b..5fc2078b 100644
+--- a/res/values/strings.xml
++++ b/res/values/strings.xml
+@@ -381,4 +381,7 @@
+     <!-- Label for the notification channel containing notifications for embedded app operations [CHAR LIMIT=40] -->
+     <string name="wear_app_channel">Installing/uninstalling wear apps</string>
+ 
++   <!-- <drawable name="clr_normal">#ff6501</drawable> -->
++   <drawable name="clr_focused">#999999</drawable>
++
+ </resources>
+-- 
+2.25.0
+

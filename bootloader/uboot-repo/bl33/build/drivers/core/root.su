@@ -1,0 +1,6 @@
+root.c:29:17:dm_root	32	static
+root.c:39:5:dm_init	16	static
+root.c:59:5:dm_uninit	16	static
+root.c:67:5:dm_scan_platdata	16	static
+root.c:109:12:dm_scan_other	0	static
+root.c:114:5:dm_init_and_scan	32	static

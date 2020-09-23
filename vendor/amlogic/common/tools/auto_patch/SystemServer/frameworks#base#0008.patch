@@ -1,0 +1,62 @@
+From 160970fc46718260da21bac5293586f40a523510 Mon Sep 17 00:00:00 2001
+From: Jason Monk <jmonk@google.com>
+Date: Tue, 3 Jul 2018 11:21:57 -0400
+Subject: [PATCH] Fix how we get provider pkgs
+
+Bug: 110985973
+Test: all existing tests pass (including high level supportlib ones)
+Change-Id: I6b37ef419e3c76f35912f84500f88c069b7505ac
+(cherry picked from commit 664af785d5b4399ff9b633f3e1aaa99ef44523c2)
+---
+ .../android/server/slice/SliceManagerService.java  | 26 ++++------------------
+ 1 file changed, 4 insertions(+), 22 deletions(-)
+
+diff --git a/services/core/java/com/android/server/slice/SliceManagerService.java b/services/core/java/com/android/server/slice/SliceManagerService.java
+index c3b9841..e8f255f 100644
+--- a/services/core/java/com/android/server/slice/SliceManagerService.java
++++ b/services/core/java/com/android/server/slice/SliceManagerService.java
+@@ -42,6 +42,7 @@ import android.content.Intent;
+ import android.content.IntentFilter;
+ import android.content.pm.PackageManager;
+ import android.content.pm.PackageManagerInternal;
++import android.content.pm.ProviderInfo;
+ import android.content.pm.ResolveInfo;
+ import android.net.Uri;
+ import android.os.Binder;
+@@ -395,30 +396,11 @@ public class SliceManagerService extends ISliceManager.Stub {
+     private String getProviderPkg(Uri uri, int user) {
+         long ident = Binder.clearCallingIdentity();
+         try {
+-            IBinder token = new Binder();
+-            IActivityManager activityManager = ActivityManager.getService();
+-            ContentProviderHolder holder = null;
+             String providerName = getUriWithoutUserId(uri).getAuthority();
+-            try {
+-                try {
+-                    holder = activityManager.getContentProviderExternal(
+-                            providerName, getUserIdFromUri(uri, user), token);
+-                    if (holder != null && holder.info != null) {
+-                        return holder.info.packageName;
+-                    } else {
+-                        return null;
+-                    }
+-                } finally {
+-                    if (holder != null && holder.provider != null) {
+-                        activityManager.removeContentProviderExternal(providerName, token);
+-                    }
+-                }
+-            } catch (RemoteException e) {
+-                // Can't happen.
+-                throw e.rethrowAsRuntimeException();
+-            }
++            ProviderInfo provider = mContext.getPackageManager().resolveContentProviderAsUser(
++                    providerName, 0, getUserIdFromUri(uri, user));
++            return provider.packageName;
+         } finally {
+-            // I know, the double finally seems ugly, but seems safest for the identity.
+             Binder.restoreCallingIdentity(ident);
+         }
+     }
+-- 
+1.9.1
+

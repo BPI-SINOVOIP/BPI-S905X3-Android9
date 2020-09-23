@@ -1,0 +1,9 @@
+optimus_sdc_update.c:39:5:optimus_device_probe	80	static
+optimus_sdc_update.c:69:12:opt_file_open	16	static
+optimus_sdc_update.c:86:5:opt_file_read	32	static
+optimus_sdc_update.c:97:5:opt_file_close	16	static
+optimus_sdc_update.c:105:5:storage_get_partition_size_in_byte	48	static
+optimus_sdc_update.c:126:5:sdc_burn_buf_manager_init	64	static
+optimus_sdc_update.c:159:5:sdc_burn_verify	240	static
+optimus_sdc_update.c:197:5:optimus_burn_partition_image	144	static
+optimus_sdc_update.c:276:5:do_sdc_update	80	static

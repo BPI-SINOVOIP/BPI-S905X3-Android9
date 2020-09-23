@@ -1,0 +1,58 @@
+From a568e530b6e9e19853a421cb64380dba883f59d8 Mon Sep 17 00:00:00 2001
+From: Josh Gao <jmgao@google.com>
+Date: Mon, 4 Jun 2018 18:16:00 -0700
+Subject: [PATCH] Fix leaks in wifi_chip.cpp.
+
+Use closedir on DIR*, instead of close(dirfd(DIR*)).
+
+Bug: http://b/109702699
+Test: mma
+Change-Id: I827d3a414761bb836d5360221296823fcb34cd6b
+---
+ wifi/1.2/default/wifi_chip.cpp | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/wifi/1.2/default/wifi_chip.cpp b/wifi/1.2/default/wifi_chip.cpp
+index 3bd0557..c4da184 100644
+--- a/wifi/1.2/default/wifi_chip.cpp
++++ b/wifi/1.2/default/wifi_chip.cpp
+@@ -111,16 +111,16 @@ std::string getP2pIfaceName() {
+ bool removeOldFilesInternal() {
+     time_t now = time(0);
+     const time_t delete_files_before = now - kMaxRingBufferFileAgeSeconds;
+-    DIR* dir_dump = opendir(kTombstoneFolderPath);
++    std::unique_ptr<DIR, decltype(&closedir)> dir_dump(
++        opendir(kTombstoneFolderPath), closedir);
+     if (!dir_dump) {
+         LOG(ERROR) << "Failed to open directory: " << strerror(errno);
+         return false;
+     }
+-    unique_fd dir_auto_closer(dirfd(dir_dump));
+     struct dirent* dp;
+     bool success = true;
+     std::list<std::pair<const time_t, std::string>> valid_files;
+-    while ((dp = readdir(dir_dump))) {
++    while ((dp = readdir(dir_dump.get()))) {
+         if (dp->d_type != DT_REG) {
+             continue;
+         }
+@@ -246,13 +246,13 @@ bool cpioWriteFileTrailer(int out_fd) {
+ size_t cpioArchiveFilesInDir(int out_fd, const char* input_dir) {
+     struct dirent* dp;
+     size_t n_error = 0;
+-    DIR* dir_dump = opendir(input_dir);
++    std::unique_ptr<DIR, decltype(&closedir)> dir_dump(opendir(input_dir),
++                                                       closedir);
+     if (!dir_dump) {
+         LOG(ERROR) << "Failed to open directory: " << strerror(errno);
+         return ++n_error;
+     }
+-    unique_fd dir_auto_closer(dirfd(dir_dump));
+-    while ((dp = readdir(dir_dump))) {
++    while ((dp = readdir(dir_dump.get()))) {
+         if (dp->d_type != DT_REG) {
+             continue;
+         }
+-- 
+2.7.4
+

@@ -1,0 +1,49 @@
+From 754dc1663f2656c1ed283ff60265477e0039712a Mon Sep 17 00:00:00 2001
+From: xi an <an.xi@amlogic.com>
+Date: Thu, 21 Mar 2019 18:54:31 +0800
+Subject: [PATCH] SystemServer: fix a vmreboot about finishing Activity [1/1]
+
+PD#SWPL-6183
+
+Problem:
+when ams trys to finish an Activity whose process has been
+killed, it may use the displayId after it hase been removed.
+
+Solution:
+don't use the displayId in the ActivityStack after it is removed.
+
+Verify:
+Ampere
+
+Change-Id: I432315f6df90ee4e226b444db9c363e71aba0878
+Signed-off-by: xi an <an.xi@amlogic.com>
+---
+ services/core/java/com/android/server/am/ActivityStack.java | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+ mode change 100644 => 100755 services/core/java/com/android/server/am/ActivityStack.java
+
+diff --git a/services/core/java/com/android/server/am/ActivityStack.java b/services/core/java/com/android/server/am/ActivityStack.java
+old mode 100644
+new mode 100755
+index aea29ac..67e277c
+--- a/services/core/java/com/android/server/am/ActivityStack.java
++++ b/services/core/java/com/android/server/am/ActivityStack.java
+@@ -3839,12 +3839,14 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
+                 || prevState == STOPPED
+                 || prevState == ActivityState.INITIALIZING) {
+             r.makeFinishingLocked();
++
++            final int displayId = mDisplayId;
+             boolean activityRemoved = destroyActivityLocked(r, true, "finish-imm:" + reason);
+ 
+             if (finishingActivityInNonFocusedStack) {
+                 // Finishing activity that was in paused state and it was in not currently focused
+                 // stack, need to make something visible in its place.
+-                mStackSupervisor.ensureVisibilityAndConfig(next, mDisplayId,
++                mStackSupervisor.ensureVisibilityAndConfig(next, displayId,
+                         false /* markFrozenIfConfigChanged */, true /* deferResume */);
+             }
+             if (activityRemoved) {
+-- 
+1.9.1
+

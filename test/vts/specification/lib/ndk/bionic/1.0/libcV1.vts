@@ -1,0 +1,340 @@
+component_class: LIB_SHARED
+component_type: BIONIC_LIBC
+component_type_version: 1.0
+component_name: "libc"
+
+header: "<unistd.h>"
+header: "<stdint.h>"
+header: "<sys/types.h>"
+header: "<linux/socket.h>"
+
+interface: {
+  api: {
+    name: "socket"
+    return_type: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+  }
+
+  api: {
+    name: "accept"
+    return_type: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+    arg: {
+      type: TYPE_PREDEFINED
+      scalar_type: "pointer"
+      predefined_type: "struct sockaddr*"
+    }
+    arg: {
+      type: TYPE_PREDEFINED
+      scalar_type: "pointer"
+      predefined_type: "socklen_t*"
+    }
+  }
+
+  api: {
+    name: "bind"
+    return_type: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+    arg: {
+      type: TYPE_PREDEFINED
+      scalar_type: "pointer"
+      predefined_type: "struct sockaddr*"
+    }
+    arg: {
+      type: TYPE_PREDEFINED
+      scalar_type: "pointer"
+      predefined_type: "socklen_t*"
+    }
+  }
+
+  api: {
+    name: "connect"
+    return_type: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+    arg: {
+      type: TYPE_PREDEFINED
+      scalar_type: "pointer"
+      predefined_type: "struct sockaddr*"
+    }
+    arg: {
+      type: TYPE_PREDEFINED
+      scalar_type: "pointer"
+      predefined_type: "socklen_t*"
+    }
+  }
+
+  api: {
+    name: "listen"
+    return_type: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+  }
+
+  api: {
+    name: "recv"
+    return_type: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "void_pointer"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "uint32_t"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+  }
+
+  api: {
+    name: "send"
+    return_type: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "void_pointer"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "uint32_t"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+  }
+
+  api: {
+    name: "fopen"
+    return_type: {
+      type: TYPE_PREDEFINED
+      scalar_type: "pointer"
+      predefined_type: "FILE*"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "char_pointer"
+      name: "filename"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "char_pointer"
+      name: "opentype"
+    }
+  }
+
+  api: {
+    name: "read"
+    return_type: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+      name: "filedes"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "void_pointer"
+      name: "buffer"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "uint32_t"
+      name: "size"
+    }
+  }
+
+  api: {
+    name: "write"
+    return_type: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+      name: "filedes"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "void_pointer"
+      name: "buffer"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+      name: "size"
+    }
+  }
+
+  api: {
+    name: "lseek"
+    return_type: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+      name: "filedes"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+      name: "offset"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+      name: "whence"
+    }
+  }
+
+  api: {
+    name: "close"
+    return_type: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+      name: "filedes"
+    }
+  }
+
+  attribute: {
+    name: "sockaddr"
+    type: TYPE_STRUCT
+    struct_value: {
+      name: "sa_family"
+      type: TYPE_SCALAR
+      scalar_type: "uint32_t"
+    }
+    struct_value: {
+      name: "sa_data"
+      type: TYPE_ARRAY
+      vector_value: {
+        type: TYPE_SCALAR
+        scalar_type: "char"
+      }
+    }
+  }
+
+  attribute: {
+    name: "PF_UNIX"
+    type: TYPE_SCALAR
+    scalar_type: "int32_t"
+    scalar_value: {
+      int32_t: 1
+    }
+    is_const: true
+  }
+
+  attribute: {
+    name: "PF_INET"
+    type: TYPE_SCALAR
+    scalar_type: "int32_t"
+    scalar_value: {
+      int32_t: 2
+    }
+    is_const: true
+  }
+
+  attribute: {
+    name: "SOCK_STREAM"
+    type: TYPE_SCALAR
+    scalar_type: "int32_t"
+    scalar_value: {
+      int32_t: 1
+    }
+    is_const: true
+  }
+
+  attribute: {
+    name: "SOCK_DGRAM"
+    type: TYPE_SCALAR
+    scalar_type: "int32_t"
+    scalar_value: {
+      int32_t: 2
+    }
+    is_const: true
+  }
+
+  attribute: {
+    name: "SOCK_RAW"
+    type: TYPE_SCALAR
+    scalar_type: "int32_t"
+    scalar_value: {
+      int32_t: 3
+    }
+    is_const: true
+  }
+
+  attribute: {
+    name: "SOCK_SEQPACKET"
+    type: TYPE_SCALAR
+    scalar_type: "int32_t"
+    scalar_value: {
+      int32_t: 5
+    }
+    is_const: true
+  }
+}

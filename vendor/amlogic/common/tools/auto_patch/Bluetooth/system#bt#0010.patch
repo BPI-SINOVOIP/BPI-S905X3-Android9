@@ -1,0 +1,40 @@
+From 98dd49c34aa72b1ff9fc4e8bc91583ad869343be Mon Sep 17 00:00:00 2001
+From: wenbiao zhang <wenbiao.zhang@amlogic.com>
+Date: Wed, 11 Mar 2020 09:51:49 +0800
+Subject: [PATCH] a2dp: fix DTV/AV/HDMIIN noise with a2dp output [1/2]
+
+PD#SWPL-19178
+
+Problem:
+DTV/AV/HDMIIN noise
+
+Solution:
+source in maybe miss some data sometimes, fill 0 in bt stack
+
+Verify:
+marconi
+
+Change-Id: I9c6dfefbf3191e1e87a3d0cc94dcdc704ce5a62c
+Signed-off-by: wenbiao zhang <wenbiao.zhang@amlogic.com>
+---
+ stack/a2dp/a2dp_sbc_encoder.cc | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/stack/a2dp/a2dp_sbc_encoder.cc b/stack/a2dp/a2dp_sbc_encoder.cc
+index 1b2cf17..bb3a1c9 100644
+--- a/stack/a2dp/a2dp_sbc_encoder.cc
++++ b/stack/a2dp/a2dp_sbc_encoder.cc
+@@ -643,6 +643,10 @@ static bool a2dp_sbc_read_feeding(uint32_t* bytes_read) {
+         ((uint8_t*)a2dp_sbc_encoder_cb.pcmBuffer) +
+             a2dp_sbc_encoder_cb.feeding_state.aa_feed_residue,
+         read_size);
++    if (nb_byte_read < read_size) {
++        memset(((uint8_t*)a2dp_sbc_encoder_cb.pcmBuffer+a2dp_sbc_encoder_cb.feeding_state.aa_feed_residue+nb_byte_read), 0, read_size-nb_byte_read);
++        nb_byte_read = read_size;
++    }
+     a2dp_sbc_encoder_cb.stats.media_read_total_actual_read_bytes +=
+         nb_byte_read;
+ 
+-- 
+2.7.4
+

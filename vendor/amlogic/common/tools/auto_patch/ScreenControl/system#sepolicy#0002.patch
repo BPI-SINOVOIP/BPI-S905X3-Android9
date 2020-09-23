@@ -1,0 +1,36 @@
+From 724f0832cb0ea14b71633f43ee0437f239add7a4 Mon Sep 17 00:00:00 2001
+From: "liangzhuo.xie" <liangzhuo.xie@amlogic.com>
+Date: Fri, 22 Mar 2019 13:51:52 +0800
+Subject: [PATCH] screencontrol: add vendor_default_prop
+
+Change-Id: I90ae7ebdd338fc5b1d3c3f8327db3f0e4c6b1724
+---
+ prebuilts/api/28.0/public/screen_control.te | 1 +
+ public/screen_control.te                    | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/prebuilts/api/28.0/public/screen_control.te b/prebuilts/api/28.0/public/screen_control.te
+index d01fb89..4012eca 100644
+--- a/prebuilts/api/28.0/public/screen_control.te
++++ b/prebuilts/api/28.0/public/screen_control.te
+@@ -39,5 +39,6 @@ get_prop(screen_control, hwservicemanager_prop)
+ 
+ get_prop(screen_control, safemode_prop)
+ set_prop(screen_control, ctl_default_prop)
++get_prop(screen_control, vendor_default_prop)
+ 
+ allow screen_control system_app:binder { call };
+diff --git a/public/screen_control.te b/public/screen_control.te
+index d01fb89..4012eca 100644
+--- a/public/screen_control.te
++++ b/public/screen_control.te
+@@ -39,5 +39,6 @@ get_prop(screen_control, hwservicemanager_prop)
+ 
+ get_prop(screen_control, safemode_prop)
+ set_prop(screen_control, ctl_default_prop)
++get_prop(screen_control, vendor_default_prop)
+ 
+ allow screen_control system_app:binder { call };
+-- 
+1.9.1
+

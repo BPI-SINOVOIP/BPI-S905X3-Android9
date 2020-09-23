@@ -1,0 +1,12 @@
+cmd_bootctl_avb.c:343:5:do_GetSystemMode	32	static
+cmd_bootctl_avb.c:363:5:do_GetAvbMode	32	static
+cmd_bootctl_avb.c:124:6:boot_info_validate	32	static
+cmd_bootctl_avb.c:137:6:boot_info_reset	32	static
+cmd_bootctl_avb.c:151:6:dump_boot_info	32	static
+cmd_bootctl_avb.c:171:5:get_active_slot	0	static
+cmd_bootctl_avb.c:179:5:boot_info_set_active_slot	16	static
+cmd_bootctl_avb.c:199:5:boot_info_open_partition	32	static
+cmd_bootctl_avb.c:215:6:boot_info_load	32	static
+cmd_bootctl_avb.c:222:6:boot_info_save	32	static
+cmd_bootctl_avb.c:235:12:do_GetValidSlot	2144	static
+cmd_bootctl_avb.c:294:12:do_SetActiveSlot	2160	static

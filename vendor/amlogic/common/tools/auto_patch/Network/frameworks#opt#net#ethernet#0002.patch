@@ -1,0 +1,40 @@
+From fa8dfed4d75b0001a887fda9d14557b919d4a84a Mon Sep 17 00:00:00 2001
+From: Gongwei Chen <gongwei.chen@amlogic.com>
+Date: Thu, 13 Dec 2018 17:08:47 +0800
+Subject: [PATCH] Ethernet is not link,but static IP address reserved [1/]
+
+PD#SWPL-1907
+
+Problem:
+Ethernet is not link,but static IP address reserved
+
+Solution:
+Determine Ethernet connection status
+
+Verify:
+Verify by Android P franklin
+
+Change-Id: I60b910d36b0b9da5fd6664a789286dc06ccad074
+Signed-off-by: GongWei Chen <gongwei.chen@amlogic.com>
+---
+ java/com/android/server/ethernet/EthernetNetworkFactory.java | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/java/com/android/server/ethernet/EthernetNetworkFactory.java b/java/com/android/server/ethernet/EthernetNetworkFactory.java
+index de0a691..e0d0846 100644
+--- a/java/com/android/server/ethernet/EthernetNetworkFactory.java
++++ b/java/com/android/server/ethernet/EthernetNetworkFactory.java
+@@ -284,6 +284,10 @@ public class EthernetNetworkFactory extends NetworkFactory {
+                 if (DBG) Log.d(TAG, "IpClient already started");
+                 return;
+             }
++
++            if(mLinkUp == false)
++                return;
++
+             if (DBG) {
+                 Log.d(TAG, String.format("starting IpClient(%s): mNetworkInfo=%s", name,
+                         mNetworkInfo));
+-- 
+1.9.1
+

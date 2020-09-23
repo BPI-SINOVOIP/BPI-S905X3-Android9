@@ -1,0 +1,155 @@
+From 043bd976009a54f5ace25ccf020643f6ba72a22a Mon Sep 17 00:00:00 2001
+From: haiyuan xiong <haiyuan.xiong@amlogic.com>
+Date: Tue, 29 Jan 2019 21:44:59 +0800
+Subject: [PATCH] Display: enable hotplug function [1/2]
+
+PD#SWPL-4629
+
+Problem:
+Netflix requires Hotplug detection for updating refresh-rate and DPI
+
+Solution:
+Check whether dpi changes after hotplug
+
+Verify:
+need FAE to verify
+
+Change-Id: I70f26fc0c284ef9268286d212dd2c3aad6132497
+Signed-off-by: haiyuan xiong <haiyuan.xiong@amlogic.com>
+---
+ core/java/android/view/Display.java                | 30 ++++++++++++++++++++++
+ .../com/android/server/display/DisplayAdapter.java |  7 +++++
+ .../server/display/LocalDisplayAdapter.java        | 10 ++++++--
+ .../com/android/server/display/LogicalDisplay.java |  4 +--
+ 4 files changed, 47 insertions(+), 4 deletions(-)
+
+diff --git a/core/java/android/view/Display.java b/core/java/android/view/Display.java
+index 31cfebc..7ca3fee 100644
+--- a/core/java/android/view/Display.java
++++ b/core/java/android/view/Display.java
+@@ -94,6 +94,10 @@ public final class Display {
+     private int mCachedAppHeightCompat;
+ 
+     /**
++    * Default dpi.
++    */
++    public static final float DEFAULT_DPI = 160.0f;
++    /**
+      * The default Display id, which is the id of the built-in primary display
+      * assuming there is one.
+      */
+@@ -1165,6 +1169,8 @@ public final class Display {
+         private final int mWidth;
+         private final int mHeight;
+         private final float mRefreshRate;
++        private final float mXDpi;
++        private final float mYDpi;
+ 
+         /**
+          * @hide
+@@ -1174,8 +1180,19 @@ public final class Display {
+             mWidth = width;
+             mHeight = height;
+             mRefreshRate = refreshRate;
++			mXDpi = mYDpi = DEFAULT_DPI;
++        }
++        public Mode(int modeId, int width, int height, float refreshRate,
++                float xDpi, float yDpi ) {
++	        mModeId = modeId;
++	        mWidth = width;
++	        mHeight = height;
++	        mRefreshRate = refreshRate;
++	        mXDpi = xDpi;
++	        mYDpi = yDpi;
+         }
+ 
++
+         /**
+          * Returns this mode's id.
+          */
+@@ -1223,6 +1240,19 @@ public final class Display {
+         }
+ 
+         /**
++         *Returns the dpi x.
++         **/
++        public float getXDpi(){
++            return mXDpi;
++        }
++
++        /**
++         *Returns the dpi x.
++         **/
++        public float getYDpi(){
++            return mYDpi;
++        }
++        /**
+          * Returns {@code true} if this mode matches the given parameters.
+          *
+          * @hide
+diff --git a/services/core/java/com/android/server/display/DisplayAdapter.java b/services/core/java/com/android/server/display/DisplayAdapter.java
+index 6ba25a5..f379732f 100644
+--- a/services/core/java/com/android/server/display/DisplayAdapter.java
++++ b/services/core/java/com/android/server/display/DisplayAdapter.java
+@@ -134,6 +134,13 @@ abstract class DisplayAdapter {
+                 NEXT_DISPLAY_MODE_ID.getAndIncrement(), width, height, refreshRate);
+     }
+ 
++    public static Display.Mode createMode(int width,int height,float refreshRate,
++            float xDpi, float yDpi) {
++        return new Display.Mode(
++                NEXT_DISPLAY_MODE_ID.getAndIncrement(), width, height, refreshRate, xDpi, yDpi);
++    }
++
++
+     public interface Listener {
+         public void onDisplayDeviceEvent(DisplayDevice device, int event);
+         public void onTraversalRequested();
+diff --git a/services/core/java/com/android/server/display/LocalDisplayAdapter.java b/services/core/java/com/android/server/display/LocalDisplayAdapter.java
+index 16d82df..b4ffa86 100644
+--- a/services/core/java/com/android/server/display/LocalDisplayAdapter.java
++++ b/services/core/java/com/android/server/display/LocalDisplayAdapter.java
+@@ -702,7 +702,7 @@ final class LocalDisplayAdapter extends DisplayAdapter {
+         public final Display.Mode mMode;
+ 
+         public DisplayModeRecord(SurfaceControl.PhysicalDisplayInfo phys) {
+-            mMode = createMode(phys.width, phys.height, phys.refreshRate);
++            mMode = createMode(phys.width, phys.height, phys.refreshRate, phys.xDpi, phys.yDpi);
+         }
+ 
+         /**
+@@ -715,9 +715,15 @@ final class LocalDisplayAdapter extends DisplayAdapter {
+         public boolean hasMatchingMode(SurfaceControl.PhysicalDisplayInfo info) {
+             int modeRefreshRate = Float.floatToIntBits(mMode.getRefreshRate());
+             int displayInfoRefreshRate = Float.floatToIntBits(info.refreshRate);
++            int modeXDpi = Float.floatToIntBits(mMode.getXDpi());
++            int modeYDpi = Float.floatToIntBits(mMode.getYDpi());
++            int displayInfoXDpi = Float.floatToIntBits(info.xDpi);
++            int displayInfoYDpi = Float.floatToIntBits(info.yDpi);
+             return mMode.getPhysicalWidth() == info.width
+                     && mMode.getPhysicalHeight() == info.height
+-                    && modeRefreshRate == displayInfoRefreshRate;
++                    && modeRefreshRate == displayInfoRefreshRate
++                    && modeXDpi == displayInfoXDpi
++                    && modeYDpi == displayInfoYDpi;
+         }
+ 
+         public String toString() {
+diff --git a/services/core/java/com/android/server/display/LogicalDisplay.java b/services/core/java/com/android/server/display/LogicalDisplay.java
+index 5b7c520..a78d41c 100644
+--- a/services/core/java/com/android/server/display/LogicalDisplay.java
++++ b/services/core/java/com/android/server/display/LogicalDisplay.java
+@@ -152,8 +152,8 @@ final class LogicalDisplay {
+                 mInfo.rotation = mOverrideDisplayInfo.rotation;
+                 mInfo.displayCutout = mOverrideDisplayInfo.displayCutout;
+                 mInfo.logicalDensityDpi = mOverrideDisplayInfo.logicalDensityDpi;
+-                mInfo.physicalXDpi = mOverrideDisplayInfo.physicalXDpi;
+-                mInfo.physicalYDpi = mOverrideDisplayInfo.physicalYDpi;
++                mInfo.physicalXDpi = mBaseDisplayInfo.physicalXDpi;
++                mInfo.physicalYDpi = mBaseDisplayInfo.physicalYDpi;
+             }
+         }
+         return mInfo;
+-- 
+2.7.4
+

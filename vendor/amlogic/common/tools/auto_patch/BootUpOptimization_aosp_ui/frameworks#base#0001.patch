@@ -1,0 +1,39 @@
+From 8e3cbe826f9bd6ed3d45c8c42f54fde55ce497b4 Mon Sep 17 00:00:00 2001
+From: yuehu mi <yuehu.mi@amlogic.com>
+Date: Wed, 23 Jan 2019 14:45:42 +0800
+Subject: [PATCH] BootAnimation: optimizing detection of bootanimation exit
+ cycle [1/1]
+
+PD#SWPL-4264
+
+Problem:
+BOOT_ANIMATION_POLL_INTERVAL 200ms too long
+
+Solution:
+set BOOT_ANIMATION_POLL_INTERVAL 10ms
+
+Verify:
+marconi test ok
+
+Change-Id: I3577c1a03584c7ca03bb13252a9d8b739dafb80c
+Signed-off-by: yuehu mi <yuehu.mi@amlogic.com>
+---
+ services/core/java/com/android/server/wm/WindowManagerService.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/services/core/java/com/android/server/wm/WindowManagerService.java b/services/core/java/com/android/server/wm/WindowManagerService.java
+index 8b4a2dd..f140820 100644
+--- a/services/core/java/com/android/server/wm/WindowManagerService.java
++++ b/services/core/java/com/android/server/wm/WindowManagerService.java
+@@ -334,7 +334,7 @@ public class WindowManagerService extends IWindowManager.Stub
+     static final long DEFAULT_INPUT_DISPATCHING_TIMEOUT_NANOS = 5000 * 1000000L;
+ 
+     // Poll interval in milliseconds for watching boot animation finished.
+-    private static final int BOOT_ANIMATION_POLL_INTERVAL = 200;
++    private static final int BOOT_ANIMATION_POLL_INTERVAL = 10;
+ 
+     // The name of the boot animation service in init.rc.
+     private static final String BOOT_ANIMATION_SERVICE = "bootanim";
+-- 
+1.9.1
+

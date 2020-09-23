@@ -1,0 +1,86 @@
+From b6ab81b2c7f991d315d99310c918f52445f66b68 Mon Sep 17 00:00:00 2001
+From: Jian Wang <jian.wang@amlogic.com>
+Date: Tue, 9 Apr 2019 14:31:28 +0800
+Subject: [PATCH] MetadataRetriever: add MetadataRetriever extension
+
+PD# TV-2893
+
+Problem:
+android default MetadataRetriever
+some type file can not parse
+
+Solution:
+add MetadataRetriever extension
+
+Verify:
+verify on x301
+
+Change-Id: I43f7505b340ea83720e3903bf44ab4fcc44f3d45
+Signed-off-by: Jian Wang <jian.wang@amlogic.com>
+---
+ .../MetadataRetrieverClient.cpp                    | 39 ++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
+
+diff --git a/media/libmediaplayerservice/MetadataRetrieverClient.cpp b/media/libmediaplayerservice/MetadataRetrieverClient.cpp
+index d829c3b..0af5c16 100644
+--- a/media/libmediaplayerservice/MetadataRetrieverClient.cpp
++++ b/media/libmediaplayerservice/MetadataRetrieverClient.cpp
+@@ -42,6 +42,9 @@
+ #include "StagefrightMetadataRetriever.h"
+ #include "MediaPlayerFactory.h"
+ 
++#include <dlfcn.h>
++
++
+ namespace android {
+ 
+ MetadataRetrieverClient::MetadataRetrieverClient(pid_t pid)
+@@ -80,9 +83,45 @@ void MetadataRetrieverClient::disconnect()
+     IPCThreadState::self()->flushCommands();
+ }
+ 
++static sp<MediaMetadataRetrieverBase> getExtendMetadataRetriever()
++{
++     void *libHandle = dlopen("libmetadataretriever_ext.so", RTLD_NOW|RTLD_NODELETE);
++
++    if (libHandle == NULL) {
++        ALOGE("unable to dlopen metadata_retriever extension: %s", dlerror());
++
++        return NULL;
++    }
++
++    typedef MediaMetadataRetrieverBase *(*GetExtendMetadataRetrieverFunc)();
++
++    GetExtendMetadataRetrieverFunc getExtendMetadataRetriever =
++        (GetExtendMetadataRetrieverFunc)dlsym(
++                libHandle,
++                "_Z26getExtendMetadataRetrieverv");
++
++    if (getExtendMetadataRetriever == NULL) {
++        dlclose(libHandle);
++        libHandle = NULL;
++
++        return NULL;
++    }
++
++    return getExtendMetadataRetriever();
++}
++
++
++
+ static sp<MediaMetadataRetrieverBase> createRetriever(player_type playerType)
+ {
+     sp<MediaMetadataRetrieverBase> p;
++    if (playerType == 112) {
++        p = getExtendMetadataRetriever();
++        if (p == NULL) {
++            p = new StagefrightMetadataRetriever;
++        }
++        return p;
++    }
+     switch (playerType) {
+         case STAGEFRIGHT_PLAYER:
+         case NU_PLAYER:
+-- 
+1.9.1
+

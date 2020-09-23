@@ -1,0 +1,344 @@
+From a3d7eb3096c4831d5ab6b5c42cd357e97792e3fe Mon Sep 17 00:00:00 2001
+From: wenbiao zhang <wenbiao.zhang@amlogic.com>
+Date: Tue, 12 Feb 2019 15:54:55 +0800
+Subject: [PATCH] suspend: suspend into freeze mode, config for vad wakeup
+ [1/3]
+
+PD#SWPL-2401
+
+Problem:
+support for vad wakeup
+
+Solution:
+suspend into freeze mode, config for vad wakeup
+
+Verify:
+x301
+
+Change-Id: Icb6cb86a9ac9a384a493826f4bd5dcb66f40bd0a
+Signed-off-by: wenbiao zhang <wenbiao.zhang@amlogic.com>
+---
+ libsuspend/Android.bp                   |   2 +
+ libsuspend/autosuspend_wakeup_count.cpp |  18 +++-
+ libsuspend/vadwake.c                    | 179 ++++++++++++++++++++++++++++++++
+ libsuspend/vadwake.h                    |  26 +++++
+ 4 files changed, 222 insertions(+), 3 deletions(-)
+ create mode 100644 libsuspend/vadwake.c
+ create mode 100644 libsuspend/vadwake.h
+
+diff --git a/libsuspend/Android.bp b/libsuspend/Android.bp
+index b3e36c2..e626d51 100644
+--- a/libsuspend/Android.bp
++++ b/libsuspend/Android.bp
+@@ -10,6 +10,7 @@ cc_library {
+     srcs: [
+         "autosuspend.c",
+         "autosuspend_wakeup_count.cpp",
++        "vadwake.c",
+     ],
+     export_include_dirs: ["include"],
+     local_include_dirs: ["include"],
+@@ -17,6 +18,7 @@ cc_library {
+         "libbase",
+         "liblog",
+         "libcutils",
++        "libtinyalsa",
+     ],
+     cflags: [
+         "-Werror",
+diff --git a/libsuspend/autosuspend_wakeup_count.cpp b/libsuspend/autosuspend_wakeup_count.cpp
+index 27c8629..c9bc417 100644
+--- a/libsuspend/autosuspend_wakeup_count.cpp
++++ b/libsuspend/autosuspend_wakeup_count.cpp
+@@ -33,6 +33,7 @@
+ #include <android-base/strings.h>
+ 
+ #include "autosuspend_ops.h"
++#include "vadwake.h"
+ 
+ #define BASE_SLEEP_TIME 100000
+ #define MAX_SLEEP_TIME 60000000
+@@ -47,11 +48,13 @@ using android::base::WriteStringToFd;
+ static pthread_t suspend_thread;
+ static sem_t suspend_lockout;
+ static constexpr char sleep_state[] = "mem";
++static constexpr char freeze_state[] = "freeze";
+ static void (*wakeup_func)(bool success) = NULL;
+ static int sleep_time = BASE_SLEEP_TIME;
+ static constexpr char sys_power_state[] = "/sys/power/state";
+ static constexpr char sys_power_wakeup_count[] = "/sys/power/wakeup_count";
+ static bool autosuspend_is_init = false;
++static bool is_vadwake_support = false;
+ 
+ static void update_sleep_time(bool success) {
+     if (success) {
+@@ -92,8 +95,9 @@ static void* suspend_thread_func(void* arg __attribute__((unused))) {
+ 
+         LOG(VERBOSE) << "write " << wakeup_count << " to wakeup_count";
+         if (WriteStringToFd(wakeup_count, wakeup_count_fd)) {
+-            LOG(VERBOSE) << "write " << sleep_state << " to " << sys_power_state;
+-            success = WriteStringToFd(sleep_state, state_fd);
++            LOG(VERBOSE) << "write " << (is_vadwake_support?freeze_state:sleep_state)
++                    << " to " << sys_power_state;
++            success = WriteStringToFd((is_vadwake_support?freeze_state:sleep_state), state_fd);
+ 
+             void (*func)(bool success) = wakeup_func;
+             if (func != NULL) {
+@@ -156,6 +160,8 @@ static int autosuspend_init(void) {
+         goto err_pthread_create;
+     }
+ 
++    is_vadwake_support = vadwake_support();
++
+     LOG(VERBOSE) << "autosuspend_init success";
+     autosuspend_is_init = true;
+     return 0;
+@@ -182,6 +188,9 @@ static int autosuspend_wakeup_count_enable(void) {
+         PLOG(ERROR) << "error changing semaphore";
+     }
+ 
++    if (is_vadwake_support)
++        vadwake_enable(1);
++
+     LOG(VERBOSE) << "autosuspend_wakeup_count_enable done";
+ 
+     return ret;
+@@ -200,6 +209,9 @@ static int autosuspend_wakeup_count_disable(void) {
+         PLOG(ERROR) << "error changing semaphore";
+     }
+ 
++    if (is_vadwake_support)
++        vadwake_enable(0);
++
+     LOG(VERBOSE) << "autosuspend_wakeup_count_disable done";
+ 
+     return ret;
+@@ -213,7 +225,7 @@ static int force_suspend(int timeout_ms) {
+         return ret;
+     }
+ 
+-    return WriteStringToFd(sleep_state, state_fd) ? 0 : -1;
++    return WriteStringToFd((is_vadwake_support?freeze_state:sleep_state), state_fd) ? 0 : -1;
+ }
+ 
+ static void autosuspend_set_wakeup_callback(void (*func)(bool success)) {
+diff --git a/libsuspend/vadwake.c b/libsuspend/vadwake.c
+new file mode 100644
+index 0000000..66d8b06
+--- /dev/null
++++ b/libsuspend/vadwake.c
+@@ -0,0 +1,179 @@
++#define LOG_TAG "vadwake"
++
++#include <tinyalsa/asoundlib.h>
++#include <cutils/properties.h>
++#include <stdlib.h>
++#include <string.h>
++#include <log/log.h>
++#include <unistd.h>
++#include <pthread.h>
++
++
++#define VAD_ENABLE "VAD enable"
++#define VAD_SWITCH "VAD Switch"
++#define VALUE_ENABLE "1"
++#define VALUE_DISABLE "0"
++#define VAD_CARD 0
++#define VAD_DEVICE 3
++
++static int vad_capturing = 0;
++static int vad_support = 0;
++static pthread_t vad_thread;
++
++static bool tinymix_get_bool(struct mixer *mixer, const char *control)
++{
++    struct mixer_ctl *ctl;
++    enum mixer_ctl_type type;
++    //unsigned int num_values;
++    int ret;
++
++    ctl = mixer_get_ctl_by_name(mixer, control);
++    if (!ctl) {
++        ALOGE("Invalid mixer control: %s\n", control);
++        return -1;
++    }
++
++    type = mixer_ctl_get_type(ctl);
++    //num_values = mixer_ctl_get_num_values(ctl);
++    if (type != MIXER_CTL_TYPE_BOOL) {
++        ALOGE("mixer control type is not bool: %d\n", type);
++        return -1;
++    }
++
++    return mixer_ctl_get_value(ctl, 0);
++}
++
++static int tinymix_set_value(struct mixer *mixer, const char *control, const char *values)
++{
++    struct mixer_ctl *ctl;
++    enum mixer_ctl_type type;
++    unsigned int num_ctl_values;
++    unsigned int i;
++
++    ctl = mixer_get_ctl_by_name(mixer, control);
++
++    if (!ctl) {
++        ALOGE("Invalid mixer control: %s\n", control);
++        return -1;
++    }
++
++    type = mixer_ctl_get_type(ctl);
++    num_ctl_values = mixer_ctl_get_num_values(ctl);
++
++    if (type == MIXER_CTL_TYPE_BYTE) {
++        ALOGE("mixer control type: MIXER_CTL_TYPE_BYTE\n");
++        //tinymix_set_byte_ctl(ctl, values, num_values);
++        return -1;
++    }
++
++    int value = atoi(values);
++
++    for (i = 0; i < num_ctl_values; i++) {
++        if (mixer_ctl_set_value(ctl, i, value)) {
++            ALOGE("Error: invalid value\n");
++            return -1;
++        }
++    }
++    return 0;
++}
++
++static void* vadwake_func(void* arg __attribute__((unused))) {
++    struct pcm_config config;
++    struct mixer *mixer;
++    struct pcm *pcm;
++    char *buffer;
++    unsigned int size;
++    bool vadswitchflag = true;
++
++    memset(&config, 0, sizeof(config));
++    config.channels = 1;
++    config.rate = 16000;
++    config.period_size = 1024;
++    config.period_count = 4;
++    config.format = PCM_FORMAT_S16_LE;
++    config.start_threshold = 0;
++    config.stop_threshold = 0;
++    config.silence_threshold = 0;
++
++    pcm = pcm_open(VAD_CARD, VAD_DEVICE, PCM_IN, &config);
++    if (!pcm || !pcm_is_ready(pcm)) {
++        ALOGE("Unable to open PCM device (%s)\n",
++                pcm_get_error(pcm));
++        return NULL;
++    }
++
++    size = pcm_frames_to_bytes(pcm, pcm_get_buffer_size(pcm));
++    buffer = malloc(size);
++    if (!buffer) {
++        ALOGE("Unable to allocate %u bytes\n", size);
++        free(buffer);
++        pcm_close(pcm);
++        return NULL;
++    }
++
++    ALOGD("Capturing sample: %u ch, %u hz, %u bit\n", config.channels, config.rate,
++           pcm_format_to_bits(config.format));
++    while (true) {
++        pcm_read(pcm, buffer, size);
++        //usleep(50000);
++        if (!vad_capturing)
++            break;
++        if (vadswitchflag) {
++            vadswitchflag = false;
++            mixer = mixer_open(VAD_CARD);
++            if (!mixer)
++                ALOGE("Failed to open mixer\n");
++            else {
++                tinymix_set_value(mixer, VAD_SWITCH, VALUE_ENABLE);
++                mixer_close(mixer);
++            }
++        }
++    }
++    ALOGD("Capturing sample: finish: %d", vad_capturing);
++
++    free(buffer);
++    pcm_close(pcm);
++    return NULL;
++}
++
++bool vadwake_support() {
++    char val[PROPERTY_VALUE_MAX];
++    int ret = property_get("ro.vendor.platform.vadwake", val, "0");
++    if (!strncmp(val, "1", 1) || !strncmp(val, "true", 4))
++        return true;
++
++    ALOGD("vadwake_support: false\n");
++    return false;
++}
++
++int vadwake_enable(int enable) {
++    int ret = 0;
++    struct mixer *mixer = mixer_open(VAD_CARD);
++
++    ALOGD("vadwake_enable: %d\n", enable);
++    if (!mixer) {
++        ALOGE("Failed to open mixer\n");
++        return -1;
++    }
++
++    if (enable) {
++        if (!tinymix_get_bool(mixer, VAD_ENABLE))
++			tinymix_set_value(mixer, VAD_ENABLE, VALUE_ENABLE);
++        if (vad_capturing)
++            return 0;
++        vad_capturing = 1;
++        ret = pthread_create(&vad_thread, NULL, vadwake_func, NULL);
++        if (ret) {
++            ALOGE("vadwake error creating thread: %s\n", strerror(ret));
++            vad_capturing = 0;
++            return -1;
++        }
++    } else {
++        tinymix_set_value(mixer, VAD_SWITCH, VALUE_DISABLE);
++        usleep(50*1000);
++        vad_capturing = 0;
++    }
++    mixer_close(mixer);
++    return 0;
++}
++
+diff --git a/libsuspend/vadwake.h b/libsuspend/vadwake.h
+new file mode 100644
+index 0000000..3f93b70
+--- /dev/null
++++ b/libsuspend/vadwake.h
+@@ -0,0 +1,26 @@
++/*
++ * Copyright (C) 2012 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++#ifndef _LIBSUSPEND_VADWAKE_H_
++#define _LIBSUSPEND_VADWAKE_H_
++
++__BEGIN_DECLS
++bool vadwake_support(void);
++int vadwake_enable(int enable);
++__END_DECLS
++
++#endif
++
+-- 
+2.7.4
+

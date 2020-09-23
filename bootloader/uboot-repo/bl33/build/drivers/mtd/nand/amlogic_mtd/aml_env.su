@@ -1,0 +1,5 @@
+aml_env.c:30:5:amlnand_save_info_by_name_mtd	16	static
+aml_env.c:40:5:amlnand_read_info_by_name_mtd	16	static
+aml_env.c:50:5:amlnf_env_save	48	static
+aml_env.c:87:5:amlnf_env_read	64	static
+aml_env.c:123:5:aml_ubootenv_init	0	static

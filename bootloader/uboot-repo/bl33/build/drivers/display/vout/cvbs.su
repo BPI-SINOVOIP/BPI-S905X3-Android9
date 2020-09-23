@@ -1,0 +1,14 @@
+cvbs.c:802:12:cvbs_config_enci	32	static
+cvbs.c:292:5:2	0	static
+cvbs.c:634:13:cvbs_set_vid1_clk	32	static
+cvbs.c:678:13:cvbs_set_vid2_clk	32	static
+cvbs.c:721:12:cvbs_config_clock	32	static
+cvbs.c:256:5:cvbs_set_bist	32	static
+cvbs.c:292:5:cvbs_set_vdac	16	static
+cvbs.c:399:5:cvbs_reg_debug	64	static
+cvbs.c:840:5:cvbs_set_vmode	48	static
+cvbs.c:882:5:cvbs_outputmode_check	48	static
+cvbs.c:898:6:cvbs_show_valid_vmode	0	static
+cvbs.c:910:6:cvbs_performance_config	80	static
+cvbs.c:1016:6:vdac_data_config	16	static
+cvbs.c:1050:6:cvbs_init	16	static

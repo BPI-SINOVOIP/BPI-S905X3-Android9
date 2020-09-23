@@ -1,0 +1,61 @@
+From 9a2f5a4064473c6d384b412f5be8859de88bc5dd Mon Sep 17 00:00:00 2001
+From: Zhiwei Yan <zhiwei.yan@amlogic.com>
+Date: Fri, 10 May 2019 14:42:24 +0800
+Subject: [PATCH] franwork: add status to control tuning process [1/2]
+
+PD#SWPL-7989
+
+Problem:
+tvview receive message slowly as main thread may running too much work
+
+Solution:
+deal time waste procees after receive status message
+
+Vefify:
+ok on r311.
+
+Change-Id: I6db9e54e64a4435ddf3d370069f270e6cad05625
+Signed-off-by: Zhiwei Yan <zhiwei.yan@amlogic.com>
+---
+ media/java/android/media/tv/TvView.java | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/media/java/android/media/tv/TvView.java b/media/java/android/media/tv/TvView.java
+index 6b329f8..d8bbe83 100644
+--- a/media/java/android/media/tv/TvView.java
++++ b/media/java/android/media/tv/TvView.java
+@@ -108,6 +108,9 @@ public class TvView extends ViewGroup {
+     private int mSurfaceViewBottom;
+     private TimeShiftPositionCallback mTimeShiftPositionCallback;
+ 
++    /** @hide */
++    public static final String EVENT_TUNE_FINISHED = "event_tune_finished";
++
+     private final SurfaceHolder.Callback mSurfaceHolderCallback = new SurfaceHolder.Callback() {
+         @Override
+         public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+@@ -318,6 +321,10 @@ public class TvView extends ViewGroup {
+         if (mSessionCallback != null && TextUtils.equals(mSessionCallback.mInputId, inputId)) {
+             if (mSession != null) {
+                 mSession.tune(channelUri, params);
++                if (DEBUG) {
++                    Log.d(TAG, "send tune finished event");
++                }
++                mCallback.onEvent(inputId, EVENT_TUNE_FINISHED, null);
+             } else {
+                 // createSession() was called but the actual session for the given inputId has not
+                 // yet been created. Just replace the existing tuning params in the callback with
+@@ -1115,6 +1122,10 @@ public class TvView extends ViewGroup {
+                     mSession.timeShiftPlay(mRecordedProgramUri);
+                 }
+                 ensurePositionTracking();
++                if (DEBUG) {
++                    Log.d(TAG, "send tune finished event");
++                }
++                mCallback.onEvent(mInputId, EVENT_TUNE_FINISHED, null);
+             } else {
+                 mSessionCallback = null;
+                 if (mCallback != null) {
+-- 
+2.10.2
+

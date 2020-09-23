@@ -1,0 +1,13 @@
+cmd_hdmitx.c:359:12:do_dump	16	static
+cmd_hdmitx.c:365:12:do_info	32	static
+cmd_hdmitx.c:351:12:do_off	16	static
+cmd_hdmitx.c:951:12:do_hdmitx	48	static
+cmd_hdmitx.c:857:12:do_get_preferred_mode	240	static
+cmd_hdmitx.c:140:12:do_edid	48	static
+cmd_hdmitx.c:338:12:do_blank	32	static
+cmd_hdmitx.c:253:12:do_output	48	static
+cmd_hdmitx.c:71:12:do_hpd_detect	48	static
+cmd_hdmitx.c:168:12:do_rx_det	64	static
+cmd_hdmitx.c:545:6:isYuv4kSink	32	static
+cmd_hdmitx.c:683:12:do_get_parse_edid	192	static
+cmd_hdmitx.c:995:18:hdmitx_get_rx_hdr_info	0	static

@@ -1,0 +1,82 @@
+From 88b4f6ce509815614323920a755b5c6d358702d6 Mon Sep 17 00:00:00 2001
+From: Jinping Wang <jinping.wang@amlogic.com>
+Date: Wed, 13 Nov 2019 13:51:21 +0800
+Subject: [PATCH] cec: add pass through for playback [1/1]
+
+PD# SWPL-16560
+
+Problem:
+playback volumekey should pass through when hdmicecsink enabled
+
+Solution:
+playback volumekey pass through
+
+Verify:
+test ok using fermi
+
+Change-Id: I2c11340dbe3b95076399e1b8cf26c2096989043a
+Signed-off-by: Jinping Wang <jinping.wang@amlogic.com>
+---
+ .../com/android/server/audio/AudioService.java     | 39 ++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
+
+diff --git a/services/core/java/com/android/server/audio/AudioService.java b/services/core/java/com/android/server/audio/AudioService.java
+index 37c7ee7..c953f0c 100644
+--- a/services/core/java/com/android/server/audio/AudioService.java
++++ b/services/core/java/com/android/server/audio/AudioService.java
+@@ -156,6 +156,10 @@ import java.util.Iterator;
+ import java.util.List;
+ import java.util.NoSuchElementException;
+ import java.util.Objects;
++import android.provider.Settings;
++import android.app.AlertDialog;
++import android.app.AlertDialog.Builder;
++import android.view.WindowManager;
+ 
+ /**
+  * The implementation of the volume manager service.
+@@ -1684,6 +1688,41 @@ public class AudioService extends IAudioService.Stub
+ 
+         if (adjustVolume && (direction != AudioManager.ADJUST_SAME)) {
+             mAudioHandler.removeMessages(MSG_UNMUTE_STREAM);
++            boolean routePassthroughVolume = SystemProperties.getBoolean("audio.passthrough.volume.route2cec", false)
++                    && SystemProperties.getBoolean("audio.passthrough.enable", false);
++            boolean hdmiControlEnabled = (Settings.Global.getInt(mContext.getContentResolver(), Settings.Global.HDMI_CONTROL_ENABLED, 1) == 1);
++            Log.d(TAG, "adjustStreamVolume() routePassthroughVolume=" + routePassthroughVolume + ", hdmiControlEnabled=" + hdmiControlEnabled);
++            if (routePassthroughVolume && !isMuteAdjust && ((device & AudioSystem.DEVICE_OUT_ALL_A2DP) == 0)) {
++                if (hdmiControlEnabled) {
++                    if (mHdmiManager != null) {
++                        synchronized (mHdmiManager) {
++                            // mHdmiCecSink true => mHdmiPlaybackClient != null
++                            if (streamTypeAlias == AudioSystem.STREAM_MUSIC) {
++                                synchronized (mHdmiPlaybackClient) {
++                                    int keyCode = isMuteAdjust ? KeyEvent.KEYCODE_VOLUME_MUTE : ((direction == -1) ? KeyEvent.KEYCODE_VOLUME_DOWN : KeyEvent.KEYCODE_VOLUME_UP);
++                                    final long ident = Binder.clearCallingIdentity();
++                                    try {
++                                        mHdmiPlaybackClient.sendKeyEvent(keyCode, true);
++                                        mHdmiPlaybackClient.sendKeyEvent(keyCode, false);
++                                    } finally {
++                                        Binder.restoreCallingIdentity(ident);
++                                    }
++                                }
++                            }
++                        }
++                    }
++                    return;
++                } else {
++                    Builder builder = new AlertDialog.Builder(mContext.getApplicationContext()).setTitle("not support!");
++                    final AlertDialog dialog = builder.create();
++                    dialog.getWindow().setType((WindowManager.LayoutParams.TYPE_SYSTEM_ALERT));
++                    mAudioHandler.post(new Runnable() {
++                        public void run() {
++                            dialog.show();
++                        }
++                    });
++                }
++            }
+ 
+             if (isMuteAdjust) {
+                 boolean state;
+-- 
+2.10.2
+

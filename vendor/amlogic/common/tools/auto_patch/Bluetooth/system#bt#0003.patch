@@ -1,0 +1,76 @@
+From 05662fdea488c27bd34d3e7c261ded862e0ff240 Mon Sep 17 00:00:00 2001
+From: "qiu.zeng" <qiu.zeng@amlogic.com>
+Date: Sat, 30 Mar 2019 17:42:55 +0800
+Subject: [PATCH] BT: Resolve Bluetooth Switch Caused by Speaker Connection
+ [1/1]
+
+PD#TV-3992
+
+Problem:
+add define ADD_AVCTP_CONTROL to control avctp
+
+Solution:
+Resolve Bluetooth Switch Caused by Speaker Connection
+
+Verify:
+Verifying on Public Edition x301
+
+Change-Id: I985d64f4cf92697111339fd9dc3155540a79e869
+Signed-off-by: Qiu Zeng <qiu.zeng@amlogic.com>
+---
+ bta/av/bta_av_aact.cc        | 2 +-
+ bta/av/bta_av_act.cc         | 2 +-
+ internal_include/bt_target.h | 5 +++++
+ 3 files changed, 7 insertions(+), 2 deletions(-)
+ mode change 100755 => 100644 bta/av/bta_av_aact.cc
+ mode change 100755 => 100644 bta/av/bta_av_act.cc
+
+diff --git a/bta/av/bta_av_aact.cc b/bta/av/bta_av_aact.cc
+old mode 100755
+new mode 100644
+index cf6097a..a4de4af
+--- a/bta/av/bta_av_aact.cc
++++ b/bta/av/bta_av_aact.cc
+@@ -3005,7 +3005,7 @@ void bta_av_open_rc(tBTA_AV_SCB* p_scb, tBTA_AV_DATA* p_data) {
+       }
+     } else {
+       /* use main SM for AVRC SDP activities */
+-      if (!is_new_avrcp_enabled()) {
++      if (!is_new_avrcp_enabled() || ADD_AVCTP_CONTROL == FALSE) {
+         APPL_TRACE_WARNING("%s: Using the new AVRCP Profile", __func__);
+         bluetooth::avrcp::AvrcpService::Get()->ConnectDevice(
+             p_scb->PeerAddress());
+diff --git a/bta/av/bta_av_act.cc b/bta/av/bta_av_act.cc
+old mode 100755
+new mode 100644
+index c81a367..64a1d8e
+--- a/bta/av/bta_av_act.cc
++++ b/bta/av/bta_av_act.cc
+@@ -305,7 +305,7 @@ static void bta_av_rc_msg_cback(uint8_t handle, uint8_t label, uint8_t opcode,
+  ******************************************************************************/
+ uint8_t bta_av_rc_create(tBTA_AV_CB* p_cb, uint8_t role, uint8_t shdl,
+                          uint8_t lidx) {
+-  if (!is_new_avrcp_enabled()) {
++  if (!is_new_avrcp_enabled() || ADD_AVCTP_CONTROL == FALSE) {
+     APPL_TRACE_WARNING("%s: Skipping RC creation for the old AVRCP profile",
+                        __func__);
+     return BTA_AV_RC_HANDLE_NONE;
+diff --git a/internal_include/bt_target.h b/internal_include/bt_target.h
+index 9d11f79..6d414b0 100644
+--- a/internal_include/bt_target.h
++++ b/internal_include/bt_target.h
+@@ -1212,6 +1212,11 @@
+ #define AVCT_NUM_CONN 14  // 2 * MaxDevices + 2
+ #endif
+ 
++/* add avctp control function */
++#ifndef ADD_AVCTP_CONTROL
++#define ADD_AVCTP_CONTROL  FALSE
++#endif
++
+ /******************************************************************************
+  *
+  * AVRCP
+-- 
+1.9.1
+

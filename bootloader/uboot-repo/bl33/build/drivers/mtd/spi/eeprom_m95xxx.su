@@ -1,0 +1,2 @@
+eeprom_m95xxx.c:28:9:spi_read	80	static
+eeprom_m95xxx.c:62:9:spi_write	80	static

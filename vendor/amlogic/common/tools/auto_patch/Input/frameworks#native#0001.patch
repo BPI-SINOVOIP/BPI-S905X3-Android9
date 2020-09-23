@@ -1,0 +1,38 @@
+From 6649e8004cb37e77a436ad5aa4ac356feceb8b20 Mon Sep 17 00:00:00 2001
+From: yu fang <yu.fang@amlogic.com>
+Date: Tue, 11 Dec 2018 18:41:03 +0800
+Subject: [PATCH] Framework: Add function of right button of mouse. [1/1]
+
+PD#SWPL-2552
+
+Problem:
+No function of right button of mouse.
+
+Solution:
+Add function of right button of mouse.
+
+Verify:
+verified on all platforms of TV and OTT.
+
+Change-Id: I1a80ed4fa9e7aeb19032fc31515a55da5f3b2b53
+Signed-off-by: yu fang <yu.fang@amlogic.com>
+---
+ services/inputflinger/InputReader.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/services/inputflinger/InputReader.cpp b/services/inputflinger/InputReader.cpp
+index e0cd8a0..9dbabfb 100644
+--- a/services/inputflinger/InputReader.cpp
++++ b/services/inputflinger/InputReader.cpp
+@@ -1404,7 +1404,7 @@ uint32_t CursorButtonAccumulator::getButtonState() const {
+         result |= AMOTION_EVENT_BUTTON_PRIMARY;
+     }
+     if (mBtnRight) {
+-        result |= AMOTION_EVENT_BUTTON_SECONDARY;
++        result |= AMOTION_EVENT_BUTTON_BACK;
+     }
+     if (mBtnMiddle) {
+         result |= AMOTION_EVENT_BUTTON_TERTIARY;
+--
+1.9.1
+

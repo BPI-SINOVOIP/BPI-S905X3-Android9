@@ -1,0 +1,7 @@
+amlogic_gpio.c:77:12:aml_gpio_get_function	32	static
+amlogic_gpio.c:66:12:aml_gpio_set_value	32	static
+amlogic_gpio.c:54:12:aml_gpio_get_value	32	static
+amlogic_gpio.c:39:12:aml_gpio_direction_output	32	static
+amlogic_gpio.c:29:12:aml_gpio_direction_input	32	static
+amlogic_gpio.c:109:12:aml_gpio_probe	32	static
+amlogic_gpio.c:94:12:aml_gpio_request	32	static

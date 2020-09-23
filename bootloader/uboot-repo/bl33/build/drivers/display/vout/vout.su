@@ -1,0 +1,8 @@
+vout.c:635:12:getenv_int	48	static
+vout.c:720:6:vout_set_current_vmode	0	static
+vout.c:725:5:vout_get_current_vmode	0	static
+vout.c:731:17:vout_get_current_vinfo	0	static
+vout.c:740:5:vout_get_current_axis	64	static
+vout.c:745:6:vout_vinfo_dump	32	static
+vout.c:762:6:vout_viu_mux	48	static
+vout.c:827:6:vout_init	96	static

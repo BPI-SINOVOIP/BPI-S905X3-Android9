@@ -1,0 +1,56 @@
+From 3c9e302be2ab351bccbfa28f8872ef0aa6c81ca6 Mon Sep 17 00:00:00 2001
+From: xi an <an.xi@amlogic.com>
+Date: Tue, 12 Mar 2019 19:17:07 +0800
+Subject: [PATCH] SystemServer: fix leak of TvInputManager BinderProxy [2/2]
+
+PD#SWPL-5139
+
+Problem:
+TvInputManager could be created for every new ContextImpl and
+there is no mechanism of unregisterCallback in the Service
+
+Solution:
+change the getService's method from CachedServiceFetcher to StaticServiceFetcher
+
+Verify:
+Ampere
+
+Change-Id: I0a4f656f5332a28fc4553405048ccfe7cd67cf93
+---
+ core/java/android/app/SystemServiceRegistry.java | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+ mode change 100644 => 100755 core/java/android/app/SystemServiceRegistry.java
+
+diff --git a/core/java/android/app/SystemServiceRegistry.java b/core/java/android/app/SystemServiceRegistry.java
+old mode 100644
+new mode 100755
+index db011da..f256ce1
+--- a/core/java/android/app/SystemServiceRegistry.java
++++ b/core/java/android/app/SystemServiceRegistry.java
+@@ -118,6 +118,7 @@ import android.os.ISystemUpdateManager;
+ import android.os.IUserManager;
+ import android.os.IncidentManager;
+ import android.os.PowerManager;
++import android.os.Process;
+ import android.os.RecoverySystem;
+ import android.os.ServiceManager;
+ import android.os.ServiceManager.ServiceNotFoundException;
+@@ -782,12 +783,12 @@ final class SystemServiceRegistry {
+             }});
+ 
+         registerService(Context.TV_INPUT_SERVICE, TvInputManager.class,
+-                new CachedServiceFetcher<TvInputManager>() {
++                new StaticServiceFetcher<TvInputManager>() {
+             @Override
+-            public TvInputManager createService(ContextImpl ctx) throws ServiceNotFoundException {
++            public TvInputManager createService() throws ServiceNotFoundException {
+                 IBinder iBinder = ServiceManager.getServiceOrThrow(Context.TV_INPUT_SERVICE);
+                 ITvInputManager service = ITvInputManager.Stub.asInterface(iBinder);
+-                return new TvInputManager(service, ctx.getUserId());
++                return new TvInputManager(service, UserHandle.getUserId(Process.myUid()));
+             }});
+ 
+         registerService(Context.NETWORK_SCORE_SERVICE, NetworkScoreManager.class,
+-- 
+1.9.1
+

@@ -1,0 +1,225 @@
+From efe87fa4a13176c81338b6e32c1cba43ff4aaeac Mon Sep 17 00:00:00 2001
+From: Kuibao Zhang <kuibao.zhang@amlogic.com>
+Date: Fri, 12 Jul 2019 10:37:00 +0800
+Subject: [PATCH] BT: A2DP SRC and SNK offical
+
+PD#SWPL-10604
+
+Change-Id: I8795b5796382be150027ab00f7cb9424807e3d35
+---
+ bta/av/bta_av_act.cc         | 10 ++++++----
+ internal_include/bt_target.h |  2 +-
+ stack/include/hcidefs.h      |  6 ++++++
+ stack/include/l2c_api.h      |  8 +++++++-
+ stack/l2cap/l2c_api.cc       |  8 +++++---
+ stack/l2cap/l2c_int.h        |  4 +++-
+ stack/l2cap/l2c_link.cc      |  3 ++-
+ stack/l2cap/l2c_utils.cc     | 26 ++++++++++++++++++++------
+ 8 files changed, 50 insertions(+), 17 deletions(-)
+
+diff --git a/bta/av/bta_av_act.cc b/bta/av/bta_av_act.cc
+index 64a1d8e..ce0c6fb 100644
+--- a/bta/av/bta_av_act.cc
++++ b/bta/av/bta_av_act.cc
+@@ -1080,19 +1080,21 @@ static uint8_t bta_av_get_shdl(tBTA_AV_SCB* p_scb) {
+  ******************************************************************************/
+ void bta_av_stream_chg(tBTA_AV_SCB* p_scb, bool started) {
+   uint8_t started_msk = BTA_AV_HNDL_TO_MSK(p_scb->hdi);
+-
++  uint8_t direction;
+   APPL_TRACE_DEBUG("%s: peer %s started:%s started_msk:0x%x", __func__,
+                    p_scb->PeerAddress().ToString().c_str(),
+                    logbool(started).c_str(), started_msk);
+-
++  direction = (p_scb->seps[p_scb->sep_idx].tsep == AVDT_TSEP_SRC)
++	  ? L2CAP_DIRECTION_DATA_SOURCE
++	  : L2CAP_DIRECTION_DATA_SINK;
+   if (started) {
+     bta_av_cb.audio_streams |= started_msk;
+     /* Let L2CAP know this channel is processed with high priority */
+-    L2CA_SetAclPriority(p_scb->PeerAddress(), L2CAP_PRIORITY_HIGH);
++    L2CA_SetAclPriority(p_scb->PeerAddress(), L2CAP_PRIORITY_HIGH, direction);
+   } else {
+     bta_av_cb.audio_streams &= ~started_msk;
+     /* Let L2CAP know this channel is processed with low priority */
+-    L2CA_SetAclPriority(p_scb->PeerAddress(), L2CAP_PRIORITY_NORMAL);
++    L2CA_SetAclPriority(p_scb->PeerAddress(), L2CAP_PRIORITY_NORMAL, direction);
+   }
+ }
+ 
+diff --git a/internal_include/bt_target.h b/internal_include/bt_target.h
+index 6d414b0..ee356ee 100644
+--- a/internal_include/bt_target.h
++++ b/internal_include/bt_target.h
+@@ -541,7 +541,7 @@
+ 
+ /* Whether link wants to be the master or the slave. */
+ #ifndef L2CAP_DESIRED_LINK_ROLE
+-#define L2CAP_DESIRED_LINK_ROLE HCI_ROLE_SLAVE
++#define L2CAP_DESIRED_LINK_ROLE HCI_ROLE_MASTER
+ #endif
+ 
+ /* Include Non-Flushable Packet Boundary Flag feature of Lisbon */
+diff --git a/stack/include/hcidefs.h b/stack/include/hcidefs.h
+index 01de06e..c013f9f 100644
+--- a/stack/include/hcidefs.h
++++ b/stack/include/hcidefs.h
+@@ -1240,6 +1240,12 @@ typedef struct {
+ #define HCI_BRCM_ACL_PRIORITY_HIGH 0xFF
+ #define HCI_BRCM_SET_ACL_PRIORITY (0x0057 | HCI_GRP_VENDOR_SPECIFIC)
+ 
++/* Set ACL Priority Extended (with direction param) */
++#define HCI_BRCM_A2DP_SOURCE 0x00
++#define HCI_BRCM_A2DP_SINK 0x01
++#define HCI_BRCM_ACL_PRIORITY_EXT_PARAM_SIZE 4
++#define HCI_BRCM_SET_ACL_PRIORITY_EXT (0x011A | HCI_GRP_VENDOR_SPECIFIC)
++
+ /* Define values for LMP Test Control parameters
+  * Test Scenario, Hopping Mode, Power Control Mode
+ */
+diff --git a/stack/include/l2c_api.h b/stack/include/l2c_api.h
+index 88121af..25be7f6 100644
+--- a/stack/include/l2c_api.h
++++ b/stack/include/l2c_api.h
+@@ -59,6 +59,11 @@
+ #define L2CAP_PRIORITY_NORMAL 0
+ #define L2CAP_PRIORITY_HIGH 1
+ 
++#define L2CAP_DIRECTION_IGNORE 0 /* Set ACL priority direction as ignore */
++#define L2CAP_DIRECTION_DATA_SOURCE 1
++                                 /* Set ACL priority direction as source */
++#define L2CAP_DIRECTION_DATA_SINK 2 /* Set ACL priority direction as sink */
++
+ /* Values for priority parameter to L2CA_SetTxPriority */
+ #define L2CAP_CHNL_PRIORITY_HIGH 0
+ #define L2CAP_CHNL_PRIORITY_MEDIUM 1
+@@ -751,7 +756,8 @@ extern uint16_t L2CA_FlushChannel(uint16_t lcid, uint16_t num_to_flush);
+  * Returns          true if a valid channel, else false
+  *
+  ******************************************************************************/
+-extern bool L2CA_SetAclPriority(const RawAddress& bd_addr, uint8_t priority);
++extern bool L2CA_SetAclPriority(const RawAddress& bd_addr, uint8_t priority,
++		                        uint8_t direction);
+ 
+ /*******************************************************************************
+  *
+diff --git a/stack/l2cap/l2c_api.cc b/stack/l2cap/l2c_api.cc
+index 951a45b..acba002 100644
+--- a/stack/l2cap/l2c_api.cc
++++ b/stack/l2cap/l2c_api.cc
+@@ -1291,10 +1291,12 @@ uint16_t L2CA_LocalLoopbackReq(uint16_t psm, uint16_t handle,
+  * Returns          true if a valid channel, else false
+  *
+  ******************************************************************************/
+-bool L2CA_SetAclPriority(const RawAddress& bd_addr, uint8_t priority) {
++bool L2CA_SetAclPriority(const RawAddress& bd_addr, uint8_t priority,
++		                 uint8_t direction) {
+   VLOG(1) << __func__ << " BDA: " << bd_addr
+-          << ", priority: " << std::to_string(priority);
+-  return (l2cu_set_acl_priority(bd_addr, priority, false));
++          << ", priority: " << std::to_string(priority)
++		  << ", direction: " << direction;
++  return (l2cu_set_acl_priority(bd_addr, priority, false, direction));
+ }
+ 
+ /*******************************************************************************
+diff --git a/stack/l2cap/l2c_int.h b/stack/l2cap/l2c_int.h
+index 421e34d..7960ab0 100644
+--- a/stack/l2cap/l2c_int.h
++++ b/stack/l2cap/l2c_int.h
+@@ -415,6 +415,8 @@ typedef struct t_l2c_linkcb {
+   BT_HDR* p_hcit_rcv_acl;   /* Current HCIT ACL buf being rcvd */
+   uint16_t idle_timeout_sv; /* Save current Idle timeout */
+   uint8_t acl_priority;     /* L2C_PRIORITY_NORMAL or L2C_PRIORITY_HIGH */
++  uint8_t a2dp_direction;   /* L2CAP_DIRECTION_DATA_SOURCE or
++							   L2CAP_DIRECTION_DATA_SINK */
+   tL2CA_NOCP_CB* p_nocp_cb; /* Num Cmpl pkts callback */
+ 
+ #if (L2CAP_NUM_FIXED_CHNLS > 0)
+@@ -597,7 +599,7 @@ extern void l2cu_update_lcb_4_bonding(const RawAddress& p_bd_addr,
+ 
+ extern uint8_t l2cu_get_conn_role(tL2C_LCB* p_this_lcb);
+ extern bool l2cu_set_acl_priority(const RawAddress& bd_addr, uint8_t priority,
+-                                  bool reset_after_rs);
++                                  bool reset_after_rs, uint8_t direction);
+ 
+ extern void l2cu_enqueue_ccb(tL2C_CCB* p_ccb);
+ extern void l2cu_dequeue_ccb(tL2C_CCB* p_ccb);
+diff --git a/stack/l2cap/l2c_link.cc b/stack/l2cap/l2c_link.cc
+index db7e613..5fece75 100644
+--- a/stack/l2cap/l2c_link.cc
++++ b/stack/l2cap/l2c_link.cc
+@@ -865,7 +865,8 @@ void l2c_link_role_changed(const RawAddress* bd_addr, uint8_t new_role,
+ 
+       /* Reset high priority link if needed */
+       if (hci_status == HCI_SUCCESS)
+-        l2cu_set_acl_priority(*bd_addr, p_lcb->acl_priority, true);
++        l2cu_set_acl_priority(*bd_addr, p_lcb->acl_priority, true,
++				              p_lcb->a2dp_direction);
+     }
+   }
+ 
+diff --git a/stack/l2cap/l2c_utils.cc b/stack/l2cap/l2c_utils.cc
+index ced48a2..4b2dcd9 100644
+--- a/stack/l2cap/l2c_utils.cc
++++ b/stack/l2cap/l2c_utils.cc
+@@ -2355,13 +2355,13 @@ bool l2cu_lcb_disconnecting(void) {
+  ******************************************************************************/
+ 
+ bool l2cu_set_acl_priority(const RawAddress& bd_addr, uint8_t priority,
+-                           bool reset_after_rs) {
++                           bool reset_after_rs, uint8_t direction) {
+   tL2C_LCB* p_lcb;
+   uint8_t* pp;
+-  uint8_t command[HCI_BRCM_ACL_PRIORITY_PARAM_SIZE];
++  uint8_t command[HCI_BRCM_ACL_PRIORITY_EXT_PARAM_SIZE];
+   uint8_t vs_param;
+ 
+-  APPL_TRACE_EVENT("SET ACL PRIORITY %d", priority);
++  APPL_TRACE_EVENT("SET ACL PRIORITY %d, direction %d", priority, direction);
+ 
+   /* Find the link control block for the acl channel */
+   p_lcb = l2cu_find_lcb_by_bd_addr(bd_addr, BT_TRANSPORT_BR_EDR);
+@@ -2370,6 +2370,12 @@ bool l2cu_set_acl_priority(const RawAddress& bd_addr, uint8_t priority,
+     return (false);
+   }
+ 
++  if (direction != L2CAP_DIRECTION_DATA_SOURCE &&
++		  direction != L2CAP_DIRECTION_DATA_SINK) {
++	  L2CAP_TRACE_ERROR("L2CAP - direction not valid %d", direction);
++	  return (false);
++  }
++
+   if (BTM_IS_BRCM_CONTROLLER()) {
+     /* Called from above L2CAP through API; send VSC if changed */
+     if ((!reset_after_rs && (priority != p_lcb->acl_priority)) ||
+@@ -2383,15 +2389,23 @@ bool l2cu_set_acl_priority(const RawAddress& bd_addr, uint8_t priority,
+       UINT16_TO_STREAM(pp, p_lcb->handle);
+       UINT8_TO_STREAM(pp, vs_param);
+ 
+-      BTM_VendorSpecificCommand(HCI_BRCM_SET_ACL_PRIORITY,
+-                                HCI_BRCM_ACL_PRIORITY_PARAM_SIZE, command,
+-                                NULL);
++	  if (direction == L2CAP_DIRECTION_DATA_SOURCE) {
++		BTM_VendorSpecificCommand(HCI_BRCM_SET_ACL_PRIORITY,
++                                  HCI_BRCM_ACL_PRIORITY_PARAM_SIZE, command,
++                                  NULL);
++	  } else {
++		  UINT8_TO_STREAM(pp, HCI_BRCM_A2DP_SINK);
++		  BTM_VendorSpecificCommand(HCI_BRCM_SET_ACL_PRIORITY_EXT,
++				  HCI_BRCM_ACL_PRIORITY_EXT_PARAM_SIZE, command,
++				  NULL);
++	  }
+     }
+   }
+ 
+   /* Adjust lmp buffer allocation for this channel if priority changed */
+   if (p_lcb->acl_priority != priority) {
+     p_lcb->acl_priority = priority;
++	p_lcb->a2dp_direction = direction;
+     l2c_link_adjust_allocation();
+   }
+   return (true);
+-- 
+1.9.1
+

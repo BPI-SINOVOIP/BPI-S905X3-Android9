@@ -1,0 +1,47 @@
+From 1e5e67d7c5ac877a9ef3c518b2a58f619c7d54f2 Mon Sep 17 00:00:00 2001
+From: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date: Fri, 3 Apr 2020 11:18:22 +0800
+Subject: [PATCH] AudioService: update audio route statu [1/1]
+
+PD# SWPL-21667
+
+Problem:
+AC off / on, no sound output from home page
+
+Solution:
+audioservice update audio route status
+
+Verify:
+verify by newton
+
+Signed-off-by: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Change-Id: I8c2147ce3cd26559c241be399ce2cab50b5f8e4e
+---
+ services/core/java/com/android/server/audio/AudioService.java | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/services/core/java/com/android/server/audio/AudioService.java b/services/core/java/com/android/server/audio/AudioService.java
+index 8702467..8ecfcf4 100644
+--- a/services/core/java/com/android/server/audio/AudioService.java
++++ b/services/core/java/com/android/server/audio/AudioService.java
+@@ -5863,7 +5863,7 @@ public class AudioService extends IAudioService.Stub
+                     // Is HDMI connected?
+                     String key = makeDeviceListKey(AudioSystem.DEVICE_OUT_HDMI, "");
+                     DeviceListSpec deviceSpec = mConnectedDevices.get(key);
+-                    if (deviceSpec != null) {
++                    if (deviceSpec != null && newSurroundMode != -1) {
+                         // Toggle HDMI to retrigger broadcast with proper formats.
+                         setWiredDeviceConnectionState(AudioSystem.DEVICE_OUT_HDMI,
+                                 AudioSystem.DEVICE_STATE_UNAVAILABLE, "", "",
+@@ -6406,7 +6406,7 @@ public class AudioService extends IAudioService.Stub
+ 
+             if (!handleDeviceConnection(state == 1, device, address, deviceName)) {
+                 // change of connection state failed, bailout
+-                return;
++                //return;
+             }
+             boolean isBluetoothOrUsbOutDevice = isBluetoothOrUsbOutDevices(device);
+             if (isBluetoothOrUsbOutDevice) {
+-- 
+2.7.4
+

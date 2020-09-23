@@ -1,0 +1,38 @@
+From a16483b3bbe67628dfc559dfafb12ec3c2757119 Mon Sep 17 00:00:00 2001
+From: Jinping Wang <jinping.wang@amlogic.com>
+Date: Fri, 13 Dec 2019 10:32:52 +0800
+Subject: [PATCH] TvSetting: network status not update when restart [1/1]
+
+PD# SWPL-17513
+
+Problem:
+network status not update when restart
+
+Solution:
+updateConnectivityStatus when onResume
+
+Verify:
+test ok locally
+
+Change-Id: I25fa6aadb7a3c09fe60d9181bf00c8152af2141b
+Signed-off-by: Jinping Wang <jinping.wang@amlogic.com>
+---
+ Settings/src/com/android/tv/settings/MainFragment.java | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/Settings/src/com/android/tv/settings/MainFragment.java b/Settings/src/com/android/tv/settings/MainFragment.java
+index 2a61f65..b15ac05 100644
+--- a/Settings/src/com/android/tv/settings/MainFragment.java
++++ b/Settings/src/com/android/tv/settings/MainFragment.java
+@@ -381,6 +381,8 @@ public class MainFragment extends PreferenceControllerFragment implements
+         super.onResume();
+         updateAccountPref();
+         updateAccessoryPref();
++        mConnectivityListener.updateConnectivityStatus();
++        updateWifi();
+     }
+ 
+     private boolean isRestricted() {
+-- 
+2.10.2
+

@@ -1,0 +1,89 @@
+From 5973cddb0ca3ce44bc00f76bb043318e1ac787bd Mon Sep 17 00:00:00 2001
+From: rongrong zhou <rongrong.zhou@amlogic.com>
+Date: Tue, 17 Sep 2019 11:03:35 +0800
+Subject: [PATCH] libavenhancements: add dv format convert [2/2]
+
+PD#SWPL-13693
+
+Problem:
+can not support exoplayer dv 264
+
+Solution:
+
+add isVideoExtendFormat & setVideoExtendParameter
+(call from ACodec) to:
+convert dv profile to vendor.profile-level.n-profile,
+convert dv level to vendor.profile-level.n-level
+
+Verify:
+verify on u212
+
+Change-Id: I03371212e0df74fd5ef3e39f3031471604a0b20a
+---
+ media/libavextensions/include/stagefright/AVExtensions.h |  4 ++++
+ media/libavextensions/stagefright/AVUtils.cpp            | 11 +++++++++++
+ media/libstagefright/ACodec.cpp                          |  4 ++++
+ 3 files changed, 19 insertions(+)
+
+diff --git a/media/libavextensions/include/stagefright/AVExtensions.h b/media/libavextensions/include/stagefright/AVExtensions.h
+index 08fe738..6614141 100644
+--- a/media/libavextensions/include/stagefright/AVExtensions.h
++++ b/media/libavextensions/include/stagefright/AVExtensions.h
+@@ -61,6 +61,10 @@ struct AVUtils {
+ 
+     virtual int setAudioExtendParameter(const char *,const sp<IOMXNode> &OMXNode,const sp<AMessage> &notify);
+ 
++    virtual bool isExtendFormat(const char *);
++
++    virtual int handleExtendParameter(const char *,const sp<IOMXNode> &OMXNode,const sp<AMessage> &notify);
++
+     virtual void addExtendXML(MediaCodecsXmlParser*);
+ 
+     virtual bool isExtendPlayer(player_type);
+diff --git a/media/libavextensions/stagefright/AVUtils.cpp b/media/libavextensions/stagefright/AVUtils.cpp
+index 94ec072..ece4f2b 100644
+--- a/media/libavextensions/stagefright/AVUtils.cpp
++++ b/media/libavextensions/stagefright/AVUtils.cpp
+@@ -55,6 +55,11 @@ bool AVUtils::isVendorSoftDecoder(const char *) {
+ bool AVUtils::isAudioExtendFormat(const char *) {
+     return false;
+ }
++
++bool AVUtils::isExtendFormat(const char *) {
++    return false;
++}
++
+ bool AVUtils::isAudioExtendCoding(int) {
+     return false;
+ }
+@@ -69,6 +74,12 @@ int AVUtils::setAudioExtendParameter(const char *,const sp<IOMXNode> &OMXNode, c
+     return -1;
+ }
+ 
++int AVUtils::handleExtendParameter(const char *,const sp<IOMXNode> &OMXNode, const sp<AMessage> &notify) {
++    if (OMXNode == NULL ||notify == NULL)
++        ALOGI("AVUtils::setVideoExtendParameter err");
++    return -1;
++}
++
+ void AVUtils::addExtendXML(MediaCodecsXmlParser*) {
+     ALOGI("AVUtils::addExtendXML");
+     //addExtendXML(xmlparser);
+diff --git a/media/libstagefright/ACodec.cpp b/media/libstagefright/ACodec.cpp
+index 3ece7bd..2651391 100644
+--- a/media/libstagefright/ACodec.cpp
++++ b/media/libstagefright/ACodec.cpp
+@@ -2241,6 +2241,10 @@ status_t ACodec::configureCodec(
+     if ( AVUtils::get()->isAudioExtendFormat(mime))
+         err = AVUtils::get()->setAudioExtendParameter(mime ,mOMXNode, msg);
+ 
++    /*add by amlogic for video/other convert format support*/
++    if ( AVUtils::get()->isExtendFormat(mime))
++        err = AVUtils::get()->handleExtendParameter(mime ,mOMXNode, msg);
++
+     if (err != OK) {
+         return err;
+     }
+-- 
+2.7.4
+

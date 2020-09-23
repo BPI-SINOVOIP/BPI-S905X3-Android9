@@ -1,0 +1,60 @@
+From 42391fd93a822494af826afc6a4f23069413d373 Mon Sep 17 00:00:00 2001
+From: Jakub Pawlowski <jpawlowski@google.com>
+Date: Thu, 19 Apr 2018 02:32:40 -0700
+Subject: [PATCH] Mask "LE Enhanced Connection Complete" when
+ BLE_PRIVACY_SPT=FALSE
+
+The code which handles this event is protected by an #ifdef. This was
+causing connections to be established, but never detected by host.
+
+Bug: 78264903
+Test: establish connection to LE device with privacy disabled
+Change-Id: Iea35016108bcbda64427250cc06258c422c1fdce
+---
+ device/src/controller.cc | 11 +++++++++--
+ stack/include/hcidefs.h  |  7 +------
+ 2 files changed, 10 insertions(+), 8 deletions(-)
+
+diff --git a/device/src/controller.cc b/device/src/controller.cc
+index a07e54b..20daa1c 100644
+--- a/device/src/controller.cc
++++ b/device/src/controller.cc
+@@ -30,8 +30,15 @@
+ #include "osi/include/future.h"
+ #include "stack/include/btm_ble_api.h"
+ 
+-const bt_event_mask_t BLE_EVENT_MASK = {
+-    {0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x1E, 0x7f}};
++const bt_event_mask_t BLE_EVENT_MASK = {{0x00, 0x00, 0x00, 0x00, 0x00, 0x02,
++#if (BLE_PRIVACY_SPT == TRUE)
++                                         0x1E,
++#else
++                                         /* Disable "LE Enhanced Connection
++                                            Complete" when privacy is off */
++                                         0x1C,
++#endif
++                                         0x7f}};
+ 
+ const bt_event_mask_t CLASSIC_EVENT_MASK = {HCI_DUMO_EVENT_MASK_EXT};
+ 
+diff --git a/stack/include/hcidefs.h b/stack/include/hcidefs.h
+index 8f91743..db58163 100644
+--- a/stack/include/hcidefs.h
++++ b/stack/include/hcidefs.h
+@@ -788,12 +788,7 @@ constexpr uint8_t HCI_LE_STATES_INIT_MASTER_SLAVE_BIT = 41;
+     0x0000000000200000 Connectionless Broadcast Channel Map Change Event
+     0x0000000000400000 Inquiry Response Notification Event
+ */
+-#if (BLE_PRIVACY_SPT == TRUE)
+-/* BLE event mask */
+-#define HCI_BLE_EVENT_MASK_DEF "\x00\x00\x00\x00\x00\x00\x07\xff"
+-#else
+-#define HCI_BLE_EVENT_MASK_DEF "\x00\x00\x00\x00\x00\x00\x00\x7f"
+-#endif
++
+ /*
+  * Definitions for packet type masks (BT1.2 and BT2.0 definitions)
+ */
+-- 
+1.9.1
+

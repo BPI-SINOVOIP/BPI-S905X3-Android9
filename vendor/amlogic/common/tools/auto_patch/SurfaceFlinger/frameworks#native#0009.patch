@@ -1,0 +1,71 @@
+From eaef49db3d854071344ec25818d789c7ddf971ca Mon Sep 17 00:00:00 2001
+From: sky zhou <sky.zhou@amlogic.com>
+Date: Mon, 10 Jun 2019 17:51:54 +0800
+Subject: [PATCH] SurfaceFlinger: avoid re-create primary display [1/1]
+
+Change-Id: I4403e11b646bc2361359c8efba2dc58874842890
+---
+ services/surfaceflinger/DisplayHardware/HWC2.cpp | 38 +++++++++++++-----------
+ 1 file changed, 20 insertions(+), 18 deletions(-)
+
+diff --git a/services/surfaceflinger/DisplayHardware/HWC2.cpp b/services/surfaceflinger/DisplayHardware/HWC2.cpp
+index 08e9f7a..e78b011 100644
+--- a/services/surfaceflinger/DisplayHardware/HWC2.cpp
++++ b/services/surfaceflinger/DisplayHardware/HWC2.cpp
+@@ -161,25 +161,27 @@ void Device::onHotplug(hwc2_display_t displayId, Connection connection) {
+         if (oldDisplay != nullptr && oldDisplay->isConnected()) {
+             ALOGI("Hotplug connecting an already connected display."
+                     " Clearing old display state.");
+-        }
+-        mDisplays.erase(displayId);
++            oldDisplay->setConnected(true);
++        } else {
++            mDisplays.erase(displayId);
++
++            DisplayType displayType;
++            auto intError = mComposer->getDisplayType(displayId,
++                    reinterpret_cast<Hwc2::IComposerClient::DisplayType *>(
++                            &displayType));
++            auto error = static_cast<Error>(intError);
++            if (error != Error::None) {
++                ALOGE("getDisplayType(%" PRIu64 ") failed: %s (%d). "
++                        "Aborting hotplug attempt.",
++                        displayId, to_string(error).c_str(), intError);
++                return;
++            }
+ 
+-        DisplayType displayType;
+-        auto intError = mComposer->getDisplayType(displayId,
+-                reinterpret_cast<Hwc2::IComposerClient::DisplayType *>(
+-                        &displayType));
+-        auto error = static_cast<Error>(intError);
+-        if (error != Error::None) {
+-            ALOGE("getDisplayType(%" PRIu64 ") failed: %s (%d). "
+-                    "Aborting hotplug attempt.",
+-                    displayId, to_string(error).c_str(), intError);
+-            return;
++            auto newDisplay = std::make_unique<Display>(
++                    *mComposer.get(), mCapabilities, displayId, displayType);
++            newDisplay->setConnected(true);
++            mDisplays.emplace(displayId, std::move(newDisplay));
+         }
+-
+-        auto newDisplay = std::make_unique<Display>(
+-                *mComposer.get(), mCapabilities, displayId, displayType);
+-        newDisplay->setConnected(true);
+-        mDisplays.emplace(displayId, std::move(newDisplay));
+     } else if (connection == Connection::Disconnected) {
+         // The display will later be destroyed by a call to
+         // destroyDisplay(). For now we just mark it disconnected.
+@@ -710,7 +712,7 @@ Error Display::presentOrValidate(uint32_t* outNumTypes, uint32_t* outNumRequests
+ // For use by Device
+ 
+ void Display::setConnected(bool connected) {
+-    if (!mIsConnected && connected) {
++    if (connected) {
+         mComposer.setClientTargetSlotCount(mId);
+         if (mType == DisplayType::Physical) {
+             loadConfigs();
+-- 
+2.7.4
+

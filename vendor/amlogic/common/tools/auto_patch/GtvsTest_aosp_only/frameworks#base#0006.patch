@@ -1,0 +1,95 @@
+From 039b2e42b1db5c2a705078aa99773b610aa33264 Mon Sep 17 00:00:00 2001
+From: Makoto Onuki <omakoto@google.com>
+Date: Tue, 12 Jun 2018 13:01:42 -0700
+Subject: [PATCH] Backport Prevent shortcut info package name spoofing
+
+Test: cts-tradefed run cts -m CtsShortcutManagerTestCases -t android.content.pm.cts.shortcutmanager.ShortcutManagerFakingPublisherTest
+Bug: 109824443
+
+Change-Id: I90443973aaef157d357b98b739572866125b2bbc
+Merged-In: I78948446a63b428ae750464194558fd44a658493
+(cherry picked from commit 9e21579a11219581a0c08ff5dd6ac4dc22e988a4)
+---
+ .../android/server/pm/ShortcutService.java    | 24 +++++++++++++++++++
+ 1 file changed, 24 insertions(+)
+
+diff --git a/services/core/java/com/android/server/pm/ShortcutService.java b/services/core/java/com/android/server/pm/ShortcutService.java
+index 599e5a57343..b9c30489042 100644
+--- a/services/core/java/com/android/server/pm/ShortcutService.java
++++ b/services/core/java/com/android/server/pm/ShortcutService.java
+@@ -132,6 +132,7 @@ import java.nio.charset.StandardCharsets;
+ import java.util.ArrayList;
+ import java.util.Collections;
+ import java.util.List;
++import java.util.Objects;
+ import java.util.concurrent.atomic.AtomicBoolean;
+ import java.util.function.Consumer;
+ import java.util.function.Predicate;
+@@ -1573,6 +1574,24 @@ public class ShortcutService extends IShortcutService.Stub {
+                 "Ephemeral apps can't use ShortcutManager");
+     }
+ 
++    private void verifyShortcutInfoPackage(String callerPackage, ShortcutInfo si) {
++        if (si == null) {
++            return;
++        }
++        if (!Objects.equals(callerPackage, si.getPackage())) {
++            android.util.EventLog.writeEvent(0x534e4554, "109824443", -1, "");
++            throw new SecurityException("Shortcut package name mismatch");
++        }
++    }
++
++    private void verifyShortcutInfoPackages(
++            String callerPackage, List<ShortcutInfo> list) {
++        final int size = list.size();
++        for (int i = 0; i < size; i++) {
++            verifyShortcutInfoPackage(callerPackage, list.get(i));
++        }
++    }
++
+     // Overridden in unit tests to execute r synchronously.
+     void injectPostToHandler(Runnable r) {
+         mHandler.post(r);
+@@ -1720,6 +1739,7 @@ public class ShortcutService extends IShortcutService.Stub {
+         verifyCaller(packageName, userId);
+ 
+         final List<ShortcutInfo> newShortcuts = (List<ShortcutInfo>) shortcutInfoList.getList();
++        verifyShortcutInfoPackages(packageName, newShortcuts);
+         final int size = newShortcuts.size();
+ 
+         final boolean unlimited = injectHasUnlimitedShortcutsApiCallsPermission(
+@@ -1774,6 +1794,7 @@ public class ShortcutService extends IShortcutService.Stub {
+         verifyCaller(packageName, userId);
+ 
+         final List<ShortcutInfo> newShortcuts = (List<ShortcutInfo>) shortcutInfoList.getList();
++        verifyShortcutInfoPackages(packageName, newShortcuts);
+         final int size = newShortcuts.size();
+ 
+         final boolean unlimited = injectHasUnlimitedShortcutsApiCallsPermission(
+@@ -1859,6 +1880,7 @@ public class ShortcutService extends IShortcutService.Stub {
+         verifyCaller(packageName, userId);
+ 
+         final List<ShortcutInfo> newShortcuts = (List<ShortcutInfo>) shortcutInfoList.getList();
++        verifyShortcutInfoPackages(packageName, newShortcuts);
+         final int size = newShortcuts.size();
+ 
+         final boolean unlimited = injectHasUnlimitedShortcutsApiCallsPermission(
+@@ -1921,6 +1943,7 @@ public class ShortcutService extends IShortcutService.Stub {
+         Preconditions.checkNotNull(shortcut);
+         Preconditions.checkArgument(shortcut.isEnabled(), "Shortcut must be enabled");
+         verifyCaller(packageName, userId);
++        verifyShortcutInfoPackage(packageName, shortcut);
+ 
+         final Intent ret;
+         synchronized (mLock) {
+@@ -1942,6 +1965,7 @@ public class ShortcutService extends IShortcutService.Stub {
+     private boolean requestPinItem(String packageName, int userId, ShortcutInfo shortcut,
+             AppWidgetProviderInfo appWidget, Bundle extras, IntentSender resultIntent) {
+         verifyCaller(packageName, userId);
++        verifyShortcutInfoPackage(packageName, shortcut);
+ 
+         final boolean ret;
+         synchronized (mLock) {
+-- 
+2.18.0.597.ga71716f1ad-goog
+

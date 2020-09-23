@@ -1,0 +1,255 @@
+From 934c8b1ba5fb0ed0689d6ed231698d07fd5d1153 Mon Sep 17 00:00:00 2001
+From: "jie.yuan" <jie.yuan@amlogic.com>
+Date: Mon, 16 Sep 2019 14:41:52 +0800
+Subject: [PATCH] camera : add res for u202 [1/1]
+
+PD#SWPL-14034
+
+Problem:
+Resources NotFound when select the recording mode
+
+Solution:
+add drawable-ldpi res
+
+Verify:
+locally
+
+Change-Id: I7baabb7e9580e823bb6d3f6d8bd13bc411f52c25
+Signed-off-by: jie.yuan <jie.yuan@amlogic.com>
+---
+ res/drawable-hdpi/ic_capture_video.png           | Bin 516 -> 0 bytes
+ res/drawable-hdpi/ic_capture_video_normal.png    | Bin 0 -> 516 bytes
+ res/drawable-mdpi/ic_capture_video.png           | Bin 369 -> 0 bytes
+ res/drawable-mdpi/ic_capture_video_normal.png    | Bin 0 -> 369 bytes
+ res/drawable-xhdpi/ic_capture_video.png          | Bin 557 -> 0 bytes
+ res/drawable-xhdpi/ic_capture_video_normal.png   | Bin 0 -> 557 bytes
+ res/drawable-xxhdpi/ic_capture_video.png         | Bin 844 -> 0 bytes
+ res/drawable-xxhdpi/ic_capture_video_normal.png  | Bin 0 -> 844 bytes
+ res/drawable-xxxhdpi/ic_capture_video.png        | Bin 1369 -> 0 bytes
+ res/drawable-xxxhdpi/ic_capture_video_normal.png | Bin 0 -> 1369 bytes
+ res/drawable/ic_capture_video.xml                |   2 +-
+ 11 files changed, 1 insertion(+), 1 deletion(-)
+ delete mode 100644 res/drawable-hdpi/ic_capture_video.png
+ create mode 100644 res/drawable-hdpi/ic_capture_video_normal.png
+ delete mode 100644 res/drawable-mdpi/ic_capture_video.png
+ create mode 100644 res/drawable-mdpi/ic_capture_video_normal.png
+ delete mode 100644 res/drawable-xhdpi/ic_capture_video.png
+ create mode 100644 res/drawable-xhdpi/ic_capture_video_normal.png
+ delete mode 100644 res/drawable-xxhdpi/ic_capture_video.png
+ create mode 100644 res/drawable-xxhdpi/ic_capture_video_normal.png
+ delete mode 100644 res/drawable-xxxhdpi/ic_capture_video.png
+ create mode 100644 res/drawable-xxxhdpi/ic_capture_video_normal.png
+
+diff --git a/res/drawable-hdpi/ic_capture_video.png b/res/drawable-hdpi/ic_capture_video.png
+deleted file mode 100644
+index dc3d0267976620d7a5618fa805819ed81baf9a61..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 516
+zcmeAS@N?(olHy`uVBq!ia0vp^bs)^a1|%OTFYN$QoCO|{#S9Drb3m9;?W~mvP*AeO
+zHKHUqKdq!Zu_%?nF(p4KRlzeiF+DXXH8G{K@MNkD0|VnkPZ!6Kid%2)94u^d5NUXL
+zmCJ|SQ*{R4rN(8OGT5gz%w57_ec(7x`y8biFLd_2pI>RtXZ^cZ!(h{^UF$UBwLd&y
+zjU#{#a_>2S8|7_TSKvE)hS{>!CASiL?LPjG*}u{E>F=_>n|>Dml%KKu`~K|H-OobB
+zl7)Bdo~^#0{o!;&z5F@9<O|-pA6_qV|0;a9-}=Rah0X1Ja#j^U#_qoLudM!+GVPMK
+z;BK@(_GZ}|(;uk^{O@IdcyO?ponOwT0-0g2xIJg`q4U2Kdyj9be=YFY@_1{re;2=<
+zrrnPvKORhegy7^oxN|@H%=eDR-;Um2;(k?3-_3(_zogm9l@fc~_e_y|{?y%*nV(Ql
+ku*%^JiUY61!Wr2Z*19e}f27kR3K)Y7p00i_>zopr0Oe}xFaQ7m
+
+diff --git a/res/drawable-hdpi/ic_capture_video_normal.png b/res/drawable-hdpi/ic_capture_video_normal.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..dc3d0267976620d7a5618fa805819ed81baf9a61
+GIT binary patch
+literal 516
+zcmeAS@N?(olHy`uVBq!ia0vp^bs)^a1|%OTFYN$QoCO|{#S9Drb3m9;?W~mvP*AeO
+zHKHUqKdq!Zu_%?nF(p4KRlzeiF+DXXH8G{K@MNkD0|VnkPZ!6Kid%2)94u^d5NUXL
+zmCJ|SQ*{R4rN(8OGT5gz%w57_ec(7x`y8biFLd_2pI>RtXZ^cZ!(h{^UF$UBwLd&y
+zjU#{#a_>2S8|7_TSKvE)hS{>!CASiL?LPjG*}u{E>F=_>n|>Dml%KKu`~K|H-OobB
+zl7)Bdo~^#0{o!;&z5F@9<O|-pA6_qV|0;a9-}=Rah0X1Ja#j^U#_qoLudM!+GVPMK
+z;BK@(_GZ}|(;uk^{O@IdcyO?ponOwT0-0g2xIJg`q4U2Kdyj9be=YFY@_1{re;2=<
+zrrnPvKORhegy7^oxN|@H%=eDR-;Um2;(k?3-_3(_zogm9l@fc~_e_y|{?y%*nV(Ql
+ku*%^JiUY61!Wr2Z*19e}f27kR3K)Y7p00i_>zopr0Oe}xFaQ7m
+
+literal 0
+HcmV?d00001
+
+diff --git a/res/drawable-mdpi/ic_capture_video.png b/res/drawable-mdpi/ic_capture_video.png
+deleted file mode 100644
+index b38059cc376f41171518431aa2a479386b7bcb96..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 369
+zcmeAS@N?(olHy`uVBq!ia0vp^p&-n`1|%)Mu80CsoCO|{#S9GG!XV7ZFl&wkP*AeO
+zHKHUqKdq!Zu_%?nF(p4KRlzeiF+DXXH8G{K@MNkDP|-h67srr_TW@ZjEj(l(&=7be
+zfI)Q!i<O7=5*Diklb5uVOb`olvTER)Vq5TF(){MV-cP=#nOL3rd@`AP&rP6yDERMu
+zI%3K9y1tj1i7U@bEWdWE^hIp<g5&dEKW)#xdEcxeaCghP;7@jb_gQ;i+8%pU{;`br
+z{EpoV+IzlkYwG&-!LhwBO0?w0im8t7y-`vouRW%|4X9;YZ4uO|rM0L_>y`4(F01|h
+z66Y74TeJ0Blw{eB^sLky3*$pV6Wi;5hquHYov3B~ChOeFtNQCBzusFeG5yH;mCxhX
+zrGKp7xM|;Se?wX0b1Mqn_x<!`hdG$x&)Mk=%navsq(6BaU)BH;_H^}gS?83{1OSLj
+Bn6>}_
+
+diff --git a/res/drawable-mdpi/ic_capture_video_normal.png b/res/drawable-mdpi/ic_capture_video_normal.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..b38059cc376f41171518431aa2a479386b7bcb96
+GIT binary patch
+literal 369
+zcmeAS@N?(olHy`uVBq!ia0vp^p&-n`1|%)Mu80CsoCO|{#S9GG!XV7ZFl&wkP*AeO
+zHKHUqKdq!Zu_%?nF(p4KRlzeiF+DXXH8G{K@MNkDP|-h67srr_TW@ZjEj(l(&=7be
+zfI)Q!i<O7=5*Diklb5uVOb`olvTER)Vq5TF(){MV-cP=#nOL3rd@`AP&rP6yDERMu
+zI%3K9y1tj1i7U@bEWdWE^hIp<g5&dEKW)#xdEcxeaCghP;7@jb_gQ;i+8%pU{;`br
+z{EpoV+IzlkYwG&-!LhwBO0?w0im8t7y-`vouRW%|4X9;YZ4uO|rM0L_>y`4(F01|h
+z66Y74TeJ0Blw{eB^sLky3*$pV6Wi;5hquHYov3B~ChOeFtNQCBzusFeG5yH;mCxhX
+zrGKp7xM|;Se?wX0b1Mqn_x<!`hdG$x&)Mk=%navsq(6BaU)BH;_H^}gS?83{1OSLj
+Bn6>}_
+
+literal 0
+HcmV?d00001
+
+diff --git a/res/drawable-xhdpi/ic_capture_video.png b/res/drawable-xhdpi/ic_capture_video.png
+deleted file mode 100644
+index 8bcdd8105332649993c708be8f4313bebc780d57..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 557
+zcmeAS@N?(olHy`uVBq!ia0vp^D?pfo4M>)FFWmy9I14-?iy0WiR6&^0Gf3qFP*AeO
+zHKHUqKdq!Zu_%?nF(p4KRlzeiF+DXXH8G{K@MNkD0|VnOPZ!6Kid%2)9`rqIAky%#
+zg)@Qq#)6&$Y;QSw4y2SYhb1(pG4E=uoL2Ryt<~k;=kK0jewI7_r7oSMs?QCygcwl2
+zXlq$dVP@%<oic0RY+57wsONa~#jloYUss7`ymQe1SfR7aE}G?+$&cN4jz3nuS1<PB
+z|IwS`4_E(C`y?<i*8NdWVMlrJ`j2zh&$(;eb1X9P(@N&QZ_gPWoPRW^@Rs9I&444C
+z0fp0gf)_jz(Rd`X!h*F6jI{h3mHZn0l5bh;<~sg1>Z9qddrGp=51uTa$r4q|F0{gd
+zRV$#8D`WwaD45BD!fWIbfylk^50)1zyp#7oF1hBMRb}I|8;<d5y&(%M_bD$2Qc9v4
+zN}?+~Si8VTE2vQ^s4>VksIe<#K}Si2-%WLcgPCgLm8#oC`--J^a<97N7o~V%`=Lg@
+z^K0E_{hfDCsPSGNvz_Q|&)+f2_P>-MCO8=w67=`6N-!uiwC+34=z0#M$J5o%Wt~$(
+F69Bfh!}0(C
+
+diff --git a/res/drawable-xhdpi/ic_capture_video_normal.png b/res/drawable-xhdpi/ic_capture_video_normal.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..8bcdd8105332649993c708be8f4313bebc780d57
+GIT binary patch
+literal 557
+zcmeAS@N?(olHy`uVBq!ia0vp^D?pfo4M>)FFWmy9I14-?iy0WiR6&^0Gf3qFP*AeO
+zHKHUqKdq!Zu_%?nF(p4KRlzeiF+DXXH8G{K@MNkD0|VnOPZ!6Kid%2)9`rqIAky%#
+zg)@Qq#)6&$Y;QSw4y2SYhb1(pG4E=uoL2Ryt<~k;=kK0jewI7_r7oSMs?QCygcwl2
+zXlq$dVP@%<oic0RY+57wsONa~#jloYUss7`ymQe1SfR7aE}G?+$&cN4jz3nuS1<PB
+z|IwS`4_E(C`y?<i*8NdWVMlrJ`j2zh&$(;eb1X9P(@N&QZ_gPWoPRW^@Rs9I&444C
+z0fp0gf)_jz(Rd`X!h*F6jI{h3mHZn0l5bh;<~sg1>Z9qddrGp=51uTa$r4q|F0{gd
+zRV$#8D`WwaD45BD!fWIbfylk^50)1zyp#7oF1hBMRb}I|8;<d5y&(%M_bD$2Qc9v4
+zN}?+~Si8VTE2vQ^s4>VksIe<#K}Si2-%WLcgPCgLm8#oC`--J^a<97N7o~V%`=Lg@
+z^K0E_{hfDCsPSGNvz_Q|&)+f2_P>-MCO8=w67=`6N-!uiwC+34=z0#M$J5o%Wt~$(
+F69Bfh!}0(C
+
+literal 0
+HcmV?d00001
+
+diff --git a/res/drawable-xxhdpi/ic_capture_video.png b/res/drawable-xxhdpi/ic_capture_video.png
+deleted file mode 100644
+index 685df78f8234b4d8653b66642472656863a42741..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 844
+zcmeAS@N?(olHy`uVBq!ia0vp^e?XXn4M+yBKA8@rI14-?iy0UcEkKyjb(&!UP*AeO
+zHKHUqKdq!Zu_%?nF(p4KRlzeiF+DXXH8G{K@MNkD0|V1dPZ!6Kid%2)91J|<Aky&g
+z2$u)@6ag;}_H7BOJ#zz?WCNTu8u>ifKQ6pDS^32~sTno*&+wV^pZ|OF>84Otpe?ij
+zI^nr2+a-?|%F5r4IKMGWt!T31HM?usvDeif3;bDp<leF4jxRhPmJ9y9sKN4|L%mx6
+zo6g1jIbS|k88xlmmUKSJ^z5c9;-9s`^3VAFxYAo9R<keI&hN)Emp7OF*O~p>XRG^T
+zNpFc+=bBj=MH+&?f47P4(Y7sLsw-;U<iGo0icP0Rd9OL|LFF=*{u`|PN#Zsgu^$x5
+z4mKlmz><PCN$wvyWPvJ?BtPhGJb$9O{<{C-iz1t(RyD0>s6G<(p(*|n(3%IV`V}nt
+z6$iQH4syqRXmbD1ByQ6rzUP4;P^KRysSK0n04jmVLnIH*ZbDWw&wt*ISrgrLe&*|M
+z>^r7VF|GJe`66+f(?93xRvlEXV(EV&XtN0DJ~;@7l^-bC5%)o%>R|H=B#v^`MQ*u^
+z$`vmC4+Q@zJx^n?|J;#Uc2*>N-T(7X9nUzgDf^|gVL9vkEep?u9t;l?PwSAI&Gdiq
+z`WLM4z2;}-vwXMpzFw_fbMA7oto+_!yT2v<TRScM-5$2=zn_1kpZAup^tAoQ?{&t0
+z=ok9?bk&Z|t-}A-JKy(J-~HN*7HJ1)=7BZ$SR@$uJS6M?xY%WaEb(;pb6Mw<&;$Sw
+CO(ZM;
+
+diff --git a/res/drawable-xxhdpi/ic_capture_video_normal.png b/res/drawable-xxhdpi/ic_capture_video_normal.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..685df78f8234b4d8653b66642472656863a42741
+GIT binary patch
+literal 844
+zcmeAS@N?(olHy`uVBq!ia0vp^e?XXn4M+yBKA8@rI14-?iy0UcEkKyjb(&!UP*AeO
+zHKHUqKdq!Zu_%?nF(p4KRlzeiF+DXXH8G{K@MNkD0|V1dPZ!6Kid%2)91J|<Aky&g
+z2$u)@6ag;}_H7BOJ#zz?WCNTu8u>ifKQ6pDS^32~sTno*&+wV^pZ|OF>84Otpe?ij
+zI^nr2+a-?|%F5r4IKMGWt!T31HM?usvDeif3;bDp<leF4jxRhPmJ9y9sKN4|L%mx6
+zo6g1jIbS|k88xlmmUKSJ^z5c9;-9s`^3VAFxYAo9R<keI&hN)Emp7OF*O~p>XRG^T
+zNpFc+=bBj=MH+&?f47P4(Y7sLsw-;U<iGo0icP0Rd9OL|LFF=*{u`|PN#Zsgu^$x5
+z4mKlmz><PCN$wvyWPvJ?BtPhGJb$9O{<{C-iz1t(RyD0>s6G<(p(*|n(3%IV`V}nt
+z6$iQH4syqRXmbD1ByQ6rzUP4;P^KRysSK0n04jmVLnIH*ZbDWw&wt*ISrgrLe&*|M
+z>^r7VF|GJe`66+f(?93xRvlEXV(EV&XtN0DJ~;@7l^-bC5%)o%>R|H=B#v^`MQ*u^
+z$`vmC4+Q@zJx^n?|J;#Uc2*>N-T(7X9nUzgDf^|gVL9vkEep?u9t;l?PwSAI&Gdiq
+z`WLM4z2;}-vwXMpzFw_fbMA7oto+_!yT2v<TRScM-5$2=zn_1kpZAup^tAoQ?{&t0
+z=ok9?bk&Z|t-}A-JKy(J-~HN*7HJ1)=7BZ$SR@$uJS6M?xY%WaEb(;pb6Mw<&;$Sw
+CO(ZM;
+
+literal 0
+HcmV?d00001
+
+diff --git a/res/drawable-xxxhdpi/ic_capture_video.png b/res/drawable-xxxhdpi/ic_capture_video.png
+deleted file mode 100644
+index bddc23848d705db94426a9fd706fe6d975bca73d..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 1369
+zcmeAS@N?(olHy`uVBq!ia0y~yU<?3Z4mP03%NJ@lffQ$fM`SSrgN`={GcL8Awh|~P
+zS>hT|5}cn_Ql40p%HWuipOmWLnVXoN8kCxtQdxL1)rNtA<(a38V@SoVH#Z;p9&(Uq
+zNc59gkoSONLu20omIG-<jLHYt449Nlntx5a!lGQiW?^~yeD$4Q)K8Xw`O5d)n1OAk
+zG-E>p6Nd(vU|`}>SO6ms!ax>5VW0x2At<U*ggG=|X5$uS;zHPqq#9Wmw*?4S;<f<c
+zN)+cHTY%Tz{;xSKsV{fs3HO(-F~6*F%J7=r(l3c3HJ)w(J{IwhH}-Ee=v_27d9BhC
+z@x=}fr#qi(h9ygdW+dynPEl9ZI232I`qG!`wuVVRzw9i`U4LoO{oOJ5XRBR1X~yy5
+z%G%xo_x_sA`)Kjw@a*~b9X`)@unu1FgO$tjvE{etk6EIEZ2rE><ezK9Dx#J>Wk%=n
+zhEJb=U7yADNOM6$1($}xJPwTxbtbMyoedBnr3F+G`rh%pMOFDkUDZpUg;}}s7j5(l
+zHn1{jEl^mn?gKEW5b=c)F*t+~5%b4?tssYn!5On_Hzim^B+8g-#RC~x**r8mS2Qpw
+zbu~0~0NuX`=p_v%E)Yf%Qdop0q@=Z=p#vBKP~||SOkg1-6F`Q7R2Ajt_b9B_o8fdd
+z?$?3dkFlAL3Oly$=v-YM;lMg2%fCJI$@|mWJGfS8|G6RyjE<e>xHS&H={az(bA`6e
+z;q|G@Z=QW074lF<F<PowSmWo~q^-vSdbiy-W|{KldczdGj}f~jT`l~y=UwRjbPkQB
+zE?f2s<)#1I7_#W~yqxvbD)SgVxECuk2m~-NvVsW*2SyeV7=aK5vIq*Zh`<a%QH>(Z
+z$O<zXr!Y_f!d`@G6k*&JAY6&l0wh-=I|s!AeD*%rXvZqSz@Eu7XOD)N2e4RV@O1Ta
+JS?83{1OOM0hkO74
+
+diff --git a/res/drawable-xxxhdpi/ic_capture_video_normal.png b/res/drawable-xxxhdpi/ic_capture_video_normal.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..bddc23848d705db94426a9fd706fe6d975bca73d
+GIT binary patch
+literal 1369
+zcmeAS@N?(olHy`uVBq!ia0y~yU<?3Z4mP03%NJ@lffQ$fM`SSrgN`={GcL8Awh|~P
+zS>hT|5}cn_Ql40p%HWuipOmWLnVXoN8kCxtQdxL1)rNtA<(a38V@SoVH#Z;p9&(Uq
+zNc59gkoSONLu20omIG-<jLHYt449Nlntx5a!lGQiW?^~yeD$4Q)K8Xw`O5d)n1OAk
+zG-E>p6Nd(vU|`}>SO6ms!ax>5VW0x2At<U*ggG=|X5$uS;zHPqq#9Wmw*?4S;<f<c
+zN)+cHTY%Tz{;xSKsV{fs3HO(-F~6*F%J7=r(l3c3HJ)w(J{IwhH}-Ee=v_27d9BhC
+z@x=}fr#qi(h9ygdW+dynPEl9ZI232I`qG!`wuVVRzw9i`U4LoO{oOJ5XRBR1X~yy5
+z%G%xo_x_sA`)Kjw@a*~b9X`)@unu1FgO$tjvE{etk6EIEZ2rE><ezK9Dx#J>Wk%=n
+zhEJb=U7yADNOM6$1($}xJPwTxbtbMyoedBnr3F+G`rh%pMOFDkUDZpUg;}}s7j5(l
+zHn1{jEl^mn?gKEW5b=c)F*t+~5%b4?tssYn!5On_Hzim^B+8g-#RC~x**r8mS2Qpw
+zbu~0~0NuX`=p_v%E)Yf%Qdop0q@=Z=p#vBKP~||SOkg1-6F`Q7R2Ajt_b9B_o8fdd
+z?$?3dkFlAL3Oly$=v-YM;lMg2%fCJI$@|mWJGfS8|G6RyjE<e>xHS&H={az(bA`6e
+z;q|G@Z=QW074lF<F<PowSmWo~q^-vSdbiy-W|{KldczdGj}f~jT`l~y=UwRjbPkQB
+zE?f2s<)#1I7_#W~yqxvbD)SgVxECuk2m~-NvVsW*2SyeV7=aK5vIq*Zh`<a%QH>(Z
+z$O<zXr!Y_f!d`@G6k*&JAY6&l0wh-=I|s!AeD*%rXvZqSz@Eu7XOD)N2e4RV@O1Ta
+JS?83{1OOM0hkO74
+
+literal 0
+HcmV?d00001
+
+diff --git a/res/drawable/ic_capture_video.xml b/res/drawable/ic_capture_video.xml
+index d3600c8..8d5f83f 100644
+--- a/res/drawable/ic_capture_video.xml
++++ b/res/drawable/ic_capture_video.xml
+@@ -24,6 +24,6 @@
+     <item>
+         <bitmap
+             android:gravity="center"
+-            android:src="@drawable/ic_capture_video" />
++            android:src="@drawable/ic_capture_video_normal" />
+     </item>
+ </selector>
+-- 
+2.7.4
+

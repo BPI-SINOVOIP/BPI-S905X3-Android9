@@ -1,0 +1,1 @@
+cmd_drivers/display/osd/built-in.o :=  aarch64-none-elf-ld.bfd     -r -o drivers/display/osd/built-in.o drivers/display/osd/osd_hw.o drivers/display/osd/osd_fb.o drivers/display/osd/osd_debug.o drivers/display/osd/dolby_vision.o drivers/display/osd/dovi.o 

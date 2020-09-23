@@ -1,0 +1,79 @@
+From b300606c3e0d2083e4e40ef84a9d804b8ddff0cf Mon Sep 17 00:00:00 2001
+From: Zhigang Yu <zhigang.yu@amlogic.com>
+Date: Thu, 6 Jun 2019 19:30:27 +0800
+Subject: [PATCH] recovery: add resize2fs for data partition [2/2]
+
+PD#SWPL-9098
+
+add resize2fs function  for data partition to max
+
+Change-Id: Icde28581fdf4c8b34776a99168e44bc278d35ac3
+---
+ recovery.cpp | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
+
+diff --git a/recovery.cpp b/recovery.cpp
+index fcdaa78..cd6a3fe 100644
+--- a/recovery.cpp
++++ b/recovery.cpp
+@@ -79,6 +79,7 @@ static const struct option OPTIONS[] = {
+   { "retry_count", required_argument, NULL, 'n' },
+   { "wipe_data", no_argument, NULL, 'w' },
+   { "wipe_cache", no_argument, NULL, 'c' },
++  { "resize2fs_data", no_argument, NULL, 'd' },
+ #ifdef RECOVERY_HAS_PARAM
+   { "wipe_param", no_argument, NULL, 'P' },
+ #endif /*RECOVERY_HAS_PARAM */
+@@ -1558,6 +1559,7 @@ int main(int argc, char **argv) {
+   bool sideload = false;
+   bool sideload_auto_reboot = false;
+   bool just_exit = false;
++  bool resize_data = false;
+   bool shutdown_after = false;
+   int retry_count = 0;
+   bool security_update = false;
+@@ -1601,6 +1603,9 @@ int main(int argc, char **argv) {
+       case 'p':
+         shutdown_after = true;
+         break;
++       case 'd':
++        resize_data = true;
++        break;
+ #ifdef RECOVERY_HAS_PARAM
+         case 'P': should_wipe_param = 1; break;
+ #endif /* RECOVERY_HAS_PARAM */
+@@ -1795,6 +1800,31 @@ int main(int argc, char **argv) {
+     }
+   }
+ 
++  if (resize_data) {
++    const char *args2[4] = {"/sbin/resize2fs", "-f", "/dev/block/data"};
++    args2[3] = nullptr;
++    pid_t child = fork();
++    if (child == 0) {
++        execv("/sbin/resize2fs", (char* const*)args2);
++        printf("execv failed\n");
++        _exit(EXIT_FAILURE);
++    }
++
++    int status_t;
++    waitpid(child, &status_t, 0);
++    if (WIFEXITED(status_t)) {
++        if (WEXITSTATUS(status_t) != 0) {
++            printf("child exited with status:%d\n", WEXITSTATUS(status_t));
++            status = INSTALL_ERROR;
++        }
++    } else if (WIFSIGNALED(status_t)) {
++        printf("child terminated by signal :%d\n", WTERMSIG(status_t));
++        status = INSTALL_ERROR;
++    } else {
++        status = INSTALL_SUCCESS;
++    }
++  }
++
+   if (status == INSTALL_ERROR || status == INSTALL_CORRUPT) {
+     ui->SetBackground(RecoveryUI::ERROR);
+     if (!ui->IsTextVisible()) {
+-- 
+1.9.1
+

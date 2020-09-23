@@ -1,0 +1,54 @@
+From d44cab372ccfdca9e1dd8ec290c117af0863b79a Mon Sep 17 00:00:00 2001
+From: Lu Wang <lu.wang@amlogic.com>
+Date: Fri, 28 Dec 2018 16:10:05 +0800
+Subject: [PATCH] Music: fix unable to switch TAB [1/1]
+
+PD#SWPL-2307
+
+Problem:
+unable to switch tab
+
+Solution:
+remove setOnFocusChangeListener
+
+Verify:
+ampere
+
+Change-Id: I4cc8d9b363afedf2f423c7799348ab5a09c2af3b
+Signed-off-by: Lu Wang <lu.wang@amlogic.com>
+---
+ res/layout-land/buttonbar.xml         | 2 +-
+ src/com/android/music/MusicUtils.java | 4 +++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/res/layout-land/buttonbar.xml b/res/layout-land/buttonbar.xml
+index f27907d..a8243e7 100644
+--- a/res/layout-land/buttonbar.xml
++++ b/res/layout-land/buttonbar.xml
+@@ -92,7 +92,7 @@
+ 
+     <TextView
+         android:id="@+id/nowplayingtab"
+-        android:focusable="false"
++        android:focusable="true"
+         android:background="@drawable/buttonbarbackground"
+         android:drawableTop="@drawable/ic_tab_playback"
+         android:text="@string/nowplaying_title"
+diff --git a/src/com/android/music/MusicUtils.java b/src/com/android/music/MusicUtils.java
+index a8a93e1..ebf79a5 100644
+--- a/src/com/android/music/MusicUtils.java
++++ b/src/com/android/music/MusicUtils.java
+@@ -213,7 +213,9 @@ public class MusicUtils {
+             View v = ll.getChildAt(i);
+             boolean isActive = (v.getId() == highlight);
+             if (isActive) {
+-                ll.setCurrentTab(i);
++                //if setCurrentTab,  will cause uable to focus and switch TAB, because of ll.getChildAt(0), stay on tab 0 forever.
++                //it will trigger if switch tab.and will switch tab 0.
++                ll.focusCurrentTab(i);
+                 sActiveTabIndex = i;
+             }
+             v.setTag(i);
+-- 
+2.10.2
+

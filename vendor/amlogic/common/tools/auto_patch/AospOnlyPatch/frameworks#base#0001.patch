@@ -1,0 +1,96 @@
+From de8ae55d4bbd08a4974ad9d6e05e49abedd4c862 Mon Sep 17 00:00:00 2001
+From: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date: Fri, 20 Apr 2018 14:26:54 +0800
+Subject: [PATCH] HDMI IN:allow hdmi update audio gain[2/3]
+
+PD# 164183,164102
+
+TIF manager allow hdmi update audio gain
+
+Change-Id: Ie85ad781f4664ddb260d11b10f579fe9cc560478
+---
+ .../android/server/tv/TvInputHardwareManager.java  | 29 +++++++++++++++++-----
+ 1 file changed, 23 insertions(+), 6 deletions(-)
+
+diff --git a/services/core/java/com/android/server/tv/TvInputHardwareManager.java b/services/core/java/com/android/server/tv/TvInputHardwareManager.java
+index c1607e9..c4c9da7 100644
+--- a/services/core/java/com/android/server/tv/TvInputHardwareManager.java
++++ b/services/core/java/com/android/server/tv/TvInputHardwareManager.java
+@@ -771,7 +771,7 @@ class TvInputHardwareManager implements TvInputHal.Callback {
+         // Set to an invalid value for a volume, so that current volume can be applied at the
+         // first call to updateAudioConfigLocked().
+         private float mCommittedVolume = -1f;
+-        private float mSourceVolume = 0.0f;
++        private float mSourceVolume = 1.0f;
+ 
+         private TvStreamConfig mActiveConfig = null;
+ 
+@@ -890,6 +890,7 @@ class TvInputHardwareManager implements TvInputHal.Callback {
+                     mAudioManager.releaseAudioPatch(mAudioPatch);
+                     mAudioPatch = null;
+                 }
++                mCommittedVolume = -1f;
+                 return;
+             }
+ 
+@@ -927,6 +928,11 @@ class TvInputHardwareManager implements TvInputHal.Callback {
+             List<AudioPortConfig> sinkConfigs = new ArrayList<>();
+             AudioPatch[] audioPatchArray = new AudioPatch[] { mAudioPatch };
+             boolean shouldRecreateAudioPatch = sourceUpdated || sinkUpdated;
++            boolean shouldApplyGain = false;
++
++             //mAudioPatch should not be null when current hardware is active.
++            if (mAudioPatch == null)
++                shouldRecreateAudioPatch = true;
+ 
+             for (AudioDevicePort audioSink : mAudioSink) {
+                 AudioPortConfig sinkConfig = audioSink.activeConfig();
+@@ -943,7 +949,7 @@ class TvInputHardwareManager implements TvInputHal.Callback {
+                         sinkChannelMask = sinkConfig.channelMask();
+                     }
+                     if (sinkFormat == AudioFormat.ENCODING_DEFAULT) {
+-                        sinkChannelMask = sinkConfig.format();
++                        sinkFormat = sinkConfig.format();
+                     }
+                 }
+ 
+@@ -993,21 +999,32 @@ class TvInputHardwareManager implements TvInputHal.Callback {
+                 }
+                 sourceConfig = mAudioSource.buildConfig(sourceSamplingRate, sourceChannelMask,
+                         sourceFormat, sourceGainConfig);
+-                shouldRecreateAudioPatch = true;
++                if (mAudioPatch != null &&
++                    ((sourceConfig.port().equals(mAudioPatch.sources()[0].port())) &&
++                    (sourceConfig.samplingRate() == mAudioPatch.sources()[0].samplingRate()) &&
++                    (sourceConfig.channelMask() == mAudioPatch.sources()[0].channelMask()) &&
++                    (sourceConfig.format() == mAudioPatch.sources()[0].format()))) {
++                    shouldApplyGain = true;
++                } else {
++                    shouldRecreateAudioPatch = true;
++                }
+             }
+             if (shouldRecreateAudioPatch) {
+                 mCommittedVolume = volume;
+                 if (mAudioPatch != null) {
+                     mAudioManager.releaseAudioPatch(mAudioPatch);
++                    audioPatchArray[0] = null;
+                 }
+                 mAudioManager.createAudioPatch(
+                         audioPatchArray,
+                         new AudioPortConfig[] { sourceConfig },
+                         sinkConfigs.toArray(new AudioPortConfig[sinkConfigs.size()]));
+                 mAudioPatch = audioPatchArray[0];
+-                if (sourceGainConfig != null) {
+-                    mAudioManager.setAudioPortGain(mAudioSource, sourceGainConfig);
+-                }
++            }
++            if (sourceGainConfig != null &&
++                    (shouldApplyGain || shouldRecreateAudioPatch)) {
++                mCommittedVolume = volume;
++                mAudioManager.setAudioPortGain(mAudioSource, sourceGainConfig);
+             }
+         }
+ 
+-- 
+1.9.1
+

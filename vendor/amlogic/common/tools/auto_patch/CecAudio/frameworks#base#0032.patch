@@ -1,0 +1,42 @@
+From e06344b35dffff5bad25eb5156230d9c30497e97 Mon Sep 17 00:00:00 2001
+From: xian <an.xi@amlogic.com>
+Date: Fri, 11 Oct 2019 07:09:30 -0400
+Subject: [PATCH] SystemServer: fix tv select source slow issue [1/6]
+
+PD#SWPL-11187
+
+Problem:
+It takes tv long time to show when waked up by cec
+
+Solution:
+Use apart device detect action to poll cec devices
+
+Verify:
+verify it on Marconi
+
+Change-Id: I037f3ef418cacc66ffbbf4925520fb9c4dff0e40
+Signed-off-by: xian <an.xi@amlogic.com>
+---
+ media/java/android/media/tv/TvInputHardwareInfo.java | 3 ---
+ 1 file changed, 3 deletions(-)
+ mode change 100644 => 100755 media/java/android/media/tv/TvInputHardwareInfo.java
+
+diff --git a/media/java/android/media/tv/TvInputHardwareInfo.java b/media/java/android/media/tv/TvInputHardwareInfo.java
+old mode 100644
+new mode 100755
+index 762f0c0..64541bc
+--- a/media/java/android/media/tv/TvInputHardwareInfo.java
++++ b/media/java/android/media/tv/TvInputHardwareInfo.java
+@@ -122,9 +122,6 @@ public final class TvInputHardwareInfo implements Parcelable {
+     }
+ 
+     public int getHdmiPortId() {
+-        if (mType != TV_INPUT_TYPE_HDMI) {
+-            throw new IllegalStateException();
+-        }
+         return mHdmiPortId;
+     }
+ 
+-- 
+2.7.4
+

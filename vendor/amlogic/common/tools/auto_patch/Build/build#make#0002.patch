@@ -1,0 +1,38 @@
+From 12d373849d318d533dcf0902be7302d3a6718565 Mon Sep 17 00:00:00 2001
+From: baocheng sun <baocheng.sun@amlogic.com>
+Date: Sat, 12 Oct 2019 02:17:08 -0400
+Subject: [PATCH] build: add hwc_enable_real_mode productVariable [2/2]
+
+PD#SWPL-14734
+
+Problem:
+Add full active mode to switch ui resolution dynamicly.
+
+Solution:
+add build config and dynamic fb device info to surfacefling.
+
+Verify:
+verified on franklin
+
+Change-Id: Ide9746e07763925533819ff553855a07be6cd496
+Signed-off-by: baocheng sun <baocheng.sun@amlogic.com>
+---
+ core/soong_config.mk | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/core/soong_config.mk b/core/soong_config.mk
+index f8cb2fb..7924241 100644
+--- a/core/soong_config.mk
++++ b/core/soong_config.mk
+@@ -143,6 +143,8 @@ $(call add_json_list, NamespacesToExport,                $(PRODUCT_SOONG_NAMESPA
+ 
+ $(call add_json_list, PgoAdditionalProfileDirs,          $(PGO_ADDITIONAL_PROFILE_DIRS))
+ 
++$(call add_json_bool, Hwc_enable_real_mode,                  $(filter true,$(HWC_ENABLE_REAL_MODE)))
++
+ _contents := $(_contents)    "VendorVars": {$(newline)
+ $(foreach namespace,$(SOONG_CONFIG_NAMESPACES),\
+   $(eval _contents := $$(_contents)        "$(namespace)": {$$(newline)) \
+-- 
+2.7.4
+

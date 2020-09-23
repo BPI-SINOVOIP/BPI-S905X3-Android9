@@ -1,0 +1,49 @@
+From b33cc760d78653a9ae8f65bcbb45731f7010a351 Mon Sep 17 00:00:00 2001
+From: "hongchao.yin" <hongchao.yin@amlogic.com>
+Date: Thu, 13 Feb 2020 16:06:51 +0800
+Subject: [PATCH] AudioService: fixed HDMI plug/unplug Audio bug [1/1]
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+PD#OTT-8141
+
+Problem:
+[SWPL-19573][Skyworth][ODM][SKYAML-370][S905X2][9.0][Feedback][System]:Press
+mute button,unplug and plug hdmi,STB isn‘t muted,100%
+
+Solution:
+Do not seed a unmute msg when plug HDMI cable
+
+Verify:
+verify by franklin
+
+Change-Id: I514b2bbd7289d3a056ef0ba655ac5aaec0e061b6
+Signed-off-by: hongchao.yin <hongchao.yin@amlogic.com>
+---
+ .../core/java/com/android/server/audio/AudioService.java    | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+ mode change 100755 => 100644 services/core/java/com/android/server/audio/AudioService.java
+
+diff --git a/services/core/java/com/android/server/audio/AudioService.java b/services/core/java/com/android/server/audio/AudioService.java
+old mode 100755
+new mode 100644
+index 9a8f0f488f2..87024672dea
+--- a/services/core/java/com/android/server/audio/AudioService.java
++++ b/services/core/java/com/android/server/audio/AudioService.java
+@@ -6211,8 +6211,10 @@ public class AudioService extends IAudioService.Stub
+                     return false;
+                 }
+                 mConnectedDevices.put(deviceKey, new DeviceListSpec(device, deviceName, address));
+-                sendMsg(mAudioHandler, MSG_ACCESSORY_PLUG_MEDIA_UNMUTE, SENDMSG_QUEUE,
+-                        device, 0, null, 0);
++                if (device != AudioSystem.DEVICE_OUT_HDMI) {
++                    sendMsg(mAudioHandler, MSG_ACCESSORY_PLUG_MEDIA_UNMUTE, SENDMSG_QUEUE,
++                            device, 0, null, 0);
++                }
+                 return true;
+             } else if (!connect && isConnected) {
+                 AudioSystem.setDeviceConnectionState(device,
+-- 
+2.25.0
+

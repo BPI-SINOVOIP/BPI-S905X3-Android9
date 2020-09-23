@@ -1,0 +1,2 @@
+avb_crypto.c:357:25:avb_get_algorithm_data	0	static
+avb_crypto.c:364:6:avb_rsa_public_key_header_validate_and_byteswap	32	static

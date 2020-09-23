@@ -1,0 +1,86 @@
+From 4a951d6d709de9efcc115f647f38972aac484adf Mon Sep 17 00:00:00 2001
+From: yuehu mi <yuehu.mi@amlogic.com>
+Date: Tue, 16 Jul 2019 13:35:10 +0800
+Subject: [PATCH] Settings: Solve the problem of clicking 'Connection
+ preferences' crash [1/1]
+
+PD#SWPL-10575
+
+Problem:
+Click on the Settings - Connected devices -
+Connection preferences icon and crash.
+Because there is no PRINT_SERVICE in the system
+
+Solution:
+Increase null pointer judgment
+
+Verify:
+u202
+
+Change-Id: Id33cbcde78d36ffb0e2ec8b87eaea1e216b64c3c
+Signed-off-by: yuehu mi <yuehu.mi@amlogic.com>
+---
+ .../settings/print/PrintSettingPreferenceController.java  | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
+
+diff --git a/src/com/android/settings/print/PrintSettingPreferenceController.java b/src/com/android/settings/print/PrintSettingPreferenceController.java
+index 2307b2c..d42b6dd 100644
+--- a/src/com/android/settings/print/PrintSettingPreferenceController.java
++++ b/src/com/android/settings/print/PrintSettingPreferenceController.java
+@@ -26,6 +26,7 @@ import android.print.PrintManager;
+ import android.printservice.PrintServiceInfo;
+ import android.support.v7.preference.Preference;
+ import android.support.v7.preference.PreferenceScreen;
++import android.util.Log;
+ 
+ import com.android.settings.R;
+ import com.android.settings.core.BasePreferenceController;
+@@ -43,6 +44,7 @@ public class PrintSettingPreferenceController extends BasePreferenceController i
+         LifecycleObserver, OnStart, OnStop, PrintManager.PrintJobStateChangeListener {
+ 
+     private static final String KEY_PRINTING_SETTINGS = "connected_device_printing";
++    private static final String TAG = "PrintSetting";
+ 
+     private final PackageManager mPackageManager;
+     private final PrintManager mPrintManager;
+@@ -54,6 +56,7 @@ public class PrintSettingPreferenceController extends BasePreferenceController i
+         mPackageManager = context.getPackageManager();
+         mPrintManager = ((PrintManager) context.getSystemService(Context.PRINT_SERVICE))
+                 .getGlobalPrintManagerForUser(context.getUserId());
++        Log.d(TAG, "PrintSettingPreferenceController mPrintManager=" + mPrintManager);
+     }
+ 
+     @Override
+@@ -70,12 +73,16 @@ public class PrintSettingPreferenceController extends BasePreferenceController i
+ 
+     @Override
+     public void onStart() {
+-        mPrintManager.addPrintJobStateChangeListener(this);
++        if (mPrintManager != null) {
++            mPrintManager.addPrintJobStateChangeListener(this);
++        }
+     }
+ 
+     @Override
+     public void onStop() {
+-        mPrintManager.removePrintJobStateChangeListener(this);
++        if (mPrintManager != null) {
++            mPrintManager.removePrintJobStateChangeListener(this);
++        }
+     }
+ 
+     @Override
+@@ -92,6 +99,10 @@ public class PrintSettingPreferenceController extends BasePreferenceController i
+ 
+     @Override
+     public CharSequence getSummary() {
++        if (mPrintManager == null) {
++            Log.i(TAG, "getSummary mPrintManager is null");
++            return mContext.getText(R.string.print_settings_summary_no_service);
++        }
+         final List<PrintJob> printJobs = mPrintManager.getPrintJobs();
+ 
+         int numActivePrintJobs = 0;
+-- 
+1.9.1
+

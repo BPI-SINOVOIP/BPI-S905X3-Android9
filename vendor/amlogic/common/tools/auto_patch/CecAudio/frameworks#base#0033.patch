@@ -1,0 +1,43 @@
+From 05e01b535d0ecec4f3456e707c3ec448c885b719 Mon Sep 17 00:00:00 2001
+From: xian <an.xi@amlogic.com>
+Date: Wed, 23 Oct 2019 20:31:35 +0800
+Subject: [PATCH] SystemServer: show volume bar when arc enabled [1/1]
+
+PD#SWPL-14697
+
+Problem:
+volume bar not show when amplifier is connected with
+arc on.
+
+Solution:
+show the ui when the volume change action is not
+triggered by arc.
+
+Verify:
+verify it on marconi
+
+Change-Id: I1a6723d585dd436ec8c4e5624cc6a5c2ccbac307
+Signed-off-by: xian <an.xi@amlogic.com>
+---
+ services/core/java/com/android/server/audio/AudioService.java | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/services/core/java/com/android/server/audio/AudioService.java b/services/core/java/com/android/server/audio/AudioService.java
+index 13de652..fb2f59a 100644
+--- a/services/core/java/com/android/server/audio/AudioService.java
++++ b/services/core/java/com/android/server/audio/AudioService.java
+@@ -2169,7 +2169,10 @@ public class AudioService extends IAudioService.Stub
+             synchronized (mHdmiTvClient) {
+                 if (mHdmiSystemAudioSupported &&
+                         ((flags & AudioManager.FLAG_HDMI_SYSTEM_AUDIO_VOLUME) == 0)) {
+-                    flags &= ~AudioManager.FLAG_SHOW_UI;
++                    //flags &= ~AudioManager.FLAG_SHOW_UI;
++                    if (DEBUG_VOL) {
++                        Slog.d(TAG, "updateFlagsForSystemAudio show ui when arc device is connected.");
++                    }
+                 }
+             }
+         }
+-- 
+2.7.4
+

@@ -1,0 +1,38 @@
+From a92a888862bc7983558a138ec586782fdab36c99 Mon Sep 17 00:00:00 2001
+From: Lei Qian <lei.qian@amlogic.com>
+Date: Thu, 27 Jun 2019 14:37:46 +0800
+Subject: [PATCH] DisplayPowerController: fix apk flash after wakeup [1/1]
+
+PD#SWPL-9810
+
+Problem:
+apk flash after wakeup on low mem device
+
+Solution:
+set mColorFadeEnabled true on on low mem device
+
+Verify:
+verify by marconi
+
+Change-Id: I082a39045728e60c4a745b89f93fb6de28790214
+Signed-off-by: Lei Qian <lei.qian@amlogic.com>
+---
+ .../core/java/com/android/server/display/DisplayPowerController.java    | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/services/core/java/com/android/server/display/DisplayPowerController.java b/services/core/java/com/android/server/display/DisplayPowerController.java
+index 99412c5..baf6633 100644
+--- a/services/core/java/com/android/server/display/DisplayPowerController.java
++++ b/services/core/java/com/android/server/display/DisplayPowerController.java
+@@ -465,7 +465,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
+             }
+         }
+ 
+-        mColorFadeEnabled = !ActivityManager.isLowRamDeviceStatic();
++        mColorFadeEnabled = true;//!ActivityManager.isLowRamDeviceStatic();
+         mColorFadeFadesConfig = resources.getBoolean(
+                 com.android.internal.R.bool.config_animateScreenLights);
+ 
+-- 
+1.9.1
+

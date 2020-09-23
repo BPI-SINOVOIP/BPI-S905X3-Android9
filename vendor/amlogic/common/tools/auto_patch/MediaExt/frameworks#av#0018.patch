@@ -1,0 +1,366 @@
+From ad5ceec49184650be9d7a24928ff8ae45043a8af Mon Sep 17 00:00:00 2001
+From: Jian Wang <jian.wang@amlogic.com>
+Date: Tue, 7 Jan 2020 17:54:38 +0800
+Subject: [PATCH] av1: add av1 support for p
+
+Change-Id: Ice0e75919b4c47e889c06ff9280d62e72c39cd0e
+Signed-off-by: Jian Wang <jian.wang@amlogic.com>
+---
+ media/extractors/mkv/MatroskaExtractor.cpp         |  9 +++
+ media/extractors/mp4/MPEG4Extractor.cpp            | 47 ++++++++++++-
+ .../include/media/stagefright/MetaDataBase.h       |  3 +
+ media/libstagefright/ACodec.cpp                    |  1 +
+ media/libstagefright/Utils.cpp                     | 76 ++++++++++++++++++++++
+ .../media/stagefright/foundation/MediaDefs.h       |  2 +
+ .../media/stagefright/MediaCodecConstants.h        | 31 +++++++++
+ media/libstagefright/omx/OMXUtils.cpp              |  2 +
+ media/libstagefright/omx/SoftOMXPlugin.cpp         |  1 +
+ 9 files changed, 171 insertions(+), 1 deletion(-)
+
+diff --git a/media/extractors/mkv/MatroskaExtractor.cpp b/media/extractors/mkv/MatroskaExtractor.cpp
+index d657582..1706ac5 100644
+--- a/media/extractors/mkv/MatroskaExtractor.cpp
++++ b/media/extractors/mkv/MatroskaExtractor.cpp
+@@ -1440,6 +1440,15 @@ void MatroskaExtractor::addTracks() {
+                               kKeyVp9CodecPrivate, 0, codecPrivate,
+                               codecPrivateSize);
+                     }
++                } else if (!strcmp("V_AV1", codecID)) {
++                    meta.setCString(kKeyMIMEType, MEDIA_MIMETYPE_VIDEO_AV1);
++                    if (codecPrivateSize > 0) {
++                      // 'csd-0' for AV1 is the Blob of Codec Private data as
++                      // specified in https://aomediacodec.github.io/av1-isobmff/.
++                        meta.setData(
++                              kKeyAV1C, kTypeAV1C, codecPrivate,
++                              codecPrivateSize);
++                    }
+                 } else {
+                     ALOGW("%s is not supported.", codecID);
+                     continue;
+diff --git a/media/extractors/mp4/MPEG4Extractor.cpp b/media/extractors/mp4/MPEG4Extractor.cpp
+index 8b3ac00..673f5a2 100644
+--- a/media/extractors/mp4/MPEG4Extractor.cpp
++++ b/media/extractors/mp4/MPEG4Extractor.cpp
+@@ -357,6 +357,8 @@ static const char *FourCC2MIME(uint32_t fourcc) {
+         case FOURCC('d', 'v', 'h', '1'):
+             return MEDIA_MIMETYPE_VIDEO_DOLBY_VISION;
+ #endif
++        case FOURCC('a', 'v', '0', '1'):
++            return MEDIA_MIMETYPE_VIDEO_AV1;
+ 
+         default:
+             ALOGW("Unknown fourcc: %c%c%c%c",
+@@ -1614,6 +1616,8 @@ status_t MPEG4Extractor::parseChunk(off64_t *offset, int depth) {
+         case FOURCC('d', 'v', 'h', 'e'):
+         case FOURCC('d', 'v', 'h', '1'):
+ #endif
++        case FOURCC('a', 'v', '0', '1'):
++
+         {
+             uint8_t buffer[78];
+             if (chunk_data_size < (ssize_t)sizeof(buffer)) {
+@@ -2056,6 +2060,29 @@ status_t MPEG4Extractor::parseChunk(off64_t *offset, int depth) {
+             *offset += chunk_size;
+             break;
+         }
++        case FOURCC('a', 'v', '1', 'C'):
++        {
++                auto buffer = heapbuffer<uint8_t>(chunk_data_size);
++
++                if (buffer.get() == NULL) {
++                    ALOGE("b/28471206");
++                    return NO_MEMORY;
++                }
++
++                if (mDataSource->readAt(
++                            data_offset, buffer.get(), chunk_data_size) < chunk_data_size) {
++                    return ERROR_IO;
++                }
++
++                if (mLastTrack == NULL)
++                    return ERROR_MALFORMED;
++
++                mLastTrack->meta.setData(
++                        kKeyAV1C, kTypeAV1C, buffer.get(), chunk_data_size);
++
++                *offset += chunk_size;
++                break;
++        }
+ 
+ #ifdef DLB_VISION
+         case FOURCC('d', 'v', 'c', 'C'):
+@@ -2084,7 +2111,6 @@ status_t MPEG4Extractor::parseChunk(off64_t *offset, int depth) {
+             break;
+         }
+ #endif
+-
+         case FOURCC('d', '2', '6', '3'):
+         {
+             *offset += chunk_size;
+@@ -3739,6 +3765,19 @@ MediaTrack *MPEG4Extractor::getTrack(size_t index) {
+         if (!strcasecmp(mime, MEDIA_MIMETYPE_IMAGE_ANDROID_HEIC)) {
+             itemTable = mItemTable;
+         }
++    } else if (!strcasecmp(mime, MEDIA_MIMETYPE_VIDEO_AV1)) {
++        uint32_t type;
++        const void *data;
++        size_t size;
++        if (!track->meta.findData(kKeyAV1C, &type, &data, &size)) {
++            return NULL;
++        }
++
++        const uint8_t *ptr = (const uint8_t *)data;
++
++        if (size < 5 || ptr[0] != 0x81) {  // configurationVersion == 1
++            return NULL;
++        }
+     }
+ #ifdef DLB_VISION
+       else if (!strcasecmp(mime, MEDIA_MIMETYPE_VIDEO_DOLBY_VISION)) {
+@@ -3785,6 +3824,11 @@ status_t MPEG4Extractor::verifyTrack(Track *track) {
+                     || type != kTypeHVCC) {
+             return ERROR_MALFORMED;
+         }
++    } else if (!strcasecmp(mime, MEDIA_MIMETYPE_VIDEO_AV1)) {
++        if (!track->meta.findData(kKeyAV1C, &type, &data, &size)
++                    || type != kTypeAV1C) {
++            return ERROR_MALFORMED;
++        }
+ #ifdef DLB_VISION
+     } else if (!strcasecmp(mime, MEDIA_MIMETYPE_VIDEO_DOLBY_VISION)) {
+         if (!track->meta.findData(kKeyDVCC, &type, &data, &size)
+@@ -5864,6 +5908,7 @@ static bool isCompatibleBrand(uint32_t fourcc) {
+         FOURCC('a', 'v', 'c', '1'),
+         FOURCC('h', 'v', 'c', '1'),
+         FOURCC('h', 'e', 'v', '1'),
++        FOURCC('a', 'v', '0', '1'),
+         FOURCC('3', 'g', 'p', '4'),
+         FOURCC('m', 'p', '4', '1'),
+         FOURCC('m', 'p', '4', '2'),
+diff --git a/media/libmediaextractor/include/media/stagefright/MetaDataBase.h b/media/libmediaextractor/include/media/stagefright/MetaDataBase.h
+index 1338502..8a720df 100644
+--- a/media/libmediaextractor/include/media/stagefright/MetaDataBase.h
++++ b/media/libmediaextractor/include/media/stagefright/MetaDataBase.h
+@@ -73,9 +73,11 @@ enum {
+     kKeyAVCC              = 'avcc',  // raw data
+     kKeyHVCC              = 'hvcc',  // raw data
+     kKeyThumbnailHVCC     = 'thvc',  // raw data
++    kKeyAV1C              = 'av1c',  // raw data
+ #ifdef DLB_VISION
+     kKeyDVCC              = 'dvcc',  // raw data
+ #endif
++
+     kKeyD263              = 'd263',  // raw data
+     kKeyVorbisInfo        = 'vinf',  // raw data
+     kKeyVorbisBooks       = 'vboo',  // raw data
+@@ -249,6 +251,7 @@ enum {
+     kTypeESDS        = 'esds',
+     kTypeAVCC        = 'avcc',
+     kTypeHVCC        = 'hvcc',
++    kTypeAV1C        = 'av1c',
+ #ifdef DLB_VISION
+     kTypeDVCC        = 'dvcc',
+ #endif
+diff --git a/media/libstagefright/ACodec.cpp b/media/libstagefright/ACodec.cpp
+index 2651391..3a22e6e 100644
+--- a/media/libstagefright/ACodec.cpp
++++ b/media/libstagefright/ACodec.cpp
+@@ -3251,6 +3251,7 @@ static const struct VideoCodingMapEntry {
+     { MEDIA_MIMETYPE_VIDEO_VP9, OMX_VIDEO_CodingVP9 },
+     { MEDIA_MIMETYPE_VIDEO_DOLBY_VISION, OMX_VIDEO_CodingDolbyVision },
+     { MEDIA_MIMETYPE_IMAGE_ANDROID_HEIC, OMX_VIDEO_CodingImageHEIC },
++    { MEDIA_MIMETYPE_VIDEO_AV1, OMX_VIDEO_CodingAV1 },
+ };
+ 
+ static status_t GetVideoCodingTypeFromMime(
+diff --git a/media/libstagefright/Utils.cpp b/media/libstagefright/Utils.cpp
+index 367bab6..852ce9f 100644
+--- a/media/libstagefright/Utils.cpp
++++ b/media/libstagefright/Utils.cpp
+@@ -56,6 +56,7 @@
+ #include <media/stagefright/foundation/AMessage.h>
+ #include <media/stagefright/foundation/ByteUtils.h>
+ #include <media/stagefright/MetaData.h>
++#include <media/stagefright/MediaCodecConstants.h>
+ #include <media/stagefright/MediaDefs.h>
+ #include <media/AudioSystem.h>
+ #include <media/MediaPlayerInterface.h>
+@@ -659,6 +660,68 @@ static void parseVp9ProfileLevelFromCsd(const sp<ABuffer> &csd, sp<AMessage> &fo
+     }
+ }
+ 
++static void parseAV1ProfileLevelFromCsd(const sp<ABuffer> &csd, sp<AMessage> &format) {
++    // Parse CSD structure to extract profile level information
++    // https://aomediacodec.github.io/av1-isobmff/#av1codecconfigurationbox
++    const uint8_t *data = csd->data();
++    size_t remaining = csd->size();
++    if (remaining < 4 || data[0] != 0x81) {  // configurationVersion == 1
++        return;
++    }
++    uint8_t profileData = (data[1] & 0xE0) >> 5;
++    uint8_t levelData = data[1] & 0x1F;
++    uint8_t highBitDepth = (data[2] & 0x40) >> 6;
++
++    const static ALookup<std::pair<uint8_t, uint8_t>, int32_t> profiles {
++        { { 0, 0 }, AV1ProfileMain8 },
++        { { 1, 0 }, AV1ProfileMain10 },
++    };
++
++    int32_t profile;
++    if (profiles.map(std::make_pair(highBitDepth, profileData), &profile)) {
++        // bump to HDR profile
++        if (isHdr(format) && profile == AV1ProfileMain10) {
++            if (format->contains("hdr10-plus-info")) {
++                profile = AV1ProfileMain10HDR10Plus;
++            } else {
++                profile = AV1ProfileMain10HDR10;
++            }
++        }
++        format->setInt32("profile", profile);
++    }
++    const static ALookup<uint8_t, int32_t> levels {
++        { 0, AV1Level2   },
++        { 1, AV1Level21  },
++        { 2, AV1Level22  },
++        { 3, AV1Level23  },
++        { 4, AV1Level3   },
++        { 5, AV1Level31  },
++        { 6, AV1Level32  },
++        { 7, AV1Level33  },
++        { 8, AV1Level4   },
++        { 9, AV1Level41  },
++        { 10, AV1Level42  },
++        { 11, AV1Level43  },
++        { 12, AV1Level5   },
++        { 13, AV1Level51  },
++        { 14, AV1Level52  },
++        { 15, AV1Level53  },
++        { 16, AV1Level6   },
++        { 17, AV1Level61  },
++        { 18, AV1Level62  },
++        { 19, AV1Level63  },
++        { 20, AV1Level7   },
++        { 21, AV1Level71  },
++        { 22, AV1Level72  },
++        { 23, AV1Level73  },
++    };
++
++    int32_t level;
++    if (levels.map(levelData, &level)) {
++        format->setInt32("level", level);
++    }
++}
++
+ status_t convertMetaDataToMessage(
+         const sp<MetaData> &meta, sp<AMessage> *format) {
+ 
+@@ -1047,6 +1110,17 @@ status_t convertMetaDataToMessage(
+         }
+ 
+         parseHevcProfileLevelFromHvcc((const uint8_t *)data, dataSize, msg);
++    }else if (meta->findData(kKeyAV1C, &type, &data, &size)) {
++        sp<ABuffer> buffer = new (std::nothrow) ABuffer(size);
++        if (buffer.get() == NULL || buffer->base() == NULL) {
++            return NO_MEMORY;
++        }
++        memcpy(buffer->data(), data, size);
++
++        buffer->meta()->setInt32("csd", true);
++        buffer->meta()->setInt64("timeUs", 0);
++        msg->setBuffer("csd-0", buffer);
++        parseAV1ProfileLevelFromCsd(buffer, msg);
+     } else if (meta->findData(kKeyESDS, &type, &data, &size)) {
+         ESDS esds((const char *)data, size);
+         if (esds.InitCheck() != (status_t)OK) {
+@@ -1586,6 +1660,8 @@ void convertMessageToMetaData(const sp<AMessage> &msg, sp<MetaData> &meta) {
+             std::vector<uint8_t> hvcc(csd0size + 1024);
+             size_t outsize = reassembleHVCC(csd0, hvcc.data(), hvcc.size(), 4);
+             meta->setData(kKeyHVCC, kKeyHVCC, hvcc.data(), outsize);
++        } else if (mime == MEDIA_MIMETYPE_VIDEO_AV1) {
++            meta->setData(kKeyAV1C, 0, csd0->data(), csd0->size());
+ #ifdef DLB_VISION
+         } else if (mime ==  MEDIA_MIMETYPE_VIDEO_DOLBY_VISION) {
+             uint8_t dvcc[1024];
+diff --git a/media/libstagefright/foundation/include/media/stagefright/foundation/MediaDefs.h b/media/libstagefright/foundation/include/media/stagefright/foundation/MediaDefs.h
+index b165bcb..44f8ff8 100644
+--- a/media/libstagefright/foundation/include/media/stagefright/foundation/MediaDefs.h
++++ b/media/libstagefright/foundation/include/media/stagefright/foundation/MediaDefs.h
+@@ -71,6 +71,8 @@ extern const char *MEDIA_MIMETYPE_TEXT_CEA_608;
+ extern const char *MEDIA_MIMETYPE_TEXT_CEA_708;
+ extern const char *MEDIA_MIMETYPE_DATA_TIMED_ID3;
+ 
++#define MEDIA_MIMETYPE_VIDEO_AV1 "video/av01"
++
+ // These are values exported to JAVA API that need to be in sync with
+ // frameworks/base/media/java/android/media/AudioFormat.java. Unfortunately,
+ // they are not defined in frameworks/av, so defining them here.
+diff --git a/media/libstagefright/include/media/stagefright/MediaCodecConstants.h b/media/libstagefright/include/media/stagefright/MediaCodecConstants.h
+index 3ef4c0e..330c196 100644
+--- a/media/libstagefright/include/media/stagefright/MediaCodecConstants.h
++++ b/media/libstagefright/include/media/stagefright/MediaCodecConstants.h
+@@ -151,6 +151,37 @@ constexpr int32_t VP9Level6  = 0x800;
+ constexpr int32_t VP9Level61 = 0x1000;
+ constexpr int32_t VP9Level62 = 0x2000;
+ 
++constexpr int32_t AV1ProfileMain8 = 0x1;
++constexpr int32_t AV1ProfileMain10 = 0x2;
++constexpr int32_t AV1ProfileMain10HDR10 = 0x1000;
++constexpr int32_t AV1ProfileMain10HDR10Plus = 0x2000;
++
++constexpr int32_t AV1Level2  = 0x1;
++constexpr int32_t AV1Level21 = 0x2;
++constexpr int32_t AV1Level22 = 0x4;
++constexpr int32_t AV1Level23 = 0x8;
++constexpr int32_t AV1Level3  = 0x10;
++constexpr int32_t AV1Level31 = 0x20;
++constexpr int32_t AV1Level32 = 0x40;
++constexpr int32_t AV1Level33 = 0x80;
++constexpr int32_t AV1Level4  = 0x100;
++constexpr int32_t AV1Level41 = 0x200;
++constexpr int32_t AV1Level42 = 0x400;
++constexpr int32_t AV1Level43 = 0x800;
++constexpr int32_t AV1Level5  = 0x1000;
++constexpr int32_t AV1Level51 = 0x2000;
++constexpr int32_t AV1Level52 = 0x4000;
++constexpr int32_t AV1Level53 = 0x8000;
++constexpr int32_t AV1Level6  = 0x10000;
++constexpr int32_t AV1Level61 = 0x20000;
++constexpr int32_t AV1Level62 = 0x40000;
++constexpr int32_t AV1Level63 = 0x80000;
++constexpr int32_t AV1Level7  = 0x100000;
++constexpr int32_t AV1Level71 = 0x200000;
++constexpr int32_t AV1Level72 = 0x400000;
++constexpr int32_t AV1Level73 = 0x800000;
++
++
+ constexpr int32_t HEVCProfileMain        = 0x01;
+ constexpr int32_t HEVCProfileMain10      = 0x02;
+ constexpr int32_t HEVCProfileMainStill   = 0x04;
+diff --git a/media/libstagefright/omx/OMXUtils.cpp b/media/libstagefright/omx/OMXUtils.cpp
+index f7b569d..59574eb 100644
+--- a/media/libstagefright/omx/OMXUtils.cpp
++++ b/media/libstagefright/omx/OMXUtils.cpp
+@@ -149,6 +149,8 @@ const char *GetComponentRole(bool isEncoder, const char *mime) {
+             "video_decoder.vp8", "video_encoder.vp8" },
+         { MEDIA_MIMETYPE_VIDEO_VP9,
+             "video_decoder.vp9", "video_encoder.vp9" },
++        { MEDIA_MIMETYPE_VIDEO_AV1,
++            "video_decoder.av1", "video_encoder.av1" },
+         { MEDIA_MIMETYPE_AUDIO_RAW,
+             "audio_decoder.raw", "audio_encoder.raw" },
+         { MEDIA_MIMETYPE_VIDEO_DOLBY_VISION,
+diff --git a/media/libstagefright/omx/SoftOMXPlugin.cpp b/media/libstagefright/omx/SoftOMXPlugin.cpp
+index 1f3e8c1..7c6c3ec 100644
+--- a/media/libstagefright/omx/SoftOMXPlugin.cpp
++++ b/media/libstagefright/omx/SoftOMXPlugin.cpp
+@@ -60,6 +60,7 @@ static const struct {
+     { "OMX.google.opus.decoder", "opusdec", "audio_decoder.opus" },
+     { "OMX.google.vp8.decoder", "vpxdec", "video_decoder.vp8" },
+     { "OMX.google.vp9.decoder", "vpxdec", "video_decoder.vp9" },
++    { "OMX.google.av1.decoder", "av1dec", "video_decoder.av1" },
+     { "OMX.google.vp8.encoder", "vpxenc", "video_encoder.vp8" },
+     { "OMX.google.vp9.encoder", "vpxenc", "video_encoder.vp9" },
+     { "OMX.google.raw.decoder", "rawdec", "audio_decoder.raw" },
+-- 
+1.9.1
+

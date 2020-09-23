@@ -1,0 +1,77 @@
+From c2f180aa0778737378bc71fdb5e69c9c8eb9bcb4 Mon Sep 17 00:00:00 2001
+From: "lijun.meng" <lijun.meng@amlogic.com>
+Date: Fri, 6 Dec 2019 17:10:14 +0800
+Subject: [PATCH] Ethernet: network proxy settings
+
+PD#SWPL-3222
+
+Problem:
+Open the network proxy settings, select "None" to save,  Ethernet can not continue to use
+
+Solution:
+update proxy none set method, config none Directly if select none
+
+Verify:
+verified by franklin, Can work normally under Ethernet/WiFi, Whether restart or unplug the network cable and reconnect,
+
+Change-Id: Ibe89039e201dfbd7c8f49f99cdf7e76437ecaa96
+Signed-off-by: lijun.meng <lijun.meng@amlogic.com>
+---
+ .../setup/ProxySettingsState.java             |  2 +-
+ .../util/AdvancedOptionsFlowUtil.java         | 21 +++++++++++++++++++
+ 2 files changed, 22 insertions(+), 1 deletion(-)
+ mode change 100644 => 100755 Settings/src/com/android/tv/settings/connectivity/setup/ProxySettingsState.java
+ mode change 100644 => 100755 Settings/src/com/android/tv/settings/connectivity/util/AdvancedOptionsFlowUtil.java
+
+diff --git a/Settings/src/com/android/tv/settings/connectivity/setup/ProxySettingsState.java b/Settings/src/com/android/tv/settings/connectivity/setup/ProxySettingsState.java
+old mode 100644
+new mode 100755
+index ab3ee917..ce089c29
+--- a/Settings/src/com/android/tv/settings/connectivity/setup/ProxySettingsState.java
++++ b/Settings/src/com/android/tv/settings/connectivity/setup/ProxySettingsState.java
+@@ -137,7 +137,7 @@ public class ProxySettingsState implements State {
+             mAdvancedOptionsFlowInfo.put(AdvancedOptionsFlowInfo.PROXY_HOSTNAME,
+                     action.getTitle());
+             if (action.getId() == WIFI_ACTION_PROXY_NONE) {
+-                AdvancedOptionsFlowUtil.processIpSettings(getActivity());
++                AdvancedOptionsFlowUtil.processProxySettings(getActivity(),true);
+                 if (mAdvancedOptionsFlowInfo.isSettingsFlow()) {
+                     mStateMachine.getListener().onComplete(StateMachine.ADVANCED_FLOW_COMPLETE);
+                 } else {
+diff --git a/Settings/src/com/android/tv/settings/connectivity/util/AdvancedOptionsFlowUtil.java b/Settings/src/com/android/tv/settings/connectivity/util/AdvancedOptionsFlowUtil.java
+old mode 100644
+new mode 100755
+index 458798f8..69d564e3
+--- a/Settings/src/com/android/tv/settings/connectivity/util/AdvancedOptionsFlowUtil.java
++++ b/Settings/src/com/android/tv/settings/connectivity/util/AdvancedOptionsFlowUtil.java
+@@ -79,6 +79,27 @@ public class AdvancedOptionsFlowUtil {
+         return 0;
+     }
+ 
++    /**
++     * Process Proxy Settings.
++     *
++     * @param activity the activity that calls this method.
++     * @param proxySettings the proxySettings that to be set.
++     * @param httpProxy the httpProxy that to be set.
++     * @return 0 if successful, or other different values based on the result.
++     */
++    public static int processProxySettings(FragmentActivity activity, boolean bReset) {
++
++        AdvancedOptionsFlowInfo flowInfo = ViewModelProviders
++                .of(activity)
++                .get(AdvancedOptionsFlowInfo.class);
++        IpConfiguration mIpConfiguration = flowInfo.getIpConfiguration();
++
++        mIpConfiguration.setProxySettings(bReset?IpConfiguration.ProxySettings.NONE:mIpConfiguration.getProxySettings());
++		mIpConfiguration.setHttpProxy(bReset?null:mIpConfiguration.getHttpProxy());		
++
++        return 0;
++    }
++
+     /**
+      * Process Ip Settings.
+      *
+-- 
+2.24.0
+

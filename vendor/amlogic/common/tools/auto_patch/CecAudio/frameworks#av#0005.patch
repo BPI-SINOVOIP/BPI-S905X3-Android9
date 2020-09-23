@@ -1,0 +1,38 @@
+From 12451a67d1fd718fe4f845942c3b4324d22a9524 Mon Sep 17 00:00:00 2001
+From: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date: Mon, 25 Feb 2019 20:12:24 +0800
+Subject: [PATCH] Audiopolicy: remove regist uid policy when bootup [1/1]
+
+PD# SWPL-5130
+
+Problem:
+audio policy service start slowly
+
+Solution:
+remove regist uid policy when bootup
+
+Verify:
+verify by x301
+
+Change-Id: I5042a817d93a0fcb94b4f4ba43adce46b0981fff
+Signed-off-by: Chaomin Zheng <chaomin.zheng@amlogic.com>
+---
+ services/audiopolicy/service/AudioPolicyService.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/services/audiopolicy/service/AudioPolicyService.cpp b/services/audiopolicy/service/AudioPolicyService.cpp
+index dbbf1d0..71d5c95 100644
+--- a/services/audiopolicy/service/AudioPolicyService.cpp
++++ b/services/audiopolicy/service/AudioPolicyService.cpp
+@@ -88,7 +88,7 @@ void AudioPolicyService::onFirstRef()
+     }
+ 
+     mUidPolicy = new UidPolicy(this);
+-    mUidPolicy->registerSelf();
++    //mUidPolicy->registerSelf();
+ }
+ 
+ AudioPolicyService::~AudioPolicyService()
+-- 
+2.7.4
+

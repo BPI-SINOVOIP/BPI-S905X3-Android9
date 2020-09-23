@@ -1,0 +1,1715 @@
+From 6615df72cc36c63537f3a1a0a97ec01727aec62c Mon Sep 17 00:00:00 2001
+From: Lu Wang <lu.wang@amlogic.com>
+Date: Thu, 11 Jul 2019 11:23:37 +0800
+Subject: [PATCH] framework: add explayer play flow on mediaplayer [3/3]
+
+PD#OTT-4321
+
+Problem:
+no support exoplayer
+
+Solution:
+add exoplayer play flow on mediaplayer
+
+Verify:
+ampere
+
+Change-Id: I7bb8c618ceb43b47ca021d3194a7a0d221d3d99a
+Signed-off-by: Lu Wang <lu.wang@amlogic.com>
+
+diff --git a/media/java/android/media/MediaPlayer.java b/media/java/android/media/MediaPlayer.java
+index d532e52..cbd2036 100644
+--- a/media/java/android/media/MediaPlayer.java
++++ b/media/java/android/media/MediaPlayer.java
+@@ -93,7 +93,6 @@ import java.util.Set;
+ import java.util.UUID;
+ import java.util.Vector;
+ 
+-
+ /**
+  * MediaPlayer class can be used to control playback
+  * of audio/video files and streams. An example on how to use the methods in
+@@ -651,6 +650,19 @@ public class MediaPlayer extends PlayerBase
+     private boolean mPrepareDrmInProgress;
+     private ProvisioningThread mDrmProvisioningThread;
+ 
++
++    private final static String TAGEXO = "MediaPlayerExo";
++    private boolean mExoIsPlaying = false;
++    private Looper looper = null;
++    private boolean mUseExoPlayer = false;
++    private MediaPlayerExo mExoPlayerInstance = null;
++    private int mExoTotalDuration;
++    private int mExoCurPosition;
++    private int mExoVideoWidth;
++    private int mExoVideoHeight;
++    private boolean mExoBuffering;
++    private boolean mExoBufferNotifyStart;
++
+     /**
+      * Default constructor. Consider using one of the create() methods for
+      * synchronously instantiating a MediaPlayer from a Uri or resource.
+@@ -661,8 +673,7 @@ public class MediaPlayer extends PlayerBase
+     public MediaPlayer() {
+         super(new AudioAttributes.Builder().build(),
+                 AudioPlaybackConfiguration.PLAYER_TYPE_JAM_MEDIAPLAYER);
+-
+-        Looper looper;
++        //Looper looper;
+         if ((looper = Looper.myLooper()) != null) {
+             mEventHandler = new EventHandler(this, looper);
+         } else if ((looper = Looper.getMainLooper()) != null) {
+@@ -712,6 +723,10 @@ public class MediaPlayer extends PlayerBase
+      */
+     public Parcel newRequest() {
+         Parcel parcel = Parcel.obtain();
++        if (mUseExoPlayer) {
++            Log.i(TAGEXO, "newRequest not implement now");
++            return parcel;
++        }
+         parcel.writeInterfaceToken(IMEDIA_PLAYER);
+         return parcel;
+     }
+@@ -731,6 +746,10 @@ public class MediaPlayer extends PlayerBase
+      * {@hide}
+      */
+     public void invoke(Parcel request, Parcel reply) {
++        if (mUseExoPlayer) {
++            Log.i(TAGEXO, "invoke not implement now");
++            return;
++        }
+         int retcode = native_invoke(request, reply);
+         reply.setDataPosition(0);
+         if (retcode != 0) {
+@@ -754,6 +773,14 @@ public class MediaPlayer extends PlayerBase
+      */
+     public void setDisplay(SurfaceHolder sh) {
+         mSurfaceHolder = sh;
++        if (mUseExoPlayer) {
++            Log.i(TAGEXO, "call setDisplay");
++            if (mExoPlayerInstance != null) {
++                mExoPlayerInstance.setVideoSurfaceHolder(sh);
++                updateSurfaceScreenOn();
++            }
++            return;
++        }
+         Surface surface;
+         if (sh != null) {
+             surface = sh.getSurface();
+@@ -789,7 +816,14 @@ public class MediaPlayer extends PlayerBase
+             Log.w(TAG, "setScreenOnWhilePlaying(true) is ineffective for Surface");
+         }
+         mSurfaceHolder = null;
+-        _setVideoSurface(surface);
++        if (mUseExoPlayer) {
++            Log.i(TAG, "call setSurface");
++            if (mExoPlayerInstance != null) {
++                mExoPlayerInstance.setSurface(surface);
++            }
++        } else {
++            _setVideoSurface(surface);
++        }
+         updateSurfaceScreenOn();
+     }
+ 
+@@ -838,6 +872,12 @@ public class MediaPlayer extends PlayerBase
+             final String msg = "Scaling mode " + mode + " is not supported";
+             throw new IllegalArgumentException(msg);
+         }
++        if (mUseExoPlayer) {
++            Log.i(TAG, "call setVideoScalingMode");
++            if (mExoPlayerInstance != null)
++                mExoPlayerInstance.setVideoScalingMode(mode);
++            return;
++        }
+         Parcel request = Parcel.obtain();
+         Parcel reply = Parcel.obtain();
+         try {
+@@ -902,6 +942,13 @@ public class MediaPlayer extends PlayerBase
+      *     see {@link AudioManager#generateAudioSessionId()} to obtain a new session.
+      * @return a MediaPlayer object, or null if creation failed
+      */
++
++    private void setExoPlayerSupport(boolean support) {
++        mUseExoPlayer = support;
++        if (support == true && mExoPlayerInstance == null)
++            mExoPlayerInstance = new MediaPlayerExo(this, looper, mEventHandler);
++    }
++
+     public static MediaPlayer create(Context context, Uri uri, SurfaceHolder holder,
+             AudioAttributes audioAttributes, int audioSessionId) {
+ 
+@@ -1036,6 +1083,16 @@ public class MediaPlayer extends PlayerBase
+     public void setDataSource(@NonNull Context context, @NonNull Uri uri,
+             @Nullable Map<String, String> headers, @Nullable List<HttpCookie> cookies)
+             throws IOException {
++        if (MediaPlayerExo.getIsFormatSupport(uri)) {
++            Log.i(TAGEXO, "ExoPlayer support this uri we choose exoplayer");
++            setExoPlayerSupport(true);
++            if (mExoPlayerInstance != null) {
++                mExoPlayerInstance.initVideo(context, uri, headers, cookies);
++            } else {
++                Log.i(TAGEXO, "ExoPlayer mExoPlayerInstance is null");
++            }
++            return;
++        }
+         if (context == null) {
+             throw new NullPointerException("context param can not be null.");
+         }
+@@ -1100,6 +1157,17 @@ public class MediaPlayer extends PlayerBase
+     public void setDataSource(@NonNull Context context, @NonNull Uri uri,
+             @Nullable Map<String, String> headers)
+             throws IOException, IllegalArgumentException, SecurityException, IllegalStateException {
++        if (MediaPlayerExo.getIsFormatSupport(uri)) {
++            Log.i(TAGEXO, "ExoPlayer support this uri we choose exoplayer");
++            setExoPlayerSupport(true);
++            if (mExoPlayerInstance != null) {
++                Log.i(TAG, "[exo-setDataSource]uri-path:" + uri.getPath());
++                mExoPlayerInstance.initVideo(context, uri, headers, null);
++            } else {
++                Log.i(TAGEXO, "ExoPlayer mExoPlayerInstance is null");
++            }
++            return;
++        }
+         setDataSource(context, uri, headers, null);
+     }
+ 
+@@ -1128,6 +1196,10 @@ public class MediaPlayer extends PlayerBase
+      */
+     public void setDataSource(String path)
+             throws IOException, IllegalArgumentException, SecurityException, IllegalStateException {
++        if (mUseExoPlayer) {
++            Log.i(TAG, "[exo-setDataSource] only path, exo not support this way!");
++            return;
++        }
+         setDataSource(path, null, null);
+     }
+ 
+@@ -1172,6 +1244,12 @@ public class MediaPlayer extends PlayerBase
+         if ("file".equals(scheme)) {
+             path = uri.getPath();
+         } else if (scheme != null) {
++            if (scheme.contains("http")) {
++                Uri exoUri = Uri.parse(path);
++                if (MediaPlayerExo.getIsFormatSupport(exoUri)) {
++                    Log.i(TAGEXO ,"Maybe should use exoplayer we now not implement this setDataSource");
++                }
++            }
+             // handle non-file sources
+             nativeSetDataSource(
+                 MediaHTTPService.createHttpServiceBinderIfNecessary(path, cookies),
+@@ -1208,6 +1286,10 @@ public class MediaPlayer extends PlayerBase
+      */
+     public void setDataSource(@NonNull AssetFileDescriptor afd)
+             throws IOException, IllegalArgumentException, IllegalStateException {
++        if (mUseExoPlayer) {
++            Log.i(TAGEXO, "[exo-setDataSource] now, exo not support this way, AssetFileDescriptor!");
++            return;
++        }
+         Preconditions.checkNotNull(afd);
+         // Note: using getDeclaredLength so that our behavior is the same
+         // as previous versions when the content provider is returning
+@@ -1248,6 +1330,10 @@ public class MediaPlayer extends PlayerBase
+      */
+     public void setDataSource(FileDescriptor fd, long offset, long length)
+             throws IOException, IllegalArgumentException, IllegalStateException {
++        if (mUseExoPlayer) {
++            Log.i(TAG, "[exo-setDataSource] now, exo not support this way, FileDescriptor!");
++            return;
++        }
+         _setDataSource(fd, offset, length);
+     }
+ 
+@@ -1263,6 +1349,10 @@ public class MediaPlayer extends PlayerBase
+      */
+     public void setDataSource(MediaDataSource dataSource)
+             throws IllegalArgumentException, IllegalStateException {
++        if (mUseExoPlayer) {
++            Log.i(TAG, "[exo-setDataSource] now, exo not support this way, MediaDataSource!");
++            return;
++        }
+         _setDataSource(dataSource);
+     }
+ 
+@@ -1279,6 +1369,17 @@ public class MediaPlayer extends PlayerBase
+      * @throws IllegalStateException if it is called in an invalid state
+      */
+     public void prepare() throws IOException, IllegalStateException {
++        if (mUseExoPlayer) {
++            if (mExoPlayerInstance!= null) {
++                Log.i(TAGEXO, "exo-prepare");
++                mExoPlayerInstance.prepare();
++                if (mSurfaceHolder != null) {
++                    Log.i(TAGEXO, "exo-setVideoSurfaceHolder");
++                    mExoPlayerInstance.setVideoSurfaceHolder(mSurfaceHolder);
++                }
++            }
++            return;
++        }
+         _prepare();
+         scanInternalSubtitleTracks();
+ 
+@@ -1300,7 +1401,22 @@ public class MediaPlayer extends PlayerBase
+      *
+      * @throws IllegalStateException if it is called in an invalid state
+      */
+-    public native void prepareAsync() throws IllegalStateException;
++    private native void _prepareAsync() throws IllegalStateException;
++
++    public void prepareAsync() throws IllegalStateException {
++        if (mUseExoPlayer) {
++            if (mExoPlayerInstance != null) {
++                Log.i(TAGEXO, "exo-prepareAsync");
++                mExoPlayerInstance.prepareAsync();
++                if (mSurfaceHolder != null) {
++                    Log.i(TAGEXO, "exo-setVideoSurfaceHolder");
++                    mExoPlayerInstance.setVideoSurfaceHolder(mSurfaceHolder);
++                }
++            }
++            return;
++        }
++        _prepareAsync();
++    }
+ 
+     /**
+      * Starts or resumes playback. If playback had previously been paused,
+@@ -1311,6 +1427,13 @@ public class MediaPlayer extends PlayerBase
+      * @throws IllegalStateException if it is called in an invalid state
+      */
+     public void start() throws IllegalStateException {
++        if (mUseExoPlayer) {
++            if (mExoPlayerInstance != null) {
++                Log.i(TAG, "[exo-start]");
++                mExoPlayerInstance.start();
++            }
++            return;
++        }
+         //FIXME use lambda to pass startImpl to superclass
+         final int delay = getStartDelayMs();
+         if (delay == 0) {
+@@ -1346,6 +1469,9 @@ public class MediaPlayer extends PlayerBase
+ 
+ 
+     private int getAudioStreamType() {
++        if (mUseExoPlayer) {
++            return mStreamType;
++        }
+         if (mStreamType == AudioManager.USE_DEFAULT_STREAM_TYPE) {
+             mStreamType = _getAudioStreamType();
+         }
+@@ -1362,6 +1488,13 @@ public class MediaPlayer extends PlayerBase
+      */
+     public void stop() throws IllegalStateException {
+         stayAwake(false);
++        if (mUseExoPlayer) {
++            Log.i(TAGEXO, "stop");
++            if (mExoPlayerInstance != null)
++                mExoPlayerInstance.stop();
++            baseStop();
++            return;
++        }
+         _stop();
+         baseStop();
+     }
+@@ -1376,6 +1509,13 @@ public class MediaPlayer extends PlayerBase
+      */
+     public void pause() throws IllegalStateException {
+         stayAwake(false);
++        if (mUseExoPlayer) {
++            Log.i(TAGEXO, "pause");
++            if (mExoPlayerInstance != null)
++                mExoPlayerInstance.pause();
++            basePause();
++            return;
++        }
+         _pause();
+         basePause();
+     }
+@@ -1401,11 +1541,19 @@ public class MediaPlayer extends PlayerBase
+     /* package */ int playerApplyVolumeShaper(
+             @NonNull VolumeShaper.Configuration configuration,
+             @NonNull VolumeShaper.Operation operation) {
++        if (mUseExoPlayer) {
++            Log.i(TAGEXO, "playerApplyVolumeShaper now we not implment for exoplayer mode");
++            return 0;
++        }
+         return native_applyVolumeShaper(configuration, operation);
+     }
+ 
+     @Override
+     /* package */ @Nullable VolumeShaper.State playerGetVolumeShaperState(int id) {
++        if (mUseExoPlayer) {
++            Log.i(TAGEXO, "playerGetVolumeShaperState now we not implment for exoplayer mode");
++            return null;
++        }
+         return native_getVolumeShaperState(id);
+     }
+ 
+@@ -1436,6 +1584,10 @@ public class MediaPlayer extends PlayerBase
+      */
+     @Override
+     public boolean setPreferredDevice(AudioDeviceInfo deviceInfo) {
++        if (mUseExoPlayer) {
++            Log.i(TAGEXO, "setPreferredDevice now we not implment for exoplayer mode");
++            return false;
++        }
+         if (deviceInfo != null && !deviceInfo.isSink()) {
+             return false;
+         }
+@@ -1455,6 +1607,10 @@ public class MediaPlayer extends PlayerBase
+      */
+     @Override
+     public AudioDeviceInfo getPreferredDevice() {
++        if (mUseExoPlayer) {
++            Log.i(TAGEXO, "getPreferredDevice now we not implment for exoplayer mode");
++            return null;
++        }
+         synchronized (this) {
+             return mPreferredDevice;
+         }
+@@ -1468,6 +1624,10 @@ public class MediaPlayer extends PlayerBase
+      */
+     @Override
+     public AudioDeviceInfo getRoutedDevice() {
++        if (mUseExoPlayer) {
++            Log.i(TAGEXO, "getRoutedDevice now we not implment for exoplayer mode");
++            return null;
++        }
+         int deviceId = native_getRoutedDeviceId();
+         if (deviceId == 0) {
+             return null;
+@@ -1512,6 +1672,10 @@ public class MediaPlayer extends PlayerBase
+     @Override
+     public void addOnRoutingChangedListener(AudioRouting.OnRoutingChangedListener listener,
+             Handler handler) {
++        if (mUseExoPlayer) {
++            Log.i(TAGEXO, "addOnRoutingChangedListener now we not implment for exoplayer mode");
++            return;
++        }
+         synchronized (mRoutingChangeListeners) {
+             if (listener != null && !mRoutingChangeListeners.containsKey(listener)) {
+                 enableNativeRoutingCallbacksLocked(true);
+@@ -1530,6 +1694,10 @@ public class MediaPlayer extends PlayerBase
+      */
+     @Override
+     public void removeOnRoutingChangedListener(AudioRouting.OnRoutingChangedListener listener) {
++        if (mUseExoPlayer) {
++            Log.i(TAGEXO, "removeOnRoutingChangedListener now we not implment for exoplayer mode");
++            return;
++        }
+         synchronized (mRoutingChangeListeners) {
+             if (mRoutingChangeListeners.containsKey(listener)) {
+                 mRoutingChangeListeners.remove(listener);
+@@ -1631,7 +1799,22 @@ public class MediaPlayer extends PlayerBase
+      * {@link #setOnVideoSizeChangedListener(OnVideoSizeChangedListener)}
+      * to provide a notification when the width is available.
+      */
+-    public native int getVideoWidth();
++    private native int _getVideoWidth();
++
++    public int getVideoWidth() {
++        if (mUseExoPlayer) {
++            if (mExoPlayerInstance != null) {
++                Log.i(TAGEXO, "exo-getVideoWidth");
++                if (mEventHandler != null) {
++                    Log.i(TAGEXO, "exo-send-EXO_MEDIA_INFO");
++                    Message m = mEventHandler.obtainMessage(EXO_MEDIA_INFO, 0, 0, null);
++                    mEventHandler.sendMessage(m);
++                }
++            }
++            return mExoVideoWidth;
++        }
++        return _getVideoWidth();
++    }
+ 
+     /**
+      * Returns the height of the video.
+@@ -1642,7 +1825,22 @@ public class MediaPlayer extends PlayerBase
+      * {@link #setOnVideoSizeChangedListener(OnVideoSizeChangedListener)}
+      * to provide a notification when the height is available.
+      */
+-    public native int getVideoHeight();
++    private native int _getVideoHeight();
++
++    public int getVideoHeight() {
++        if (mUseExoPlayer) {
++            if (mExoPlayerInstance != null) {
++                Log.i(TAGEXO, "exo-getVideoHeight");
++                if (mEventHandler != null) {
++                    Log.i(TAGEXO, "exo-send-EXO_MEDIA_INFO");
++                    Message m = mEventHandler.obtainMessage(EXO_MEDIA_INFO, 0, 0, null);
++                    mEventHandler.sendMessage(m);
++                }
++            }
++            return mExoVideoHeight;
++        }
++        return _getVideoHeight();
++    }
+ 
+     /**
+      * Return Metrics data about the current player.
+@@ -1655,6 +1853,10 @@ public class MediaPlayer extends PlayerBase
+      *  the return value.
+      */
+     public PersistableBundle getMetrics() {
++        if (mUseExoPlayer) {
++            Log.i(TAGEXO, "getMetrics now we not implment for exoplayer mode");
++            return null;
++        }
+         PersistableBundle bundle = native_getMetrics();
+         return bundle;
+     }
+@@ -1668,7 +1870,18 @@ public class MediaPlayer extends PlayerBase
+      * @throws IllegalStateException if the internal player engine has not been
+      * initialized or has been released.
+      */
+-    public native boolean isPlaying();
++    private native boolean _isPlaying();
++
++    public boolean isPlaying() {
++        if (mUseExoPlayer) {
++            if (mEventHandler != null) {
++                Message m = mEventHandler.obtainMessage(EXO_MEDIA_IS_PLAYING, 0, 0, null);
++                mEventHandler.sendMessage(m);
++            }
++            return mExoIsPlaying;
++        }
++        return _isPlaying();
++    }
+ 
+     /**
+      * Gets the current buffering management params used by the source component.
+@@ -1683,7 +1896,6 @@ public class MediaPlayer extends PlayerBase
+     @NonNull
+     @TestApi
+     public native BufferingParams getBufferingParams();
+-
+     /**
+      * Sets buffering management params.
+      * The object sets its internal BufferingParams to the input, except that the input is
+@@ -1700,7 +1912,6 @@ public class MediaPlayer extends PlayerBase
+      */
+     @TestApi
+     public native void setBufferingParams(@NonNull BufferingParams params);
+-
+     /**
+      * Change playback speed of audio by resampling the audio.
+      * <p>
+@@ -1802,8 +2013,24 @@ public class MediaPlayer extends PlayerBase
+      * initialized or has been released.
+      * @throws IllegalArgumentException if params is not supported.
+      */
+-    public native void setPlaybackParams(@NonNull PlaybackParams params);
++    private native void _setPlaybackParams(@NonNull PlaybackParams params);
+ 
++    public void setPlaybackParams(@NonNull PlaybackParams params) {
++        if (mUseExoPlayer) {
++            Log.i(TAGEXO, "call setPlaybackParams");
++            if (mExoPlayerInstance != null) {
++                if (mEventHandler != null) {
++                    Log.i(TAGEXO, "exo-send-MEDIA_EXO_EXTEND_SET_PLAYBACK_PARAMS");
++                    Message m = mEventHandler.obtainMessage(MEDIA_EXO_EXTEND_SET_PLAYBACK_PARAMS, 0, 0, null);
++                    mEventHandler.sendMessage(m);
++                }
++            }
++            else
++                Log.i(TAGEXO, "setPlaybackParams ExoPlayerInstance is null");
++            return;
++        }
++        _setPlaybackParams(params);
++    }
+     /**
+      * Gets the playback params, containing the current playback rate.
+      *
+@@ -1812,8 +2039,15 @@ public class MediaPlayer extends PlayerBase
+      * initialized.
+      */
+     @NonNull
+-    public native PlaybackParams getPlaybackParams();
++    private native PlaybackParams _getPlaybackParams();
+ 
++    public PlaybackParams getPlaybackParams() {
++        if (mUseExoPlayer) {
++            Log.i(TAGEXO, "now getPlaybackParams now implement");
++            return null;
++        }
++        return _getPlaybackParams();
++    }
+     /**
+      * Sets A/V sync mode.
+      *
+@@ -1823,8 +2057,14 @@ public class MediaPlayer extends PlayerBase
+      * initialized.
+      * @throws IllegalArgumentException if params are not supported.
+      */
+-    public native void setSyncParams(@NonNull SyncParams params);
+-
++    private native void _setSyncParams(@NonNull SyncParams params);
++    public void setSyncParams(@NonNull SyncParams params) {
++        if (mUseExoPlayer) {
++            Log.i(TAGEXO, "now setSyncParams now implement");
++            return;
++        }
++        _setSyncParams(params);
++    }
+     /**
+      * Gets the A/V sync mode.
+      *
+@@ -1834,8 +2074,14 @@ public class MediaPlayer extends PlayerBase
+      * initialized.
+      */
+     @NonNull
+-    public native SyncParams getSyncParams();
+-
++    private native SyncParams _getSyncParams();
++    public SyncParams getSyncParams() {
++        if (mUseExoPlayer) {
++            Log.i(TAGEXO, "now getSyncParams now implement");
++            return null;
++        }
++        return _getSyncParams();
++    }
+     /**
+      * Seek modes used in method seekTo(long, int) to move media position
+      * to a specified location.
+@@ -1920,6 +2166,13 @@ public class MediaPlayer extends PlayerBase
+      * @throws IllegalArgumentException if the mode is invalid.
+      */
+     public void seekTo(long msec, @SeekMode int mode) {
++        if (mUseExoPlayer) {
++            if (mExoPlayerInstance != null) {
++                Log.i(TAG, "[exo-seekTo]");
++                mExoPlayerInstance.seekTo((int)msec, mode);
++            }
++            return;
++        }
+         if (mode < SEEK_PREVIOUS_SYNC || mode > SEEK_CLOSEST) {
+             final String msg = "Illegal seek mode: " + mode;
+             throw new IllegalArgumentException(msg);
+@@ -1944,6 +2197,13 @@ public class MediaPlayer extends PlayerBase
+      * initialized
+      */
+     public void seekTo(int msec) throws IllegalStateException {
++        if (mUseExoPlayer) {
++            if (mExoPlayerInstance != null) {
++                Log.i(TAG, "[exo-seekTo]");
++                mExoPlayerInstance.seekTo(SEEK_PREVIOUS_SYNC, msec);
++            }
++            return;
++        }
+         seekTo(msec, SEEK_PREVIOUS_SYNC /* mode */);
+     }
+ 
+@@ -1984,7 +2244,21 @@ public class MediaPlayer extends PlayerBase
+      *
+      * @return the current position in milliseconds
+      */
+-    public native int getCurrentPosition();
++    private native int _getCurrentPosition();
++
++    public int getCurrentPosition() {
++        if (mUseExoPlayer) {
++            if (mExoPlayerInstance!= null && isPlaying()) {
++                if (mEventHandler != null) {
++                    Log.i(TAG, "exo-send-EXO_MEDIA_UPDATE_PROCESS");
++                    Message m = mEventHandler.obtainMessage(EXO_MEDIA_UPDATE_PROCESS, 0, 0, null);
++                    mEventHandler.sendMessage(m);
++                }
++            }
++            return mExoCurPosition;
++        }
++        return _getCurrentPosition();
++    }
+ 
+     /**
+      * Gets the duration of the file.
+@@ -1992,7 +2266,23 @@ public class MediaPlayer extends PlayerBase
+      * @return the duration in milliseconds, if no duration is available
+      *         (for example, if streaming live content), -1 is returned.
+      */
+-    public native int getDuration();
++    private native int _getDuration();
++
++    public int getDuration() {
++        if (mUseExoPlayer) {
++            Log.i(TAG, "exo-getDuration -1-");
++            if (mExoPlayerInstance != null && isPlaying()) {
++                Log.i(TAG, "exo-getDuration");
++                if (mEventHandler != null) {
++                    Log.i(TAG, "exo-send-EXO_MEDIA_UPDATE_PROCESS");
++                    Message m = mEventHandler.obtainMessage(EXO_MEDIA_UPDATE_PROCESS, 0, 0, null);
++                    mEventHandler.sendMessage(m);
++                }
++            }
++            return mExoTotalDuration;
++        }
++        return _getDuration();
++    }
+ 
+     /**
+      * Gets the media metadata.
+@@ -2012,6 +2302,10 @@ public class MediaPlayer extends PlayerBase
+      */
+     public Metadata getMetadata(final boolean update_only,
+                                 final boolean apply_filter) {
++        if (mUseExoPlayer) {
++            Log.i(TAGEXO, "getMetadata now we not implment for exoplayer mode");
++            return null;
++        }
+         Parcel reply = Parcel.obtain();
+         Metadata data = new Metadata();
+ 
+@@ -2049,6 +2343,10 @@ public class MediaPlayer extends PlayerBase
+      * {@hide}
+      */
+     public int setMetadataFilter(Set<Integer> allow, Set<Integer> block) {
++        if (mUseExoPlayer) {
++            Log.i(TAGEXO, "setMetadataFilter now we not implment for exoplayer mode");
++            return 0;
++        }
+         // Do our serialization manually instead of calling
+         // Parcel.writeArray since the sets are made of the same type
+         // we avoid paying the price of calling writeValue (used by
+@@ -2095,8 +2393,15 @@ public class MediaPlayer extends PlayerBase
+      * @param next the player to start after this one completes playback.
+      *
+      */
+-    public native void setNextMediaPlayer(MediaPlayer next);
++    private native void _setNextMediaPlayer(MediaPlayer next);
+ 
++    public void setNextMediaPlayer(MediaPlayer next) {
++        if (mUseExoPlayer) {
++            Log.i(TAGEXO, "setMetadataFilter now we not implment for exoplayer mode");
++            return;
++        }
++        _setNextMediaPlayer(next);
++    }
+     /**
+      * Releases resources associated with this MediaPlayer object.
+      * It is considered good practice to call this method when you're
+@@ -2143,9 +2448,16 @@ public class MediaPlayer extends PlayerBase
+         mOnDrmConfigHelper = null;
+         mOnDrmInfoHandlerDelegate = null;
+         mOnDrmPreparedHandlerDelegate = null;
+-        resetDrmState();
+-
+-        _release();
++        if (mUseExoPlayer) {
++            Log.i(TAGEXO, "release");
++            mUseExoPlayer = false;
++            if (mExoPlayerInstance != null)
++                mExoPlayerInstance.release();
++            mExoPlayerInstance = null;
++        } else {
++            resetDrmState();
++            _release();
++        }
+     }
+ 
+     private native void _release();
+@@ -2175,7 +2487,13 @@ public class MediaPlayer extends PlayerBase
+         }
+ 
+         stayAwake(false);
+-        _reset();
++        if (mUseExoPlayer) {
++            Log.i(TAGEXO, "reset");
++            if (mExoPlayerInstance != null)
++                mExoPlayerInstance.reset();
++        } else {
++            _reset();
++        }
+         // make sure none of the listeners get called anymore
+         if (mEventHandler != null) {
+             mEventHandler.removeCallbacksAndMessages(null);
+@@ -2185,8 +2503,8 @@ public class MediaPlayer extends PlayerBase
+             mIndexTrackPairs.clear();
+             mInbandTrackIndices.clear();
+         };
+-
+-        resetDrmState();
++        if (mUseExoPlayer == false)
++            resetDrmState();
+     }
+ 
+     private native void _reset();
+@@ -2200,6 +2518,10 @@ public class MediaPlayer extends PlayerBase
+      * @hide
+      */
+     public void notifyAt(long mediaTimeUs) {
++        if (mUseExoPlayer) {
++            Log.i(TAGEXO, "notifyAt now we not implment for exoplayer mode " + mediaTimeUs);
++            return;
++        }
+         _notifyAt(mediaTimeUs);
+     }
+ 
+@@ -2219,7 +2541,13 @@ public class MediaPlayer extends PlayerBase
+         deprecateStreamTypeForPlayback(streamtype, "MediaPlayer", "setAudioStreamType()");
+         baseUpdateAudioAttributes(
+                 new AudioAttributes.Builder().setInternalLegacyStreamType(streamtype).build());
+-        _setAudioStreamType(streamtype);
++        if (mUseExoPlayer) {
++            Log.i(TAGEXO, "call setAudioStreamType streamtype " + streamtype);
++            if (mExoPlayerInstance != null)
++                mExoPlayerInstance.setAudioStreamType(streamtype);
++        } else {
++            _setAudioStreamType(streamtype);
++        }
+         mStreamType = streamtype;
+     }
+ 
+@@ -2227,6 +2555,9 @@ public class MediaPlayer extends PlayerBase
+ 
+     // Keep KEY_PARAMETER_* in sync with include/media/mediaplayer.h
+     private final static int KEY_PARAMETER_AUDIO_ATTRIBUTES = 1400;
++    private final static int KEY_PARAMETER_START_PLAYBACK_POSITION = 2600;
++    private static final int KEY_PARAMETER_LA_URL = 2700;
++    private static final int KEY_PARAMETER_CUSTOM_DATA = 2800;
+     /**
+      * Sets the parameter indicated by key.
+      * @param key key indicates the parameter to be set.
+@@ -2234,8 +2565,59 @@ public class MediaPlayer extends PlayerBase
+      * @return true if the parameter is set successfully, false otherwise
+      * {@hide}
+      */
+-    private native boolean setParameter(int key, Parcel value);
++    private native boolean _setParameter(int key, Parcel value);
++    //If need can be set to public we now set private first
++    private boolean setParameter(int key, Parcel value) {
++        boolean ret = false;
++        if (key == KEY_PARAMETER_START_PLAYBACK_POSITION) {
++            if (mExoPlayerInstance == null)
++                setExoPlayerSupport(true);
++            ret = mExoPlayerInstance.setParameter(key, value);
++        } else {
++            ret = _setParameter(key, value);
++        }
++        return ret;
++    }
++
++    public boolean setParameter(int key, int value) {
++        boolean ret = false;
++        if (mExoPlayerInstance != null) {
++            ret = mExoPlayerInstance.setParameter(key, value);
++        }
++        return ret;
++    }
++
++    public boolean setParameter(int key, String value) {
++        boolean ret = false;
++        if (key == KEY_PARAMETER_LA_URL || key == KEY_PARAMETER_CUSTOM_DATA) {
++            if (mExoPlayerInstance == null)
++                setExoPlayerSupport(true);
++        }
++        if (mExoPlayerInstance != null) {
++            ret = mExoPlayerInstance.setParameter(key, value);
++        }
++        return ret;
++    }
++
++    public Parcel getParcelParameter(int key) {
++        Parcel parcel = null;
++        if (mExoPlayerInstance != null) {
++            parcel = mExoPlayerInstance.getParcelParameter(key);
++        } else {
++            Log.e(TAG, " getParcelParameter should not carry out here");
++        }
++        return parcel;
++    }
+ 
++    public int getIntParameter(int key) {
++        int ret = -1;
++        if (mExoPlayerInstance != null) {
++            ret = mExoPlayerInstance.getIntParameter(key);
++        } else {
++           Log.e(TAG, " getParcelParameter should not carry out here");
++        }
++        return ret;
++    }
+     /**
+      * Sets the audio attributes for this MediaPlayer.
+      * See {@link AudioAttributes} for how to build and configure an instance of this class.
+@@ -2263,14 +2645,31 @@ public class MediaPlayer extends PlayerBase
+      *
+      * @param looping whether to loop or not
+      */
+-    public native void setLooping(boolean looping);
+-
++    private native void _setLooping(boolean looping);
++    public void setLooping(boolean looping) {
++        if (mUseExoPlayer) {
++            if (mExoPlayerInstance != null)
++               mExoPlayerInstance.setLooping(looping);
++            return;
++        }
++        _setLooping(looping);
++    }
+     /**
+      * Checks whether the MediaPlayer is looping or non-looping.
+      *
+      * @return true if the MediaPlayer is currently looping, false otherwise
+      */
+-    public native boolean isLooping();
++    private native boolean _isLooping();
++    public boolean isLooping() {
++        boolean ret = false;
++        if (mUseExoPlayer) {
++            if (mExoPlayerInstance != null)
++               ret = mExoPlayerInstance.getLooping();
++            return ret;
++        }
++        ret = _isLooping();
++        return ret;
++    }
+ 
+     /**
+      * Sets the volume on this player.
+@@ -2290,6 +2689,13 @@ public class MediaPlayer extends PlayerBase
+      * to be set independently.
+      */
+     public void setVolume(float leftVolume, float rightVolume) {
++        if (mUseExoPlayer) {
++            if (mExoPlayerInstance!= null) {
++                Log.i(TAG, "[exo-setVolume2]");
++                mExoPlayerInstance.setVolume(leftVolume, rightVolume);
++            }
++            return;
++        }
+         baseSetVolume(leftVolume, rightVolume);
+     }
+ 
+@@ -2305,6 +2711,13 @@ public class MediaPlayer extends PlayerBase
+      * @hide
+      */
+     public void setVolume(float volume) {
++        if (mUseExoPlayer) {
++            if (mExoPlayerInstance!= null) {
++                Log.i(TAG, "[exo-setVolume]");
++                mExoPlayerInstance.setVolume(volume, volume);
++            }
++            return;
++        }
+         setVolume(volume, volume);
+     }
+ 
+@@ -2324,16 +2737,29 @@ public class MediaPlayer extends PlayerBase
+      * This method must be called before one of the overloaded <code> setDataSource </code> methods.
+      * @throws IllegalStateException if it is called in an invalid state
+      */
+-    public native void setAudioSessionId(int sessionId)  throws IllegalArgumentException, IllegalStateException;
++    private native void _setAudioSessionId(int sessionId)  throws IllegalArgumentException, IllegalStateException;
+ 
++    public void setAudioSessionId(int sessionId) throws IllegalArgumentException, IllegalStateException {
++        if (mUseExoPlayer) {
++            Log.i(TAGEXO, "setAudioSessionId now we not implment for exoplayer mode");
++            return;
++        }
++        _setAudioSessionId(sessionId);
++    }
+     /**
+      * Returns the audio session ID.
+      *
+      * @return the audio session ID. {@see #setAudioSessionId(int)}
+      * Note that the audio session ID is 0 only if a problem occured when the MediaPlayer was contructed.
+      */
+-    public native int getAudioSessionId();
+-
++    private native int _getAudioSessionId();
++    public int getAudioSessionId(){
++        if (mUseExoPlayer) {
++            Log.i(TAGEXO, "getAudioSessionId now we not implment for exoplayer mode");
++            return 0;
++        }
++        return _getAudioSessionId();
++    }
+     /**
+      * Attaches an auxiliary effect to the player. A typical auxiliary effect is a reverberation
+      * effect which can be applied on any sound source that directs a certain amount of its
+@@ -2348,8 +2774,14 @@ public class MediaPlayer extends PlayerBase
+      * methods.
+      * @param effectId system wide unique id of the effect to attach
+      */
+-    public native void attachAuxEffect(int effectId);
+-
++    private native void _attachAuxEffect(int effectId);
++    public void attachAuxEffect(int effectId) {
++        if (mUseExoPlayer) {
++            Log.i(TAGEXO, "attachAuxEffect now we not implment for exoplayer mode");
++            return;
++        }
++        _attachAuxEffect(effectId);
++    }
+ 
+     /**
+      * Sets the send level of the player to the attached auxiliary effect.
+@@ -2490,6 +2922,9 @@ public class MediaPlayer extends PlayerBase
+             }
+         }
+ 
++        static public TrackInfo build(int type, MediaFormat format) {
++            return new TrackInfo(type, format);
++        }
+         /** @hide */
+         TrackInfo(int type, MediaFormat format) {
+             mTrackType = type;
+@@ -2584,6 +3019,12 @@ public class MediaPlayer extends PlayerBase
+      * @throws IllegalStateException if it is called in an invalid state.
+      */
+     public TrackInfo[] getTrackInfo() throws IllegalStateException {
++        if (mUseExoPlayer) {
++            if (mExoPlayerInstance != null) {
++                return mExoPlayerInstance.getTrackInfo();
++            }
++            return null;
++        }
+         TrackInfo trackInfo[] = getInbandTrackInfo();
+         // add out-of-band tracks
+         synchronized (mIndexTrackPairs) {
+@@ -3154,6 +3595,9 @@ public class MediaPlayer extends PlayerBase
+      * @see android.media.MediaPlayer#getTrackInfo
+      */
+     public void selectTrack(int index) throws IllegalStateException {
++        if (mUseExoPlayer) {
++            return;
++        }
+         selectOrDeselectTrack(index, true /* select */);
+     }
+ 
+@@ -3324,6 +3768,14 @@ public class MediaPlayer extends PlayerBase
+     private static final int MEDIA_TIME_DISCONTINUITY = 211;
+     private static final int MEDIA_AUDIO_ROUTING_CHANGED = 10000;
+ 
++    private static final int EXO_MEDIA_UPDATE_PROCESS = 300;
++    private static final int EXO_MEDIA_INFO = 301;
++    private static final int EXO_MEDIA_IS_PLAYING = 302;
++    private static final int EXO_MEDIA_UPDATE_BUFFER_PROCESS = 303;
++
++    private static final int MEDIA_EXO_EXTEND_SET_PLAYBACK_PARAMS = 4004;
++    private static final int MEDIA_EXO_EXTEND_GET_PLAYBACK_PARAMS = 4005;
++
+     private TimeProvider mTimeProvider;
+ 
+     /** @hide */
+@@ -3350,7 +3802,70 @@ public class MediaPlayer extends PlayerBase
+                 return;
+             }
+             switch(msg.what) {
++            case EXO_MEDIA_IS_PLAYING:
++                if (mUseExoPlayer) {
++                    if (mExoPlayerInstance != null) {
++                        mExoIsPlaying = mExoPlayerInstance.isPlaying();
++                        Log.w(TAGEXO, "mExoIsPlaying:" + mExoIsPlaying);
++                    }
++                }
++                break;
++            case EXO_MEDIA_INFO:
++                Log.w(TAG, "exo-EXO_MEDIA_INFO ");
++                if (mUseExoPlayer) {
++                    if (mExoPlayerInstance != null) {
++                          mExoVideoHeight = mExoPlayerInstance.getVideoHeight();
++                          mExoVideoWidth = mExoPlayerInstance.getVideoWidth();
++                          Log.w(TAG, "mExoVideoWidth:" + mExoVideoWidth + ",mExoVideoHeight:" + mExoVideoHeight);
++                    }
++                }
++                break;
++            case MEDIA_EXO_EXTEND_SET_PLAYBACK_PARAMS:
++                Log.i(TAGEXO, "exo-MEDIA_EXO_EXTEND_SET_PLAYBACK_PARAMS ");
++                if (mUseExoPlayer == true && mExoPlayerInstance != null) {
++                    //mExoPlayerInstance.setPlaybackParams(msg.obj);
++                }
++            case MEDIA_EXO_EXTEND_GET_PLAYBACK_PARAMS:
++                Log.i(TAGEXO, "now now implement MEDIA_EXO_EXTEND_GET_PLAYBACK_PARAMS ");
++                //if (mUseExoPlayer == true && mExoPlayerInstance != null) {
++                    //mExoPlaybackParams = mExoPlayerInstance.getPlaybackParams();
++                //}
++                break;
++            case EXO_MEDIA_UPDATE_PROCESS:
++                //Log.w(TAG, "exo-EXO_MEDIA_UPDATE_PROCESS ");
++                if (mUseExoPlayer) {
++                    if (mExoPlayerInstance!= null) {
++                          mExoTotalDuration = mExoPlayerInstance.getDuration();
++                          mExoCurPosition = mExoPlayerInstance.getCurrentPosition();
++                          //Log.w(TAG, "mExoTotalDuration:" + mExoTotalDuration + ",mExoCurPosition:" + mExoCurPosition);
++                          msg = mEventHandler.obtainMessage (EXO_MEDIA_UPDATE_PROCESS, 0, 0, null);
++                          mEventHandler.sendMessageDelayed (msg, 1000 - (mExoCurPosition % 1000));
++                    }
++                }
++                break;
++            case EXO_MEDIA_UPDATE_BUFFER_PROCESS:
++                if (mUseExoPlayer) {
++                    if (mExoPlayerInstance != null && mExoBuffering == true) {
++                        int mCurrentBufferTime = (int)mExoPlayerInstance.getBufferedPosition();
++                        if (mCurrentBufferTime > 0) {
++                            msg = mEventHandler.obtainMessage(MEDIA_BUFFERING_UPDATE, mCurrentBufferTime, 0, null);
++                            mEventHandler.sendMessage(msg);
++                        }
++                        msg = mEventHandler.obtainMessage(EXO_MEDIA_UPDATE_BUFFER_PROCESS, 0, 0, null);
++                        mEventHandler.sendMessageDelayed(msg, 1000);
++                    }
++                }
++                break;
+             case MEDIA_PREPARED:
++                if (mUseExoPlayer) {
++                    if (mExoPlayerInstance != null) {
++                        Log.i(TAG, "[exo-onPrepared]");
++                        OnPreparedListener onPreparedListener = mOnPreparedListener;
++                        if (onPreparedListener != null)
++                            onPreparedListener.onPrepared(mMediaPlayer);
++                        }
++                    return;
++                }
+                 try {
+                     scanInternalSubtitleTracks();
+                 } catch (RuntimeException e) {
+@@ -3395,6 +3910,16 @@ public class MediaPlayer extends PlayerBase
+                 return;
+ 
+             case MEDIA_PLAYBACK_COMPLETE:
++                        Log.i(TAG, "[exo-MEDIA_PLAYBACK_COMPLETE]-receive");
++                if (mUseExoPlayer) {
++                    if (mExoPlayerInstance != null) {
++                        Log.i(TAG, "[exo-MEDIA_PLAYBACK_COMPLETE]");
++                        OnCompletionListener onCompletionListener = mOnCompletionListener;
++                        if (onCompletionListener != null)
++                            onCompletionListener.onCompletion(mMediaPlayer);
++                        return;
++                    }
++                }
+                 {
+                     mOnCompletionInternalListener.onCompletion(mMediaPlayer);
+                     OnCompletionListener onCompletionListener = mOnCompletionListener;
+@@ -3461,7 +3986,9 @@ public class MediaPlayer extends PlayerBase
+                     error_was_handled = onErrorListener.onError(mMediaPlayer, msg.arg1, msg.arg2);
+                 }
+                 {
+-                    mOnCompletionInternalListener.onCompletion(mMediaPlayer);
++                    if (!mUseExoPlayer) {
++                        mOnCompletionInternalListener.onCompletion(mMediaPlayer);
++                    }
+                     OnCompletionListener onCompletionListener = mOnCompletionListener;
+                     if (onCompletionListener != null && ! error_was_handled) {
+                         onCompletionListener.onCompletion(mMediaPlayer);
+@@ -3471,6 +3998,7 @@ public class MediaPlayer extends PlayerBase
+                 return;
+ 
+             case MEDIA_INFO:
++                    Log.i(TAG, "Info (" + msg.arg1 + "," + msg.arg2 + ")");
+                 switch (msg.arg1) {
+                 case MEDIA_INFO_VIDEO_TRACK_LAGGING:
+                     Log.i(TAG, "Info (" + msg.arg1 + "," + msg.arg2 + ")");
+@@ -3494,15 +4022,44 @@ public class MediaPlayer extends PlayerBase
+                     break;
+                 case MEDIA_INFO_BUFFERING_START:
+                 case MEDIA_INFO_BUFFERING_END:
++                    Log.i(TAG, "Info =============");
+                     TimeProvider timeProvider = mTimeProvider;
+                     if (timeProvider != null) {
+                         timeProvider.onBuffering(msg.arg1 == MEDIA_INFO_BUFFERING_START);
+                     }
++                    if (mUseExoPlayer) {
++                        if (msg.arg1 == MEDIA_INFO_BUFFERING_START) {
++                            mExoBuffering = true;
++                            if (mExoBufferNotifyStart == false) {
++                                mExoBufferNotifyStart = true;
++                                msg = mEventHandler.obtainMessage(EXO_MEDIA_UPDATE_BUFFER_PROCESS, 0, 0, null);
++                                mEventHandler.sendMessage(msg);
++                            }
++                        } else {
++                            mExoBuffering = false;
++                        }
++                    }
++                    break;
++                case MEDIA_INFO_VIDEO_TRACK_BITRATE:
++                    msg.arg1 = MEDIA_INFO_VIDEO_TRACK_BITRATE;
++                    Log.i(TAG, "Info ============= MEDIA_INFO_VIDEO_TRACK_BITRATE is " + msg.arg2);
++                    break;
++                case MEDIA_INFO_AUDIO_LANGUAGE:
++                    msg.arg1 = MEDIA_INFO_AUDIO_LANGUAGE;
++                    Log.i(TAG, "Info ============= MEDIA_INFO_AUDIO_LANGUAGE is " + msg.arg2);
++                    break;
++                case MEDIA_INFO_VIDEO_TRACK_BITRATE_CHANGE:
++                    msg.arg1 = MEDIA_INFO_VIDEO_TRACK_BITRATE_CHANGE;
++                    Log.i(TAG, "Info ============= MEDIA_INFO_VIDEO_TRACK_BITRATE_CHANGE is " + msg.arg2);
++                    break;
++                case MEDIA_INFO_BUFFER_DURATION:
++                    msg.arg1 = MEDIA_INFO_BUFFER_DURATION;
++                    Log.i(TAG, "Info ============= MEDIA_INFO_BUFFER_DURATION is " + msg.arg2);
+                     break;
+                 }
+-
+                 OnInfoListener onInfoListener = mOnInfoListener;
+                 if (onInfoListener != null) {
++                    Log.i(TAG, "=callback=Info (" + msg.arg1 + "," + msg.arg2 + ")");
+                     onInfoListener.onInfo(mMediaPlayer, msg.arg1, msg.arg2);
+                 }
+                 // No real default action so far.
+@@ -4262,6 +4819,10 @@ public class MediaPlayer extends PlayerBase
+      */
+     public static final int MEDIA_INFO_SUBTITLE_TIMED_OUT = 902;
+ 
++    public static final int MEDIA_INFO_VIDEO_TRACK_BITRATE = 856;
++    public static final int MEDIA_INFO_VIDEO_TRACK_BITRATE_CHANGE = 857;
++    public static final int MEDIA_INFO_BUFFER_DURATION = 861;
++    public static final int MEDIA_INFO_AUDIO_LANGUAGE = 864;
+     /**
+      * Interface definition of a callback to be invoked to communicate some
+      * info and/or warning about the media or its playback.
+diff --git a/media/java/android/media/MediaPlayerExo.java b/media/java/android/media/MediaPlayerExo.java
+new file mode 100644
+index 0000000..04a6107
+--- /dev/null
++++ b/media/java/android/media/MediaPlayerExo.java
+@@ -0,0 +1,484 @@
++package android.media;
++
++import android.annotation.Nullable;
++import android.content.Context;
++import android.media.PlaybackParams;
++import android.media.MediaPlayer.TrackInfo;
++import android.net.Uri;
++import android.os.Handler;
++import android.os.Looper;
++import android.os.SystemProperties;
++import android.view.Surface;
++import android.view.SurfaceHolder;
++import android.util.Log;
++
++import java.lang.reflect.Constructor;
++import java.lang.reflect.Method;
++import java.net.HttpCookie;
++import java.util.List;
++import java.util.Map;
++import android.os.Parcel;
++
++public class MediaPlayerExo {
++    private final static String TAG = "MediaPlayerExo";
++    private boolean DEBUG = false;
++
++    private Looper mExoLooper;
++    private Handler mEventHandler;
++    private SurfaceHolder mSurfaceHolder;
++
++    Class<?> exoplayerWrapper = null;
++    static Class<?> staticExoplayerWrapper = null;
++    Method initVideo = null;
++    Method prepare = null;
++    Method prepareAsync = null;
++    Method start = null;
++    Method pause = null;
++    Method stop = null;
++    Method release = null;
++    Method reset = null;
++    Method isPlaying = null;
++    Method seekTo = null;
++    Method getDuration = null;
++    Method getCurrentPosition = null;
++    Method getVideoHeight = null;
++    Method getVideoWidth = null;
++    Method setVolume = null;
++    Method setVideoSurfaceHolder = null;
++    Method setAudioStreamType = null;
++    Method setSurface = null;
++    Method setVideoScalingMode = null;
++    Method setPlaybackParams = null;
++    Method setStateListener = null;
++    Method setParameter = null;
++    Method setParameterString = null;
++    Method setParameterParcel = null;
++    Method getParcelParameter = null;
++    Method getIntParameter = null;
++    Method setLooping = null;
++    Method getLooping = null;
++    Method getTrackInfo = null;
++    Method getBufferedPosition = null;
++    static Method getIsFormatSupport = null;
++    Object player = null;
++    Class<?> stateListener = null;
++    private MediaPlayer mMediaPlayer;
++
++    public MediaPlayerExo(MediaPlayer mp, Looper looper, Handler handler) {
++        mMediaPlayer = mp;
++        mExoLooper = looper;
++        mEventHandler = handler;
++        try {
++            exoplayerWrapper = Class.forName("com.google.android.exoplayer2.ExoPlayerWrapper");
++            if (DEBUG) LOGI(TAG,"[MediaPlayerExo]exoplayerWrapper:" + exoplayerWrapper);
++            Class[] paramTypes = { MediaPlayer.class, Looper.class, Handler.class };
++            Object[] params = { mMediaPlayer, mExoLooper,  mEventHandler};
++            Constructor<?> constructor = exoplayerWrapper.getConstructor(paramTypes);
++            player = constructor.newInstance(params);
++            initVideo = exoplayerWrapper.getMethod("initVideo",Context.class, Uri.class, Map.class, List.class);
++            prepare = exoplayerWrapper.getMethod("prepare");
++            prepareAsync = exoplayerWrapper.getMethod("prepareAsync");
++            start = exoplayerWrapper.getMethod("start");
++            pause = exoplayerWrapper.getMethod("pause");
++            stop = exoplayerWrapper.getMethod("stop");
++            release = exoplayerWrapper.getMethod("release");
++            isPlaying = exoplayerWrapper.getMethod("isPlaying");
++            reset = exoplayerWrapper.getMethod("reset");
++            seekTo = exoplayerWrapper.getMethod("seekTo", int.class, long.class);
++            getDuration = exoplayerWrapper.getMethod("getDuration");
++            getCurrentPosition = exoplayerWrapper.getMethod("getCurrentPosition");
++            getVideoHeight = exoplayerWrapper.getMethod("getVideoHeight");
++            getVideoWidth = exoplayerWrapper.getMethod("getVideoWidth");
++            setVolume = exoplayerWrapper.getMethod("setVolume", float.class, float.class);
++            setVideoSurfaceHolder = exoplayerWrapper.getMethod("setVideoSurfaceHolder",SurfaceHolder.class);
++            setAudioStreamType = exoplayerWrapper.getMethod("setAudioStreamType",int.class);
++            setSurface = exoplayerWrapper.getMethod("setSurface",Surface.class);
++            setVideoScalingMode = exoplayerWrapper.getMethod("setVideoScalingMode",int.class);
++            setPlaybackParams = exoplayerWrapper.getMethod("setPlaybackParams",PlaybackParams.class);
++            getIsFormatSupport = exoplayerWrapper.getMethod("getIsFormatSupport",Uri.class);
++            setParameter = exoplayerWrapper.getMethod("setParameter", int.class, int.class);
++            setParameterString = exoplayerWrapper.getMethod("setParameterString", int.class, String.class);
++            setParameterParcel = exoplayerWrapper.getMethod("setParameterParcel", int.class, Parcel.class);
++            getParcelParameter = exoplayerWrapper.getMethod("getParcelParameter", int.class);
++            getIntParameter = exoplayerWrapper.getMethod("getIntParameter", int.class);
++            setLooping = exoplayerWrapper.getMethod("setLooping", boolean.class);
++            getLooping = exoplayerWrapper.getMethod("getLooping");
++            getTrackInfo = exoplayerWrapper.getMethod("getTrackInfo");
++            getBufferedPosition = exoplayerWrapper.getMethod("getBufferedPosition");
++        } catch (Exception ex) {
++            ex.printStackTrace();
++        }
++    }
++
++    private void LOGI (String tag, String msg) {
++        if (DEBUG || getDebugEnable()) { Log.i (tag, msg); }
++    }
++
++    private void LOGD (String tag, String msg) {
++        if (DEBUG || getDebugEnable()) { Log.d (tag, msg); }
++    }
++
++    private void LOGE (String tag, String msg) {
++        Log.e (tag, msg);
++    }
++
++    public static boolean getIsFormatSupport(Uri uri) {
++        boolean ret = false;
++        try {
++            if (staticExoplayerWrapper == null)
++                staticExoplayerWrapper = Class.forName("com.google.android.exoplayer2.ExoPlayerWrapper");
++            getIsFormatSupport = staticExoplayerWrapper.getMethod("getIsFormatSupport",Uri.class);
++            ret = (boolean)getIsFormatSupport.invoke(staticExoplayerWrapper, uri);
++        }
++        catch (Exception ex) {
++            ex.printStackTrace();
++        }
++        return ret;
++    }
++    
++
++    private boolean getDebugEnable() {
++        boolean ret = SystemProperties.getBoolean("sys.exoplayer.debug", false);
++        return ret;
++    }
++
++    public void initVideo(Context context, Uri uri, @Nullable Map<String, String> headers, List<HttpCookie> cookies) {
++        if (initVideo != null) {
++            LOGI(TAG, "initVideo");
++            try {
++                initVideo.invoke(player, context, uri, headers, cookies);
++            } catch (Exception ex) {
++                ex.printStackTrace();
++            }
++        }
++    }
++
++    public void prepare() {
++        if (prepare != null) {
++            LOGI(TAG, "prepare");
++            try {
++                prepare.invoke(player);
++            } catch (Exception ex) {
++                ex.printStackTrace();
++            }
++        }
++    }
++
++    public void prepareAsync() {
++        if (prepareAsync != null) {
++            LOGI(TAG, "prepareAsync");
++            try {
++                prepareAsync.invoke(player);
++            } catch (Exception ex) {
++                ex.printStackTrace();
++            }
++        }
++    }
++
++    public void start() {
++        if (start != null) {
++            try {
++                start.invoke(player);
++            } catch (Exception ex) {
++                ex.printStackTrace();
++            }
++        }
++    }
++
++    public void pause() {
++        if (pause != null) {
++            try {
++                pause.invoke(player);
++            } catch (Exception ex) {
++                ex.printStackTrace();
++            }
++        }
++    }
++
++    public void stop() {
++        if (stop != null) {
++            try {
++                stop.invoke(player);
++            } catch (Exception ex) {
++                ex.printStackTrace();
++            }
++        }
++    }
++
++    public void release() {
++        if (release != null) {
++            try {
++                release.invoke(player);
++            } catch (Exception ex) {
++                ex.printStackTrace();
++            }
++        }
++    }
++
++    public void reset() {
++        if (reset != null) {
++            try {
++                reset.invoke(player);
++            } catch (Exception ex) {
++                ex.printStackTrace();
++            }
++        }
++    }
++
++    public boolean isPlaying() {
++        boolean ret = false;
++        if (isPlaying != null) {
++            try {
++                ret = (boolean) isPlaying.invoke(player);
++            } catch (Exception ex) {
++                ex.printStackTrace();
++            }
++        }
++        return ret;
++    }
++
++    public void seekTo(int mode, long msec) {
++        if (seekTo != null) {
++            try {
++                seekTo.invoke(player, mode, msec);
++            } catch (Exception ex) {
++                ex.printStackTrace();
++            }
++        }
++    }
++
++    public int  getDuration() {
++        int duration = 0;
++        if (getDuration != null) {
++            try {
++                duration = (int) getDuration.invoke(player);
++            } catch (Exception ex) {
++                ex.printStackTrace();
++            }
++        }
++        return duration;
++    }
++
++    public int getCurrentPosition() {
++        int curreentPosition = 0;
++        if (getCurrentPosition != null) {
++            try {
++                curreentPosition = (int) getCurrentPosition.invoke(player);
++            } catch (Exception ex) {
++                ex.printStackTrace();
++            }
++        }
++        return curreentPosition;
++    }
++
++    public int getVideoHeight() {
++        int videoHeight = 0;
++        if (getVideoHeight != null) {
++            try {
++                videoHeight = (int) getVideoHeight.invoke(player);
++            } catch (Exception ex) {
++                ex.printStackTrace();
++            }
++        }
++        return videoHeight;
++    }
++
++    public int getVideoWidth() {
++        int videoWidth = 0;
++        if (getVideoWidth != null) {
++            try {
++                videoWidth = (int) getVideoWidth.invoke(player);
++            } catch (Exception ex) {
++                ex.printStackTrace();
++            }
++        }
++        return videoWidth;
++    }
++
++    public void setVolume(float leftvolume, float rightvolume) {
++        if (setVolume != null) {
++            try {
++                setVolume.invoke(player, leftvolume, rightvolume);
++            } catch (Exception ex) {
++                ex.printStackTrace();
++            }
++        }
++    }
++
++    public void setVideoSurfaceHolder(SurfaceHolder surfaceHolder) {
++        if (setVideoSurfaceHolder != null) {
++            try {
++                setVideoSurfaceHolder.invoke(player, surfaceHolder);
++            } catch (Exception ex) {
++                ex.printStackTrace();
++            }
++        }
++    }
++
++    public void setDisplay(SurfaceHolder surfaceHolder) {
++        mSurfaceHolder = surfaceHolder;
++        if (setVideoSurfaceHolder != null) {
++            try {
++                mSurfaceHolder = surfaceHolder;
++                setVideoSurfaceHolder.invoke(player, surfaceHolder);
++            } catch (Exception ex) {
++                ex.printStackTrace();
++            }
++        }
++    }
++
++    public void setAudioStreamType(int type) {
++        if (setAudioStreamType != null) {
++            try {
++                setAudioStreamType.invoke(player, type);
++            } catch (Exception ex) {
++                ex.printStackTrace();
++            }
++        }
++    }
++
++    public void setSurface(Surface surface) {
++        if (setSurface != null) {
++            try {
++                setSurface.invoke(player, surface);
++            } catch (Exception ex) {
++                ex.printStackTrace();
++            }
++        }
++    }
++
++    public void setVideoScalingMode(int  mode) {
++        if (setVideoScalingMode != null) {
++            try {
++                setVideoScalingMode.invoke(player, mode);
++            } catch (Exception ex) {
++                ex.printStackTrace();
++            }
++        }
++    }
++
++    public void setPlaybackParams(PlaybackParams params) {
++        if (setPlaybackParams != null) {
++            try {
++                setPlaybackParams.invoke(player, params);
++            } catch (Exception ex) {
++                ex.printStackTrace();
++            }
++        }
++    }
++
++    public boolean setParameter(int key, int value) {
++        boolean ret = false;
++        if (setParameter != null) {
++            LOGI(TAG, "setParameter");
++            try {
++                ret = (boolean)setParameter.invoke(player, key, value);
++            } catch (Exception ex) {
++                ex.printStackTrace();
++            }
++        }
++        return ret;
++    }
++
++    public boolean setParameter(int key, String value) {
++        boolean ret = false;
++        if (setParameterString != null) {
++            LOGI(TAG, "setParameterString");
++            try {
++                ret = (boolean)setParameterString.invoke(player, key, value);
++            } catch (Exception ex) {
++                ex.printStackTrace();
++            }
++        }
++        return ret;
++    }
++
++    public boolean setParameter(int key, Parcel parcel) {
++        boolean ret = false;
++        if (setParameterParcel != null) {
++            LOGI(TAG, "setParameterParcel");
++            try {
++                ret = (boolean)setParameterParcel.invoke(player, key, parcel);
++            } catch (Exception ex) {
++                ex.printStackTrace();
++            }
++        }
++        return ret;
++    }
++
++    public Parcel getParcelParameter(int key) {
++        Parcel parcel = null;
++        if (getParcelParameter != null) {
++            LOGI(TAG, "getParcelParameter");
++            try {
++                parcel = (Parcel)getParcelParameter.invoke(player, key);
++            } catch (Exception ex) {
++                LOGE(TAG, "getParcelParameter failed:" + ex);
++                ex.printStackTrace();
++            }
++        }
++        return parcel;
++    }
++
++    public int getIntParameter(int key) {
++        int ret = 0;
++        if (getIntParameter != null) {
++            LOGI(TAG, "getIntParameter");
++            try {
++                ret = (int)getIntParameter.invoke(player, key);
++            } catch (Exception ex) {
++                ex.printStackTrace();
++            }
++        }
++        return ret;
++    }
++
++    public void setLooping(boolean isLoop) {
++        if (setLooping != null) {
++            LOGI(TAG, "setLooping");
++            try {
++                setLooping.invoke(player, isLoop);
++            } catch (Exception ex) {
++                ex.printStackTrace();
++            }
++        }
++    }
++
++    public boolean getLooping() {
++        boolean ret = false;
++        if (getLooping != null) {
++            LOGI(TAG, "getLooping");
++            try {
++                ret = (boolean)getLooping.invoke(player);
++            } catch (Exception ex) {
++                ex.printStackTrace();
++            }
++        }
++        return ret;
++    }
++
++    public TrackInfo[] getTrackInfo() {
++        if (getTrackInfo != null) {
++            LOGI(TAG, "getTrackInfo");
++            try {
++                return (TrackInfo[])getTrackInfo.invoke(player);
++            } catch (Exception ex) {
++                ex.printStackTrace();
++            }
++        }
++        return null;
++    }
++
++    public int getBufferedPosition() {
++        int ret = 0;
++        if (getBufferedPosition != null) {
++            LOGI(TAG, "getBufferedPosition");
++            try {
++                ret = (int)getBufferedPosition.invoke(player);
++            } catch (Exception ex) {
++                ex.printStackTrace();
++            }
++        }
++        return ret;
++    }
++}
+diff --git a/media/jni/android_media_MediaPlayer.cpp b/media/jni/android_media_MediaPlayer.cpp
+index 5dd01b0..de64d7a 100644
+--- a/media/jni/android_media_MediaPlayer.cpp
++++ b/media/jni/android_media_MediaPlayer.cpp
+@@ -1429,29 +1429,29 @@ static const JNINativeMethod gMethods[] = {
+     {"getBufferingParams", "()Landroid/media/BufferingParams;", (void *)android_media_MediaPlayer_getBufferingParams},
+     {"setBufferingParams", "(Landroid/media/BufferingParams;)V", (void *)android_media_MediaPlayer_setBufferingParams},
+     {"_prepare",            "()V",                              (void *)android_media_MediaPlayer_prepare},
+-    {"prepareAsync",        "()V",                              (void *)android_media_MediaPlayer_prepareAsync},
++    {"_prepareAsync",        "()V",                              (void *)android_media_MediaPlayer_prepareAsync},
+     {"_start",              "()V",                              (void *)android_media_MediaPlayer_start},
+     {"_stop",               "()V",                              (void *)android_media_MediaPlayer_stop},
+-    {"getVideoWidth",       "()I",                              (void *)android_media_MediaPlayer_getVideoWidth},
+-    {"getVideoHeight",      "()I",                              (void *)android_media_MediaPlayer_getVideoHeight},
++    {"_getVideoWidth",       "()I",                              (void *)android_media_MediaPlayer_getVideoWidth},
++    {"_getVideoHeight",      "()I",                              (void *)android_media_MediaPlayer_getVideoHeight},
+     {"native_getMetrics",   "()Landroid/os/PersistableBundle;", (void *)android_media_MediaPlayer_native_getMetrics},
+-    {"setPlaybackParams", "(Landroid/media/PlaybackParams;)V", (void *)android_media_MediaPlayer_setPlaybackParams},
+-    {"getPlaybackParams", "()Landroid/media/PlaybackParams;", (void *)android_media_MediaPlayer_getPlaybackParams},
+-    {"setSyncParams",     "(Landroid/media/SyncParams;)V",  (void *)android_media_MediaPlayer_setSyncParams},
+-    {"getSyncParams",     "()Landroid/media/SyncParams;",   (void *)android_media_MediaPlayer_getSyncParams},
++    {"_setPlaybackParams", "(Landroid/media/PlaybackParams;)V", (void *)android_media_MediaPlayer_setPlaybackParams},
++    {"_getPlaybackParams", "()Landroid/media/PlaybackParams;", (void *)android_media_MediaPlayer_getPlaybackParams},
++    {"_setSyncParams",     "(Landroid/media/SyncParams;)V",  (void *)android_media_MediaPlayer_setSyncParams},
++    {"_getSyncParams",     "()Landroid/media/SyncParams;",   (void *)android_media_MediaPlayer_getSyncParams},
+     {"_seekTo",             "(JI)V",                            (void *)android_media_MediaPlayer_seekTo},
+     {"_notifyAt",           "(J)V",                             (void *)android_media_MediaPlayer_notifyAt},
+     {"_pause",              "()V",                              (void *)android_media_MediaPlayer_pause},
+-    {"isPlaying",           "()Z",                              (void *)android_media_MediaPlayer_isPlaying},
+-    {"getCurrentPosition",  "()I",                              (void *)android_media_MediaPlayer_getCurrentPosition},
+-    {"getDuration",         "()I",                              (void *)android_media_MediaPlayer_getDuration},
++    {"_isPlaying",           "()Z",                              (void *)android_media_MediaPlayer_isPlaying},
++    {"_getCurrentPosition",  "()I",                              (void *)android_media_MediaPlayer_getCurrentPosition},
++    {"_getDuration",         "()I",                              (void *)android_media_MediaPlayer_getDuration},
+     {"_release",            "()V",                              (void *)android_media_MediaPlayer_release},
+     {"_reset",              "()V",                              (void *)android_media_MediaPlayer_reset},
+     {"_setAudioStreamType", "(I)V",                             (void *)android_media_MediaPlayer_setAudioStreamType},
+     {"_getAudioStreamType", "()I",                              (void *)android_media_MediaPlayer_getAudioStreamType},
+-    {"setParameter",        "(ILandroid/os/Parcel;)Z",          (void *)android_media_MediaPlayer_setParameter},
+-    {"setLooping",          "(Z)V",                             (void *)android_media_MediaPlayer_setLooping},
+-    {"isLooping",           "()Z",                              (void *)android_media_MediaPlayer_isLooping},
++    {"_setParameter",        "(ILandroid/os/Parcel;)Z",          (void *)android_media_MediaPlayer_setParameter},
++    {"_setLooping",          "(Z)V",                             (void *)android_media_MediaPlayer_setLooping},
++    {"_isLooping",           "()Z",                              (void *)android_media_MediaPlayer_isLooping},
+     {"_setVolume",          "(FF)V",                            (void *)android_media_MediaPlayer_setVolume},
+     {"native_invoke",       "(Landroid/os/Parcel;Landroid/os/Parcel;)I",(void *)android_media_MediaPlayer_invoke},
+     {"native_setMetadataFilter", "(Landroid/os/Parcel;)I",      (void *)android_media_MediaPlayer_setMetadataFilter},
+@@ -1459,13 +1459,13 @@ static const JNINativeMethod gMethods[] = {
+     {"native_init",         "()V",                              (void *)android_media_MediaPlayer_native_init},
+     {"native_setup",        "(Ljava/lang/Object;)V",            (void *)android_media_MediaPlayer_native_setup},
+     {"native_finalize",     "()V",                              (void *)android_media_MediaPlayer_native_finalize},
+-    {"getAudioSessionId",   "()I",                              (void *)android_media_MediaPlayer_get_audio_session_id},
+-    {"setAudioSessionId",   "(I)V",                             (void *)android_media_MediaPlayer_set_audio_session_id},
++    {"_getAudioSessionId",   "()I",                              (void *)android_media_MediaPlayer_get_audio_session_id},
++    {"_setAudioSessionId",   "(I)V",                             (void *)android_media_MediaPlayer_set_audio_session_id},
+     {"_setAuxEffectSendLevel", "(F)V",                          (void *)android_media_MediaPlayer_setAuxEffectSendLevel},
+-    {"attachAuxEffect",     "(I)V",                             (void *)android_media_MediaPlayer_attachAuxEffect},
++    {"_attachAuxEffect",     "(I)V",                             (void *)android_media_MediaPlayer_attachAuxEffect},
+     {"native_pullBatteryData", "(Landroid/os/Parcel;)I",        (void *)android_media_MediaPlayer_pullBatteryData},
+     {"native_setRetransmitEndpoint", "(Ljava/lang/String;I)I",  (void *)android_media_MediaPlayer_setRetransmitEndpoint},
+-    {"setNextMediaPlayer",  "(Landroid/media/MediaPlayer;)V",   (void *)android_media_MediaPlayer_setNextMediaPlayer},
++    {"_setNextMediaPlayer",  "(Landroid/media/MediaPlayer;)V",   (void *)android_media_MediaPlayer_setNextMediaPlayer},
+     {"native_applyVolumeShaper",
+                             "(Landroid/media/VolumeShaper$Configuration;Landroid/media/VolumeShaper$Operation;)I",
+                                                                 (void *)android_media_MediaPlayer_applyVolumeShaper},
+-- 
+1.9.1
+

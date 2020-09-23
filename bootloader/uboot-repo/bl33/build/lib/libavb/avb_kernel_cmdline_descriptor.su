@@ -1,0 +1,1 @@
+avb_kernel_cmdline_descriptor.c:28:6:avb_kernel_cmdline_descriptor_validate_and_byteswap	48	static

@@ -1,0 +1,96 @@
+From 2c8360ce340a3168934d67210b681eae6ee6744d Mon Sep 17 00:00:00 2001
+From: Baocheng Sun <baocheng.sun@amlogic.com>
+Date: Tue, 19 Dec 2017 20:12:51 +0800
+Subject: [PATCH] logd: fix a concurrency problem [1/1]
+
+PD# NONE
+
+Logcat is the consumer and other processes who generate log is the producer.
+When producer generates data too fast and consumer is slow consuming,
+the bufferElement send to consumer may be released in another thread.
+In this way, logcat will read a eof from logdr socket.
+
+Change-Id: I13ea43939aae9f46d51b54b7b08dc986180e4f17
+---
+ logd/LogBuffer.cpp        | 10 ++++++++--
+ logd/LogBufferElement.cpp |  8 ++++----
+ 2 files changed, 12 insertions(+), 6 deletions(-)
+
+diff --git a/logd/LogBuffer.cpp b/logd/LogBuffer.cpp
+index 9b04363..56b3675 100644
+--- a/logd/LogBuffer.cpp
++++ b/logd/LogBuffer.cpp
+@@ -1048,6 +1048,7 @@ bool LogBuffer::clear(log_id_t id, uid_t uid) {
+             // otherwise, lets be a good citizen and preserve the slow
+             // readers and let the clear run (below) deal with determining
+             // if we are still blocked and return an error code to caller.
++            /*
+             if (busy) {
+                 LogTimeEntry::wrlock();
+                 LastLogTimes::iterator times = mTimes.begin();
+@@ -1061,11 +1062,15 @@ bool LogBuffer::clear(log_id_t id, uid_t uid) {
+                 }
+                 LogTimeEntry::unlock();
+             }
++            */
++            busy = false;
++            break;
+         }
+         wrlock();
+         busy = prune(id, ULONG_MAX, uid);
+         unlock();
+         if (!busy || !--retry) {
++            if (retry == 0) busy = false;
+             break;
+         }
+         sleep(1);  // Let reader(s) catch up after notification
+@@ -1186,17 +1191,18 @@ log_time LogBuffer::flushTo(SocketClient* reader, const log_time& start,
+                 (element->getDropped() && !sameTid) ? 0 : element->getTid();
+         }
+ 
+-        unlock();
++        //unlock();
+ 
+         // range locking in LastLogTimes looks after us
+         curr = element->flushTo(reader, this, privileged, sameTid);
+ 
+         if (curr == element->FLUSH_ERROR) {
++            unlock();
+             return curr;
+         }
+ 
+         skip = maxSkip;
+-        rdlock();
++        //rdlock();
+     }
+     unlock();
+ 
+diff --git a/logd/LogBufferElement.cpp b/logd/LogBufferElement.cpp
+index f20ac45..ec60313 100644
+--- a/logd/LogBufferElement.cpp
++++ b/logd/LogBufferElement.cpp
+@@ -145,17 +145,17 @@ size_t LogBufferElement::populateDroppedMessage(char*& buffer, LogBuffer* parent
+     }
+ 
+     static const char format_uid[] = "uid=%u%s%s %s %u line%s";
+-    parent->wrlock();
++    //parent->wrlock();
+     const char* name = parent->uidToName(mUid);
+-    parent->unlock();
++    //parent->unlock();
+     const char* commName = android::tidToName(mTid);
+     if (!commName && (mTid != mPid)) {
+         commName = android::tidToName(mPid);
+     }
+     if (!commName) {
+-        parent->wrlock();
++        //parent->wrlock();
+         commName = parent->pidToName(mPid);
+-        parent->unlock();
++        //parent->unlock();
+     }
+     if (name && name[0] && commName && (name[0] == commName[0])) {
+         size_t len = strlen(name + 1);
+-- 
+1.9.1
+

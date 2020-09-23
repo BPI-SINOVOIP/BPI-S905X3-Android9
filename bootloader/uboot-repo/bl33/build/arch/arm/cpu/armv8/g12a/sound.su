@@ -1,0 +1,4 @@
+sound.c:49:13:audiobus_write	48	static
+sound.c:58:12:audiobus_update_bits	48	static
+sound.c:124:6:frddr_init_without_mngr	32	static
+sound.c:201:5:aml_audio_init	16	static

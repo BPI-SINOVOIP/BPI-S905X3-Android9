@@ -1,0 +1,38 @@
+From 326516adfb8bc403826fa7f0aeebe45c98609d93 Mon Sep 17 00:00:00 2001
+From: Jinping Wang <jinping.wang@amlogic.com>
+Date: Mon, 5 Aug 2019 21:00:06 +0800
+Subject: [PATCH] cec: remove <Request Active Source> when cec enabled [1/1]
+
+PD# SWPL-11185
+
+Problem:
+input maybe change when cec enabled and send <Request Active Source>
+
+Solution:
+remove <Request Active Source> when cec enabled
+
+Verify:
+test ok using p321
+
+Change-Id: I76bafc9cec84acfd4a70c886736d404744f76938
+Signed-off-by: Jinping Wang <jinping.wang@amlogic.com>
+---
+ services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java b/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
+index b09a639..8ae1bba 100644
+--- a/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
++++ b/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
+@@ -1687,7 +1687,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+             setActivePath(activePath);
+             if (!routingForBootup
+                     && !mDelayedMessageBuffer.isBuffered(Constants.MESSAGE_ACTIVE_SOURCE)) {
+-                mService.sendCecCommand(HdmiCecMessageBuilder.buildRequestActiveSource(mAddress));
++                //mService.sendCecCommand(HdmiCecMessageBuilder.buildRequestActiveSource(mAddress));
+                 /*
+                  mService.sendCecCommand(HdmiCecMessageBuilder.buildActiveSource(mAddress,
+                          activePath));
+-- 
+2.10.2
+

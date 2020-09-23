@@ -1,0 +1,6 @@
+canvas.c:44:6:canvas_init	32	static
+canvas.c:62:6:canvas_config	96	static
+canvas.c:95:6:canvas_read	0	static
+canvas.c:101:6:canvas_copy	0	static
+canvas.c:138:6:canvas_update_addr	0	static
+canvas.c:162:14:canvas_get_addr	0	static

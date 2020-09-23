@@ -1,0 +1,48 @@
+From 772014585b739607e8462d0f93f214ed764eafc9 Mon Sep 17 00:00:00 2001
+From: baocheng sun <baocheng.sun@amlogic.com>
+Date: Sat, 12 Oct 2019 02:09:39 -0400
+Subject: [PATCH] build: add hwc_enable_real_mode productVariable [1/2]
+
+PD#SWPL-14734
+
+Problem:
+Add full active mode to switch ui resolution dynamicly.
+
+Solution:
+add build config and dynamic fb device info to surfacefling.
+
+Verify:
+verified on franklin
+
+Change-Id: Iaada83a4ac55826af35a4f777d236256159872fe
+Signed-off-by: baocheng sun <baocheng.sun@amlogic.com>
+---
+ android/variable.go | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/android/variable.go b/android/variable.go
+index f4aaec7..7eb822e 100644
+--- a/android/variable.go
++++ b/android/variable.go
+@@ -63,6 +63,10 @@ type variableProperties struct {
+ 			Cflags []string
+ 		}
+ 
++		Hwc_enable_real_mode struct {
++			Cflags []string
++		}
++
+ 		Override_rs_driver struct {
+ 			Cflags []string
+ 		}
+@@ -180,6 +184,7 @@ type productVariables struct {
+ 	Debuggable                 *bool `json:",omitempty"`
+ 	Eng                        *bool `json:",omitempty"`
+ 	Device_uses_hwc2           *bool `json:",omitempty"`
++	Hwc_enable_real_mode       *bool `json:",omitempty"`
+ 	Treble_linker_namespaces   *bool `json:",omitempty"`
+ 	Sepolicy_split             *bool `json:",omitempty"`
+ 	Enforce_vintf_manifest     *bool `json:",omitempty"`
+-- 
+2.7.4
+

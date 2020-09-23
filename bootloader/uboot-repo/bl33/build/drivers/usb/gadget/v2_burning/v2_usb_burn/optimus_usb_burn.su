@@ -1,0 +1,2 @@
+optimus_usb_burn.c:27:5:optimus_burn_package_in_usb	32	static
+optimus_usb_burn.c:59:5:do_usb_burn	48	static

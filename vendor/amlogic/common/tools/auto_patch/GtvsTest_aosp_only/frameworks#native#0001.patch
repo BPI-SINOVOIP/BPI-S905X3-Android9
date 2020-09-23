@@ -1,0 +1,244 @@
+From 12897ced9dbaa74ddfe2277bd79c7c9ea0e6524a Mon Sep 17 00:00:00 2001
+From: Siarhei Vishniakou <svv@google.com>
+Date: Fri, 16 Nov 2018 22:18:53 -0800
+Subject: [PATCH] security: Security patch from bulletin-2019-02-preview [9/21]
+
+PD# SWPL-6448
+
+Sanitize InputMessage before sending
+
+The struct InputMessage has many fields, and is force-aligned to 8-byte
+boundaries. There are also some padding fields that carry no
+information.
+
+This struct is typically allocated in the stack and populated with
+various values before being sent across as a stream of bytes through the
+socket.
+
+Therefore, the "unused" data portions of the struct could contain
+portions of the stack, since there aren't ever writes to those memory
+locations.
+
+To avoid this information leak, forcefully sanitize the struct. Create a
+new struct that is explicitly set to zero. Next, only fill the
+meaningful fields manually.
+
+Bug: 115739809
+Test: cts-tradefed run cts -m CtsSecurityBulletinHostTestCases -t android.security.cts.Poc18_12; adb shell monkey 100000
+Change-Id: I7e44dacf1e8fa3156c8e4d2f7784ef0c53dab507
+Merged-In: I7e44dacf1e8fa3156c8e4d2f7784ef0c53dab507
+(cherry picked from commit e730f5aaa1c726ee9998a080e2d7f6284f4afec8)
+---
+ include/input/InputTransport.h         |  13 ++++
+ libs/input/InputTransport.cpp          | 106 ++++++++++++++++++++++++++++++++-
+ libs/input/tests/StructLayout_test.cpp |   3 +
+ 3 files changed, 120 insertions(+), 2 deletions(-)
+
+diff --git a/include/input/InputTransport.h b/include/input/InputTransport.h
+index 1ea2c2c..ecdc075 100644
+--- a/include/input/InputTransport.h
++++ b/include/input/InputTransport.h
+@@ -41,6 +41,13 @@ namespace android {
+  *
+  * Note that this structure is used for IPCs so its layout must be identical
+  * on 64 and 32 bit processes. This is tested in StructLayout_test.cpp.
++ *
++ * Since the struct must be aligned to an 8-byte boundary, there could be uninitialized bytes
++ * in-between the defined fields. This padding data should be explicitly accounted for by adding
++ * "empty" fields into the struct. This data is memset to zero before sending the struct across
++ * the socket. Adding the explicit fields ensures that the memset is not optimized away by the
++ * compiler. When a new field is added to the struct, the corresponding change
++ * in StructLayout_test should be made.
+  */
+ struct InputMessage {
+     enum {
+@@ -61,6 +68,7 @@ struct InputMessage {
+     union Body {
+         struct Key {
+             uint32_t seq;
++            uint32_t empty1;
+             nsecs_t eventTime __attribute__((aligned(8)));
+             int32_t deviceId;
+             int32_t source;
+@@ -71,6 +79,7 @@ struct InputMessage {
+             int32_t scanCode;
+             int32_t metaState;
+             int32_t repeatCount;
++            uint32_t empty2;
+             nsecs_t downTime __attribute__((aligned(8)));
+ 
+             inline size_t size() const {
+@@ -80,6 +89,7 @@ struct InputMessage {
+ 
+         struct Motion {
+             uint32_t seq;
++            uint32_t empty1;
+             nsecs_t eventTime __attribute__((aligned(8)));
+             int32_t deviceId;
+             int32_t source;
+@@ -90,12 +100,14 @@ struct InputMessage {
+             int32_t metaState;
+             int32_t buttonState;
+             int32_t edgeFlags;
++            uint32_t empty2;
+             nsecs_t downTime __attribute__((aligned(8)));
+             float xOffset;
+             float yOffset;
+             float xPrecision;
+             float yPrecision;
+             uint32_t pointerCount;
++            uint32_t empty3;
+             // Note that PointerCoords requires 8 byte alignment.
+             struct Pointer {
+                 PointerProperties properties;
+@@ -126,6 +138,7 @@ struct InputMessage {
+ 
+     bool isValid(size_t actualSize) const;
+     size_t size() const;
++    void getSanitizedCopy(InputMessage* msg) const;
+ };
+ 
+ /*
+diff --git a/libs/input/InputTransport.cpp b/libs/input/InputTransport.cpp
+index aa0bf17..03f593f 100644
+--- a/libs/input/InputTransport.cpp
++++ b/libs/input/InputTransport.cpp
+@@ -96,6 +96,106 @@ size_t InputMessage::size() const {
+     return sizeof(Header);
+ }
+ 
++/**
++ * There could be non-zero bytes in-between InputMessage fields. Force-initialize the entire
++ * memory to zero, then only copy the valid bytes on a per-field basis.
++ */
++void InputMessage::getSanitizedCopy(InputMessage* msg) const {
++    memset(msg, 0, sizeof(*msg));
++
++    // Write the header
++    msg->header.type = header.type;
++
++    // Write the body
++    switch(header.type) {
++        case InputMessage::TYPE_KEY: {
++            // uint32_t seq
++            msg->body.key.seq = body.key.seq;
++            // nsecs_t eventTime
++            msg->body.key.eventTime = body.key.eventTime;
++            // int32_t deviceId
++            msg->body.key.deviceId = body.key.deviceId;
++            // int32_t source
++            msg->body.key.source = body.key.source;
++            // int32_t displayId
++            msg->body.key.displayId = body.key.displayId;
++            // int32_t action
++            msg->body.key.action = body.key.action;
++            // int32_t flags
++            msg->body.key.flags = body.key.flags;
++            // int32_t keyCode
++            msg->body.key.keyCode = body.key.keyCode;
++            // int32_t scanCode
++            msg->body.key.scanCode = body.key.scanCode;
++            // int32_t metaState
++            msg->body.key.metaState = body.key.metaState;
++            // int32_t repeatCount
++            msg->body.key.repeatCount = body.key.repeatCount;
++            // nsecs_t downTime
++            msg->body.key.downTime = body.key.downTime;
++            break;
++        }
++        case InputMessage::TYPE_MOTION: {
++            // uint32_t seq
++            msg->body.motion.seq = body.motion.seq;
++            // nsecs_t eventTime
++            msg->body.motion.eventTime = body.motion.eventTime;
++            // int32_t deviceId
++            msg->body.motion.deviceId = body.motion.deviceId;
++            // int32_t source
++            msg->body.motion.source = body.motion.source;
++            // int32_t displayId
++            msg->body.motion.displayId = body.motion.displayId;
++            // int32_t action
++            msg->body.motion.action = body.motion.action;
++            // int32_t actionButton
++            msg->body.motion.actionButton = body.motion.actionButton;
++            // int32_t flags
++            msg->body.motion.flags = body.motion.flags;
++            // int32_t metaState
++            msg->body.motion.metaState = body.motion.metaState;
++            // int32_t buttonState
++            msg->body.motion.buttonState = body.motion.buttonState;
++            // int32_t edgeFlags
++            msg->body.motion.edgeFlags = body.motion.edgeFlags;
++            // nsecs_t downTime
++            msg->body.motion.downTime = body.motion.downTime;
++            // float xOffset
++            msg->body.motion.xOffset = body.motion.xOffset;
++            // float yOffset
++            msg->body.motion.yOffset = body.motion.yOffset;
++            // float xPrecision
++            msg->body.motion.xPrecision = body.motion.xPrecision;
++            // float yPrecision
++            msg->body.motion.yPrecision = body.motion.yPrecision;
++            // uint32_t pointerCount
++            msg->body.motion.pointerCount = body.motion.pointerCount;
++            //struct Pointer pointers[MAX_POINTERS]
++            for (size_t i = 0; i < body.motion.pointerCount; i++) {
++                // PointerProperties properties
++                msg->body.motion.pointers[i].properties.id = body.motion.pointers[i].properties.id;
++                msg->body.motion.pointers[i].properties.toolType =
++                        body.motion.pointers[i].properties.toolType,
++                // PointerCoords coords
++                msg->body.motion.pointers[i].coords.bits = body.motion.pointers[i].coords.bits;
++                const uint32_t count = BitSet64::count(body.motion.pointers[i].coords.bits);
++                memcpy(&msg->body.motion.pointers[i].coords.values[0],
++                        &body.motion.pointers[i].coords.values[0],
++                        count * (sizeof(body.motion.pointers[i].coords.values[0])));
++            }
++            break;
++        }
++        case InputMessage::TYPE_FINISHED: {
++            msg->body.finished.seq = body.finished.seq;
++            msg->body.finished.handled = body.finished.handled;
++            break;
++        }
++        default: {
++            LOG_FATAL("Unexpected message type %i", header.type);
++            break;
++        }
++    }
++}
+ 
+ // --- InputChannel ---
+ 
+@@ -149,10 +249,12 @@ status_t InputChannel::openInputChannelPair(const std::string& name,
+ }
+ 
+ status_t InputChannel::sendMessage(const InputMessage* msg) {
+-    size_t msgLength = msg->size();
++    const size_t msgLength = msg->size();
++    InputMessage cleanMsg;
++    msg->getSanitizedCopy(&cleanMsg);
+     ssize_t nWrite;
+     do {
+-        nWrite = ::send(mFd, msg, msgLength, MSG_DONTWAIT | MSG_NOSIGNAL);
++        nWrite = ::send(mFd, &cleanMsg, msgLength, MSG_DONTWAIT | MSG_NOSIGNAL);
+     } while (nWrite == -1 && errno == EINTR);
+ 
+     if (nWrite < 0) {
+diff --git a/libs/input/tests/StructLayout_test.cpp b/libs/input/tests/StructLayout_test.cpp
+index d19f3b8..12a6782 100644
+--- a/libs/input/tests/StructLayout_test.cpp
++++ b/libs/input/tests/StructLayout_test.cpp
+@@ -65,6 +65,9 @@ void TestInputMessageAlignment() {
+   CHECK_OFFSET(InputMessage::Body::Motion, yPrecision, 76);
+   CHECK_OFFSET(InputMessage::Body::Motion, pointerCount, 80);
+   CHECK_OFFSET(InputMessage::Body::Motion, pointers, 88);
++
++  CHECK_OFFSET(InputMessage::Body::Finished, seq, 0);
++  CHECK_OFFSET(InputMessage::Body::Finished, handled, 4);
+ }
+ 
+ } // namespace android
+-- 
+1.9.1
+

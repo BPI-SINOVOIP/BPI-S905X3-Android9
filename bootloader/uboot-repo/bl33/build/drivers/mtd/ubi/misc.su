@@ -1,0 +1,5 @@
+misc.c:24:5:ubi_calc_data_len	0	static
+misc.c:50:5:ubi_check_volume	64	static
+misc.c:92:6:ubi_update_reserved	0	static
+misc.c:111:6:ubi_calculate_reserved	0	static
+misc.c:134:5:ubi_check_pattern	0	static

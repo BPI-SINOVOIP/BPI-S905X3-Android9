@@ -1,0 +1,44 @@
+From ffb5271537474d8192921cb81ab5b034a8e537f8 Mon Sep 17 00:00:00 2001
+From: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date: Thu, 3 Jan 2019 19:51:37 +0800
+Subject: [PATCH] AudioPolicy: change max audio effect cpu load size for armA53
+ cts [1/1]
+
+PD# SWPL-3766
+
+Problem:
+CtsMediaTestCases Module 6 Fails
+
+Solution:
+change max audio effect cpu load size for armA53 cts
+
+Verify:
+verify by p321
+
+Change-Id: I3ddcc0cab74cc858ac64540867bcec307a148d07
+Signed-off-by: Chaomin Zheng <chaomin.zheng@amlogic.com>
+---
+ .../audiopolicy/common/managerdefinitions/include/EffectDescriptor.h  | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/services/audiopolicy/common/managerdefinitions/include/EffectDescriptor.h b/services/audiopolicy/common/managerdefinitions/include/EffectDescriptor.h
+index 04831c6..6af9d0f 100644
+--- a/services/audiopolicy/common/managerdefinitions/include/EffectDescriptor.h
++++ b/services/audiopolicy/common/managerdefinitions/include/EffectDescriptor.h
+@@ -62,11 +62,11 @@ private:
+     /**
+      * Maximum CPU load allocated to audio effects in 0.1 MIPS (ARMv5TE, 0 WS memory) units
+      */
+-    static const uint32_t MAX_EFFECTS_CPU_LOAD = 1000;
++    static const uint32_t MAX_EFFECTS_CPU_LOAD = 1500;//1000;
+     /**
+      * Maximum memory allocated to audio effects in KB
+      */
+-    static const uint32_t MAX_EFFECTS_MEMORY = 512;
++    static const uint32_t MAX_EFFECTS_MEMORY = 1024;//512;
+ };
+ 
+ } // namespace android
+-- 
+2.7.4
+

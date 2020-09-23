@@ -1,0 +1,62 @@
+From e340be84d612eb6121a57131284699a6beca25bd Mon Sep 17 00:00:00 2001
+From: "qiu.zeng" <qiu.zeng@amlogic.com>
+Date: Mon, 23 Sep 2019 19:05:23 +0800
+Subject: [PATCH] BT: fix cts verifier failed [1/2]
+
+PD#SWPL-14369
+
+Problem:
+cts verifier failed (State not synchronized)
+
+Solution:
+fix cts verifier failed
+
+Verify:
+Verifying on u212
+
+Change-Id: I42a1d61d9b74489bec1cfc027c93b66d386fc475
+Signed-off-by: qiu.zeng <qiu.zeng@amlogic.com>
+---
+ bta/gatt/bta_gattc_cache.cc | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+diff --git a/bta/gatt/bta_gattc_cache.cc b/bta/gatt/bta_gattc_cache.cc
+index 60224a3..1a6e923 100644
+--- a/bta/gatt/bta_gattc_cache.cc
++++ b/bta/gatt/bta_gattc_cache.cc
+@@ -43,6 +43,7 @@
+ #include "sdp_api.h"
+ #include "sdpdefs.h"
+ #include "utl.h"
++#include "device/include/controller.h"
+ 
+ using bluetooth::Uuid;
+ using base::StringPrintf;
+@@ -1067,6 +1068,24 @@ bool bta_gattc_cache_load(tBTA_GATTC_CLCB* p_clcb) {
+     goto done;
+   }
+ 
++  LOG(ERROR) << __func__ << ": manufacturer: " << controller_get_interface()-> \
++      get_bt_version()->manufacturer << " :BTM_IS_BRCM_CONTROLLER: " << BTM_IS_BRCM_CONTROLLER();
++  if(BTM_IS_BRCM_CONTROLLER()) {
++    tBTA_GATTC_NV_ATTR* p_attr = NULL;
++    uint16_t tmp_num = 0;
++    p_attr = attr;
++    tmp_num = num_attr;
++    while( tmp_num > 0 && p_attr != NULL) {
++      if ( (p_attr->uuid.As16Bit() == 0x9999) || (p_attr->uuid.As16Bit() == 0x9995)) {
++        LOG(ERROR) << __func__ << ": find cts verifier test, rediscovery!";
++        success = false;
++        goto done;
++      }
++      p_attr++;
++      tmp_num--;
++    }
++  }
++
+   bta_gattc_rebuild_cache(p_clcb->p_srcb, num_attr, attr);
+ 
+   success = true;
+-- 
+1.9.1
+

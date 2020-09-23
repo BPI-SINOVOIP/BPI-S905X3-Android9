@@ -1,0 +1,51 @@
+From 38c23d9b7861af48c9029fff645e7480535e8cce Mon Sep 17 00:00:00 2001
+From: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date: Wed, 25 Sep 2019 10:49:34 +0800
+Subject: [PATCH] Add audio device type AUDIO_DEVICE_IN_HDMI_ARC
+
+Change-Id: I9c16fca10ccbfbdee953818fc05c8f6b2bd78c6d
+---
+ audio/include/system/audio-base-utils.h | 1 +
+ audio/include/system/audio-base.h       | 1 +
+ audio/include/system/audio.h            | 1 +
+ 3 files changed, 3 insertions(+)
+
+diff --git a/audio/include/system/audio-base-utils.h b/audio/include/system/audio-base-utils.h
+index 016a085..076ae9f 100644
+--- a/audio/include/system/audio-base-utils.h
++++ b/audio/include/system/audio-base-utils.h
+@@ -156,6 +156,7 @@ enum {
+                                 AUDIO_DEVICE_IN_PROXY |
+                                 AUDIO_DEVICE_IN_USB_HEADSET |
+                                 AUDIO_DEVICE_IN_BLUETOOTH_BLE |
++                                AUDIO_DEVICE_IN_HDMI_ARC |
+                                 AUDIO_DEVICE_IN_DEFAULT,
+ 
+     AUDIO_DEVICE_IN_ALL_SCO   = AUDIO_DEVICE_IN_BLUETOOTH_SCO_HEADSET,
+diff --git a/audio/include/system/audio-base.h b/audio/include/system/audio-base.h
+index 4eb2808..7d57148 100644
+--- a/audio/include/system/audio-base.h
++++ b/audio/include/system/audio-base.h
+@@ -349,6 +349,7 @@ enum {
+     AUDIO_DEVICE_IN_PROXY                      = 0x81000000u, // BIT_IN | 0x1000000
+     AUDIO_DEVICE_IN_USB_HEADSET                = 0x82000000u, // BIT_IN | 0x2000000
+     AUDIO_DEVICE_IN_BLUETOOTH_BLE              = 0x84000000u, // BIT_IN | 0x4000000
++    AUDIO_DEVICE_IN_HDMI_ARC                   = 0x88000000u, // BIT_IN | 0x8000000
+     AUDIO_DEVICE_IN_DEFAULT                    = 0xC0000000u, // BIT_IN | BIT_DEFAULT
+ };
+ 
+diff --git a/audio/include/system/audio.h b/audio/include/system/audio.h
+index c1c80a3..13e00ce 100644
+--- a/audio/include/system/audio.h
++++ b/audio/include/system/audio.h
+@@ -1038,6 +1038,7 @@ static inline bool audio_device_is_digital(audio_devices_t device) {
+         // input
+         return (~AUDIO_DEVICE_BIT_IN & device & (AUDIO_DEVICE_IN_ALL_USB |
+                           AUDIO_DEVICE_IN_HDMI |
++                          AUDIO_DEVICE_IN_HDMI_ARC |
+                           AUDIO_DEVICE_IN_SPDIF |
+                           AUDIO_DEVICE_IN_IP |
+                           AUDIO_DEVICE_IN_BUS)) != 0;
+-- 
+2.7.4
+

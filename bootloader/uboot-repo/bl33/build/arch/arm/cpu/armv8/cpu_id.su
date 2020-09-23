@@ -1,0 +1,2 @@
+cpu_id.c:34:10:get_cpu_id	0	static
+cpu_id.c:46:5:get_chip_id	48	static

@@ -1,0 +1,3 @@
+bootm.c:506:5:bootm_find_ramdisk_fdt	304	static
+bootm.c:711:7:bootm_disable_interrupts	32	static
+bootm.c:827:5:do_bootm_states	176	static

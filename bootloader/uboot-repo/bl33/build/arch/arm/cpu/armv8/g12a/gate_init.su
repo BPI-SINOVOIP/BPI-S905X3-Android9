@@ -1,0 +1,2 @@
+gate_init.c:29:6:ee_gate_off	0	static
+gate_init.c:265:6:ee_gate_on	16	static

@@ -1,0 +1,42 @@
+From 5431434515ba6d49e6c3fa4c28b235e7cf6597e4 Mon Sep 17 00:00:00 2001
+From: "qiu.zeng" <qiu.zeng@amlogic.com>
+Date: Sat, 29 Dec 2018 11:04:53 +0800
+Subject: [PATCH] BT: Calling the interface to RTK libbtvendor for protection
+ [3/4]
+
+Change-Id: If32524c724a43d9d850cd526e026d8c3491722f8
+---
+ bluetooth/1.0/default/vendor_interface.cc | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/bluetooth/1.0/default/vendor_interface.cc b/bluetooth/1.0/default/vendor_interface.cc
+index a8f5bb4..e48dcba 100644
+--- a/bluetooth/1.0/default/vendor_interface.cc
++++ b/bluetooth/1.0/default/vendor_interface.cc
+@@ -50,6 +50,7 @@ bool recent_activity_flag;
+ 
+ VendorInterface* g_vendor_interface = nullptr;
+ std::mutex wakeup_mutex_;
++std::mutex init_mutex_;
+ 
+ HC_BT_HDR* WrapPacketAndCopy(uint16_t event, const hidl_vec<uint8_t>& data) {
+   size_t packet_size = data.size() + sizeof(HC_BT_HDR);
+@@ -163,6 +164,7 @@ bool VendorInterface::Initialize(
+     InitializeCompleteCallback initialize_complete_cb,
+     PacketReadCallback event_cb, PacketReadCallback acl_cb,
+     PacketReadCallback sco_cb) {
++    std::unique_lock<std::mutex> lock(init_mutex_);
+   if (g_vendor_interface) {
+     ALOGE("%s: No previous Shutdown()?", __func__);
+     return false;
+@@ -173,6 +175,7 @@ bool VendorInterface::Initialize(
+ }
+ 
+ void VendorInterface::Shutdown() {
++  std::unique_lock<std::mutex> lock(init_mutex_);
+   LOG_ALWAYS_FATAL_IF(!g_vendor_interface, "%s: No Vendor interface!",
+                       __func__);
+   g_vendor_interface->Close();
+-- 
+1.9.1
+

@@ -1,0 +1,5 @@
+cmd_reboot.c:43:5:do_get_rebootmode	32	static
+cmd_reboot.c:160:5:do_reboot	48	static
+cmd_reboot.c:217:5:do_set_usb_boot	32	static
+cmd_reboot.c:269:5:do_systemoff	16	static
+cmd_reboot.c:35:14:do_get_reboot_reason	0	static

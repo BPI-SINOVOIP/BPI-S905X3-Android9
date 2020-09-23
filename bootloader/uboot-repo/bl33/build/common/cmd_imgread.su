@@ -1,0 +1,8 @@
+cmd_imgread.c:693:12:do_image_read	64	static
+cmd_imgread.c:436:12:img_res_check_log_header	32	static
+cmd_imgread.c:453:12:do_image_read_res	48	static
+cmd_imgread.c:731:12:do_unpackimg	224	static
+cmd_imgread.c:541:12:do_image_read_pic	528	static
+cmd_imgread.c:122:12:_aml_get_secure_boot_kernel_size	64	static
+cmd_imgread.c:201:12:do_image_read_dtb	96	static
+cmd_imgread.c:299:12:do_image_read_kernel	80	static

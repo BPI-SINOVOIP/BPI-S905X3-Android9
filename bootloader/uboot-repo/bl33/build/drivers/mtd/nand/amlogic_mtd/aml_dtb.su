@@ -1,0 +1,4 @@
+aml_dtb.c:34:5:amlnf_dtb_save	80	static
+aml_dtb.c:64:5:amlnf_dtb_erase	48	static
+aml_dtb.c:83:5:amlnf_dtb_read	80	static
+aml_dtb.c:114:5:amlnf_dtb_init	0	static

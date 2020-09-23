@@ -1,0 +1,1 @@
+cmd_examples/standalone/atmel_df_pow2 := aarch64-none-elf-ld.bfd   -g -Ttext 0xc100000 -o examples/standalone/atmel_df_pow2 -e atmel_df_pow2 examples/standalone/atmel_df_pow2.o examples/standalone/libstubs.o -L /opt/gcc-linaro-aarch64-none-elf-4.8-2013.11_linux/bin/../lib/gcc/aarch64-none-elf/4.8.3 -lgcc

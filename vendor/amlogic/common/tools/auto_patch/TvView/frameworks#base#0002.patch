@@ -1,0 +1,40 @@
+From 2a6013d1de2b38cc92c315c58aeff7b2e33b1780 Mon Sep 17 00:00:00 2001
+From: Lei Qian <lei.qian@amlogic.com>
+Date: Wed, 12 Jun 2019 18:39:36 +0800
+Subject: [PATCH] ITvInputSessionWrapper: don't check OverlayView status [1/1]
+
+PD#TV-6386
+
+Problem:
+we have removed OverlayView when the surface is null
+before release session, so don't need check OverlayView isAttachedToWindow.
+
+Solution:
+don't check OverlayView status when do release
+
+Verify:
+verify by marconi
+
+Change-Id: I6e56619edade66a9ed03352cd55811eca4bf1a76
+Signed-off-by: Lei Qian <lei.qian@amlogic.com>
+---
+ media/java/android/media/tv/ITvInputSessionWrapper.java | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/media/java/android/media/tv/ITvInputSessionWrapper.java b/media/java/android/media/tv/ITvInputSessionWrapper.java
+index df87e0f..d151102 100644
+--- a/media/java/android/media/tv/ITvInputSessionWrapper.java
++++ b/media/java/android/media/tv/ITvInputSessionWrapper.java
+@@ -246,9 +246,6 @@ public class ITvInputSessionWrapper extends ITvInputSession.Stub implements Hand
+ 
+     @Override
+     public void release() {
+-        if (!mIsRecordingSession) {
+-            mTvInputSessionImpl.scheduleOverlayViewCleanup();
+-        }
+         mCaller.executeOrSendMessage(mCaller.obtainMessage(DO_RELEASE));
+     }
+ 
+-- 
+1.9.1
+

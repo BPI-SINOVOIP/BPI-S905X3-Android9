@@ -1,0 +1,279 @@
+From e014baf4238dd2593eefb348eec0e93b62bab520 Mon Sep 17 00:00:00 2001
+From: Lei Qian <lei.qian@amlogic.com>
+Date: Thu, 4 Jul 2019 16:18:56 +0800
+Subject: [PATCH] Arc: adjust request short audio descriptor [1/1]
+
+PD# SWPL-9369
+
+Problem:
+TV connected to AMP-ARC, then TV AC OFF/ON, DD/DD+/DTS passthrough failed
+
+Solution:
+adjust request short audio descriptor
+
+Verify:
+verify by x301
+
+Change-Id: Ic3b02a9e55dbd4fc1bf009e85261842283288312
+Signed-off-by: Lei Qian <lei.qian@amlogic.com>
+---
+ .../com/android/server/hdmi/HdmiCecController.java |   3 +
+ .../android/server/hdmi/HdmiCecLocalDevice.java    |   2 +-
+ .../android/server/hdmi/HdmiCecLocalDeviceTv.java  | 103 +++++++++++++++++----
+ .../hdmi/RequestShortAudioDescriptorAction.java    |   1 +
+ 4 files changed, 90 insertions(+), 19 deletions(-)
+
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecController.java b/services/core/java/com/android/server/hdmi/HdmiCecController.java
+index fe1dc64..ae919af 100644
+--- a/services/core/java/com/android/server/hdmi/HdmiCecController.java
++++ b/services/core/java/com/android/server/hdmi/HdmiCecController.java
+@@ -557,6 +557,9 @@ final class HdmiCecController {
+         if (isAcceptableAddress(message.getDestination()) && mService.handleCecCommand(message)) {
+             return;
+         }
++        if (message.getOpcode() == Constants.MESSAGE_REPORT_SHORT_AUDIO_DESCRIPTOR) {
++            return;
++        }
+         // Not handled message, so we will reply it with <Feature Abort>.
+         maySendFeatureAbortCommand(message, Constants.ABORT_UNRECOGNIZED_OPCODE);
+     }
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecLocalDevice.java b/services/core/java/com/android/server/hdmi/HdmiCecLocalDevice.java
+index a31860c..21f889e 100644
+--- a/services/core/java/com/android/server/hdmi/HdmiCecLocalDevice.java
++++ b/services/core/java/com/android/server/hdmi/HdmiCecLocalDevice.java
+@@ -129,7 +129,7 @@ abstract class HdmiCecLocalDevice {
+     // Note that access to this collection should happen in service thread.
+     private final ArrayList<HdmiCecFeatureAction> mActions = new ArrayList<>();
+ 
+-    private final Handler mHandler = new Handler () {
++    protected final Handler mHandler = new Handler () {
+         @Override
+         public void handleMessage(Message msg) {
+             switch (msg.what) {
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java b/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
+index e8f44a3..75cd4ec 100644
+--- a/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
++++ b/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
+@@ -83,6 +83,20 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+ 
+     private RequestShortAudioDescriptorAction mRequestShortAudioDescriptorAction = null;
+ 
++    private boolean mHasHandleReportAudioStatus = false;
++
++    private boolean mSkipSendRequestSystemAudioMode = false;
++
++    private boolean mSkipHandleSetSystemAudioMode = false;
++
++    private Runnable mUnMuteSpeakerRunnable = new Runnable() {
++
++        @Override
++        public void run() {
++            mService.getAudioManager().setParameters("speaker_mute=0");
++        }
++    };
++
+     // Whether the System Audio Control feature is enabled or not. True by default.
+     @GuardedBy("mLock")
+     private boolean mSystemAudioControlFeatureEnabled;
+@@ -710,6 +724,13 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+         boolean mute = HdmiUtils.isAudioStatusMute(message);
+         int volume = HdmiUtils.getAudioStatusVolume(message);
+         setAudioStatus(mute, volume);
++        mHasHandleReportAudioStatus = true;
++        mHandler.postDelayed(new Runnable() {
++            @Override
++            public void run() {
++                mHasHandleReportAudioStatus = false;
++            }
++        }, 430);
+         return true;
+     }
+ 
+@@ -859,12 +880,8 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+             return;
+         }
+ 
+-        if (!hasAction(RequestShortAudioDescriptorAction.class)) {
+-            if (mRequestShortAudioDescriptorAction == null) {
+-                mRequestShortAudioDescriptorAction = new RequestShortAudioDescriptorAction(
+-                        this, avr.getLogicalAddress(), enabled, mService, avr.getPortId());
+-            }
+-            addAndStartAction(mRequestShortAudioDescriptorAction);
++        if (!hasAction(RequestShortAudioDescriptorAction.class) && enabled) {
++            startRequestShortAudioDescriptorAction(avr);
+         }
+ 
+         addAndStartAction(
+@@ -876,6 +893,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+         if (!isSystemAudioControlFeatureEnabled() && on) {
+             HdmiLogger.debug("Cannot turn on system audio mode "
+                     + "because the System Audio Control feature is disabled.");
++            mSystemAudioActivated = false;
+             return;
+         }
+         if (isBluetoothOrUsbOutDevices() && on) return;
+@@ -886,15 +904,10 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+         HdmiLogger.debug("System Audio Mode change[old:%b new:%b]", mSystemAudioActivated, on);
+         updateAudioManagerForSystemAudio(on);
+         synchronized (mLock) {
++            if (!hasAction(RequestShortAudioDescriptorAction.class) && on) {
++                startRequestShortAudioDescriptorAction(avr);
++            }
+             if (mSystemAudioActivated != on) {
+-                if (mRequestShortAudioDescriptorAction == null) {
+-                    mRequestShortAudioDescriptorAction =
+-                            new RequestShortAudioDescriptorAction(
+-                                    this, avr.getLogicalAddress(), on, mService, avr.getPortId());
+-                }
+-                if (!hasAction(RequestShortAudioDescriptorAction.class)) {
+-                    addAndStartAction(mRequestShortAudioDescriptorAction);
+-                }
+                 mSystemAudioActivated = on;
+                 mService.writeBooleanSetting(Global.HDMI_SYSTEM_AUDIO_STATUS_ENABLED, on);
+                 updateAudioDevicesStatus(on);
+@@ -904,6 +917,14 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+         }
+     }
+ 
++    private void startRequestShortAudioDescriptorAction(HdmiDeviceInfo avr) {
++        if (mRequestShortAudioDescriptorAction == null) {
++            mRequestShortAudioDescriptorAction = new RequestShortAudioDescriptorAction(
++                    this, avr.getLogicalAddress(), true, mService, avr.getPortId());
++        }
++        addAndStartAction(mRequestShortAudioDescriptorAction);
++    }
++
+     private void updateAudioManagerForSystemAudio(boolean on) {
+         if (isBluetoothOrUsbOutDevices() && on) return;
+         int device = mService.getAudioManager().setHdmiSystemAudioSupported(on);
+@@ -913,12 +934,22 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+     private void updateAudioDevicesStatus(boolean on) {
+         mService.writeBooleanSetting(
+             "sound_output_device"/* OutputModeManager.SOUND_OUTPUT_DEVICE */, on);
+-        mService.getAudioManager().setParameters("speaker_mute=" + (on ? 1 : 0));
++        if (!on && getActivePath() != HdmiDeviceInfo.PATH_INTERNAL &&
++                getActivePath() != HdmiDeviceInfo.PATH_INVALID) {
++            mHandler.removeCallbacks(mUnMuteSpeakerRunnable);
++            mHandler.postDelayed(mUnMuteSpeakerRunnable, 1000);
++        } else {
++            mService.getAudioManager().setParameters("speaker_mute=" + (on ? 1 : 0));
++        }
+         mService.getAudioManager().setParameters("HDMI ARC Switch=" + (on ? 1 : 0));
+         sendSystemAudioModeRequest(on);
+         if (mRequestShortAudioDescriptorAction != null && on) {
+             mRequestShortAudioDescriptorAction.start();
++        } else if (!hasAction(RequestShortAudioDescriptorAction.class) &&
++                on && hasSystemAudioDevice()) {
++            startRequestShortAudioDescriptorAction(getAvrDeviceInfo());
+         } else if (!on) {
++            HdmiLogger.debug("updateAudioDevicesStatus Clean Audio Format");
+             mService.getAudioManager().setParameters("set_ARC_format=[2, 0, 0, 0, 0]");
+             mService.getAudioManager().setParameters("set_ARC_format=[7, 0, 0, 0, 0]");
+             mService.getAudioManager().setParameters("set_ARC_format=[10, 0, 0, 0, 0]");
+@@ -932,12 +963,21 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+                     + "because the System Audio Control feature is disabled.");
+             return;
+         }
+-        if (getAvrDeviceInfo() == null) {
++        HdmiDeviceInfo avr = getAvrDeviceInfo();
++        if (avr == null || mSkipSendRequestSystemAudioMode) {
+             enableSystemAudio = false;
++            return;
++        }
++
++        if (enableSystemAudio) {
++            mSkipHandleSetSystemAudioMode = false;
++        } else {
++            mSkipHandleSetSystemAudioMode = true;
+         }
++
+         HdmiCecMessage command = HdmiCecMessageBuilder.buildSystemAudioModeRequest(
+                 mAddress, Constants.ADDR_AUDIO_SYSTEM,
+-                enableSystemAudio ? getAvrDeviceInfo().getPhysicalAddress() : mAddress, true);
++                enableSystemAudio ? avr.getPhysicalAddress() : mAddress, true);
+         mService.sendCecCommand(command, new HdmiControlService.SendMessageCallback() {
+             @Override
+             public void onSendCompleted(int error) {
+@@ -953,11 +993,14 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+         assertRunOnServiceThread();
+         if (isBluetoothOrUsbOutDevices() && on) return;
+         if (!hasSystemAudioDevice() || mSystemAudioActivated == on) {
+-            mSystemAudioActivated = on;
++            //mSystemAudioActivated = on;
+             return;
+         }
+         updateAudioManagerForSystemAudio(on);
+         synchronized (mLock) {
++            if (!hasAction(RequestShortAudioDescriptorAction.class) && on) {
++                startRequestShortAudioDescriptorAction(getAvrDeviceInfo());
++            }
+             mSystemAudioActivated = on;
+             mService.writeBooleanSetting(Global.HDMI_SYSTEM_AUDIO_STATUS_ENABLED, on);
+             updateAudioDevicesStatus(on);
+@@ -988,6 +1031,9 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+                 changeArcFeatureEnabled(port.getId(), enabled);
+             }
+         }
++        if (enabled) {
++            mSkipSendRequestSystemAudioMode = false;
++        }
+     }
+ 
+     boolean isSystemAudioControlFeatureEnabled() {
+@@ -1086,6 +1132,9 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+         }
+         if (enabled && !mArcEstablished) {
+             startArcAction(true);
++            if (!hasAction(RequestShortAudioDescriptorAction.class)) {
++                startRequestShortAudioDescriptorAction(avr);
++            }
+         } else if (!enabled && mArcEstablished) {
+             startArcAction(false);
+         }
+@@ -1203,6 +1252,15 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+         removeAction(VolumeControlAction.class);
+         sendUserControlPressedAndReleased(getAvrDeviceInfo().getLogicalAddress(),
+                 HdmiCecKeycode.getMuteKey(mute));
++        mHandler.postDelayed(new Runnable() {
++            @Override
++            public void run() {
++                if (!mHasHandleReportAudioStatus && getAvrDeviceInfo() != null) {
++                    mService.sendCecCommand(HdmiCecMessageBuilder.buildGiveAudioStatus(
++                            mAddress, getAvrDeviceInfo().getLogicalAddress()));
++                }
++            }
++        }, 600);
+     }
+ 
+     @Override
+@@ -1286,6 +1344,15 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+             mService.maySendFeatureAbortCommand(message, Constants.ABORT_REFUSED);
+             return true;
+         }
++        if (systemAudioStatus) {
++            mSkipSendRequestSystemAudioMode = false;
++        } else {
++            mSkipSendRequestSystemAudioMode = true;
++        }
++        if (systemAudioStatus && mSkipHandleSetSystemAudioMode) {
++            mSkipHandleSetSystemAudioMode = false;
++            return true;
++        }
+         removeAction(SystemAudioAutoInitiationAction.class);
+         SystemAudioActionFromAvr action = new SystemAudioActionFromAvr(this,
+                 message.getSource(), systemAudioStatus, null);
+diff --git a/services/core/java/com/android/server/hdmi/RequestShortAudioDescriptorAction.java b/services/core/java/com/android/server/hdmi/RequestShortAudioDescriptorAction.java
+index fcefcce..10f77b9 100644
+--- a/services/core/java/com/android/server/hdmi/RequestShortAudioDescriptorAction.java
++++ b/services/core/java/com/android/server/hdmi/RequestShortAudioDescriptorAction.java
+@@ -249,6 +249,7 @@ final class RequestShortAudioDescriptorAction extends HdmiCecFeatureAction {
+     private void setParameters(String parameters) {
+         if (mService != null) {
+             mService.getAudioManager().setParameters(parameters);
++            HdmiLogger.debug("Set Audio Format [%s]", parameters);
+         }
+     }
+ 
+-- 
+1.9.1
+

@@ -1,0 +1,516 @@
+From 92ab84756814672180b760bbe3085b1b0dc064ff Mon Sep 17 00:00:00 2001
+From: "liangzhuo.xie" <liangzhuo.xie@amlogic.com>
+Date: Mon, 19 Nov 2018 11:09:36 +0800
+Subject: [PATCH] screen_control: add system sepolicy for screencontrol
+
+PD#SWPL-210
+
+Change-Id: I4fb0aa9c3aeb743e4a5240329421337eae7936dc
+---
+ .../api/28.0/private/compat/26.0/26.0.ignore.cil   |  5 +++
+ .../api/28.0/private/compat/27.0/27.0.ignore.cil   |  5 +++
+ prebuilts/api/28.0/private/file_contexts           |  1 +
+ prebuilts/api/28.0/private/hwservice_contexts      |  1 +
+ prebuilts/api/28.0/private/screen_control.te       |  5 +++
+ prebuilts/api/28.0/public/hwservice.te             |  1 +
+ prebuilts/api/28.0/public/hwservicemanager.te      |  6 +++
+ prebuilts/api/28.0/public/mediacodec.te            |  2 +
+ prebuilts/api/28.0/public/mediaserver.te           |  2 +
+ prebuilts/api/28.0/public/platform_app.te          |  2 +
+ prebuilts/api/28.0/public/priv_app.te              |  2 +
+ prebuilts/api/28.0/public/screen_control.te        | 43 ++++++++++++++++++++++
+ prebuilts/api/28.0/public/service.te               |  1 +
+ prebuilts/api/28.0/public/servicemanager.te        |  3 ++
+ prebuilts/api/28.0/public/system_app.te            |  2 +
+ prebuilts/api/28.0/public/system_server.te         |  2 +
+ private/compat/26.0/26.0.ignore.cil                |  5 +++
+ private/compat/27.0/27.0.ignore.cil                |  5 +++
+ private/file_contexts                              |  1 +
+ private/hwservice_contexts                         |  1 +
+ private/screen_control.te                          |  5 +++
+ public/hwservice.te                                |  1 +
+ public/hwservicemanager.te                         |  6 +++
+ public/mediacodec.te                               |  2 +
+ public/mediaserver.te                              |  2 +
+ public/platform_app.te                             |  2 +
+ public/priv_app.te                                 |  2 +
+ public/screen_control.te                           | 43 ++++++++++++++++++++++
+ public/service.te                                  |  1 +
+ public/servicemanager.te                           |  3 ++
+ public/system_app.te                               |  2 +
+ public/system_server.te                            |  2 +
+ 32 files changed, 166 insertions(+)
+ create mode 100644 prebuilts/api/28.0/private/screen_control.te
+ create mode 100644 prebuilts/api/28.0/public/screen_control.te
+ create mode 100644 private/screen_control.te
+ create mode 100644 public/screen_control.te
+
+diff --git a/prebuilts/api/28.0/private/compat/26.0/26.0.ignore.cil b/prebuilts/api/28.0/private/compat/26.0/26.0.ignore.cil
+index 4e0aae2..7f761c8 100644
+--- a/prebuilts/api/28.0/private/compat/26.0/26.0.ignore.cil
++++ b/prebuilts/api/28.0/private/compat/26.0/26.0.ignore.cil
+@@ -85,6 +85,11 @@
+     perfetto_traces_data_file
+     perfprofd_service
+     property_info
++    screen_control
++    screen_control_exec
++    screen_control_service
++    screen_control_tmpfs
++    screencontrol_hwservice
+     secure_element
+     secure_element_device
+     secure_element_tmpfs
+diff --git a/prebuilts/api/28.0/private/compat/27.0/27.0.ignore.cil b/prebuilts/api/28.0/private/compat/27.0/27.0.ignore.cil
+index 747478c..fc923e5 100644
+--- a/prebuilts/api/28.0/private/compat/27.0/27.0.ignore.cil
++++ b/prebuilts/api/28.0/private/compat/27.0/27.0.ignore.cil
+@@ -72,6 +72,11 @@
+     perfetto_traces_data_file
+     perfprofd_service
+     property_info
++    screen_control
++    screen_control_exec
++    screen_control_service
++    screen_control_tmpfs
++    screencontrol_hwservice
+     secure_element
+     secure_element_device
+     secure_element_service
+diff --git a/prebuilts/api/28.0/private/file_contexts b/prebuilts/api/28.0/private/file_contexts
+index 564e45c..ded88f7 100644
+--- a/prebuilts/api/28.0/private/file_contexts
++++ b/prebuilts/api/28.0/private/file_contexts
+@@ -293,6 +293,7 @@
+ /system/bin/statsd               u:object_r:statsd_exec:s0
+ /system/bin/bpfloader            u:object_r:bpfloader_exec:s0
+ /system/bin/wait_for_keymaster   u:object_r:wait_for_keymaster_exec:s0
++/system/bin/screencontrol        u:object_r:screen_control_exec:s0
+ 
+ #############################
+ # Vendor files
+diff --git a/prebuilts/api/28.0/private/hwservice_contexts b/prebuilts/api/28.0/private/hwservice_contexts
+index c75c0a5..410bf63 100644
+--- a/prebuilts/api/28.0/private/hwservice_contexts
++++ b/prebuilts/api/28.0/private/hwservice_contexts
+@@ -69,3 +69,4 @@ android.hidl.token::ITokenManager                               u:object_r:hidl_
+ android.system.net.netd::INetd                                  u:object_r:system_net_netd_hwservice:s0
+ android.system.wifi.keystore::IKeystore                         u:object_r:system_wifi_keystore_hwservice:s0
+ *                                                               u:object_r:default_android_hwservice:s0
++vendor.amlogic.hardware.screencontrol::IScreenControl           u:object_r:screencontrol_hwservice:s0
+diff --git a/prebuilts/api/28.0/private/screen_control.te b/prebuilts/api/28.0/private/screen_control.te
+new file mode 100644
+index 0000000..c95c5ee
+--- /dev/null
++++ b/prebuilts/api/28.0/private/screen_control.te
+@@ -0,0 +1,5 @@
++typeattribute screen_control coredomain;
++
++init_daemon_domain(screen_control)
++allow screen_control hal_allocator_default:fd { use };
++allow screen_control hal_allocator_default:binder { call };
+diff --git a/prebuilts/api/28.0/public/hwservice.te b/prebuilts/api/28.0/public/hwservice.te
+index 5fba86a..7bd5e80 100644
+--- a/prebuilts/api/28.0/public/hwservice.te
++++ b/prebuilts/api/28.0/public/hwservice.te
+@@ -57,6 +57,7 @@ type hidl_base_hwservice, hwservice_manager_type;
+ type hidl_manager_hwservice, hwservice_manager_type, coredomain_hwservice;
+ type hidl_memory_hwservice, hwservice_manager_type, coredomain_hwservice;
+ type hidl_token_hwservice, hwservice_manager_type, coredomain_hwservice;
++type screencontrol_hwservice, hwservice_manager_type;
+ type system_net_netd_hwservice, hwservice_manager_type, coredomain_hwservice;
+ type system_wifi_keystore_hwservice, hwservice_manager_type, coredomain_hwservice;
+ type thermalcallback_hwservice, hwservice_manager_type;
+diff --git a/prebuilts/api/28.0/public/hwservicemanager.te b/prebuilts/api/28.0/public/hwservicemanager.te
+index 1ffd2a6..8c91de1 100644
+--- a/prebuilts/api/28.0/public/hwservicemanager.te
++++ b/prebuilts/api/28.0/public/hwservicemanager.te
+@@ -18,5 +18,11 @@ allow hwservicemanager system_file:dir r_dir_perms;
+ # Read hwservice_contexts
+ allow hwservicemanager hwservice_contexts_file:file r_file_perms;
+ 
++# add screen_control
++allow hwservicemanager screen_control:binder { call transfer };
++allow hwservicemanager screen_control:dir { search };
++allow hwservicemanager screen_control:file { read open };
++allow hwservicemanager screen_control:process { getattr };
++
+ # Check SELinux permissions.
+ selinux_check_access(hwservicemanager)
+diff --git a/prebuilts/api/28.0/public/mediacodec.te b/prebuilts/api/28.0/public/mediacodec.te
+index e5b4a7d..9b2328b 100644
+--- a/prebuilts/api/28.0/public/mediacodec.te
++++ b/prebuilts/api/28.0/public/mediacodec.te
+@@ -31,6 +31,8 @@ allow mediacodec video_device:dir search;
+ allow mediacodec ion_device:chr_file rw_file_perms;
+ allow mediacodec hal_camera:fd use;
+ 
++allow mediacodec screen_control:binder { call transfer };
++
+ crash_dump_fallback(mediacodec)
+ 
+ add_hwservice(mediacodec, hal_codec2_hwservice)
+diff --git a/prebuilts/api/28.0/public/mediaserver.te b/prebuilts/api/28.0/public/mediaserver.te
+index f0c94ed..ca9f6bb 100644
+--- a/prebuilts/api/28.0/public/mediaserver.te
++++ b/prebuilts/api/28.0/public/mediaserver.te
+@@ -55,6 +55,8 @@ allow mediaserver rpmsg_device:chr_file rw_file_perms;
+ # Inter System processes communicate over named pipe (FIFO)
+ allow mediaserver system_server:fifo_file r_file_perms;
+ 
++allow mediaserver screen_control:binder { transfer };
++
+ r_dir_file(mediaserver, media_rw_data_file)
+ 
+ # Grant access to read files on appfuse.
+diff --git a/prebuilts/api/28.0/public/platform_app.te b/prebuilts/api/28.0/public/platform_app.te
+index 9b1faf0..32fcd06 100644
+--- a/prebuilts/api/28.0/public/platform_app.te
++++ b/prebuilts/api/28.0/public/platform_app.te
+@@ -3,3 +3,5 @@
+ ###
+ 
+ type platform_app, domain;
++allow platform_app screencontrol_hwservice:hwservice_manager { find };
++allow platform_app screen_control:binder { call };
+diff --git a/prebuilts/api/28.0/public/priv_app.te b/prebuilts/api/28.0/public/priv_app.te
+index 0761fc3..d173061 100644
+--- a/prebuilts/api/28.0/public/priv_app.te
++++ b/prebuilts/api/28.0/public/priv_app.te
+@@ -3,3 +3,5 @@
+ ###
+ 
+ type priv_app, domain;
++allow priv_app screencontrol_hwservice:hwservice_manager { find };
++allow priv_app screen_control:binder call;
+diff --git a/prebuilts/api/28.0/public/screen_control.te b/prebuilts/api/28.0/public/screen_control.te
+new file mode 100644
+index 0000000..d01fb89
+--- /dev/null
++++ b/prebuilts/api/28.0/public/screen_control.te
+@@ -0,0 +1,43 @@
++type screen_control, domain;
++
++type screen_control_exec, exec_type, file_type;
++
++allow screen_control mediacodec:binder { call transfer };
++
++allow screen_control hwservicemanager:binder { call transfer };
++allow screen_control { screencontrol_hwservice hidl_base_hwservice }:hwservice_manager { add };
++
++allow screen_control hidl_memory_hwservice:hwservice_manager find;
++allow screen_control hidl_allocator_hwservice:hwservice_manager find;
++allow screen_control hal_omx_hwservice:hwservice_manager find;
++
++allow screen_control video_device:chr_file { read write open ioctl getattr };
++#allow screen_control media_prop:file {open read getattr };
++allow screen_control sdcardfs:dir { read open search write add_name };
++allow screen_control sdcardfs:file { create read open getattr write};
++
++allow screen_control media_rw_data_file:dir { read open write add_name search };
++allow screen_control media_rw_data_file:file { create open read getattr setattr write};
++allow screen_control system_file:dir { read open search };
++
++allow screen_control storage_file:dir { search read write };
++allow screen_control storage_file:file { write read open getattr};
++
++allow screen_control servicemanager:binder { call transfer };
++allow screen_control servicemanager:dir { search };
++
++allow screen_control mediaserver:binder { call transfer };
++allow screen_control mediaserver_service:service_manager { find };
++allow screen_control system_server:binder { call };
++allow screen_control mediametrics:binder { call };
++allow screen_control mediametrics_service:service_manager { find };
++
++allow screen_control init:process sigchld;
++
++set_prop(screen_control, hwservicemanager_prop)
++get_prop(screen_control, hwservicemanager_prop)
++
++get_prop(screen_control, safemode_prop)
++set_prop(screen_control, ctl_default_prop)
++
++allow screen_control system_app:binder { call };
+diff --git a/prebuilts/api/28.0/public/service.te b/prebuilts/api/28.0/public/service.te
+index 3526049..8342766 100644
+--- a/prebuilts/api/28.0/public/service.te
++++ b/prebuilts/api/28.0/public/service.te
+@@ -32,6 +32,7 @@ type update_engine_service,     service_manager_type;
+ type virtual_touchpad_service,  service_manager_type;
+ type vold_service,              service_manager_type;
+ type vr_hwc_service,            service_manager_type;
++type screen_control_service,    service_manager_type;
+ 
+ # system_server_services broken down
+ type accessibility_service, app_api_service, ephemeral_app_api_service, system_server_service, service_manager_type;
+diff --git a/prebuilts/api/28.0/public/servicemanager.te b/prebuilts/api/28.0/public/servicemanager.te
+index 87e3a22..4c1b4e5 100644
+--- a/prebuilts/api/28.0/public/servicemanager.te
++++ b/prebuilts/api/28.0/public/servicemanager.te
+@@ -18,6 +18,9 @@ allow servicemanager {
+ }:binder transfer;
+ 
+ allow servicemanager service_contexts_file:file r_file_perms;
++allow servicemanager screen_control:dir { search };
++allow servicemanager screen_control:file { read open };
++allow servicemanager screen_control:process { getattr };
+ # nonplat_service_contexts only accessible on non full-treble devices
+ not_full_treble(`allow servicemanager nonplat_service_contexts_file:file r_file_perms;')
+ 
+diff --git a/prebuilts/api/28.0/public/system_app.te b/prebuilts/api/28.0/public/system_app.te
+index 023058e..dfd7764 100644
+--- a/prebuilts/api/28.0/public/system_app.te
++++ b/prebuilts/api/28.0/public/system_app.te
+@@ -5,3 +5,5 @@
+ ###
+ 
+ type system_app, domain;
++allow system_app screencontrol_hwservice:hwservice_manager { find };
++allow system_app screen_control:binder { call };
+diff --git a/prebuilts/api/28.0/public/system_server.te b/prebuilts/api/28.0/public/system_server.te
+index 805d617..b7035c3 100644
+--- a/prebuilts/api/28.0/public/system_server.te
++++ b/prebuilts/api/28.0/public/system_server.te
+@@ -3,3 +3,5 @@
+ # Most of the framework services run in this process.
+ #
+ type system_server, domain;
++allow system_server screen_control:dir { search };
++allow system_server screen_control:file { read getattr open };
+diff --git a/private/compat/26.0/26.0.ignore.cil b/private/compat/26.0/26.0.ignore.cil
+index 4e0aae2..7f761c8 100644
+--- a/private/compat/26.0/26.0.ignore.cil
++++ b/private/compat/26.0/26.0.ignore.cil
+@@ -85,6 +85,11 @@
+     perfetto_traces_data_file
+     perfprofd_service
+     property_info
++    screen_control
++    screen_control_exec
++    screen_control_service
++    screen_control_tmpfs
++    screencontrol_hwservice
+     secure_element
+     secure_element_device
+     secure_element_tmpfs
+diff --git a/private/compat/27.0/27.0.ignore.cil b/private/compat/27.0/27.0.ignore.cil
+index 747478c..fc923e5 100644
+--- a/private/compat/27.0/27.0.ignore.cil
++++ b/private/compat/27.0/27.0.ignore.cil
+@@ -72,6 +72,11 @@
+     perfetto_traces_data_file
+     perfprofd_service
+     property_info
++    screen_control
++    screen_control_exec
++    screen_control_service
++    screen_control_tmpfs
++    screencontrol_hwservice
+     secure_element
+     secure_element_device
+     secure_element_service
+diff --git a/private/file_contexts b/private/file_contexts
+index 564e45c..ded88f7 100644
+--- a/private/file_contexts
++++ b/private/file_contexts
+@@ -293,6 +293,7 @@
+ /system/bin/statsd               u:object_r:statsd_exec:s0
+ /system/bin/bpfloader            u:object_r:bpfloader_exec:s0
+ /system/bin/wait_for_keymaster   u:object_r:wait_for_keymaster_exec:s0
++/system/bin/screencontrol        u:object_r:screen_control_exec:s0
+ 
+ #############################
+ # Vendor files
+diff --git a/private/hwservice_contexts b/private/hwservice_contexts
+index c75c0a5..410bf63 100644
+--- a/private/hwservice_contexts
++++ b/private/hwservice_contexts
+@@ -69,3 +69,4 @@ android.hidl.token::ITokenManager                               u:object_r:hidl_
+ android.system.net.netd::INetd                                  u:object_r:system_net_netd_hwservice:s0
+ android.system.wifi.keystore::IKeystore                         u:object_r:system_wifi_keystore_hwservice:s0
+ *                                                               u:object_r:default_android_hwservice:s0
++vendor.amlogic.hardware.screencontrol::IScreenControl           u:object_r:screencontrol_hwservice:s0
+diff --git a/private/screen_control.te b/private/screen_control.te
+new file mode 100644
+index 0000000..c95c5ee
+--- /dev/null
++++ b/private/screen_control.te
+@@ -0,0 +1,5 @@
++typeattribute screen_control coredomain;
++
++init_daemon_domain(screen_control)
++allow screen_control hal_allocator_default:fd { use };
++allow screen_control hal_allocator_default:binder { call };
+diff --git a/public/hwservice.te b/public/hwservice.te
+index 5fba86a..7bd5e80 100644
+--- a/public/hwservice.te
++++ b/public/hwservice.te
+@@ -57,6 +57,7 @@ type hidl_base_hwservice, hwservice_manager_type;
+ type hidl_manager_hwservice, hwservice_manager_type, coredomain_hwservice;
+ type hidl_memory_hwservice, hwservice_manager_type, coredomain_hwservice;
+ type hidl_token_hwservice, hwservice_manager_type, coredomain_hwservice;
++type screencontrol_hwservice, hwservice_manager_type;
+ type system_net_netd_hwservice, hwservice_manager_type, coredomain_hwservice;
+ type system_wifi_keystore_hwservice, hwservice_manager_type, coredomain_hwservice;
+ type thermalcallback_hwservice, hwservice_manager_type;
+diff --git a/public/hwservicemanager.te b/public/hwservicemanager.te
+index 1ffd2a6..8c91de1 100644
+--- a/public/hwservicemanager.te
++++ b/public/hwservicemanager.te
+@@ -18,5 +18,11 @@ allow hwservicemanager system_file:dir r_dir_perms;
+ # Read hwservice_contexts
+ allow hwservicemanager hwservice_contexts_file:file r_file_perms;
+ 
++# add screen_control
++allow hwservicemanager screen_control:binder { call transfer };
++allow hwservicemanager screen_control:dir { search };
++allow hwservicemanager screen_control:file { read open };
++allow hwservicemanager screen_control:process { getattr };
++
+ # Check SELinux permissions.
+ selinux_check_access(hwservicemanager)
+diff --git a/public/mediacodec.te b/public/mediacodec.te
+index e5b4a7d..9b2328b 100644
+--- a/public/mediacodec.te
++++ b/public/mediacodec.te
+@@ -31,6 +31,8 @@ allow mediacodec video_device:dir search;
+ allow mediacodec ion_device:chr_file rw_file_perms;
+ allow mediacodec hal_camera:fd use;
+ 
++allow mediacodec screen_control:binder { call transfer };
++
+ crash_dump_fallback(mediacodec)
+ 
+ add_hwservice(mediacodec, hal_codec2_hwservice)
+diff --git a/public/mediaserver.te b/public/mediaserver.te
+index f0c94ed..ca9f6bb 100644
+--- a/public/mediaserver.te
++++ b/public/mediaserver.te
+@@ -55,6 +55,8 @@ allow mediaserver rpmsg_device:chr_file rw_file_perms;
+ # Inter System processes communicate over named pipe (FIFO)
+ allow mediaserver system_server:fifo_file r_file_perms;
+ 
++allow mediaserver screen_control:binder { transfer };
++
+ r_dir_file(mediaserver, media_rw_data_file)
+ 
+ # Grant access to read files on appfuse.
+diff --git a/public/platform_app.te b/public/platform_app.te
+index 9b1faf0..32fcd06 100644
+--- a/public/platform_app.te
++++ b/public/platform_app.te
+@@ -3,3 +3,5 @@
+ ###
+ 
+ type platform_app, domain;
++allow platform_app screencontrol_hwservice:hwservice_manager { find };
++allow platform_app screen_control:binder { call };
+diff --git a/public/priv_app.te b/public/priv_app.te
+index 0761fc3..d173061 100644
+--- a/public/priv_app.te
++++ b/public/priv_app.te
+@@ -3,3 +3,5 @@
+ ###
+ 
+ type priv_app, domain;
++allow priv_app screencontrol_hwservice:hwservice_manager { find };
++allow priv_app screen_control:binder call;
+diff --git a/public/screen_control.te b/public/screen_control.te
+new file mode 100644
+index 0000000..d01fb89
+--- /dev/null
++++ b/public/screen_control.te
+@@ -0,0 +1,43 @@
++type screen_control, domain;
++
++type screen_control_exec, exec_type, file_type;
++
++allow screen_control mediacodec:binder { call transfer };
++
++allow screen_control hwservicemanager:binder { call transfer };
++allow screen_control { screencontrol_hwservice hidl_base_hwservice }:hwservice_manager { add };
++
++allow screen_control hidl_memory_hwservice:hwservice_manager find;
++allow screen_control hidl_allocator_hwservice:hwservice_manager find;
++allow screen_control hal_omx_hwservice:hwservice_manager find;
++
++allow screen_control video_device:chr_file { read write open ioctl getattr };
++#allow screen_control media_prop:file {open read getattr };
++allow screen_control sdcardfs:dir { read open search write add_name };
++allow screen_control sdcardfs:file { create read open getattr write};
++
++allow screen_control media_rw_data_file:dir { read open write add_name search };
++allow screen_control media_rw_data_file:file { create open read getattr setattr write};
++allow screen_control system_file:dir { read open search };
++
++allow screen_control storage_file:dir { search read write };
++allow screen_control storage_file:file { write read open getattr};
++
++allow screen_control servicemanager:binder { call transfer };
++allow screen_control servicemanager:dir { search };
++
++allow screen_control mediaserver:binder { call transfer };
++allow screen_control mediaserver_service:service_manager { find };
++allow screen_control system_server:binder { call };
++allow screen_control mediametrics:binder { call };
++allow screen_control mediametrics_service:service_manager { find };
++
++allow screen_control init:process sigchld;
++
++set_prop(screen_control, hwservicemanager_prop)
++get_prop(screen_control, hwservicemanager_prop)
++
++get_prop(screen_control, safemode_prop)
++set_prop(screen_control, ctl_default_prop)
++
++allow screen_control system_app:binder { call };
+diff --git a/public/service.te b/public/service.te
+index 3526049..8342766 100644
+--- a/public/service.te
++++ b/public/service.te
+@@ -32,6 +32,7 @@ type update_engine_service,     service_manager_type;
+ type virtual_touchpad_service,  service_manager_type;
+ type vold_service,              service_manager_type;
+ type vr_hwc_service,            service_manager_type;
++type screen_control_service,    service_manager_type;
+ 
+ # system_server_services broken down
+ type accessibility_service, app_api_service, ephemeral_app_api_service, system_server_service, service_manager_type;
+diff --git a/public/servicemanager.te b/public/servicemanager.te
+index 87e3a22..4c1b4e5 100644
+--- a/public/servicemanager.te
++++ b/public/servicemanager.te
+@@ -18,6 +18,9 @@ allow servicemanager {
+ }:binder transfer;
+ 
+ allow servicemanager service_contexts_file:file r_file_perms;
++allow servicemanager screen_control:dir { search };
++allow servicemanager screen_control:file { read open };
++allow servicemanager screen_control:process { getattr };
+ # nonplat_service_contexts only accessible on non full-treble devices
+ not_full_treble(`allow servicemanager nonplat_service_contexts_file:file r_file_perms;')
+ 
+diff --git a/public/system_app.te b/public/system_app.te
+index 023058e..dfd7764 100644
+--- a/public/system_app.te
++++ b/public/system_app.te
+@@ -5,3 +5,5 @@
+ ###
+ 
+ type system_app, domain;
++allow system_app screencontrol_hwservice:hwservice_manager { find };
++allow system_app screen_control:binder { call };
+diff --git a/public/system_server.te b/public/system_server.te
+index 805d617..b7035c3 100644
+--- a/public/system_server.te
++++ b/public/system_server.te
+@@ -3,3 +3,5 @@
+ # Most of the framework services run in this process.
+ #
+ type system_server, domain;
++allow system_server screen_control:dir { search };
++allow system_server screen_control:file { read getattr open };
+-- 
+1.9.1
+

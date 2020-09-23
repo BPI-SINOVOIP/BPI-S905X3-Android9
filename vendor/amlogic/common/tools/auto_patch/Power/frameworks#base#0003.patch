@@ -1,0 +1,94 @@
+From edb138941ecf39da3acd3a04e7887648a7b44e00 Mon Sep 17 00:00:00 2001
+From: "qingwei.xu" <qingwei.xu@amlogic.com>
+Date: Wed, 14 Nov 2018 20:18:47 +0800
+Subject: [PATCH] framework: fixed wacklock cause suspend timeout issue [2/2]
+
+PD#SWPL-986
+
+Problem:
+TvInputHardwareManager cause STR suspend time long
+
+Solution:
+1. TvInputHardwareManager: linkToDeath miss unlinkToDeath,
+call unlinkToDeath when release
+2. fixed ConnectivityService WakeLocks causes long standby time
+
+Verify:
+Verify by p321
+
+Change-Id: I2d624072c1c6cf358fec0ad4e467e275c2b52619
+---
+ .../java/com/android/server/ConnectivityService.java  | 19 +++++++++++++++++++
+ .../com/android/server/tv/TvInputHardwareManager.java |  3 +++
+ .../com/android/server/tv/TvInputManagerService.java  |  2 ++
+ 3 files changed, 24 insertions(+)
+
+diff --git a/services/core/java/com/android/server/ConnectivityService.java b/services/core/java/com/android/server/ConnectivityService.java
+index 6ef1c14..5d72248 100644
+--- a/services/core/java/com/android/server/ConnectivityService.java
++++ b/services/core/java/com/android/server/ConnectivityService.java
+@@ -1831,8 +1831,27 @@ public class ConnectivityService extends IConnectivityManager.Stub
+         mHandler.sendMessage(mHandler.obtainMessage(EVENT_SYSTEM_READY));
+ 
+         mPermissionMonitor.startMonitoring();
++        IntentFilter fl = new IntentFilter(Intent.ACTION_SCREEN_OFF);
++        mContext.registerReceiver(mSuspendReceiver, fl);
+     }
+ 
++    // release lock.
++    private BroadcastReceiver mSuspendReceiver = new BroadcastReceiver() {
++        @Override
++        public void onReceive(Context context, Intent intent) {
++            synchronized (this) {
++                if (!mNetTransitionWakeLock.isHeld()) {
++                    return; // expiry message released the lock first.
++                }
++            }
++            log("SuspendReceiver --> sendMessage to realse lock");
++            mHandler.removeMessages(EVENT_EXPIRE_NET_TRANSITION_WAKELOCK);
++            Message msg = mHandler.obtainMessage(EVENT_CLEAR_NET_TRANSITION_WAKELOCK);
++            mHandler.sendMessage(msg);
++        }
++    };
++
++
+     /**
+      * Setup data activity tracking for the given network.
+      *
+diff --git a/services/core/java/com/android/server/tv/TvInputHardwareManager.java b/services/core/java/com/android/server/tv/TvInputHardwareManager.java
+index c4c9da7..17a3bd8 100644
+--- a/services/core/java/com/android/server/tv/TvInputHardwareManager.java
++++ b/services/core/java/com/android/server/tv/TvInputHardwareManager.java
+@@ -625,6 +625,9 @@ class TvInputHardwareManager implements TvInputHal.Callback {
+ 
+         public void resetLocked(TvInputHardwareImpl hardware, ITvInputHardwareCallback callback,
+                 TvInputInfo info, Integer callingUid, Integer resolvedUserId) {
++            if (mCallback != null) {
++                mCallback.asBinder().unlinkToDeath(this, 0);
++            }
+             if (mHardware != null) {
+                 try {
+                     mCallback.onReleased();
+diff --git a/services/core/java/com/android/server/tv/TvInputManagerService.java b/services/core/java/com/android/server/tv/TvInputManagerService.java
+index d104488..eb6b912 100644
+--- a/services/core/java/com/android/server/tv/TvInputManagerService.java
++++ b/services/core/java/com/android/server/tv/TvInputManagerService.java
+@@ -672,6 +672,7 @@ public final class TvInputManagerService extends SystemService {
+                 if (sessionToken == userState.mainSessionToken) {
+                     setMainLocked(sessionToken, false, callingUid, userId);
+                 }
++                sessionState.session.asBinder().unlinkToDeath(sessionState, 0);
+                 sessionState.session.release();
+             }
+         } catch (RemoteException | SessionNotFoundException e) {
+@@ -707,6 +708,7 @@ public final class TvInputManagerService extends SystemService {
+             clientState.sessionTokens.remove(sessionToken);
+             if (clientState.isEmpty()) {
+                 userState.clientStateMap.remove(sessionState.client.asBinder());
++                clientState.clientToken.unlinkToDeath(clientState, 0);
+             }
+         }
+ 
+-- 
+1.9.1
+

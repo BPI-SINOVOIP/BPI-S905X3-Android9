@@ -1,0 +1,9 @@
+cmd_burnup.c:50:5:store_read_ops	192	static
+cmd_burnup.c:115:5:store_write_ops	192	static
+cmd_burnup.c:180:5:store_get_partititon_size	192	static
+cmd_burnup.c:231:5:store_erase_ops	160	static
+cmd_burnup.c:272:5:store_boot_read	160	static
+cmd_burnup.c:299:5:store_boot_write	160	static
+cmd_burnup.c:326:5:store_init	144	static
+cmd_burnup.c:345:5:store_exit	160	static
+cmd_burnup.c:366:5:store_dtb_rw	144	static

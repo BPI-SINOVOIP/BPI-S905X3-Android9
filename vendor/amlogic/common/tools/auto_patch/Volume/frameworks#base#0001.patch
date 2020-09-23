@@ -1,0 +1,46 @@
+From 41c2ab9359bc7a334324bee1459d7ffe3d00c7c4 Mon Sep 17 00:00:00 2001
+From: Gongwei Chen <gongwei.chen@amlogic.com>
+Date: Thu, 20 Jun 2019 19:32:30 +0800
+Subject: [PATCH] volume: modify for volume ui
+
+PD#SWPL-9751
+
+Problem:
+No volume bar is displayed when setting volume
+
+Solution:
+modify for volume ui
+
+Verify:
+Verify by Android P AOSP u202
+
+Change-Id: I7335c5604e8b783ea6071c12f857582b3957ee22
+Signed-off-by: GongWei Chen <gongwei.chen@amlogic.com>
+---
+ .../src/com/android/systemui/volume/VolumeDialogControllerImpl.java  | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/volume/VolumeDialogControllerImpl.java b/packages/SystemUI/src/com/android/systemui/volume/VolumeDialogControllerImpl.java
+index a97effd..16c3a0b 100644
+--- a/packages/SystemUI/src/com/android/systemui/volume/VolumeDialogControllerImpl.java
++++ b/packages/SystemUI/src/com/android/systemui/volume/VolumeDialogControllerImpl.java
+@@ -386,13 +386,14 @@ public class VolumeDialogControllerImpl implements VolumeDialogController, Dumpa
+         updateStatusBar();
+         // if status bar isn't null, check if phone is in AOD, else check flags
+         // since we could be using a different status bar
+-        return mStatusBar != null ?
++        /*return mStatusBar != null ?
+                 mStatusBar.getWakefulnessState() != WakefulnessLifecycle.WAKEFULNESS_ASLEEP
+                 && mStatusBar.getWakefulnessState() !=
+                         WakefulnessLifecycle.WAKEFULNESS_GOING_TO_SLEEP
+                 && mStatusBar.isDeviceInteractive()
+                 && (flags & AudioManager.FLAG_SHOW_UI) != 0 && mShowVolumeDialog
+-                : mShowVolumeDialog && (flags & AudioManager.FLAG_SHOW_UI) != 0;
++                : mShowVolumeDialog && (flags & AudioManager.FLAG_SHOW_UI) != 0; */
++        return mShowVolumeDialog && (flags & AudioManager.FLAG_SHOW_UI) != 0;
+     }
+ 
+     boolean onVolumeChangedW(int stream, int flags) {
+-- 
+1.9.1
+

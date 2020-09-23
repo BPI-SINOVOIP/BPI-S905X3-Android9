@@ -1,0 +1,36 @@
+From 1dacf1d8a9ec9598b22212cd31f01e45b5098263 Mon Sep 17 00:00:00 2001
+From: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date: Fri, 9 Nov 2018 19:43:11 +0800
+Subject: [PATCH] audio: support 192k flac playback [3/3]
+
+PD#SWPL-1653
+
+Problem:
+  flac 192k can not playback
+
+Solution:
+  add support for 192k
+
+Verify:
+  verified by p212
+
+Change-Id: I2d811324740c001252ab0e55b71553d80eeeaab9
+---
+ media/extractors/flac/FLACExtractor.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/media/extractors/flac/FLACExtractor.cpp b/media/extractors/flac/FLACExtractor.cpp
+index e3da259..112d285 100644
+--- a/media/extractors/flac/FLACExtractor.cpp
++++ b/media/extractors/flac/FLACExtractor.cpp
+@@ -583,6 +583,7 @@ status_t FLACParser::init()
+         case 48000:
+         case 88200:
+         case 96000:
++        case 192000:
+             break;
+         default:
+             ALOGE("unsupported sample rate %u", getSampleRate());
+-- 
+2.7.4
+

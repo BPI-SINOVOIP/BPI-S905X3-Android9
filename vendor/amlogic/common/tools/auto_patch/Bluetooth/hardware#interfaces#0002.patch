@@ -1,0 +1,88 @@
+From e1e996e7309c46aafe15e3a356aff61cdfc7a348 Mon Sep 17 00:00:00 2001
+From: Kuibao Zhang <kuibao.zhang@amlogic.com>
+Date: Mon, 3 Jun 2019 14:59:51 +0800
+Subject: [PATCH] BT: support bt RCU wakeup host [2/4]
+
+PD#OTT-3091
+
+Problem:
+    1.all the key of bt RCU can wakeup host after suspend;
+    2.bt RCU cann't wakeup hosy after shutdown.
+
+Solution:
+    1.send hardware error to restart stack if VSC status is non-zero.
+
+Verify:
+    ampere.
+
+Change-Id: I7803973614a5664916d371f8e59342d89c631e26
+---
+ bluetooth/1.0/default/h4_protocol.cc      |  4 ++++
+ bluetooth/1.0/default/vendor_interface.cc | 10 ++++++++++
+ 2 files changed, 14 insertions(+)
+ mode change 100644 => 100755 bluetooth/1.0/default/h4_protocol.cc
+ mode change 100644 => 100755 bluetooth/1.0/default/vendor_interface.cc
+
+diff --git a/bluetooth/1.0/default/h4_protocol.cc b/bluetooth/1.0/default/h4_protocol.cc
+old mode 100644
+new mode 100755
+index df40507..40c4908
+--- a/bluetooth/1.0/default/h4_protocol.cc
++++ b/bluetooth/1.0/default/h4_protocol.cc
+@@ -23,19 +23,23 @@
+ #include <log/log.h>
+ #include <sys/uio.h>
+ #include <unistd.h>
++#include <mutex>
+ 
+ namespace android {
+ namespace hardware {
+ namespace bluetooth {
+ namespace hci {
++std::timed_mutex mtx;
+ 
+ size_t H4Protocol::Send(uint8_t type, const uint8_t* data, size_t length) {
+   struct iovec iov[] = {{&type, sizeof(type)},
+                         {const_cast<uint8_t*>(data), length}};
+   ssize_t ret = 0;
++  mtx.try_lock_for(std::chrono::milliseconds(100));
+   do {
+     ret = TEMP_FAILURE_RETRY(writev(uart_fd_, iov, sizeof(iov) / sizeof(iov[0])));
+   } while (-1 == ret && EAGAIN == errno);
++  mtx.unlock();
+ 
+   if (ret == -1) {
+     ALOGE("%s error writing to UART (%s)", __func__, strerror(errno));
+diff --git a/bluetooth/1.0/default/vendor_interface.cc b/bluetooth/1.0/default/vendor_interface.cc
+old mode 100644
+new mode 100755
+index e48dcba..26338cd
+--- a/bluetooth/1.0/default/vendor_interface.cc
++++ b/bluetooth/1.0/default/vendor_interface.cc
+@@ -32,6 +32,7 @@ static const char* VENDOR_LIBRARY_SYMBOL_NAME =
+     "BLUETOOTH_VENDOR_LIB_INTERFACE";
+ 
+ static const int INVALID_FD = -1;
++#define HCI_VSC_READ_RAM 0xFC4D
+ 
+ namespace {
+ 
+@@ -372,6 +373,15 @@ void VendorInterface::HandleIncomingEvent(const hidl_vec<uint8_t>& hci_packet) {
+       internal_command_event_match(hci_packet)) {
+     HC_BT_HDR* bt_hdr = WrapPacketAndCopy(HCI_PACKET_TYPE_EVENT, hci_packet);
+ 
++    // Here to send hardware error to restart stack if VSC status is non-zero
++    uint16_t opcode = hci_packet[3] | (hci_packet[3 + 1] << 8);
++    if(opcode == HCI_VSC_READ_RAM  && hci_packet[6] != 0 )
++    {
++        ALOGE("Send a fake hardware error to stack");
++        hidl_vec<uint8_t> hardware_error_packet = {0x10,0x01,0x00};
++        event_cb_(hardware_error_packet);
++    }
++
+     // The callbacks can send new commands, so don't zero after calling.
+     tINT_CMD_CBACK saved_cb = internal_command.cb;
+     internal_command.cb = nullptr;
+-- 
+1.9.1
+

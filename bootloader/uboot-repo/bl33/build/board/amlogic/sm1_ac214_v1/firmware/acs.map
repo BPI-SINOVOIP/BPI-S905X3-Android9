@@ -1,0 +1,77 @@
+
+Discarded input sections
+
+ .text          0x0000000000000000        0x0 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/build_message.o
+ .data          0x0000000000000000        0x0 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/build_message.o
+ .bss           0x0000000000000000        0x0 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/build_message.o
+ .rodata.build_message
+                0x0000000000000000       0x48 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/build_message.o
+ .debug_info    0x0000000000000000       0x52 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/build_message.o
+ .debug_abbrev  0x0000000000000000       0x43 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/build_message.o
+ .debug_aranges
+                0x0000000000000000       0x20 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/build_message.o
+ .debug_line    0x0000000000000000       0x28 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/build_message.o
+ .debug_str     0x0000000000000000      0x157 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/build_message.o
+ .comment       0x0000000000000000       0x60 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/build_message.o
+ .text          0x0000000000000000        0x0 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/acs.o
+ .data          0x0000000000000000        0x0 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/acs.o
+ .bss           0x0000000000000000        0x0 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/acs.o
+ .data          0x0000000000000000        0x0 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/acs_entry.o
+ .bss           0x0000000000000000        0x0 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/acs_entry.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+                0x00000000fffaf000                . = 0xfffaf000
+
+.               0x00000000fffaf000     0x1e10
+                0x00000000fffaf000                __RO_START__ = .
+ *acs_entry.o(.text*)
+ .text          0x00000000fffaf000       0x10 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/acs_entry.o
+                0x00000000fffaf000                acs_entry
+ *(.text*)
+ *(.data*)
+ .data.__ddr_reg
+                0x00000000fffaf010       0x30 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/acs.o
+                0x00000000fffaf010                __ddr_reg
+ .data.__bl2_reg
+                0x00000000fffaf040      0x120 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/acs.o
+                0x00000000fffaf040                __bl2_reg
+ .data.__acs_set
+                0x00000000fffaf160       0xa0 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/acs.o
+                0x00000000fffaf160                __acs_set
+ .data.__pll_setting
+                0x00000000fffaf200       0x80 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/acs.o
+                0x00000000fffaf200                __pll_setting
+ *(.ddr_settings*)
+ .ddr_settings  0x00000000fffaf280     0x1b90 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/acs.o
+                0x00000000fffaf280                __ddr_setting
+LOAD /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/build_message.o
+LOAD /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/acs.o
+LOAD /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/acs_entry.o
+OUTPUT(/media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/acs.elf elf64-littleaarch64)
+
+.debug_info     0x0000000000000000      0xaa5
+ .debug_info    0x0000000000000000      0xaa5 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/acs.o
+
+.debug_abbrev   0x0000000000000000       0xfb
+ .debug_abbrev  0x0000000000000000       0xfb /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/acs.o
+
+.debug_aranges  0x0000000000000000       0x20
+ .debug_aranges
+                0x0000000000000000       0x20 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/acs.o
+
+.debug_line     0x0000000000000000      0x12b
+ .debug_line    0x0000000000000000      0x12b /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/acs.o
+
+.debug_str      0x0000000000000000      0xacc
+ .debug_str     0x0000000000000000      0xacc /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/acs.o
+                                        0xb17 (size before relaxing)
+
+.comment        0x0000000000000000       0x5f
+ .comment       0x0000000000000000       0x5f /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/board/amlogic/sm1_ac214_v1/firmware/acs.o
+                                         0x60 (size before relaxing)

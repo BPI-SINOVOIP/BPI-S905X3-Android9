@@ -1,0 +1,98 @@
+From a1f94184bb365f85ccec1c8ef16338654e4e2890 Mon Sep 17 00:00:00 2001
+From: "shipeng.sun" <shipeng.sun@amlogic.com>
+Date: Fri, 26 Apr 2019 10:18:27 +0800
+Subject: [PATCH] auto_patch: CTS test selinux neverallow failed [1/1]
+
+PD#SWPL-7708
+
+Problem:
+android.cts.security.SELinuxNeverallowRulesTest#testNeverallowRules261
+
+Solution:
+Remove selinux neverallow for app.te shell.te domain.te
+
+Verify:
+verified by darwin
+
+Change-Id: I626aa529bca0cb6453720cd23334c874996d8743
+Signed-off-by: shipeng.sun <shipeng.sun@amlogic.com>
+
+diff --git a/prebuilts/api/28.0/public/app.te b/prebuilts/api/28.0/public/app.te
+index 13ba8f0..439c1f8 100644
+--- a/prebuilts/api/28.0/public/app.te
++++ b/prebuilts/api/28.0/public/app.te
+@@ -368,7 +368,7 @@ with_asan(`allow appdomain asanwrapper_exec:file rx_file_perms;')
+ 
+ # Superuser capabilities.
+ # bluetooth requires net_admin and wake_alarm.
+-neverallow { appdomain -bluetooth -shell } self:capability_class_set *;
++neverallow { appdomain -bluetooth } self:capability_class_set *;
+ 
+ # Block device access.
+ neverallow appdomain dev_type:blk_file { read write };
+diff --git a/prebuilts/api/28.0/public/domain.te b/prebuilts/api/28.0/public/domain.te
+index 806ef60..e9337b6 100644
+--- a/prebuilts/api/28.0/public/domain.te
++++ b/prebuilts/api/28.0/public/domain.te
+@@ -1362,7 +1362,6 @@ neverallow {
+   -vold
+   -vold_prepare_subdirs
+   -zygote
+-  -shell
+ } self:capability dac_override;
+ neverallow { domain -traced_probes } self:capability dac_read_search;
+ 
+diff --git a/prebuilts/api/28.0/public/shell.te b/prebuilts/api/28.0/public/shell.te
+index 2788cbf..307e103 100644
+--- a/prebuilts/api/28.0/public/shell.te
++++ b/prebuilts/api/28.0/public/shell.te
+@@ -198,8 +198,6 @@ allow shell sepolicy_file:file r_file_perms;
+ # Allow shell to start up vendor shell
+ allow shell vendor_shell_exec:file rx_file_perms;
+ 
+-# Allow shell capability dac_override
+-allow shell self:capability { dac_override };
+ ###
+ ### Neverallow rules
+ ###
+diff --git a/public/app.te b/public/app.te
+index 13ba8f0..439c1f8 100644
+--- a/public/app.te
++++ b/public/app.te
+@@ -368,7 +368,7 @@ with_asan(`allow appdomain asanwrapper_exec:file rx_file_perms;')
+ 
+ # Superuser capabilities.
+ # bluetooth requires net_admin and wake_alarm.
+-neverallow { appdomain -bluetooth -shell } self:capability_class_set *;
++neverallow { appdomain -bluetooth } self:capability_class_set *;
+ 
+ # Block device access.
+ neverallow appdomain dev_type:blk_file { read write };
+diff --git a/public/domain.te b/public/domain.te
+index 806ef60..e9337b6 100644
+--- a/public/domain.te
++++ b/public/domain.te
+@@ -1362,7 +1362,6 @@ neverallow {
+   -vold
+   -vold_prepare_subdirs
+   -zygote
+-  -shell
+ } self:capability dac_override;
+ neverallow { domain -traced_probes } self:capability dac_read_search;
+ 
+diff --git a/public/shell.te b/public/shell.te
+index 2788cbf..307e103 100644
+--- a/public/shell.te
++++ b/public/shell.te
+@@ -198,8 +198,6 @@ allow shell sepolicy_file:file r_file_perms;
+ # Allow shell to start up vendor shell
+ allow shell vendor_shell_exec:file rx_file_perms;
+ 
+-# Allow shell capability dac_override
+-allow shell self:capability { dac_override };
+ ###
+ ### Neverallow rules
+ ###
+-- 
+1.9.1
+

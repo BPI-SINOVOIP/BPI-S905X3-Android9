@@ -1,0 +1,78 @@
+From f611486030265bf34df91402fc0ca07f0e6be608 Mon Sep 17 00:00:00 2001
+From: Rongjun Chen <rongjun.chen@amlogic.com>
+Date: Thu, 28 Feb 2019 13:17:39 +0800
+Subject: [PATCH 2/2] wifi: fix qca9377 open fail issue
+
+Change-Id: Ieeadc80bb684023e87ef061bc68c02e1ca34b3a6
+---
+ wpa_supplicant/main.c | 23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
+
+diff --git a/wpa_supplicant/main.c b/wpa_supplicant/main.c
+index 3bb4a36..768c086 100644
+--- a/wpa_supplicant/main.c
++++ b/wpa_supplicant/main.c
+@@ -18,9 +18,10 @@
+ #include "p2p_supplicant.h"
+ #ifdef MULTI_WIFI_SUPPORT
+ #include <dlfcn.h>
+-static int is_bcm_driver_loaded() {
++static int is_wifi_driver_loaded(const char *module_tag)
++{
+     FILE *proc;
+-    char line[sizeof("bcmdhd")+15];
++    char line[sizeof(module_tag)+10];
+ 
+     /*
+      * If the property says the driver is loaded, check to
+@@ -32,7 +33,7 @@ static int is_bcm_driver_loaded() {
+         return 0;
+     }
+     while ((fgets(line, sizeof(line), proc)) != NULL) {
+-        if (strncmp(line, "dhd", 3) == 0 || strncmp(line, "bcmdhd", 6) == 0) {
++        if (strncmp(line, module_tag, strlen(module_tag)) == 0) {
+             fclose(proc);
+             return 1;
+         }
+@@ -272,9 +273,19 @@ int main(int argc, char *argv[])
+ 			usage();
+ 			exitcode = 0;
+ 			goto out;
++#ifdef MULTI_WIFI_SUPPORT
+ 		case 'i':
+-			iface->ifname = optarg;
++			if (is_wifi_driver_loaded("wlan")) {
++				iface->ifname = "p2p0";
++			} else {
++				iface->ifname = optarg;
++			}
+ 			break;
++#else
++                case 'i':
++                        iface->ifname = optarg;
++                        break;
++#endif
+ 		case 'I':
+ 			iface->confanother = optarg;
+ 			break;
+@@ -288,7 +299,7 @@ int main(int argc, char *argv[])
+ #ifdef CONFIG_P2P
+ #ifdef MULTI_WIFI_SUPPORT
+ 		case 'm':
+-			if (is_bcm_driver_loaded() == 1)
++			if (is_wifi_driver_loaded("dhd") == 1 || is_wifi_driver_loaded("bcmdhd") == 1)
+ 			    params.conf_p2p_dev = optarg;
+ 			break;
+ #else
+@@ -305,7 +316,7 @@ int main(int argc, char *argv[])
+ 			break;
+ #ifdef MULTI_WIFI_SUPPORT
+ 		case 'p':
+-			if (is_bcm_driver_loaded() == 1)
++			if (is_wifi_driver_loaded("dhd") == 1 || is_wifi_driver_loaded("bcmdhd") == 1)
+ 			    iface->driver_param = optarg;
+ 			break;
+ #else
+-- 
+1.9.1
+

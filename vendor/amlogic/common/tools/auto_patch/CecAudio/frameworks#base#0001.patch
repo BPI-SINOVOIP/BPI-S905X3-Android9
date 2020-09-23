@@ -1,0 +1,643 @@
+From 6fb8046172e29a105e596bf2dd1e028c1df801d8 Mon Sep 17 00:00:00 2001
+From: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date: Tue, 9 Oct 2018 14:45:53 +0800
+Subject: [PATCH] Audio:add arc request short audio descriptor action[4/4]
+
+PD# 315
+
+add arc request short audio descriptor action
+
+Change-Id: I3f724c94ca538bbc93b7ffff540bf31d9251260f
+---
+ core/java/android/provider/Settings.java           |   9 +
+ .../com/android/server/audio/AudioService.java     |  46 +++-
+ .../android/server/hdmi/HdmiCecLocalDeviceTv.java  |  69 ++++-
+ .../android/server/hdmi/HdmiControlService.java    |   6 +
+ .../hdmi/RequestShortAudioDescriptorAction.java    | 284 +++++++++++++++++++++
+ .../hdmi/SystemAudioAutoInitiationAction.java      |   2 +-
+ .../server/hdmi/SystemAudioStatusAction.java       |  10 +-
+ .../android/server/hdmi/VolumeControlAction.java   |   1 +
+ 8 files changed, 414 insertions(+), 13 deletions(-)
+ create mode 100644 services/core/java/com/android/server/hdmi/RequestShortAudioDescriptorAction.java
+
+diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
+index 0510418..f68cf83 100644
+--- a/core/java/android/provider/Settings.java
++++ b/core/java/android/provider/Settings.java
+@@ -8949,6 +8949,15 @@ public final class Settings {
+                 "hdmi_system_audio_control_enabled";
+ 
+         /**
++         * Whether HDMI System Audio Status is enabled. If enabled, audio stream will
++         * be played on AVR instead of TV spaeker  if there's a connected CEC-enabled AV Receiver.
++         * If disabled, the system audio mode will never be activated.
++         * @hide
++         */
++         public static final String HDMI_SYSTEM_AUDIO_STATUS_ENABLED =
++                 "hdmi_system_audio_status_enabled";
++
++        /**
+          * Whether TV will automatically turn on upon reception of the CEC command
+          * &lt;Text View On&gt; or &lt;Image View On&gt;. (0 = false, 1 = true)
+          *
+diff --git a/services/core/java/com/android/server/audio/AudioService.java b/services/core/java/com/android/server/audio/AudioService.java
+index 13de652..989b989 100644
+--- a/services/core/java/com/android/server/audio/AudioService.java
++++ b/services/core/java/com/android/server/audio/AudioService.java
+@@ -358,10 +358,10 @@ public class AudioService extends IAudioService.Stub
+     };
+     private final int[] STREAM_VOLUME_ALIAS_TELEVISION = new int[] {
+         AudioSystem.STREAM_MUSIC,       // STREAM_VOICE_CALL
+-        AudioSystem.STREAM_MUSIC,       // STREAM_SYSTEM
+-        AudioSystem.STREAM_MUSIC,       // STREAM_RING
++        AudioSystem.STREAM_RING,       // STREAM_SYSTEM
++        AudioSystem.STREAM_RING,       // STREAM_RING
+         AudioSystem.STREAM_MUSIC,       // STREAM_MUSIC
+-        AudioSystem.STREAM_MUSIC,       // STREAM_ALARM
++        AudioSystem.STREAM_ALARM,       // STREAM_ALARM
+         AudioSystem.STREAM_MUSIC,       // STREAM_NOTIFICATION
+         AudioSystem.STREAM_MUSIC,       // STREAM_BLUETOOTH_SCO
+         AudioSystem.STREAM_MUSIC,       // STREAM_SYSTEM_ENFORCED
+@@ -593,7 +593,7 @@ public class AudioService extends IAudioService.Stub
+             = new RemoteCallbackList<IAudioRoutesObserver>();
+ 
+     // Devices for which the volume is fixed and VolumePanel slider should be disabled
+-    int mFixedVolumeDevices = AudioSystem.DEVICE_OUT_HDMI |
++    int mFixedVolumeDevices = //AudioSystem.DEVICE_OUT_HDMI |
+             AudioSystem.DEVICE_OUT_DGTL_DOCK_HEADSET |
+             AudioSystem.DEVICE_OUT_ANLG_DOCK_HEADSET |
+             AudioSystem.DEVICE_OUT_HDMI_ARC |
+@@ -4551,10 +4551,16 @@ public class AudioService extends IAudioService.Stub
+             // retain the device on the A2DP output as the other must not correspond to an active
+             // selection if not the speaker.
+             //  - HDMI-CEC system audio mode only output: give priority to available item in order.
+-            if ((device & AudioSystem.DEVICE_OUT_SPEAKER) != 0) {
+-                device = AudioSystem.DEVICE_OUT_SPEAKER;
+-            } else if ((device & AudioSystem.DEVICE_OUT_HDMI_ARC) != 0) {
++            if ((device & AudioSystem.DEVICE_OUT_ALL_A2DP) != 0) {
++                device &= AudioSystem.DEVICE_OUT_ALL_A2DP;
++            } else if ((device & AudioSystem.DEVICE_OUT_ALL_SCO) != 0) {
++                device &= AudioSystem.DEVICE_OUT_ALL_SCO;
++            } else if ((device & AudioSystem.DEVICE_OUT_ALL_USB) != 0) {
++                device &= AudioSystem.DEVICE_OUT_ALL_USB;
++            } else if ((device & AudioSystem.DEVICE_OUT_HDMI_ARC) != 0 && mHdmiSystemAudioSupported) {
+                 device = AudioSystem.DEVICE_OUT_HDMI_ARC;
++            } else if ((device & AudioSystem.DEVICE_OUT_SPEAKER) != 0) {
++                device = AudioSystem.DEVICE_OUT_SPEAKER;
+             } else if ((device & AudioSystem.DEVICE_OUT_SPDIF) != 0) {
+                 device = AudioSystem.DEVICE_OUT_SPDIF;
+             } else if ((device & AudioSystem.DEVICE_OUT_AUX_LINE) != 0) {
+@@ -5992,6 +5998,11 @@ public class AudioService extends IAudioService.Stub
+                         "onSetA2dpSinkConnectionState");
+                 setCurrentAudioRouteName(btDevice.getAliasName());
+             }
++            if (state == BluetoothProfile.STATE_CONNECTED) {
++                updateHdmiSystemAudioStatus(false);
++            } else if (state == BluetoothProfile.STATE_DISCONNECTED) {
++                updateHdmiSystemAudioStatus(true);
++            }
+         }
+     }
+ 
+@@ -6326,6 +6337,10 @@ public class AudioService extends IAudioService.Stub
+                 // change of connection state failed, bailout
+                 return;
+             }
++            boolean isBluetoothOrUsbOutDevice = isBluetoothOrUsbOutDevices(device);
++            if (isBluetoothOrUsbOutDevice) {
++                updateHdmiSystemAudioStatus(state == 0);
++            }
+             if (state != 0) {
+                 if ((device & DEVICE_OVERRIDE_A2DP_ROUTE_ON_PLUG) != 0) {
+                     setBluetoothA2dpOnInt(false, "onSetWiredDeviceConnectionState state not 0");
+@@ -6341,7 +6356,7 @@ public class AudioService extends IAudioService.Stub
+                 }
+                 // Television devices without CEC service apply software volume on HDMI output
+                 if (isPlatformTelevision() && ((device & AudioSystem.DEVICE_OUT_HDMI) != 0)) {
+-                    mFixedVolumeDevices |= AudioSystem.DEVICE_OUT_HDMI;
++                    //mFixedVolumeDevices |= AudioSystem.DEVICE_OUT_HDMI;
+                     checkAllFixedVolumeDevices();
+                     if (mHdmiManager != null) {
+                         synchronized (mHdmiManager) {
+@@ -6369,6 +6384,21 @@ public class AudioService extends IAudioService.Stub
+         }
+     }
+ 
++    private boolean isBluetoothOrUsbOutDevices(int device) {
++        if ((device & AudioSystem.DEVICE_BIT_IN) != 0) {
++            return false;
++        }
++        return ((device & AudioSystem.DEVICE_OUT_ALL_A2DP) != 0)
++                || ((device & AudioSystem.DEVICE_OUT_ALL_SCO) != 0)
++                || ((device & AudioSystem.DEVICE_OUT_ALL_USB) != 0);
++    }
++
++    private void updateHdmiSystemAudioStatus(boolean enable) {
++        Settings.Global.putInt(mContentResolver,
++                Settings.Global.HDMI_SYSTEM_AUDIO_STATUS_ENABLED,
++                enable ? 1 : 0);
++    }
++
+     private void configureHdmiPlugIntent(Intent intent, int state) {
+         intent.setAction(AudioManager.ACTION_HDMI_AUDIO_PLUG);
+         intent.putExtra(AudioManager.EXTRA_AUDIO_PLUG_STATE, state);
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java b/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
+index de0f298..4031d19 100644
+--- a/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
++++ b/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
+@@ -832,6 +832,12 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+             return;
+         }
+ 
++        if (!hasAction(RequestShortAudioDescriptorAction.class)) {
++            addAndStartAction(
++                    new RequestShortAudioDescriptorAction(
++                            this, avr.getLogicalAddress(), enabled, mService, avr.getPortId()));
++        }
++
+         addAndStartAction(
+                 new SystemAudioActionFromTv(this, avr.getLogicalAddress(), enabled, callback));
+     }
+@@ -843,22 +849,59 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+                     + "because the System Audio Control feature is disabled.");
+             return;
+         }
++        if (isBluetoothOrUsbOutDevices() && on) return;
+         HdmiLogger.debug("System Audio Mode change[old:%b new:%b]", mSystemAudioActivated, on);
+         updateAudioManagerForSystemAudio(on);
+         synchronized (mLock) {
+             if (mSystemAudioActivated != on) {
++                HdmiDeviceInfo avr = getAvrDeviceInfo();
++                if (avr != null && isConnectedToArcPort(avr.getPhysicalAddress())) {
++                    RequestShortAudioDescriptorAction action =
++                            new RequestShortAudioDescriptorAction(
++                                    this, avr.getLogicalAddress(), on, mService, avr.getPortId());
++                    if (!hasAction(RequestShortAudioDescriptorAction.class)) {
++                        addAndStartAction(action);
++                    }
++                }
+                 mSystemAudioActivated = on;
++                mService.writeBooleanSetting(Global.HDMI_SYSTEM_AUDIO_STATUS_ENABLED, on);
++                updateAudioDevicesStatus(on);
+                 mService.announceSystemAudioModeChange(on);
+             }
+-            startArcAction(on);
++            if (!hasAction(SetArcTransmissionStateAction.class)) {
++                startArcAction(on);
++            }
+         }
+     }
+ 
+     private void updateAudioManagerForSystemAudio(boolean on) {
++        if (isBluetoothOrUsbOutDevices() && on) return;
+         int device = mService.getAudioManager().setHdmiSystemAudioSupported(on);
+         HdmiLogger.debug("[A]UpdateSystemAudio mode[on=%b] output=[%X]", on, device);
+     }
+ 
++    private void updateAudioDevicesStatus(boolean on) {
++        mService.writeBooleanSetting(
++            "sound_output_device"/* OutputModeManager.SOUND_OUTPUT_DEVICE */, on);
++        mService.getAudioManager().setParameters("speaker_mute=" + (on ? 1 : 0));
++        mService.getAudioManager().setParameters("HDMI ARC Switch=" + (on ? 1 : 0));
++    }
++
++    @ServiceThreadOnly
++    void changeSystemAudioStatus(boolean on) {
++        assertRunOnServiceThread();
++        if (isBluetoothOrUsbOutDevices() && on) return;
++        if (!hasSystemAudioDevice()) {
++            return;
++        }
++        updateAudioManagerForSystemAudio(on);
++        synchronized (mLock) {
++            mSystemAudioActivated = on;
++            mService.writeBooleanSetting(Global.HDMI_SYSTEM_AUDIO_STATUS_ENABLED, on);
++            updateAudioDevicesStatus(on);
++        }
++    }
++
+     boolean isSystemAudioActivated() {
+         if (!hasSystemAudioDevice()) {
+             return false;
+@@ -905,6 +948,17 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+         return oldStatus;
+     }
+ 
++    boolean isBluetoothOrUsbOutDevices() {
++        int device = mService.getAudioManager().getDevicesForStream(AudioSystem.STREAM_MUSIC);
++        boolean isBluetoothOrUsbOutDevices = ((device & AudioSystem.DEVICE_OUT_ALL_A2DP) != 0)
++                || ((device & AudioSystem.DEVICE_OUT_ALL_SCO) != 0)
++                || ((device & AudioSystem.DEVICE_OUT_ALL_USB) != 0);
++        if (isBluetoothOrUsbOutDevices) {
++            mService.writeBooleanSetting(Global.HDMI_SYSTEM_AUDIO_STATUS_ENABLED, false);
++        }
++        return isBluetoothOrUsbOutDevices;
++    }
++
+     /**
+      * Switch hardware ARC circuit in the system.
+      */
+@@ -928,6 +982,12 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+         mService.getAudioManager().setWiredDeviceConnectionState(
+                 AudioSystem.DEVICE_OUT_HDMI_ARC,
+                 enabled ? 1 : 0, "", "");
++        if (!enabled) {
++            updateAudioManagerForSystemAudio(enabled);
++            mSystemAudioActivated = enabled;
++            mService.writeBooleanSetting(Global.HDMI_SYSTEM_AUDIO_STATUS_ENABLED, enabled);
++            updateAudioDevicesStatus(enabled);
++        }
+     }
+ 
+     /**
+@@ -1464,6 +1524,10 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+     @ServiceThreadOnly
+     final void removeCecDevice(int address) {
+         assertRunOnServiceThread();
++
++        removeAction(RequestShortAudioDescriptorAction.class);
++        RequestShortAudioDescriptorAction.removeAudioFormat();
++
+         HdmiDeviceInfo info = removeDeviceInfo(HdmiDeviceInfo.idForCecDevice(address));
+ 
+         mCecMessageCache.flushMessagesFrom(address);
+@@ -1660,6 +1724,9 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+             return;
+         }
+ 
++        removeAction(RequestShortAudioDescriptorAction.class);
++        RequestShortAudioDescriptorAction.removeAudioFormat();
++
+         // Seq #44.
+         removeAction(RequestArcInitiationAction.class);
+         if (!hasAction(RequestArcTerminationAction.class) && isArcEstablished()) {
+diff --git a/services/core/java/com/android/server/hdmi/HdmiControlService.java b/services/core/java/com/android/server/hdmi/HdmiControlService.java
+index b06dba9..dd8b7eb 100644
+--- a/services/core/java/com/android/server/hdmi/HdmiControlService.java
++++ b/services/core/java/com/android/server/hdmi/HdmiControlService.java
+@@ -488,6 +488,7 @@ public final class HdmiControlService extends SystemService {
+                 Global.HDMI_CONTROL_AUTO_WAKEUP_ENABLED,
+                 Global.HDMI_CONTROL_AUTO_DEVICE_OFF_ENABLED,
+                 Global.HDMI_SYSTEM_AUDIO_CONTROL_ENABLED,
++                Global.HDMI_SYSTEM_AUDIO_STATUS_ENABLED,
+                 Global.MHL_INPUT_SWITCHING_ENABLED,
+                 Global.MHL_POWER_CHARGE_ENABLED
+         };
+@@ -531,6 +532,11 @@ public final class HdmiControlService extends SystemService {
+                         tv().setSystemAudioControlFeatureEnabled(enabled);
+                     }
+                     break;
++                case Global.HDMI_SYSTEM_AUDIO_STATUS_ENABLED:
++                    if (isTvDeviceEnabled()) {
++                        tv().changeSystemAudioStatus(enabled);
++                    }
++                    break;
+                 case Global.MHL_INPUT_SWITCHING_ENABLED:
+                     setMhlInputChangeEnabled(enabled);
+                     break;
+diff --git a/services/core/java/com/android/server/hdmi/RequestShortAudioDescriptorAction.java b/services/core/java/com/android/server/hdmi/RequestShortAudioDescriptorAction.java
+new file mode 100644
+index 0000000..fcefcce
+--- /dev/null
++++ b/services/core/java/com/android/server/hdmi/RequestShortAudioDescriptorAction.java
+@@ -0,0 +1,284 @@
++/*
++ * Copyright (C) 2014 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.server.hdmi;
++
++import android.content.Context;
++import android.content.ContentResolver;
++import android.hardware.hdmi.HdmiDeviceInfo;
++import android.hardware.tv.cec.V1_0.SendMessageResult;
++import android.provider.Settings;
++
++import java.util.Arrays;
++
++/**
++ * This action is to send 'Request Short Audio Descriptor' HDMI-CEC command to AVR when connects.
++ * And call setParameters to Audio HAL to update audio format support list.
++ * For now this action only query AC-3, DTS, DD+, DTSHD formats.
++ *
++ * Reference:
++ * HDMI Specifications (Ver 1.4):
++ *     CEC 13.15.3 Discovering the Amplifier’s Audio Format
++ *     CEC Table 23 (Page CEC-92)
++ *     CEC Table 29 (Page CEC-106 and CEC-107)
++ * CEA-861-D:
++ *     Table 35, 36, 37 (Page 91)
++ */
++final class RequestShortAudioDescriptorAction extends HdmiCecFeatureAction {
++    private static final String TAG = "RequestShortAudioDescriptor";
++
++    // State that waits for <ReportShortAudioDescriptor>
++    private static final int STATE_WAITNG_FOR_REQUEST_SHORT_AUDIO_DESCRIPTOR = 1;
++
++    /**
++     * Used to Store Short Audio Descriptor after ARC established.
++     */
++    public static final String SETTINGS_AUDIO_DESCRIPTOR = "settings_audio_descriptor";
++
++    // Logic address of AV Receiver
++    private final int mAvrAddress;
++    private final boolean mEnabled;
++    private HdmiControlService mService;
++    private final int mAvrPort;
++
++    private static byte[] sDescriptor = null;
++
++    /**
++     *  Audio Format Description of CEC Short Audio Descriptor
++     *  CEA-861-D: Table 37
++     */
++    private static final int SAD_CODEC_RESERVED1   = 0x0;
++    private static final int SAD_CODEC_LPCM        = 0x1;
++    private static final int SAD_CODEC_AC3         = 0x2;
++    private static final int SAD_CODEC_MPEG1       = 0x3;
++    private static final int SAD_CODEC_MP3         = 0x4;
++    private static final int SAD_CODEC_MPEG2MC     = 0x5;
++    private static final int SAD_CODEC_AAC         = 0x6;
++    private static final int SAD_CODEC_DTS         = 0x7;
++    private static final int SAD_CODEC_ATRAC       = 0x8;
++    private static final int SAD_CODEC_OBA         = 0x9;
++    private static final int SAD_CODEC_DDP         = 0xA;
++    private static final int SAD_CODEC_DTSHD       = 0xB;
++    private static final int SAD_CODEC_MAT         = 0xC;
++    private static final int SAD_CODEC_DST         = 0xD;
++    private static final int SAD_CODEC_WMAPRO      = 0xE;
++    private static final int SAD_CODEC_RESERVED2   = 0xF;
++
++    private final int SINGAL_SAD_LEN = 3;
++    private final int MAX_SAD_NUM = 4;
++
++    private final int SAD_REQ_TIMEOUT_MS = 10000;
++
++    private final int[] SUPPORT_CODECS = {SAD_CODEC_AC3, SAD_CODEC_DTS, SAD_CODEC_DDP, SAD_CODEC_DTSHD};
++
++    private final byte SUPPORT = 1;
++    private final byte UNSUPPORT = 0;
++
++    private final String SET_ARC_HDMI = "set_ARC_hdmi=";
++    private final String SET_ARC_FORMAT = "set_ARC_format=";
++
++    /**
++     * @param source {@link HdmiCecLocalDevice} instance
++     * @param avrAddress address of AV receiver. It should be AUDIO_SYSTEM type
++     * @param enabled whether to reset AVR audio codecs
++     * @param service {@link HdmiControlService} instance
++     * @param avrPort AVR port ID
++     */
++    RequestShortAudioDescriptorAction(HdmiCecLocalDevice source,
++                                      int avrAddress,
++                                      boolean enabled,
++                                      HdmiControlService service,
++                                      int avrPort) {
++        super(source);
++        HdmiUtils.verifyAddressType(getSourceAddress(), HdmiDeviceInfo.DEVICE_TV);
++        HdmiUtils.verifyAddressType(avrAddress, HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM);
++        mAvrAddress = avrAddress;
++        mEnabled = enabled;
++        mService = service;
++        mAvrPort = avrPort;
++    }
++
++    @Override
++    boolean start() {
++        if (mEnabled) {
++            if (sDescriptor != null) {
++                setAudioFormat();
++            } else {
++                mState = STATE_WAITNG_FOR_REQUEST_SHORT_AUDIO_DESCRIPTOR;
++                addTimer(mState, SAD_REQ_TIMEOUT_MS);
++                sendRequestShortAudioDescriptor();
++            }
++        } else {
++            sDescriptor = null;
++            setAudioFormat();
++            finish();
++        }
++        return true;
++    }
++
++    @Override
++    boolean processCommand(HdmiCecMessage hdmiCecMessage) {
++        if (mState != STATE_WAITNG_FOR_REQUEST_SHORT_AUDIO_DESCRIPTOR) {
++            return false;
++        }
++
++        int opcode = hdmiCecMessage.getOpcode();
++        byte[] params = hdmiCecMessage.getParams();
++        switch (opcode) {
++            case Constants.MESSAGE_FEATURE_ABORT:
++                // If avr returns <Feature Abort> ["Invalid Operand"], it indicates the Amplifier
++                // does not support the requested audio format, the TV should select default 2
++                // channels LPCM for output. (CEC Figure 34. Typical Operation to discover the
++                // Audio Format capability of an Amplifier)
++                if (params[0] == (byte) (Constants.MESSAGE_REQUEST_SHORT_AUDIO_DESCRIPTOR & 0xFF)
++                        && params[1] == (byte) (Constants.ABORT_INVALID_OPERAND & 0xFF)) {
++                    sDescriptor = null;
++                    setAudioFormat();
++                    finish();
++                    return true;
++                } else {
++                    return false;
++                }
++            case Constants.MESSAGE_REPORT_SHORT_AUDIO_DESCRIPTOR:
++                // If avr returns REPORT_SHORT_AUDIO_DESCRIPTOR, it should have at least one short
++                // audio descriptor. If it returns invalid value, TV should ignore the message.
++                if (params.length == 0) {
++                    sDescriptor = null;
++                } else {
++                    sDescriptor = new byte[params.length];
++                    System.arraycopy(params, 0, sDescriptor, 0, params.length);
++                }
++                setAudioFormat();
++                finish();
++                return true;
++            default:
++                return false;
++        }
++    }
++
++    @Override
++    void handleTimerEvent(int state) {
++        if (mState != state || state != STATE_WAITNG_FOR_REQUEST_SHORT_AUDIO_DESCRIPTOR) {
++            return;
++        }
++        HdmiLogger.debug("[T] RequestShortAudioDescriptorAction.");
++        finish();
++    }
++
++    /**
++     * Clean Cached Descriptor
++     */
++    public static void removeAudioFormat() {
++        sDescriptor = null;
++        HdmiLogger.debug("Audio Format Cleaned");
++    }
++
++    /**
++     * This function will send set_ARC_format multiple times (according to the size of
++     * SUPPORT_CODECS) and send set_ARC_hdmi one time.
++     */
++    private void setAudioFormat() {
++        String settingsBuffer = "";
++        byte edidLength = (byte) (sDescriptor == null ? 0 : sDescriptor.length);
++        byte[] edidBuffer = new byte[edidLength + 2];
++
++        edidBuffer[0] = edidLength;
++        edidBuffer[1] = (byte) mAvrPort;
++
++        if (sDescriptor != null) {
++            System.arraycopy(sDescriptor, 0, edidBuffer, 2, edidLength);
++        }
++        String edidParameter = SET_ARC_HDMI + Arrays.toString(edidBuffer);
++        setParameters(edidParameter);
++        settingsBuffer += edidParameter;
++
++        // for each codec, send a set_ARC_format parameters to audio HAL
++        for (int codec : SUPPORT_CODECS) {
++            // initial array : format, support, channel, sample rate, bit rate
++            byte[] formatBuffer = new byte[] { (byte) codec, UNSUPPORT, 0, 0, 0 };
++
++            // If use this Action to query LPCM format information, it should at least
++            // give a default value for LPCM.
++            if (codec == SAD_CODEC_LPCM && edidLength == 0) {
++                formatBuffer[1] = SUPPORT;
++                formatBuffer[2] = 0x1; // 2ch
++                formatBuffer[3] = 0x6; // 48kHz, 44.1kHz
++                formatBuffer[4] = 0x1; // 16bit
++            }
++
++            // find a descriptor for each SUPPORT_CODECS
++            // CEA-861-D Table 34, 35, 36
++            for (int i = 0; i + 2 < edidLength; i += SINGAL_SAD_LEN) {
++                if ((byte) codec == (byte) (sDescriptor[i] & 0x78) >> 3) {
++                    formatBuffer[0] = (byte) codec;
++                    formatBuffer[1] = SUPPORT;
++                    formatBuffer[2] = (byte) (sDescriptor[i] & 0x7); // Max Channels - 1
++                    formatBuffer[3] = (byte) (sDescriptor[i + 1] & 0x7F); // Support Sample Rate
++                    formatBuffer[4] = (byte) (sDescriptor[i + 2] & 0xFF); // Max bit rate / 8kHz
++                    break;
++                }
++            }
++
++            String formatParameter = SET_ARC_FORMAT + Arrays.toString(formatBuffer);
++            setParameters(formatParameter);
++            settingsBuffer += "|" + formatParameter;
++        }
++
++        // Save the newest Audio Parameters to settings.
++        // Note: setprop can save only 91 words so we need to use settings.
++        ContentResolver cr = mService.getContext().getContentResolver();
++        Settings.System.putString(cr, SETTINGS_AUDIO_DESCRIPTOR, settingsBuffer);
++    }
++
++    /**
++     * Set k-v parameters to audio HAL
++     */
++    private void setParameters(String parameters) {
++        if (mService != null) {
++            mService.getAudioManager().setParameters(parameters);
++        }
++    }
++
++    private void sendRequestShortAudioDescriptor() {
++        int formatLength = Math.min(SUPPORT_CODECS.length, MAX_SAD_NUM);
++        byte[] formats = new byte[formatLength]; //Audio Format ID & Code, max length is 4
++        for (int i = 0; i < formatLength; i++) {
++            formats[i] = (byte) (SUPPORT_CODECS[i] & 0x0F);
++        }
++
++        // CEC Message Descriptions
++        HdmiCecMessage command = new HdmiCecMessage(getSourceAddress(),
++                mAvrAddress, Constants.MESSAGE_REQUEST_SHORT_AUDIO_DESCRIPTOR, formats);
++        HdmiLogger.debug("Sending Message + " + command.toString());
++        sendCommand(command, new HdmiControlService.SendMessageCallback() {
++            @Override
++            public void onSendCompleted(int error) {
++                switch (error) {
++                    case SendMessageResult.BUSY:
++                    case SendMessageResult.FAIL:
++                    case SendMessageResult.SUCCESS:
++                        // The result of the command transmission, unless it is an obvious
++                        // failure indicated by the target device (or lack thereof), should
++                        // not affect the ARC status. Ignores it silently.
++                        break;
++                    case SendMessageResult.NACK:
++                        finish();
++                        break;
++                }
++            }
++        });
++    }
++}
+diff --git a/services/core/java/com/android/server/hdmi/SystemAudioAutoInitiationAction.java b/services/core/java/com/android/server/hdmi/SystemAudioAutoInitiationAction.java
+index d347a91..4ec01fc 100644
+--- a/services/core/java/com/android/server/hdmi/SystemAudioAutoInitiationAction.java
++++ b/services/core/java/com/android/server/hdmi/SystemAudioAutoInitiationAction.java
+@@ -81,7 +81,7 @@ final class SystemAudioAutoInitiationAction extends HdmiCecFeatureAction {
+         // If System Audio Control feature is enabled, turn on system audio mode when new AVR is
+         // detected. Otherwise, turn off system audio mode.
+         boolean targetSystemAudioMode = tv().isSystemAudioControlFeatureEnabled();
+-        if (currentSystemAudioMode != targetSystemAudioMode) {
++        if (targetSystemAudioMode || currentSystemAudioMode != targetSystemAudioMode) {
+             // Start System Audio Control feature actions only if necessary.
+             addAndStartAction(
+                     new SystemAudioActionFromTv(tv(), mAvrAddress, targetSystemAudioMode, null));
+diff --git a/services/core/java/com/android/server/hdmi/SystemAudioStatusAction.java b/services/core/java/com/android/server/hdmi/SystemAudioStatusAction.java
+index d41a36c..742c024 100644
+--- a/services/core/java/com/android/server/hdmi/SystemAudioStatusAction.java
++++ b/services/core/java/com/android/server/hdmi/SystemAudioStatusAction.java
+@@ -47,7 +47,9 @@ final class SystemAudioStatusAction extends HdmiCecFeatureAction {
+     boolean start() {
+         mState = STATE_WAIT_FOR_REPORT_AUDIO_STATUS;
+         addTimer(mState, HdmiConfig.TIMEOUT_MS);
+-        sendGiveAudioStatus();
++        if (!tv().isBluetoothOrUsbOutDevices()) {
++            sendGiveAudioStatus();
++        }
+         return true;
+     }
+ 
+@@ -68,8 +70,10 @@ final class SystemAudioStatusAction extends HdmiCecFeatureAction {
+         // the audio amplifier is unknown.
+         tv().setAudioStatus(false, Constants.UNKNOWN_VOLUME);
+ 
+-        sendUserControlPressedAndReleased(mAvrAddress,
+-                HdmiCecKeycode.getMuteKey(!tv().isSystemAudioActivated()));
++        if (!tv().isBluetoothOrUsbOutDevices() && !tv().isSystemAudioActivated()) {
++            sendUserControlPressedAndReleased(mAvrAddress,
++                    HdmiCecKeycode.getMuteKey(!tv().isSystemAudioActivated()));
++        }
+ 
+         // Still return SUCCESS to callback.
+         finishWithCallback(HdmiControlManager.RESULT_SUCCESS);
+diff --git a/services/core/java/com/android/server/hdmi/VolumeControlAction.java b/services/core/java/com/android/server/hdmi/VolumeControlAction.java
+index 0011387..dc47fcb 100644
+--- a/services/core/java/com/android/server/hdmi/VolumeControlAction.java
++++ b/services/core/java/com/android/server/hdmi/VolumeControlAction.java
+@@ -97,6 +97,7 @@ final class VolumeControlAction extends HdmiCecFeatureAction {
+         sendCommand(HdmiCecMessageBuilder.buildUserControlPressed(getSourceAddress(), mAvrAddress,
+                 mIsVolumeUp ? HdmiCecKeycode.CEC_KEYCODE_VOLUME_UP
+                         : HdmiCecKeycode.CEC_KEYCODE_VOLUME_DOWN));
++        sendCommand(HdmiCecMessageBuilder.buildGiveAudioStatus(getSourceAddress(), mAvrAddress));
+         mSentKeyPressed = true;
+     }
+ 
+-- 
+2.7.4
+

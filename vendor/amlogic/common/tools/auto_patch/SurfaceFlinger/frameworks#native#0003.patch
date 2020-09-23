@@ -1,0 +1,52 @@
+From 115e647c7553aed8ba7d404d1019df9f2159c201 Mon Sep 17 00:00:00 2001
+From: "binqi.zhang" <binqi.zhang@amlogic.com>
+Date: Thu, 6 Dec 2018 19:31:48 +0800
+Subject: [PATCH] SurfaceFlinger: fix android P youtube 4K 60 frames loss[1/1]
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+PD#SWPL-971
+
+Problem:
+eglCreateSyncKHR returen EGL_BAD_MATCH
+
+Solution:
+rm unneccessary sync ops since we just want to drop the omx frame in sf
+
+Verify:
+1、Enter movieplayer
+2、Play 4KH264 video file video files
+
+Change-Id: If83c06a8d3c2756ca2f6ae397de1f464fd14ba2e
+Signed-off-by: binqi.zhang <binqi.zhang@amlogic.com>
+---
+ services/surfaceflinger/BufferLayerConsumer.cpp | 12 ------------
+ 1 file changed, 12 deletions(-)
+
+diff --git a/services/surfaceflinger/BufferLayerConsumer.cpp b/services/surfaceflinger/BufferLayerConsumer.cpp
+index 3817d88..ec6199d 100755
+--- a/services/surfaceflinger/BufferLayerConsumer.cpp
++++ b/services/surfaceflinger/BufferLayerConsumer.cpp
+@@ -281,18 +281,6 @@ status_t BufferLayerConsumer::releaseNoTextureLocked(const BufferItem& item,
+ 
+     int slot = item.mSlot;
+ 
+-        // Do whatever sync ops we need to do before releasing the old slot.
+-    if (slot != mCurrentTexture) {
+-        err = syncForReleaseLocked();
+-        if (err != NO_ERROR) {
+-            // Release the buffer we just acquired.  It's not safe to
+-            // release the old buffer, so instead we just drop the new frame.
+-            // As we are still under lock since acquireBuffer, it is safe to
+-            // release by slot.
+-            releaseBufferLocked(slot, mSlots[slot].mGraphicBuffer);
+-            return err;
+-        }
+-    }
+ 
+     BLC_LOGV("releaseNoTextureLocked: (slot=%d buf=%p) -> (slot=%d buf=%p)", mCurrentTexture,
+              mCurrentTextureImage != nullptr ? mCurrentTextureImage->graphicBufferHandle() : 0,
+-- 
+2.7.4
+

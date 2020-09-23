@@ -1,0 +1,45 @@
+From ad1dfd8c48de6db161ffb26c1459b688bfe0fa1e Mon Sep 17 00:00:00 2001
+From: "shilong.yang" <shilong.yang@amlogic.com>
+Date: Sat, 18 Apr 2020 15:22:41 +0800
+Subject: [PATCH] StagefrightMetadataRetriever: some file with hevc codec crash
+ [1/1]
+
+PD#SWPL-23328
+
+Problem:
+when gallery decoder some file, anr happened:
+WindowManager: Input event dispatching timed out sending to com.android.gallery3d/com.android.gallery3d.app.GalleryActivity.
+Reason: Waiting to send key event because the focused window has not finished processing all of the input events that were previously delivered to it.
+
+Solution:
+when getVUIparams error return.
+
+Verify:
+verify on s805y/ac214
+
+Signed-off-by: shilong.yang <shilong.yang@amlogic.com>
+Change-Id: I1f925c1e1cf2e4b9230b93345a38ab68b3aba50e
+---
+ media/libstagefright/codecs/hevcdec/SoftHEVC.cpp | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+ mode change 100644 => 100755 media/libstagefright/codecs/hevcdec/SoftHEVC.cpp
+
+diff --git a/media/libstagefright/codecs/hevcdec/SoftHEVC.cpp b/media/libstagefright/codecs/hevcdec/SoftHEVC.cpp
+old mode 100644
+new mode 100755
+index bb7d361ba..fd0ea50c4
+--- a/media/libstagefright/codecs/hevcdec/SoftHEVC.cpp
++++ b/media/libstagefright/codecs/hevcdec/SoftHEVC.cpp
+@@ -589,7 +589,8 @@ void SoftHEVC::onQueueFilled(OMX_U32 portIndex) {
+ 
+             bool resChanged = (IVD_RES_CHANGED == (s_dec_op.u4_error_code & 0xFF));
+ 
+-            getVUIParams();
++            if (getVUIParams() == false)
++                return;
+ 
+             GETTIME(&mTimeEnd, NULL);
+             /* Compute time taken for decode() */
+-- 
+2.24.0
+

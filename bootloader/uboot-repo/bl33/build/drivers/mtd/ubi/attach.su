@@ -1,0 +1,9 @@
+attach.c:115:12:add_to_list	80	static
+attach.c:1159:13:destroy_ai	48	static
+attach.c:187:12:5	32	static
+attach.c:318:5:ubi_compare_lebs	80	static
+attach.c:443:5:ubi_add_to_av	144	static
+attach.c:599:25:ubi_find_av	0	static
+attach.c:625:6:ubi_remove_av	64	static
+attach.c:702:22:ubi_early_get_peb	96	static
+attach.c:1389:5:ubi_attach	128	static

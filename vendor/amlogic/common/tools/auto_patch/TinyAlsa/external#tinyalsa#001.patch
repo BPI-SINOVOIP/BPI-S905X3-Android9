@@ -1,0 +1,95 @@
+From fe34f4a07824fdcc5ebee593882fe920149eb345 Mon Sep 17 00:00:00 2001
+From: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date: Wed, 27 Feb 2019 17:01:57 +0800
+Subject: [PATCH] audio: update pcm_read api to support nonblock mode [1/2]
+
+PD#SWPL-4256
+
+Problem:
+  suspend/resume in HDMI-IN status,
+no audio out because audioserver issue
+
+Solution:
+ add nonblock mode for pcm_read,when hardware
+has no data, reture again.
+
+Verify:
+X301
+
+Change-Id: Ia9c48efb04396eeb78ed17fa5929a38c68ecec19
+Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+---
+ include/tinyalsa/asoundlib.h |  1 +
+ pcm.c                        | 30 ++++++++++++++++++++++--------
+ 2 files changed, 23 insertions(+), 8 deletions(-)
+
+diff --git a/include/tinyalsa/asoundlib.h b/include/tinyalsa/asoundlib.h
+index 935c8d0..eb7dd03 100644
+--- a/include/tinyalsa/asoundlib.h
++++ b/include/tinyalsa/asoundlib.h
+@@ -56,6 +56,7 @@ struct pcm;
+                                    * restart the stream.
+                                    */
+ #define PCM_MONOTONIC  0x00000008 /* see pcm_get_htimestamp */
++#define PCM_NONEBLOCK  0x00000010
+ 
+ /* PCM runtime states */
+ #define	PCM_STATE_OPEN		0
+diff --git a/pcm.c b/pcm.c
+index 4ae321b..86ad629 100644
+--- a/pcm.c
++++ b/pcm.c
+@@ -574,16 +574,29 @@ int pcm_read(struct pcm *pcm, void *data, unsigned int count)
+             }
+         }
+         if (ioctl(pcm->fd, SNDRV_PCM_IOCTL_READI_FRAMES, &x)) {
+-            pcm->prepared = 0;
+-            pcm->running = 0;
++            if(!(pcm->flags & PCM_NONEBLOCK)) {
++                pcm->prepared = 0;
++                pcm->running = 0;
++            }
+             if (errno == EPIPE) {
+                     /* we failed to make our window -- try to restart */
++                if (pcm->flags & PCM_NONEBLOCK) {
++                    pcm->prepared = 0;
++                    pcm->running = 0; 
++                }
+                 pcm->underruns++;
+                 continue;
+             }
+-            return oops(pcm, errno, "cannot read stream data");
++            if (errno == EAGAIN && (pcm->flags & PCM_NONEBLOCK)) {
++                return -EAGAIN;
++            }            
++            //return oops(pcm, errno, "cannot read stream data");
+         }
+-        return 0;
++        if (!(pcm->flags & PCM_NONEBLOCK)) {
++            return 0;
++        }
++        return x.result;
++
+     }
+ }
+ 
+@@ -900,11 +913,12 @@ struct pcm *pcm_open(unsigned int card, unsigned int device,
+         oops(pcm, errno, "cannot open device '%s'", fn);
+         return pcm;
+     }
+-
+-    if (fcntl(pcm->fd, F_SETFL, fcntl(pcm->fd, F_GETFL) &
++    if (!(flags&PCM_NONEBLOCK)) {
++    	if (fcntl(pcm->fd, F_SETFL, fcntl(pcm->fd, F_GETFL) &
+               ~O_NONBLOCK) < 0) {
+-        oops(pcm, errno, "failed to reset blocking mode '%s'", fn);
+-        goto fail_close;
++        	oops(pcm, errno, "failed to reset blocking mode '%s'", fn);
++        	goto fail_close;
++    	}
+     }
+ 
+     if (ioctl(pcm->fd, SNDRV_PCM_IOCTL_INFO, &info)) {
+-- 
+2.7.4
+

@@ -1,0 +1,44 @@
+From 1799529d754668b90fdf71917e6bd2a774759a2a Mon Sep 17 00:00:00 2001
+From: Jinping Wang <jinping.wang@amlogic.com>
+Date: Thu, 9 May 2019 10:07:35 +0800
+Subject: [PATCH] cec: sending <Standby> has removed to power hal when
+ suspend[1/1]
+
+PD# SWPL-7201
+
+Problem:
+sending <Standby> has removed to power hal,
+if send two times, some devices may trigger otp messages.
+
+Solution:
+remove sending <Standby> from framework
+
+Verify:
+test ok using p321
+
+Change-Id: Ice778004d0137174af647280451f7743d3206280
+Signed-off-by: Jinping Wang <jinping.wang@amlogic.com>
+---
+ .../core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java     | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java b/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
+index abcb002..0d6bc11 100644
+--- a/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
++++ b/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
+@@ -1785,7 +1785,11 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+         if (!mService.isControlEnabled()) {
+             return;
+         }
+-        if (!initiatedByCec && mAutoDeviceOff) {
++        if (!initiatedByCec
++            && mAutoDeviceOff
++            && (standbyAction == HdmiControlService.STANDBY_SHUTDOWN
++            || standbyAction != HdmiControlService.STANDBY_SCREEN_OFF)) {
++            /*send <Standby> when shutdown, not suspend*/
+             mService.sendCecCommand(HdmiCecMessageBuilder.buildStandby(
+                     mAddress, Constants.ADDR_BROADCAST));
+         }
+-- 
+2.10.2
+

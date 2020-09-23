@@ -1,0 +1,7 @@
+graphics_fbdev.c:190:13:fbdev_exit	32	static
+graphics_fbdev.c:62:13:fbdev_blank	32	static
+graphics_fbdev.c:71:13:set_displayed_framebuffer	32	static
+graphics_fbdev.c:169:19:fbdev_flip	48	static
+graphics_fbdev.c:43:22:2	32	static
+graphics_fbdev.c:98:19:fbdev_init	160	static
+graphics_fbdev.c:57:16:open_fbdev	0	static

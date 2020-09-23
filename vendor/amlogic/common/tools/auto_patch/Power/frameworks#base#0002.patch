@@ -1,0 +1,38 @@
+From 1d1521cab42b37864b42211ed402c2644fe3a92b Mon Sep 17 00:00:00 2001
+From: "qingwei.xu" <qingwei.xu@amlogic.com>
+Date: Thu, 8 Nov 2018 16:12:36 +0800
+Subject: [PATCH] PhoneWindowManager: Do not call finishKeyguardDrawn with
+ PWM's mlock [1/1]
+
+PD#SWPL-1600
+
+Problem:
+Cause deadlock between PWM's mlock and WM's mWindowmap.
+
+Solution:
+Post the work to the policy handler instead.
+
+Verify:
+verify by Android P All Project
+
+Change-Id: I005a7ae8b513e572d480029e5e25a5110c506854
+---
+ services/core/java/com/android/server/policy/PhoneWindowManager.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/services/core/java/com/android/server/policy/PhoneWindowManager.java b/services/core/java/com/android/server/policy/PhoneWindowManager.java
+index 0aa70cf..4038d35 100644
+--- a/services/core/java/com/android/server/policy/PhoneWindowManager.java
++++ b/services/core/java/com/android/server/policy/PhoneWindowManager.java
+@@ -6944,7 +6944,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+             } else {
+                 if (DEBUG_WAKEUP) Slog.d(TAG,
+                         "null mKeyguardDelegate: setting mKeyguardDrawComplete.");
+-                finishKeyguardDrawn();
++                mHandler.sendEmptyMessage(MSG_KEYGUARD_DRAWN_COMPLETE);
+             }
+         }
+     }
+-- 
+1.9.1
+

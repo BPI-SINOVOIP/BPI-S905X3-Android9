@@ -1,0 +1,145 @@
+From 3734e60745d8c38547ec443467eeed85d848fd4d Mon Sep 17 00:00:00 2001
+From: Tao Bao <tbao@google.com>
+Date: Tue, 10 Jul 2018 15:31:22 -0700
+Subject: [PATCH] releasetools: Address two issues with system_root_image file
+ map.
+
+With system_root_image, e2fsdroid writes file map with extra leading
+slashes in filenames (e.g. "//system/framework/am.jar"). This breaks the
+detection of files with incomplete ranges, and thus fails the patch
+generation. This CL addresses the issue by stripping out leading
+slashes.
+
+Additionally, non-/system files (e.g "//sbin/charger") are not packed
+under SYSTEM/ in a target_files.zip, despite being part of system.img.
+We need to look for these files under ROOT/ instead.
+
+This CL also asserts the availability of all files listed on a file map,
+to avoid silently missing other edge cases.
+
+Bug: 80380658
+Test: python -m unittest test_common
+Test: Successfully generated an incremental for a target using
+      system_root_image that was previously failing.
+Change-Id: I62a2460e882f3930e99add4d2b44291edf7a51a0
+(cherry picked from commit d3554e628ffed060908f40e99196e5512a630878)
+---
+ tools/releasetools/common.py      | 19 +++++++++--
+ tools/releasetools/test_common.py | 68 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 84 insertions(+), 3 deletions(-)
+
+diff --git a/tools/releasetools/common.py b/tools/releasetools/common.py
+index 6defb2b..ee5c9df 100644
+--- a/tools/releasetools/common.py
++++ b/tools/releasetools/common.py
+@@ -652,12 +652,25 @@ def GetSparseImage(which, tmpdir, input_zip, allow_shared_blocks):
+   # if they contain all zeros. We can't reconstruct such a file from its block
+   # list. Tag such entries accordingly. (Bug: 65213616)
+   for entry in image.file_map:
+-    # "/system/framework/am.jar" => "SYSTEM/framework/am.jar".
+-    arcname = string.replace(entry, which, which.upper(), 1)[1:]
+     # Skip artificial names, such as "__ZERO", "__NONZERO-1".
+-    if arcname not in input_zip.namelist():
++    if not entry.startswith('/'):
+       continue
+ 
++    # "/system/framework/am.jar" => "SYSTEM/framework/am.jar". Note that when
++    # using system_root_image, the filename listed in system.map may contain an
++    # additional leading slash (i.e. "//system/framework/am.jar"). Using lstrip
++    # to get consistent results.
++    arcname = string.replace(entry, which, which.upper(), 1).lstrip('/')
++
++    # Special handling another case with system_root_image, where files not
++    # under /system (e.g. "/sbin/charger") are packed under ROOT/ in a
++    # target_files.zip.
++    if which == 'system' and not arcname.startswith('SYSTEM'):
++      arcname = 'ROOT/' + arcname
++
++    assert arcname in input_zip.namelist(), \
++        "Failed to find the ZIP entry for {}".format(entry)
++
+     info = input_zip.getinfo(arcname)
+     ranges = image.file_map[entry]
+ 
+diff --git a/tools/releasetools/test_common.py b/tools/releasetools/test_common.py
+index fb26b66..48493ef 100644
+--- a/tools/releasetools/test_common.py
++++ b/tools/releasetools/test_common.py
+@@ -645,6 +645,74 @@ class CommonUtilsTest(unittest.TestCase):
+     self.assertFalse(sparse_image.file_map['/system/file1'].extra)
+     self.assertTrue(sparse_image.file_map['/system/file2'].extra['incomplete'])
+ 
++  def test_GetSparseImage_systemRootImage_filenameWithExtraLeadingSlash(self):
++    target_files = common.MakeTempFile(prefix='target_files-', suffix='.zip')
++    with zipfile.ZipFile(target_files, 'w') as target_files_zip:
++      target_files_zip.write(
++          test_utils.construct_sparse_image([(0xCAC2, 16)]),
++          arcname='IMAGES/system.img')
++      target_files_zip.writestr(
++          'IMAGES/system.map',
++          '\n'.join([
++              '//system/file1 1-5 9-10',
++              '//system/file2 11-12',
++              '/system/app/file3 13-15']))
++      target_files_zip.writestr('SYSTEM/file1', os.urandom(4096 * 7))
++      # '/system/file2' has less blocks listed (2) than actual (3).
++      target_files_zip.writestr('SYSTEM/file2', os.urandom(4096 * 3))
++      # '/system/app/file3' has less blocks listed (3) than actual (4).
++      target_files_zip.writestr('SYSTEM/app/file3', os.urandom(4096 * 4))
++
++    tempdir = common.UnzipTemp(target_files)
++    with zipfile.ZipFile(target_files, 'r') as input_zip:
++      sparse_image = common.GetSparseImage('system', tempdir, input_zip, False)
++
++    self.assertFalse(sparse_image.file_map['//system/file1'].extra)
++    self.assertTrue(sparse_image.file_map['//system/file2'].extra['incomplete'])
++    self.assertTrue(
++        sparse_image.file_map['/system/app/file3'].extra['incomplete'])
++
++  def test_GetSparseImage_systemRootImage_nonSystemFiles(self):
++    target_files = common.MakeTempFile(prefix='target_files-', suffix='.zip')
++    with zipfile.ZipFile(target_files, 'w') as target_files_zip:
++      target_files_zip.write(
++          test_utils.construct_sparse_image([(0xCAC2, 16)]),
++          arcname='IMAGES/system.img')
++      target_files_zip.writestr(
++          'IMAGES/system.map',
++          '\n'.join([
++              '//system/file1 1-5 9-10',
++              '//init.rc 13-15']))
++      target_files_zip.writestr('SYSTEM/file1', os.urandom(4096 * 7))
++      # '/init.rc' has less blocks listed (3) than actual (4).
++      target_files_zip.writestr('ROOT/init.rc', os.urandom(4096 * 4))
++
++    tempdir = common.UnzipTemp(target_files)
++    with zipfile.ZipFile(target_files, 'r') as input_zip:
++      sparse_image = common.GetSparseImage('system', tempdir, input_zip, False)
++
++    self.assertFalse(sparse_image.file_map['//system/file1'].extra)
++    self.assertTrue(sparse_image.file_map['//init.rc'].extra['incomplete'])
++
++  def test_GetSparseImage_fileNotFound(self):
++    target_files = common.MakeTempFile(prefix='target_files-', suffix='.zip')
++    with zipfile.ZipFile(target_files, 'w') as target_files_zip:
++      target_files_zip.write(
++          test_utils.construct_sparse_image([(0xCAC2, 16)]),
++          arcname='IMAGES/system.img')
++      target_files_zip.writestr(
++          'IMAGES/system.map',
++          '\n'.join([
++              '//system/file1 1-5 9-10',
++              '//system/file2 11-12']))
++      target_files_zip.writestr('SYSTEM/file1', os.urandom(4096 * 7))
++
++    tempdir = common.UnzipTemp(target_files)
++    with zipfile.ZipFile(target_files, 'r') as input_zip:
++      self.assertRaises(
++          AssertionError, common.GetSparseImage, 'system', tempdir, input_zip,
++          False)
++
+ 
+ class InstallRecoveryScriptFormatTest(unittest.TestCase):
+   """Checks the format of install-recovery.sh.
+-- 
+1.9.1
+

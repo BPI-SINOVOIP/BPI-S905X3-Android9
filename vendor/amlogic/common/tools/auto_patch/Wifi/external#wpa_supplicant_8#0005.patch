@@ -1,0 +1,73 @@
+From 5e726e88faab0cae31885378c950260246e88f72 Mon Sep 17 00:00:00 2001
+From: Rongjun Chen <rongjun.chen@amlogic.com>
+Date: Wed, 5 Jun 2019 15:06:42 +0800
+Subject: [PATCH 5/5] wifi: fix patch 4 let suspend long time issue [1/1]
+
+PD#SWPL-9095
+
+Problem:
+suspend long time
+
+Solution:
+fix unexpected rmmove p2p interface cmd
+
+Verify:
+ampere
+
+Change-Id: Ida0cb2f5ffbd1ae9bff794a59b60ba7d99481436
+---
+ wpa_supplicant/hidl/1.1/supplicant.cpp | 6 ++++++
+ wpa_supplicant/wpa_supplicant.c        | 8 --------
+ 2 files changed, 6 insertions(+), 8 deletions(-)
+
+diff --git a/wpa_supplicant/hidl/1.1/supplicant.cpp b/wpa_supplicant/hidl/1.1/supplicant.cpp
+index 4785c37..6f00fef 100644
+--- a/wpa_supplicant/hidl/1.1/supplicant.cpp
++++ b/wpa_supplicant/hidl/1.1/supplicant.cpp
+@@ -318,11 +318,17 @@ Supplicant::addInterfaceInternal(const IfaceInfo& iface_info)
+ SupplicantStatus Supplicant::removeInterfaceInternal(
+     const IfaceInfo& iface_info)
+ {
++	bool remove_p2p;	
+ 	struct wpa_supplicant* wpa_s =
+ 	    wpa_supplicant_get_iface(wpa_global_, iface_info.name.c_str());
+ 	if (!wpa_s) {
+ 		return {SupplicantStatusCode::FAILURE_IFACE_UNKNOWN, ""};
+ 	}
++    
++	if (os_strncmp(wpa_s->ifname, "p2p-dev-wlan", 12) == 0) {
++		wpa_printf(MSG_ERROR, "bcm wifi not removeInterfaceInternal");
++		return {SupplicantStatusCode::SUCCESS, ""};
++	}
+ 	if (wpa_supplicant_remove_iface(wpa_global_, wpa_s, 0)) {
+ 		return {SupplicantStatusCode::FAILURE_UNKNOWN, ""};
+ 	}
+diff --git a/wpa_supplicant/wpa_supplicant.c b/wpa_supplicant/wpa_supplicant.c
+index e683f09..ee5710f 100644
+--- a/wpa_supplicant/wpa_supplicant.c
++++ b/wpa_supplicant/wpa_supplicant.c
+@@ -5760,7 +5760,6 @@ int wpa_supplicant_remove_iface(struct wpa_global *global,
+ 				int terminate)
+ {
+ 	struct wpa_supplicant *prev;
+-	static Boolean remove_p2p;
+ #ifdef CONFIG_MESH
+ 	unsigned int mesh_if_created = wpa_s->mesh_if_created;
+ 	char *ifname = NULL;
+@@ -5769,13 +5768,6 @@ int wpa_supplicant_remove_iface(struct wpa_global *global,
+ 
+ 	/* Remove interface from the global list of interfaces */
+ 	prev = global->ifaces;
+-       if (os_strcmp(wpa_s->ifname, "wlan0") == 0)
+-               remove_p2p = TRUE;
+-
+-       if (os_strncmp(wpa_s->ifname, "p2p-dev-wlan", 12) == 0 &&  remove_p2p != TRUE) {
+-               wpa_dbg(wpa_s, MSG_ERROR, "do not Removing interface %s", wpa_s->ifname);
+-               return 0;
+-       }
+ 	if (prev == wpa_s) {
+ 		global->ifaces = wpa_s->next;
+ 	} else {
+-- 
+1.9.1
+

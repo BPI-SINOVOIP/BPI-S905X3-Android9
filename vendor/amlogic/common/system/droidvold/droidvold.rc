@@ -1,0 +1,9 @@
+service droidvold /vendor/bin/droidvold
+    class core
+    disabled
+    ioprio be 2
+    writepid /dev/cpuset/foreground/tasks
+
+
+on property:ro.droidvold.enable=true
+    start droidvold

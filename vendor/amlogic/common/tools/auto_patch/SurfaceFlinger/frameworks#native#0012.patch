@@ -1,0 +1,332 @@
+From 151f01ee6652cc6b3d188f56bedf774b7f6ed1ee Mon Sep 17 00:00:00 2001
+From: baocheng sun <baocheng.sun@amlogic.com>
+Date: Wed, 2 Oct 2019 04:28:54 -0400
+Subject: [PATCH] surfaceflinger: add full active mode feature [1/2]
+
+PD#SWPL-14734
+
+Problem:
+Add Full active mode to switch ui resolution dynamicly.
+
+Solution:
+Get fb size from configstore
+report primary display hotplut to framework
+
+Verify:
+verified on franklin
+
+Change-Id: I9b121b57c454b756f4aeada89a27134059d6834e
+Signed-off-by: baocheng sun <baocheng.sun@amlogic.com>
+---
+ services/surfaceflinger/Android.bp                 |  6 +++
+ .../DisplayHardware/FramebufferSurface.cpp         | 21 +++++++++
+ services/surfaceflinger/DisplayHardware/HWC2.cpp   | 50 +++++++++++-----------
+ services/surfaceflinger/DisplayHardware/HWC2.h     | 11 +++++
+ .../surfaceflinger/DisplayHardware/HWComposer.cpp  | 14 ++++++
+ services/surfaceflinger/SurfaceFlinger.cpp         | 40 ++++++++++++-----
+ 6 files changed, 106 insertions(+), 36 deletions(-)
+
+diff --git a/services/surfaceflinger/Android.bp b/services/surfaceflinger/Android.bp
+index b906800..3fb9d09 100644
+--- a/services/surfaceflinger/Android.bp
++++ b/services/surfaceflinger/Android.bp
+@@ -75,6 +75,12 @@ cc_defaults {
+         "libhidltransport",
+         "libhwbinder",
+     ],
++
++    product_variables: {
++        hwc_enable_real_mode: {
++            cflags: ["-DUSE_AML_REAL_MODE"],
++        },
++    },
+ }
+ 
+ cc_library_headers {
+diff --git a/services/surfaceflinger/DisplayHardware/FramebufferSurface.cpp b/services/surfaceflinger/DisplayHardware/FramebufferSurface.cpp
+index e6d7834..21a8da1 100644
+--- a/services/surfaceflinger/DisplayHardware/FramebufferSurface.cpp
++++ b/services/surfaceflinger/DisplayHardware/FramebufferSurface.cpp
+@@ -40,10 +40,17 @@
+ #include "HWComposer.h"
+ #include "../SurfaceFlinger.h"
+ 
++#include <android/hardware/configstore/1.0/ISurfaceFlingerConfigs.h>
++#include <android/hardware/configstore/1.1/ISurfaceFlingerConfigs.h>
++#include <android/hardware/configstore/1.1/types.h>
++#include <configstore/Utils.h>
++
+ // ----------------------------------------------------------------------------
+ namespace android {
+ // ----------------------------------------------------------------------------
+ 
++using namespace android::hardware::configstore;
++using namespace android::hardware::configstore::V1_0;
+ using ui::Dataspace;
+ 
+ /*
+@@ -71,9 +78,23 @@ FramebufferSurface::FramebufferSurface(HWComposer& hwc, int disp,
+     mConsumer->setConsumerUsageBits(GRALLOC_USAGE_HW_FB |
+                                        GRALLOC_USAGE_HW_RENDER |
+                                        GRALLOC_USAGE_HW_COMPOSER);
++
++#ifdef USE_AML_REAL_MODE
++    int width = getInt32< ISurfaceFlingerConfigs,
++            &ISurfaceFlingerConfigs::primaryDisplayFramebufferWidth>(1920);
++
++    int height = getInt32< ISurfaceFlingerConfigs,
++            &ISurfaceFlingerConfigs::primaryDisplayFramebufferHeight>(1080);
++
++    ALOGD("get framebuffer size (%d, %d) from configStore", width, height);
++    mConsumer->setDefaultBufferSize(width, height);
++#else
++    ALOGD("get framebuffer size from hwc");
+     const auto& activeConfig = mHwc.getActiveConfig(disp);
+     mConsumer->setDefaultBufferSize(activeConfig->getWidth(),
+             activeConfig->getHeight());
++#endif
++
+     mConsumer->setMaxAcquiredBufferCount(
+             SurfaceFlinger::maxFrameBufferAcquiredBuffers - 1);
+ }
+diff --git a/services/surfaceflinger/DisplayHardware/HWC2.cpp b/services/surfaceflinger/DisplayHardware/HWC2.cpp
+index b05e760..a96b2cf 100644
+--- a/services/surfaceflinger/DisplayHardware/HWC2.cpp
++++ b/services/surfaceflinger/DisplayHardware/HWC2.cpp
+@@ -320,6 +320,9 @@ Error Display::getActiveConfig(
+ {
+     ALOGV("[%" PRIu64 "] getActiveConfig", mId);
+     hwc2_config_t configId = 0;
++#ifdef USE_AML_HW_ACTIVE_MODE
++    android::Mutex::Autolock autolock(mConfigLock);
++#endif
+     auto intError = mComposer.getActiveConfig(mId, &configId);
+     auto error = static_cast<Error>(intError);
+ 
+@@ -345,6 +348,9 @@ Error Display::getActiveConfig(
+ Error Display::getActiveConfigIndex(int* outIndex) const {
+     ALOGV("[%" PRIu64 "] getActiveConfigIndex", mId);
+     hwc2_config_t configId = 0;
++#ifdef USE_AML_HW_ACTIVE_MODE
++    android::Mutex::Autolock autolock(mConfigLock);
++#endif
+     auto intError = mComposer.getActiveConfig(mId, &configId);
+     auto error = static_cast<Error>(intError);
+ 
+@@ -456,37 +462,14 @@ Error Display::getDataspaceSaturationMatrix(Dataspace dataspace, android::mat4*
+ 
+ std::vector<std::shared_ptr<const Display::Config>> Display::getConfigs() const
+ {
+-#ifdef USE_AML_HW_ACTIVE_MODE
+-    ALOGV("[%" PRIu64 "] getConfigs", mId);
+-    hwc2_config_t activeConfigId = 0;
+-    auto intError = mComposer.getActiveConfig(mId, &activeConfigId);
+-    auto error = static_cast<Error>(intError);
+-    if (error != Error::None) {
+-        ALOGE("[%" PRIu64 "] mGetActiveConfig error", mId);
+-    }
+-    if (mConfigs.count(activeConfigId) == 0) {
+-        ALOGE("[%" PRIu64 "] getActiveConfig returned unknown config %u", mId,
+-                activeConfigId);
+-    }
+-#endif
+-
+     std::vector<std::shared_ptr<const Config>> configs;
+-    for (const auto& element : mConfigs) {
+ #ifdef USE_AML_HW_ACTIVE_MODE
+-    // Skip active configid, need to add to the front of configs.
+-        if (element.first == activeConfigId) {
+-            continue;
+-        }
++    android::Mutex::Autolock autolock(mConfigLock);
+ #endif
++    for (const auto& element : mConfigs) {
+         configs.emplace_back(element.second);
+     }
+ 
+-#ifdef USE_AML_HW_ACTIVE_MODE
+-    if (mConfigs.count(activeConfigId) != 0) {
+-        // Add active config to the front of configs.
+-        configs.emplace(configs.begin(), mConfigs.at(activeConfigId));
+-    }
+-#endif
+     return configs;
+ }
+ 
+@@ -728,6 +711,19 @@ void Display::setConnected(bool connected) {
+     mIsConnected = connected;
+ }
+ 
++#ifdef USE_AML_HW_ACTIVE_MODE
++void Display::syncConfigs() {
++    /* During hotplugs, there is a window where plaform and surfaceflinger may
++     * not be in sync. During this time, if resyncToHardwareVsync() call happens,
++     * it will call getActiveConfig() which will return an invalid config causing
++     * a SF crash. This call is provided to ensure that platform and SF are always
++     * in sync, and SF never gets an invalid config in the getActiveConfig() call
++     * or getActiveConfigIndex() calls.
++     */
++    loadConfigs();
++}
++#endif
++
+ int32_t Display::getAttribute(hwc2_config_t configId, Attribute attribute)
+ {
+     int32_t value = 0;
+@@ -762,6 +758,10 @@ void Display::loadConfigs()
+ {
+     ALOGV("[%" PRIu64 "] loadConfigs", mId);
+ 
++#ifdef USE_AML_HW_ACTIVE_MODE
++    android::Mutex::Autolock autolock(mConfigLock);
++#endif
++
+     std::vector<Hwc2::Config> configIds;
+     auto intError = mComposer.getDisplayConfigs(mId, &configIds);
+     auto error = static_cast<Error>(intError);
+diff --git a/services/surfaceflinger/DisplayHardware/HWC2.h b/services/surfaceflinger/DisplayHardware/HWC2.h
+index 29d7a47..404091d 100644
+--- a/services/surfaceflinger/DisplayHardware/HWC2.h
++++ b/services/surfaceflinger/DisplayHardware/HWC2.h
+@@ -37,6 +37,10 @@
+ #include <unordered_set>
+ #include <vector>
+ 
++#ifdef USE_AML_HW_ACTIVE_MODE
++#include <utils/Mutex.h>
++#endif
++
+ namespace android {
+     class Fence;
+     class FloatRect;
+@@ -264,6 +268,9 @@ public:
+     hwc2_display_t getId() const { return mId; }
+     bool isConnected() const { return mIsConnected; }
+     void setConnected(bool connected);  // For use by Device only
++#ifdef USE_AML_HW_ACTIVE_MODE
++    void syncConfigs();
++#endif
+ 
+ private:
+     int32_t getAttribute(hwc2_config_t configId, Attribute attribute);
+@@ -289,6 +296,10 @@ private:
+     DisplayType mType;
+     std::unordered_map<hwc2_layer_t, std::unique_ptr<Layer>> mLayers;
+     std::unordered_map<hwc2_config_t, std::shared_ptr<const Config>> mConfigs;
++#ifdef USE_AML_HW_ACTIVE_MODE
++    // protect rw access of mConfigs
++    mutable android::Mutex mConfigLock;
++#endif
+ };
+ 
+ // Convenience C++ class to access hwc2_device_t Layer functions directly.
+diff --git a/services/surfaceflinger/DisplayHardware/HWComposer.cpp b/services/surfaceflinger/DisplayHardware/HWComposer.cpp
+index f7a24c8..b64008d 100644
+--- a/services/surfaceflinger/DisplayHardware/HWComposer.cpp
++++ b/services/surfaceflinger/DisplayHardware/HWComposer.cpp
+@@ -287,6 +287,11 @@ std::vector<std::shared_ptr<const HWC2::Display::Config>>
+         HWComposer::getConfigs(int32_t displayId) const {
+     RETURN_IF_INVALID_DISPLAY(displayId, {});
+ 
++#ifdef USE_AML_HW_ACTIVE_MODE
++    /* Resync sf with platform now to ensure we dont run into weird things*/
++    mDisplayData[displayId].hwcDisplay->syncConfigs();
++#endif
++
+     auto& displayData = mDisplayData[displayId];
+     auto configs = mDisplayData[displayId].hwcDisplay->getConfigs();
+ 
+@@ -307,6 +312,11 @@ std::shared_ptr<const HWC2::Display::Config>
+         HWComposer::getActiveConfig(int32_t displayId) const {
+     RETURN_IF_INVALID_DISPLAY(displayId, nullptr);
+ 
++#ifdef USE_AML_HW_ACTIVE_MODE
++    /* Resync sf with platform now to ensure we dont run into weird things*/
++    mDisplayData[displayId].hwcDisplay->syncConfigs();
++#endif
++
+     std::shared_ptr<const HWC2::Display::Config> config;
+     auto error = mDisplayData[displayId].hwcDisplay->getActiveConfig(&config);
+     if (error == HWC2::Error::BadConfig) {
+@@ -329,6 +339,10 @@ int HWComposer::getActiveConfigIndex(int32_t displayId) const {
+         ALOGV("getActiveConfigIndex: Attempted to access invalid display %d", displayId);
+         return -1;
+     }
++#ifdef USE_AML_HW_ACTIVE_MODE
++    /* Resync sf with platform now to ensure we dont run into weird things*/
++    mDisplayData[displayId].hwcDisplay->syncConfigs();
++#endif
+     int index;
+     auto error = mDisplayData[displayId].hwcDisplay->getActiveConfigIndex(&index);
+     if (error == HWC2::Error::BadConfig) {
+diff --git a/services/surfaceflinger/SurfaceFlinger.cpp b/services/surfaceflinger/SurfaceFlinger.cpp
+index b924e26..e375ce8 100644
+--- a/services/surfaceflinger/SurfaceFlinger.cpp
++++ b/services/surfaceflinger/SurfaceFlinger.cpp
+@@ -1351,7 +1351,19 @@ void SurfaceFlinger::resyncToHardwareVsync(bool makeAvailable) {
+         return;
+     }
+ 
+-    const auto& activeConfig = getBE().mHwc->getActiveConfig(HWC_DISPLAY_PRIMARY);
++    auto activeConfig = getBE().mHwc->getActiveConfig(HWC_DISPLAY_PRIMARY);
++#ifdef USE_AML_HW_ACTIVE_MODE
++    if (!activeConfig) {
++        // There is always a small window where plaform and surfaceflinger
++        // may not sync. So try again.
++        activeConfig = getBE().mHwc->getActiveConfig(HWC_DISPLAY_PRIMARY);
++        if (!activeConfig) {
++            ALOGE("resyncToHardwareVsync get null ActiveConfig");
++            return;
++        }
++    }
++#endif
++
+     const nsecs_t period = activeConfig->getVsyncPeriod();
+ 
+     mPrimaryDispSync.reset();
+@@ -2326,12 +2338,25 @@ void SurfaceFlinger::processDisplayHotplugEventsLocked() {
+                         "Built-in Screen" : "External Screen";
+                 mCurrentState.displays.add(mBuiltinDisplays[displayType], info);
+                 mInterceptor->saveDisplayCreation(info);
+-                } else {
++                }
+ #ifdef USE_AML_HW_ACTIVE_MODE
+-                setTransactionFlags(eDisplayTransactionNeeded | ePrimaryHotplugTranscation);
+-#endif
++            else if (displayType == DisplayDevice::DISPLAY_PRIMARY) {
++                disableHardwareVsync(false);
++                resyncToHardwareVsync(true);
++
++                auto& displayDevice = mDisplays[displayType];
++                displayDevice->setActiveConfig(getHwComposer().getActiveConfigIndex(displayType));
++                mEventThread->onHotplugReceived(DisplayDevice::DISPLAY_PRIMARY, true);
+             }
++#endif
+         } else {
++#ifdef USE_AML_HW_ACTIVE_MODE
++            // Disable hardware VSync if disconnect on primary display
++            if (displayType == DisplayDevice::DISPLAY_PRIMARY) {
++                disableHardwareVsync(true);
++                continue;
++            }
++#endif
+             ALOGV("Removing built in display %d", displayType);
+ 
+             ssize_t idx = mCurrentState.displays.indexOfKey(mBuiltinDisplays[displayType]);
+@@ -2602,13 +2627,6 @@ void SurfaceFlinger::handleTransactionLocked(uint32_t transactionFlags)
+      */
+ 
+     if (transactionFlags & eDisplayTransactionNeeded) {
+-#ifdef USE_AML_HW_ACTIVE_MODE
+-        // deal Primary display hotplug
+-        if (transactionFlags & ePrimaryHotplugTranscation) {
+-            mEventThread->onHotplugReceived(DisplayDevice::DISPLAY_PRIMARY, true);
+-        }
+-#endif
+-
+         processDisplayChangesLocked();
+         processDisplayHotplugEventsLocked();
+     }
+-- 
+2.7.4
+

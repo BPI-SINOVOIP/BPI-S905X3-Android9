@@ -1,0 +1,38 @@
+From 587c0d29c387b340440be5d9b4c1d95e1a6e61f4 Mon Sep 17 00:00:00 2001
+From: "shipeng.sun" <shipeng.sun@amlogic.com>
+Date: Tue, 15 Jan 2019 17:39:18 +0800
+Subject: [PATCH] Subject: [PATCH] framwork_av: modify w & h to be multiple of
+ 8 to fix show one  green bar [1/1]
+
+PD#OTT-1250
+
+Problem:
+modify w & h to be multiple of 8 to fix show one green bar
+
+Solution:
+modify w & h to be multiple of 8 to fix show one green bar
+
+Verify:
+Ampere
+
+Change-Id: Ia441b3bc67670ae06c77c199d05c48ce69f4eeaa
+Signed-off-by: shipeng.sun <shipeng.sun@amlogic.com>
+
+diff --git a/media/libstagefright/colorconversion/SoftwareRenderer.cpp b/media/libstagefright/colorconversion/SoftwareRenderer.cpp
+index 657a05b..15363da 100644
+--- a/media/libstagefright/colorconversion/SoftwareRenderer.cpp
++++ b/media/libstagefright/colorconversion/SoftwareRenderer.cpp
+@@ -127,8 +127,8 @@ void SoftwareRenderer::resetFormatIfChanged(
+             case OMX_TI_COLOR_FormatYUV420PackedSemiPlanar:
+             {
+                 halFormat = HAL_PIXEL_FORMAT_YV12;
+-                bufWidth = (mCropWidth + 1) & ~1;
+-                bufHeight = (mCropHeight + 1) & ~1;
++                bufWidth = (mCropWidth + 7) & ~7;
++                bufHeight = (mCropHeight + 7) & ~7;
+                 break;
+             }
+             case OMX_COLOR_Format24bitRGB888:
+-- 
+1.9.1
+

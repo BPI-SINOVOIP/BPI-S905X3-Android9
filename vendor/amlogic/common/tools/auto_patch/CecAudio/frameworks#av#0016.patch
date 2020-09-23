@@ -1,0 +1,63 @@
+From c1abc43d4653be3a460965df5170d00f4a36df96 Mon Sep 17 00:00:00 2001
+From: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date: Fri, 1 Nov 2019 11:02:44 +0800
+Subject: [PATCH] audio: fix eac3 passthrough underrun issuse [2/2]
+
+PD#SWPL-16083
+
+Problem:
+EAC3 can't passthrough with ctc player
+
+Solution:
+decrease omx wait buffer time to fix eac3 underrun issuse
+
+Verify:
+verify by u212
+
+Change-Id: I674ea2f3bae3857691eaf4ead6fb4e004cde2225
+Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+---
+ media/libstagefright/SimpleDecodingSource.cpp | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/media/libstagefright/SimpleDecodingSource.cpp b/media/libstagefright/SimpleDecodingSource.cpp
+index 3d760bd..449975d 100644
+--- a/media/libstagefright/SimpleDecodingSource.cpp
++++ b/media/libstagefright/SimpleDecodingSource.cpp
+@@ -35,7 +35,7 @@
+ 
+ using namespace android;
+ 
+-const int64_t kTimeoutWaitForOutputUs = 100000; // 0.1 seconds
++const int64_t kTimeoutWaitForOutputUs = 5000; // 0.005 seconds
+ const int64_t kTimeoutWaitForInputUs = 1000; // 1 milliseconds
+ 
+ //static
+@@ -219,7 +219,6 @@ status_t SimpleDecodingSource::read(
+ 
+     return res;
+ }
+-int is_full = 0;
+ status_t SimpleDecodingSource::doRead(
+         Mutexed<ProtectedState>::Locked &me, MediaBufferBase **buffer, const ReadOptions *options) {
+     // |me| is always locked on entry, but is allowed to be unlocked on exit
+@@ -335,8 +334,6 @@ status_t SimpleDecodingSource::doRead(
+                     me->mState = ERROR;
+                 }
+                 in_buf->release();
+-                if (is_full == 1)
+-                  break;
+             }
+         }
+ 
+@@ -398,7 +395,6 @@ status_t SimpleDecodingSource::doRead(
+             (*buffer)->meta_data().setInt64(kKeyTime, out_pts);
+             mCodec->releaseOutputBuffer(out_ix);
+         }
+-        is_full = 1;
+         return OK;
+     }
+ 
+-- 
+2.7.4
+

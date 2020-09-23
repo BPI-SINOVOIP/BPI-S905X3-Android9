@@ -1,0 +1,410 @@
+From 9425a03bbde04f1ef31ad98050166f94b7e81a7f Mon Sep 17 00:00:00 2001
+From: "an.xi" <an.xi@amlogic.com>
+Date: Mon, 6 Jan 2020 17:25:08 +0800
+Subject: [PATCH] cec: fix the fuzzy logic when cec is switched constantly
+ [1/2]
+
+PD#SWPL-15991
+
+Problem:
+When cec is switched to open and close constantly, the logic
+in HdmiControlService is mixed up with enable and disable work.
+The consequence is that more and more HdmiCecLocalDeviceTv
+instances is living with HotplugDetection working, they are
+constantly sending send physical address message to playbacks
+while they can't really process the response.But the real tv
+instance will be constantly excuting hanleReportPhysicalAddress
+and then adding the device, then resulting in triggering the
+onHdmiDeviceAdded callback with power status is off and excute
+the deviceSelect work. This is why it feels more and more
+stuck.
+
+Solution:
+Use synchronization to make sure the disable and enable work
+is sperated in HdmiControlService.
+
+Change-Id: I48deeca75532b7fafc166c2944979918f87df620
+Signed-off-by: an.xi <an.xi@amlogic.com>
+---
+ .../server/hdmi/ApartDeviceDiscoveryAction.java    | 11 +++
+ .../android/server/hdmi/DeviceDiscoveryAction.java |  4 +
+ .../com/android/server/hdmi/HdmiCecController.java |  0
+ .../android/server/hdmi/HdmiCecFeatureAction.java  | 15 +++-
+ .../android/server/hdmi/HdmiControlService.java    | 93 ++++++++++++++++------
+ .../server/hdmi/HotplugDetectionAction.java        | 12 ++-
+ 6 files changed, 107 insertions(+), 28 deletions(-)
+ mode change 100755 => 100644 services/core/java/com/android/server/hdmi/ApartDeviceDiscoveryAction.java
+ mode change 100755 => 100644 services/core/java/com/android/server/hdmi/DeviceDiscoveryAction.java
+ mode change 100644 => 100755 services/core/java/com/android/server/hdmi/HdmiCecController.java
+ mode change 100755 => 100644 services/core/java/com/android/server/hdmi/HdmiCecFeatureAction.java
+ mode change 100644 => 100755 services/core/java/com/android/server/hdmi/HdmiControlService.java
+
+diff --git a/services/core/java/com/android/server/hdmi/ApartDeviceDiscoveryAction.java b/services/core/java/com/android/server/hdmi/ApartDeviceDiscoveryAction.java
+old mode 100755
+new mode 100644
+index a0abe42..3ec4b89
+--- a/services/core/java/com/android/server/hdmi/ApartDeviceDiscoveryAction.java
++++ b/services/core/java/com/android/server/hdmi/ApartDeviceDiscoveryAction.java
+@@ -73,10 +73,17 @@ class ApartDeviceDiscoveryAction extends DeviceDiscoveryAction {
+     @Override
+     boolean start() {
+         mDevices.clear();
++        mState = STATE_WAITING_FOR_DEVICE_POLLING;
++        Slog.v(TAG, "start and pollDevices");
+ 
+         pollDevices(new DevicePollingCallback() {
+             @Override
+             public void onPollingFinished(List<Integer> ackedAddress) {
++                //We should make sure the action is removed
++                if (STATE_NONE == mState) {
++                    Slog.e(TAG, "action has been removed.");
++                    return;
++                }
+                 if (ackedAddress.isEmpty()) {
+                     Slog.v(TAG, "No device is detected.");
+                     wrapUpAndFinish(null);
+@@ -329,6 +336,10 @@ class ApartDeviceDiscoveryAction extends DeviceDiscoveryAction {
+ 
+     @Override
+     void handleTimerEvent(int state, int logicAddress) {
++        if (STATE_NONE == mState) {
++            Slog.e(TAG, "handleTimerEvent action has been removed");
++            return;
++        }
+         DiscoveryDeviceInfo device = getDevice(logicAddress);
+         if (null == device) {
+             Slog.e(TAG, "handleTimerEvent no device of " + logicAddress);
+diff --git a/services/core/java/com/android/server/hdmi/DeviceDiscoveryAction.java b/services/core/java/com/android/server/hdmi/DeviceDiscoveryAction.java
+old mode 100755
+new mode 100644
+index 75a3474..709c211
+--- a/services/core/java/com/android/server/hdmi/DeviceDiscoveryAction.java
++++ b/services/core/java/com/android/server/hdmi/DeviceDiscoveryAction.java
+@@ -113,6 +113,10 @@ class DeviceDiscoveryAction extends HdmiCecFeatureAction {
+         pollDevices(new DevicePollingCallback() {
+             @Override
+             public void onPollingFinished(List<Integer> ackedAddress) {
++                if (STATE_NONE == mState) {
++                    Slog.e(TAG, "action has been removed.");
++                    return;
++                }
+                 if (ackedAddress.isEmpty()) {
+                     Slog.v(TAG, "No device is detected.");
+                     wrapUpAndFinish();
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecController.java b/services/core/java/com/android/server/hdmi/HdmiCecController.java
+old mode 100644
+new mode 100755
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecFeatureAction.java b/services/core/java/com/android/server/hdmi/HdmiCecFeatureAction.java
+old mode 100755
+new mode 100644
+index b57fa03..a908207
+--- a/services/core/java/com/android/server/hdmi/HdmiCecFeatureAction.java
++++ b/services/core/java/com/android/server/hdmi/HdmiCecFeatureAction.java
+@@ -47,6 +47,7 @@ abstract class HdmiCecFeatureAction {
+     // Timer handler message used for timeout event
+     protected static final int MSG_TIMEOUT = 100;
+     protected static final int MSG_TIMEOUT_DEVICE = 101;
++    protected static final int MSG_POLL = 102;
+ 
+     // Default state used in common by all the feature actions.
+     protected static final int STATE_NONE = 0;
+@@ -167,6 +168,9 @@ abstract class HdmiCecFeatureAction {
+             case MSG_TIMEOUT_DEVICE:
+                 handleTimerEvent(msg.arg1, (int)msg.obj);
+                 break;
++            case MSG_POLL:
++                mService.pollDevices((DevicePollingCallback)msg.obj, getSourceAddress(), msg.arg1, msg.arg2);
++                break;
+             default:
+                 Slog.w(TAG, "Unsupported message:" + msg.what);
+                 break;
+@@ -234,7 +238,12 @@ abstract class HdmiCecFeatureAction {
+ 
+     protected final void pollDevices(DevicePollingCallback callback, int pickStrategy,
+             int retryCount) {
+-        mService.pollDevices(callback, getSourceAddress(), pickStrategy, retryCount);
++        getActionHandler().sendMessage(Message.obtain(getActionHandler(), MSG_POLL,
++                pickStrategy, retryCount, callback));
++    }
++
++    protected Handler getActionHandler() {
++        return (Handler)mActionTimer;
+     }
+ 
+     /**
+@@ -246,6 +255,10 @@ abstract class HdmiCecFeatureAction {
+         mState = STATE_NONE;
+         // Clear all timers.
+         mActionTimer.clearTimerMessage();
++        // If don't remove this, action like DeviceDiscoveryAction will finally start
++        // actions like HotplugAction when the poll work is done, and the new actions
++        // started will disturb the normal source managerment.
++        getActionHandler().removeMessages(MSG_POLL);
+     }
+ 
+     /**
+diff --git a/services/core/java/com/android/server/hdmi/HdmiControlService.java b/services/core/java/com/android/server/hdmi/HdmiControlService.java
+old mode 100644
+new mode 100755
+index 035d5af..f2d54ed
+--- a/services/core/java/com/android/server/hdmi/HdmiControlService.java
++++ b/services/core/java/com/android/server/hdmi/HdmiControlService.java
+@@ -57,6 +57,7 @@ import android.os.Handler;
+ import android.os.HandlerThread;
+ import android.os.IBinder;
+ import android.os.Looper;
++import android.os.Message;
+ import android.os.PowerManager;
+ import android.os.PowerManager.WakeLock;
+ import android.os.RemoteException;
+@@ -85,6 +86,8 @@ import java.util.Arrays;
+ import java.util.Collections;
+ import java.util.List;
+ import java.util.Locale;
++import java.util.concurrent.CountDownLatch;
++import java.util.concurrent.TimeUnit;
+ import libcore.util.EmptyArray;
+ 
+ /**
+@@ -111,6 +114,32 @@ public final class HdmiControlService extends SystemService {
+     static final int STANDBY_SCREEN_OFF = 0;
+     static final int STANDBY_SHUTDOWN = 1;
+ 
++    static final int ENABLED = 1;
++    static final int DISABLED = 2;
++
++    static final int ENABLE_SERVICE = 1;
++    static final int DISABLE_SERVICE = 2;
++
++    static final int AWAIT_TIME = 5000;
++
++    private CountDownLatch mDisableLatch;
++
++    class HdmiControlHandler extends Handler {
++        public void handleMessage(Message msg) {
++            switch(msg.what) {
++                case ENABLE_SERVICE:
++                    enableHdmiControlService();
++                    break;
++                case DISABLE_SERVICE:
++                    disableHdmiControlService();
++                    break;
++                default:
++                    break;
++            }
++        }
++    }
++
++
+     /**
+      * Interface to report send result.
+      */
+@@ -244,7 +273,7 @@ public final class HdmiControlService extends SystemService {
+             mSystemAudioModeChangeListenerRecords = new ArrayList<>();
+ 
+     // Handler used to run a task in service thread.
+-    private final Handler mHandler = new Handler();
++    private final Handler mHandler = new HdmiControlHandler();
+ 
+     private final SettingsObserver mSettingsObserver;
+ 
+@@ -468,18 +497,23 @@ public final class HdmiControlService extends SystemService {
+         return mPowerManager;
+     }
+ 
+-    /**
+-     * Called when the initialization of local devices is complete.
+-     */
+-    private void onInitializeCecComplete(int initiatedBy) {
++    private void doFinalInit(int initiatedBy) {
++        if (INITIATED_BY_HOTPLUG == initiatedBy) {
++            return;
++        }
+         if (mPowerStatus == HdmiControlManager.POWER_STATUS_TRANSIENT_TO_ON) {
+             mPowerStatus = HdmiControlManager.POWER_STATUS_ON;
+         }
+         mWakeUpMessageReceived = false;
+-
+         if (isTvDeviceEnabled()) {
+             mCecController.setOption(OptionKey.WAKEUP, tv().getAutoWakeup());
+         }
++    }
++
++    /**
++     * Called when the initialization of local devices is complete.
++     */
++    private void onInitializeCecComplete(int initiatedBy) {
+         int reason = -1;
+         switch (initiatedBy) {
+             case INITIATED_BY_BOOT_UP:
+@@ -649,13 +683,15 @@ public final class HdmiControlService extends SystemService {
+                     // Address allocation completed for all devices. Notify each device.
+                     if (allocatingDevices.size() == ++finished[0]) {
+                         mAddressAllocated = true;
++
++                        doFinalInit(initiatedBy);
++                        notifyAddressAllocated(allocatedDevices, initiatedBy);
++                        mCecMessageBuffer.processMessages();
+                         if (initiatedBy != INITIATED_BY_HOTPLUG) {
+                             // In case of the hotplug we don't call onInitializeCecComplete()
+                             // since we reallocate the logical address only.
+                             onInitializeCecComplete(initiatedBy);
+                         }
+-                        notifyAddressAllocated(allocatedDevices, initiatedBy);
+-                        mCecMessageBuffer.processMessages();
+                     }
+                 }
+             });
+@@ -971,7 +1007,6 @@ public final class HdmiControlService extends SystemService {
+     @ServiceThreadOnly
+     void onHotplug(int portId, boolean connected) {
+         assertRunOnServiceThread();
+-
+         if (connected && !isTvDevice()) {
+             ArrayList<HdmiCecLocalDevice> localDevices = new ArrayList<>();
+             for (int type : mLocalDevices) {
+@@ -1244,6 +1279,7 @@ public final class HdmiControlService extends SystemService {
+         @Override
+         public void binderDied() {
+             synchronized (mLock) {
++                Slog.d(TAG, "binderDied VendorCommandListenerRecord " + mListener);
+                 mVendorCommandListenerRecords.remove(this);
+             }
+         }
+@@ -1553,17 +1589,14 @@ public final class HdmiControlService extends SystemService {
+             HdmiCecLocalDeviceTv tv = tv();
+             synchronized (mLock) {
+                 if (tv != null) {
+-                    Slog.d(TAG, "getDeviceList tv " + tv);
+                     return tv.getSafeCecDevicesLocked();
+                 } else {
+                     HdmiCecLocalDeviceAudioSystem audioSystem = audioSystem();
+                     if (audioSystem != null) {
+-                        Slog.d(TAG, "getDeviceList audioSystem " + audioSystem);
+                         return audioSystem.getSafeCecDevicesLocked();
+                     }
+                 }
+             }
+-            Slog.e(TAG, "getDeviceList empty!");
+             return Collections.<HdmiDeviceInfo>emptyList();
+         }
+ 
+@@ -2260,7 +2293,11 @@ public final class HdmiControlService extends SystemService {
+ 
+     private void disableDevices(PendingActionClearedCallback callback) {
+         if (mCecController != null) {
++            if (!mCecController.getLocalDeviceList().isEmpty()) {
++                mDisableLatch = new CountDownLatch(1);
++            }
+             for (HdmiCecLocalDevice device : mCecController.getLocalDeviceList()) {
++                Slog.d(TAG, "disableDevices " + device);
+                 device.disableDevice(mStandbyMessageReceived, callback);
+             }
+         }
+@@ -2433,26 +2470,24 @@ public final class HdmiControlService extends SystemService {
+             mHdmiControlEnabled = enabled;
+         }
+ 
+-        if (enabled) {
+-            enableHdmiControlService();
+-            return;
+-        }
+-        // Call the vendor handler before the service is disabled.
+-        invokeVendorCommandListenersOnControlStateChanged(false,
+-                HdmiControlManager.CONTROL_STATE_CHANGED_REASON_SETTING);
++        int control = enabled ? ENABLE_SERVICE : DISABLE_SERVICE;
+         // Post the remained tasks in the service thread again to give the vendor-issued-tasks
+         // a chance to run.
+-        runOnServiceThread(new Runnable() {
+-            @Override
+-            public void run() {
+-                disableHdmiControlService();
+-            }
+-        });
++        mHandler.removeMessages(control);
++        mHandler.sendMessage(Message.obtain(mHandler, control));
+         return;
+     }
+ 
+     @ServiceThreadOnly
+     private void enableHdmiControlService() {
++        Slog.d(TAG, "enableHdmiControlService");
++        if (mDisableLatch != null) {
++            try {
++                mDisableLatch.await(AWAIT_TIME, TimeUnit.MILLISECONDS);
++            } catch(InterruptedException e) {
++                Slog.e(TAG, "enableHdmiControlService latch await fails " + e);
++            }
++        }
+         mCecController.setOption(OptionKey.SYSTEM_CEC_CONTROL, true);
+         mMhlController.setOption(OPTION_MHL_ENABLE, ENABLED);
+ 
+@@ -2461,6 +2496,7 @@ public final class HdmiControlService extends SystemService {
+ 
+     @ServiceThreadOnly
+     private void disableHdmiControlService() {
++        Slog.d(TAG, "disableHdmiControlService");
+         disableDevices(new PendingActionClearedCallback() {
+             @Override
+             public void onCleared(HdmiCecLocalDevice device) {
+@@ -2468,9 +2504,16 @@ public final class HdmiControlService extends SystemService {
+                 mCecController.flush(new Runnable() {
+                     @Override
+                     public void run() {
++                        Slog.d(TAG, "disableHdmiControlService clear local devices");
+                         mCecController.setOption(OptionKey.ENABLE_CEC, false);
+                         mMhlController.setOption(OPTION_MHL_ENABLE, DISABLED);
+                         clearLocalDevices();
++                                // Call the vendor handler before the service is disabled.
++                        invokeVendorCommandListenersOnControlStateChanged(false,
++                            HdmiControlManager.CONTROL_STATE_CHANGED_REASON_SETTING);
++                        if (mDisableLatch != null) {
++                            mDisableLatch.countDown();
++                        }
+                     }
+                 });
+             }
+diff --git a/services/core/java/com/android/server/hdmi/HotplugDetectionAction.java b/services/core/java/com/android/server/hdmi/HotplugDetectionAction.java
+index 7670dcc..2c3121b 100644
+--- a/services/core/java/com/android/server/hdmi/HotplugDetectionAction.java
++++ b/services/core/java/com/android/server/hdmi/HotplugDetectionAction.java
+@@ -85,7 +85,7 @@ final class HotplugDetectionAction extends HdmiCecFeatureAction {
+ 
+     @Override
+     void handleTimerEvent(int state) {
+-        if (mState != state) {
++        if (STATE_NONE == mState || mState != state) {
+             return;
+         }
+ 
+@@ -124,11 +124,15 @@ final class HotplugDetectionAction extends HdmiCecFeatureAction {
+     }
+ 
+     private void pollAllDevices() {
+-        Slog.v(TAG, "Poll all devices.");
++        Slog.v(TAG, "Poll all devices." + this + " mSource " + tv());
+ 
+         pollDevices(new DevicePollingCallback() {
+             @Override
+             public void onPollingFinished(List<Integer> ackedAddress) {
++                if (STATE_NONE == mState) {
++                    Slog.e(TAG, "action has been removed.");
++                    return;
++                }
+                 checkHotplug(ackedAddress, false);
+             }
+         }, Constants.POLL_ITERATION_IN_ORDER
+@@ -141,6 +145,10 @@ final class HotplugDetectionAction extends HdmiCecFeatureAction {
+         pollDevices(new DevicePollingCallback() {
+             @Override
+             public void onPollingFinished(List<Integer> ackedAddress) {
++                if (STATE_NONE == mState) {
++                    Slog.e(TAG, "action has been removed.");
++                    return;
++                }
+                 checkHotplug(ackedAddress, true);
+             }
+         }, Constants.POLL_ITERATION_IN_ORDER
+-- 
+2.7.4
+

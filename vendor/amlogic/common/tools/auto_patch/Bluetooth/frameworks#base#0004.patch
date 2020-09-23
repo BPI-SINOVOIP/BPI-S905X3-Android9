@@ -1,0 +1,41 @@
+From 4f70b82199fd619ce2a0d8994a9ac42609c269d6 Mon Sep 17 00:00:00 2001
+From: Gongwei Chen <gongwei.chen@amlogic.com>
+Date: Mon, 2 Dec 2019 15:25:54 +0800
+Subject: [PATCH] BT: add app button and number button [1/2]
+
+PD#SWPL-14655
+
+Problem:
+add app button and number button
+
+Solution:
+add app button and number button
+
+Verify:
+Verifying on ac214
+
+Change-Id: I83fd273af9d743880fd9a0efdee4c305859c7531
+Signed-off-by: GongWei Chen <gongwei.chen@amlogic.com>
+---
+ .../core/java/com/android/server/policy/PhoneWindowManager.java | 2 ++
+ 1 file changed, 2 insertions(+)
+ mode change 100644 => 100755 services/core/java/com/android/server/policy/PhoneWindowManager.java
+
+diff --git a/services/core/java/com/android/server/policy/PhoneWindowManager.java b/services/core/java/com/android/server/policy/PhoneWindowManager.java
+old mode 100644
+new mode 100755
+index 1fe8f1d8350..c7a5e37ccc3
+--- a/services/core/java/com/android/server/policy/PhoneWindowManager.java
++++ b/services/core/java/com/android/server/policy/PhoneWindowManager.java
+@@ -297,6 +297,8 @@ import java.io.FileReader;
+ import java.io.IOException;
+ import java.io.PrintWriter;
+ import java.util.List;
++import android.app.ActivityManager.RunningTaskInfo;
++import android.content.ComponentName;
+ 
+ /**
+  * WindowManagerPolicy implementation for the Android phone UI.  This
+-- 
+2.24.0
+

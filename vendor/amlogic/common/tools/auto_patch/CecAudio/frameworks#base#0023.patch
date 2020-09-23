@@ -1,0 +1,106 @@
+From 482603b9f6b49c5c61c7af6de93e7b5b6acc0d10 Mon Sep 17 00:00:00 2001
+From: Jinping Wang <jinping.wang@amlogic.com>
+Date: Mon, 12 Aug 2019 19:10:32 +0800
+Subject: [PATCH] cec: support str wakeup by cec [1/3]
+
+PD# SWPL-12320
+
+Problem:
+sometimes not go to wakeup source when resume from str
+
+Solution:
+support str wakeup by cec
+
+Verify:
+test ok using p321
+
+Change-Id: I9ace2a8e52ed3a433d3127d1257a9d3ab8f2cedc
+Signed-off-by: Jinping Wang <jinping.wang@amlogic.com>
+---
+ .../com/android/server/hdmi/HdmiCecLocalDeviceTv.java   | 14 ++++++++------
+ .../com/android/server/hdmi/HdmiControlService.java     | 17 ++++++++++++++++-
+ 2 files changed, 24 insertions(+), 7 deletions(-)
+ mode change 100755 => 100644 services/core/java/com/android/server/hdmi/HdmiControlService.java
+
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java b/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
+index 8ae1bba..d1a5b5e 100644
+--- a/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
++++ b/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
+@@ -161,7 +161,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+             HdmiDeviceInfo info = tvInfo.getHdmiDeviceInfo();
+             if (info == null) return;
+             addTvInput(inputId, info.getId());
+-            if (info.isCecDevice()) {
++            if (info.isCecDevice() && mService.isInputChangeListenerReady()) {
+                 processDelayedActiveSource(info.getLogicalAddress());
+             }
+         }
+@@ -492,14 +492,16 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+                 HdmiLogger.debug("Device info %X not found; buffering the command", logicalAddress);
+                 mDelayedMessageBuffer.add(message);
+             }
+-        } else if (isInputReady(info.getId())
+-                || info.getDeviceType() == HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM) {
++        } else if (!isInputReady(info.getId())) {
++            HdmiLogger.debug("Input not ready for device: %X; buffering the command", info.getId());
++            mDelayedMessageBuffer.add(message);
++        } else if (!mService.isInputChangeListenerReady()) {
++            HdmiLogger.debug("InputChangeListener not set for device: %X; buffering the command", info.getId());
++            mDelayedMessageBuffer.add(message);
++        } else {
+             updateDevicePowerStatus(logicalAddress, HdmiControlManager.POWER_STATUS_ON);
+             ActiveSource activeSource = ActiveSource.of(logicalAddress, physicalAddress);
+             ActiveSourceHandler.create(this, null).process(activeSource, info.getDeviceType());
+-        } else {
+-            HdmiLogger.debug("Input not ready for device: %X; buffering the command", info.getId());
+-            mDelayedMessageBuffer.add(message);
+         }
+         return true;
+     }
+diff --git a/services/core/java/com/android/server/hdmi/HdmiControlService.java b/services/core/java/com/android/server/hdmi/HdmiControlService.java
+old mode 100755
+new mode 100644
+index a00aef4..c7e6f7a
+--- a/services/core/java/com/android/server/hdmi/HdmiControlService.java
++++ b/services/core/java/com/android/server/hdmi/HdmiControlService.java
+@@ -223,7 +223,7 @@ public final class HdmiControlService extends SystemService {
+             new ArrayList<>();
+ 
+     @GuardedBy("mLock")
+-    private InputChangeListenerRecord mInputChangeListenerRecord;
++    private InputChangeListenerRecord mInputChangeListenerRecord = null;
+ 
+     @GuardedBy("mLock")
+     private HdmiRecordListenerRecord mRecordListenerRecord;
+@@ -1512,6 +1512,15 @@ public final class HdmiControlService extends SystemService {
+         public void setInputChangeListener(final IHdmiInputChangeListener listener) {
+             enforceAccessPermission();
+             HdmiControlService.this.setInputChangeListener(listener);
++            runOnServiceThread(new Runnable() {
++                @Override
++                public void run() {
++                    if (tv() != null) {
++                        tv().processAllDelayedMessages();
++                        HdmiLogger.debug("process All Delayed Message when set InputChangeListener");
++                    }
++                }
++            });
+         }
+ 
+         @Override
+@@ -1949,6 +1958,12 @@ public final class HdmiControlService extends SystemService {
+         }
+     }
+ 
++    public boolean isInputChangeListenerReady() {
++        synchronized (mLock) {
++            return (mInputChangeListenerRecord != null);
++        }
++    }
++
+     private void removeInputChangeListener(IHdmiInputChangeListener listener) {
+         synchronized (mLock) {
+             Slog.d(TAG, "removeInputChangeListener");
+-- 
+2.10.2
+

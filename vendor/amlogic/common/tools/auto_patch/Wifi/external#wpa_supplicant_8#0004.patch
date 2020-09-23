@@ -1,0 +1,74 @@
+From f7416ac5a6b374d6e5375da575f8b63056cf66cf Mon Sep 17 00:00:00 2001
+From: Rongjun Chen <rongjun.chen@amlogic.com>
+Date: Thu, 9 May 2019 15:52:26 +0800
+Subject: [PATCH 4/4] wifi: fix miracast open fail issue [1/1]
+
+PD#SWPL-7538
+
+Problem:
+miracast open fail
+
+Solution:
+fix unexpected rmmove p2p interface cmd
+
+Verify:
+p212
+
+Change-Id: I559d174fb98f802e89a814f9f3a2079063cc5f1e
+Signed-off-by: Rongjun Chen <rongjun.chen@amlogic.com>
+---
+ wpa_supplicant/main.c           | 4 ++--
+ wpa_supplicant/wpa_supplicant.c | 8 ++++++++
+ 2 files changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/wpa_supplicant/main.c b/wpa_supplicant/main.c
+index 743aa7b..cbc6339 100644
+--- a/wpa_supplicant/main.c
++++ b/wpa_supplicant/main.c
+@@ -289,7 +289,7 @@ int main(int argc, char *argv[])
+ 			break;
+ #ifdef MULTI_WIFI_SUPPORT
+                 case 'c':
+-                        if (is_wifi_driver_loaded("wlan") || is_wifi_driver_loaded("atbm602x_usb") || is_wifi_driver_loaded("mt7601usta")) {
++                        if (!is_wifi_driver_loaded("dhd") && !is_wifi_driver_loaded("bcmdhd")) {
+ 				if (!ensure_config_file_exists(P2P_CONFIG_FILE))
+                                 	iface->confname = "/data/vendor/wifi/wpa/p2p_supplicant.conf";
+ 				else
+@@ -339,7 +339,7 @@ int main(int argc, char *argv[])
+ 			goto out;
+ #ifdef MULTI_WIFI_SUPPORT
+ 		case 'i':
+-			if (is_wifi_driver_loaded("wlan") || is_wifi_driver_loaded("atbm602x_usb") || is_wifi_driver_loaded("mt7601usta")) {
++			if (!is_wifi_driver_loaded("dhd") && !is_wifi_driver_loaded("bcmdhd")) {
+ 				iface->ifname = "p2p0";
+ 			} else {
+ 				iface->ifname = optarg;
+diff --git a/wpa_supplicant/wpa_supplicant.c b/wpa_supplicant/wpa_supplicant.c
+index ee5710f..e683f09 100644
+--- a/wpa_supplicant/wpa_supplicant.c
++++ b/wpa_supplicant/wpa_supplicant.c
+@@ -5760,6 +5760,7 @@ int wpa_supplicant_remove_iface(struct wpa_global *global,
+ 				int terminate)
+ {
+ 	struct wpa_supplicant *prev;
++	static Boolean remove_p2p;
+ #ifdef CONFIG_MESH
+ 	unsigned int mesh_if_created = wpa_s->mesh_if_created;
+ 	char *ifname = NULL;
+@@ -5768,6 +5769,13 @@ int wpa_supplicant_remove_iface(struct wpa_global *global,
+ 
+ 	/* Remove interface from the global list of interfaces */
+ 	prev = global->ifaces;
++       if (os_strcmp(wpa_s->ifname, "wlan0") == 0)
++               remove_p2p = TRUE;
++
++       if (os_strncmp(wpa_s->ifname, "p2p-dev-wlan", 12) == 0 &&  remove_p2p != TRUE) {
++               wpa_dbg(wpa_s, MSG_ERROR, "do not Removing interface %s", wpa_s->ifname);
++               return 0;
++       }
+ 	if (prev == wpa_s) {
+ 		global->ifaces = wpa_s->next;
+ 	} else {
+-- 
+1.9.1
+

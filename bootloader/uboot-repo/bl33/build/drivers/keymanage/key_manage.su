@@ -1,0 +1,16 @@
+key_manage.c:264:13:generalDataChange	0	static
+key_manage.c:588:12:do_keyman_init	0	static
+key_manage.c:600:12:do_keyman_exit	0	static
+key_manage.c:41:12:km_get_user_key_format	64	static
+key_manage.c:778:12:do_keymanage	64	static
+key_manage.c:388:5:key_manage_init	0	static
+key_manage.c:395:5:key_manage_exit	0	static
+key_manage.c:400:5:key_manage_write	208	dynamic,bounded
+key_manage.c:664:12:do_keyman_write	64	static
+key_manage.c:548:5:key_manage_query_exist	48	static
+key_manage.c:503:5:key_manage_query_size	48	static
+key_manage.c:451:5:key_manage_read	96	static
+key_manage.c:607:12:do_keyman_read	64	static
+key_manage.c:563:5:key_manage_query_secure	64	static
+key_manage.c:725:12:do_keyman_query	48	static
+key_manage.c:583:5:key_manage_query_canOverWrite	0	static

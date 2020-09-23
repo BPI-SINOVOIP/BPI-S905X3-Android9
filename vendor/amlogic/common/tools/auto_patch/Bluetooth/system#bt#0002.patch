@@ -1,0 +1,46 @@
+From 172b2c9790e8ac1de3c0388585eabcf3a5693470 Mon Sep 17 00:00:00 2001
+From: "qiu.zeng" <qiu.zeng@amlogic.com>
+Date: Sun, 17 Mar 2019 13:27:45 +0800
+Subject: [PATCH] BT: add avctp control function [1/1]
+
+Change-Id: Idb6a6a56e9c64d36df7e993cc35bab4c6926cb8d
+---
+ bta/av/bta_av_aact.cc | 2 +-
+ bta/av/bta_av_act.cc  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+ mode change 100644 => 100755 bta/av/bta_av_aact.cc
+ mode change 100644 => 100755 bta/av/bta_av_act.cc
+
+diff --git a/bta/av/bta_av_aact.cc b/bta/av/bta_av_aact.cc
+old mode 100644
+new mode 100755
+index 297bba4..cf6097a
+--- a/bta/av/bta_av_aact.cc
++++ b/bta/av/bta_av_aact.cc
+@@ -3005,7 +3005,7 @@ void bta_av_open_rc(tBTA_AV_SCB* p_scb, tBTA_AV_DATA* p_data) {
+       }
+     } else {
+       /* use main SM for AVRC SDP activities */
+-      if (is_new_avrcp_enabled()) {
++      if (!is_new_avrcp_enabled()) {
+         APPL_TRACE_WARNING("%s: Using the new AVRCP Profile", __func__);
+         bluetooth::avrcp::AvrcpService::Get()->ConnectDevice(
+             p_scb->PeerAddress());
+diff --git a/bta/av/bta_av_act.cc b/bta/av/bta_av_act.cc
+old mode 100644
+new mode 100755
+index 5625f90..c81a367
+--- a/bta/av/bta_av_act.cc
++++ b/bta/av/bta_av_act.cc
+@@ -305,7 +305,7 @@ static void bta_av_rc_msg_cback(uint8_t handle, uint8_t label, uint8_t opcode,
+  ******************************************************************************/
+ uint8_t bta_av_rc_create(tBTA_AV_CB* p_cb, uint8_t role, uint8_t shdl,
+                          uint8_t lidx) {
+-  if (is_new_avrcp_enabled()) {
++  if (!is_new_avrcp_enabled()) {
+     APPL_TRACE_WARNING("%s: Skipping RC creation for the old AVRCP profile",
+                        __func__);
+     return BTA_AV_RC_HANDLE_NONE;
+-- 
+1.9.1
+

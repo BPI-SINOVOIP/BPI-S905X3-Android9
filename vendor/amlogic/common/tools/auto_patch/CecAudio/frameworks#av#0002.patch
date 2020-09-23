@@ -1,0 +1,45 @@
+From 3c99da926575274fd3d6dfc50e3860ded0d71aa4 Mon Sep 17 00:00:00 2001
+From: Lei Qian <lei.qian@amlogic.com>
+Date: Mon, 17 Dec 2018 21:48:59 +0800
+Subject: [PATCH] StreamHalLocal: delete log assert in addEffect and
+ removeEffect [1/1]
+
+PD#SWPL-3146
+
+Problem:
+log assert cause audioserver crash, we need add effect for BT
+
+Solution:
+delete log assert in addEffect and removeEffect
+
+Verify:
+verify by einstein
+
+Change-Id: I0206e7b48d336723bfd3ecfd874a8f13ea4f28b3
+Signed-off-by: Lei Qian <lei.qian@amlogic.com>
+---
+ media/libaudiohal/4.0/StreamHalLocal.cpp | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/media/libaudiohal/4.0/StreamHalLocal.cpp b/media/libaudiohal/4.0/StreamHalLocal.cpp
+index e9d96bf..9ef6511 100644
+--- a/media/libaudiohal/4.0/StreamHalLocal.cpp
++++ b/media/libaudiohal/4.0/StreamHalLocal.cpp
+@@ -88,12 +88,12 @@ status_t StreamHalLocal::getParameters(const String8& keys, String8 *values) {
+ }
+ 
+ status_t StreamHalLocal::addEffect(sp<EffectHalInterface>) {
+-    LOG_ALWAYS_FATAL("Local streams can not have effects");
++    //LOG_ALWAYS_FATAL("Local streams can not have effects");
+     return INVALID_OPERATION;
+ }
+ 
+ status_t StreamHalLocal::removeEffect(sp<EffectHalInterface>) {
+-    LOG_ALWAYS_FATAL("Local streams can not have effects");
++    //LOG_ALWAYS_FATAL("Local streams can not have effects");
+     return INVALID_OPERATION;
+ }
+ 
+-- 
+1.9.1
+

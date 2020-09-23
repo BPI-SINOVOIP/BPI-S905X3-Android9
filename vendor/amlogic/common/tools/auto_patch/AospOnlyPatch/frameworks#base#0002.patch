@@ -1,0 +1,108 @@
+From 9a9fd4eaec0d36b19b416e3dc429a69088134698 Mon Sep 17 00:00:00 2001
+From: Nick Chalko <nchalko@google.com>
+Date: Fri, 25 May 2018 10:29:01 -0700
+Subject: [PATCH] Add stub implementation of HdmiCecLocalDeviceAudioSystem
+
+Bug:80297499
+Change-Id: I02893148f3970d6635d8ccad99de0f3ab6f5f0f9
+Test: lunch atom; m; flashall
+---
+ .../java/com/android/server/hdmi/Constants.java    |  2 +
+ .../android/server/hdmi/HdmiCecLocalDevice.java    |  2 +
+ .../server/hdmi/HdmiCecLocalDeviceAudioSystem.java | 58 ++++++++++++++++++++++
+ 3 files changed, 62 insertions(+)
+ create mode 100644 services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceAudioSystem.java
+
+diff --git a/services/core/java/com/android/server/hdmi/Constants.java b/services/core/java/com/android/server/hdmi/Constants.java
+index a2a55e5..0eb18a8 100644
+--- a/services/core/java/com/android/server/hdmi/Constants.java
++++ b/services/core/java/com/android/server/hdmi/Constants.java
+@@ -200,6 +200,8 @@ final class Constants {
+ 
+     static final int UNKNOWN_VOLUME = -1;
+ 
++    static final String PROPERTY_PREFERRED_ADDRESS_AUDIO_SYSTEM =
++            "persist.sys.hdmi.addr.audiosystem";
+     static final String PROPERTY_PREFERRED_ADDRESS_PLAYBACK = "persist.sys.hdmi.addr.playback";
+     static final String PROPERTY_PREFERRED_ADDRESS_TV = "persist.sys.hdmi.addr.tv";
+ 
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecLocalDevice.java b/services/core/java/com/android/server/hdmi/HdmiCecLocalDevice.java
+index 0cba76b..fbaafca 100755
+--- a/services/core/java/com/android/server/hdmi/HdmiCecLocalDevice.java
++++ b/services/core/java/com/android/server/hdmi/HdmiCecLocalDevice.java
+@@ -167,6 +167,8 @@ abstract class HdmiCecLocalDevice {
+             return new HdmiCecLocalDeviceTv(service);
+         case HdmiDeviceInfo.DEVICE_PLAYBACK:
+             return new HdmiCecLocalDevicePlayback(service);
++        case HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM:
++            return new HdmiCecLocalDeviceAudioSystem(service);
+         default:
+             return null;
+         }
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceAudioSystem.java b/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceAudioSystem.java
+new file mode 100644
+index 0000000..9b545c0
+--- /dev/null
++++ b/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceAudioSystem.java
+@@ -0,0 +1,58 @@
++/*
++ * Copyright (C) 2018 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++package com.android.server.hdmi;
++
++
++import android.hardware.hdmi.HdmiDeviceInfo;
++import android.os.SystemProperties;
++
++/**
++ * Represent a logical device of type {@link HdmiDeviceInfo#DEVICE_AUDIO_SYSTEM} residing in
++ * Android system.
++ */
++public class HdmiCecLocalDeviceAudioSystem extends HdmiCecLocalDevice {
++
++    protected HdmiCecLocalDeviceAudioSystem(HdmiControlService service) {
++        super(service, HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM);
++    }
++
++    @Override
++    @HdmiAnnotations.ServiceThreadOnly
++    protected void onAddressAllocated(int logicalAddress, int reason) {
++        assertRunOnServiceThread();
++        mService.sendCecCommand(HdmiCecMessageBuilder.buildReportPhysicalAddressCommand(
++                mAddress, mService.getPhysicalAddress(), mDeviceType));
++        mService.sendCecCommand(HdmiCecMessageBuilder.buildDeviceVendorIdCommand(
++                mAddress, mService.getVendorId()));
++        startQueuedActions();
++    }
++
++    @Override
++    @HdmiAnnotations.ServiceThreadOnly
++    protected int getPreferredAddress() {
++        assertRunOnServiceThread();
++        return SystemProperties.getInt(Constants.PROPERTY_PREFERRED_ADDRESS_AUDIO_SYSTEM,
++                Constants.ADDR_UNREGISTERED);
++    }
++
++    @Override
++    @HdmiAnnotations.ServiceThreadOnly
++    protected void setPreferredAddress(int addr) {
++        assertRunOnServiceThread();
++        SystemProperties.set(Constants.PROPERTY_PREFERRED_ADDRESS_AUDIO_SYSTEM,
++                String.valueOf(addr));
++    }
++}
+-- 
+1.9.1
+

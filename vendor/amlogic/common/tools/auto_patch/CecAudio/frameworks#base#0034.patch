@@ -1,0 +1,42 @@
+From 851b79a367d8a0467b525ec201470d4f84c41e0b Mon Sep 17 00:00:00 2001
+From: wenbiao zhang <wenbiao.zhang@amlogic.com>
+Date: Mon, 21 Oct 2019 17:09:57 +0800
+Subject: [PATCH] cec: fix no sound for GIEC DVD after connect/disconnect bt
+ speaker [1/1]
+
+PD#SWPL-12924
+
+Problem:
+no sound for GIEC DVD after connect/disconnect bt speaker
+
+Solution:
+check hdmi port for avr device
+
+Verify:
+marconi
+
+Change-Id: Ic0b136ee938f65706a7a8eeefdbb5876ebc7c8f4
+Signed-off-by: wenbiao zhang <wenbiao.zhang@amlogic.com>
+---
+ services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java b/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
+index 6953f49..8e90b9a 100644
+--- a/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
++++ b/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
+@@ -1004,6 +1004,11 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+             //mSystemAudioActivated = on;
+             return;
+         }
++        HdmiDeviceInfo avr = getSafeAvrDeviceInfo();
++        if (avr == null || !isConnectedToArcPort(avr.getPhysicalAddress())) {
++            return;
++        }
++
+         updateAudioManagerForSystemAudio(on);
+         synchronized (mLock) {
+             if (!hasAction(RequestShortAudioDescriptorAction.class) && on) {
+-- 
+2.7.4
+

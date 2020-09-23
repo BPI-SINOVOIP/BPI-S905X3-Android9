@@ -1,0 +1,42 @@
+From b4785bd22b93426f8f9074411a89cfe146a93c41 Mon Sep 17 00:00:00 2001
+From: Lei Qian <lei.qian@amlogic.com>
+Date: Fri, 19 Apr 2019 19:37:14 +0800
+Subject: [PATCH] MediaScanner: quit MediaScan if system is shutting down [1/2]
+
+PD#TV-4544
+
+Problem:
+MediaScan cause disk can't be disconnected
+
+Solution:
+quit MediaScan if system is shutting down
+
+Verify:
+verify by marconi
+
+Change-Id: Ifd352afac8f97ef786526c11d4d6587ff8831078
+Signed-off-by: Lei Qian <lei.qian@amlogic.com>
+---
+ media/libmedia/MediaScanner.cpp | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/media/libmedia/MediaScanner.cpp b/media/libmedia/MediaScanner.cpp
+index dcbb769..941e414 100644
+--- a/media/libmedia/MediaScanner.cpp
++++ b/media/libmedia/MediaScanner.cpp
+@@ -175,6 +175,12 @@ MediaScanResult MediaScanner::doProcessDirectoryEntry(
+     struct stat statbuf;
+     const char* name = entry->d_name;
+ 
++    char value[PROPERTY_VALUE_MAX];
++    if (property_get("sys.shutdown.requested", value, NULL) > 0) {
++        ALOGW("detected system shutdown: %s, exit MediaScaner!!", value);
++        return MEDIA_SCAN_RESULT_ERROR;
++    }
++
+     // ignore "." and ".."
+     if (name[0] == '.' && (name[1] == 0 || (name[1] == '.' && name[2] == 0))) {
+         return MEDIA_SCAN_RESULT_SKIPPED;
+-- 
+1.9.1
+

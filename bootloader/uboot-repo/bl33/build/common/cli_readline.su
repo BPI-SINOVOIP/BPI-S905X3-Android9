@@ -1,0 +1,3 @@
+cli_readline.c:24:14:0	80	static
+cli_readline.c:486:5:cli_readline_into_buffer	96	static
+cli_readline.c:474:5:cli_readline	0	static

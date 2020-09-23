@@ -1,0 +1,156 @@
+From 9693e4ae83c16ee2bb3f85ae516515f961af630a Mon Sep 17 00:00:00 2001
+From: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date: Fri, 25 Jan 2019 15:15:05 +0800
+Subject: [PATCH] audio policy: fix speaker gain calculation [2/4]
+
+PD# TV-1905
+
+Problem:
+adjust  speaker gain calculation
+
+Solution:
+Take volume curves into account when computing device gain.
+
+Verify:
+verify by p321
+
+Change-Id: Ided188523c578c8fa78ca4c832afdd7d96c126a6
+Signed-off-by: Chaomin Zheng <chaomin.zheng@amlogic.com>
+---
+ .../include/AudioOutputDescriptor.h                |  6 ++-
+ .../src/AudioOutputDescriptor.cpp                  | 25 +++++++------
+ .../managerdefault/AudioPolicyManager.cpp          | 43 ++++++++++++----------
+ 3 files changed, 42 insertions(+), 32 deletions(-)
+
+diff --git a/services/audiopolicy/common/managerdefinitions/include/AudioOutputDescriptor.h b/services/audiopolicy/common/managerdefinitions/include/AudioOutputDescriptor.h
+index 7288551..d4b8c3d 100644
+--- a/services/audiopolicy/common/managerdefinitions/include/AudioOutputDescriptor.h
++++ b/services/audiopolicy/common/managerdefinitions/include/AudioOutputDescriptor.h
+@@ -86,7 +86,8 @@ public:
+                                         // device selection. See checkDeviceMuteStrategies()
+     AudioPolicyClientInterface *mClientInterface;
+ 
+-    virtual bool updateGain(audio_stream_type_t stream, audio_devices_t device, float mediaVolume);
++    virtual bool updateGain(
++        audio_devices_t device, float volumeDb, float minVolumeDb, float maxVolumeDb);
+ 
+ protected:
+     audio_patch_handle_t mPatchHandle;
+@@ -139,7 +140,8 @@ public:
+                                      const sp<SwAudioOutputDescriptor>& output2,
+                                      audio_io_handle_t *ioHandle);
+ 
+-    bool updateGain(audio_stream_type_t stream, audio_devices_t device, float mediaVolume);
++    virtual bool updateGain(
++          audio_devices_t device, float volumeDb, float minVolumeDb, float maxVolumeDb);
+ 
+     const sp<IOProfile> mProfile;          // I/O profile this output derives from
+     audio_io_handle_t mIoHandle;           // output handle
+diff --git a/services/audiopolicy/common/managerdefinitions/src/AudioOutputDescriptor.cpp b/services/audiopolicy/common/managerdefinitions/src/AudioOutputDescriptor.cpp
+index 74c085f..e8e780f 100644
+--- a/services/audiopolicy/common/managerdefinitions/src/AudioOutputDescriptor.cpp
++++ b/services/audiopolicy/common/managerdefinitions/src/AudioOutputDescriptor.cpp
+@@ -218,14 +218,18 @@ void AudioOutputDescriptor::log(const char* indent)
+           indent, mId, mId, mSamplingRate, mFormat, mChannelMask);
+ }
+ 
+-bool AudioOutputDescriptor::updateGain(audio_stream_type_t stream __unused,
+-        audio_devices_t device __unused, float mediaVolume __unused)
++bool AudioOutputDescriptor::updateGain(audio_devices_t device __unused,
++                                       float volumeDb __unused,
++                                       float minVolumeDb __unused,
++                                       float maxVolumeDb __unused)
+ {
+     return false;
+ }
+ 
+-bool SwAudioOutputDescriptor::updateGain(audio_stream_type_t stream __unused,
+-        audio_devices_t device, float mediaVolume)
++bool SwAudioOutputDescriptor::updateGain(audio_devices_t device,
++                                         float volumeDb,
++                                         float minVolumeDb,
++                                         float maxVolumeDb)
+ {
+     if (mProfile == 0) {
+         ALOGE("Error: this SwAudioOutputDescriptor doesn't have valid mProfile!");
+@@ -258,13 +262,12 @@ bool SwAudioOutputDescriptor::updateGain(audio_stream_type_t stream __unused,
+     int gainMinValueInMb = gainCol[0]->getMinValueInMb();
+     int gainMaxValueInMb = gainCol[0]->getMaxValueInMb();
+     int gainStepValueInMb = gainCol[0]->getStepValueInMb();
+-    int steps = (gainMaxValueInMb - gainMinValueInMb) / gainStepValueInMb;
+-    int gainValue = gainMinValueInMb;
+-    if (mediaVolume < 1.0f) {
+-        gainValue += gainStepValueInMb * (int) (mediaVolume * steps + 0.5);
+-    } else {
+-        gainValue = gainMaxValueInMb;
+-    }
++
++    int gainValue = ((int)((volumeDb - minVolumeDb) * (gainMaxValueInMb - gainMinValueInMb)))
++        / (int)(maxVolumeDb - minVolumeDb) + gainMinValueInMb;
++    gainValue = (int)(((float)gainValue / gainStepValueInMb) * gainStepValueInMb);
++
++    std::max(gainMinValueInMb, std::min(gainValue, gainMaxValueInMb));
+ 
+     struct audio_port_config newConfig;
+     struct audio_port_config backupConfig;
+diff --git a/services/audiopolicy/managerdefault/AudioPolicyManager.cpp b/services/audiopolicy/managerdefault/AudioPolicyManager.cpp
+index a71312a..2ff94e8 100644
+--- a/services/audiopolicy/managerdefault/AudioPolicyManager.cpp
++++ b/services/audiopolicy/managerdefault/AudioPolicyManager.cpp
+@@ -5660,29 +5660,34 @@ status_t AudioPolicyManager::checkAndSetVolume(audio_stream_type_t stream,
+ 
+     if (mIsPlatformTelevision) {
+         audio_devices_t curDevice = Volume::getDeviceForVolume(getDevicesForStream(AUDIO_STREAM_MUSIC));
+-        if (curDevice == AUDIO_DEVICE_OUT_HDMI_ARC ||
+-            curDevice == AUDIO_DEVICE_OUT_WIRED_HEADPHONE ||
+-            (curDevice & AUDIO_DEVICE_OUT_SPEAKER)) {
+-            volumeDb = 0.0f;
+-        }
+-        if (curDevice == AUDIO_DEVICE_OUT_SPEAKER && outputDesc->isStreamActive(stream)) {
++        bool speakerGainApplied = false;
++        bool bootVideoRunning = property_get_int32("service.bootvideo.exit", 0) == 1;
++        if (curDevice == AUDIO_DEVICE_OUT_SPEAKER &&
++                (outputDesc->isStreamActive(stream) || bootVideoRunning)) {
+             //ignoring the "index" passed as argument and always use MUSIC stream index
+             //for all stream types works on TV because all stream types are aliases of MUSIC.
+             int volumeIndex = mVolumeCurves->getVolumeIndex(AUDIO_STREAM_MUSIC, curDevice);
+             int volumeMaxIndex = mVolumeCurves->getVolumeIndexMax(AUDIO_STREAM_MUSIC);
+-            float mediaVolume = (float) volumeIndex / (float) volumeMaxIndex;
+-
+-            if (volumeMaxIndex == 1) {
+-                char defaultMediaVolume[PROPERTY_VALUE_MAX];
+-                char volumeStep[PROPERTY_VALUE_MAX];
+-                if (property_get("ro.config.media_vol_default", defaultMediaVolume, NULL)
+-                        && property_get("ro.config.media_vol_steps", volumeStep, NULL)) {
+-                   mediaVolume = ((float)atoi(defaultMediaVolume)) / ((float)atoi(volumeStep));
+-                } else {
+-                   mediaVolume = 0.25f;
+-                }
+-            }
+-            outputDesc->updateGain(stream, curDevice, mediaVolume);
++
++            float musicVolumeDb = mVolumeCurves->volIndexToDb(AUDIO_STREAM_MUSIC,
++                                        Volume::getDeviceCategory(curDevice), volumeIndex);
++            float maxMusicVolumeDb = mVolumeCurves->volIndexToDb(AUDIO_STREAM_MUSIC,
++                                        Volume::getDeviceCategory(curDevice), volumeMaxIndex);
++            float minMusicVolumeDb = mVolumeCurves->volIndexToDb(AUDIO_STREAM_MUSIC,
++                                        Volume::getDeviceCategory(curDevice),
++                                        mVolumeCurves->getVolumeIndexMin(AUDIO_STREAM_MUSIC));
++            if (bootVideoRunning) {
++                maxMusicVolumeDb = 0.0f;
++                minMusicVolumeDb = -10000.0f;
++                musicVolumeDb = -1837.0f;
++            }
++            speakerGainApplied = outputDesc->updateGain(curDevice,
++                                        musicVolumeDb, minMusicVolumeDb, maxMusicVolumeDb);
++        }
++        if (curDevice == AUDIO_DEVICE_OUT_HDMI_ARC ||
++                curDevice == AUDIO_DEVICE_OUT_WIRED_HEADPHONE ||
++            (speakerGainApplied && (curDevice & AUDIO_DEVICE_OUT_SPEAKER) != 0)) {
++            volumeDb = 0.0f;
+         }
+     }
+ 
+-- 
+1.9.1
+

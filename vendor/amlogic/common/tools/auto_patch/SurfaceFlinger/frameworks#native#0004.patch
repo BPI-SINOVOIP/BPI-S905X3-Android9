@@ -1,0 +1,53 @@
+From 3a690205b829a5c142d6bc85801ecbe55602ec66 Mon Sep 17 00:00:00 2001
+From: "shuze.ma" <shuze.ma@amlogic.com>
+Date: Thu, 27 Dec 2018 11:30:14 +0800
+Subject: [PATCH] surfaceflinger: fix cts AdaptivePlayback test fail [1/2]
+
+PD# SWPL-3556
+
+Problem:
+Run cts.AdaptivePlaybackTest fail
+
+Solution:
+Check prop media.sf.omxvideo-optmize
+
+Verify:
+Verify on einstein
+
+Change-Id: I85901db760e5e62160dd24f9d5c60f9036ddd4df
+Signed-off-by: shuze.ma <shuze.ma@amlogic.com>
+---
+ services/surfaceflinger/BufferLayer.cpp | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
+
+diff --git a/services/surfaceflinger/BufferLayer.cpp b/services/surfaceflinger/BufferLayer.cpp
+index 89080cc..b0790e3 100644
+--- a/services/surfaceflinger/BufferLayer.cpp
++++ b/services/surfaceflinger/BufferLayer.cpp
+@@ -160,15 +160,14 @@ bool HwcSidebandAgent::preProcess(sp<GraphicBuffer> buffer) {
+ }
+ 
+ bool HwcSidebandAgent::isOmxVideoFrame(sp<GraphicBuffer> activeBuffer) {
+-#if 0
+-    static String8 trueVal("true");
+-    char value[PROPERTY_VALUE_MAX] = {};
+-    property_get("sys.mediastub.running", value, "0");
+-    if (trueVal == String8(value)) {
+-        ALOGV("Skip omx handle.\n");
+-        return false;
+-    }
+-#endif
++   char value[PROPERTY_VALUE_MAX] = {};
++   int skip_omx_enabled = 0;
++
++   if (property_get("media.sf.omxvideo-optmize", value, "0") > 0)
++       skip_omx_enabled = atoi(value);
++
++   if (skip_omx_enabled)
++       return false;
+ 
+     if (activeBuffer != 0) {
+         bool ret = am_gralloc_is_omx_metadata_producer(activeBuffer->getUsage());
+-- 
+2.7.4
+

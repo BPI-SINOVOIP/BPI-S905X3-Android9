@@ -1,0 +1,17 @@
+cmd_i2c.c:1853:12:do_i2c	48	static
+cmd_i2c.c:1788:12:do_i2c_reset	16	static
+cmd_i2c.c:883:12:do_i2c_probe	64	static
+cmd_i2c.c:241:13:4	0	static
+cmd_i2c.c:283:12:do_i2c_read	64	static
+cmd_i2c.c:336:12:do_i2c_write	64	static
+cmd_i2c.c:958:12:do_i2c_loop	96	static
+cmd_i2c.c:564:12:do_i2c_mw	96	static
+cmd_i2c.c:735:1:2	144	static
+cmd_i2c.c:1774:12:do_i2c_nm	0	static
+cmd_i2c.c:1759:12:do_i2c_mm	0	static
+cmd_i2c.c:445:12:do_i2c_md	160	static
+cmd_i2c.c:650:12:do_i2c_crc	96	static
+cmd_i2c.c:184:6:i2c_init_board	0	static
+cmd_i2c.c:208:14:i2c_get_bus_speed	0	static
+cmd_i2c.c:227:5:i2c_set_bus_speed	0	static
+cmd_i2c.c:1717:12:do_i2c_bus_speed	32	static

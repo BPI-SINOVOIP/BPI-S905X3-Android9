@@ -1,0 +1,52 @@
+From c68aed807640099ac94b712f6e73f545e8aee919 Mon Sep 17 00:00:00 2001
+From: Zhigang Yu <zhigang.yu@amlogic.com>
+Date: Mon, 13 May 2019 14:02:35 +0800
+Subject: [PATCH] recovery: fixed build err when disable param [1/1]
+
+PD#OTT-3865
+
+fixed build err when TARGET_RECOVERY_HAS_PARAM := false
+
+Change-Id: I8382207c091fced12edf5873e2ddc5e92400aa89
+---
+ device.h     | 2 ++
+ recovery.cpp | 2 ++
+ 2 files changed, 4 insertions(+)
+
+diff --git a/device.h b/device.h
+index bbcc30b..ae921b5 100644
+--- a/device.h
++++ b/device.h
+@@ -63,7 +63,9 @@ class Device {
+     APPLY_ADB_SIDELOAD = 4,
+     WIPE_DATA = 5,
+     WIPE_CACHE = 6,
++#ifdef RECOVERY_HAS_PARAM
+     WIPE_PARAM = 7,
++ #endif
+     REBOOT_BOOTLOADER = 8,
+     SHUTDOWN = 9,
+     VIEW_RECOVERY_LOGS = 10,
+diff --git a/recovery.cpp b/recovery.cpp
+index 7f33da9..fcdaa78 100644
+--- a/recovery.cpp
++++ b/recovery.cpp
+@@ -810,6 +810,7 @@ static bool prompt_and_wipe_data(Device* device) {
+   }
+ }
+ 
++#ifdef RECOVERY_HAS_PARAM
+ // Return true on success.
+ static bool wipe_param(bool should_confirm, Device* device) {
+ 
+@@ -824,6 +825,7 @@ static bool wipe_param(bool should_confirm, Device* device) {
+     ui->Print("Param wipe %s.\n", success ? "complete" : "failed");
+     return success;
+ }
++#endif
+ 
+ // Return true on success.
+ static bool wipe_cache(bool should_confirm, Device* device) {
+-- 
+1.9.1
+

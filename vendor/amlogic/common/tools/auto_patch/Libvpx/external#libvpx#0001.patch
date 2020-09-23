@@ -1,0 +1,40 @@
+From d2c829c3d3d364a0f23910dc106ef2738b80cfc8 Mon Sep 17 00:00:00 2001
+From: rongrong zhou <rongrong.zhou@amlogic.com>
+Date: Tue, 22 Jan 2019 16:09:23 +0800
+Subject: [PATCH] libvpx: correct audio bitdepth [1/1]
+
+PD#SWPL-3795
+
+Problem:
+can not play
+
+Solution:
+if audio bitdepth == 0, set it to 16
+
+Verify:
+X301
+
+Change-Id: I9fdca83c673bbbe5ef493f2bfa9a9bf2b02baa0e
+---
+ libwebm/mkvparser/mkvparser.cc | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/libwebm/mkvparser/mkvparser.cc b/libwebm/mkvparser/mkvparser.cc
+index ff13327..278ba3f 100644
+--- a/libwebm/mkvparser/mkvparser.cc
++++ b/libwebm/mkvparser/mkvparser.cc
+@@ -5475,8 +5475,10 @@ long AudioTrack::Parse(Segment* pSegment, const Info& info,
+     } else if (id == libwebm::kMkvBitDepth) {
+       bit_depth = UnserializeUInt(pReader, pos, size);
+ 
+-      if (bit_depth <= 0)
++      if (bit_depth < 0)
+         return E_FILE_FORMAT_INVALID;
++      else if (bit_depth == 0)
++        bit_depth = 16;
+     }
+ 
+     pos += size;  // consume payload
+-- 
+2.11.0
+

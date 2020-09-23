@@ -1,0 +1,32 @@
+From fc808296f85be4ae8797fdc416033a1256d4dd55 Mon Sep 17 00:00:00 2001
+From: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date: Sat, 29 Sep 2018 15:58:36 +0800
+Subject: [PATCH] AudioPolicy:add AUDIO_POLICY_FORCE_SPDIF
+ AUDIO_POLICY_FORCE_HDMI_ARC force type[3/4]
+
+PD# 315
+
+add AUDIO_POLICY_FORCE_SPDIF AUDIO_POLICY_FORCE_HDMI_ARC force type
+
+Change-Id: Ib60e6a943214c201915bc811c82d8e17e8e4859a
+---
+ audio/include/system/audio_policy.h | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/audio/include/system/audio_policy.h b/audio/include/system/audio_policy.h
+index 450125b..e233595 100644
+--- a/audio/include/system/audio_policy.h
++++ b/audio/include/system/audio_policy.h
+@@ -50,6 +50,9 @@ typedef enum {
+     AUDIO_POLICY_FORCE_ENCODED_SURROUND_NEVER,
+     AUDIO_POLICY_FORCE_ENCODED_SURROUND_ALWAYS,
+     AUDIO_POLICY_FORCE_ENCODED_SURROUND_MANUAL,
++    //amlogic add for force spdif/arc audio out
++    AUDIO_POLICY_FORCE_HDMI_ARC,
++    AUDIO_POLICY_FORCE_SPDIF,
+ 
+     AUDIO_POLICY_FORCE_CFG_CNT,
+     AUDIO_POLICY_FORCE_CFG_MAX = AUDIO_POLICY_FORCE_CFG_CNT - 1,
+-- 
+1.9.1
+

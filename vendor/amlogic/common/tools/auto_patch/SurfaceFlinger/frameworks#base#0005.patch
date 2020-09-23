@@ -1,0 +1,75 @@
+From 53d8d85ca152eb6fddf476429cb03f4b84d7da90 Mon Sep 17 00:00:00 2001
+From: binqi zhang <binqi.zhang@amlogic.com>
+Date: Mon, 12 Aug 2019 22:46:53 -0400
+Subject: [PATCH] Display: feature: activemode for hdmi selfadaption [2/3]
+
+PD#SWPL-883
+
+Problem:
+AndroidP doesn't have hdmi selfadption function
+
+Solution:
+add function related dependence
+
+Verify:
+for debug
+
+Change-Id: Iceb583c3aab7217885def4457f84aeb8f6b76c90
+---
+ .../com/android/server/display/LocalDisplayAdapter.java     | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/services/core/java/com/android/server/display/LocalDisplayAdapter.java b/services/core/java/com/android/server/display/LocalDisplayAdapter.java
+index a673a4f..f0c4155 100644
+--- a/services/core/java/com/android/server/display/LocalDisplayAdapter.java
++++ b/services/core/java/com/android/server/display/LocalDisplayAdapter.java
+@@ -99,6 +99,7 @@ final class LocalDisplayAdapter extends DisplayAdapter {
+                 return;
+             }
+             int activeConfig = SurfaceControl.getActiveConfig(displayToken);
++            Slog.e(TAG,"getactiveconfig id "+activeConfig);
+             if (activeConfig < 0) {
+                 // There is no active config, and for now we don't have the
+                 // policy to set one.
+@@ -230,12 +231,14 @@ final class LocalDisplayAdapter extends DisplayAdapter {
+                 // If we haven't already added a mode for this configuration to the new set of
+                 // supported modes then check to see if we have one in the prior set of supported
+                 // modes to reuse.
+-                DisplayModeRecord record = findDisplayModeRecord(info);
++                //DisplayModeRecord record = findDisplayModeRecord(info);
++                DisplayModeRecord record = null;
+                 if (record == null) {
+                     record = new DisplayModeRecord(info);
+                     modesAdded = true;
+                 }
+                 records.add(record);
++                Slog.e(TAG,"mode" + i + "refreshrate" + info.refreshRate + "height " + info.height + "width " + info.width);
+             }
+ 
+             // Get the currently active mode
+@@ -267,7 +270,8 @@ final class LocalDisplayAdapter extends DisplayAdapter {
+             for (DisplayModeRecord record : records) {
+                 mSupportedModes.put(record.mMode.getModeId(), record);
+             }
+-            // Update the default mode, if needed.
++/**
++             // Update the default mode, if needed.
+             if (findDisplayInfoIndexLocked(mDefaultModeId) < 0) {
+                 if (mDefaultModeId != 0) {
+                     Slog.w(TAG, "Default display mode no longer available, using currently"
+@@ -284,6 +288,11 @@ final class LocalDisplayAdapter extends DisplayAdapter {
+                 mActiveModeId = mDefaultModeId;
+                 mActiveModeInvalid = true;
+             }
++**/
++            mDefaultModeId = activeRecord.mMode.getModeId();
++            Slog.e(TAG,"defaultmodeid "+mDefaultModeId);
++            mActiveModeId = mDefaultModeId;
++            mActiveModeInvalid = true;
+ 
+             // Schedule traversals so that we apply pending changes.
+             sendTraversalRequestLocked();
+-- 
+2.7.4
+>>>>>>> 877ce6c... Display: feature: activemode for hdmi selfadaption [2/3]
+

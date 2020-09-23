@@ -1,0 +1,46 @@
+From 08b8a104c97240bf4c954b8ed163852245cc1278 Mon Sep 17 00:00:00 2001
+From: "shipeng.sun" <shipeng.sun@amlogic.com>
+Date: Mon, 16 Sep 2019 14:03:58 +0800
+Subject: [PATCH] exoplayer: firmware can't run exoplayer [2/2]
+
+PD#SWPL-14057
+
+Problem:
+firmware can't run exoplayer report exception
+
+Solution:
+Due to we package a exoplayer.jar, the same namespace
+conflict lead the crash, so modify packagename org to
+orgaml and exoplayer to exoplayer2aml
+
+Verify:
+local test
+
+Change-Id: Ic9c165683db757636fc49adb16d8e1639a626dcd
+Signed-off-by: shipeng.sun <shipeng.sun@amlogic.com>
+
+diff --git a/media/java/android/media/MediaPlayerExo.java b/media/java/android/media/MediaPlayerExo.java
+index 04a6107..3bcc04d 100644
+--- a/media/java/android/media/MediaPlayerExo.java
++++ b/media/java/android/media/MediaPlayerExo.java
+@@ -69,7 +69,7 @@ public class MediaPlayerExo {
+         mExoLooper = looper;
+         mEventHandler = handler;
+         try {
+-            exoplayerWrapper = Class.forName("com.google.android.exoplayer2.ExoPlayerWrapper");
++            exoplayerWrapper = Class.forName("com.google.android.exoplayer2aml.ExoPlayerWrapper");
+             if (DEBUG) LOGI(TAG,"[MediaPlayerExo]exoplayerWrapper:" + exoplayerWrapper);
+             Class[] paramTypes = { MediaPlayer.class, Looper.class, Handler.class };
+             Object[] params = { mMediaPlayer, mExoLooper,  mEventHandler};
+@@ -126,7 +126,7 @@ public class MediaPlayerExo {
+         boolean ret = false;
+         try {
+             if (staticExoplayerWrapper == null)
+-                staticExoplayerWrapper = Class.forName("com.google.android.exoplayer2.ExoPlayerWrapper");
++                staticExoplayerWrapper = Class.forName("com.google.android.exoplayer2aml.ExoPlayerWrapper");
+             getIsFormatSupport = staticExoplayerWrapper.getMethod("getIsFormatSupport",Uri.class);
+             ret = (boolean)getIsFormatSupport.invoke(staticExoplayerWrapper, uri);
+         }
+-- 
+1.9.1
+

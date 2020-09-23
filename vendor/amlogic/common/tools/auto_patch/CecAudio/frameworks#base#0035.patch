@@ -1,0 +1,98 @@
+From 320de70a5808f03a68c404f9f19107322bde477b Mon Sep 17 00:00:00 2001
+From: "an.xi" <an.xi@amlogic.com>
+Date: Fri, 25 Oct 2019 10:20:11 +0800
+Subject: [PATCH] SystemServer: fix arc hotplug no sound issue [1/1]
+
+PD#SWPL-15715
+
+Problem:
+When tv is connected with a loudspeaker and hotplug
+the arc device, tv may not has sound
+
+Solution:
+Create a HotplugDeviceDetection to make sure thereis
+always one to process hotplug event if there is none
+
+Verify:
+verify it on Marconi
+
+Change-Id: I3a724b1dca7cf5324d2eb66af0f4dc197035bab4
+Signed-off-by: an.xi <an.xi@amlogic.com>
+---
+ .../android/server/hdmi/HdmiCecLocalDevice.java    |  3 +++
+ .../android/server/hdmi/HdmiCecLocalDeviceTv.java  | 22 +++++++++++++++-------
+ 2 files changed, 18 insertions(+), 7 deletions(-)
+ mode change 100755 => 100644 services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
+
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecLocalDevice.java b/services/core/java/com/android/server/hdmi/HdmiCecLocalDevice.java
+index 21f889e..2a6c673 100644
+--- a/services/core/java/com/android/server/hdmi/HdmiCecLocalDevice.java
++++ b/services/core/java/com/android/server/hdmi/HdmiCecLocalDevice.java
+@@ -947,5 +947,8 @@ abstract class HdmiCecLocalDevice {
+         pw.println("mDeviceInfo: " + mDeviceInfo);
+         pw.println("mActiveSource: " + mActiveSource);
+         pw.println(String.format("mActiveRoutingPath: 0x%04x", mActiveRoutingPath));
++        for (HdmiCecFeatureAction action : mActions) {
++            pw.println("action: " + action.getClass().getSimpleName());
++        }
+     }
+ }
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java b/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
+old mode 100755
+new mode 100644
+index e2df4af..13ec18a
+--- a/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
++++ b/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
+@@ -816,6 +816,8 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+                         if (avr == null) {
+                             setSystemAudioMode(false);
+                         }
++                        // Start the operation if there is no device discovered.
++                        startPowerAndHotplugDetect();
+                     }
+ 
+                     @Override
+@@ -823,13 +825,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+                         Slog.d(TAG, "onDeviceDiscovered " + deviceInfo);
+                         addCecDevice(deviceInfo);
+                         doSelectOfDevice(deviceInfo);
+-                        if (!hasAction(HotplugDetectionAction.class)) {
+-                            addAndStartAction(new HotplugDetectionAction(HdmiCecLocalDeviceTv.this));
+-                        }
+-                        if (!hasAction(PowerStatusMonitorAction.class)) {
+-                            addAndStartAction(new PowerStatusMonitorAction(HdmiCecLocalDeviceTv.this));
+-                        }
+-
++                        startPowerAndHotplugDetect();
+                         if (Constants.ADDR_AUDIO_SYSTEM == deviceInfo.getId()) {
+                             onNewAvrAdded(deviceInfo);
+                         }
+@@ -838,6 +834,15 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+         addAndStartAction(action);
+     }
+ 
++    private void startPowerAndHotplugDetect() {
++        if (!hasAction(HotplugDetectionAction.class)) {
++            addAndStartAction(new HotplugDetectionAction(HdmiCecLocalDeviceTv.this));
++        }
++        if (!hasAction(PowerStatusMonitorAction.class)) {
++            addAndStartAction(new PowerStatusMonitorAction(HdmiCecLocalDeviceTv.this));
++        }
++    }
++
+     private void doSelectOfDevice(HdmiDeviceInfo deviceInfo) {
+         if (null == mSelectRequestBuffer) {
+             Slog.d(TAG, "doSelectOfDevice buffer null");
+@@ -1794,6 +1799,9 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+             // "pollAllDevicesNow" cleans up timer and start poll action immediately.
+             // It covers seq #40, #43.
+             hotplugActions.get(0).pollAllDevicesNow();
++        } else {
++            HdmiLogger.debug("start poll devices for hotplug");
++            addAndStartAction(new HotplugDetectionAction(HdmiCecLocalDeviceTv.this));
+         }
+     }
+ 
+-- 
+2.7.4
+

@@ -1,0 +1,8 @@
+pwm-meson.c:326:12:meson_pwm_set_invert	48	static
+pwm-meson.c:488:5:meson_pwm_remove	16	static
+pwm-meson.c:440:12:meson_pwm_blink_enable	48	static
+pwm-meson.c:404:12:meson_pwm_set_blink_times	32	static
+pwm-meson.c:360:12:meson_pwm_set_times	32	static
+pwm-meson.c:239:12:meson_pwm_set_config	144	static
+pwm-meson.c:475:12:meson_pwm_probe	32	static
+pwm-meson.c:281:12:meson_pwm_set_enable	48	static

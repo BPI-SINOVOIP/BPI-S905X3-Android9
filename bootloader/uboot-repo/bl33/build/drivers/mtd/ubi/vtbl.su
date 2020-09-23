@@ -1,0 +1,5 @@
+vtbl.c:166:12:vtbl_check	112	static
+vtbl.c:298:12:create_vtbl	96	static
+vtbl.c:74:5:ubi_change_vtbl_record	48	static
+vtbl.c:116:5:ubi_vtbl_rename_volumes	80	static
+vtbl.c:775:5:ubi_read_volume_table	112	static

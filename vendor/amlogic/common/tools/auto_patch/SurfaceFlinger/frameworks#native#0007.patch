@@ -1,0 +1,113 @@
+From e8de56d8298aa7af0f6edc1d7b7587a622673079 Mon Sep 17 00:00:00 2001
+From: kaishuang <kaishuang.zhang@amlogic.com>
+Date: Thu, 20 Jun 2019 19:00:48 +0800
+Subject: [PATCH] Native: Update sourcecrop when framebuffer size changed with
+ omx. [1/1]
+
+PD#SWPL-9407
+
+Problem:
+Video switching at different resolutions and the picture will be elongated.
+
+Solution:
+Check framebuffer size and determine to update sourcecrop
+
+Verify:
+Video switching at different resolutions.
+
+Change-Id: Iade4cdd3290e05d043baa31514cf1825ac9b850b
+Signed-off-by: kaishuang <kaishuang.zhang@amlogic.com>
+---
+ services/surfaceflinger/BufferLayer.cpp | 45 +++++++++++++++++++++++++++++++++
+ services/surfaceflinger/BufferLayer.h   | 11 ++++----
+ 2 files changed, 51 insertions(+), 5 deletions(-)
+
+diff --git a/services/surfaceflinger/BufferLayer.cpp b/services/surfaceflinger/BufferLayer.cpp
+index b0790e3..9cf849a 100644
+--- a/services/surfaceflinger/BufferLayer.cpp
++++ b/services/surfaceflinger/BufferLayer.cpp
+@@ -267,6 +267,7 @@ BufferLayer::BufferLayer(SurfaceFlinger* flinger, const sp<Client>& client, cons
+         mOmxOverlayLayer(false),
+         mOmxFrameCount(0),
+         mOmxFrameCountLock(),
++        mRecomputeVisibleLock(),
+ #endif
+         mRefreshPending(false) {
+     ALOGV("Creating Layer %s", name.string());
+@@ -1328,6 +1329,50 @@ bool BufferLayer::consumeOmxFrame(status_t &updateResult) {
+         return false;
+     }
+ 
++    {
++        Mutex::Autolock lock(mRecomputeVisibleLock);
++        // Capture the old state of the layer for comparisons later
++        const State& s(getDrawingState());
++        const bool oldOpacity = isOpaque(s);
++        sp<GraphicBuffer> oldBuffer = getBE().compositionInfo.mBuffer;
++
++        if (oldBuffer == nullptr) {
++            // the first time we receive a buffer, we need to trigger a
++            // geometry invalidation.
++            recomputeVisibleRegions = true;
++        }
++
++        Rect crop(mConsumer->getCurrentCrop());
++        const uint32_t transform(mConsumer->getCurrentTransform());
++        const uint32_t scalingMode(mConsumer->getCurrentScalingMode());
++        if ((crop != mCurrentCrop) ||
++            (transform != mCurrentTransform) ||
++            (scalingMode != mCurrentScalingMode)) {
++            mCurrentCrop = crop;
++            mCurrentTransform = transform;
++            mCurrentScalingMode = scalingMode;
++            recomputeVisibleRegions = true;
++        }
++
++        if (oldBuffer != nullptr) {
++            uint32_t bufWidth = getBE().compositionInfo.mBuffer->getWidth();
++            uint32_t bufHeight = getBE().compositionInfo.mBuffer->getHeight();
++            if (bufWidth != uint32_t(oldBuffer->width) ||
++                bufHeight != uint32_t(oldBuffer->height)) {
++                recomputeVisibleRegions = true;
++            }
++        }
++
++        mCurrentOpacity = getOpacityForFormat(getBE().compositionInfo.mBuffer->format);
++        if (oldOpacity != isOpaque(s)) {
++            recomputeVisibleRegions = true;
++        }
++
++        if (recomputeVisibleRegions) {
++            mFlinger->invalidateHwcGeometry();
++        }
++    }
++
+     if (queuedBuffer) {
+         // Autolock scope
+         auto currentFrameNumber = mConsumer->getFrameNumber();
+diff --git a/services/surfaceflinger/BufferLayer.h b/services/surfaceflinger/BufferLayer.h
+index 26b426d..0615f22 100644
+--- a/services/surfaceflinger/BufferLayer.h
++++ b/services/surfaceflinger/BufferLayer.h
+@@ -204,12 +204,13 @@ private:
+     bool mUpdateTexImageFailed; // This is only accessed on the main thread.
+ 
+ #ifdef REDUCE_VIDEO_WORKLOAD
+-		bool mOmxOverlayLayer;
+-		sp<HwcSidebandAgent> mHwcAgent;
++    bool mOmxOverlayLayer;
++    sp<HwcSidebandAgent> mHwcAgent;
+ 
+-		// thread-safe
+-		volatile int32_t mOmxFrameCount;
+-		mutable Mutex mOmxFrameCountLock;
++    // thread-safe
++    volatile int32_t mOmxFrameCount;
++    mutable Mutex mOmxFrameCountLock;
++    mutable Mutex mRecomputeVisibleLock;
+ #endif
+ 
+     bool mRefreshPending;
+-- 
+2.7.4
+

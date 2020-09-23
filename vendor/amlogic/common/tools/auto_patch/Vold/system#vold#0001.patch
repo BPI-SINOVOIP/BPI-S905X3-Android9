@@ -1,0 +1,98 @@
+From 9dfe99e2c768b5862ebe338b34535af392f89b3d Mon Sep 17 00:00:00 2001
+From: "qingwei.xu" <qingwei.xu@amlogic.com>
+Date: Tue, 23 Oct 2018 15:56:53 +0800
+Subject: [PATCH] Vold:Fat32: Solve part of FAT32 unable to mount problem for
+ Android P [1/1]
+
+PD#SWPL-847
+
+Problem:
+  Netac 128GB FAT32 is not mounted.Reference design has same problem.
+
+Solution:
+  Entire Disk As Partition
+
+Verify:
+  verify by Android P All Project
+
+Change-Id: I385836dbdb894529db2f5022cb4af4f942c5a1f1
+---
+ model/Disk.cpp | 36 ++++++++++++++++++++++++++++++++++++
+ model/Disk.h   |  1 +
+ 2 files changed, 37 insertions(+)
+ mode change 100644 => 100755 model/Disk.cpp
+ mode change 100644 => 100755 model/Disk.h
+
+diff --git a/model/Disk.cpp b/model/Disk.cpp
+old mode 100644
+new mode 100755
+index d7b19ac..71eacbd
+--- a/model/Disk.cpp
++++ b/model/Disk.cpp
+@@ -304,6 +304,36 @@ status_t Disk::readMetadata() {
+     return OK;
+ }
+ 
++bool Disk::isEntireDiskAsPartition(const int part) {
++    int iPos = mSysPath.find("/block/");
++    if (iPos < 0 || part < 1) {
++        return false;
++    }
++
++    std::string physicalDev = StringPrintf("/dev/block/%s",
++                                   mSysPath.substr(iPos + 7).c_str());
++
++    if (access(physicalDev.c_str(), F_OK)) {
++        return false;
++    }
++
++    std::string partDevName;
++    for (int i = 1; i <= part; i++) {
++        if (mFlags & Flags::kUsb) {
++            partDevName = StringPrintf("%s%d", physicalDev.c_str(), i);
++        } else if (mFlags & Flags::kSd) {
++            partDevName = StringPrintf("%sp%d", physicalDev.c_str(), i);
++        }
++
++        if (!access(partDevName.c_str(), F_OK)) {
++            return false;
++        }
++    }
++
++    LOG(INFO) << "physical dev: " << physicalDev << "[1-" << part << "] doesn't exist";
++    return true;
++}
++
+ status_t Disk::readPartitions() {
+     int maxMinors = getMaxMinors();
+     if (maxMinors < 0) {
+@@ -367,6 +397,12 @@ status_t Disk::readPartitions() {
+                     continue;
+                 }
+ 
++                if (isEntireDiskAsPartition(i)) {
++                    LOG(INFO) << "don't create public:xx,xx for physical device!";
++                    foundParts = false;
++                    break;
++                }
++
+                 switch (type) {
+                     case 0x06:  // FAT16
+                     case 0x07:  // HPFS/NTFS/exFAT
+diff --git a/model/Disk.h b/model/Disk.h
+old mode 100644
+new mode 100755
+index 63acf6a..c6a396e
+--- a/model/Disk.h
++++ b/model/Disk.h
+@@ -78,6 +78,7 @@ public:
+     status_t partitionPublic();
+     status_t partitionPrivate();
+     status_t partitionMixed(int8_t ratio);
++    bool isEntireDiskAsPartition(const int part);
+ 
+ private:
+     /* ID that uniquely references this disk */
+-- 
+1.9.1
+

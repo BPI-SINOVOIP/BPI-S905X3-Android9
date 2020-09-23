@@ -1,0 +1,15 @@
+uclass.c:22:16:uclass_find	0	static
+uclass.c:99:5:uclass_destroy	48	static
+uclass.c:125:5:uclass_get	64	static
+uclass.c:138:5:uclass_find_device	64	static
+uclass.c:159:5:uclass_find_device_by_seq	64	static
+uclass.c:237:5:uclass_get_device	48	static
+uclass.c:247:5:uclass_get_device_by_seq	64	static
+uclass.c:264:5:uclass_get_device_by_of_offset	64	static
+uclass.c:275:5:uclass_first_device	48	static
+uclass.c:297:5:uclass_next_device	32	static
+uclass.c:316:5:uclass_bind_device	32	static
+uclass.c:336:5:uclass_unbind_device	32	static
+uclass.c:352:5:uclass_resolve_seq	48	static
+uclass.c:383:5:uclass_post_probe_device	16	static
+uclass.c:393:5:uclass_pre_remove_device	32	static

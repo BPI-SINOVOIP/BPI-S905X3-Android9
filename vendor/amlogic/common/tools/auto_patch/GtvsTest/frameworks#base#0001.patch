@@ -1,0 +1,25 @@
+From 75b00edda9534e4ed9d5ab57fc365e2f86a148dd Mon Sep 17 00:00:00 2001
+From: "liangzhuo.xie" <liangzhuo.xie@amlogic.com>
+Date: Mon, 21 Jan 2019 15:37:27 +0800
+Subject: [PATCH] add WRITE_SECURE_SETTINGS permission
+
+Change-Id: I582797f5f6d7eef3bd8c142d112270a7466df76e
+---
+ data/etc/privapp-permissions-platform.xml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/data/etc/privapp-permissions-platform.xml b/data/etc/privapp-permissions-platform.xml
+index 82b6a22..56b218d 100644
+--- a/data/etc/privapp-permissions-platform.xml
++++ b/data/etc/privapp-permissions-platform.xml
+@@ -396,6 +396,7 @@ applications that come with the platform
+         <permission name="android.permission.HDMI_CEC"/>
+         <permission name="android.permission.MODIFY_PARENTAL_CONTROLS"/>
+         <permission name="android.permission.READ_CONTENT_RATING_SYSTEMS"/>
++        <permission name="android.permission.WRITE_SECURE_SETTINGS"/>
+         <permission name="com.android.providers.tv.permission.ACCESS_ALL_EPG_DATA"/>
+         <permission name="com.android.providers.tv.permission.ACCESS_WATCHED_PROGRAMS"/>
+     </privapp-permissions>
+-- 
+1.9.1
+

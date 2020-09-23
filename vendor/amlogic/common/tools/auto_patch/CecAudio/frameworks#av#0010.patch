@@ -1,0 +1,41 @@
+From e2bb4924e104abf260856caf92bfae1f8e2683a8 Mon Sep 17 00:00:00 2001
+From: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date: Tue, 9 Jul 2019 15:21:06 +0800
+Subject: [PATCH] AudioPolicy: change ott+dvb product volume settings [1/2]
+
+PD# SWPL-8619
+
+Problem:
+liveTV Press the volume +/- button, The volume cannot be controlled
+
+Solution:
+change ott+dvb product volume settings
+
+Verify:
+verify by franklin
+
+Change-Id: I0bc199306c57587d78a337a235ea3436556248fc
+Signed-off-by: Chaomin Zheng <chaomin.zheng@amlogic.com>
+---
+ services/audiopolicy/managerdefault/AudioPolicyManager.cpp | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/services/audiopolicy/managerdefault/AudioPolicyManager.cpp b/services/audiopolicy/managerdefault/AudioPolicyManager.cpp
+index 59d68d2..ecc3a55 100644
+--- a/services/audiopolicy/managerdefault/AudioPolicyManager.cpp
++++ b/services/audiopolicy/managerdefault/AudioPolicyManager.cpp
+@@ -5775,8 +5775,9 @@ status_t AudioPolicyManager::checkAndSetVolume(audio_stream_type_t stream,
+         audio_devices_t curDevice = Volume::getDeviceForVolume(getDevicesForStream(AUDIO_STREAM_MUSIC));
+         bool speakerGainApplied = false;
+         bool bootVideoRunning = property_get_int32("service.bootvideo.exit", 0) == 1;
+-        if (curDevice == AUDIO_DEVICE_OUT_SPEAKER &&
+-                (outputDesc->isStreamActive(stream) || bootVideoRunning)) {
++        if (((curDevice == AUDIO_DEVICE_OUT_HDMI && property_get_bool("ro.vendor.platform.is.stb", false))
++                || curDevice == AUDIO_DEVICE_OUT_SPEAKER) &&
++                        (outputDesc->isStreamActive(stream) || bootVideoRunning)) {
+             //ignoring the "index" passed as argument and always use MUSIC stream index
+             //for all stream types works on TV because all stream types are aliases of MUSIC.
+             int volumeIndex = mVolumeCurves->getVolumeIndex(AUDIO_STREAM_MUSIC, curDevice);
+-- 
+2.7.4
+

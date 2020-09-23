@@ -1,0 +1,7 @@
+aml_key.c:30:5:amlnf_key_read	64	static
+aml_key.c:58:5:amlnf_key_write	64	static
+aml_key.c:85:5:amlnf_key_erase	48	static
+aml_key.c:103:5:amlnf_ddr_parameter_read	64	static
+aml_key.c:124:5:amlnf_ddr_parameter_write	64	static
+aml_key.c:150:5:amlnf_ddr_parameter_erase	48	static
+aml_key.c:168:5:aml_key_init	0	static

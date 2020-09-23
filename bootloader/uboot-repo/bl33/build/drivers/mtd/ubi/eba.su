@@ -1,0 +1,15 @@
+eba.c:89:32:5	0	static
+eba.c:128:32:ltree_add_entry	64	static
+eba.c:240:12:leb_write_lock	16	static
+eba.c:291:13:leb_write_unlock	32	static
+eba.c:215:13:leb_read_unlock	32	static
+eba.c:960:12:is_error_sane	0	static
+eba.c:53:20:ubi_next_sqnum	0	static
+eba.c:317:5:ubi_eba_unmap_leb	64	static
+eba.c:365:5:ubi_eba_read_leb	128	static
+eba.c:590:5:ubi_eba_write_leb	160	static
+eba.c:721:5:ubi_eba_write_leb_st	128	static
+eba.c:836:5:ubi_eba_atomic_leb_change	112	static
+eba.c:982:5:ubi_eba_copy_leb	112	static
+eba.c:1219:5:self_check_eba	112	static
+eba.c:1313:5:ubi_eba_init	96	static

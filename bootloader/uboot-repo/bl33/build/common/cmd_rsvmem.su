@@ -1,0 +1,3 @@
+cmd_rsvmem.c:282:12:do_rsvmem	48	static
+cmd_rsvmem.c:252:12:do_rsvmem_dump	32	static
+cmd_rsvmem.c:41:12:do_rsvmem_check	208	static

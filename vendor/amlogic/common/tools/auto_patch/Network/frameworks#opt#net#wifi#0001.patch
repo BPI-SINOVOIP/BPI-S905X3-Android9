@@ -1,0 +1,31 @@
+From f6fc691289d8cc306f5c59450501cb422c3df58b Mon Sep 17 00:00:00 2001
+From: Gongwei Chen <gongwei.chen@amlogic.com>
+Date: Tue, 16 Oct 2018 15:35:31 +0800
+Subject: [PATCH] wifi: fix arp lost let wifi disconnect issue
+
+PD# 174177
+
+fix wifi disconnect issue
+
+Change-Id: I49f42f0d4256ae1b8d9f0491dcff2d61620d506b
+Signed-off-by: GongWei Chen <gongwei.chen@amlogic.com>
+---
+ service/java/com/android/server/wifi/WifiStateMachine.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/service/java/com/android/server/wifi/WifiStateMachine.java b/service/java/com/android/server/wifi/WifiStateMachine.java
+index ef5eb02..f8b2581 100644
+--- a/service/java/com/android/server/wifi/WifiStateMachine.java
++++ b/service/java/com/android/server/wifi/WifiStateMachine.java
+@@ -211,7 +211,7 @@ public class WifiStateMachine extends StateMachine {
+     private String mLastBssid;
+     private int mLastNetworkId; // The network Id we successfully joined
+ 
+-    private boolean mIpReachabilityDisconnectEnabled = true;
++    private boolean mIpReachabilityDisconnectEnabled = false;
+ 
+     private void processRssiThreshold(byte curRssi, int reason,
+             WifiNative.WifiRssiEventHandler rssiHandler) {
+-- 
+1.9.1
+

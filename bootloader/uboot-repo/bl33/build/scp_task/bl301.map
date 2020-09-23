@@ -1,0 +1,173 @@
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/task_entry.o
+LOAD /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/user_task.o
+LOAD /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/misc.o
+LOAD /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/uart.o
+LOAD /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/suspend.o
+LOAD /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/lib/string.o
+LOAD /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/lib/delay.o
+                0x1000b800                . = 0x1000b800
+
+.text           0x1000b800     0x1535
+ *task_entry.o(.text)
+ .text          0x1000b800        0xc /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/task_entry.o
+                0x1000b800                task_entry
+ *(.text .text*)
+ .text          0x1000b80c      0x140 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/user_task.o
+                0x1000b80c                __switch_idle_task
+                0x1000b814                __switch_back_securemb
+                0x1000b81c                __switch_back_highmb
+                0x1000b824                __switch_back_lowmb
+                0x1000b82c                secure_task
+                0x1000b8a4                set_wakeup_method
+                0x1000b8b0                process_high_task
+                0x1000b8b2                high_task
+                0x1000b8dc                process_low_task
+                0x1000b920                low_task
+ .text          0x1000b94c       0x1c /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/misc.o
+                0x1000b94c                bss_init
+ .text          0x1000b968       0x9c /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/uart.o
+                0x1000b968                wait_uart_empty
+                0x1000b988                uart_tx_flush
+                0x1000b998                uart_putc
+                0x1000b9c4                uart_puts
+                0x1000b9d8                uart_put_hex
+ .text          0x1000ba04     0x11b8 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/suspend.o
+                0x1000ba04                get_wakeup_source
+                0x1000bd38                setremotereg
+                0x1000bd40                set_remote_mode
+                0x1000bd8c                backuremote_register
+                0x1000bddc                resume_remote_register
+                0x1000be1c                init_custom_trigger
+                0x1000be44                remote_init_pwrkeys
+                0x1000be54                remote_get_pwrkeys
+                0x1000be5c                saradc_enable
+                0x1000bf10                get_adc_sample_gxbb
+                0x1000bfd4                saradc_disable
+                0x1000c010                check_adc_key_resume
+                0x1000c022                remote_cec_hw_reset
+                0x1000c1f8                cec_routing_change
+                0x1000c21c                cec_handler
+                0x1000c69c                cec_node_init
+                0x1000c960                cec_power_on_check
+                0x1000cae4                suspend_pwr_ops_init
+                0x1000cb1c                suspend_get_wakeup_source
+                0x1000cb30                enter_suspend
+ .text          0x1000cbbc       0x22 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/lib/string.o
+                0x1000cbbc                memcpy
+                0x1000cbce                memset
+ *fill*         0x1000cbde        0x2 
+ .text          0x1000cbe0       0x20 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/lib/delay.o
+                0x1000cbe0                get_time
+                0x1000cbec                _udelay
+ *(.ARM.*)
+ .ARM.attributes
+                0x1000cc00       0x1b /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/task_entry.o
+ .ARM.attributes
+                0x1000cc1b       0x33 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/user_task.o
+ .ARM.attributes
+                0x1000cc4e       0x1b /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/misc.o
+ .ARM.attributes
+                0x1000cc69       0x33 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/uart.o
+ .ARM.attributes
+                0x1000cc9c       0x33 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/suspend.o
+ .ARM.attributes
+                0x1000cccf       0x33 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/lib/string.o
+ .ARM.attributes
+                0x1000cd02       0x33 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/lib/delay.o
+
+.glue_7         0x1000cd38        0x0
+ .glue_7        0x00000000        0x0 linker stubs
+
+.glue_7t        0x1000cd38        0x0
+ .glue_7t       0x00000000        0x0 linker stubs
+
+.vfp11_veneer   0x1000cd38        0x0
+ .vfp11_veneer  0x00000000        0x0 linker stubs
+
+.v4_bx          0x1000cd38        0x0
+ .v4_bx         0x00000000        0x0 linker stubs
+
+.iplt           0x1000cd38        0x0
+ .iplt          0x00000000        0x0 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/task_entry.o
+
+.rel.dyn        0x1000cd38        0x0
+ .rel.iplt      0x00000000        0x0 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/task_entry.o
+
+.common
+ *(.commo*)
+
+.data           0x1000cd38      0x9d4
+ *(.bss .data .rodata*)
+ .data          0x1000cd38        0x0 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/task_entry.o
+ .bss           0x1000cd38        0x0 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/task_entry.o
+ .data          0x1000cd38        0xc /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/user_task.o
+                0x1000cd38                secure_task_share_mem
+                0x1000cd3c                high_task_share_mem
+                0x1000cd40                low_task_share_mem
+ .bss           0x1000cd44        0x4 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/user_task.o
+                0x1000cd44                resume_data
+ .rodata.str1.1
+                0x1000cd48       0x51 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/user_task.o
+                                 0x53 (size before relaxing)
+ .data          0x1000cd99        0x0 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/misc.o
+ .bss           0x1000cd99        0x0 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/misc.o
+ .data          0x1000cd99        0x0 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/uart.o
+ .bss           0x1000cd99        0x0 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/uart.o
+ *fill*         0x1000cd99        0x3 
+ .data          0x1000cd9c      0x1a8 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/suspend.o
+                0x1000cf40                usr_pwr_key
+ .bss           0x1000cf44       0xd0 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/suspend.o
+                0x1000cf48                cec_msg
+                0x1000cf70                backuAO_RTI_PIN_MUX_REG
+                0x1000cf74                backuAO_IR_DEC_REG0
+                0x1000cf78                backuAO_IR_DEC_REG1
+                0x1000cf7c                backuAO_IR_DEC_LDR_ACTIVE
+                0x1000cf80                backuAO_IR_DEC_LDR_IDLE
+                0x1000cf84                backuAO_IR_DEC_BIT_0
+                0x1000cf88                bakeuAO_IR_DEC_LDR_REPEAT
+                0x1000cf8c                pwr_keys_list
+                0x1000cf98                cec_tx_msgs
+                0x1000cfe2                hdmi_cec_func_config
+                0x1000d010                time
+ .rodata        0x1000d014      0x380 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/suspend.o
+ .rodata.str1.1
+                0x1000d394      0x378 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/suspend.o
+                                0x37c (size before relaxing)
+ .data          0x1000d70c        0x0 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/lib/string.o
+ .bss           0x1000d70c        0x0 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/lib/string.o
+ .data          0x1000d70c        0x0 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/lib/delay.o
+ .bss           0x1000d70c        0x0 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/lib/delay.o
+
+.igot.plt       0x1000d70c        0x0
+ .igot.plt      0x00000000        0x0 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/task_entry.o
+                0x1000d70c                . = ALIGN (0x4)
+                0x1000d70c                _bssstart = .
+
+.bss
+ *(.bss)
+                0x1000d70c                . = ALIGN (0x4)
+                0x1000d70c                _bssend = .
+                0x1000ed80                . = 0x1000ed80
+
+.bss_stack      0x1000ed80      0x600
+ *(.bss_stack.usr_stack)
+ .bss_stack.usr_stack
+                0x1000ed80      0x600 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/task_entry.o
+                0x00000001                ASSERT ((_bssend <= 0x1000ed80), Data is too big. Please fine-tune start address and LENGTH!)
+OUTPUT(/media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/bl301.out elf32-littlearm)
+
+.comment        0x00000000       0x63
+ .comment       0x00000000       0x63 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/user_task.o
+                                 0x64 (size before relaxing)
+ .comment       0x00000000       0x64 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/uart.o
+ .comment       0x00000000       0x64 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/suspend.o
+ .comment       0x00000000       0x64 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/lib/string.o
+ .comment       0x00000000       0x64 /media/dangku/mywork/m5/android/BPI-S905X3-Android9/bootloader/uboot-repo/bl33/build/scp_task/lib/delay.o

@@ -1,0 +1,51 @@
+From e1ec8d7e33fd8f10b04d1a6c7a386c0e1b257f35 Mon Sep 17 00:00:00 2001
+From: kaishuang <kaishuang.zhang@amlogic.com>
+Date: Mon, 24 Jun 2019 16:35:32 +0800
+Subject: [PATCH] native: bugfix for hotplug with dual display. [3/3]
+
+PD#SWPL-8255
+
+Problem:
+Multi-screen support.
+
+Solution:
+Not check display type when get display with mDisplayData.
+
+Verify:
+1. Primary screen display with HDMI.
+2. Extend screen display with panel.
+3. Primary and extend screen can display the same UI or difference.
+
+Change-Id: I84758f14c3954b6d71df85af458e5fe4fd175a4f
+Signed-off-by: kaishuang <kaishuang.zhang@amlogic.com>
+---
+ services/surfaceflinger/DisplayHardware/HWComposer.cpp | 13 ++-----------
+ 1 file changed, 2 insertions(+), 11 deletions(-)
+
+diff --git a/services/surfaceflinger/DisplayHardware/HWComposer.cpp b/services/surfaceflinger/DisplayHardware/HWComposer.cpp
+index 57e52a7..f7a24c8 100644
+--- a/services/surfaceflinger/DisplayHardware/HWComposer.cpp
++++ b/services/surfaceflinger/DisplayHardware/HWComposer.cpp
+@@ -145,17 +145,8 @@ void HWComposer::onHotplug(hwc2_display_t displayId, int32_t displayType,
+     // Disconnect is handled through HWComposer::disconnectDisplay via
+     // SurfaceFlinger's onHotplugReceived callback handling
+     if (connection == HWC2::Connection::Connected) {
+-#ifdef USE_AML_HW_ACTIVE_MODE
+-        if (displayId == DisplayDevice::DISPLAY_PRIMARY){
+-            if (!mDisplayData[0].hwcDisplay){
+-#endif
+-                mDisplayData[displayType].hwcDisplay = mHwcDevice->getDisplayById(displayId);
+-                mHwcDisplaySlots[displayId] = displayType;
+-#ifdef USE_AML_HW_ACTIVE_MODE
+-            }
+-        }
+-#endif
+-
++        mDisplayData[displayType].hwcDisplay = mHwcDevice->getDisplayById(displayId);
++        mHwcDisplaySlots[displayId] = displayType;
+     }
+ }
+ 
+-- 
+2.7.4
+

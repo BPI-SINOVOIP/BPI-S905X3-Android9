@@ -1,0 +1,163 @@
+From 86f3671b6580c0258b4605605bb52eee678173f0 Mon Sep 17 00:00:00 2001
+From: "qiu.zeng" <qiu.zeng@amlogic.com>
+Date: Wed, 9 Oct 2019 13:16:23 +0800
+Subject: [PATCH] BT: add app button and number button [2/3]
+
+Change-Id: If6cd6fca04530bd64ade53bbb1c49dacb80bfc8d
+Signed-off-by: qiu.zeng <qiu.zeng@amlogic.com>
+---
+ core/java/android/view/KeyEvent.java               |  6 ++
+ core/res/res/values/attrs.xml                      |  1 +
+ .../android/server/policy/PhoneWindowManager.java  | 79 +++++++++++++++++++++-
+ 3 files changed, 85 insertions(+), 1 deletion(-)
+
+diff --git a/core/java/android/view/KeyEvent.java b/core/java/android/view/KeyEvent.java
+index a597405..2b4cfcb 100644
+--- a/core/java/android/view/KeyEvent.java
++++ b/core/java/android/view/KeyEvent.java
+@@ -808,6 +808,8 @@ public class KeyEvent extends InputEvent implements Parcelable {
+     public static final int KEYCODE_ALL_APPS = 284;
+     /** Key code constant: Refresh key. */
+     public static final int KEYCODE_REFRESH = 285;
++    /** Key code constant: youtube. */
++    public static final int KEYCODE_YOUTUBE = 286;
+ 
+     private static final int LAST_KEYCODE = KEYCODE_REFRESH;
+ 
+@@ -1861,6 +1863,8 @@ public class KeyEvent extends InputEvent implements Parcelable {
+             case KeyEvent.KEYCODE_SYSTEM_NAVIGATION_DOWN:
+             case KeyEvent.KEYCODE_SYSTEM_NAVIGATION_LEFT:
+             case KeyEvent.KEYCODE_SYSTEM_NAVIGATION_RIGHT:
++            case KeyEvent.KEYCODE_YOUTUBE:
++            case KeyEvent.KEYCODE_SETTINGS:
+                 return true;
+         }
+ 
+@@ -1877,6 +1881,8 @@ public class KeyEvent extends InputEvent implements Parcelable {
+             case KeyEvent.KEYCODE_STEM_1:
+             case KeyEvent.KEYCODE_STEM_2:
+             case KeyEvent.KEYCODE_STEM_3:
++            case KeyEvent.KEYCODE_YOUTUBE:
++            case KeyEvent.KEYCODE_SETTINGS:
+                 return true;
+         }
+         return false;
+diff --git a/core/res/res/values/attrs.xml b/core/res/res/values/attrs.xml
+index 21c10ce..7a6e66e 100644
+--- a/core/res/res/values/attrs.xml
++++ b/core/res/res/values/attrs.xml
+@@ -1904,6 +1904,7 @@
+         <enum name="KEYCODE_SYSTEM_NAVIGATION_RIGHT" value="283" />
+         <enum name="KEYCODE_ALL_APPS" value="284" />
+         <enum name="KEYCODE_REFRESH" value="285" />
++        <enum name="KEYCODE_YOUTUBE" value="286" />
+     </attr>
+ 
+     <!-- ***************************************************************** -->
+diff --git a/services/core/java/com/android/server/policy/PhoneWindowManager.java b/services/core/java/com/android/server/policy/PhoneWindowManager.java
+index 6917938..8c884eb 100644
+--- a/services/core/java/com/android/server/policy/PhoneWindowManager.java
++++ b/services/core/java/com/android/server/policy/PhoneWindowManager.java
+@@ -175,6 +175,7 @@ import android.content.IntentFilter;
+ import android.content.pm.ActivityInfo;
+ import android.content.pm.ApplicationInfo;
+ import android.content.pm.PackageManager;
++import android.content.pm.PackageInfo;
+ import android.content.pm.ResolveInfo;
+ import android.content.res.CompatibilityInfo;
+ import android.content.res.Configuration;
+@@ -6448,6 +6449,72 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+                 }
+                 break;
+             }
++            case KeyEvent.KEYCODE_YOUTUBE: {
++                boolean isWakeup = !mAwake;
++                result &= ~ACTION_PASS_TO_USER;
++                isWakeKey = false;
++                if (down) {
++                    wakeUp(event.getEventTime(), mAllowTheaterModeWakeFromPowerKey, "android.policy:KEY");
++                    if (isAvilible(mContext,"com.google.android.youtube.tv")) {
++                        boolean isYoutubeRunning = false;
++                        try {
++                            List<RunningTaskInfo> tasks = ActivityManager.getService().getTasks(1);
++                            ComponentName componentInfo = tasks.get(0).topActivity;
++                            if (componentInfo.getPackageName().equals("com.google.android.youtube.tv")) {
++                                isYoutubeRunning = true;
++                            }
++                        } catch (Exception e) {}
++
++                        Log.i(TAG, "Youtube running: " + isYoutubeRunning + ", isWakeup: " + isWakeup);
++                        if (isYoutubeRunning) {
++                            Log.i(TAG, "Youtube running:");
++                            break;
++                        } else {
++                            String package_name = "com.google.android.youtube.tv";
++                            String activity_path = "com.google.android.apps.youtube.tv.activity.MainActivity";
++                            Intent intent = new Intent();
++                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
++                            ComponentName comp = new ComponentName(package_name,activity_path);
++                            intent.setComponent(comp);
++                            mContext.startActivity(intent);
++                        }
++                    }
++                }
++                break;
++            }
++            case KeyEvent.KEYCODE_SETTINGS: {
++                boolean isWakeup = !mAwake;
++                result &= ~ACTION_PASS_TO_USER;
++                isWakeKey = false;
++                if (down) {
++                    wakeUp(event.getEventTime(), mAllowTheaterModeWakeFromPowerKey, "android.policy:KEY");
++                    if (isAvilible(mContext,"com.android.tv.settings")) {
++                        boolean isSettingsRunning = false;
++                        try {
++                            List<RunningTaskInfo> tasks = ActivityManager.getService().getTasks(1);
++                            ComponentName componentInfo = tasks.get(0).topActivity;
++                            if (componentInfo.getPackageName().equals("com.android.tv.settings")) {
++                                isSettingsRunning = true;
++                            }
++                        } catch (Exception e) {}
++
++                        Log.i(TAG, "SETTINGS running: " + isSettingsRunning + ", isWakeup: " + isWakeup);
++                        if (isSettingsRunning) {
++                            Log.i(TAG, "SETTINGS running:");
++                            break;
++                        } else {
++                            String package_name = "com.android.tv.settings";
++                            String activity_path = "com.android.tv.settings.MainSettings";
++                            Intent intent = new Intent();
++                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
++                            ComponentName comp = new ComponentName(package_name,activity_path);
++                            intent.setComponent(comp);
++                            mContext.startActivity(intent);
++                        }
++                    }
++                }
++                break;
++            }
+         }
+ 
+         if (useHapticFeedback) {
+@@ -6460,7 +6527,17 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+ 
+         return result;
+     }
+-
++    private boolean isAvilible( Context context, String packageName ){
++        final PackageManager packageManager = context.getPackageManager();
++        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);
++        for ( int i = 0; i < pinfo.size(); i++ )
++        {
++                if (pinfo.get(i).packageName.equalsIgnoreCase(packageName)) {
++                    return true;
++                }
++        }
++        return false;
++    }
+     /**
+      * Handle statusbar expansion events.
+      * @param event
+-- 
+1.9.1
+

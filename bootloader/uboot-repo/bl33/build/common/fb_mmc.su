@@ -1,0 +1,5 @@
+fb_mmc.c:54:17:fb_mmc_sparse_write	16	static
+fb_mmc.c:64:17:fb_mmc_sparse_reserve	0	static
+fb_mmc.c:103:13:0	64	static
+fb_mmc.c:161:6:fb_mmc_flash_write	304	static
+fb_mmc.c:262:6:fb_mmc_erase_write	304	static

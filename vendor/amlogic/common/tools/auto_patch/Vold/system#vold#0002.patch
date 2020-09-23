@@ -1,0 +1,313 @@
+From d3776d79e507ea5d50df0bf509b381bf2ca1d7af Mon Sep 17 00:00:00 2001
+From: "qingwei.xu" <qingwei.xu@amlogic.com>
+Date: Wed, 24 Oct 2018 10:22:55 +0800
+Subject: [PATCH] Vold:NTFS: Support NTFS and exFAT Automatically mount for
+ Android P [2/4]
+
+PD#SWPL-171
+
+Problem:
+  When the USB File System is NTFS or exFAT, the U disk cannot be detected.
+
+Solution:
+  Add vold ntfs and exfat mount code
+
+Verify:
+  verify by Android P All Project
+
+Change-Id: Iabd80d469611a57477c0b6ce7141006b7575f27f
+---
+ Android.bp             |   1 +
+ fs/Ntfs.cpp            | 137 +++++++++++++++++++++++++++++++++++++++++++++++++
+ fs/Ntfs.h              |  43 ++++++++++++++++
+ main.cpp               |   6 ++-
+ model/PublicVolume.cpp |  20 ++++++++
+ 5 files changed, 206 insertions(+), 1 deletion(-)
+ mode change 100644 => 100755 Android.bp
+ create mode 100755 fs/Ntfs.cpp
+ create mode 100755 fs/Ntfs.h
+ mode change 100644 => 100755 main.cpp
+ mode change 100644 => 100755 model/PublicVolume.cpp
+
+diff --git a/Android.bp b/Android.bp
+old mode 100644
+new mode 100755
+index 556784f..fedb26f
+--- a/Android.bp
++++ b/Android.bp
+@@ -120,6 +120,7 @@ cc_library_static {
+         "fs/Ext4.cpp",
+         "fs/F2fs.cpp",
+         "fs/Vfat.cpp",
++        "fs/Ntfs.cpp",
+         "model/Disk.cpp",
+         "model/EmulatedVolume.cpp",
+         "model/ObbVolume.cpp",
+diff --git a/fs/Ntfs.cpp b/fs/Ntfs.cpp
+new file mode 100755
+index 0000000..36aefa7
+--- /dev/null
++++ b/fs/Ntfs.cpp
+@@ -0,0 +1,137 @@
++/*
++ * Copyright (C) 2008 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++#include <stdio.h>
++#include <fcntl.h>
++#include <unistd.h>
++#include <errno.h>
++#include <string.h>
++#include <dirent.h>
++#include <errno.h>
++#include <fcntl.h>
++
++#include <sys/types.h>
++#include <sys/stat.h>
++#include <sys/types.h>
++#include <sys/mman.h>
++#include <sys/mount.h>
++#include <sys/wait.h>
++
++#include <linux/kdev_t.h>
++
++#include <cutils/log.h>
++#include <cutils/properties.h>
++#include <logwrap/logwrap.h>
++#include <android-base/stringprintf.h>
++#include <android-base/logging.h>
++
++#include "Ntfs.h"
++#include "Utils.h"
++
++
++#define UNUSED __attribute__((unused))
++
++using android::base::StringPrintf;
++
++namespace android {
++namespace vold {
++namespace ntfs {
++
++static const char* NTFS_3G_PATH = "/system/bin/ntfs-3g";
++static const char* NTFSFIX_3G_PATH = "/system/bin/ntfsfix";
++static const char* MKNTFS_3G_PATH = "/system/bin/mkntfs";
++
++bool IsSupported() {
++    LOG(INFO) << "IsSupported() -ntfs-3g-> " << access(NTFS_3G_PATH, X_OK);
++    LOG(INFO) << "IsSupported() -ntfsfix-> " << access(NTFSFIX_3G_PATH, X_OK);
++    LOG(INFO) << "IsSupported() -mkntfs-> " << access(MKNTFS_3G_PATH, X_OK);
++    LOG(INFO) << "IsSupported() --> " << IsFilesystemSupported("ntfs");
++    return IsFilesystemSupported("ntfs");
++}
++
++
++status_t Check(const std::string& source) {
++    std::vector<std::string> cmd;
++    cmd.push_back(NTFSFIX_3G_PATH);
++    cmd.push_back("-n");
++    cmd.push_back(source);
++
++    int rc = ForkExecvp(cmd, sFsckUntrustedContext);
++    if (rc == 0) {
++        LOG(INFO) << "Check OK";
++        return 0;
++    } else {
++        LOG(ERROR) << "Check failed (code " << rc << ")";
++        errno = EIO;
++        return -1;
++    }
++}
++
++status_t Mount(const std::string& source, const std::string& target, bool ro,
++                bool remount, int ownerUid, int ownerGid, int permMask,
++                bool createLost) {
++
++    auto mountData = android::base::StringPrintf(
++        "locale=utf8,uid=%d,gid=%d,fmask=%o,dmask=%o",
++            ownerUid, ownerGid, permMask, permMask);
++
++    std::vector<std::string> cmd;
++    cmd.push_back(NTFS_3G_PATH);
++    cmd.push_back(source.c_str());
++    cmd.push_back(target.c_str());
++    cmd.push_back("-o");
++    cmd.push_back(mountData.c_str());
++
++    int rc = ForkExecvp(cmd, sFsckUntrustedContext);
++    if (rc != 0) {
++        LOG(ERROR) << "ntfs Mount error";
++        errno = EIO;
++        return -1;
++    }
++    return rc;
++}
++
++
++status_t Format(const std::string& source/*, unsigned int numSectors UNUSED*/) {
++
++    std::vector<std::string> cmd;
++    cmd.push_back(MKNTFS_3G_PATH);
++    cmd.push_back("-f");
++
++    /*
++    if (numSectors) {
++        auto tmp = android::base::StringPrintf("%u", numSectors);
++        cmd.push_back("-s");
++        cmd.push_back(tmp.c_str());
++    }*/
++
++    cmd.push_back(source.c_str());
++
++    int rc = ForkExecvp(cmd);
++    if (rc == 0) {
++        LOG(INFO) << "Format OK";
++        return 0;
++    } else {
++        LOG(ERROR) << "Format failed (code " << rc << ")";
++        errno = EIO;
++        return -1;
++    }
++    return 0;
++}
++
++}  // namespace ntfs
++}  // namespace vold
++}  // namespace android
+diff --git a/fs/Ntfs.h b/fs/Ntfs.h
+new file mode 100755
+index 0000000..bc84e0a
+--- /dev/null
++++ b/fs/Ntfs.h
+@@ -0,0 +1,43 @@
++/*
++ * Copyright (C) 2008 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++#ifndef ANDROID_VOLD_NTFS_H
++#define ANDROID_VOLD_NTFS_H
++
++#include <utils/Errors.h>
++
++#include <string>
++
++
++namespace android {
++namespace vold {
++namespace ntfs {
++
++bool IsSupported();
++
++status_t Check(const std::string& source);
++
++status_t Mount(const std::string& source, const std::string& target, bool ro,
++        bool remount, int ownerUid, int ownerGid, int permMask,
++        bool createLost);
++
++status_t Format(const std::string& source);
++
++}  // namespace ntfs
++}  // namespace vold
++}  // namespace android
++
++#endif
+diff --git a/main.cpp b/main.cpp
+old mode 100644
+new mode 100755
+index 5525e85..83b956d
+--- a/main.cpp
++++ b/main.cpp
+@@ -63,7 +63,11 @@ int main(int argc, char** argv) {
+     LOG(VERBOSE) << "Detected support for:"
+             << (android::vold::IsFilesystemSupported("ext4") ? " ext4" : "")
+             << (android::vold::IsFilesystemSupported("f2fs") ? " f2fs" : "")
+-            << (android::vold::IsFilesystemSupported("vfat") ? " vfat" : "");
++            << (android::vold::IsFilesystemSupported("vfat") ? " vfat" : "")
++            << (android::vold::IsFilesystemSupported("ntfs") ? " ntfs" : "")
++            << (android::vold::IsFilesystemSupported("exfat") ? " exfat" : "")
++            << (android::vold::IsFilesystemSupported("hfsplus") ? " hfsplus" : "")
++            << (android::vold::IsFilesystemSupported("iso9660") ? " iso9660" : "");
+ 
+     VolumeManager *vm;
+     NetlinkManager *nm;
+diff --git a/model/PublicVolume.cpp b/model/PublicVolume.cpp
+old mode 100644
+new mode 100755
+index fc7e96f..1cef7fe
+--- a/model/PublicVolume.cpp
++++ b/model/PublicVolume.cpp
+@@ -18,6 +18,7 @@
+ #include "Utils.h"
+ #include "VolumeManager.h"
+ #include "fs/Exfat.h"
++#include "fs/Ntfs.h"
+ #include "fs/Vfat.h"
+ 
+ #include <android-base/stringprintf.h>
+@@ -106,6 +107,11 @@ status_t PublicVolume::doMount() {
+             LOG(ERROR) << getId() << " failed filesystem check";
+             return -EIO;
+         }
++    } else if (mFsType == "ntfs" && ntfs::IsSupported()) {
++        if (ntfs::Check(mDevPath)) {
++            LOG(ERROR) << getId() << " failed filesystem check";
++            return -EIO;
++        }
+     } else {
+         LOG(ERROR) << getId() << " unsupported filesystem " << mFsType;
+         return -EIO;
+@@ -146,6 +152,12 @@ status_t PublicVolume::doMount() {
+             PLOG(ERROR) << getId() << " failed to mount " << mDevPath;
+             return -EIO;
+         }
++    } else if (mFsType == "ntfs") {
++        if (ntfs::Mount(mDevPath, mRawPath, false, false,
++                            AID_MEDIA_RW, AID_MEDIA_RW, 0007, true)) {
++            PLOG(ERROR) << getId() << " failed to mount " << mDevPath;
++            return -EIO;
++        }
+     }
+ 
+     if (getMountFlags() & MountFlags::kPrimary) {
+@@ -267,6 +279,14 @@ status_t PublicVolume::doFormat(const std::string& fsType) {
+             LOG(ERROR) << getId() << " failed to format";
+             return -errno;
+         }
++    } else if ((fsType == "ntfs" || fsType == "auto") && ntfs::IsSupported()) {
++        if (WipeBlockDevice(mDevPath) != OK) {
++            LOG(WARNING) << getId() << " " << fsType << " failed to wipe";
++        }
++        if (ntfs::Format(mDevPath)) {
++            LOG(ERROR) << getId() << " " << fsType << " failed to format";
++            return -errno;
++        }
+     } else {
+         LOG(ERROR) << "Unsupported filesystem " << fsType;
+         return -EINVAL;
+-- 
+1.9.1
+

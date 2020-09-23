@@ -1,0 +1,95 @@
+From d50d8fb2382695db0f2dbe8ee3c3556f0d6d08e6 Mon Sep 17 00:00:00 2001
+From: Jinping Wang <jinping.wang@amlogic.com>
+Date: Tue, 7 May 2019 15:33:25 +0800
+Subject: [PATCH] cec: cec-framework [1/1]
+
+PD# TV-4640
+
+Problem:
+need more than 4s from hotplug in to output sound
+
+Solution:
+1. not polling the address that never used
+2. begin connect arc when received <Report Physical Address>
+
+Verify:
+test ok using p321
+
+Change-Id: Iac9bfe6e8e54fc1f02489dcc5da740ffd5ff51ca
+Signed-off-by: Jinping Wang <jinping.wang@amlogic.com>
+---
+ .../java/com/android/server/hdmi/HdmiCecController.java     | 13 +++++++------
+ .../java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java  |  4 ++++
+ .../core/java/com/android/server/hdmi/NewDeviceAction.java  |  5 -----
+ 3 files changed, 11 insertions(+), 11 deletions(-)
+
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecController.java b/services/core/java/com/android/server/hdmi/HdmiCecController.java
+index 07c3a38..fe1dc64 100644
+--- a/services/core/java/com/android/server/hdmi/HdmiCecController.java
++++ b/services/core/java/com/android/server/hdmi/HdmiCecController.java
+@@ -412,6 +412,7 @@ final class HdmiCecController {
+     private List<Integer> pickPollCandidates(int pickStrategy) {
+         int strategy = pickStrategy & Constants.POLL_STRATEGY_MASK;
+         Predicate<Integer> pickPredicate = null;
++        int CommonUsedCandidates[] = {0x0, 0x3, 0x4, 0x5, 0x8, 0xb, 0xe};
+         switch (strategy) {
+             case Constants.POLL_STRATEGY_SYSTEM_AUDIO:
+                 pickPredicate = mSystemAudioAddressPredicate;
+@@ -426,17 +427,17 @@ final class HdmiCecController {
+         LinkedList<Integer> pollingCandidates = new LinkedList<>();
+         switch (iterationStrategy) {
+             case Constants.POLL_ITERATION_IN_ORDER:
+-                for (int i = Constants.ADDR_TV; i <= Constants.ADDR_SPECIFIC_USE; ++i) {
+-                    if (pickPredicate.test(i)) {
+-                        pollingCandidates.add(i);
++                for (int i = Constants.ADDR_TV; i <= CommonUsedCandidates.length - 1; ++i) {
++                    if (pickPredicate.test(CommonUsedCandidates[i])) {
++                        pollingCandidates.add(CommonUsedCandidates[i]);
+                     }
+                 }
+                 break;
+             case Constants.POLL_ITERATION_REVERSE_ORDER:
+             default:  // The default is reverse order.
+-                for (int i = Constants.ADDR_SPECIFIC_USE; i >= Constants.ADDR_TV; --i) {
+-                    if (pickPredicate.test(i)) {
+-                        pollingCandidates.add(i);
++                for (int i = CommonUsedCandidates.length - 1; i >= Constants.ADDR_TV; --i) {
++                    if (pickPredicate.test(CommonUsedCandidates[i])) {
++                        pollingCandidates.add(CommonUsedCandidates[i]);
+                     }
+                 }
+                 break;
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java b/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
+index 9fda153..abcb002 100644
+--- a/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
++++ b/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
+@@ -588,6 +588,10 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+         HdmiDeviceInfo deviceInfo = new HdmiDeviceInfo(address, path, getPortId(path), type,
+                 Constants.UNKNOWN_VENDOR_ID, HdmiUtils.getDefaultDeviceName(address));
+         addCecDevice(deviceInfo);
++        if (HdmiUtils.getTypeFromAddress(address)
++            == HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM) {
++            onNewAvrAdded(deviceInfo);
++        }
+         startNewDeviceAction(ActiveSource.of(address, path), type);
+         return true;
+     }
+diff --git a/services/core/java/com/android/server/hdmi/NewDeviceAction.java b/services/core/java/com/android/server/hdmi/NewDeviceAction.java
+index 6753368..d6023be 100644
+--- a/services/core/java/com/android/server/hdmi/NewDeviceAction.java
++++ b/services/core/java/com/android/server/hdmi/NewDeviceAction.java
+@@ -180,11 +180,6 @@ final class NewDeviceAction extends HdmiCecFeatureAction {
+ 
+         // Consume CEC messages we already got for this newly found device.
+         tv().processDelayedMessages(mDeviceLogicalAddress);
+-
+-        if (HdmiUtils.getTypeFromAddress(mDeviceLogicalAddress)
+-                == HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM) {
+-            tv().onNewAvrAdded(deviceInfo);
+-        }
+     }
+ 
+     @Override
+-- 
+2.10.2
+

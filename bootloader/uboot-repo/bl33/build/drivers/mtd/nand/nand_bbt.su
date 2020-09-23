@@ -1,0 +1,13 @@
+nand_bbt.c:1050:13:verify_bbt_descr	16	static
+nand_bbt.c:470:12:create_bbt	160	static
+nand_bbt.c:187:12:read_bbt	160	static
+nand_bbt.c:280:12:read_abs_bbt	80	static
+nand_bbt.c:642:12:write_bbt	416	static
+nand_bbt.c:1170:12:nand_update_bbt	64	static
+nand_bbt.c:990:13:mark_bbt_region	96	static
+nand_bbt.c:360:12:scan_read	128	static
+nand_bbt.c:540:12:search_bbt	112	static
+nand_bbt.c:1102:5:nand_scan_bbt	128	static
+nand_bbt.c:1304:5:nand_default_bbt	32	static
+nand_bbt.c:1337:5:nand_isbad_bbt	0	static
+nand_bbt.c:1365:5:nand_markbad_bbt	0	static

@@ -1,0 +1,86 @@
+component_class: LIB_SHARED
+component_type: VNDK_LIBCUTILS
+component_type_version: 1.0
+component_name: "libcutils"
+
+header: "<unistd.h>"
+header: "<stdint.h>"
+header: "<sys/types.h>"
+
+interface: {
+  api: {
+    name: "qtaguid_tagSocket"
+    return_type: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "uint32_t"
+    }
+  }
+
+  api: {
+    name: "qtaguid_untagSocket"
+    return_type: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+  }
+
+  api: {
+    name: "qtaguid_setCounterSet"
+    return_type: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "uint32_t"
+    }
+  }
+
+  api: {
+    name: "qtaguid_deleteTagData"
+    return_type: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "uint32_t"
+    }
+  }
+
+  api: {
+    name: "qtaguid_setPacifier"
+    return_type: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "int32_t"
+    }
+  }
+}

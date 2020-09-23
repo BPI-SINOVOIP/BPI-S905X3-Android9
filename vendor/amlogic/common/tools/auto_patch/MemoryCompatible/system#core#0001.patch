@@ -1,0 +1,62 @@
+From dc895085ce7b71797a196cd3425b6d1d22b9682a Mon Sep 17 00:00:00 2001
+From: "huijie.huang" <huijie.huang@amlogic.com>
+Date: Fri, 29 Mar 2019 16:18:51 +0800
+Subject: [PATCH] T962X2_x301: add one img compat multi memory mode function
+ [4/4]
+
+PD#SWPL-6343
+
+Problem:
+Compatible 1G and 2G platform in one suite code
+
+Solution:
+Switch memory size through uboot command line
+
+Verify:
+test pass on TL1-X301
+
+Change-Id: I669baf0e8047415c8d60e4c75a143bec0a6be485
+Signed-off-by: huijie.huang <huijie.huang@amlogic.com>
+---
+ init/init.cpp             | 2 ++
+ init/property_service.cpp | 6 ++++++
+ 2 files changed, 8 insertions(+)
+
+diff --git a/init/init.cpp b/init/init.cpp
+index 4fe115e..9c6dfaf 100644
+--- a/init/init.cpp
++++ b/init/init.cpp
+@@ -356,6 +356,8 @@ static void import_kernel_nv(const std::string& key, const std::string& value, b
+         strlcpy(qemu, value.c_str(), sizeof(qemu));
+     } else if (android::base::StartsWith(key, "androidboot.")) {
+         property_set("ro.boot." + key.substr(12), value);
++    } else if (key == "mem_size") {
++        property_set("ro.mem_size", value);
+     }
+ }
+ 
+diff --git a/init/property_service.cpp b/init/property_service.cpp
+index 4172ba7..c633bf3 100644
+--- a/init/property_service.cpp
++++ b/init/property_service.cpp
+@@ -757,11 +757,17 @@ void load_recovery_id_prop() {
+ }
+ 
+ void load_system_props() {
++    std::string ddrMode = android::base::GetProperty("ro.mem_size", "2g");
++
+     load_properties_from_file("/system/build.prop", NULL);
+     load_properties_from_file("/odm/build.prop", NULL);
+     load_properties_from_file("/vendor/build.prop", NULL);
+     load_properties_from_file("/factory/factory.prop", "ro.*");
+     load_recovery_id_prop();
++
++    if (ddrMode == "1g") {
++        load_properties_from_file("/vendor/etc/mem_1g_ro.prop", NULL);
++    }
+ }
+ 
+ static int SelinuxAuditCallback(void* data, security_class_t /*cls*/, char* buf, size_t len) {
+-- 
+1.9.1
+

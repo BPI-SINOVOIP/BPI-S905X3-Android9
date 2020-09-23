@@ -1,0 +1,9 @@
+dwc_pcd_irq.c:53:13:dwc_otg_ep_start_transfer	0	static
+dwc_pcd_irq.c:913:13:ep0_out_start	16	static
+dwc_pcd_irq.c:197:13:5	16	static
+dwc_pcd_irq.c:367:12:4	48	static
+dwc_pcd_irq.c:19:6:dwc_otg_flush_fifo	32	static
+dwc_pcd_irq.c:107:6:dwc_otg_bulk_ep_activate	0	static
+dwc_pcd_irq.c:138:5:f_dwc_otg_ep_req_start	32	static
+dwc_pcd_irq.c:281:13:handle_ep0	48	static
+dwc_pcd_irq.c:1050:5:f_dwc_pcd_irq	112	static

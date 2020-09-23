@@ -1,0 +1,5 @@
+cmd_mtdparts.c:1990:12:do_mtdparts	32	static
+cmd_mtdparts.c:787:20:device_find	0	static
+cmd_mtdparts.c:1049:5:mtd_id_parse	64	static
+cmd_mtdparts.c:1417:5:find_dev_and_part	96	static
+cmd_mtdparts.c:1952:12:do_chpart	128	static

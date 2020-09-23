@@ -1,0 +1,239 @@
+From bcfd34b721ef3070185116815cc032c823880768 Mon Sep 17 00:00:00 2001
+From: Nick Chalko <nchalko@google.com>
+Date: Fri, 9 Nov 2018 11:49:26 -0800
+Subject: [PATCH 1/2] Add extcon specific UEventObserver
+
+Change-Id: If751f7264eebdedd9a23f8dbb33e1cc1fab00951
+Test: m -j services.core
+Bug: 116011465
+---
+ .../com/android/server/ExtconStateObserver.java    |  81 +++++++++++++
+ .../com/android/server/ExtconUEventObserver.java   | 128 +++++++++++++++++++++
+ 2 files changed, 209 insertions(+)
+ create mode 100644 services/core/java/com/android/server/ExtconStateObserver.java
+ create mode 100644 services/core/java/com/android/server/ExtconUEventObserver.java
+
+diff --git a/services/core/java/com/android/server/ExtconStateObserver.java b/services/core/java/com/android/server/ExtconStateObserver.java
+new file mode 100644
+index 0000000..cd4ccf8
+--- /dev/null
++++ b/services/core/java/com/android/server/ExtconStateObserver.java
+@@ -0,0 +1,81 @@
++/*
++ * Copyright (C) 2018 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++package com.android.server;
++
++import android.annotation.NonNull;
++import android.annotation.Nullable;
++import android.os.FileUtils;
++import android.util.Slog;
++
++import java.io.File;
++import java.io.IOException;
++
++/**
++ * A specialized ExtconUEventObserver that on receiving a {@link UEvent} calls {@link
++ * #updateState(ExtconInfo, String, S)} with the value of{@link #parseState(ExtconInfo, String)}.
++ *
++ * @param <S> the type of state to parse and update
++ * @hide
++ */
++public abstract class ExtconStateObserver<S> extends ExtconUEventObserver {
++    private static final String TAG = "ExtconStateObserver";
++    private static final boolean LOG = false;
++
++    /**
++     * Parses the current state from the state file for {@code extconInfo}.
++     *
++     * @param extconInfo the extconInfo to parse state for
++     * @see #parseState(ExtconInfo, String)
++     * @see ExtconInfo#getStatePath()
++     */
++    public S parseStateFromFile(ExtconInfo extconInfo) throws IOException {
++        String statePath = extconInfo.getStatePath();
++        return parseState(
++                extconInfo,
++                FileUtils.readTextFile(new File(statePath), 0, null).trim());
++    }
++
++    @Override
++    public void onUEvent(ExtconInfo extconInfo, UEvent event) {
++        if (LOG) Slog.d(TAG, extconInfo.getName() + " UEVENT: " + event);
++        String name = event.get("NAME");
++        S state = parseState(extconInfo, event.get("STATE"));
++        if (state != null) {
++            updateState(extconInfo, name, state);
++        }
++    }
++
++    /**
++     * Subclasses of ExtconStateObserver should override this method update state for {@code
++     * exconInfo} from an {@code UEvent}.
++     *
++     * @param extconInfo that matches the {@code DEVPATH} of {@code event}
++     * @param eventName the {@code NAME} of the {@code UEvent}
++     * @param state the{@code STATE} as parsed by {@link #parseState(ExtconInfo, String)}.
++     */
++    public abstract void updateState(ExtconInfo extconInfo, String eventName, @NonNull S state);
++
++    /**
++     * Subclasses of ExtconStateObserver should override this method to parse the {@code STATE} from
++     * an UEvent.
++     *
++     * @param extconInfo the external connection
++     * @param state the {@code STATE} from a {@code UEvent}.
++     * @return the parsed state. Return null if the state can not be parsed.
++     */
++    @Nullable
++    public abstract S parseState(ExtconInfo extconInfo, String state);
++}
+diff --git a/services/core/java/com/android/server/ExtconUEventObserver.java b/services/core/java/com/android/server/ExtconUEventObserver.java
+new file mode 100644
+index 0000000..b3084f5
+--- /dev/null
++++ b/services/core/java/com/android/server/ExtconUEventObserver.java
+@@ -0,0 +1,128 @@
++/*
++ * Copyright (C) 2018 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++package com.android.server;
++
++import android.annotation.Nullable;
++import android.os.UEventObserver;
++import android.util.ArrayMap;
++import android.util.Slog;
++
++import java.io.File;
++import java.io.IOException;
++import java.util.Locale;
++import java.util.Map;
++
++/**
++ * A specialized UEventObserver that receives UEvents from the kernel for devices in the {@code
++ * /sys/class/extcon}. directory
++ *
++ * <p>Subclass ExtconUEventObserver, implementing {@link #onUEvent(ExtconInfo, UEvent)}, then call
++ * startObserving() with a ExtconInfo to observe. The UEvent thread will then call your onUEvent()
++ * method when a UEvent occurs that matches the path of your ExtconInfos.
++ *
++ * <p>Call stopObserving() to stop receiving UEvents.
++ *
++ * <p>There is only one UEvent thread per process, even if that process has multiple UEventObserver
++ * subclass instances. The UEvent thread starts when the startObserving() is called for the first
++ * time in that process. Once started the UEvent thread will not stop (although it can stop
++ * notifying UEventObserver's via stopObserving()).
++ *
++ * <p>
++ *
++ * @hide
++ */
++public abstract class ExtconUEventObserver extends UEventObserver {
++    private static final String TAG = "ExtconUEventObserver";
++    private static final boolean LOG = false;
++    private final Map<String, ExtconInfo> mExtconInfos = new ArrayMap<>();
++
++    @Override
++    public final void onUEvent(UEvent event) {
++        String devPath = event.get("DEVPATH");
++        ExtconInfo info = mExtconInfos.get(devPath);
++        if (info != null) {
++            onUEvent(info, event);
++        } else {
++            Slog.w(TAG, "No match found for DEVPATH of " + event + " in " + mExtconInfos);
++        }
++    }
++
++    /**
++     * Subclasses of ExtconUEventObserver should override this method to handle UEvents.
++     *
++     * @param extconInfo that matches the {@code DEVPATH} of {@code event}
++     * @param event the event
++     */
++    protected abstract void onUEvent(ExtconInfo extconInfo, UEvent event);
++
++    /** Starts observing {@link ExtconInfo#getDevicePath()}. */
++    public void startObserving(ExtconInfo extconInfo) {
++        mExtconInfos.put(extconInfo.getDevicePath(), extconInfo);
++        if (LOG) Slog.v(TAG, "Observing  " + extconInfo.getDevicePath());
++        startObserving("DEVPATH=" + extconInfo.getDevicePath());
++    }
++
++    /** An External Connection to watch. */
++    public static final class ExtconInfo {
++        private static final String TAG = "ExtconInfo";
++
++        private final String mName;
++
++        public ExtconInfo(String name) {
++            mName = name;
++        }
++
++        /** The name of the external connection */
++        public String getName() {
++            return mName;
++        }
++
++        /**
++         * The path to the device for this external connection.
++         *
++         * <p><b>NOTE</b> getting this path involves resolving a symlink.
++         *
++         * @return the device path, or null if it not found.
++         */
++        @Nullable
++        public String getDevicePath() {
++            try {
++                String extconPath = String.format(Locale.US, "/sys/class/extcon/%s", mName);
++                File devPath = new File(extconPath);
++                if (devPath.exists()) {
++                    String canonicalPath = devPath.getCanonicalPath();
++                    int start = canonicalPath.indexOf("/devices");
++                    return canonicalPath.substring(start);
++                }
++                return null;
++            } catch (IOException e) {
++                Slog.e(TAG, "Could not get the extcon device path for " + mName, e);
++                return null;
++            }
++        }
++
++        /** The path to the state file */
++        public String getStatePath() {
++            return String.format(Locale.US, "/sys/class/extcon/%s/state", mName);
++        }
++    }
++
++    /** Does the {@link /sys/class/extcon} directory exist */
++    public static boolean extconExists() {
++        File extconDir = new File("/sys/class/extcon");
++        return extconDir.exists() && extconDir.isDirectory();
++    }
++}
+-- 
+1.9.1
+

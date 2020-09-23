@@ -1,0 +1,37 @@
+From a17cfdd18b4290bbf4a47d7919e41fd012bbeb61 Mon Sep 17 00:00:00 2001
+From: xian <an.xi@amlogic.com>
+Date: Fri, 10 May 2019 16:57:50 +0800
+Subject: [PATCH] TvInput: add hwbinder threads for tvinput [1/1]
+
+PD#SWPL-8171
+
+Problem:
+the tvinput hal service could be too busy to process
+client requests with only 1 thread
+
+Solution:
+set the max thread count to 4
+
+Verify:
+verify it on marconi
+
+Change-Id: I8594d70070be45b98d7a67d0651827f5cdea99d3
+Signed-off-by: an.xi <an.xi@amlogic.com>
+---
+ tv/input/1.0/default/service.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tv/input/1.0/default/service.cpp b/tv/input/1.0/default/service.cpp
+index d904d0b..4423326 100644
+--- a/tv/input/1.0/default/service.cpp
++++ b/tv/input/1.0/default/service.cpp
+@@ -27,5 +27,5 @@ using android::hardware::tv::input::V1_0::ITvInput;
+ using android::hardware::defaultPassthroughServiceImplementation;
+ 
+ int main() {
+-    return defaultPassthroughServiceImplementation<ITvInput>();
++    return defaultPassthroughServiceImplementation<ITvInput>(4);
+ }
+-- 
+1.9.1
+

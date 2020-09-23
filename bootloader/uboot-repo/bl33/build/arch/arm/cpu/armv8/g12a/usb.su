@@ -1,0 +1,7 @@
+usb.c:50:29:board_usb_start	64	static
+usb.c:76:5:board_usb_stop	16	static
+usb.c:84:6:board_usb_init	0	static
+usb.c:99:5:get_usb_count	0	static
+usb.c:115:6:set_usb_pll	32	static
+usb.c:157:6:board_usb_pll_disable	0	static
+usb.c:178:6:set_usb_phy_tuning_1	0	static

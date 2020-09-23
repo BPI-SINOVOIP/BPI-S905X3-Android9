@@ -1,0 +1,32 @@
+component_class: LIB_SHARED
+component_type: BIONIC_LIBM
+component_type_version: 1.0
+component_name: "libm"
+
+header: "<math.h>"
+
+interface: {
+  api: {
+    name: "fabs"
+    return_type: {
+      type: TYPE_SCALAR
+      scalar_type: "double_t"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "double_t"
+    }
+  }
+
+  api: {
+    name: "fabsf"
+    return_type: {
+      type: TYPE_SCALAR
+      scalar_type: "float_t"
+    }
+    arg: {
+      type: TYPE_SCALAR
+      scalar_type: "float_t"
+    }
+  }
+}

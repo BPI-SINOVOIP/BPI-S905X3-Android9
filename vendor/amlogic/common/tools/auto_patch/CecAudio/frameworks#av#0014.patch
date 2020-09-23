@@ -1,0 +1,194 @@
+From 7aa9a6895654f58fdb7ef6aa5a05e094a7d18877 Mon Sep 17 00:00:00 2001
+From: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date: Sun, 29 Sep 2019 17:31:29 +0800
+Subject: [PATCH] audio: support amadec audio passthough feature [3/3]
+
+PD#5817
+
+Problem:
+amadec do not support passthough
+
+Solution:
+add new api to support amadec passthough
+
+Verify:
+U212
+
+Change-Id: Ide731a28f3c6c32a22a788f15532af1adc212791
+Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+---
+ media/libaudioclient/AudioSystem.cpp               | 51 ++++++++++++++++++++++
+ media/libaudioclient/include/media/AudioSystem.h   |  1 +
+ .../include/media/stagefright/MetaDataBase.h       |  1 +
+ media/libstagefright/SimpleDecodingSource.cpp      |  9 ++--
+ media/libstagefright/Utils.cpp                     |  5 +++
+ services/audioflinger/Threads.cpp                  |  3 +-
+ 6 files changed, 66 insertions(+), 4 deletions(-)
+
+diff --git a/media/libaudioclient/AudioSystem.cpp b/media/libaudioclient/AudioSystem.cpp
+index c072901..202a82a 100644
+--- a/media/libaudioclient/AudioSystem.cpp
++++ b/media/libaudioclient/AudioSystem.cpp
+@@ -28,6 +28,8 @@
+ #include <math.h>
+ 
+ #include <system/audio.h>
++#include <cutils/properties.h>
++#include <cutils/str_parms.h>
+ 
+ // ----------------------------------------------------------------------------
+ 
+@@ -1091,6 +1093,55 @@ bool AudioSystem::isOffloadSupported(const audio_offload_info_t& info)
+     if (aps == 0) return false;
+     return aps->isOffloadSupported(info);
+ }
++#define PRIMARY_AUDIO_DEVICE   (AUDIO_DEVICE_OUT_WIRED_HEADPHONE|AUDIO_DEVICE_OUT_SPEAKER| \
++                                AUDIO_DEVICE_OUT_HDMI_ARC|AUDIO_DEVICE_OUT_SPDIF|AUDIO_DEVICE_OUT_HDMI)
++
++bool AudioSystem::isPassthroughSupported(const audio_format_t audioFormat)
++{
++    ALOGV("isPassthroughSupported()");
++
++    const sp<IAudioPolicyService>& aps = AudioSystem::get_audio_policy_service();
++    if (aps == 0) return false;
++    String8 mString = String8("");
++    struct str_parms *parms;
++    int hdmi_format = 0;
++    mString = getParameters(AUDIO_IO_HANDLE_NONE, String8("hdmi_format"));
++    if (!mString.isEmpty()) {
++      parms = str_parms_create_str (mString);
++      str_parms_get_int (parms, "hdmi_format", &hdmi_format);
++      ALOGI("hdmi_format:%d",hdmi_format);
++    } else {
++      hdmi_format = 0;
++    }
++    if (!property_get_bool("ro.vendor.platform.is.tv", false /* default_value */)) {
++       hdmi_format = 5;
++    }
++    if (hdmi_format == 0) {
++        return false;
++    } else {
++        if (!(AudioSystem::getDevicesForStream(AUDIO_STREAM_MUSIC) & PRIMARY_AUDIO_DEVICE)) {
++            ALOGI("PRIMARY_AUDIO_DEVICE NULL");   
++             return false;
++        } else {
++            unsigned int numSurroundFormats;
++            bool surroundFormatsEnabled[10];
++            bool reported = true;
++            audio_format_t surroundFormats[10];
++            if (NO_ERROR == aps->getSurroundFormats(
++                  &numSurroundFormats, surroundFormats, surroundFormatsEnabled, reported)) {
++                ALOGI("numSurroundFormats %d ",numSurroundFormats);
++               for (size_t i = 0; i < (size_t)numSurroundFormats; i++) {
++                   ALOGI("surroundFormats[i] %0x surroundFormatsEnabled[i] %d",surroundFormats[i],surroundFormatsEnabled[i]);
++                   if (audioFormat == surroundFormats[i] && surroundFormatsEnabled[i]) {
++                       return true;
++                   }
++               }
++            }
++        }
++    }
++    return false;
++}
++
+ 
+ status_t AudioSystem::listAudioPorts(audio_port_role_t role,
+                                      audio_port_type_t type,
+diff --git a/media/libaudioclient/include/media/AudioSystem.h b/media/libaudioclient/include/media/AudioSystem.h
+index 4c0f796..5a2eca8 100644
+--- a/media/libaudioclient/include/media/AudioSystem.h
++++ b/media/libaudioclient/include/media/AudioSystem.h
+@@ -288,6 +288,7 @@ public:
+     // Check if hw offload is possible for given format, stream type, sample rate,
+     // bit rate, duration, video and streaming or offload property is enabled
+     static bool isOffloadSupported(const audio_offload_info_t& info);
++    static bool isPassthroughSupported(const audio_format_t audioFormat);
+ 
+     // check presence of audio flinger service.
+     // returns NO_ERROR if binding to service succeeds, DEAD_OBJECT otherwise
+diff --git a/media/libmediaextractor/include/media/stagefright/MetaDataBase.h b/media/libmediaextractor/include/media/stagefright/MetaDataBase.h
+index b6ae39b..1338502 100644
+--- a/media/libmediaextractor/include/media/stagefright/MetaDataBase.h
++++ b/media/libmediaextractor/include/media/stagefright/MetaDataBase.h
+@@ -242,6 +242,7 @@ enum {
+     kKeyExifOffset       = 'exof', // int64_t, Exif data offset
+     kKeyExifSize         = 'exsz', // int64_t, Exif data size
+     kKeyIsExif           = 'exif', // bool (int32_t) buffer contains exif data block
++    kKeyIsPtenable       = 'ispt',
+ };
+ 
+ enum {
+diff --git a/media/libstagefright/SimpleDecodingSource.cpp b/media/libstagefright/SimpleDecodingSource.cpp
+index 404c537..3d760bd 100644
+--- a/media/libstagefright/SimpleDecodingSource.cpp
++++ b/media/libstagefright/SimpleDecodingSource.cpp
+@@ -35,8 +35,8 @@
+ 
+ using namespace android;
+ 
+-const int64_t kTimeoutWaitForOutputUs = 500000; // 0.5 seconds
+-const int64_t kTimeoutWaitForInputUs = 5000; // 5 milliseconds
++const int64_t kTimeoutWaitForOutputUs = 100000; // 0.1 seconds
++const int64_t kTimeoutWaitForInputUs = 1000; // 1 milliseconds
+ 
+ //static
+ sp<SimpleDecodingSource> SimpleDecodingSource::Create(
+@@ -219,7 +219,7 @@ status_t SimpleDecodingSource::read(
+ 
+     return res;
+ }
+-
++int is_full = 0;
+ status_t SimpleDecodingSource::doRead(
+         Mutexed<ProtectedState>::Locked &me, MediaBufferBase **buffer, const ReadOptions *options) {
+     // |me| is always locked on entry, but is allowed to be unlocked on exit
+@@ -335,6 +335,8 @@ status_t SimpleDecodingSource::doRead(
+                     me->mState = ERROR;
+                 }
+                 in_buf->release();
++                if (is_full == 1)
++                  break;
+             }
+         }
+ 
+@@ -396,6 +398,7 @@ status_t SimpleDecodingSource::doRead(
+             (*buffer)->meta_data().setInt64(kKeyTime, out_pts);
+             mCodec->releaseOutputBuffer(out_ix);
+         }
++        is_full = 1;
+         return OK;
+     }
+ 
+diff --git a/media/libstagefright/Utils.cpp b/media/libstagefright/Utils.cpp
+index ffd7c98..367bab6 100644
+--- a/media/libstagefright/Utils.cpp
++++ b/media/libstagefright/Utils.cpp
+@@ -842,6 +842,11 @@ status_t convertMetaDataToMessage(
+         if (meta->findInt32(kKeyPcmEncoding, &pcmEncoding)) {
+             msg->setInt32("pcm-encoding", pcmEncoding);
+         }
++        int32_t isPassthroughEnable;
++        if (meta->findInt32(kKeyIsPtenable, &isPassthroughEnable)) {
++           ALOGI("isPassthroughEnable %d",isPassthroughEnable);
++           msg->setInt32("is_passthrough_enable", isPassthroughEnable); 
++        }
+     }
+ 
+     int32_t maxInputSize;
+diff --git a/services/audioflinger/Threads.cpp b/services/audioflinger/Threads.cpp
+index 9bc2d58..570fd21 100644
+--- a/services/audioflinger/Threads.cpp
++++ b/services/audioflinger/Threads.cpp
+@@ -5441,7 +5441,8 @@ AudioFlinger::PlaybackThread::mixer_state AudioFlinger::DirectOutputThread::prep
+                 }
+ 
+                 int64_t framesWritten = mBytesWritten / mFrameSize;
+-                if (mStandby || !last ||
++                bool need_remove = track->isTerminated()||track->isStopped();
++                if (mStandby || !last || need_remove ||
+                         track->presentationComplete(framesWritten, audioHALFrames)) {
+                     if (track->isStopping_2()) {
+                         track->mState = TrackBase::STOPPED;
+-- 
+2.7.4
+

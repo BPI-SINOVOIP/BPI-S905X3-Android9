@@ -1,0 +1,3 @@
+rand.c:15:14:rand_r	0	static
+rand.c:24:14:rand	0	static
+rand.c:29:6:srand	0	static

@@ -1,0 +1,65 @@
+From bae4894776fb2d3cb403d6709c528b9a100f7a30 Mon Sep 17 00:00:00 2001
+From: Jinping Wang <jinping.wang@amlogic.com>
+Date: Tue, 21 May 2019 17:18:52 +0800
+Subject: [PATCH] cec: tv won't be ActiveSource [1/1]
+
+PD# SWPL-7976
+
+Problem:
+tv maybe Active Source when boot up or cec enabled
+
+Solution:
+tv should send <Request Active Source> when boot up or cec enabled
+
+Verify:
+verify by p321
+
+Change-Id: I2ee796d677c640aaadc994f8b5e5c109b563431f
+Signed-off-by: Jinping Wang <jinping.wang@amlogic.com>
+---
+ .../java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java     |  7 +++++--
+ .../java/com/android/server/hdmi/HdmiCecMessageBuilder.java    | 10 ++++++++++
+ 2 files changed, 15 insertions(+), 2 deletions(-)
+
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java b/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
+index 0d6bc11..3df9f6e 100644
+--- a/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
++++ b/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
+@@ -1607,8 +1607,11 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+             setActivePath(activePath);
+             if (!routingForBootup
+                     && !mDelayedMessageBuffer.isBuffered(Constants.MESSAGE_ACTIVE_SOURCE)) {
+-                mService.sendCecCommand(HdmiCecMessageBuilder.buildActiveSource(mAddress,
+-                        activePath));
++                mService.sendCecCommand(HdmiCecMessageBuilder.buildRequestActiveSource(mAddress));
++                /*
++                 mService.sendCecCommand(HdmiCecMessageBuilder.buildActiveSource(mAddress,
++                         activePath));
++                */
+             }
+         }
+     }
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecMessageBuilder.java b/services/core/java/com/android/server/hdmi/HdmiCecMessageBuilder.java
+index bcb927e..c01c008 100644
+--- a/services/core/java/com/android/server/hdmi/HdmiCecMessageBuilder.java
++++ b/services/core/java/com/android/server/hdmi/HdmiCecMessageBuilder.java
+@@ -267,6 +267,16 @@ public class HdmiCecMessageBuilder {
+     }
+ 
+     /**
++     * Build &lt;Request Active Source&gt; command.
++     *
++     * @param src source address of command
++     * @return newly created {@link HdmiCecMessage}
++     */
++    static HdmiCecMessage buildRequestActiveSource(int src) {
++        return buildCommand(src, Constants.ADDR_BROADCAST, Constants.MESSAGE_REQUEST_ACTIVE_SOURCE);
++    }
++
++    /**
+      * Build &lt;Inactive Source&gt; command.
+      *
+      * @param src source address of command
+-- 
+2.10.2
+

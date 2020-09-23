@@ -1,0 +1,93 @@
+From dad6bee45fd286ecd54632089e391059014876b5 Mon Sep 17 00:00:00 2001
+From: Zhao Yi <zhao.yi@amlogic.com>
+Date: Mon, 25 Mar 2019 20:29:01 +0800
+Subject: [PATCH] frameworks_av: MP4Extractor seek error [1/1]
+
+PD#SWPL-3714
+
+Problem:
+after seek option, playback return to beginning.
+
+Solution:
+if there is not Sync-Sample or
+only the first smaple is Sync-Sample,
+seek option does't find sync-sample.
+
+Verify:
+T962X_R311
+
+Change-Id: Iae1eb67f4211602a483ff812a97edf8c7cbbeabe
+Signed-off-by: Zhao Yi <zhao.yi@amlogic.com>
+---
+ media/extractors/mp4/MPEG4Extractor.cpp |  8 +++++++-
+ media/extractors/mp4/SampleTable.cpp    | 13 ++++++++++++-
+ media/extractors/mp4/SampleTable.h      |  2 +-
+ 3 files changed, 20 insertions(+), 3 deletions(-)
+
+diff --git a/media/extractors/mp4/MPEG4Extractor.cpp b/media/extractors/mp4/MPEG4Extractor.cpp
+index c0efb8d..22847d6 100644
+--- a/media/extractors/mp4/MPEG4Extractor.cpp
++++ b/media/extractors/mp4/MPEG4Extractor.cpp
+@@ -4987,8 +4987,14 @@ status_t MPEG4Source::read(
+ 
+             uint32_t syncSampleIndex;
+             if (err == OK) {
++                const char *mime;
++                bool is_video = false;
++                CHECK(mFormat.findCString(kKeyMIMEType, &mime));
++                if (!strncasecmp("video/", mime, 6)) {
++                    is_video = true;
++                }
+                 err = mSampleTable->findSyncSampleNear(
+-                        sampleIndex, &syncSampleIndex, findFlags);
++                        sampleIndex, &syncSampleIndex, findFlags,is_video);
+             }
+ 
+             uint32_t sampleTime;
+diff --git a/media/extractors/mp4/SampleTable.cpp b/media/extractors/mp4/SampleTable.cpp
+index 81c353e..9c84c54 100644
+--- a/media/extractors/mp4/SampleTable.cpp
++++ b/media/extractors/mp4/SampleTable.cpp
+@@ -798,7 +798,7 @@ status_t SampleTable::findSampleAtTime(
+ }
+ 
+ status_t SampleTable::findSyncSampleNear(
+-        uint32_t start_sample_index, uint32_t *sample_index, uint32_t flags) {
++        uint32_t start_sample_index, uint32_t *sample_index, uint32_t flags, bool is_video) {
+     Mutex::Autolock autoLock(mLock);
+ 
+     *sample_index = 0;
+@@ -814,6 +814,17 @@ status_t SampleTable::findSyncSampleNear(
+         return OK;
+     }
+ 
++    //mov's stss is wrong sometimes,
++    if (is_video &&
++        (mNumSyncSamples == 0 || (mNumSyncSamples == 1 && mSyncSamples[0] == 0))
++       ) {
++        //there is not Sync-Sample
++        //or only the first sample is Sync-Smaple
++        ALOGI("mov's stss is wrong sometimes, there is not Sync-Sample or only the first sample is Sync-Smaple");
++        *sample_index = start_sample_index;
++        return OK;
++    }
++
+     uint32_t left = 0;
+     uint32_t right_plus_one = mNumSyncSamples;
+     while (left < right_plus_one) {
+diff --git a/media/extractors/mp4/SampleTable.h b/media/extractors/mp4/SampleTable.h
+index e4e974b..a86901c 100644
+--- a/media/extractors/mp4/SampleTable.h
++++ b/media/extractors/mp4/SampleTable.h
+@@ -81,7 +81,7 @@ public:
+ 
+     status_t findSyncSampleNear(
+             uint32_t start_sample_index, uint32_t *sample_index,
+-            uint32_t flags);
++            uint32_t flags, bool is_video);
+ 
+     status_t findThumbnailSample(uint32_t *sample_index);
+ 
+-- 
+1.9.1
+

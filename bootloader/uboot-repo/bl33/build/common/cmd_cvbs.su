@@ -1,0 +1,5 @@
+cmd_cvbs.c:96:12:do_cvbs	48	static
+cmd_cvbs.c:83:12:do_vdac	16	static
+cmd_cvbs.c:36:12:do_cvbs_debug	16	static
+cmd_cvbs.c:29:12:do_cvbs_init	16	static
+cmd_cvbs.c:54:12:do_cvbs_output	48	static

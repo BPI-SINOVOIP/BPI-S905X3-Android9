@@ -1,0 +1,11 @@
+optimus_sdc_burn.c:35:5:get_burn_parts_from_img	96	static
+optimus_sdc_burn.c:85:5:optimus_verify_partition	160	static
+optimus_sdc_burn.c:135:12:optimus_burn_one_partition	672	static
+optimus_sdc_burn.c:260:5:optimus_sdc_burn_partitions	80	static
+optimus_sdc_burn.c:298:5:optimus_sdc_burn_media_partition	0	static
+optimus_sdc_burn.c:304:5:optimus_burn_bootlader	16	static
+optimus_sdc_burn.c:319:5:optimus_report_burn_complete_sta	48	static
+optimus_sdc_burn.c:339:5:optimus_sdc_burn_dtb_load	592	static
+optimus_sdc_burn.c:594:5:optimus_burn_with_cfg_file	96	static
+optimus_sdc_burn.c:769:5:optimus_burn_package_in_sdmmc	32	static
+optimus_sdc_burn.c:793:5:do_sdc_burn	32	static

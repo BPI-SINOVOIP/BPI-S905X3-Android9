@@ -1,0 +1,4 @@
+avb_property_descriptor.c:28:6:avb_property_descriptor_validate_and_byteswap	48	static
+avb_property_descriptor.c:68:13:property_lookup_desc_foreach	80	static
+avb_property_descriptor.c:107:13:avb_property_lookup	80	static
+avb_property_descriptor.c:135:6:avb_property_lookup_uint64	32	static

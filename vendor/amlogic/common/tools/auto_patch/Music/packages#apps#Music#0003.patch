@@ -1,0 +1,55 @@
+From 36d25f0c5f700d757f457bedf9bc7177f1d7a3c1 Mon Sep 17 00:00:00 2001
+From: xi an <an.xi@amlogic.com>
+Date: Fri, 22 Mar 2019 09:56:46 +0800
+Subject: [PATCH] Music: fix a null ptr crash [1/1]
+
+PD#SWPL-6172
+
+Problem:
+null object of MediaMetadata could cause crash
+
+Solution:
+add null ptr protection
+
+Verify:
+Ampere
+
+Change-Id: Ieff6c54c1fa7254b143412425e29795ec3c12994
+Signed-off-by: xi an <an.xi@amlogic.com>
+---
+ src/com/android/music/MediaPlaybackActivity.java | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
+ mode change 100644 => 100755 src/com/android/music/MediaPlaybackActivity.java
+
+diff --git a/src/com/android/music/MediaPlaybackActivity.java b/src/com/android/music/MediaPlaybackActivity.java
+old mode 100644
+new mode 100755
+index 6910a81..98de470
+--- a/src/com/android/music/MediaPlaybackActivity.java
++++ b/src/com/android/music/MediaPlaybackActivity.java
+@@ -236,13 +236,15 @@ public class MediaPlaybackActivity
+                     long now = SystemClock.elapsedRealtime();
+                     if ((now - mLastSeekEventTime) > 250) {
+                         mLastSeekEventTime = now;
+-                        long duration = getMediaController().getMetadata().getLong(
+-                                MediaMetadata.METADATA_KEY_DURATION);
+-                        long position = duration * progress / 1000;
+-                        getMediaController().getTransportControls().seekTo(position);
+-                        // trackball event, allow progress updates
+-                        if (!mmFromTouch) {
+-                            updateProgressBar();
++                        MediaMetadata metadata = getMediaController().getMetadata();
++                        if (metadata != null) {
++                            long duration = metadata.getLong(MediaMetadata.METADATA_KEY_DURATION);
++                            long position = duration * progress / 1000;
++                            getMediaController().getTransportControls().seekTo(position);
++                            // trackball event, allow progress updates
++                            if (!mmFromTouch) {
++                                updateProgressBar();
++                            }
+                         }
+                     }
+                 }
+-- 
+1.9.1
+

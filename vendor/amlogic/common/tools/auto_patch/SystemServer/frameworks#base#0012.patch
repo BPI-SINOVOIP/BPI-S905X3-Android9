@@ -1,0 +1,37 @@
+From a59bb3bd97e1807626986b9bc6e6cb8832e6b3ad Mon Sep 17 00:00:00 2001
+From: xian <an.xi@amlogic.com>
+Date: Tue, 20 Aug 2019 02:36:43 -0400
+Subject: [PATCH] Watchdog: systemserver catch hdmicecd stack  [2/2]
+
+PD#OTT-5825
+
+Problem:
+systemserver should catch hdmicecd stack when dump stacks
+
+Solution:
+add it in watchdog
+
+Verify:
+verify it on marconi
+
+Change-Id: I106776db1aedf61e9b66c9dc83339fba878dbdb6
+Signed-off-by: an.xi <an.xi@amlogic.com>
+---
+ services/core/java/com/android/server/Watchdog.java | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/services/core/java/com/android/server/Watchdog.java b/services/core/java/com/android/server/Watchdog.java
+index 959b422..f848ce2 100644
+--- a/services/core/java/com/android/server/Watchdog.java
++++ b/services/core/java/com/android/server/Watchdog.java
+@@ -93,6 +93,7 @@ public class Watchdog extends Thread {
+         "com.droidlogic.tvinput",
+         "com.android.tv",
+         "/vendor/bin/hw/android.hardware.tv.input@1.0-service",
++        "/vendor/bin/hdmicecd",
+     };
+ 
+     public static final List<String> HAL_INTERFACES_OF_INTEREST = Arrays.asList(
+-- 
+2.7.4
+

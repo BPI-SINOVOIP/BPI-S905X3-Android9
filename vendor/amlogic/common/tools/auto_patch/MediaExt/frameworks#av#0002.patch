@@ -1,0 +1,38 @@
+From 239b8c3cfe9a76e4995ee9cb97aaf66a882bfb36 Mon Sep 17 00:00:00 2001
+From: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date: Sat, 13 Oct 2018 17:57:41 +0800
+Subject: [PATCH] audio: support dolby passthrough [1/1]
+
+PD#SWPL-186
+
+Problem:
+  no dolby passthrough function
+
+Solution:
+  add configuration for dolby decoder
+  to output raw data
+
+Verify:
+verified by p212
+
+Change-Id: Id3c87549b86f3e634fd771f6923436d4831ed8eb
+---
+ media/libstagefright/ACodec.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/media/libstagefright/ACodec.cpp b/media/libstagefright/ACodec.cpp
+index df7a0ae..fd7b50b 100644
+--- a/media/libstagefright/ACodec.cpp
++++ b/media/libstagefright/ACodec.cpp
+@@ -2238,7 +2238,7 @@ status_t ACodec::configureCodec(
+         }
+     }
+     /*add by amlogic for audio extend format support*/
+-    else if ( AVUtils::get()->isAudioExtendFormat(mime))
++    if ( AVUtils::get()->isAudioExtendFormat(mime))
+         err = AVUtils::get()->setAudioExtendParameter(mime ,mOMXNode, msg);
+ 
+     if (err != OK) {
+-- 
+2.7.4
+

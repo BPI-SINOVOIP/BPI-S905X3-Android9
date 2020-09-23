@@ -1,0 +1,41 @@
+From 5fffa623fb5643cc3903bc05d67492386d084bb9 Mon Sep 17 00:00:00 2001
+From: Shuide Chen <shuide.chen@amlogic.com>
+Date: Tue, 19 Mar 2019 13:02:52 +0800
+Subject: [PATCH] Browser: add mixed content support for broser test apk [1/1]
+
+PD#SWPL-5814
+
+Problem:
+The demo apk not support mixed content, it intended to, for security reason.
+but it caused some website access with error and QA reported bug. so enable it.
+
+Solution:
+enable mixed content, should not merge.
+
+Verify:
+Locally
+
+Change-Id: I2bde0006a4d244ce4e67ce52e0e99992c3e15da0
+Signed-off-by: Shuide Chen <shuide.chen@amlogic.com>
+---
+ src/org/chromium/webview_shell/WebViewBrowserActivity.java | 1 +
+ 1 file changed, 1 insertion(+)
+ mode change 100644 => 100755 src/org/chromium/webview_shell/WebViewBrowserActivity.java
+
+diff --git a/src/org/chromium/webview_shell/WebViewBrowserActivity.java b/src/org/chromium/webview_shell/WebViewBrowserActivity.java
+old mode 100644
+new mode 100755
+index 1da563e..e34456b
+--- a/src/org/chromium/webview_shell/WebViewBrowserActivity.java
++++ b/src/org/chromium/webview_shell/WebViewBrowserActivity.java
+@@ -383,6 +383,7 @@ public class WebViewBrowserActivity extends Activity implements PopupMenu.OnMenu
+         settings.setGeolocationEnabled(true);
+         settings.setDatabaseEnabled(true);
+         settings.setDomStorageEnabled(true);
++        settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+     }
+ 
+     private void about() {
+-- 
+1.9.1
+

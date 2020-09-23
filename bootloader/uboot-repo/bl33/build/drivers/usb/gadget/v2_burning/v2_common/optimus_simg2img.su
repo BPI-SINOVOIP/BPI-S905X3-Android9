@@ -1,0 +1,5 @@
+optimus_simg2img.c:56:5:optimus_simg_probe	32	static
+optimus_simg2img.c:83:5:optimus_simg_parser_init	32	static
+optimus_simg2img.c:110:5:optimus_simg_to_media	128	static
+optimus_simg2img.c:308:5:optimus_sparse_back_info_probe	32	static
+optimus_simg2img.c:325:5:optimus_sparse_get_chunk_data	32	static

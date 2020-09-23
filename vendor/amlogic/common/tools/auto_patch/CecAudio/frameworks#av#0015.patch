@@ -1,0 +1,25 @@
+From d29299858bbfff2604675bbc938815195a16e164 Mon Sep 17 00:00:00 2001
+From: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date: Wed, 25 Sep 2019 10:39:27 +0800
+Subject: [PATCH] Add audio device type AUDIO_DEVICE_IN_HDMI_ARC
+
+Change-Id: Ie0edb2258b56186c1c47be41a5feef88ee33a5c3
+---
+ media/libmedia/TypeConverter.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/media/libmedia/TypeConverter.cpp b/media/libmedia/TypeConverter.cpp
+index 514c795..c113a83 100644
+--- a/media/libmedia/TypeConverter.cpp
++++ b/media/libmedia/TypeConverter.cpp
+@@ -74,6 +74,7 @@ const InputDeviceConverter::Table InputDeviceConverter::mTable[] = {
+     MAKE_STRING_FROM_ENUM(AUDIO_DEVICE_IN_WIRED_HEADSET),
+     MAKE_STRING_FROM_ENUM(AUDIO_DEVICE_IN_AUX_DIGITAL),
+     MAKE_STRING_FROM_ENUM(AUDIO_DEVICE_IN_HDMI),
++    {"VX_AUDIO_DEVICE_IN_HDMI_ARC", AUDIO_DEVICE_IN_HDMI_ARC},
+     MAKE_STRING_FROM_ENUM(AUDIO_DEVICE_IN_TELEPHONY_RX),
+     MAKE_STRING_FROM_ENUM(AUDIO_DEVICE_IN_VOICE_CALL),
+     MAKE_STRING_FROM_ENUM(AUDIO_DEVICE_IN_BACK_MIC),
+-- 
+2.7.4
+

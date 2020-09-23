@@ -1,0 +1,22 @@
+// Copyright 2017 The Android Open Source Project
+
+cc_library {
+    name: "libdroiduuid",
+    vendor: true,
+    srcs: [
+        "clear.c",
+        "compare.c",
+        "copy.c",
+        "gen_uuid.c",
+        "isnull.c",
+        "pack.c",
+        "parse.c",
+        "unpack.c",
+        "unparse.c",
+        "uuid_time.c",
+    ],
+    cflags: [
+        "-Wno-unused-function",
+        "-Wno-unused-parameter",
+    ],
+}

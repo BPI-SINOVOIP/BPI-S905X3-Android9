@@ -1,0 +1,5 @@
+optimus_progress.c:43:5:optimus_progress_init	0	static
+optimus_progress.c:65:5:optimus_progress_exit	0	static
+optimus_progress.c:70:5:optimus_update_progress	32	static
+optimus_progress.c:96:5:optimus_hex_data_2_ascii_str	80	static
+optimus_progress.c:113:10:add_sum	0	static

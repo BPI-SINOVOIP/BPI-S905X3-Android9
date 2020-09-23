@@ -1,0 +1,43 @@
+From 8fec01a1415e7ae54df587c36dfdc94daa270557 Mon Sep 17 00:00:00 2001
+From: Winson Chung <winsonc@google.com>
+Date: Thu, 26 Jul 2018 14:00:22 -0700
+Subject: [PATCH] Revert to O home button behaviour for over lockscreen
+ activities
+
+- Reverting specific changes from ag/3458963
+
+Bug: 111789245
+Test: Launch camera, hit home
+Change-Id: Ib0fe79dbe125e418193f991f22d09777e2bbc3bb
+---
+ .../java/com/android/server/policy/PhoneWindowManager.java | 14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
+
+diff --git a/services/core/java/com/android/server/policy/PhoneWindowManager.java b/services/core/java/com/android/server/policy/PhoneWindowManager.java
+index 7d6b896..69c2414 100644
+--- a/services/core/java/com/android/server/policy/PhoneWindowManager.java
++++ b/services/core/java/com/android/server/policy/PhoneWindowManager.java
+@@ -4397,17 +4397,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+             if (isKeyguardShowingAndNotOccluded()) {
+                 // don't launch home if keyguard showing
+                 return;
+-            } else if (mKeyguardOccluded && mKeyguardDelegate.isShowing()) {
+-                mKeyguardDelegate.dismiss(new KeyguardDismissCallback() {
+-                    @Override
+-                    public void onDismissSucceeded() throws RemoteException {
+-                        mHandler.post(() -> {
+-                            startDockOrHome(true /*fromHomeKey*/, awakenFromDreams);
+-                        });
+-                    }
+-                }, null /* message */);
+-                return;
+-            } else if (!mKeyguardOccluded && mKeyguardDelegate.isInputRestricted()) {
++            }
++
++            if (!mKeyguardOccluded && mKeyguardDelegate.isInputRestricted()) {
+                 // when in keyguard restricted mode, must first verify unlock
+                 // before launching home
+                 mKeyguardDelegate.verifyUnlock(new OnKeyguardExitResult() {
+-- 
+1.9.1
+

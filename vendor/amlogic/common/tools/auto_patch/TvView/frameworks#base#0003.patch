@@ -1,0 +1,54 @@
+From 3fce4d519cbf08327629b55b1b3eaecd836c8a8d Mon Sep 17 00:00:00 2001
+From: "zhiwei.yan" <zhiwei.yan@amlogic.com>
+Date: Fri, 28 Jun 2019 17:06:59 +0800
+Subject: [PATCH] TvView: fix null pointer erro [1/1]
+
+PD#TV-7242
+
+Problem:
+null pointer erro
+
+Solution:
+add null poninter detect
+
+Verify:
+ok on r314.
+
+Change-Id: I27438a58dc5274838b58018b0f5e02aaa829aa0e
+Signed-off-by: zhiwei.yan <zhiwei.yan@amlogic.com>
+---
+ media/java/android/media/tv/TvView.java | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/media/java/android/media/tv/TvView.java b/media/java/android/media/tv/TvView.java
+index d8bbe8334f7..28c9adfe77a 100644
+--- a/media/java/android/media/tv/TvView.java
++++ b/media/java/android/media/tv/TvView.java
+@@ -324,7 +324,9 @@ public class TvView extends ViewGroup {
+                 if (DEBUG) {
+                     Log.d(TAG, "send tune finished event");
+                 }
+-                mCallback.onEvent(inputId, EVENT_TUNE_FINISHED, null);
++                if (mCallback != null) {
++                    mCallback.onEvent(inputId, EVENT_TUNE_FINISHED, null);
++                }
+             } else {
+                 // createSession() was called but the actual session for the given inputId has not
+                 // yet been created. Just replace the existing tuning params in the callback with
+@@ -1123,9 +1125,11 @@ public class TvView extends ViewGroup {
+                 }
+                 ensurePositionTracking();
+                 if (DEBUG) {
+-                    Log.d(TAG, "send tune finished event");
++                    Log.d(TAG, "send tune after creat session event");
++                }
++                if (mCallback != null) {
++                    mCallback.onEvent(mInputId, EVENT_TUNE_FINISHED, null);
+                 }
+-                mCallback.onEvent(mInputId, EVENT_TUNE_FINISHED, null);
+             } else {
+                 mSessionCallback = null;
+                 if (mCallback != null) {
+-- 
+2.20.1
+

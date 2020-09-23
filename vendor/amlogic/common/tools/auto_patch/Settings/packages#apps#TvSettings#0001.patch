@@ -1,0 +1,37 @@
+From 971e69e703ec2640cf5d0bcb906a1bbb638bce22 Mon Sep 17 00:00:00 2001
+From: yu fang <yu.fang@amlogic.com>
+Date: Thu, 15 Nov 2018 16:53:42 +0800
+Subject: [PATCH] USB: Optimze process of updating USB configuration.[1/2]
+
+PD#SWPL-923
+
+Problem:
+Something wrong with updating USB configuration.
+
+Solution:
+Optimze process of updating USB configuration.
+
+Verify:
+Verified on all TV/OTT platform of android P.
+
+Change-Id: I687fe4ebc662cf9a224ac481bde284b31cc0d866
+---
+ .../com/android/tv/settings/system/development/DevelopmentFragment.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Settings/src/com/android/tv/settings/system/development/DevelopmentFragment.java b/Settings/src/com/android/tv/settings/system/development/DevelopmentFragment.java
+index f5a08b1..78cb0d4 100644
+--- a/Settings/src/com/android/tv/settings/system/development/DevelopmentFragment.java
++++ b/Settings/src/com/android/tv/settings/system/development/DevelopmentFragment.java
+@@ -1256,7 +1256,7 @@ public class DevelopmentFragment extends SettingsPreferenceFragment
+             int index = 0;
+             long functions = manager.getCurrentFunctions();
+             for (int i = 0; i < titles.length; i++) {
+-                if ((functions | UsbManager.usbFunctionsFromString(values[i])) != 0) {
++                if (manager.isFunctionEnabled(values[i])) {
+                     index = i;
+                     break;
+                 }
+--
+1.9.1
+

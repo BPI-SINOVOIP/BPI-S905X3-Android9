@@ -1,0 +1,148 @@
+From e5c1327dcb5cb23b304bd442931d4d8192433b91 Mon Sep 17 00:00:00 2001
+From: "shuanglong.wang" <shuanglong.wang@amlogic.com>
+Date: Tue, 25 Jun 2019 15:13:43 +0800
+Subject: [PATCH] StagefrightMetadataRetriever: fix some metadataretriver crash
+ problem [1/2]
+
+PD#TV-6625
+
+Problem:
+1.when miplayer play 8k video occur lowmemorykiller and mediacodec crash
+ pid: 8044, tid: 8428, name: omx@1.0-service >>> media.codec <<<
+signal 6 (SIGABRT), code -6 (SI_TKILL), fault addr --------
+Abort message: 'frameworks/av/media/libstagefright/omx/SimpleSoftOMXComponent.cpp:473 CHECK(state == OMX_StateLoaded || state == OMX_StateExecuting) failed.'
+    r0 00000000 r1 000020ec r2 00000006 r3 aeb9e918
+    r4 00001f6c r5 000020ec r6 a61713d4 r7 0000010c
+    r8 adc783a0 r9 a6171924 r10 adc78380 r11 00000000
+    ip adc47400 sp a61713c0 lr aeb2d0e5 pc aeb24e72
+
+ backtrace:
+    #00 pc 0001ce72 /system/lib/libc.so (abort+62)
+    #01 pc 00006dd5 /system/lib/liblog.so (__android_log_assert+156)
+    #02 pc 0002a2ab /system/lib/vndk-28/libstagefright_omx.so (android::SimpleSoftOMXComponent::onChangeState(OMX_STATETYPE)+210)
+2.mediaserver crash
+ pid: 9342, tid: 9369, name: Binder:9342_4 >>> /system/bin/mediaserver <<<
+ signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x0
+ Cause: null pointer dereference
+    r0 00000000 r1 00000000 r2 00000002 r3 00000065
+    r4 abcd1670 r5 00000000 r6 abcd15c8 r7 abcd16b8
+    r8 abcd16a0 r9 abcd15d0 r10 abcd15e0 r11 00000000
+    ip af7a4dec sp abcd15a8 lr af727687 pc af7276be
+
+ backtrace:
+    #00 pc 0006c6be /system/lib/libstagefright.so (android::FrameDecoder::extractInternal()+218)
+    #01 pc 0006c5b9 /system/lib/libstagefright.Solution (android::FrameDecoder::extractFrame(android::FrameRect*)+20)
+    #02 pc 000a1095 /system/lib/libstagefright.so (android::StagefrightMetadataRetriever::getFrameInternal(long long,int, int,int, bool,android::sp<android::IMemory
+    #03 pc 000a0e27 /system/lib/libstagefright.So (android::StagefrightMetadataRetriever::getFrameAtTime(long long,int, int, bool)+46
+
+Solution:
+1.mediacodec crash problem
+when enter video directory, mitv will media scan
+If some video have not get bitmap, it will decoder
+to get again. So when play 8k at the same time will
+occur lowmemory killer and mediacodec crash lead by
+mediaserver memory over 800M. Here we disalbe 8k soft
+decoder for metadataretriver.
+2.metadataretrive use hard codec have risk, disable it
+3.mediserver crash problem imporve error handle
+4.merge google patch
+commit d62d30773decf3cd44cbd2a4edc8f0daf7c0ca5b
+Author: Chong Zhang <chz@google.com>
+Date:   Thu Jun 14 12:28:32 2018 -0700
+
+    stagefright: send EOS to encoder for thumbnail extraction
+
+    Decoders might hold on to decoded frames for certain streams,
+    send EOS after last sample so that we get all output frames.
+
+    bug: 110116757
+    bug: 110226430
+
+    Test: CTS HeifWriterTest; MediaMetadataRetrieverTest
+    Change-Id: I0f8e7f1607857297325594adad8ca4fbff16e5e9
+
+Verify:
+verify by T972
+
+Change-Id: I3c3df1f11208e4030643dc299c3d2714e59ebf1a
+---
+ media/libstagefright/FrameDecoder.cpp                 |  9 ++++++---
+ media/libstagefright/StagefrightMetadataRetriever.cpp | 18 ++++++++++++++++++
+ 2 files changed, 24 insertions(+), 3 deletions(-)
+
+diff --git a/media/libstagefright/FrameDecoder.cpp b/media/libstagefright/FrameDecoder.cpp
+index 29a219f..9492067 100644
+--- a/media/libstagefright/FrameDecoder.cpp
++++ b/media/libstagefright/FrameDecoder.cpp
+@@ -291,7 +291,7 @@ status_t FrameDecoder::extractInternal() {
+             }
+             sp<MediaCodecBuffer> codecBuffer;
+             err = mDecoder->getInputBuffer(index, &codecBuffer);
+-            if (err != OK) {
++            if (err != OK || codecBuffer == NULL) {
+                 ALOGE("failed to get input buffer %zu", index);
+                 break;
+             }
+@@ -300,11 +300,14 @@ status_t FrameDecoder::extractInternal() {
+ 
+             err = mSource->read(&mediaBuffer, &mReadOptions);
+             mReadOptions.clearSeekTo();
+-            if (err != OK) {
+-                ALOGW("Input Error or EOS");
++            if (err != OK || mediaBuffer == NULL) {
+                 mHaveMoreInputs = false;
+                 if (!mFirstSample && err == ERROR_END_OF_STREAM) {
++                    (void)mDecoder->queueInputBuffer(
++                            index, 0, 0, 0, MediaCodec::BUFFER_FLAG_EOS);
+                     err = OK;
++                } else {
++                    ALOGW("Input Error: err=%d", err);
+                 }
+                 break;
+             }
+diff --git a/media/libstagefright/StagefrightMetadataRetriever.cpp b/media/libstagefright/StagefrightMetadataRetriever.cpp
+index e80ec3b..cedaa08 100644
+--- a/media/libstagefright/StagefrightMetadataRetriever.cpp
++++ b/media/libstagefright/StagefrightMetadataRetriever.cpp
+@@ -35,6 +35,7 @@
+ #include <media/stagefright/MediaExtractorFactory.h>
+ #include <media/stagefright/MetaData.h>
+ #include <media/CharacterEncodingDetector.h>
++#include <cutils/properties.h>
+ 
+ namespace android {
+ 
+@@ -297,6 +298,19 @@ status_t StagefrightMetadataRetriever::getFrameInternal(
+     sp<MetaData> trackMeta = mExtractor->getTrackMetaData(
+             i, MediaExtractor::kIncludeExtensiveMetaData);
+ 
++    char value[PROPERTY_VALUE_MAX];
++    if (property_get("media.metadataretriver.disable-8k", value, NULL) > 0) {
++        if (!strcmp(value, "1") || !strcmp(value, "true")) {
++            int width = 0, height = 0;
++            trackMeta->findInt32(kKeyWidth, &width);
++            trackMeta->findInt32(kKeyHeight, &height);
++            if ((((unsigned int)width) * ((unsigned int)height)) > (4096 * 2304)) {
++                ALOGI("8k[%d x %d] will not use soft compoment decoder frame for metadataretriver", width, height);
++                return UNKNOWN_ERROR;
++            }
++        }
++    }
++
+     if (metaOnly) {
+         if (outFrame != NULL) {
+             *outFrame = FrameDecoder::getMetadataOnly(trackMeta, colorFormat);
+@@ -334,6 +348,10 @@ status_t StagefrightMetadataRetriever::getFrameInternal(
+ 
+     for (size_t i = 0; i < matchingCodecs.size(); ++i) {
+         const AString &componentName = matchingCodecs[i];
++        if (!componentName.startsWithIgnoreCase("OMX.google.")
++            && !componentName.endsWithIgnoreCase(".sw")) {
++            break;
++        }
+         VideoFrameDecoder decoder(componentName, trackMeta, source);
+         if (decoder.init(timeUs, numFrames, option, colorFormat) == OK) {
+             if (outFrame != NULL) {
+-- 
+1.9.1
+

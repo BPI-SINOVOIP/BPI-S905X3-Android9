@@ -1,0 +1,41 @@
+From 1a5612a55cd5b54e0949543e85e08a7309f67d07 Mon Sep 17 00:00:00 2001
+From: rongrong zhou <rongrong.zhou@amlogic.com>
+Date: Tue, 5 Mar 2019 15:40:44 +0800
+Subject: [PATCH] mpeg4extractor: !mHasMoovBox && mMdatFound return init ok
+ [1/1]
+
+PD#SWPL-3731
+
+Problem:
+can not play
+
+Solution:
+moov not found, but found mdat, return ok
+
+verfiy:
+verify on p212
+
+Change-Id: I81cec611773fc5b1cf69aa2da3b6bdb0c4afe5ad
+---
+ media/extractors/mp4/MPEG4Extractor.cpp | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/media/extractors/mp4/MPEG4Extractor.cpp b/media/extractors/mp4/MPEG4Extractor.cpp
+index 26dbdef..c0efb8d 100644
+--- a/media/extractors/mp4/MPEG4Extractor.cpp
++++ b/media/extractors/mp4/MPEG4Extractor.cpp
+@@ -589,6 +589,11 @@ status_t MPEG4Extractor::readMetaData() {
+         off64_t orig_offset = offset;
+         err = parseChunk(&offset, 0);
+ 
++        if (err == ERROR_IO && !mHasMoovBox && mMdatFound) {
++            mInitCheck = OK;
++            ALOGI("moov not found, but return init ok\n");
++            break;
++        }
+         if (err != OK && err != UNKNOWN_ERROR) {
+             break;
+         } else if (offset <= orig_offset) {
+-- 
+2.7.4
+

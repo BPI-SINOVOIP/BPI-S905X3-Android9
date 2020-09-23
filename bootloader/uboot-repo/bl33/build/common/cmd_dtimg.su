@@ -1,0 +1,5 @@
+cmd_dtimg.c:107:12:do_dtimg	64	static
+cmd_dtimg.c:40:12:dtimg_get_fdt	160	static
+cmd_dtimg.c:95:12:do_dtimg_size	0	static
+cmd_dtimg.c:89:12:do_dtimg_start	0	static
+cmd_dtimg.c:15:12:do_dtimg_dump	48	static

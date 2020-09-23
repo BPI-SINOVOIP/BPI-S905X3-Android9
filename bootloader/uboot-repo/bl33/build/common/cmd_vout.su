@@ -1,0 +1,7 @@
+cmd_vout.c:241:12:do_vout	48	static
+cmd_vout.c:274:12:do_vout2	48	static
+cmd_vout.c:228:12:do_vout_info	16	static
+cmd_vout.c:40:12:do_vout_list	16	static
+cmd_vout.c:71:12:do_vout_output	112	static
+cmd_vout.c:127:12:do_vout2_output	96	static
+cmd_vout.c:177:12:do_vout2_prepare	48	static

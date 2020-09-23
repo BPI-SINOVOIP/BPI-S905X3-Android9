@@ -1,0 +1,35 @@
+From 4717d35e3ce7ec59fa3b3ab652d05c446bffa984 Mon Sep 17 00:00:00 2001
+From: "liangzhuo.xie" <liangzhuo.xie@amlogic.com>
+Date: Wed, 21 Nov 2018 15:16:46 +0800
+Subject: [PATCH] screencontrol: add screencontrol hidl interface [1/1]
+
+PD#SWPL-210
+
+Change-Id: I93930deeab7418d747b1b1b39601e877b1702826
+---
+ vintfdata/manifest.xml | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/vintfdata/manifest.xml b/vintfdata/manifest.xml
+index 51d68eb..decebbd 100644
+--- a/vintfdata/manifest.xml
++++ b/vintfdata/manifest.xml
+@@ -81,6 +81,15 @@
+         </interface>
+     </hal>
+     <hal>
++        <name>vendor.amlogic.hardware.screencontrol</name>
++        <transport>hwbinder</transport>
++        <version>1.0</version>
++        <interface>
++            <name>IScreenControl</name>
++            <instance>default</instance>
++        </interface>
++    </hal>
++    <hal>
+       <name>android.hardware.graphics.composer</name>
+       <transport>hwbinder</transport>
+       <version>2.1</version>
+-- 
+1.9.1
+

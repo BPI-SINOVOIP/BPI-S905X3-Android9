@@ -1,0 +1,307 @@
+From f6670020a2dc6610110fefc0d2a765daf4351857 Mon Sep 17 00:00:00 2001
+From: "an.xi" <an.xi@amlogic.com>
+Date: Thu, 9 Jan 2020 14:41:52 +0800
+Subject: [PATCH] netflix: add activeness notification feature for netflix
+ [1/1]
+
+PD#SWPL-19485
+
+Problem:
+netflix customed feature to notify the activeness state of
+local playback device.
+
+Solution:
+update the activeness value according to the cec switch,
+standby, and active state.
+
+Verify:
+verify it on u212
+
+Change-Id: If20154aea4c5cc3fbf20d2fd90781529a28c1197
+Signed-off-by: an.xi <an.xi@amlogic.com>
+---
+ .../com/android/server/hdmi/HdmiCecActiveness.java | 111 +++++++++++++++++++++
+ .../com/android/server/hdmi/HdmiCecController.java |  30 ++++++
+ .../server/hdmi/HdmiCecLocalDevicePlayback.java    |  30 ++++--
+ .../android/server/hdmi/HdmiControlService.java    |  14 ++-
+ 4 files changed, 177 insertions(+), 8 deletions(-)
+ create mode 100755 services/core/java/com/android/server/hdmi/HdmiCecActiveness.java
+
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecActiveness.java b/services/core/java/com/android/server/hdmi/HdmiCecActiveness.java
+new file mode 100755
+index 0000000..46abede
+--- /dev/null
++++ b/services/core/java/com/android/server/hdmi/HdmiCecActiveness.java
+@@ -0,0 +1,111 @@
++/*
++ * Copyright (c) 2014 Amlogic, Inc. All rights reserved.
++ *
++ * This source code is subject to the terms and conditions defined in the
++ * file 'LICENSE' which is part of this source code package.
++ *
++ * Description:
++ *     AMLOGIC HdmiCecActiveness
++ */
++
++package com.android.server.hdmi;
++
++import android.content.Context;
++import android.content.ContentResolver;
++import android.provider.Settings.Global;
++
++import android.util.Slog;
++
++import org.json.JSONObject;
++import org.json.JSONException;
++
++
++/**
++ * Notify the activeness of a playback
++ * HDMI-CEC Activeness​integration is required in NRDP 5.2. Following doc provides the guideline
++ * for Android TV Partner to integrate HDMI-CEC Activeness for Netflix.
++ * Ninja uses "nrdp_video_platform_capabilities" settings to signal video output related events and
++ * capabilities. The "nrdp_video_platform_capabilities" setting can be updated by invoking
++ * Settings.Global.putString(getContentResolver(), "nrdp_video_platform_capabilities", jsonCaps)
++ * jsonCaps is a JSON string, for example: {"activeCecState":"active", "xxx":"yyy"}
++ * Ninja APK uses “activeCecState” key in “nrdp_video_platform_capabilities” json value for
++ * HDMI-CEC Activeness integration. Android/Fire TV partners must report the correct
++ * “activeCecState” value in “nrdp_video_platform_capabilities” json if it’s HDMI source devices
++ * and device’s Ninja Validation Version >= ninja_7.
++ * Following table describes the supported JSON Keys for “nrdp_video_platform_capabilities”:
++ *
++ * Accepted values:
++ * ● "active": cecState dpi set to CEC_ACTIVE, dpi supportCecActiveVideo set to true
++ * ● "inactive": cecState dpi set to CEC_INACTIVE, dpi supportCecActiveVideo set to true
++ * ● "unknown": cecState set to CEC_NOT_APPLICABLE, dpi supportCecActiveVideo set to true
++ * ● no activeCecState value in "nrdp_video_platform_capabilities" json string: cecState set to
++ * CEC_NOT_APPLICABLE, dpi supportCecActiveVideo set to false
++ * ● other value: has the same effect as no activeCecState value
++ *
++ * notes:
++ * 1) If the device doesn't support HDMI-CEC integration or it’s non HDMI source source devices(e.g.
++ * smart TV), activeCecState should not be set.
++ * 2) If the device supports HDMI-CEC integration and it’s HDMI source devices(e.g. set-top-boxes and streaming
++ * sticks), activeCecState should be set to "active", "inactive" (or “unknown).
++ * 3) HDMI-CEC integration is mandatory for ​HDMI source devices​with Ninja Validation Version >= ninja_7
++ */
++public class HdmiCecActiveness {
++    private static final String TAG = "HdmiCecActiveness";
++
++    private static final String HDMI_ACTIVENESS_KEY = "activeCecState";
++
++    private static final String CEC_ACTIVE = "active";
++    private static final String CEC_INACTIVE = "inactive";
++    private static final String CEC_NOT_APPLICABLE = "unknown";
++    private static final String CEC_OTHER = CEC_NOT_APPLICABLE;
++
++    private static final String SETTINGS_CEC_ACTIVENESS = "nrdp_video_platform_capabilities";
++
++    private static String CEC_ACTIVENESS_ACTIVE_JSON = "";
++    private static String CEC_ACTIVENESS_INACTIVE_JSON = "";
++    private static String CEC_ACTIVENESS_UNKOWN_JSON = "";
++
++    public static boolean mActive;
++
++    static {
++        try {
++            JSONObject activeness = new JSONObject();
++            activeness.put(HDMI_ACTIVENESS_KEY, CEC_ACTIVE);
++            CEC_ACTIVENESS_ACTIVE_JSON = activeness.toString();
++
++            activeness.remove(HDMI_ACTIVENESS_KEY);
++            activeness.put(HDMI_ACTIVENESS_KEY, CEC_INACTIVE);
++            CEC_ACTIVENESS_INACTIVE_JSON = activeness.toString();
++
++            activeness.remove(HDMI_ACTIVENESS_KEY);
++            activeness.put(HDMI_ACTIVENESS_KEY, CEC_NOT_APPLICABLE);
++            CEC_ACTIVENESS_UNKOWN_JSON = activeness.toString();
++
++        } catch(JSONException e) {
++            Slog.e(TAG, "init HdmiCecActiveness json fail " + e);
++        }
++    }
++
++    public static void notifyState(Context context, boolean active) {
++        Slog.d(TAG, "notifyState " + active);
++        mActive = active;
++        ContentResolver cr = context.getContentResolver();
++        if (active) {
++            Global.putString(cr, SETTINGS_CEC_ACTIVENESS, CEC_ACTIVENESS_ACTIVE_JSON);
++        } else {
++            Global.putString(cr, SETTINGS_CEC_ACTIVENESS, CEC_ACTIVENESS_INACTIVE_JSON);
++        }
++    }
++
++    public static void enableState(Context context, boolean enable) {
++        Slog.d(TAG, "enableState " + enable);
++        // mActive state should be reset.
++        mActive = false;
++        ContentResolver cr = context.getContentResolver();
++        if (enable) {
++            Global.putString(cr, SETTINGS_CEC_ACTIVENESS, CEC_ACTIVENESS_UNKOWN_JSON);
++        } else {
++            Global.putString(cr, SETTINGS_CEC_ACTIVENESS, "");
++        }
++    }
++}
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecController.java b/services/core/java/com/android/server/hdmi/HdmiCecController.java
+index ae919af..9ef33f5 100755
+--- a/services/core/java/com/android/server/hdmi/HdmiCecController.java
++++ b/services/core/java/com/android/server/hdmi/HdmiCecController.java
+@@ -35,6 +35,7 @@ import java.util.LinkedList;
+ import java.util.List;
+ import java.util.function.Predicate;
+ import java.util.concurrent.ArrayBlockingQueue;
++import java.util.concurrent.CountDownLatch;
+ import libcore.util.EmptyArray;
+ import sun.util.locale.LanguageTag;
+ 
+@@ -489,6 +490,35 @@ final class HdmiCecController {
+         });
+     }
+ 
++    @ServiceThreadOnly
++    boolean isConenctedToCecTv(final int sourceAddress) {
++        final CountDownLatch latch = new CountDownLatch(1);
++        final PollResult pollResult = new PollResult();
++        runOnIoThread(new Runnable() {
++            @Override
++            public void run() {
++                boolean connected = sendPollMessage(sourceAddress, Constants.ADDR_TV, 1);
++                Slog.d(TAG, "isConenctedToCecTv " + connected);
++                pollResult.result = connected;
++                latch.countDown();
++            }
++        });
++
++        try {
++            latch.await();
++        } catch (InterruptedException e) {
++            Slog.e(TAG, "latch await fail " + e);
++        }
++
++        Slog.d(TAG, "isConenctedToCecTv pollResult.result " + pollResult.result);
++
++        return pollResult.result;
++    }
++
++    private class PollResult {
++        boolean result;
++    }
++
+     @IoThreadOnly
+     private boolean sendPollMessage(int sourceAddress, int destinationAddress, int retryCount) {
+         assertRunOnIoThread();
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java b/services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java
+index 544c1aa..9458173 100755
+--- a/services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java
++++ b/services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java
+@@ -177,6 +177,8 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
+             mService.wakeUp();
+         }
+         if (!connected) {
++            Slog.d(TAG, "onHotplug activeness reset to unkown");
++            HdmiCecActiveness.enableState(mService.getContext(), true);
+             getWakeLock().release();
+         }
+     }
+@@ -211,6 +213,26 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
+     @ServiceThreadOnly
+     void setActiveSource(boolean on) {
+         assertRunOnServiceThread();
++
++        boolean isConnected = mService.isConenctedToCecTv(mAddress);
++        // When the device is not connected to tv, the state should be "unkown" although the active
++        // State in here is true. Then when the devices is actually connected and active, we should
++        // Change the state of activeness.
++        boolean connectedActive = isConnected && on && !HdmiCecActiveness.mActive;
++        // When changes from active to inactive state or inverse, We should notify to
++        // Change the activeness state. Other situations should not be concerning.
++        boolean changesToActive = isConnected && on && !mIsActiveSource;
++        boolean changesToInActive = mIsActiveSource && !on;
++        Slog.d(TAG, "setIsActiveSource isConnected " + isConnected
++                + " connectedActive " + connectedActive
++                + " changesToActive " + changesToActive
++                + " changesToInActive " + changesToInActive);
++
++        if (connectedActive || changesToActive || changesToInActive) {
++            Slog.d(TAG, "activeness change to " + on);
++            HdmiCecActiveness.notifyState(mService.getContext(), on);
++        }
++
+         mIsActiveSource = on;
+         if (on) {
+             getWakeLock().acquire();
+@@ -252,16 +274,10 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
+     protected boolean handleActiveSource(HdmiCecMessage message) {
+         assertRunOnServiceThread();
+         int physicalAddress = HdmiUtils.twoBytesToInt(message.getParams());
+-        mayResetActiveSource(physicalAddress);
++        setActiveSource(physicalAddress == mService.getPhysicalAddress());
+         return true;  // Broadcast message.
+     }
+ 
+-    private void mayResetActiveSource(int physicalAddress) {
+-        if (physicalAddress != mService.getPhysicalAddress()) {
+-            setActiveSource(false);
+-        }
+-    }
+-
+     @ServiceThreadOnly
+     protected boolean handleUserControlPressed(HdmiCecMessage message) {
+         assertRunOnServiceThread();
+diff --git a/services/core/java/com/android/server/hdmi/HdmiControlService.java b/services/core/java/com/android/server/hdmi/HdmiControlService.java
+index f2d54ed..6faf823 100755
+--- a/services/core/java/com/android/server/hdmi/HdmiControlService.java
++++ b/services/core/java/com/android/server/hdmi/HdmiControlService.java
+@@ -429,12 +429,15 @@ public final class HdmiControlService extends SystemService {
+ 
+     @Override
+     public void onStart() {
++        Slog.i(TAG, "hdmi service on start.");
+         mIoThread.start();
+         mPowerStatus = HdmiControlManager.POWER_STATUS_TRANSIENT_TO_ON;
+         mProhibitMode = false;
+         mHdmiControlEnabled = readBooleanSetting(Global.HDMI_CONTROL_ENABLED, true);
+         mMhlInputChangeEnabled = readBooleanSetting(Global.MHL_INPUT_SWITCHING_ENABLED, true);
+ 
++        HdmiCecActiveness.enableState(getContext(), mHdmiControlEnabled);
++
+         mCecController = HdmiCecController.create(this);
+         if (mCecController != null) {
+             if (mHdmiControlEnabled) {
+@@ -947,6 +950,11 @@ public final class HdmiControlService extends SystemService {
+         sendCecCommand(command, null);
+     }
+ 
++    @ServiceThreadOnly
++    boolean isConenctedToCecTv(final int sourceAddress) {
++        return mCecController.isConenctedToCecTv(sourceAddress);
++    }
++
+     /**
+      * Send <Feature Abort> command on the given CEC message if possible.
+      * If the aborted message is invalid, then it wont send the message.
+@@ -2492,6 +2500,8 @@ public final class HdmiControlService extends SystemService {
+         mMhlController.setOption(OPTION_MHL_ENABLE, ENABLED);
+ 
+         initializeCec(INITIATED_BY_ENABLE_CEC);
++
++        HdmiCecActiveness.enableState(getContext(), true);
+     }
+ 
+     @ServiceThreadOnly
+@@ -2508,7 +2518,9 @@ public final class HdmiControlService extends SystemService {
+                         mCecController.setOption(OptionKey.ENABLE_CEC, false);
+                         mMhlController.setOption(OPTION_MHL_ENABLE, DISABLED);
+                         clearLocalDevices();
+-                                // Call the vendor handler before the service is disabled.
++                        HdmiCecActiveness.enableState(getContext(), false);
++
++                        // Call the vendor handler before the service is disabled.
+                         invokeVendorCommandListenersOnControlStateChanged(false,
+                             HdmiControlManager.CONTROL_STATE_CHANGED_REASON_SETTING);
+                         if (mDisableLatch != null) {
+-- 
+2.7.4
+

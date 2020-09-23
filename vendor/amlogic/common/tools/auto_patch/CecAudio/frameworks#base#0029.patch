@@ -1,0 +1,120 @@
+From 86305e366a3752ecc97c4e6126b283c86e569280 Mon Sep 17 00:00:00 2001
+From: xian <an.xi@amlogic.com>
+Date: Mon, 16 Sep 2019 02:25:50 -0400
+Subject: [PATCH] SystemServer: fix zh language compat issue of 
+ set_menu_language function [2/2]
+
+PD#SWPL-13612
+
+Problem:
+1.Android always returns "zho" for all Chinese languages, so need to compat.
+2.Lg etc. tvs may send wrong code for "zho".
+
+Solution:
+compat the language code before device process the work
+
+Verify:
+Franklin
+
+Change-Id: I003859dc68a965c571d561daefcfdd9b32eb0ea8
+Signed-off-by: xian <an.xi@amlogic.com>
+---
+ .../server/hdmi/HdmiCecLocalDevicePlayback.java    | 43 +++++++++++++---------
+ 1 file changed, 26 insertions(+), 17 deletions(-)
+ mode change 100644 => 100755 services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java
+
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java b/services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java
+old mode 100644
+new mode 100755
+index ca634f9..1afd340
+--- a/services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java
++++ b/services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java
+@@ -49,6 +49,9 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
+     private static final boolean SET_MENU_LANGUAGE =
+             SystemProperties.getBoolean(Constants.PROPERTY_SET_MENU_LANGUAGE, true);
+ 
++    private static final Locale HONG_KONG = new Locale("zh", "HK");
++    private static final Locale MACAU = new Locale("zh", "MO");
++
+     private boolean mIsActiveSource = false;
+ 
+     // Used to keep the device awake while it is the active source. For devices that
+@@ -80,6 +83,8 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
+                 mAddress, mService.getPhysicalAddress(), mDeviceType));
+         mService.sendCecCommand(HdmiCecMessageBuilder.buildDeviceVendorIdCommand(
+                 mAddress, mService.getVendorId()));
++        mService.sendCecCommand(HdmiCecMessageBuilder.buildGiveDeviceVendorIdCommand(
++                mAddress, Constants.ADDR_TV));
+         mService.sendCecCommand(HdmiCecMessageBuilder.buildGetMenuLanguageCommand(
+                 mAddress));
+         startQueuedActions();
+@@ -336,30 +341,19 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
+     protected boolean handleSetMenuLanguage(HdmiCecMessage message) {
+         assertRunOnServiceThread();
+         if (!SET_MENU_LANGUAGE) {
++            Slog.e(TAG, "handleSetMenuLanguage not support set menu language");
+             return false;
+         }
+         try {
+             String iso3Language = new String(message.getParams(), 0, 3, "US-ASCII");
+-            HdmiLogger.debug("handleSetMenuLanguage, iso3Language: " + iso3Language);
+-            if (iso3Language.equals("chi") || iso3Language.equals("zho")) {
+-                Locale locale = null;
+-                if (iso3Language.equals("zho")) {
+-                    locale = new Locale("zh", "CN"); //LanguageCode.CountryCode
+-                } else {
+-                    locale = new Locale("zh", "TW");
+-                }
+-                try {
+-                    LocalePicker.updateLocale(locale);
+-                } catch (Exception e) {
+-                    e.printStackTrace();
+-                }
+-                return true;
+-            }
+             Locale currentLocale = mService.getContext().getResources().getConfiguration().locale;
+-            if (currentLocale.getISO3Language().equals(iso3Language)) {
++            String curIso3Language = getLocaleIso3Language(currentLocale);
++            HdmiLogger.debug("handleSetMenuLanguage " + iso3Language + " cur:" + curIso3Language);
++            if (curIso3Language.equals(iso3Language)) {
+                 // Do not switch language if the new language is the same as the current one.
+                 // This helps avoid accidental country variant switching from en_US to en_AU
+                 // due to the limitation of CEC. See the warning below.
++                Slog.d(TAG, "handleSetMenuLanguage same language and no need to change");
+                 return true;
+             }
+ 
+@@ -368,7 +362,7 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
+             final List<LocaleInfo> localeInfos = LocalePicker.getAllAssetLocales(
+                     mService.getContext(), false);
+             for (LocaleInfo localeInfo : localeInfos) {
+-                if (localeInfo.getLocale().getISO3Language().equals(iso3Language)) {
++                if (getLocaleIso3Language(localeInfo.getLocale()).equals(iso3Language)) {
+                     // WARNING: CEC adopts ISO/FDIS-2 for language code, while Android requires
+                     // additional country variant to pinpoint the locale. This keeps the right
+                     // locale from being chosen. 'eng' in the CEC command, for instance,
+@@ -386,6 +380,21 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
+         }
+     }
+ 
++    private String getLocaleIso3Language(Locale locale) {
++        if (null == locale) {
++            Slog.e(TAG, "getLocaleIso3Language locale null!");
++            return "";
++        }
++        if (locale.equals(Locale.TAIWAN) || locale.equals(HONG_KONG) || locale.equals(MACAU)) {
++            // Android always returns "zho" for all Chinese variants.
++            // Use "bibliographic" code defined in CEC639-2 for traditional
++            // Chinese used in Taiwan/Hong Kong/Macau.
++            return "chi";
++        } else {
++            return locale.getISO3Language();
++        }
++    }
++
+     @Override
+     protected int findKeyReceiverAddress() {
+         return Constants.ADDR_TV;
+-- 
+2.7.4
+

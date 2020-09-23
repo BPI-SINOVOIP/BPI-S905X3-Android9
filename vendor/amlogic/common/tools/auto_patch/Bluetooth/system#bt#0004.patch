@@ -1,0 +1,39 @@
+From 29acb626101b563f818493d20b91c9a092253093 Mon Sep 17 00:00:00 2001
+From: Kuibao Zhang <kuibao.zhang@amlogic.com>
+Date: Wed, 26 Jun 2019 15:01:03 +0800
+Subject: [PATCH] BT: solve the issue of a2dp tx slow [1/1]
+
+PD#SWPL-8816
+
+Problem:
+    BT sound output distortion after playing for about 20 minutes in
+    ATV/AV/HDMI;
+
+Solution:
+    The accuracy of clock is not enough.
+
+Verify:
+    X301.
+
+Change-Id: Id5873ea469a5ecbd4dd4f8196f784f63033e1c11
+---
+ stack/a2dp/a2dp_sbc_encoder.cc | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/stack/a2dp/a2dp_sbc_encoder.cc b/stack/a2dp/a2dp_sbc_encoder.cc
+index bd09989..1b2cf17 100644
+--- a/stack/a2dp/a2dp_sbc_encoder.cc
++++ b/stack/a2dp/a2dp_sbc_encoder.cc
+@@ -443,8 +443,7 @@ static void a2dp_sbc_get_num_frame_iteration(uint8_t* num_of_iterations,
+   a2dp_sbc_encoder_cb.feeding_state.last_frame_us = now_us;
+ 
+   a2dp_sbc_encoder_cb.feeding_state.counter +=
+-      a2dp_sbc_encoder_cb.feeding_state.bytes_per_tick * us_this_tick /
+-      (A2DP_SBC_ENCODER_INTERVAL_MS * 1000);
++      a2dp_sbc_encoder_cb.feeding_state.bytes_per_tick;
+ 
+   /* Calculate the number of frames pending for this media tick */
+   projected_nof =
+-- 
+1.9.1
+

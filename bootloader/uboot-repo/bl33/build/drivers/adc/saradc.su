@@ -1,0 +1,12 @@
+saradc.c:95:14:saradc_dev_get	0	static
+saradc.c:104:6:saradc_clock_switch	0	static
+saradc.c:124:6:saradc_clock_set	0	static
+saradc.c:161:6:saradc_hw_init	0	static
+saradc.c:211:5:saradc_probe	16	static
+saradc.c:229:5:saradc_value_trim	0	static
+saradc.c:253:5:get_adc_sample_gxbb_early	80	static
+saradc.c:329:5:get_adc_sample_gxbb	0	static
+saradc.c:337:5:get_adc_sample_gxbb_12bit	0	static
+saradc.c:345:5:saradc_enable	16	static
+saradc.c:354:5:saradc_disable	16	static
+saradc.c:360:6:saradc_sample_test	48	static

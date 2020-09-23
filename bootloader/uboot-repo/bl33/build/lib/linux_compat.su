@@ -1,0 +1,6 @@
+linux_compat.c:10:15:copy_from_user	16	static
+linux_compat.c:17:7:kmalloc	0	static
+linux_compat.c:22:7:kzalloc	48	static
+linux_compat.c:29:7:vzalloc	0	static
+linux_compat.c:34:20:get_mem	32	static
+linux_compat.c:44:7:kmem_cache_alloc	0	static

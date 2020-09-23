@@ -1,0 +1,7 @@
+input.c:114:5:input_tstc	32	static
+input.c:123:5:input_getc	32	static
+input.c:396:5:input_send_keycodes	128	dynamic
+input.c:433:5:input_add_table	0	static
+input.c:452:6:input_set_delays	0	static
+input.c:459:5:input_init	32	static
+input.c:476:5:input_stdio_register	32	static

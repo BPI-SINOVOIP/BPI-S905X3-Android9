@@ -1,0 +1,3 @@
+cmd_jtag.c:32:12:get_jtag_sel	32	static
+cmd_jtag.c:51:5:do_jtagon	32	static
+cmd_jtag.c:86:5:do_jtagoff	32	static

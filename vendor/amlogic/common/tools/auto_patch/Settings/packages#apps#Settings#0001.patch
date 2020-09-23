@@ -1,0 +1,28 @@
+From 3fa9e4122d985558d45f12019ee16ac72540f56d Mon Sep 17 00:00:00 2001
+From: Luan Yuan <luan.yuan@amlogic.com>
+Date: Fri, 28 Sep 2018 17:01:33 +0800
+Subject: [PATCH] Settings: fix Settings crash.[1/3]
+
+PD# 171673
+
+Change-Id: I9ab3a7e8fb9454bf08795a17489d1d13b3452f8d
+---
+ src/com/android/settings/SettingsActivity.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/com/android/settings/SettingsActivity.java b/src/com/android/settings/SettingsActivity.java
+index 971ae04..d5fc8aa 100644
+--- a/src/com/android/settings/SettingsActivity.java
++++ b/src/com/android/settings/SettingsActivity.java
+@@ -293,7 +293,7 @@ public class SettingsActivity extends SettingsDrawerActivity
+ 
+         if (mIsShowingDashboard) {
+             findViewById(R.id.search_bar).setVisibility(View.VISIBLE);
+-            findViewById(R.id.action_bar).setVisibility(View.GONE);
++            //findViewById(R.id.action_bar).setVisibility(View.GONE);
+             final Toolbar toolbar = findViewById(R.id.search_action_bar);
+             FeatureFactory.getFactory(this).getSearchFeatureProvider()
+                     .initSearchToolbar(this, toolbar);
+-- 
+1.9.1
+

@@ -1,0 +1,37 @@
+From 4596e0ccb7d727699bf84157c28fea7f157fe31b Mon Sep 17 00:00:00 2001
+From: Rongjun Chen <rongjun.chen@amlogic.com>
+Date: Fri, 27 Sep 2019 15:18:18 +0800
+Subject: [PATCH 6/6] wifi: fix mt7662 p2p close issue [1/1]
+
+PD#TV-10731
+
+Problem:
+p2p connect issue
+
+Solution:
+reject not allow p2p deinit
+
+Verify:
+ampere
+
+Change-Id: I26febb174ca1ec33cf5c847cd8171b4bffdff3fa
+---
+ wpa_supplicant/hidl/1.1/supplicant.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/wpa_supplicant/hidl/1.1/supplicant.cpp b/wpa_supplicant/hidl/1.1/supplicant.cpp
+index 6f00fef..e5e11bb 100644
+--- a/wpa_supplicant/hidl/1.1/supplicant.cpp
++++ b/wpa_supplicant/hidl/1.1/supplicant.cpp
+@@ -325,7 +325,7 @@ SupplicantStatus Supplicant::removeInterfaceInternal(
+ 		return {SupplicantStatusCode::FAILURE_IFACE_UNKNOWN, ""};
+ 	}
+     
+-	if (os_strncmp(wpa_s->ifname, "p2p-dev-wlan", 12) == 0) {
++	if (os_strncmp(wpa_s->ifname, "p2p", 3) == 0) {
+ 		wpa_printf(MSG_ERROR, "bcm wifi not removeInterfaceInternal");
+ 		return {SupplicantStatusCode::SUCCESS, ""};
+ 	}
+-- 
+1.9.1
+

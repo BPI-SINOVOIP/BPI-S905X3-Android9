@@ -1,0 +1,142 @@
+From 18c7e967d046f5cd9f140e72d4f55d5b83bfa389 Mon Sep 17 00:00:00 2001
+From: Ting Li <ting.li@amlogic.com>
+Date: Mon, 17 Sep 2018 10:53:51 +0800
+Subject: [PATCH] Power: add focus for long press power action and powerkey
+ definition[1/1]
+
+PD# 173408
+
+add focus for long press power action and powerkey definition
+
+Change-Id: Ic348b1fb595a53ad538abb5d919cc18c0f822013
+---
+ .../res/drawable/powerkey_long_press_selector.xml  | 25 ++++++++++++++++++++++
+ .../SystemUI/res/layout/global_actions_item.xml    |  3 ++-
+ packages/SystemUI/res/values/colors.xml            |  2 ++
+ .../globalactions/GlobalActionsDialog.java         |  3 +++
+ .../android/server/policy/PhoneWindowManager.java  | 21 ++++++++++++++++--
+ 5 files changed, 51 insertions(+), 3 deletions(-)
+ create mode 100644 packages/SystemUI/res/drawable/powerkey_long_press_selector.xml
+
+diff --git a/packages/SystemUI/res/drawable/powerkey_long_press_selector.xml b/packages/SystemUI/res/drawable/powerkey_long_press_selector.xml
+new file mode 100644
+index 0000000..066ce9c
+--- /dev/null
++++ b/packages/SystemUI/res/drawable/powerkey_long_press_selector.xml
+@@ -0,0 +1,25 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++/*
++** Copyright 2012, The Android Open Source Project
++**
++** Licensed under the Apache License, Version 2.0 (the "License");
++** you may not use this file except in compliance with the License.
++** You may obtain a copy of the License at
++**
++**     http://www.apache.org/licenses/LICENSE-2.0
++**
++** Unless required by applicable law or agreed to in writing, software
++** distributed under the License is distributed on an "AS IS" BASIS,
++** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++** See the License for the specific language governing permissions and
++** limitations under the License.
++*/
++-->
++<selector xmlns:android="http://schemas.android.com/apk/res/android">
++    <item android:state_focused="true" android:drawable="@color/power_long_press_focus" />
++    <item android:state_pressed="true" android:drawable="@color/power_long_press_selected" />
++    <item android:state_selected="true" android:drawable="@color/power_long_press_selected" />
++    <item android:drawable="@android:color/transparent" />
++</selector>
++
+diff --git a/packages/SystemUI/res/layout/global_actions_item.xml b/packages/SystemUI/res/layout/global_actions_item.xml
+index 66a4b73..f5d745c 100644
+--- a/packages/SystemUI/res/layout/global_actions_item.xml
++++ b/packages/SystemUI/res/layout/global_actions_item.xml
+@@ -26,7 +26,8 @@
+     android:gravity="center"
+     android:orientation="vertical"
+     android:paddingEnd="4dip"
+-    android:paddingStart="4dip">
++    android:paddingStart="4dip"
++    android:background="@drawable/powerkey_long_press_selector">
+ 
+     <ImageView
+         android:id="@*android:id/icon"
+diff --git a/packages/SystemUI/res/values/colors.xml b/packages/SystemUI/res/values/colors.xml
+index 07f1ee0..5bcffb8 100644
+--- a/packages/SystemUI/res/values/colors.xml
++++ b/packages/SystemUI/res/values/colors.xml
+@@ -17,6 +17,8 @@
+  */
+ -->
+ <resources>
++    <color name="power_long_press_focus">#dcdcdc</color>
++    <color name="power_long_press_selected">#808080</color>
+     <drawable name="notification_number_text_color">#ffffffff</drawable>
+     <drawable name="ticker_background_color">#ff1d1d1d</drawable>
+     <drawable name="system_bar_background">@color/system_bar_background_opaque</drawable>
+diff --git a/packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsDialog.java b/packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsDialog.java
+index d232108..2111a35 100644
+--- a/packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsDialog.java
++++ b/packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsDialog.java
+@@ -1416,6 +1416,9 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
+                 v.setOnLongClickListener(view ->
+                         mLongClickListener.onItemLongClick(null, v, pos, 0));
+                 mListView.addView(v);
++                if (i == 0) {
++                   v.requestFocus();
++                }
+             }
+         }
+ 
+diff --git a/services/core/java/com/android/server/policy/PhoneWindowManager.java b/services/core/java/com/android/server/policy/PhoneWindowManager.java
+index 56ceda7..0aa70cf 100644
+--- a/services/core/java/com/android/server/policy/PhoneWindowManager.java
++++ b/services/core/java/com/android/server/policy/PhoneWindowManager.java
+@@ -1387,7 +1387,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+             if (interactive) {
+                 // When interactive, we're already awake.
+                 // Wait for a long press or for the button to be released to decide what to do.
+-                if (hasLongPressOnPowerBehavior()) {
++                if ((hasLongPressOnPowerBehavior() && !SystemProperties.getBoolean("ro.platform.has.tvuimode", false) )
++                        ||(whichPowerKeyDefinition() == POWER_KEY_SHUTDOWN)) {
+                     if ((event.getFlags() & KeyEvent.FLAG_LONG_PRESS) != 0) {
+                         powerLongPress();
+                     } else {
+@@ -1435,7 +1436,15 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+             }
+         }
+     }
++    private static final String POWER_KEY_DEFINITION = "power_key_definition";
++    static final int POWER_KEY_SUSPEND = 0;
++    static final int POWER_KEY_SHUTDOWN = 1;
++    static final int POWER_KEY_RESTART = 2;
+ 
++    private int whichPowerKeyDefinition() {
++        int default_value = POWER_KEY_SUSPEND;
++        return Settings.System.getInt(mContext.getContentResolver(), POWER_KEY_DEFINITION, default_value);
++    }
+     private void interceptPowerKeyUp(KeyEvent event, boolean interactive, boolean canceled) {
+         final boolean handled = canceled || mPowerKeyHandled;
+         mScreenshotChordPowerKeyTriggered = false;
+@@ -1500,7 +1509,15 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+         Slog.d(TAG, "powerPress: eventTime=" + eventTime + " interactive=" + interactive
+                 + " count=" + count + " beganFromNonInteractive=" + mBeganFromNonInteractive +
+                 " mShortPressOnPowerBehavior=" + mShortPressOnPowerBehavior);
+-
++        int definedPowerKey = whichPowerKeyDefinition();
++        if (definedPowerKey == POWER_KEY_SHUTDOWN) {
++            mPowerManager.shutdown(false,"userrequested",false);
++            return;
++        }
++        if (definedPowerKey == POWER_KEY_RESTART) {
++            mPowerManager.reboot("");
++            return;
++        }
+         if (count == 2) {
+             powerMultiPressAction(eventTime, interactive, mDoublePressOnPowerBehavior);
+         } else if (count == 3) {
+-- 
+2.7.4
+

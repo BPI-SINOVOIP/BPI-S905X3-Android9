@@ -1,0 +1,43 @@
+From 3c0ccf3af40a665b3a8a5b0a9a95c0b69c5e23d1 Mon Sep 17 00:00:00 2001
+From: Shuide Chen <shuide.chen@amlogic.com>
+Date: Wed, 31 Jul 2019 02:54:23 -0400
+Subject: [PATCH] service: let fetch service more robust [1/1]
+
+PD#SWPL-12105
+
+Problem:
+we found some of customization services(run in systemserver) in customer
+project, will get wifi before start wifi service. this cause the access
+process never fetch wifi service anymore. because the Fetch result(in
+this case, fetch result is null) is cached!
+
+Solution:
+If the service not ready, makesure next fetch check again, do not use
+the cached null result, make sure customizated android who check service
+at the wrong time stage, not crash the system.
+
+Verify:
+Locally
+
+Change-Id: I57bade92d2c36d43f219e53e55162673420af6b2
+Signed-off-by: Shuide Chen <shuide.chen@amlogic.com>
+---
+ core/java/android/app/SystemServiceRegistry.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/core/java/android/app/SystemServiceRegistry.java b/core/java/android/app/SystemServiceRegistry.java
+index f256ce1..a88f369 100755
+--- a/core/java/android/app/SystemServiceRegistry.java
++++ b/core/java/android/app/SystemServiceRegistry.java
+@@ -1101,7 +1101,7 @@ final class SystemServiceRegistry {
+ 
+                     } catch (ServiceNotFoundException e) {
+                         onServiceNotFound(e);
+-
++                        newState = ContextImpl.STATE_READY; // makesure, this process can check later
+                     } finally {
+                         synchronized (cache) {
+                             cache[mCacheIndex] = service;
+-- 
+2.7.4
+

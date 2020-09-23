@@ -1,0 +1,7 @@
+cmd_amlmtd.c:32:13:dump_args	48	static
+cmd_amlmtd.c:480:12:do_key_ops	80	static
+cmd_amlmtd.c:426:12:do_dtb_ops	80	static
+cmd_amlmtd.c:301:12:do_fip_ops	144	static
+cmd_amlmtd.c:186:12:do_bl2_ops	144	static
+cmd_amlmtd.c:57:12:do_rom_ops	144	static
+cmd_amlmtd.c:538:12:do_amlmtd	80	static

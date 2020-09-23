@@ -1,0 +1,69 @@
+From 8d350e647dc2d1e499b839e2bcdfc8098a334319 Mon Sep 17 00:00:00 2001
+From: xi an <an.xi@amlogic.com>
+Date: Tue, 5 Mar 2019 14:43:41 +0800
+Subject: [PATCH] Vold: give kernel a time to rescan disks after deep sleep
+ [1/1]
+
+PD#SWPL-5323
+
+Problem:
+some u disks disappears after system deep sleep
+
+Solution:
+give kernel a time to rescan disks after deep sleep
+
+Verify:
+verify it on P212
+
+Change-Id: Ibe7cc22695cfbe99f1887836418cf6bb6462412a
+Signed-off-by: xi an <an.xi@amlogic.com>
+---
+ main.cpp | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+ mode change 100644 => 100755 main.cpp
+
+diff --git a/main.cpp b/main.cpp
+old mode 100644
+new mode 100755
+index 5525e85..39dd166
+--- a/main.cpp
++++ b/main.cpp
+@@ -45,6 +45,7 @@ static int process_config(VolumeManager* vm, bool* has_adoptable, bool* has_quot
+                           bool* has_reserved);
+ static void coldboot(const char *path);
+ static void parse_args(int argc, char** argv);
++static void set_media_poll_time(void);
+ 
+ struct selabel_handle *sehandle;
+ 
+@@ -124,6 +125,8 @@ int main(int argc, char** argv) {
+     }
+     ATRACE_END();
+ 
++    set_media_poll_time();
++
+     // This call should go after listeners are started to avoid
+     // a deadlock between vold and init (see b/34278978 for details)
+     android::base::SetProperty("vold.has_adoptable", has_adoptable ? "1" : "0");
+@@ -143,6 +146,18 @@ int main(int argc, char** argv) {
+     exit(0);
+ }
+ 
++static void set_media_poll_time(void)
++{
++    int fd;
++    fd = open ("/sys/module/block/parameters/events_dfl_poll_msecs", O_WRONLY);
++    if (fd >= 0) {
++        write(fd, "2000", 4);
++        close (fd);
++    } else {
++        LOG(ERROR) << "kernel not support media poll uevent!";
++    }
++}
++
+ static void parse_args(int argc, char** argv) {
+     static struct option opts[] = {
+         {"blkid_context", required_argument, 0, 'b' },
+-- 
+1.9.1
+

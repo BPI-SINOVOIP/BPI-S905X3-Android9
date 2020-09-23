@@ -1,0 +1,2 @@
+cmd_defenv_without.c:41:12:_reserve_env_list_after_defenv	2624	dynamic,bounded
+cmd_defenv_without.c:91:12:do_defenv_reserv	16	static

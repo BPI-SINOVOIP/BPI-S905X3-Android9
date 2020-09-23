@@ -1,0 +1,41 @@
+From 128eccdc26faf1645f6aef88958126a7f1fd4fd3 Mon Sep 17 00:00:00 2001
+From: rongrong zhou <rongrong.zhou@amlogic.com>
+Date: Mon, 3 Dec 2018 17:23:32 +0800
+Subject: [PATCH] media: fix play error when play again after alloc codec fail
+ once
+
+PD# 158355
+
+Problem:
+This an acodec bug, When alloc component fail, it will signel error,
+and then reclaim the last component alloc a new component again.
+But this time mFatalError alse is true. So when dequeueBufferFromNativeWindow
+it will "not dequeuing from native window due to fatal error",
+and return NULL. It duo to video can not play.
+
+Solution:
+This fixed is when alloc a new component again success, set mFatalError to false
+
+Verify:
+verified by p212
+
+Change-Id: I92c07da696cf0c4b328f01a4776901a02fac95bd
+---
+ media/libstagefright/ACodec.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/media/libstagefright/ACodec.cpp b/media/libstagefright/ACodec.cpp
+index fd7b50bf6..841287d58 100644
+--- a/media/libstagefright/ACodec.cpp
++++ b/media/libstagefright/ACodec.cpp
+@@ -6531,6 +6531,7 @@ bool ACodec::UninitializedState::onAllocateComponent(const sp<AMessage> &msg) {
+     mCodec->mOMXNode = omxNode;
+     mCodec->mCallback->onComponentAllocated(mCodec->mComponentName.c_str());
+     mCodec->changeState(mCodec->mLoadedState);
++    mCodec->mFatalError = false;
+ 
+     return true;
+ }
+-- 
+2.11.0
+

@@ -1,0 +1,117 @@
+From 9f321b41fa92b1c6c6b4e058129f4dae43e54e57 Mon Sep 17 00:00:00 2001
+From: "an.xi" <an.xi@amlogic.com>
+Date: Thu, 31 Oct 2019 20:46:56 +0800
+Subject: [PATCH] SystemServer: tv close system audio mode first when shut down
+ [1/1]
+
+PD#SWPL-14704
+
+Problem:
+Amplifier could not go to standby when tv shutsdown.
+It's related with SWPL-951's modification.
+
+Solution:
+tv close system audio mode first when shut down
+
+Verify:
+Marconi
+
+Change-Id: I94b076c2ee8220f3df0599a695889f56c663947e
+Signed-off-by: an.xi <an.xi@amlogic.com>
+---
+ .../android/server/hdmi/HdmiCecLocalDeviceTv.java    | 20 ++++++++++++++------
+ .../com/android/server/hdmi/HdmiControlService.java  |  5 +----
+ 2 files changed, 15 insertions(+), 10 deletions(-)
+ mode change 100755 => 100644 services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
+ mode change 100755 => 100644 services/core/java/com/android/server/hdmi/HdmiControlService.java
+
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java b/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
+old mode 100755
+new mode 100644
+index 9499c76..a14ef9d
+--- a/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
++++ b/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
+@@ -1013,6 +1013,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+     @ServiceThreadOnly
+     void changeSystemAudioStatus(boolean on) {
+         assertRunOnServiceThread();
++        HdmiLogger.debug("changeSystemAudioStatus " + on);
+         if (isBluetoothOrUsbOutDevices() && on) return;
+         if (!hasSystemAudioDevice() || mSystemAudioActivated == on) {
+             //mSystemAudioActivated = on;
+@@ -1848,6 +1849,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+     @ServiceThreadOnly
+     protected void disableDevice(boolean initiatedByCec, PendingActionClearedCallback callback) {
+         assertRunOnServiceThread();
++        HdmiLogger.debug("disableDevice " + initiatedByCec);
+         mService.unregisterTvInputCallback(mTvInputCallback);
+         // Remove any repeated working actions.
+         // HotplugDetectionAction will be reinstated during the wake up process.
+@@ -1862,6 +1864,11 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+ 
+         disableSystemAudioIfExist();
+         disableArcIfExist();
++        // Make sure the tv broadcast standby message instantly after the system
++        // Audio mode is close. This could make sure of the connected amplifer
++        // Go to standby. This could be only done on the main thread, only in
++        // This way can the standby message be sent before the system powers off.
++        onStandby(false, 0);
+ 
+         super.disableDevice(initiatedByCec, callback);
+         clearDeviceInfoList();
+@@ -1877,6 +1884,9 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+             return;
+         }
+ 
++        // Make sure tv could close system audio mode before broadcast standby.
++        changeSystemAudioStatus(false);
++
+         // Seq #31.
+         removeAction(SystemAudioActionFromAvr.class);
+         removeAction(SystemAudioActionFromTv.class);
+@@ -1912,13 +1922,11 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+         if (!mService.isControlEnabled()) {
+             return;
+         }
+-        if (!initiatedByCec
+-            && mAutoDeviceOff
+-            && (standbyAction == HdmiControlService.STANDBY_SHUTDOWN
+-            || standbyAction != HdmiControlService.STANDBY_SCREEN_OFF)) {
+-            /*send <Standby> when shutdown, not suspend*/
++        Slog.i(TAG, "tv standby " + initiatedByCec);
++        if (!initiatedByCec && mAutoDeviceOff) {
++            // when standby, it's not bad to send the broadcast more than once
+             mService.sendCecCommand(HdmiCecMessageBuilder.buildStandby(
+-                    mAddress, Constants.ADDR_BROADCAST));
++                    Constants.ADDR_TV, Constants.ADDR_BROADCAST));
+         }
+     }
+ 
+diff --git a/services/core/java/com/android/server/hdmi/HdmiControlService.java b/services/core/java/com/android/server/hdmi/HdmiControlService.java
+old mode 100755
+new mode 100644
+index 5d1243f..035d5af
+--- a/services/core/java/com/android/server/hdmi/HdmiControlService.java
++++ b/services/core/java/com/android/server/hdmi/HdmiControlService.java
+@@ -2211,7 +2211,7 @@ public final class HdmiControlService extends SystemService {
+ 
+         final List<HdmiCecLocalDevice> devices = getAllLocalDevices();
+ 
+-        if ((STANDBY_SHUTDOWN == standbyAction) ||(!isStandbyMessageReceived() && !canGoToStandby())) {
++        if (!isStandbyMessageReceived() && !canGoToStandby()) {
+             mPowerStatus = HdmiControlManager.POWER_STATUS_STANDBY;
+             for (HdmiCecLocalDevice device : devices) {
+                 device.onStandby(mStandbyMessageReceived, standbyAction);
+@@ -2302,9 +2302,6 @@ public final class HdmiControlService extends SystemService {
+                     mWakeLock.release();
+                     mWakeLock = null;
+                 }
+-                if (isTvDeviceEnabled()) {
+-                    tv().changeSystemAudioStatus(false);
+-                }
+                 mCecController.setOption(OptionKey.SYSTEM_CEC_CONTROL, false);
+                 mMhlController.setOption(OPTION_MHL_SERVICE_CONTROL, DISABLED);
+             }
+-- 
+2.7.4
+

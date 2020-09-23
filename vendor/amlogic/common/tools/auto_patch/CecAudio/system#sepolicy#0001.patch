@@ -1,0 +1,40 @@
+From 8f05d3360962b2b90fe22363b7c358c59fef1169 Mon Sep 17 00:00:00 2001
+From: wenbiao zhang <wenbiao.zhang@amlogic.com>
+Date: Wed, 8 May 2019 15:56:42 +0800
+Subject: [PATCH] audio: allow audio hal to communicate with bt stack [1/3]
+
+PD#SWPL-3581
+
+Problem:
+allow audio hal to communicate with bt stack
+
+Solution:
+allow audio hal to communicate with bt stack
+
+Verify:
+x301
+
+Change-Id: I0f67f8bc0b05cbf6b56bf3473db31859a399cf71
+Signed-off-by: wenbiao zhang <wenbiao.zhang@amlogic.com>
+---
+ vendor/hal_audio_default.te | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/vendor/hal_audio_default.te b/vendor/hal_audio_default.te
+index 0dc2170..9da0f1b 100644
+--- a/vendor/hal_audio_default.te
++++ b/vendor/hal_audio_default.te
+@@ -1,4 +1,4 @@
+-type hal_audio_default, domain;
++type hal_audio_default, domain, socket_between_core_and_vendor_violators;
+ hal_server_domain(hal_audio_default, hal_audio)
+ 
+ type hal_audio_default_exec, exec_type, vendor_file_type, file_type;
+@@ -6,3 +6,4 @@ init_daemon_domain(hal_audio_default)
+ 
+ hal_client_domain(hal_audio_default, hal_allocator)
+ 
++allow hal_audio_default bluetooth:unix_stream_socket connectto;
+-- 
+2.7.4
+

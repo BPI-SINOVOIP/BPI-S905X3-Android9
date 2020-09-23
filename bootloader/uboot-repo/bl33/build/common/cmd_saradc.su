@@ -1,0 +1,9 @@
+cmd_saradc.c:136:12:do_saradc	64	static
+cmd_saradc.c:168:12:do_saradc_12bit	64	static
+cmd_saradc.c:79:12:do_saradc_get_in_range	80	static
+cmd_saradc.c:74:12:do_saradc_test	16	static
+cmd_saradc.c:54:12:do_saradc_getval	48	static
+cmd_saradc.c:46:12:do_saradc_close	16	static
+cmd_saradc.c:31:12:do_saradc_open	32	static
+cmd_saradc.c:103:12:do_saradc_get_in_range_12bit	80	static
+cmd_saradc.c:64:12:do_saradc_getval_12bit	48	static

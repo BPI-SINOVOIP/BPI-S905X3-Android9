@@ -1,0 +1,57 @@
+From 4659bce81cab8f042a587eff51306b91a36c4dbf Mon Sep 17 00:00:00 2001
+From: Zhao Yi <zhao.yi@amlogic.com>
+Date: Thu, 24 Oct 2019 16:12:23 +0800
+Subject: [PATCH] MediaHttpConnection: getSize failed [1/1]
+
+PD#TV-11171
+
+Problem:
+MediaHttpConnection getSize return failed.
+
+Solution:
+if ContenLen is -1,
+ We need to use the header of the HTTP response to calculate a new length.
+
+Verify:
+T972
+
+Change-Id: I338c46a40e710b94fe698aa399b66a7558b4794c
+Signed-off-by: Zhao Yi <zhao.yi@amlogic.com>
+---
+ media/java/android/media/MediaHTTPConnection.java | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+ mode change 100644 => 100755 media/java/android/media/MediaHTTPConnection.java
+
+diff --git a/media/java/android/media/MediaHTTPConnection.java b/media/java/android/media/MediaHTTPConnection.java
+old mode 100644
+new mode 100755
+index 6bf52bd..8d8a9b5
+--- a/media/java/android/media/MediaHTTPConnection.java
++++ b/media/java/android/media/MediaHTTPConnection.java
+@@ -290,6 +290,23 @@ public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
+                 throw new IOException();
+             } else {
+                 mTotalSize = mConnection.getContentLength();
++                if (mTotalSize <=0) {
++                    String mine = null;
++                    String mineKey = null;
++                    for (int i = 0;; i++) {
++                        mine = mConnection.getHeaderField(i);
++                        if (mine == null)
++                            break;
++                        mineKey = mConnection.getHeaderFieldKey(i);
++                        if (mineKey != null && mineKey.compareToIgnoreCase("Content-Length") == 0) {
++                            try {
++                                mTotalSize = Long.parseLong(mine.trim());
++                            } catch (NumberFormatException e) {
++                                e.printStackTrace();
++                            }
++                        }
++                    }
++                }
+             }
+ 
+             if (offset > 0 && response != HttpURLConnection.HTTP_PARTIAL) {
+-- 
+1.9.1
+

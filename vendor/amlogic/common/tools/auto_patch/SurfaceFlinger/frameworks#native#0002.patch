@@ -1,0 +1,65 @@
+From 3ee27ca8175377bdda1dddd0a8ec30a9d804f77a Mon Sep 17 00:00:00 2001
+From: "binqi.zhang" <binqi.zhang@amlogic.com>
+Date: Mon, 26 Nov 2018 22:20:04 -0500
+Subject: [PATCH] Graphics: fix sf crash when playing 4k videos[1/1]
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+PD#SWPL-1673
+
+Problem:
+sf may crash when playing 4k videos for long time
+
+Solution:
+fix USED AFTER FREE in surfaceflinger
+
+Verify:
+1、Enter movieplayer
+2、Play 4KH264 video file video files
+
+Change-Id: Ifadb5d21f8060c3e8c42c1275b47095fe56daa38
+---
+ services/surfaceflinger/BufferLayerConsumer.cpp | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
+ mode change 100644 => 100755 services/surfaceflinger/BufferLayerConsumer.cpp
+
+diff --git a/services/surfaceflinger/BufferLayerConsumer.cpp b/services/surfaceflinger/BufferLayerConsumer.cpp
+old mode 100644
+new mode 100755
+index cdee8b8..3817d88
+--- a/services/surfaceflinger/BufferLayerConsumer.cpp
++++ b/services/surfaceflinger/BufferLayerConsumer.cpp
+@@ -281,6 +281,19 @@ status_t BufferLayerConsumer::releaseNoTextureLocked(const BufferItem& item,
+ 
+     int slot = item.mSlot;
+ 
++        // Do whatever sync ops we need to do before releasing the old slot.
++    if (slot != mCurrentTexture) {
++        err = syncForReleaseLocked();
++        if (err != NO_ERROR) {
++            // Release the buffer we just acquired.  It's not safe to
++            // release the old buffer, so instead we just drop the new frame.
++            // As we are still under lock since acquireBuffer, it is safe to
++            // release by slot.
++            releaseBufferLocked(slot, mSlots[slot].mGraphicBuffer);
++            return err;
++        }
++    }
++
+     BLC_LOGV("releaseNoTextureLocked: (slot=%d buf=%p) -> (slot=%d buf=%p)", mCurrentTexture,
+              mCurrentTextureImage != nullptr ? mCurrentTextureImage->graphicBufferHandle() : 0,
+              slot, mSlots[slot].mGraphicBuffer->handle);
+@@ -320,8 +333,7 @@ status_t BufferLayerConsumer::releaseNoTextureLocked(const BufferItem& item,
+     mCurrentFence = item.mFence;
+     mCurrentFenceTime = item.mFenceTime;
+     mCurrentFrameNumber = item.mFrameNumber;
+-    mCurrentTransformToDisplayInverse = item.mTransformToDisplayInverse;
+-    mCurrentSurfaceDamage = item.mSurfaceDamage;
++
+     mCurrentApi = item.mApi;
+ 
+     computeCurrentTransformMatrixLocked();
+-- 
+2.7.4
+

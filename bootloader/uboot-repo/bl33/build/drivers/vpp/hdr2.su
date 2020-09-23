@@ -1,0 +1,6 @@
+hdr2.c:359:6:set_hdr_matrix	432	static
+hdr2.c:736:6:set_eotf_lut	576	static
+hdr2.c:769:6:set_ootf_lut	608	static
+hdr2.c:805:6:set_oetf_lut	608	static
+hdr2.c:847:6:set_c_gain	272	static
+hdr2.c:887:6:hdr_func	416	static

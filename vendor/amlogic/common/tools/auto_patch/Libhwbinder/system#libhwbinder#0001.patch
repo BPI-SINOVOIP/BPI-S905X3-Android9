@@ -1,0 +1,202 @@
+From 16786a76b2c736791f2c364a1bce7632e112e93e Mon Sep 17 00:00:00 2001
+From: Steven Moreland <smoreland@google.com>
+Date: Thu, 18 Apr 2019 11:31:03 -0700
+Subject: [PATCH 28/30] Rely on compiler to zero out structs.
+
+Before, we were relying on having contiguous structs and remembering
+to manually zero-out fields. Alleviate all concerns by using C99
+designator initializers. These are technically not slated to be added
+to the C++ standard until C++20. However, because they are in C99, and
+they are awesome, they are commonly used in Android.
+
+Bug: 130161842
+Test: manual
+Change-Id: I96e4bea47f99e00ef33cfce74621e5869b1ff3d7
+Merged-In: I96e4bea47f99e00ef33cfce74621e5869b1ff3d7
+---
+ Parcel.cpp | 96 ++++++++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 52 insertions(+), 44 deletions(-)
+
+diff --git a/Parcel.cpp b/Parcel.cpp
+index 2b1bb90..6e9bd1e 100644
+--- a/Parcel.cpp
++++ b/Parcel.cpp
+@@ -196,7 +196,7 @@ inline static status_t finish_flatten_binder(
+ status_t flatten_binder(const sp<ProcessState>& /*proc*/,
+     const sp<IBinder>& binder, Parcel* out)
+ {
+-    flat_binder_object obj;
++    flat_binder_object obj = {};
+ 
+     if (binder != NULL) {
+         BHwBinder *local = binder->localBinder();
+@@ -238,7 +238,7 @@ status_t flatten_binder(const sp<ProcessState>& /*proc*/,
+ status_t flatten_binder(const sp<ProcessState>& /*proc*/,
+     const wp<IBinder>& binder, Parcel* out)
+ {
+-    flat_binder_object obj;
++    flat_binder_object obj = {};
+ 
+     obj.flags = 0x7f | FLAT_BINDER_FLAG_ACCEPTS_FDS;
+     if (binder != NULL) {
+@@ -842,15 +842,16 @@ status_t Parcel::writeEmbeddedBuffer(
+     LOG_BUFFER("writeEmbeddedBuffer(%p, %zu, parent = (%zu, %zu)) -> %zu",
+         buffer, length, parent_buffer_handle,
+          parent_offset, mObjectsSize);
+-    binder_buffer_object obj;
+-    obj.hdr.type = BINDER_TYPE_PTR;
+-    obj.buffer = reinterpret_cast<binder_uintptr_t>(buffer);
+-    obj.length = length;
+-    obj.flags = BINDER_BUFFER_FLAG_HAS_PARENT;
+     if(!validateBufferParent(parent_buffer_handle, parent_offset))
+         return BAD_VALUE;
+-    obj.parent = parent_buffer_handle;
+-    obj.parent_offset = parent_offset;
++    binder_buffer_object obj = {
++        .hdr = { .type = BINDER_TYPE_PTR },
++        .buffer = reinterpret_cast<binder_uintptr_t>(buffer),
++        .length = length,
++        .flags = BINDER_BUFFER_FLAG_HAS_PARENT,
++        .parent = parent_buffer_handle,
++        .parent_offset = parent_offset,
++    };
+     if (handle != nullptr) {
+         // We use an index into mObjects as a handle
+         *handle = mObjectsSize;
+@@ -862,11 +863,12 @@ status_t Parcel::writeBuffer(const void *buffer, size_t length, size_t *handle)
+ {
+     LOG_BUFFER("writeBuffer(%p, %zu) -> %zu",
+         buffer, length, mObjectsSize);
+-    binder_buffer_object obj;
+-    obj.hdr.type = BINDER_TYPE_PTR;
+-    obj.buffer = reinterpret_cast<binder_uintptr_t>(buffer);
+-    obj.length = length;
+-    obj.flags = 0;
++    binder_buffer_object obj {
++        .hdr = { .type = BINDER_TYPE_PTR },
++        .buffer = reinterpret_cast<binder_uintptr_t>(buffer),
++        .length = length,
++        .flags = 0,
++    };
+     if (handle != nullptr) {
+         // We use an index into mObjects as a handle
+         *handle = mObjectsSize;
+@@ -888,15 +890,16 @@ status_t Parcel::writeReference(size_t *handle,
+     status_t status = incrementNumReferences();
+     if (status != OK)
+         return status;
+-    binder_buffer_object obj;
+-    obj.hdr.type = BINDER_TYPE_PTR;
+-    obj.flags = BINDER_BUFFER_FLAG_REF;
+     if (!validateBufferChild(child_buffer_handle, child_offset))
+         return BAD_VALUE;
+-    // The current binder.h does not have child and child_offset names yet.
+-    // Use the buffer and length parameters.
+-    obj.buffer = child_buffer_handle;
+-    obj.length = child_offset;
++    binder_buffer_object obj {
++        .hdr = { .type = BINDER_TYPE_PTR },
++        .flags = BINDER_BUFFER_FLAG_REF,
++        // The current binder.h does not have child and child_offset names yet.
++        // Use the buffer and length parameters.
++        .buffer = child_buffer_handle,
++        .length = child_offset,
++    };
+     if (handle != nullptr)
+         // We use an index into mObjects as a handle
+         *handle = mObjectsSize;
+@@ -915,19 +918,20 @@ status_t Parcel::writeEmbeddedReference(size_t *handle,
+     status_t status = incrementNumReferences();
+     if (status != OK)
+         return status;
+-    binder_buffer_object obj;
+-    obj.hdr.type = BINDER_TYPE_PTR;
+-    obj.flags = BINDER_BUFFER_FLAG_REF | BINDER_BUFFER_FLAG_HAS_PARENT;
+-    if (!validateBufferChild(child_buffer_handle, child_offset))
+-        return BAD_VALUE;
+     // The current binder.h does not have child and child_offset names yet.
+     // Use the buffer and length parameters.
+-    obj.buffer = child_buffer_handle;
+-    obj.length = child_offset;
++    if (!validateBufferChild(child_buffer_handle, child_offset))
++        return BAD_VALUE;
+     if(!validateBufferParent(parent_buffer_handle, parent_offset))
+         return BAD_VALUE;
+-    obj.parent = parent_buffer_handle;
+-    obj.parent_offset = parent_offset;
++    binder_buffer_object obj {
++        .hdr = { .type = BINDER_TYPE_PTR },
++        .flags = BINDER_BUFFER_FLAG_REF | BINDER_BUFFER_FLAG_HAS_PARENT,
++        .buffer = child_buffer_handle,
++        .length = child_offset,
++        .parent = parent_buffer_handle,
++        .parent_offset = parent_offset,
++    };
+     if (handle != nullptr) {
+         // We use an index into mObjects as a handle
+         *handle = mObjectsSize;
+@@ -940,9 +944,12 @@ status_t Parcel::writeNullReference(size_t * handle) {
+     status_t status = incrementNumReferences();
+     if (status != OK)
+         return status;
+-    binder_buffer_object obj;
+-    obj.hdr.type = BINDER_TYPE_PTR;
+-    obj.flags = BINDER_BUFFER_FLAG_REF;
++
++    binder_buffer_object obj {
++        .hdr = { .type = BINDER_TYPE_PTR },
++        .flags = BINDER_BUFFER_FLAG_REF,
++    };
++
+     if (handle != nullptr)
+         // We use an index into mObjects as a handle
+         *handle = mObjectsSize;
+@@ -958,14 +965,14 @@ status_t Parcel::writeEmbeddedNullReference(size_t * handle,
+     status_t status = incrementNumReferences();
+     if (status != OK)
+         return status;
+-    binder_buffer_object obj;
+-    obj.hdr.type = BINDER_TYPE_PTR;
+-    obj.flags = BINDER_BUFFER_FLAG_REF | BINDER_BUFFER_FLAG_HAS_PARENT;
+-    // parent_buffer_handle and parent_offset needs to be checked.
+     if(!validateBufferParent(parent_buffer_handle, parent_offset))
+         return BAD_VALUE;
+-    obj.parent = parent_buffer_handle;
+-    obj.parent_offset = parent_offset;
++    binder_buffer_object obj {
++        .hdr = { .type = BINDER_TYPE_PTR, },
++        .flags = BINDER_BUFFER_FLAG_REF | BINDER_BUFFER_FLAG_HAS_PARENT,
++        .parent = parent_buffer_handle,
++        .parent_offset = parent_offset,
++    };
+     if (handle != nullptr) {
+         // We use an index into mObjects as a handle
+         *handle = mObjectsSize;
+@@ -1050,7 +1057,6 @@ status_t Parcel::writeNativeHandleNoDup(const native_handle_t *handle,
+                                         size_t parent_buffer_handle,
+                                         size_t parent_offset)
+ {
+-    struct binder_fd_array_object fd_array;
+     size_t buffer_handle;
+     status_t status = OK;
+ 
+@@ -1075,10 +1081,12 @@ status_t Parcel::writeNativeHandleNoDup(const native_handle_t *handle,
+         return status;
+     }
+ 
+-    fd_array.hdr.type = BINDER_TYPE_FDA;
+-    fd_array.num_fds = handle->numFds;
+-    fd_array.parent = buffer_handle;
+-    fd_array.parent_offset = offsetof(native_handle_t, data);
++    struct binder_fd_array_object fd_array {
++        .hdr = { .type = BINDER_TYPE_FDA },
++        .num_fds = static_cast<binder_size_t>(handle->numFds),
++        .parent = buffer_handle,
++        .parent_offset = offsetof(native_handle_t, data),
++    };
+ 
+     return writeObject(fd_array);
+ }
+-- 
+2.7.4
+

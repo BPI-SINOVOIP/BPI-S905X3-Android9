@@ -1,0 +1,41 @@
+From 035e04509052508d84cf11374529eb981c09d7ec Mon Sep 17 00:00:00 2001
+From: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date: Thu, 22 Aug 2019 11:10:41 +0800
+Subject: [PATCH] AudioService: bt sco device use bluetooth sco stream [1/1]
+
+PD# SWPL-11868
+
+Problem:
+When the bluetooth speaker is disconnected,the TV speaker will gets louder
+
+Solution:
+bt sco device use bluetooth sco stream type
+
+Verify:
+verify by x301
+
+Change-Id: I25256d2edc48ffe55f0f25c29ec48d25022ca89b
+Signed-off-by: Chaomin Zheng <chaomin.zheng@amlogic.com>
+---
+ services/core/java/com/android/server/audio/AudioService.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+ mode change 100755 => 100644 services/core/java/com/android/server/audio/AudioService.java
+
+diff --git a/services/core/java/com/android/server/audio/AudioService.java b/services/core/java/com/android/server/audio/AudioService.java
+old mode 100755
+new mode 100644
+index 3eb27b9..af7d7f3
+--- a/services/core/java/com/android/server/audio/AudioService.java
++++ b/services/core/java/com/android/server/audio/AudioService.java
+@@ -371,7 +371,7 @@ public class AudioService extends IAudioService.Stub
+         AudioSystem.STREAM_MUSIC,       // STREAM_MUSIC
+         AudioSystem.STREAM_ALARM,       // STREAM_ALARM
+         AudioSystem.STREAM_MUSIC,       // STREAM_NOTIFICATION
+-        AudioSystem.STREAM_MUSIC,       // STREAM_BLUETOOTH_SCO
++        AudioSystem.STREAM_BLUETOOTH_SCO,       // STREAM_BLUETOOTH_SCO
+         AudioSystem.STREAM_MUSIC,       // STREAM_SYSTEM_ENFORCED
+         AudioSystem.STREAM_MUSIC,       // STREAM_DTMF
+         AudioSystem.STREAM_MUSIC,       // STREAM_TTS
+-- 
+2.7.4
+

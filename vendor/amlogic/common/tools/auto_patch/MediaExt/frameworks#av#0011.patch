@@ -1,0 +1,38 @@
+From 274413f5a1a8fb97a0486db21bbd5c4edbfe8911 Mon Sep 17 00:00:00 2001
+From: "qingwei.xu" <qingwei.xu@amlogic.com>
+Date: Fri, 19 Apr 2019 13:43:18 +0800
+Subject: [PATCH] audio: disable timeout check [1/1]
+
+PD# SWPL-5186
+
+Problem:#
+audio: disable timeout check
+
+Solution:#
+audio: disable timeout check
+
+Verify:
+TL1
+
+Change-Id: I918e114812fb5eb3fba23d0ffea893617ec789c2
+Signed-off-by: qingwei.xu <qingwei.xu@amlogic.com>
+---
+ media/libmedia/TimeCheck.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/media/libmedia/TimeCheck.cpp b/media/libmedia/TimeCheck.cpp
+index dab5d4f..5e9447a 100644
+--- a/media/libmedia/TimeCheck.cpp
++++ b/media/libmedia/TimeCheck.cpp
+@@ -81,7 +81,7 @@ bool TimeCheck::TimeCheckThread::threadLoop()
+             status = mCond.waitRelative(mMutex, waitTimeNs);
+         }
+     }
+-    LOG_ALWAYS_FATAL_IF(status != NO_ERROR, "TimeCheck timeout for %s", tag);
++    //LOG_ALWAYS_FATAL_IF(status != NO_ERROR, "TimeCheck timeout for %s", tag);
+     return true;
+ }
+ 
+-- 
+1.9.1
+

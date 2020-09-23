@@ -1,0 +1,8 @@
+xyzModem.c:72:1:0	32	static
+xyzModem.c:304:1:xyzModem_flush	32	static
+xyzModem.c:317:1:xyzModem_get_hdr	64	static
+xyzModem.c:477:1:xyzModem_stream_open	96	static
+xyzModem.c:582:1:xyzModem_stream_read	112	static
+xyzModem.c:707:1:xyzModem_stream_close	0	static
+xyzModem.c:719:1:xyzModem_stream_terminate	48	static
+xyzModem.c:775:1:xyzModem_error	0	static

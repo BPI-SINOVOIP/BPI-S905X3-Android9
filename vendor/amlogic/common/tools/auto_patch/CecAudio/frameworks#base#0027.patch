@@ -1,0 +1,63 @@
+From 17a5608208713f04084ef42ec85f7fb78dea4e70 Mon Sep 17 00:00:00 2001
+From: xian <an.xi@amlogic.com>
+Date: Wed, 11 Sep 2019 03:56:52 -0400
+Subject: [PATCH] SystemServer: Send MESSAGE_SET_MENU_LANGUAGE when logical
+ address allocated [1/1]
+
+PD#SWPL-13332
+
+Problem:
+When boot MESSAGE_SET_MENU_LANGUAGE  may not be sent to the tv
+
+Solution:
+Send MESSAGE_SET_MENU_LANGUAGE when logical address allocated
+
+Verify:
+verify it on Franklin
+
+Change-Id: I0ee8a61aeda557ac58bc7eeda674c77f774d6adc
+Signed-off-by: an.xi <an.xi@amlogic.com>
+---
+ .../com/android/server/hdmi/HdmiCecLocalDevicePlayback.java  |  2 ++
+ .../java/com/android/server/hdmi/HdmiCecMessageBuilder.java  | 12 ++++++++++++
+ 2 files changed, 14 insertions(+)
+
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java b/services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java
+index 7a69c1f..11bfd4f 100644
+--- a/services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java
++++ b/services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java
+@@ -86,6 +86,8 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
+                 mAddress, mService.getPhysicalAddress(), mDeviceType));
+         mService.sendCecCommand(HdmiCecMessageBuilder.buildDeviceVendorIdCommand(
+                 mAddress, mService.getVendorId()));
++        mService.sendCecCommand(HdmiCecMessageBuilder.buildGetMenuLanguageCommand(
++                mAddress));
+         startQueuedActions();
+         boolean isOneTouchPlayEnabled =
+             mService.readBooleanSetting("hdmi_control_one_touch_play_enabled", true);
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecMessageBuilder.java b/services/core/java/com/android/server/hdmi/HdmiCecMessageBuilder.java
+index f9f1edb..ee9ba9e 100644
+--- a/services/core/java/com/android/server/hdmi/HdmiCecMessageBuilder.java
++++ b/services/core/java/com/android/server/hdmi/HdmiCecMessageBuilder.java
+@@ -124,6 +124,18 @@ public class HdmiCecMessageBuilder {
+     }
+ 
+     /**
++     * Build &lt;Get Menu Language &gt; command.
++     *
++     * <p>This is a  message sent to the tv device on the bus.
++     *
++     * @param src source address of command
++     * @return newly created {@link HdmiCecMessage}
++     */
++    static HdmiCecMessage buildGetMenuLanguageCommand(int src) {
++        return buildCommand(src, Constants.ADDR_TV, Constants.MESSAGE_GET_MENU_LANGUAGE);
++    }
++
++    /**
+      * Build &lt;Set Osd Name &gt; command.
+      *
+      * @param src source address of command
+-- 
+2.7.4
+

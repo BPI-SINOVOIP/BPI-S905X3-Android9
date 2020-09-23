@@ -1,0 +1,41 @@
+From a4b9f09a9bbaa644d0db3da11d9f638ca8a1b20b Mon Sep 17 00:00:00 2001
+From: Wencai You <wencai.you@amlogic.com>
+Date: Tue, 26 Feb 2019 21:34:38 +0800
+Subject: [PATCH] cts: reset simState [1/1]
+
+PD#SWPL-5066
+
+Problem:
+CtsTelephonyTestCases fail
+testNotifyConfigChangedForSubId
+
+Solution:
+simState default to SIM_STATE_ABSENT
+
+Verify:
+verify by ampere
+
+Change-Id: I42026cf2533f9f0d0af8e8c3380b53275941e555
+Signed-off-by: Wencai You <wencai.you@amlogic.com>
+---
+ telephony/java/android/telephony/SubscriptionManager.java | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/telephony/java/android/telephony/SubscriptionManager.java b/telephony/java/android/telephony/SubscriptionManager.java
+index ece646c..9dc56e2 100644
+--- a/telephony/java/android/telephony/SubscriptionManager.java
++++ b/telephony/java/android/telephony/SubscriptionManager.java
+@@ -1575,8 +1575,8 @@ public class SubscriptionManager {
+      * {@hide}
+      */
+     public static int getSimStateForSlotIndex(int slotIndex) {
+-        int simState = TelephonyManager.SIM_STATE_UNKNOWN;
+-
++        int simState = TelephonyManager.SIM_STATE_ABSENT;
++        //ott add tv donot have isub service, reset default state to absent
+         try {
+             ISub iSub = ISub.Stub.asInterface(ServiceManager.getService("isub"));
+             if (iSub != null) {
+-- 
+1.9.1
+

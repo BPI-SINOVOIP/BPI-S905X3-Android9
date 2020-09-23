@@ -1,0 +1,45 @@
+From a726e769c138349cc15fde9a4eafae365904db6e Mon Sep 17 00:00:00 2001
+From: Jian Wang <jian.wang@amlogic.com>
+Date: Wed, 26 Dec 2018 20:28:30 +0800
+Subject: [PATCH] Mediaserver: android_bug: fix crash caused by
+ StagefrightMetadataRetriever [1/1]
+
+PD#SWPL-1032
+
+Problem:
+some file can not get width and height duo to crash
+
+Solution:
+do not check if can get w & h
+
+verfiy:
+verify on p212
+
+Change-Id: I5312184736f4e59f2b9f27794db979e0a3b96814
+Signed-off-by: Jian Wang <jian.wang@amlogic.com>
+---
+ media/libstagefright/StagefrightMetadataRetriever.cpp | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/media/libstagefright/StagefrightMetadataRetriever.cpp b/media/libstagefright/StagefrightMetadataRetriever.cpp
+index e80ec3b..b883320 100644
+--- a/media/libstagefright/StagefrightMetadataRetriever.cpp
++++ b/media/libstagefright/StagefrightMetadataRetriever.cpp
+@@ -526,8 +526,12 @@ void StagefrightMetadataRetriever::parseMetaData() {
+             } else if (!hasVideo && !strncasecmp("video/", mime, 6)) {
+                 hasVideo = true;
+ 
+-                CHECK(trackMeta->findInt32(kKeyWidth, &videoWidth));
+-                CHECK(trackMeta->findInt32(kKeyHeight, &videoHeight));
++                if (!trackMeta->findInt32(kKeyWidth, &videoWidth)) {
++                    videoWidth = 0;
++                }
++                if (!trackMeta->findInt32(kKeyHeight, &videoHeight)) {
++                    videoHeight = 0;
++                }
+                 if (!trackMeta->findInt32(kKeyRotation, &rotationAngle)) {
+                     rotationAngle = 0;
+                 }
+-- 
+1.9.1
+

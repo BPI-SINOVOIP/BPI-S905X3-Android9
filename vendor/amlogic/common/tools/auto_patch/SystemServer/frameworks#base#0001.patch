@@ -1,0 +1,87 @@
+From 8769fcdae7e6c45bc9267947f7cf49b8a0cd7183 Mon Sep 17 00:00:00 2001
+From: "an.xi" <an.xi@amlogic.com>
+Date: Thu, 3 Jan 2019 11:19:54 +0800
+Subject: [PATCH] SystemServer: combine two patches in SystemServer [1/1]
+
+PD#SWPL-3833
+
+Problem:
+name is not all right and the patches should be combined
+
+Solution:
+fix it
+
+Verify:
+verify it on Ampere
+
+Change-Id: I184d6501665319fd994312cdcf23293561d14dff
+Signed-off-by: an.xi <an.xi@amlogic.com>
+---
+ core/java/android/view/ViewRootImpl.java | 27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
+ mode change 100644 => 100755 core/java/android/view/ViewRootImpl.java
+
+diff --git a/core/java/android/view/ViewRootImpl.java b/core/java/android/view/ViewRootImpl.java
+old mode 100644
+new mode 100755
+index 5967e77..d378f20
+--- a/core/java/android/view/ViewRootImpl.java
++++ b/core/java/android/view/ViewRootImpl.java
+@@ -1355,6 +1355,9 @@ public final class ViewRootImpl implements ViewParent,
+             }
+ 
+             if (mStopped) {
++                if (mSurfaceHolder != null) {
++                    notifySurfaceDestroyed();
++                }
+                 mSurface.release();
+             }
+         }
+@@ -1750,7 +1753,11 @@ public final class ViewRootImpl implements ViewParent,
+             // PixelFormat.hasAlpha(lp.format) || lp.format == PixelFormat.RGBX_8888
+             // However, windows are now always 32 bits by default, so choose 32 bits
+             mAttachInfo.mUse32BitDrawingCache = true;
+-            mAttachInfo.mHasWindowFocus = false;
++            // The mAttachInfo.mHasWindowFocus's value is false by default, so there is
++            // No need to update it again in the first draw process. When the new window
++            // Is changed focus before it is drawn, this can even result in a circumstance
++            // Wherethe new window has no focus and can't dispatch input events.
++            //mAttachInfo.mHasWindowFocus = false;
+             mAttachInfo.mWindowVisibility = viewVisibility;
+             mAttachInfo.mRecomputeGlobalAttributes = false;
+             mLastConfigurationFromResources.setTo(config);
+@@ -2228,13 +2235,7 @@ public final class ViewRootImpl implements ViewParent,
+                     }
+                     mIsCreating = false;
+                 } else if (hadSurface) {
+-                    mSurfaceHolder.ungetCallbacks();
+-                    SurfaceHolder.Callback callbacks[] = mSurfaceHolder.getCallbacks();
+-                    if (callbacks != null) {
+-                        for (SurfaceHolder.Callback c : callbacks) {
+-                            c.surfaceDestroyed(mSurfaceHolder);
+-                        }
+-                    }
++                    notifySurfaceDestroyed();
+                     mSurfaceHolder.mSurfaceLock.lock();
+                     try {
+                         mSurfaceHolder.mSurface = new Surface();
+@@ -2498,6 +2499,16 @@ public final class ViewRootImpl implements ViewParent,
+         mIsInTraversal = false;
+     }
+ 
++    private void notifySurfaceDestroyed() {
++        mSurfaceHolder.ungetCallbacks();
++        SurfaceHolder.Callback[] callbacks = mSurfaceHolder.getCallbacks();
++        if (callbacks != null) {
++            for (SurfaceHolder.Callback c : callbacks) {
++                c.surfaceDestroyed(mSurfaceHolder);
++            }
++        }
++    }
++
+     private void maybeHandleWindowMove(Rect frame) {
+ 
+         // TODO: Well, we are checking whether the frame has changed similarly
+-- 
+1.9.1
+

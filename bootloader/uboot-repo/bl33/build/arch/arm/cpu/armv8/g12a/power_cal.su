@@ -1,0 +1,6 @@
+power_cal.c:45:14:_get_time	0	static
+power_cal.c:50:6:_udelay_	0	static
+power_cal.c:58:9:aml_delt_get	32	static
+power_cal.c:78:6:aml_set_voltage	32	static
+power_cal.c:121:6:aml_cal_pwm	64	static
+power_cal.c:136:6:aml_pwm_cal_init	16	static

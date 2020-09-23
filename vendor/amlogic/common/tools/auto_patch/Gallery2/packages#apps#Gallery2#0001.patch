@@ -1,0 +1,597 @@
+From 63ef5222f1a5b506f95a2204be7ed57024acb72d Mon Sep 17 00:00:00 2001
+From: Gongwei Chen <gongwei.chen@amlogic.com>
+Date: Wed, 28 Nov 2018 16:31:54 +0800
+Subject: [PATCH] Gallery2: fix the Gallery remote select pictures function.
+ [1/1]
+
+PD#SWPL-2306
+
+Problem:
+Gallery remote can't select pictures function
+
+Solution:
+Add Gallery remote control
+
+Verify:
+Verify by Android P AOSP galilei
+
+Change-Id: I9797340fbda2a963205b6644f751b2ddae7b1d23
+Signed-off-by: GongWei Chen <gongwei.chen@amlogic.com>
+---
+ src/com/android/gallery3d/app/AlbumPage.java       | 69 ++++++++++++++++++++++
+ src/com/android/gallery3d/app/AlbumSetPage.java    | 68 +++++++++++++++++++++
+ src/com/android/gallery3d/app/GalleryActivity.java | 55 +++++++++++++++++
+ src/com/android/gallery3d/app/ManageCachePage.java |  6 ++
+ src/com/android/gallery3d/app/PhotoPage.java       | 20 +++++++
+ src/com/android/gallery3d/ui/GLRootView.java       | 17 ++++++
+ src/com/android/gallery3d/ui/GLView.java           | 39 ++++++++++++
+ src/com/android/gallery3d/ui/PhotoView.java        | 27 +++++++++
+ src/com/android/gallery3d/ui/SlotView.java         | 38 ++++++++++++
+ 9 files changed, 339 insertions(+)
+
+diff --git a/src/com/android/gallery3d/app/AlbumPage.java b/src/com/android/gallery3d/app/AlbumPage.java
+index 44f2404..139adf3 100644
+--- a/src/com/android/gallery3d/app/AlbumPage.java
++++ b/src/com/android/gallery3d/app/AlbumPage.java
+@@ -26,6 +26,7 @@ import android.os.Handler;
+ import android.os.Message;
+ import android.provider.MediaStore;
+ import android.view.HapticFeedbackConstants;
++import android.view.KeyEvent;
+ import android.view.Menu;
+ import android.view.MenuInflater;
+ import android.view.MenuItem;
+@@ -65,6 +66,7 @@ public class AlbumPage extends ActivityState implements GalleryActionBar.Cluster
+     @SuppressWarnings("unused")
+     private static final String TAG = "AlbumPage";
+ 
++    private int mFocusedId = 0;
+     public static final String KEY_MEDIA_PATH = "media-path";
+     public static final String KEY_PARENT_MEDIA_PATH = "parent-media-path";
+     public static final String KEY_SET_CENTER = "set-center";
+@@ -494,6 +496,21 @@ public class AlbumPage extends ActivityState implements GalleryActionBar.Cluster
+             public void onLongTap(int slotIndex) {
+                 AlbumPage.this.onLongTap(slotIndex);
+             }
++
++            @Override
++            public boolean onKeyeventProcess ( KeyEvent keyEvent,  boolean requestFocus ) {
++              if ( null == keyEvent ) {
++                  mAlbumView.setPressedIndex ( requestFocus ? 0 : -1 );
++                  mFocusedId = 0;
++                  return true;
++              }
++
++              if ( ( mFocusedId == 0 ) && ( keyEvent.getKeyCode() == KeyEvent.KEYCODE_DPAD_UP ) ||
++                      ( mFocusedId == mSlotView.getVisibleEnd() ) && ( keyEvent.getKeyCode() == KeyEvent.KEYCODE_DPAD_DOWN ) ) {
++                  return false;
++              }
++              return findNextFocusd ( keyEvent );
++            }
+         });
+         mActionModeHandler = new ActionModeHandler(mActivity, mSelectionManager);
+         mActionModeHandler.setActionModeListener(new ActionModeListener() {
+@@ -783,4 +800,56 @@ public class AlbumPage extends ActivityState implements GalleryActionBar.Cluster
+             switchToFilmstrip();
+         }
+     }
++
++    private boolean findNextFocusd ( KeyEvent keyEvent ) {
++        int gapCount = mActivity.getResources().getInteger ( R.integer.albumset_rows_land );
++        int allCount = mSlotView.getVisibleEnd();
++        switch ( keyEvent.getKeyCode() ) {
++            case KeyEvent.KEYCODE_DPAD_LEFT:
++                if ( (mFocusedId - gapCount) >= 0 ) {
++                    mFocusedId -= gapCount;
++                } else {
++                    mSlotView.onKeyScroll( false, true );
++                }
++                if ( mFocusedId < mSlotView.getVisibleStart() ) {
++                    mSlotView.onKeyScroll( true, true );
++                }
++                mAlbumView.setPressedIndex ( mFocusedId );
++                break;
++            case KeyEvent.KEYCODE_DPAD_RIGHT:
++                if ( (mFocusedId + gapCount) < mDetailsSource.size() ) {
++                    mFocusedId += gapCount;
++                } else {
++                    mSlotView.onKeyScroll( false, false );
++                }
++                if ( mFocusedId >= allCount ) {
++                    mSlotView.onKeyScroll( true, false );
++                }
++                mAlbumView.setPressedIndex ( mFocusedId );
++                break;
++            case KeyEvent.KEYCODE_DPAD_DOWN:
++                if ( (mFocusedId + 1) < mDetailsSource.size() ) {
++                    mFocusedId += 1;
++                }
++                if ( mFocusedId >= allCount ) {
++                    mSlotView.onKeyScroll( true, false );
++                }
++                mAlbumView.setPressedIndex ( mFocusedId );
++                break;
++            case KeyEvent.KEYCODE_DPAD_UP:
++                if ( (mFocusedId - 1) >= 0 ) {
++                    mFocusedId -= 1;
++                }
++                if ( mFocusedId < mSlotView.getVisibleStart() ) {
++                    mSlotView.onKeyScroll( true, true );
++                }
++                mAlbumView.setPressedIndex ( mFocusedId );
++                break;
++            case KeyEvent.KEYCODE_DPAD_CENTER:
++                AlbumPage.this.onSingleTapUp ( mFocusedId );
++                break;
++        }
++        return true;
++    }
++
+ }
+diff --git a/src/com/android/gallery3d/app/AlbumSetPage.java b/src/com/android/gallery3d/app/AlbumSetPage.java
+index d56b5b8..bd04752 100644
+--- a/src/com/android/gallery3d/app/AlbumSetPage.java
++++ b/src/com/android/gallery3d/app/AlbumSetPage.java
+@@ -24,6 +24,7 @@ import android.os.Bundle;
+ import android.os.Handler;
+ import android.os.Message;
+ import android.view.HapticFeedbackConstants;
++import android.view.KeyEvent;
+ import android.view.Menu;
+ import android.view.MenuInflater;
+ import android.view.MenuItem;
+@@ -68,6 +69,7 @@ public class AlbumSetPage extends ActivityState implements
+     @SuppressWarnings("unused")
+     private static final String TAG = "AlbumSetPage";
+ 
++    private int mFocusId = 0;
+     private static final int MSG_PICK_ALBUM = 1;
+ 
+     public static final String KEY_MEDIA_PATH = "media-path";
+@@ -513,6 +515,20 @@ public class AlbumSetPage extends ActivityState implements
+             public void onLongTap(int slotIndex) {
+                 AlbumSetPage.this.onLongTap(slotIndex);
+             }
++
++            @Override
++            public boolean onKeyeventProcess ( KeyEvent keyEvent, boolean requestFocus ) {
++                if ( null == keyEvent ) {
++                    mAlbumSetView.setPressedIndex ( requestFocus ? 0 : -1 );;
++                    mFocusId = 0;
++                    return true;
++                }
++                if ( ( mFocusId == 0 ) && ( keyEvent.getKeyCode() == KeyEvent.KEYCODE_DPAD_UP )
++                        || ( mFocusId == mSlotView.getVisibleEnd() ) && ( keyEvent.getKeyCode() == KeyEvent.KEYCODE_DPAD_DOWN ) ) {
++                    return false;
++                }
++                return findNextFocusd ( keyEvent );
++            }
+         });
+ 
+         mActionModeHandler = new ActionModeHandler(mActivity, mSelectionManager);
+@@ -761,4 +777,56 @@ public class AlbumSetPage extends ActivityState implements
+             }
+         }
+     }
++
++    private boolean findNextFocusd ( KeyEvent keyEvent ) {
++        int gapCount = mActivity.getResources().getInteger ( R.integer.albumset_rows_land );
++        int allCount = mSlotView.getVisibleEnd();
++        switch ( keyEvent.getKeyCode() ) {
++            case KeyEvent.KEYCODE_DPAD_LEFT:
++                if ( (mFocusId - gapCount) >= 0 ) {
++                    mFocusId -= gapCount;
++                } else {
++                    mSlotView.onKeyScroll( false, true );
++                }
++                if ( mFocusId < mSlotView.getVisibleStart() ) {
++                    mSlotView.onKeyScroll( true, true );
++                }
++                mAlbumSetView.setPressedIndex ( mFocusId );
++                break;
++            case KeyEvent.KEYCODE_DPAD_RIGHT:
++                if ( (mFocusId + gapCount) < mDetailsSource.size() ) {
++                    mFocusId += gapCount;
++                } else {
++                    mSlotView.onKeyScroll( false, false );
++                }
++                if ( mFocusId >= allCount ) {
++                    mSlotView.onKeyScroll( true, false );
++                }
++                mAlbumSetView.setPressedIndex ( mFocusId );
++                break;
++            case KeyEvent.KEYCODE_DPAD_DOWN:
++                if ( (mFocusId + 1) < mDetailsSource.size() ) {
++                    mFocusId += 1;
++                }
++                if ( mFocusId >= allCount ) {
++                    mSlotView.onKeyScroll( true, false );
++                }
++                mAlbumSetView.setPressedIndex ( mFocusId );
++                break;
++            case KeyEvent.KEYCODE_DPAD_UP:
++                if ( (mFocusId - 1) >= 0 ) {
++                    mFocusId -= 1;
++                }
++                if ( mFocusId < mSlotView.getVisibleStart() ) {
++                    mSlotView.onKeyScroll( true, true );
++                }
++                mAlbumSetView.setPressedIndex ( mFocusId );
++                break;
++            case KeyEvent.KEYCODE_DPAD_CENTER:
++                AlbumSetPage.this.onSingleTapUp ( mFocusId );
++                break;
++            }
++        return true;
++    }
++
+ }
+diff --git a/src/com/android/gallery3d/app/GalleryActivity.java b/src/com/android/gallery3d/app/GalleryActivity.java
+index bb2a6b8..4aad769 100644
+--- a/src/com/android/gallery3d/app/GalleryActivity.java
++++ b/src/com/android/gallery3d/app/GalleryActivity.java
+@@ -24,13 +24,16 @@ import android.content.Intent;
+ import android.net.Uri;
+ import android.os.Bundle;
+ import android.view.InputDevice;
++import android.view.KeyEvent;
+ import android.view.MotionEvent;
+ import android.view.View;
++import android.view.ViewGroup;
+ import android.view.Window;
+ import android.view.WindowManager;
+ import android.widget.Toast;
+ 
+ import com.android.gallery3d.R;
++import com.android.gallery3d.ui.GLRootView;
+ import com.android.gallery3d.common.Utils;
+ import com.android.gallery3d.data.DataManager;
+ import com.android.gallery3d.data.MediaItem;
+@@ -38,6 +41,8 @@ import com.android.gallery3d.data.MediaSet;
+ import com.android.gallery3d.data.Path;
+ import com.android.gallery3d.picasasource.PicasaSource;
+ import com.android.gallery3d.util.GalleryUtils;
++import java.lang.reflect.Field;
++import java.lang.reflect.Method;
+ 
+ public final class GalleryActivity extends AbstractGalleryActivity implements OnCancelListener {
+     public static final String EXTRA_SLIDESHOW = "slideshow";
+@@ -139,6 +144,56 @@ public final class GalleryActivity extends AbstractGalleryActivity implements On
+         }
+     }
+ 
++    @Override
++    public boolean dispatchKeyEvent ( KeyEvent event ) {
++        if ( event.getKeyCode() == KeyEvent.KEYCODE_MENU ) {
++            if (event.getAction() == KeyEvent.ACTION_UP ) {
++                displayMoreMenu();
++            }
++            return false;
++        }
++        if ( event.getAction() == KeyEvent.ACTION_DOWN ) {
++            View cv = getWindow().getDecorView();
++            int vgcId, vgbId;
++            try {
++                Class c = Class.forName ( "com.android.internal.R$id" );
++                Object obj = c.newInstance();
++                Field field = c.getField ( "action_bar_container" );
++                vgbId = field.getInt ( obj );
++                GLRootView vgc = ( GLRootView ) cv.findViewById ( R.id.gl_root_view );
++                ViewGroup vgb = ( ViewGroup ) cv.findViewById ( vgbId );
++                if ( vgc.hasFocus() && !vgc.dispatchKey ( event ) ) {
++                    vgc.requestFocusAtPos0 ( false );
++                    vgb.requestFocus();
++                } else  if ( vgb.hasFocus() && event.getKeyCode() == KeyEvent.KEYCODE_DPAD_DOWN ) {
++                    vgc.setFocusable ( true );
++                    vgc.requestFocus();
++                    vgc.requestFocusAtPos0 ( true );
++                }
++            } catch ( Exception e ) {
++                e.printStackTrace();
++            }
++        }
++        return super.dispatchKeyEvent ( event );
++    }
++
++    private void displayMoreMenu(){
++        View mDecor = getWindow().getDecorView();
++        int vgcId, vgbId;
++        try {
++            Class docor = Class.forName ( "com.android.internal.widget.ActionBarOverlayLayout" );
++            Class c = Class.forName ( "com.android.internal.R$id" );
++            Object obj = c.newInstance();
++            Field field = c.getField ( "decor_content_parent" );
++            vgbId = field.getInt ( obj );
++            Object vgb =  mDecor.findViewById ( vgbId );
++            Method show = docor.getMethod("showOverflowMenu");
++            show.invoke(vgb);
++        } catch ( Exception e ) {
++            e.printStackTrace();
++        }
++    }
++
+     private void startViewAction(Intent intent) {
+         Boolean slideshow = intent.getBooleanExtra(EXTRA_SLIDESHOW, false);
+         if (slideshow) {
+diff --git a/src/com/android/gallery3d/app/ManageCachePage.java b/src/com/android/gallery3d/app/ManageCachePage.java
+index 4f5c358..401dce9 100644
+--- a/src/com/android/gallery3d/app/ManageCachePage.java
++++ b/src/com/android/gallery3d/app/ManageCachePage.java
+@@ -22,6 +22,7 @@ import android.os.Bundle;
+ import android.os.Handler;
+ import android.os.Message;
+ import android.text.format.Formatter;
++import android.view.KeyEvent;
+ import android.view.LayoutInflater;
+ import android.view.View;
+ import android.view.View.OnClickListener;
+@@ -308,6 +309,11 @@ public class ManageCachePage extends ActivityState implements
+             public void onSingleTapUp(int slotIndex) {
+                 ManageCachePage.this.onSingleTapUp(slotIndex);
+             }
++
++            @Override
++            public boolean onKeyeventProcess ( KeyEvent keyEvent,  boolean requestFocus ) {
++                return true;
++            }
+         });
+         mRootPane.addComponent(mSlotView);
+         initializeFooterViews();
+diff --git a/src/com/android/gallery3d/app/PhotoPage.java b/src/com/android/gallery3d/app/PhotoPage.java
+index 915fdab..837466e 100644
+--- a/src/com/android/gallery3d/app/PhotoPage.java
++++ b/src/com/android/gallery3d/app/PhotoPage.java
+@@ -33,6 +33,7 @@ import android.os.Bundle;
+ import android.os.Handler;
+ import android.os.Message;
+ import android.os.SystemClock;
++import android.view.KeyEvent;
+ import android.view.Menu;
+ import android.view.MenuItem;
+ import android.view.View;
+@@ -1530,4 +1531,23 @@ public abstract class PhotoPage extends ActivityState implements
+         }
+     }
+ 
++    @Override
++    public void onKeyDown ( KeyEvent KeyEvent ) {
++        int keyCode = KeyEvent.getKeyCode();
++        if ( keyCode == KeyEvent.KEYCODE_DPAD_CENTER || keyCode == KeyEvent.KEYCODE_ENTER ) {
++            MediaItem item = mModel.getMediaItem ( 0 );
++            if ( item == null || item == mScreenNailItem ) {
++                return;
++            }
++            if ( "Photo".equals ( getMediaTypeString ( item ) ) ) {
++                if ( mMediaSet != null ) {
++                    Menu menu = mActionBar.getMenu();
++                    MenuItem mitem = menu.findItem ( R.id.action_slideshow );
++                    mActivity.onOptionsItemSelected ( mitem );
++                }
++            } else if ( "Video".equals ( getMediaTypeString ( item ) ) ) {
++                playVideo ( mActivity, item.getPlayUri(), item.getName() );
++            }
++        }
++    }
+ }
+diff --git a/src/com/android/gallery3d/ui/GLRootView.java b/src/com/android/gallery3d/ui/GLRootView.java
+index dc898d8..95c1b89 100644
+--- a/src/com/android/gallery3d/ui/GLRootView.java
++++ b/src/com/android/gallery3d/ui/GLRootView.java
+@@ -27,6 +27,7 @@ import android.os.SystemClock;
+ import android.util.AttributeSet;
+ import android.view.MotionEvent;
+ import android.view.SurfaceHolder;
++import android.view.KeyEvent;
+ import android.view.View;
+ 
+ import com.android.gallery3d.R;
+@@ -145,6 +146,18 @@ public class GLRootView extends GLSurfaceView
+         mAnimations.add(animation);
+     }
+ 
++    public boolean dispatchKey ( KeyEvent paramKeyEvent ) {
++        if (!isEnabled()) return false;
++        mRenderLock.lock();
++        try {
++            // If this has been detached from root, we don't need to handle event
++            boolean handled = mContentView != null && mContentView.dispatchKeyEvent(this, paramKeyEvent);
++            return handled;
++        } finally {
++            mRenderLock.unlock();
++        }
++    }
++
+     @Override
+     public void addOnGLIdleListener(OnGLIdleListener listener) {
+         synchronized (mIdleListeners) {
+@@ -153,6 +166,10 @@ public class GLRootView extends GLSurfaceView
+         }
+     }
+ 
++    public void requestFocusAtPos0 ( boolean request ) {
++        mContentView.requestFocus ( request );
++    }
++
+     @Override
+     public void setContentPane(GLView content) {
+         if (mContentView == content) return;
+diff --git a/src/com/android/gallery3d/ui/GLView.java b/src/com/android/gallery3d/ui/GLView.java
+index 83de19f..64e3cf2 100644
+--- a/src/com/android/gallery3d/ui/GLView.java
++++ b/src/com/android/gallery3d/ui/GLView.java
+@@ -18,6 +18,7 @@ package com.android.gallery3d.ui;
+ 
+ import android.graphics.Rect;
+ import android.os.SystemClock;
++import android.view.KeyEvent;
+ import android.view.MotionEvent;
+ 
+ import com.android.gallery3d.anim.CanvasAnimation;
+@@ -308,6 +309,44 @@ public class GLView {
+         return false;
+     }
+ 
++    protected boolean dispatchKeyEvent ( GLRootView glRootView, KeyEvent keyEvent ) {
++        if ( keyEvent.getAction() == KeyEvent.ACTION_DOWN ) {
++            int i = -1 + getComponentCount();
++            if ( i >= 0 ) {
++                GLView localGLView = getComponent ( i );
++                if ( localGLView.getVisibility() == 0 ) {
++                    i--;
++                    if ( ( localGLView instanceof GLView ) ) {
++                        return localGLView.dispatchKeyEvent ( glRootView, keyEvent );
++                    }
++                }
++            }
++            return onKeyDown ( glRootView, keyEvent );
++        }
++        return false;
++    }
++
++    protected void requestFocus ( boolean request ) {
++        int i = -1 + getComponentCount();
++        if ( i >= 0 ) {
++            GLView localGLView = getComponent ( i );
++            if ( localGLView.getVisibility() == 0 ) {
++                i--;
++                if ( ( localGLView instanceof GLView ) ) {
++                    localGLView.requestFocusAtPos0 ( request );
++                }
++            }
++        }
++        requestFocusAtPos0 ( request );
++    }
++
++    protected void requestFocusAtPos0 ( boolean request ) {
++    }
++
++    protected boolean onKeyDown ( GLRootView GLRootView, KeyEvent KeyEvent ) {
++        return false;
++    }
++
+     protected boolean dispatchTouchEvent(MotionEvent event) {
+         int x = (int) event.getX();
+         int y = (int) event.getY();
+diff --git a/src/com/android/gallery3d/ui/PhotoView.java b/src/com/android/gallery3d/ui/PhotoView.java
+index e8c706f..02b64de 100644
+--- a/src/com/android/gallery3d/ui/PhotoView.java
++++ b/src/com/android/gallery3d/ui/PhotoView.java
+@@ -23,6 +23,7 @@ import android.graphics.Matrix;
+ import android.graphics.Rect;
+ import android.os.Build;
+ import android.os.Message;
++import android.view.KeyEvent;
+ import android.view.MotionEvent;
+ import android.view.View.MeasureSpec;
+ import android.view.animation.AccelerateInterpolator;
+@@ -131,6 +132,7 @@ public class PhotoView extends GLView {
+         public void onFilmModeChanged(boolean enabled);
+         public void onPictureCenter(boolean isCamera);
+         public void onUndoBarVisibilityChanged(boolean visible);
++        public void onKeyDown(KeyEvent KeyEvent);
+     }
+ 
+     // The rules about orientation locking:
+@@ -1854,4 +1856,29 @@ public class PhotoView extends GLView {
+         }
+         return effect;
+     }
++
++    @Override
++    protected boolean onKeyDown ( GLRootView GLRootView, KeyEvent KeyEvent ) {
++        int keyCode = KeyEvent.getKeyCode();
++        if ( keyCode == KeyEvent.KEYCODE_DPAD_CENTER || keyCode == KeyEvent.KEYCODE_ENTER ) {
++            if ( mListener != null ) {
++                mListener.onKeyDown ( KeyEvent );
++                return true;
++            }
++        } else if ( keyCode == KeyEvent.KEYCODE_DPAD_RIGHT ) {
++            slideToNextPicture();
++            return true;
++        } else if ( keyCode == KeyEvent.KEYCODE_DPAD_LEFT ) {
++            slideToPrevPicture();
++            return true;
++        }
++        return false;
++    }
++
++    @Override
++    protected void requestFocusAtPos0 ( boolean request ) {
++        if ( request ) {
++            switchToFirstImage();
++        }
++    }
+ }
+diff --git a/src/com/android/gallery3d/ui/SlotView.java b/src/com/android/gallery3d/ui/SlotView.java
+index bd0ffdc..ba3b0a1 100644
+--- a/src/com/android/gallery3d/ui/SlotView.java
++++ b/src/com/android/gallery3d/ui/SlotView.java
+@@ -19,6 +19,7 @@ package com.android.gallery3d.ui;
+ import android.graphics.Rect;
+ import android.os.Handler;
+ import android.view.GestureDetector;
++import android.view.KeyEvent;
+ import android.view.MotionEvent;
+ import android.view.animation.DecelerateInterpolator;
+ 
+@@ -43,6 +44,7 @@ public class SlotView extends GLView {
+         public void onSingleTapUp(int index);
+         public void onLongTap(int index);
+         public void onScrollPositionChanged(int position, int total);
++        public boolean onKeyeventProcess( KeyEvent keyEvent, boolean requestFocus);
+     }
+ 
+     public static class SimpleListener implements Listener {
+@@ -51,6 +53,7 @@ public class SlotView extends GLView {
+         @Override public void onSingleTapUp(int index) {}
+         @Override public void onLongTap(int index) {}
+         @Override public void onScrollPositionChanged(int position, int total) {}
++        @Override public boolean onKeyeventProcess( KeyEvent keyEvent,  boolean requestFocus) {return false;}
+     }
+ 
+     public static interface SlotRenderer {
+@@ -738,6 +741,41 @@ public class SlotView extends GLView {
+         return mScrollY;
+     }
+ 
++    public void onKeyScroll( boolean scroll, boolean isLeft ) {
++        int visibleStart = getVisibleStart();
++        int visibleEnd = getVisibleEnd();
++        int rowsLand = mLayout.mSpec.rowsLand;
++        int slotWidth = mLayout.getSlotWidth();
++        int distance = slotWidth * ( (visibleEnd - visibleStart) / rowsLand );
++        if ( scroll && !isLeft ) {
++            mScroller.startScroll( distance, 0, mLayout.getScrollLimit() );
++        } else if ( scroll && isLeft ) {
++            mScroller.startScroll( -distance, 0, mLayout.getScrollLimit() );
++        } else if ( !scroll && isLeft ) {
++            mPaper.overScroll( -distance );
++            mPaper.onRelease();
++        } else if ( !scroll && !isLeft ) {
++            mPaper.overScroll( distance );
++            mPaper.onRelease();
++        }
++        invalidate();
++    }
++
++    @Override
++    protected boolean onKeyDown ( GLRootView glRootView, KeyEvent keyEvent ) {
++        if ( mListener != null ) {
++            return mListener.onKeyeventProcess ( keyEvent, false ) || super.onKeyDown ( glRootView, keyEvent );
++        }
++        return super.onKeyDown ( glRootView, keyEvent );
++    }
++
++    @Override
++    protected void requestFocusAtPos0 ( boolean request ) {
++        if ( mListener != null ) {
++            mListener.onKeyeventProcess ( null, request );
++        }
++    }
++
+     public Rect getSlotRect(int slotIndex, GLView rootPane) {
+         // Get slot rectangle relative to this root pane.
+         Rect offset = new Rect();
+-- 
+1.9.1
+

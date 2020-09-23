@@ -1,0 +1,65 @@
+From c8882073c22acae3163fafd5f13ca0ea546e785f Mon Sep 17 00:00:00 2001
+From: sky zhou <sky.zhou@amlogic.com>
+Date: Mon, 24 Jun 2019 11:02:30 +0800
+Subject: [PATCH] SurfaceFlinger: sideband can not display with crop [1/2]
+
+PD#TV-6868
+
+Problem:
+when sideband window have negative offset, hwc
+cannot handle it correctly.
+
+Solution:
+Pass full window rect instead of crop.
+
+Verify:
+verify on macroni.
+
+Change-Id: I6e948fbb02d729a75d80e25d17a5e53e9cb4ef0c
+---
+ services/surfaceflinger/Layer.cpp | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
+
+diff --git a/services/surfaceflinger/Layer.cpp b/services/surfaceflinger/Layer.cpp
+index a14bb98..49c42af 100644
+--- a/services/surfaceflinger/Layer.cpp
++++ b/services/surfaceflinger/Layer.cpp
+@@ -555,6 +555,7 @@ void Layer::setGeometry(const sp<const DisplayDevice>& displayDevice, uint32_t z
+ 
+     // computeBounds returns a FloatRect to provide more accuracy during the
+     // transformation. We then round upon constructing 'frame'.
++    FloatRect sourceCrop = computeCrop(displayDevice);
+     Rect frame{t.transform(computeBounds(activeTransparentRegion))};
+     if (!s.finalCrop.isEmpty()) {
+         if (!frame.intersect(s.finalCrop, &frame)) {
+@@ -566,7 +567,18 @@ void Layer::setGeometry(const sp<const DisplayDevice>& displayDevice, uint32_t z
+     }
+     const Transform& tr(displayDevice->getTransform());
+     Rect transformedFrame = tr.transform(frame);
+-    error = hwcLayer->setDisplayFrame(transformedFrame);
++
++    if (sourceCrop.getWidth() > 0 && sourceCrop.getHeight() > 0 ) {
++        error = hwcLayer->setDisplayFrame(transformedFrame);
++    } else {
++        Rect fullrect(s.active.w, s.active.h);
++        Transform t = getTransform();
++        fullrect = t.transform(fullrect);
++        ALOGE("layer [%s] computeScreenBounds - NO PARENT [%d, %d, %d, %d]",
++            mName.string(), fullrect.left, fullrect.top, fullrect.right, fullrect.bottom);
++        error = hwcLayer->setDisplayFrame(fullrect);
++    }
++
+     if (error != HWC2::Error::None) {
+         ALOGE("[%s] Failed to set display frame [%d, %d, %d, %d]: %s (%d)", mName.string(),
+               transformedFrame.left, transformedFrame.top, transformedFrame.right,
+@@ -575,7 +587,6 @@ void Layer::setGeometry(const sp<const DisplayDevice>& displayDevice, uint32_t z
+         hwcInfo.displayFrame = transformedFrame;
+     }
+ 
+-    FloatRect sourceCrop = computeCrop(displayDevice);
+     error = hwcLayer->setSourceCrop(sourceCrop);
+     if (error != HWC2::Error::None) {
+         ALOGE("[%s] Failed to set source crop [%.3f, %.3f, %.3f, %.3f]: "
+-- 
+2.7.4
+

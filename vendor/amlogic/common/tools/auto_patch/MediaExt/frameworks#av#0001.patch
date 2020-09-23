@@ -1,0 +1,697 @@
+From 203035a508515d32e29f35a143733b49d75c9ae2 Mon Sep 17 00:00:00 2001
+From: rongrong zhou <rongrong.zhou@amlogic.com>
+Date: Thu, 23 Aug 2018 14:06:03 +0800
+Subject: [PATCH] mediaext: merge media ext from o
+
+PD# 169059
+
+1. merge media ext from O
+2. add convertMetaDataToMessage
+3. add amnuplayer use StagefrightMetadataRetriever
+
+Change-Id: Id459123b4bd7b9e7b5f0c548fe4118b7011384a4
+---
+ media/libavextensions/Android.bp                   | 63 ++++++++++++++
+ media/libavextensions/common/ExtensionsLoader.hpp  | 91 ++++++++++++++++++++
+ .../include/common/AVExtensionsCommon.h            | 69 +++++++++++++++
+ .../include/stagefright/AVExtensions.h             | 77 +++++++++++++++++
+ media/libavextensions/stagefright/AVUtils.cpp      | 99 ++++++++++++++++++++++
+ .../MetadataRetrieverClient.cpp                    |  3 +
+ media/libstagefright/ACodec.cpp                    | 23 ++++-
+ media/libstagefright/Android.bp                    |  5 ++
+ media/libstagefright/Utils.cpp                     |  7 ++
+ media/libstagefright/xmlparser/Android.bp          | 22 +++++
+ .../xmlparser/MediaCodecsXmlParser.cpp             |  5 +-
+ .../stagefright/xmlparser/MediaCodecsXmlParser.h   |  5 +-
+ 12 files changed, 463 insertions(+), 6 deletions(-)
+ create mode 100644 media/libavextensions/Android.bp
+ create mode 100644 media/libavextensions/common/ExtensionsLoader.hpp
+ create mode 100644 media/libavextensions/include/common/AVExtensionsCommon.h
+ create mode 100644 media/libavextensions/include/stagefright/AVExtensions.h
+ create mode 100644 media/libavextensions/stagefright/AVUtils.cpp
+
+diff --git a/media/libavextensions/Android.bp b/media/libavextensions/Android.bp
+new file mode 100644
+index 0000000..28a0708
+--- /dev/null
++++ b/media/libavextensions/Android.bp
+@@ -0,0 +1,63 @@
++// AV  media utils extention
++// ########################################################
++cc_library_headers {
++    name: "libavextensions_headers",
++    export_include_dirs: ["include"],
++    vendor_available: true,
++}
++
++cc_library_static {
++    name: "libavextensions",
++    vendor_available: true,
++    vndk: {
++        enabled: true,
++    },
++
++    srcs: [
++         "stagefright/AVUtils.cpp",
++    ],
++
++    shared_libs: [
++         "libhidlbase",
++         "liblog",
++         "libui",
++         "libgui",
++         "libcutils",
++         "libutils",
++         "libnativewindow",
++//         "libstagefright",
++         "libcrypto",
++         "android.hardware.media.omx@1.0",
++         "libhidlbase",
++         "libhidlmemory",
++         "android.hidl.allocator@1.0",
++         "android.hidl.memory@1.0",
++    ],
++
++    header_libs: [
++        "media_plugin_headers",
++        "libstagefright_headers",
++    ],
++
++    export_header_lib_headers: [
++        "media_plugin_headers",
++        "libstagefright_headers",
++    ],
++
++    export_include_dirs: [
++         "common",
++         "include",
++    ],
++
++    include_dirs: [
++         "frameworks/av/media/libstagefright/omx/include",
++         "frameworks/av/media/libstagefright/xmlparser/include",
++         "frameworks/av/media/libmedia/include",
++         "frameworks/av/include",
++    ],
++
++    cflags: [
++        "-Wno-multichar",
++        "-Werror",
++    ],
++}
+diff --git a/media/libavextensions/common/ExtensionsLoader.hpp b/media/libavextensions/common/ExtensionsLoader.hpp
+new file mode 100644
+index 0000000..b8e6484
+--- /dev/null
++++ b/media/libavextensions/common/ExtensionsLoader.hpp
+@@ -0,0 +1,91 @@
++/*
++ * Copyright (c) 2013 - 2017, The Linux Foundation. All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions are
++ * met:
++ *     * Redistributions of source code must retain the above copyright
++ *      notice, this list of conditions and the following disclaimer.
++ *     * Redistributions in binary form must reproduce the above
++ *       copyright notice, this list of conditions and the following
++ *       disclaimer in the documentation and/or other materials provided
++ *      with the distribution.
++ *     * Neither the name of The Linux Foundation nor the names of its
++ *      contributors may be used to endorse or promote products derived
++ *       from this software without specific prior written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
++ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
++ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
++ * ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
++ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
++ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
++ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
++ * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
++ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
++ * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
++ * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++#include <dlfcn.h>
++#include <common/AVExtensionsCommon.h>
++
++namespace android {
++
++/*
++ * Create strongly-typed objects of type T
++ * If the customization library exists and does contain a "named" constructor,
++ *  invoke and create an instance
++ * Else create the object of type T itself
++ *
++ * Contains a static instance to dlopen'd library, But may end up
++ * opening the library mutiple times. Following snip from dlopen man page is
++ * reassuring "...Only a single copy of an object file is brought into the
++ * address space, even if dlopen() is invoked multiple times in reference to
++ * the file, and even if different pathnames are used to reference the file.."
++ */
++
++template <typename T>
++T *ExtensionsLoader<T>::createInstance(const char *createFunctionName) {
++        ALOGI("createInstance(%lubit) : %s", (unsigned long)sizeof(intptr_t)*8, createFunctionName);
++        // create extended object if extensions-lib is available
++        createFunction_t createFunc = loadCreateFunction(createFunctionName);
++        if (createFunc) {
++            ALOGI("CREATE function success");
++            return reinterpret_cast<T *>((*createFunc)());
++        }
++            ALOGI("CREATE default object");
++        // Else, create the default object
++        return new T;
++}
++
++template <typename T>
++void ExtensionsLoader<T>::loadLib() {
++        if (!mLibHandle) {
++            mLibHandle = ::dlopen(CUSTOMIZATION_LIB_NAME, RTLD_LAZY);
++            if (!mLibHandle) {
++                ALOGV("%s", dlerror());
++                return;
++            }
++            ALOGI("Opened %s", CUSTOMIZATION_LIB_NAME);
++        }
++}
++
++template <typename T>
++createFunction_t ExtensionsLoader<T>::loadCreateFunction(const char *createFunctionName) {
++        loadLib();
++        if (!mLibHandle) {
++            return NULL;
++        }
++        createFunction_t func = (createFunction_t)dlsym(mLibHandle, createFunctionName);
++        if (!func) {
++            ALOGI("symbol %s not found:  %s",createFunctionName, dlerror());
++        } else 
++            ALOGI("symbol %s found:  %s",createFunctionName, dlerror());
++        return func;
++}
++
++//static
++template <typename T>
++void *ExtensionsLoader<T>::mLibHandle = NULL;
++
++} //namespace android
+diff --git a/media/libavextensions/include/common/AVExtensionsCommon.h b/media/libavextensions/include/common/AVExtensionsCommon.h
+new file mode 100644
+index 0000000..f0fc1a3
+--- /dev/null
++++ b/media/libavextensions/include/common/AVExtensionsCommon.h
+@@ -0,0 +1,69 @@
++/*
++ * Copyright (c) 2013 - 2017, The Linux Foundation. All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions are
++ * met:
++ *     * Redistributions of source code must retain the above copyright
++ *      notice, this list of conditions and the following disclaimer.
++ *     * Redistributions in binary form must reproduce the above
++ *       copyright notice, this list of conditions and the following
++ *       disclaimer in the documentation and/or other materials provided
++ *      with the distribution.
++ *     * Neither the name of The Linux Foundation nor the names of its
++ *      contributors may be used to endorse or promote products derived
++ *       from this software without specific prior written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
++ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
++ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
++ * ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
++ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
++ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
++ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
++ * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
++ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
++ * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
++ * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++#ifndef _AV_EXTENSIONS_COMMON_H_
++#define _AV_EXTENSIONS_COMMON_H_
++
++namespace android {
++
++static const char * CUSTOMIZATION_LIB_NAME = "libavenhancements.so";
++
++typedef void *(*createFunction_t)(void);
++
++template <typename T>
++struct ExtensionsLoader {
++
++    static T *createInstance(const char *createFunctionName);
++
++private:
++    static void loadLib();
++    static createFunction_t loadCreateFunction(const char *createFunctionName);
++    static void *mLibHandle;
++};
++
++/*
++ * Boiler-plate to declare the class as a singleton (with a static getter)
++ * which can be loaded (dlopen'd) via ExtensionsLoader
++ */
++#define DECLARE_LOADABLE_SINGLETON(className)   \
++protected:                                      \
++    className();                                \
++    virtual ~className();                       \
++    static className *sInst;                    \
++private:                                        \
++    className(const className&);                \
++    className &operator=(className &);          \
++public:                                         \
++    static className *get() {                   \
++        return sInst;                           \
++    }                                           \
++    friend struct ExtensionsLoader<className>;
++
++} //namespace android
++
++#endif // _AV_EXTENSIONS_COMMON_H_
+diff --git a/media/libavextensions/include/stagefright/AVExtensions.h b/media/libavextensions/include/stagefright/AVExtensions.h
+new file mode 100644
+index 0000000..08fe738
+--- /dev/null
++++ b/media/libavextensions/include/stagefright/AVExtensions.h
+@@ -0,0 +1,77 @@
++/*
++ * Copyright (c) 2013 - 2017, The Linux Foundation. All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions are
++ * met:
++ *     * Redistributions of source code must retain the above copyright
++ *      notice, this list of conditions and the following disclaimer.
++ *     * Redistributions in binary form must reproduce the above
++ *       copyright notice, this list of conditions and the following
++ *       disclaimer in the documentation and/or other materials provided
++ *      with the distribution.
++ *     * Neither the name of The Linux Foundation nor the names of its
++ *      contributors may be used to endorse or promote products derived
++ *       from this software without specific prior written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
++ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
++ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
++ * ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
++ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
++ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
++ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
++ * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
++ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
++ * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
++ * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++#ifndef _AV_EXTENSIONS_H_
++#define _AV_EXTENSIONS_H_
++
++#include <common/AVExtensionsCommon.h>
++#include <media/stagefright/foundation/AString.h>
++#include <media/stagefright/MediaErrors.h>
++#include <media/stagefright/xmlparser/MediaCodecsXmlParser.h>
++#include <OMX_Video.h>
++#include <media/IOMX.h>
++#include <media/stagefright/foundation/AMessage.h>
++#include <media/MediaPlayerInterface.h>
++
++
++namespace android {
++
++/*
++ * Common delegate to the classes in libstagefright
++ */
++struct AVUtils {
++
++    virtual const char *getComponentRole(bool isEncoder, const char *mime);
++
++    virtual status_t getVideoCodingTypeFromMimeEx(
++        const char *, OMX_VIDEO_CODINGTYPE *);
++
++    virtual bool isVendorSoftDecoder(const char *);
++
++    virtual bool isAudioExtendFormat(const char *);
++
++    virtual bool isAudioExtendCoding(int);
++
++    virtual int getAudioExtendParameter(int, uint32_t ,const sp<IOMXNode> &OMXNode, sp<AMessage> &notify);
++
++    virtual int setAudioExtendParameter(const char *,const sp<IOMXNode> &OMXNode,const sp<AMessage> &notify);
++
++    virtual void addExtendXML(MediaCodecsXmlParser*);
++
++    virtual bool isExtendPlayer(player_type);
++
++    virtual status_t convertMetaDataToMessage(
++        const sp<MetaData> &, sp<AMessage> &);
++
++    // ----- NO TRESSPASSING BEYOND THIS LINE ------
++    DECLARE_LOADABLE_SINGLETON(AVUtils);
++};
++
++}
++
++#endif // _AV_EXTENSIONS__H_
+diff --git a/media/libavextensions/stagefright/AVUtils.cpp b/media/libavextensions/stagefright/AVUtils.cpp
+new file mode 100644
+index 0000000..94ec072
+--- /dev/null
++++ b/media/libavextensions/stagefright/AVUtils.cpp
+@@ -0,0 +1,99 @@
++/*
++ * Copyright (c) 2013 - 2017, The Linux Foundation. All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions are
++ * met:
++ *     * Redistributions of source code must retain the above copyright
++ *      notice, this list of conditions and the following disclaimer.
++ *     * Redistributions in binary form must reproduce the above
++ *       copyright notice, this list of conditions and the following
++ *       disclaimer in the documentation and/or other materials provided
++ *      with the distribution.
++ *     * Neither the name of The Linux Foundation nor the names of its
++ *      contributors may be used to endorse or promote products derived
++ *       from this software without specific prior written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
++ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
++ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
++ * ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
++ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
++ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
++ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
++ * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
++ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
++ * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
++ * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++#define LOG_NDEBUG 0
++#define LOG_TAG "AVUtils"
++#include <utils/Log.h>
++
++#include "common/ExtensionsLoader.hpp"
++#include "stagefright/AVExtensions.h"
++#include <media/stagefright/omx/OMXUtils.h>
++#include <media/IOMX.h>
++
++namespace android {
++
++const char *AVUtils::getComponentRole(bool isEncoder, const char *mime) {
++    ALOGV("AVUtils::getComponentRole");
++
++    return GetComponentRole(isEncoder,mime);
++}
++
++status_t AVUtils::getVideoCodingTypeFromMimeEx(
++        const char *, OMX_VIDEO_CODINGTYPE *) {
++    return ERROR_UNSUPPORTED;
++}
++
++bool AVUtils::isVendorSoftDecoder(const char *) {
++    return false;
++}
++
++bool AVUtils::isAudioExtendFormat(const char *) {
++    return false;
++}
++bool AVUtils::isAudioExtendCoding(int) {
++    return false;
++}
++int AVUtils::getAudioExtendParameter(int, uint32_t ,const sp<IOMXNode> &OMXNode, sp<AMessage> &notify) {
++    if (OMXNode == NULL ||notify == NULL)
++        ALOGI("AVUtils::getAudioExtendParameter err");
++    return -1;
++}
++int AVUtils::setAudioExtendParameter(const char *,const sp<IOMXNode> &OMXNode, const sp<AMessage> &notify) {
++    if (OMXNode == NULL ||notify == NULL)
++        ALOGI("AVUtils::setAudioExtendParameter err");
++    return -1;
++}
++
++void AVUtils::addExtendXML(MediaCodecsXmlParser*) {
++    ALOGI("AVUtils::addExtendXML");
++    //addExtendXML(xmlparser);
++    return;
++}
++
++bool AVUtils::isExtendPlayer(player_type) {
++    return false;
++}
++
++status_t AVUtils::convertMetaDataToMessage(
++        const sp<MetaData> &, sp<AMessage> &) {
++    return OK;
++}
++
++
++
++// ----- NO TRESSPASSING BEYOND THIS LINE ------
++AVUtils::AVUtils() {}
++
++AVUtils::~AVUtils() {}
++
++//static
++AVUtils *AVUtils::sInst =
++        ExtensionsLoader<AVUtils>::createInstance("_ZN7android19createExtendedUtilsEv");
++
++} //namespace android
++
+diff --git a/media/libmediaplayerservice/MetadataRetrieverClient.cpp b/media/libmediaplayerservice/MetadataRetrieverClient.cpp
+index 40b17bf..d829c3b 100644
+--- a/media/libmediaplayerservice/MetadataRetrieverClient.cpp
++++ b/media/libmediaplayerservice/MetadataRetrieverClient.cpp
+@@ -98,6 +98,9 @@ static sp<MediaMetadataRetrieverBase> createRetriever(player_type playerType)
+     }
+     if (p == NULL) {
+         ALOGE("failed to create a retriever object");
++        if (playerType == 112) {
++           p = new StagefrightMetadataRetriever;
++        }
+     }
+     return p;
+ }
+diff --git a/media/libstagefright/ACodec.cpp b/media/libstagefright/ACodec.cpp
+index 7f39d10..df7a0ae 100644
+--- a/media/libstagefright/ACodec.cpp
++++ b/media/libstagefright/ACodec.cpp
+@@ -59,6 +59,7 @@
+ #include "include/SecureBuffer.h"
+ #include "include/SharedMemoryBuffer.h"
+ #include <media/stagefright/omx/OMXUtils.h>
++#include <stagefright/AVExtensions.h>
+ 
+ namespace android {
+ 
+@@ -1688,7 +1689,7 @@ status_t ACodec::fillBuffer(BufferInfo *info) {
+ 
+ status_t ACodec::setComponentRole(
+         bool isEncoder, const char *mime) {
+-    const char *role = GetComponentRole(isEncoder, mime);
++    const char *role = AVUtils::get()->getComponentRole(isEncoder, mime);
+     if (role == NULL) {
+         return BAD_VALUE;
+     }
+@@ -2020,7 +2021,8 @@ status_t ACodec::configureCodec(
+     if (mIsVideo || mIsImage) {
+         // determine need for software renderer
+         bool usingSwRenderer = false;
+-        if (haveNativeWindow && mComponentName.startsWith("OMX.google.")) {
++        if (haveNativeWindow && (mComponentName.startsWith("OMX.google.") ||
++                                AVUtils::get()->isVendorSoftDecoder(mComponentName.c_str()))) {
+             usingSwRenderer = true;
+             haveNativeWindow = false;
+             (void)setPortMode(kPortIndexOutput, IOMX::kPortModePresetByteBuffer);
+@@ -2235,6 +2237,9 @@ status_t ACodec::configureCodec(
+             err = setupEAC3Codec(encoder, numChannels, sampleRate);
+         }
+     }
++    /*add by amlogic for audio extend format support*/
++    else if ( AVUtils::get()->isAudioExtendFormat(mime))
++        err = AVUtils::get()->setAudioExtendParameter(mime ,mOMXNode, msg);
+ 
+     if (err != OK) {
+         return err;
+@@ -3312,9 +3317,12 @@ status_t ACodec::setupVideoDecoder(
+     status_t err = GetVideoCodingTypeFromMime(mime, &compressionFormat);
+ 
+     if (err != OK) {
+-        return err;
++        err = AVUtils::get()->getVideoCodingTypeFromMimeEx(mime, &compressionFormat);
+     }
+ 
++    if (err != OK) {
++        return err;
++    }
+     if (compressionFormat == OMX_VIDEO_CodingHEVC) {
+         int32_t profile;
+         if (msg->findInt32("profile", &profile)) {
+@@ -5306,6 +5314,13 @@ status_t ACodec::getPortFormat(OMX_U32 portIndex, sp<AMessage> &notify) {
+                 }
+ 
+                 default:
++                    /*add by amlogic for audio extend format support*/
++                    if ( AVUtils::get()->isAudioExtendCoding((int)audioDef->eEncoding)) {
++                        err =  AVUtils::get()->getAudioExtendParameter((int)audioDef->eEncoding, portIndex ,mOMXNode, notify);
++                        if (err != OK)
++                            return err;
++                        break;
++                    }
+                     ALOGE("Unsupported audio coding: %s(%d)\n",
+                             asString(audioDef->eEncoding), audioDef->eEncoding);
+                     return BAD_TYPE;
+@@ -8294,7 +8309,7 @@ void ACodec::FlushingState::changeStateIfWeOwnAllBuffers() {
+ status_t ACodec::queryCapabilities(
+         const char* owner, const char* name, const char* mime, bool isEncoder,
+         MediaCodecInfo::CapabilitiesWriter* caps) {
+-    const char *role = GetComponentRole(isEncoder, mime);
++    const char *role = AVUtils::get()->getComponentRole(isEncoder, mime);
+     if (role == NULL) {
+         return BAD_VALUE;
+     }
+diff --git a/media/libstagefright/Android.bp b/media/libstagefright/Android.bp
+index 48e351b..2267c69 100644
+--- a/media/libstagefright/Android.bp
++++ b/media/libstagefright/Android.bp
+@@ -189,6 +189,10 @@ cc_library_shared {
+         "libFLAC",
+     ],
+ 
++    whole_static_libs: [
++        "libavextensions"
++    ],
++
+     export_shared_lib_headers: [
+         "libmedia",
+         "android.hidl.allocator@1.0",
+@@ -289,6 +293,7 @@ cc_library {
+         "-Werror",
+         "-Wno-error=deprecated-declarations",
+         "-Wall",
++        "-DSTAGEFRIGHT_PLAYER2"
+     ],
+ 
+     product_variables: {
+diff --git a/media/libstagefright/Utils.cpp b/media/libstagefright/Utils.cpp
+index ada37a6..a5cf94b 100644
+--- a/media/libstagefright/Utils.cpp
++++ b/media/libstagefright/Utils.cpp
+@@ -45,6 +45,10 @@
+ #include <media/AudioParameter.h>
+ #include <system/audio.h>
+ 
++#ifndef STAGEFRIGHT_PLAYER2
++#include <stagefright/AVExtensions.h>
++#endif
++
+ namespace android {
+ 
+ static status_t copyNALUToABuffer(sp<ABuffer> *buffer, const uint8_t *ptr, size_t length) {
+@@ -1094,6 +1098,9 @@ status_t convertMetaDataToMessage(
+         memcpy(buffer->data(), data, size);
+     }
+ 
++#ifndef STAGEFRIGHT_PLAYER2
++    AVUtils::get()->convertMetaDataToMessage(meta, msg);
++#endif
+     *format = msg;
+ 
+     return OK;
+diff --git a/media/libstagefright/xmlparser/Android.bp b/media/libstagefright/xmlparser/Android.bp
+index a4fa342..166354f 100644
+--- a/media/libstagefright/xmlparser/Android.bp
++++ b/media/libstagefright/xmlparser/Android.bp
+@@ -19,6 +19,28 @@ cc_library_shared {
+         "libstagefright_omx_utils",
+     ],
+ 
++    static_libs: [
++        "libavextensions",
++    ],
++
++    header_libs: [
++        "media_plugin_headers",
++        "libstagefright_headers",
++        "libavextensions_headers",
++        "libmedia_headers",
++    ],
++
++    export_header_lib_headers: [
++        "media_plugin_headers",
++        "libstagefright_headers",
++        "libavextensions_headers"
++    ],
++
++    include_dirs: [
++         "frameworks/av/include",
++         "frameworks/av/media/libmediaplayerservice/include",
++    ],
++
+     cflags: [
+         "-Werror",
+         "-Wall",
+diff --git a/media/libstagefright/xmlparser/MediaCodecsXmlParser.cpp b/media/libstagefright/xmlparser/MediaCodecsXmlParser.cpp
+index ffd30ea..3f7f028 100644
+--- a/media/libstagefright/xmlparser/MediaCodecsXmlParser.cpp
++++ b/media/libstagefright/xmlparser/MediaCodecsXmlParser.cpp
+@@ -27,6 +27,7 @@
+ 
+ #include <cctype>
+ #include <algorithm>
++#include <stagefright/AVExtensions.h>
+ 
+ namespace android {
+ 
+@@ -121,6 +122,7 @@ MediaCodecsXmlParser::MediaCodecsXmlParser(
+     mUpdate(false),
+     mCodecCounter(0) {
+     std::string path;
++    AVUtils::get()->addExtendXML(this);
+     if (findFileInDirs(searchDirs, mainXmlName, &path)) {
+         parseTopLevelXMLFile(path.c_str(), false);
+     } else {
+@@ -138,6 +140,7 @@ MediaCodecsXmlParser::MediaCodecsXmlParser(
+ bool MediaCodecsXmlParser::parseTopLevelXMLFile(
+         const char *codecs_xml,
+         bool ignore_errors) {
++    ALOGI("parseTopLevelXMLFile %s\n", codecs_xml);
+     // get href_base
+     const char *href_base_end = strrchr(codecs_xml, '/');
+     if (href_base_end != nullptr) {
+@@ -985,7 +988,7 @@ void MediaCodecsXmlParser::generateRoleMap() const {
+         const auto& typeMap = codec.second.typeMap;
+         for (const auto& type : typeMap) {
+             const auto& typeName = type.first;
+-            const char* roleName = GetComponentRole(isEncoder, typeName.data());
++            const char* roleName = AVUtils::get()->getComponentRole(isEncoder, typeName.data());
+             if (roleName == nullptr) {
+                 ALOGE("Cannot find the role for %s of type %s",
+                         isEncoder ? "an encoder" : "a decoder",
+diff --git a/media/libstagefright/xmlparser/include/media/stagefright/xmlparser/MediaCodecsXmlParser.h b/media/libstagefright/xmlparser/include/media/stagefright/xmlparser/MediaCodecsXmlParser.h
+index cc69e52..884b031 100644
+--- a/media/libstagefright/xmlparser/include/media/stagefright/xmlparser/MediaCodecsXmlParser.h
++++ b/media/libstagefright/xmlparser/include/media/stagefright/xmlparser/MediaCodecsXmlParser.h
+@@ -116,6 +116,8 @@ public:
+ 
+     status_t getParsingStatus() const;
+ 
++    bool parseTopLevelXMLFile(const char *path, bool ignore_errors = false);
++
+ private:
+     enum Section {
+         SECTION_TOPLEVEL,
+@@ -153,7 +155,8 @@ private:
+     // Computed longest common prefix
+     mutable std::string mCommonPrefix;
+ 
+-    bool parseTopLevelXMLFile(const char *path, bool ignore_errors = false);
++    //move to public for media ext
++    //bool parseTopLevelXMLFile(const char *path, bool ignore_errors = false);
+ 
+     void parseXMLFile(const char *path);
+ 
+-- 
+1.9.1
+

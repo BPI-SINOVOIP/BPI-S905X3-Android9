@@ -1,0 +1,177 @@
+From 3c0b17c7011466ccd0718edc562ebc0556623125 Mon Sep 17 00:00:00 2001
+From: Lei Qian <lei.qian@amlogic.com>
+Date: Sat, 1 Jun 2019 15:22:28 +0800
+Subject: [PATCH] Arc: update hdmi system audio request staus [1/1]
+
+PD# TV-6174
+
+Problem:
+Video freeze and print a lots of abnormal audio relevant log all the time
+
+Solution:
+ update hdmi system audio request staus
+
+Verify:
+verify by x301
+
+Change-Id: Ia74f2eeef4a01a745e51d0bcd99587737d4ac8f0
+Signed-off-by: Lei Qian <lei.qian@amlogic.com>
+---
+ .../android/server/hdmi/HdmiCecLocalDeviceTv.java  | 17 ++++----
+ .../server/hdmi/RequestArcInitiationAction.java    | 46 ----------------------
+ .../com/android/server/hdmi/SystemAudioAction.java |  7 +++-
+ .../server/hdmi/SystemAudioStatusAction.java       |  4 +-
+ 4 files changed, 18 insertions(+), 56 deletions(-)
+
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java b/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
+index 9b3fc14..e8f44a3 100644
+--- a/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
++++ b/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
+@@ -927,12 +927,17 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+     }
+ 
+     private void sendSystemAudioModeRequest(boolean enableSystemAudio) {
++        if (!isSystemAudioControlFeatureEnabled()) {
++            HdmiLogger.debug("Ignoring <System Audio Mode Request> message "
++                    + "because the System Audio Control feature is disabled.");
++            return;
++        }
+         if (getAvrDeviceInfo() == null) {
+             enableSystemAudio = false;
+         }
+         HdmiCecMessage command = HdmiCecMessageBuilder.buildSystemAudioModeRequest(
+                 mAddress, Constants.ADDR_AUDIO_SYSTEM,
+-                enableSystemAudio ? getAvrDeviceInfo().getPhysicalAddress() : mAddress, enableSystemAudio);
++                enableSystemAudio ? getAvrDeviceInfo().getPhysicalAddress() : mAddress, true);
+         mService.sendCecCommand(command, new HdmiControlService.SendMessageCallback() {
+             @Override
+             public void onSendCompleted(int error) {
+@@ -1048,12 +1053,10 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+         mService.getAudioManager().setWiredDeviceConnectionState(
+                 AudioSystem.DEVICE_OUT_HDMI_ARC,
+                 enabled ? 1 : 0, "", "");
+-        if (!enabled) {
+-            updateAudioManagerForSystemAudio(enabled);
+-            mSystemAudioActivated = enabled;
+-            mService.writeBooleanSetting(Global.HDMI_SYSTEM_AUDIO_STATUS_ENABLED, enabled);
+-            updateAudioDevicesStatus(enabled);
+-        }
++        updateAudioManagerForSystemAudio(enabled);
++        mSystemAudioActivated = enabled;
++        mService.writeBooleanSetting(Global.HDMI_SYSTEM_AUDIO_STATUS_ENABLED, enabled);
++        updateAudioDevicesStatus(enabled);
+     }
+ 
+     /**
+diff --git a/services/core/java/com/android/server/hdmi/RequestArcInitiationAction.java b/services/core/java/com/android/server/hdmi/RequestArcInitiationAction.java
+index e411e21..0be9542 100644
+--- a/services/core/java/com/android/server/hdmi/RequestArcInitiationAction.java
++++ b/services/core/java/com/android/server/hdmi/RequestArcInitiationAction.java
+@@ -18,8 +18,6 @@ package com.android.server.hdmi;
+ 
+ import java.util.List;
+ 
+-import android.hardware.hdmi.HdmiControlManager;
+-import android.hardware.hdmi.HdmiDeviceInfo;
+ import android.hardware.tv.cec.V1_0.SendMessageResult;
+ 
+ /**
+@@ -57,50 +55,6 @@ final class RequestArcInitiationAction extends RequestArcAction {
+                 }
+             }
+         });
+-
+-        HdmiCecMessage audioRequestCommand = HdmiCecMessageBuilder.buildSystemAudioModeRequest(
+-                getSourceAddress(), mAvrAddress, physicalAddressToParam(), true);
+-        sendCommand(audioRequestCommand, new HdmiControlService.SendMessageCallback() {
+-            @Override
+-            public void onSendCompleted(int error) {
+-                if (error != SendMessageResult.SUCCESS) {
+-                    HdmiLogger.debug("Failed to send <System Audio Mode Request>:" + error);
+-                }
+-            }
+-        });
+         return true;
+     }
+-
+-    private int physicalAddressToParam() {
+-        HdmiCecLocalDeviceTv localTv = tv();
+-        int arcPortId = localTv.getAvrDeviceInfo().getPortId();
+-        int portId = HdmiDeviceInfo.PORT_INVALID;
+-        int devicePowerStatus = HdmiControlManager.POWER_STATUS_UNKNOWN;
+-        List<HdmiDeviceInfo> hdmiDeviceInfoList = localTv.getDeviceInfoList(false);
+-        for (HdmiDeviceInfo hdmiDeviceInfo : hdmiDeviceInfoList) {
+-            portId = hdmiDeviceInfo.getPortId();
+-            devicePowerStatus = hdmiDeviceInfo.getDevicePowerStatus();
+-            if (hdmiDeviceInfo.getDeviceType() != HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM
+-                    && portId == arcPortId) {
+-                if (devicePowerStatus == HdmiControlManager.POWER_STATUS_ON) {
+-                    return hdmiDeviceInfo.getPhysicalAddress();
+-                }
+-            }
+-        }
+-        return getSystemAudioModeRequestParam();
+-    }
+-
+-    private int getSystemAudioModeRequestParam() {
+-        // <System Audio Mode Request> takes the physical address of the source device
+-        // as a parameter. Get it from following candidates, in the order listed below:
+-        // 1) physical address of the active source
+-        // 2) active routing path
+-        // 3) physical address of TV
+-        if (tv().getActiveSource().isValid()) {
+-            return tv().getActiveSource().physicalAddress;
+-        }
+-        int param = tv().getActivePath();
+-        return param != Constants.INVALID_PHYSICAL_ADDRESS
+-                ? param : Constants.PATH_INTERNAL;
+-    }
+ }
+diff --git a/services/core/java/com/android/server/hdmi/SystemAudioAction.java b/services/core/java/com/android/server/hdmi/SystemAudioAction.java
+index 449b208..3a7e941 100644
+--- a/services/core/java/com/android/server/hdmi/SystemAudioAction.java
++++ b/services/core/java/com/android/server/hdmi/SystemAudioAction.java
+@@ -90,6 +90,11 @@ abstract class SystemAudioAction extends HdmiCecFeatureAction {
+     }
+ 
+     private void sendSystemAudioModeRequestInternal() {
++        if (!tv().isSystemAudioControlFeatureEnabled()) {
++            HdmiLogger.debug("Ignoring <System Audio Mode Request> message "
++                    + "because the System Audio Control feature is disabled.");
++            return;
++        }
+         HdmiCecMessage command = HdmiCecMessageBuilder.buildSystemAudioModeRequest(
+                 getSourceAddress(),
+                 mAvrLogicalAddress, getSystemAudioModeRequestParam(), mTargetAudioStatus);
+@@ -98,7 +103,7 @@ abstract class SystemAudioAction extends HdmiCecFeatureAction {
+             public void onSendCompleted(int error) {
+                 if (error != SendMessageResult.SUCCESS) {
+                     HdmiLogger.debug("Failed to send <System Audio Mode Request>:" + error);
+-                    setSystemAudioMode(false);
++                    //setSystemAudioMode(false);
+                     finishWithCallback(HdmiControlManager.RESULT_COMMUNICATION_FAILED);
+                 }
+             }
+diff --git a/services/core/java/com/android/server/hdmi/SystemAudioStatusAction.java b/services/core/java/com/android/server/hdmi/SystemAudioStatusAction.java
+index 742c024..f0938bd 100644
+--- a/services/core/java/com/android/server/hdmi/SystemAudioStatusAction.java
++++ b/services/core/java/com/android/server/hdmi/SystemAudioStatusAction.java
+@@ -68,12 +68,12 @@ final class SystemAudioStatusAction extends HdmiCecFeatureAction {
+     private void handleSendGiveAudioStatusFailure() {
+         // Inform to all application that the audio status (volumn, mute) of
+         // the audio amplifier is unknown.
+-        tv().setAudioStatus(false, Constants.UNKNOWN_VOLUME);
++        /* tv().setAudioStatus(false, Constants.UNKNOWN_VOLUME);
+ 
+         if (!tv().isBluetoothOrUsbOutDevices() && !tv().isSystemAudioActivated()) {
+             sendUserControlPressedAndReleased(mAvrAddress,
+                     HdmiCecKeycode.getMuteKey(!tv().isSystemAudioActivated()));
+-        }
++        } */
+ 
+         // Still return SUCCESS to callback.
+         finishWithCallback(HdmiControlManager.RESULT_SUCCESS);
+-- 
+1.9.1
+
+

@@ -1,0 +1,85 @@
+From c98b318b4fee1e9aa798fcdef73650a61ff65635 Mon Sep 17 00:00:00 2001
+From: yu fang <yu.fang@amlogic.com>
+Date: Thu, 13 Sep 2018 13:31:36 +0800
+Subject: [PATCH] framework-native: add tv quick key matches.[2/2]
+
+PD# 173307
+
+Change-Id: I667c3063c7ed90a34332eeeaf8f224013ae7f7d6
+Signed-off-by: qiu.zeng <qiu.zeng@amlogic.com>
+---
+ include/android/keycodes.h       | 23 +++++++++++++++++++++++
+ include/input/InputEventLabels.h | 23 +++++++++++++++++++++++
+ 2 files changed, 46 insertions(+)
+
+diff --git a/include/android/keycodes.h b/include/android/keycodes.h
+index 81419f3..5a8d5aa 100644
+--- a/include/android/keycodes.h
++++ b/include/android/keycodes.h
+@@ -773,6 +773,29 @@ enum {
+     /** youtube */
+     AKEYCODE_YOUTUBE = 286,
+     
++    /**droidlogic add key define:start.*/
++    AKEYCODE_TV_SHORTCUTKEY_GLOBALSETUP = 2001,
++    AKEYCODE_TV_SHORTCUTKEY_SOURCE_LIST = 2002,
++    AKEYCODE_TV_SHORTCUTKEY_3DMODE = 2003,
++    AKEYCODE_TV_SHORTCUTKEY_DISPAYMODE = 2004,
++    AKEYCODE_TV_SHORTCUTKEY_VIEWMODE = 2005,
++    AKEYCODE_TV_SHORTCUTKEY_VOICEMODE = 2006,
++    AKEYCODE_TV_SHORTCUTKEY_TVINFO = 2007,
++    AKEYCODE_EARLY_POWER = 2008,
++    AKEYCODE_TV_SLEEP = 2009,
++    AKEYCODE_TV_SOUND_CHANNEL = 2010,
++    AKEYCODE_TV_REPEAT = 2011,
++    AKEYCODE_TV_SUBTITLE = 2012,
++    AKEYCODE_TV_SWITCH = 2013,
++    AKEYCODE_TV_WASU = 2014,
++    AKEYCODE_TV_VTION = 2015,
++    AKEYCODE_TV_BROWSER = 2016,
++    AKEYCODE_TV_ALTERNATE = 2017,
++    AKEYCODE_FAV = 2018,
++    AKEYCODE_LIST = 2019,
++    AKEYCODE_MEDIA_AUDIO_CONTROL = 2020
++    /**droidlogic add key define:end.*/
++
+     // NOTE: If you add a new keycode here you must also add it to several other files.
+     //       Refer to frameworks/base/core/java/android/view/KeyEvent.java for the full list.
+ };
+diff --git a/include/input/InputEventLabels.h b/include/input/InputEventLabels.h
+index 9b74e11..8a89f15 100644
+--- a/include/input/InputEventLabels.h
++++ b/include/input/InputEventLabels.h
+@@ -327,6 +327,29 @@ static const InputEventLabel KEYCODES[] = {
+     DEFINE_KEYCODE(REFRESH),
+     DEFINE_KEYCODE(YOUTUBE),
+     
++    /**droidlogic add key define:start*/
++    DEFINE_KEYCODE(TV_SHORTCUTKEY_GLOBALSETUP),
++    DEFINE_KEYCODE(TV_SHORTCUTKEY_SOURCE_LIST),
++    DEFINE_KEYCODE(TV_SHORTCUTKEY_3DMODE),
++    DEFINE_KEYCODE(TV_SHORTCUTKEY_DISPAYMODE),
++    DEFINE_KEYCODE(TV_SHORTCUTKEY_VIEWMODE),
++    DEFINE_KEYCODE(TV_SHORTCUTKEY_VOICEMODE),
++    DEFINE_KEYCODE(TV_SHORTCUTKEY_TVINFO),
++    DEFINE_KEYCODE(EARLY_POWER),
++    DEFINE_KEYCODE(TV_SLEEP),
++    DEFINE_KEYCODE(TV_SOUND_CHANNEL),
++    DEFINE_KEYCODE(TV_REPEAT),
++    DEFINE_KEYCODE(TV_SUBTITLE),
++    DEFINE_KEYCODE(TV_SWITCH),
++    DEFINE_KEYCODE(TV_WASU),
++    DEFINE_KEYCODE(TV_VTION),
++    DEFINE_KEYCODE(TV_BROWSER),
++    DEFINE_KEYCODE(TV_ALTERNATE),
++    DEFINE_KEYCODE(FAV),
++    DEFINE_KEYCODE(LIST),
++    DEFINE_KEYCODE(MEDIA_AUDIO_CONTROL),
++    /**droidlogic add key define:end*/
++
+     { NULL, 0 }
+ };
+ 
+-- 
+1.9.1
+

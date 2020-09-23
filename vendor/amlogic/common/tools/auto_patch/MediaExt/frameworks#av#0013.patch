@@ -1,0 +1,145 @@
+From 1814041aa2335e0ec0f7219e6bf407fc7428ab64 Mon Sep 17 00:00:00 2001
+From: shanghai engineers <minliang.lu@amlogic.com>
+Date: Tue, 30 Apr 2019 14:24:05 +0800
+Subject: [PATCH] [PATCH] frameworks_av: Resource Manager bug fixing in
+ MediaCodec [1/1]
+
+PD#SWPL-6376
+
+Problem:
+MediaCodec has compabiable issue when RM reclaimResource and Stop
+come together.
+
+Solution:
+Let it retry more times to wait the reclaimResource done.
+
+Verify:
+T962X2-X301
+
+Change-Id: I1489e0c265aad72d1a3be6042fe5004b0d184ca6
+---
+ media/libstagefright/MediaCodec.cpp                | 37 +++++++++++++++++++---
+ .../include/media/stagefright/MediaCodec.h         |  1 +
+ 2 files changed, 34 insertions(+), 4 deletions(-)
+
+diff --git a/media/libstagefright/MediaCodec.cpp b/media/libstagefright/MediaCodec.cpp
+index 353e407..c19e66b 100644
+--- a/media/libstagefright/MediaCodec.cpp
++++ b/media/libstagefright/MediaCodec.cpp
+@@ -117,6 +117,8 @@ static bool isResourceError(status_t err) {
+ static const int kMaxRetry = 2;
+ static const int kMaxReclaimWaitTimeInUs = 500000;  // 0.5s
+ static const int kNumBuffersAlign = 16;
++static const int kStopMaxRetry = 4;
++static const int kMaxStopWaitTimeInUs = 500000;  // 0.5s
+
+ ////////////////////////////////////////////////////////////////////////////////
+
+@@ -531,6 +533,7 @@ MediaCodec::MediaCodec(const sp<ALooper> &looper, pid_t pid, uid_t uid)
+       mHaveInputSurface(false),
+       mHavePendingInputBuffers(false),
+       mCpuBoostRequested(false),
++      mReclaiming(false),
+       mLatencyUnknown(0) {
+     if (uid == kNoUid) {
+         mUid = IPCThreadState::self()->getCallingUid();
+@@ -1263,9 +1266,25 @@ status_t MediaCodec::start() {
+
+ status_t MediaCodec::stop() {
+     sp<AMessage> msg = new AMessage(kWhatStop, this);
++    status_t result;
+
+     sp<AMessage> response;
+-    return PostAndAwaitResponse(msg, &response);
++    result = PostAndAwaitResponse(msg, &response);
++    int retry_count = 0;
++    while (result == WOULD_BLOCK) {
++        ALOGD("Wait for the reclaim completed");
++        usleep(kMaxStopWaitTimeInUs);
++        ALOGD("Try to stop again.");
++        result = PostAndAwaitResponse(msg, &response);
++        retry_count++;
++        ALOGD("stop: retry_count =%d", retry_count);
++        if (retry_count > kStopMaxRetry) {
++            ALOGE("stop: retry timeout");
++            break;
++        }
++    }
++
++    return result;
+ }
+
+ bool MediaCodec::hasPendingBuffer(int portIndex) {
+@@ -1283,6 +1302,7 @@ status_t MediaCodec::reclaim(bool force) {
+     sp<AMessage> msg = new AMessage(kWhatRelease, this);
+     msg->setInt32("reclaimed", 1);
+     msg->setInt32("force", force ? 1 : 0);
++    mReclaiming = true;
+
+     sp<AMessage> response;
+     status_t ret = PostAndAwaitResponse(msg, &response);
+@@ -1290,6 +1310,7 @@ status_t MediaCodec::reclaim(bool force) {
+         ALOGD("MediaCodec looper is gone, skip reclaim");
+         ret = OK;
+     }
++    mReclaiming = false;
+     return ret;
+ }
+
+@@ -2583,8 +2604,10 @@ void MediaCodec::onMessageReceived(const sp<AMessage> &msg) {
+
+                 int32_t force = 0;
+                 msg->findInt32("force", &force);
+-                if (!force && hasPendingBuffer()) {
+-                    ALOGW("Can't reclaim codec right now due to pending buffers.");
++                if (!force &&(hasPendingBuffer()|| mState == STOPPING)) {
++                    ALOGW("Can't reclaim codec right now due to pending buffers or STOPPING");
++                    mReleasedByResourceManager = false;
++                    ALOGW("amlogic:reclaim fail need set mReleasedByResourceManager false");
+
+                     // return WOULD_BLOCK to ask resource manager to retry later.
+                     sp<AMessage> response = new AMessage;
+@@ -2604,6 +2627,7 @@ void MediaCodec::onMessageReceived(const sp<AMessage> &msg) {
+             if (!isReleasingAllocatedComponent // See 1
+                     && mState != INITIALIZED
+                     && mState != CONFIGURED && !isExecuting()) {
++                ALOGW("stop: state is not INITIALIZED: mState=%d, mReclaiming=%d", mState, mReclaiming);
+                 // 1) Permit release to shut down the component if allocated.
+                 //
+                 // 2) We may be in "UNINITIALIZED" state already and
+@@ -2621,6 +2645,9 @@ void MediaCodec::onMessageReceived(const sp<AMessage> &msg) {
+                 if (err == OK && targetState == UNINITIALIZED) {
+                     mComponentName.clear();
+                 }
++                if (mReclaiming && (msg->what() == kWhatStop)) {
++                    response->setInt32("err", WOULD_BLOCK);
++                }
+                 response->postReply(replyID);
+                 break;
+             }
+@@ -2629,7 +2656,9 @@ void MediaCodec::onMessageReceived(const sp<AMessage> &msg) {
+             // request, post the reply for the pending call first, and consider
+             // it done. The reply token will be replaced after this, and we'll
+             // no longer be able to reply.
+-            if (mState == FLUSHING || mState == STOPPING) {
++            if (mState == FLUSHING || mState == STOPPING ||
++                (msg->what() == kWhatRelease && mState == RELEASING)) {
++                ALOGI("already in state %d, post reply for the pending call first!",mState);
+                 (new AMessage)->postReply(mReplyID);
+             }
+
+diff --git a/media/libstagefright/include/media/stagefright/MediaCodec.h b/media/libstagefright/include/media/stagefright/MediaCodec.h
+index 7f6aae6..1cf7d83 100644
+--- a/media/libstagefright/include/media/stagefright/MediaCodec.h
++++ b/media/libstagefright/include/media/stagefright/MediaCodec.h
+@@ -372,6 +372,7 @@ private:
+     bool mHaveInputSurface;
+     bool mHavePendingInputBuffers;
+     bool mCpuBoostRequested;
++    bool mReclaiming;
+
+     std::shared_ptr<BufferChannelBase> mBufferChannel;
+
+--
+1.9.1
+

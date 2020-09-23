@@ -1,0 +1,4 @@
+avb_sha512.c:155:13:SHA512_transform	720	static
+avb_sha512.c:134:6:avb_sha512_init	0	static
+avb_sha512.c:321:6:avb_sha512_update	64	static
+avb_sha512.c:352:10:avb_sha512_final	48	static

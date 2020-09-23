@@ -1,0 +1,6 @@
+cmd_vpu.c:83:12:do_vpu	64	static
+cmd_vpu.c:69:12:do_vpu_info	16	static
+cmd_vpu.c:63:12:do_vpu_test	16	static
+cmd_vpu.c:40:12:do_vpu_clk	32	static
+cmd_vpu.c:34:12:do_vpu_disable	16	static
+cmd_vpu.c:28:12:do_vpu_enable	16	static

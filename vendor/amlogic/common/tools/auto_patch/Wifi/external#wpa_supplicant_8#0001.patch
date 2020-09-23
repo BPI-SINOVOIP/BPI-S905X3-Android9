@@ -1,0 +1,102 @@
+From f1c7e9210ee8c7f8fc6f45503c2a1326acd419c9 Mon Sep 17 00:00:00 2001
+From: Rongjun Chen <rongjun.chen@amlogic.com>
+Date: Fri, 18 Jan 2019 18:35:53 +0800
+Subject: [PATCH] wifi: fix multi wifi cts test fail
+
+Change-Id: I0004267b6cde48e528180f25ba332837d01714cf
+---
+ wpa_supplicant/Android.mk |  4 +++-
+ wpa_supplicant/main.c     | 44 +++++++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 44 insertions(+), 4 deletions(-)
+
+diff --git a/wpa_supplicant/Android.mk b/wpa_supplicant/Android.mk
+index d57446c..c54fe8a 100644
+--- a/wpa_supplicant/Android.mk
++++ b/wpa_supplicant/Android.mk
+@@ -16,7 +16,9 @@ include $(LOCAL_PATH)/android.config
+ 
+ # To ignore possible wrong network configurations
+ L_CFLAGS = -DWPA_IGNORE_CONFIG_ERRORS
+-
++ifeq ($(MULTI_WIFI_SUPPORT), true)
++L_CFLAGS += -DMULTI_WIFI_SUPPORT
++endif
+ L_CFLAGS += -DVERSION_STR_POSTFIX=\"-$(PLATFORM_VERSION)\"
+ 
+ # Set Android log name
+diff --git a/wpa_supplicant/main.c b/wpa_supplicant/main.c
+index e08c2fd..3bb4a36 100644
+--- a/wpa_supplicant/main.c
++++ b/wpa_supplicant/main.c
+@@ -16,7 +16,31 @@
+ #include "wpa_supplicant_i.h"
+ #include "driver_i.h"
+ #include "p2p_supplicant.h"
+-
++#ifdef MULTI_WIFI_SUPPORT
++#include <dlfcn.h>
++static int is_bcm_driver_loaded() {
++    FILE *proc;
++    char line[sizeof("bcmdhd")+15];
++
++    /*
++     * If the property says the driver is loaded, check to
++     * make sure that the property setting isn't just left
++     * over from a previous manual shutdown or a runtime
++     * crash.
++     */
++    if ((proc = fopen("/proc/modules", "r")) == NULL) {
++        return 0;
++    }
++    while ((fgets(line, sizeof(line), proc)) != NULL) {
++        if (strncmp(line, "dhd", 3) == 0 || strncmp(line, "bcmdhd", 6) == 0) {
++            fclose(proc);
++            return 1;
++        }
++    }
++    fclose(proc);
++    return 0;
++}
++#endif
+ 
+ static void usage(void)
+ {
+@@ -262,9 +286,16 @@ int main(int argc, char *argv[])
+ 			exitcode = 0;
+ 			goto out;
+ #ifdef CONFIG_P2P
++#ifdef MULTI_WIFI_SUPPORT
+ 		case 'm':
+-			params.conf_p2p_dev = optarg;
++			if (is_bcm_driver_loaded() == 1)
++			    params.conf_p2p_dev = optarg;
+ 			break;
++#else
++                case 'm':
++                        params.conf_p2p_dev = optarg;
++                        break;
++#endif
+ #endif /* CONFIG_P2P */
+ 		case 'o':
+ 			params.override_driver = optarg;
+@@ -272,9 +303,16 @@ int main(int argc, char *argv[])
+ 		case 'O':
+ 			params.override_ctrl_interface = optarg;
+ 			break;
++#ifdef MULTI_WIFI_SUPPORT
+ 		case 'p':
+-			iface->driver_param = optarg;
++			if (is_bcm_driver_loaded() == 1)
++			    iface->driver_param = optarg;
+ 			break;
++#else
++                case 'p':
++                        iface->driver_param = optarg;
++                        break;
++#endif
+ 		case 'P':
+ 			os_free(params.pid_file);
+ 			params.pid_file = os_rel2abs_path(optarg);
+-- 
+1.9.1
+

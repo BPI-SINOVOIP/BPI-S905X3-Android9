@@ -1,0 +1,68 @@
+From 344939d3e329167a9bce9f169d3f399d533c8154 Mon Sep 17 00:00:00 2001
+From: xian <an.xi@amlogic.com>
+Date: Thu, 18 Jul 2019 02:50:58 -0400
+Subject: [PATCH] Watchdog: Get complete stack for anr and watchdog issues and
+ add tv related stack [1/2]
+
+PD#SWPL-7898
+
+Problem:
+The stack is often incomplete to analyse and for tv there is no stack at all.
+
+Solution:
+enlarge dropbox data buffer and add tv to dump
+
+Verify:
+verify it on marconi
+
+Change-Id: I7c6b2d3ac566ecb2c0ead4dd13fd117489d85e2b
+Signed-off-by: an.xi <an.xi@amlogic.com>
+---
+ services/core/java/com/android/server/Watchdog.java                | 7 ++++++-
+ .../core/java/com/android/server/am/ActivityManagerService.java    | 2 +-
+ 2 files changed, 7 insertions(+), 2 deletions(-)
+ mode change 100644 => 100755 services/core/java/com/android/server/am/ActivityManagerService.java
+
+diff --git a/services/core/java/com/android/server/Watchdog.java b/services/core/java/com/android/server/Watchdog.java
+index f749fe7..959b422 100644
+--- a/services/core/java/com/android/server/Watchdog.java
++++ b/services/core/java/com/android/server/Watchdog.java
+@@ -76,6 +76,8 @@ public class Watchdog extends Thread {
+ 
+     // Which native processes to dump into dropbox's stack traces
+     public static final String[] NATIVE_STACKS_OF_INTEREST = new String[] {
++        "/vendor/bin/systemcontrol",
++        "/system/bin/servicemanager",
+         "/system/bin/audioserver",
+         "/system/bin/cameraserver",
+         "/system/bin/drmserver",
+@@ -87,7 +89,10 @@ public class Watchdog extends Thread {
+         "media.metrics", // system/bin/mediametrics
+         "media.codec", // vendor/bin/hw/android.hardware.media.omx@1.0-service
+         "com.android.bluetooth",  // Bluetooth service
+-        "statsd",  // Stats daemon
++        "/vendor/bin/tvserver",
++        "com.droidlogic.tvinput",
++        "com.android.tv",
++        "/vendor/bin/hw/android.hardware.tv.input@1.0-service",
+     };
+ 
+     public static final List<String> HAL_INTERFACES_OF_INTEREST = Arrays.asList(
+diff --git a/services/core/java/com/android/server/am/ActivityManagerService.java b/services/core/java/com/android/server/am/ActivityManagerService.java
+old mode 100644
+new mode 100755
+index 3b91b52..439d730
+--- a/services/core/java/com/android/server/am/ActivityManagerService.java
++++ b/services/core/java/com/android/server/am/ActivityManagerService.java
+@@ -620,7 +620,7 @@ public class ActivityManagerService extends IActivityManager.Stub
+     static final String[] EMPTY_STRING_ARRAY = new String[0];
+ 
+     // How many bytes to write into the dropbox log before truncating
+-    static final int DROPBOX_MAX_SIZE = 192 * 1024;
++    static final int DROPBOX_MAX_SIZE = 1 * 1024 * 1024;
+     // Assumes logcat entries average around 100 bytes; that's not perfect stack traces count
+     // as one line, but close enough for now.
+     static final int RESERVED_BYTES_PER_LOGCAT_LINE = 100;
+-- 
+2.7.4
+

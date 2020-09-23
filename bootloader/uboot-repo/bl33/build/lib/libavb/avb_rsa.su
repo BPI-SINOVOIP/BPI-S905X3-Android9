@@ -1,0 +1,3 @@
+avb_rsa.c:111:13:subM	0	static
+avb_rsa.c:162:13:montMul	64	static
+avb_rsa.c:231:6:avb_rsa_verify	128	static

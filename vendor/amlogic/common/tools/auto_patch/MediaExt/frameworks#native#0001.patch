@@ -1,0 +1,26 @@
+From 0ffbad3a45d41a01bf05e711d34ea8c324c734f0 Mon Sep 17 00:00:00 2001
+From: Jian Wang <jian.wang@amlogic.com>
+Date: Tue, 7 Jan 2020 18:01:53 +0800
+Subject: [PATCH] av1: add av1 support for p
+
+Change-Id: Id2919cfd00a44537e103b4c22a35b2faec3af43b
+Signed-off-by: Jian Wang <jian.wang@amlogic.com>
+---
+ headers/media_plugin/media/openmax/OMX_Video.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/headers/media_plugin/media/openmax/OMX_Video.h b/headers/media_plugin/media/openmax/OMX_Video.h
+index 9fd2fd2..1d7d9d9 100644
+--- a/headers/media_plugin/media/openmax/OMX_Video.h
++++ b/headers/media_plugin/media/openmax/OMX_Video.h
+@@ -90,6 +90,7 @@ typedef enum OMX_VIDEO_CODINGTYPE {
+     OMX_VIDEO_CodingHEVC,       /**< ITU H.265/HEVC */
+     OMX_VIDEO_CodingDolbyVision,/**< Dolby Vision */
+     OMX_VIDEO_CodingImageHEIC,  /**< HEIF image encoded with HEVC */
++    OMX_VIDEO_CodingAV1,        /**< AV1 */
+     OMX_VIDEO_CodingKhronosExtensions = 0x6F000000, /**< Reserved region for introducing Khronos Standard Extensions */
+     OMX_VIDEO_CodingVendorStartUnused = 0x7F000000, /**< Reserved region for introducing Vendor Extensions */
+     OMX_VIDEO_CodingMax = 0x7FFFFFFF
+-- 
+1.9.1
+

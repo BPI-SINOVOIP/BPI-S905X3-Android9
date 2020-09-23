@@ -1,0 +1,48 @@
+From 0f3cbd4de0cd1c1614b78525c6009eb86dfc6f28 Mon Sep 17 00:00:00 2001
+From: Michael Wachenschwanz <mwachens@google.com>
+Date: Fri, 24 Aug 2018 21:50:35 -0700
+Subject: [PATCH] Verify number of Map entries written to Parcel
+
+Make sure the number of entries written by Parcel#writeMapInternal
+matches the size written. If a mismatch were allowed, an exploitable
+scenario could occur where the data read from the Parcel would not
+match the data written.
+
+Fixes: 112859604
+Test: cts-tradefed run cts -m CtsOsTestCases -t android.os.cts.ParcelTest
+
+Change-Id: I325d08a8b66b6e80fe76501359c41b6656848607
+Merged-In: I325d08a8b66b6e80fe76501359c41b6656848607
+(cherry picked from commit 057a01d1f38e9b46d3faa4059fdd7c8717681ea0)
+---
+ core/java/android/os/Parcel.java | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/core/java/android/os/Parcel.java b/core/java/android/os/Parcel.java
+index 514292872e9..460f12510d4 100644
+--- a/core/java/android/os/Parcel.java
++++ b/core/java/android/os/Parcel.java
+@@ -835,11 +835,19 @@ public final class Parcel {
+             return;
+         }
+         Set<Map.Entry<String,Object>> entries = val.entrySet();
+-        writeInt(entries.size());
++        int size = entries.size();
++        writeInt(size);
++
+         for (Map.Entry<String,Object> e : entries) {
+             writeValue(e.getKey());
+             writeValue(e.getValue());
++            size--;
+         }
++
++        if (size != 0) {
++            throw new BadParcelableException("Map size does not match number of entries!");
++        }
++
+     }
+ 
+     /**
+-- 
+2.19.0.605.g01d371f741-goog
+

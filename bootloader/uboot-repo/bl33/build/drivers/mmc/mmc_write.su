@@ -1,0 +1,5 @@
+mmc_write.c:70:15:mmc_berase_becalled	80	static
+mmc_write.c:277:7:mmc_bwrite	160	static
+mmc_write.c:99:17:mmc_zero_out	64	static
+mmc_write.c:128:15:mmc_berase	64	static
+mmc_write.c:305:7:mmc_ffu_write	112	static

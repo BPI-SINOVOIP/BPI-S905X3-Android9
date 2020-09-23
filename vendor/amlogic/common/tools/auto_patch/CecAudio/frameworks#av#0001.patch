@@ -1,0 +1,207 @@
+From af2cc9ecc772e7fe2563c965e79789e936f4ad0e Mon Sep 17 00:00:00 2001
+From: Lei Qian <lei.qian@amlogic.com>
+Date: Fri, 30 Nov 2018 22:40:21 +0800
+Subject: [PATCH] Audiopolicy:adjust spdif hdmi_arc policy[1/4]
+
+PD# 315
+
+adjust spdif hdmi_arc policy
+
+Change-Id: I5117e4376e0e3eab1298a00758ac765993812af3
+---
+ services/audiopolicy/Android.mk                    |  6 ++--
+ services/audiopolicy/common/include/Volume.h       |  8 ++++-
+ services/audiopolicy/enginedefault/src/Engine.cpp  | 28 +++++++++++++++--
+ .../managerdefault/AudioPolicyManager.cpp          | 36 +++++++++++++++++-----
+ 4 files changed, 66 insertions(+), 12 deletions(-)
+
+diff --git a/services/audiopolicy/Android.mk b/services/audiopolicy/Android.mk
+index d29cae1..7599549 100644
+--- a/services/audiopolicy/Android.mk
++++ b/services/audiopolicy/Android.mk
+@@ -48,7 +48,8 @@ LOCAL_SHARED_LIBRARIES := \
+     libcutils \
+     libutils \
+     liblog \
+-    libsoundtrigger
++    libsoundtrigger \
++    libaudioclient
+ 
+ ifeq ($(USE_CONFIGURABLE_AUDIO_POLICY), 1)
+ 
+@@ -74,7 +75,8 @@ endif # ifeq ($(USE_CONFIGURABLE_AUDIO_POLICY), 1)
+ LOCAL_C_INCLUDES += \
+     frameworks/av/services/audiopolicy/common/include \
+     frameworks/av/services/audiopolicy/engine/interface \
+-    frameworks/av/services/audiopolicy/utilities
++    frameworks/av/services/audiopolicy/utilities \
++    frameworks/av/media/libaudioclient/include
+ 
+ LOCAL_STATIC_LIBRARIES := \
+     libaudiopolicycomponents
+diff --git a/services/audiopolicy/common/include/Volume.h b/services/audiopolicy/common/include/Volume.h
+index fc012a2..f30d0a2 100644
+--- a/services/audiopolicy/common/include/Volume.h
++++ b/services/audiopolicy/common/include/Volume.h
+@@ -81,7 +81,13 @@ public:
+             // retain the device on the A2DP output as the other must not correspond to an active
+             // selection if not the speaker.
+             //  - HDMI-CEC system audio mode only output: give priority to available item in order.
+-            if (device & AUDIO_DEVICE_OUT_SPEAKER) {
++            if (device & AUDIO_DEVICE_OUT_ALL_A2DP) {
++                device = (audio_devices_t)(device & AUDIO_DEVICE_OUT_ALL_A2DP);
++            } else if (device & AUDIO_DEVICE_OUT_ALL_SCO) {
++                device = (audio_devices_t)(device & AUDIO_DEVICE_OUT_ALL_SCO);
++            } else if (device & AUDIO_DEVICE_OUT_ALL_USB) {
++                device = (audio_devices_t)(device & AUDIO_DEVICE_OUT_ALL_USB);
++            } else if (device & AUDIO_DEVICE_OUT_SPEAKER) {
+                 device = AUDIO_DEVICE_OUT_SPEAKER;
+             } else if (device & AUDIO_DEVICE_OUT_SPEAKER_SAFE) {
+                 device = AUDIO_DEVICE_OUT_SPEAKER_SAFE;
+diff --git a/services/audiopolicy/enginedefault/src/Engine.cpp b/services/audiopolicy/enginedefault/src/Engine.cpp
+index 3e13e50..ba5a9ca 100644
+--- a/services/audiopolicy/enginedefault/src/Engine.cpp
++++ b/services/audiopolicy/enginedefault/src/Engine.cpp
+@@ -29,6 +29,7 @@
+ #include <AudioPort.h>
+ #include <IOProfile.h>
+ #include <policy.h>
++#include <cutils/properties.h>
+ #include <utils/String8.h>
+ #include <utils/Log.h>
+ 
+@@ -533,6 +534,15 @@ audio_devices_t Engine::getDeviceForStrategyInt(routing_strategy strategy,
+             (mForceUse[AUDIO_POLICY_FORCE_FOR_MEDIA] == AUDIO_POLICY_FORCE_SPEAKER)) {
+             device2 = availableOutputDevicesType & AUDIO_DEVICE_OUT_SPEAKER;
+         }
++        //changed by amlogic for force spdif/hdmi-arc audio output
++        if ((device2 == AUDIO_DEVICE_NONE) &&
++            (mForceUse[AUDIO_POLICY_FORCE_FOR_MEDIA] == AUDIO_POLICY_FORCE_HDMI_ARC)) {
++            device2 = availableOutputDevicesType & AUDIO_DEVICE_OUT_HDMI_ARC;
++        }
++        if ((device2 == AUDIO_DEVICE_NONE) &&
++            (mForceUse[AUDIO_POLICY_FORCE_FOR_MEDIA] == AUDIO_POLICY_FORCE_SPDIF)) {
++            device2 = availableOutputDevicesType & AUDIO_DEVICE_OUT_SPDIF;
++        }
+         if (device2 == AUDIO_DEVICE_NONE) {
+             device2 = availableOutputDevicesType & AUDIO_DEVICE_OUT_WIRED_HEADPHONE;
+         }
+@@ -569,7 +579,8 @@ audio_devices_t Engine::getDeviceForStrategyInt(routing_strategy strategy,
+         if (strategy == STRATEGY_MEDIA) {
+             // ARC, SPDIF and AUX_LINE can co-exist with others.
+             device3 = availableOutputDevicesType & AUDIO_DEVICE_OUT_HDMI_ARC;
+-            device3 |= (availableOutputDevicesType & AUDIO_DEVICE_OUT_SPDIF);
++            //modified by amlogic,if SPDIF are co-exist with others.
++            //device3 |= (availableOutputDevicesType & AUDIO_DEVICE_OUT_SPDIF);
+             device3 |= (availableOutputDevicesType & AUDIO_DEVICE_OUT_AUX_LINE);
+         }
+ 
+@@ -579,10 +590,23 @@ audio_devices_t Engine::getDeviceForStrategyInt(routing_strategy strategy,
+         device |= device2;
+ 
+         // If hdmi system audio mode is on, remove speaker out of output list.
+-        if ((strategy == STRATEGY_MEDIA) &&
++        //modified by amlogic,if HDMI ARC are co-exist with AUDIO_DEVICE_OUT_SPEAKER
++        /* if ((strategy == STRATEGY_MEDIA) &&
+             (mForceUse[AUDIO_POLICY_FORCE_FOR_HDMI_SYSTEM_AUDIO] ==
+                 AUDIO_POLICY_FORCE_HDMI_SYSTEM_AUDIO_ENFORCED)) {
+             device &= ~AUDIO_DEVICE_OUT_SPEAKER;
++        } */
++        bool hasBluetoothOrUsbDevices = (device & AUDIO_DEVICE_OUT_BLUETOOTH_A2DP) ||
++                (device & AUDIO_DEVICE_OUT_BLUETOOTH_A2DP_HEADPHONES) ||
++                (device & AUDIO_DEVICE_OUT_BLUETOOTH_A2DP_SPEAKER) ||
++                (device & AUDIO_DEVICE_OUT_BLUETOOTH_SCO) ||
++                (device & AUDIO_DEVICE_OUT_BLUETOOTH_SCO_CARKIT) ||
++                (device & AUDIO_DEVICE_OUT_BLUETOOTH_SCO_HEADSET) ||
++                (device & AUDIO_DEVICE_OUT_USB_HEADSET) ||
++                (device & AUDIO_DEVICE_OUT_USB_ACCESSORY) ||
++                (device & AUDIO_DEVICE_OUT_USB_DEVICE);
++        if ((strategy == STRATEGY_MEDIA) && hasBluetoothOrUsbDevices) {
++            device &= ~AUDIO_DEVICE_OUT_HDMI_ARC;
+         }
+ 
+         // for STRATEGY_SONIFICATION:
+diff --git a/services/audiopolicy/managerdefault/AudioPolicyManager.cpp b/services/audiopolicy/managerdefault/AudioPolicyManager.cpp
+index 1d22064..a71312a 100644
+--- a/services/audiopolicy/managerdefault/AudioPolicyManager.cpp
++++ b/services/audiopolicy/managerdefault/AudioPolicyManager.cpp
+@@ -38,6 +38,7 @@
+ #include <utils/Log.h>
+ #include <media/AudioParameter.h>
+ #include <media/AudioPolicyHelper.h>
++#include <media/AudioSystem.h>
+ #include <soundtrigger/SoundTrigger.h>
+ #include <system/audio.h>
+ #include <audio_policy_conf.h>
+@@ -149,6 +150,10 @@ status_t AudioPolicyManager::setDeviceConnectionStateInt(audio_devices_t device,
+                     return INVALID_OPERATION;
+                 }
+                 mAvailableOutputDevices[index]->attach(module);
++                if (device == AUDIO_DEVICE_OUT_USB_HEADSET) {
++                    String8 speakerMute("speaker_mute=1");
++                    AudioSystem::setParameters(speakerMute);
++                }
+             } else {
+                 return NO_MEMORY;
+             }
+@@ -188,6 +193,11 @@ status_t AudioPolicyManager::setDeviceConnectionStateInt(audio_devices_t device,
+ 
+             // remove device from available output devices
+             mAvailableOutputDevices.remove(devDesc);
++            if (device == AUDIO_DEVICE_OUT_USB_HEADSET &&
++                    (!(getDevicesForStream(AUDIO_STREAM_MUSIC) & AUDIO_DEVICE_OUT_HDMI_ARC))) {
++                String8 speakerUnmute("speaker_mute=0");
++                AudioSystem::setParameters(speakerUnmute);
++            }
+ 
+             checkOutputsForDevice(devDesc, state, outputs, devDesc->mAddress);
+ 
+@@ -3956,7 +3966,7 @@ void AudioPolicyManager::loadConfig() {
+ status_t AudioPolicyManager::initialize() {
+     mVolumeCurves->initializeVolumeCurves(getConfig().isSpeakerDrcEnabled());
+ 
+-    mIsPlatformTelevision = property_get_bool("ro.platform.is.tv", false /* default_value */);
++    mIsPlatformTelevision = property_get_bool("ro.vendor.platform.is.tv", false /* default_value */);
+ 
+     // Once policy config has been parsed, retrieve an instance of the engine and initialize it.
+     audio_policy::EngineInstance *engineInstance = audio_policy::EngineInstance::getInstance();
+@@ -5649,18 +5659,30 @@ status_t AudioPolicyManager::checkAndSetVolume(audio_stream_type_t stream,
+     }
+ 
+     if (mIsPlatformTelevision) {
+-        if (device == AUDIO_DEVICE_OUT_HDMI_ARC ||
+-            device == AUDIO_DEVICE_OUT_WIRED_HEADPHONE ||
+-            (device & AUDIO_DEVICE_OUT_SPEAKER)) {
++        audio_devices_t curDevice = Volume::getDeviceForVolume(getDevicesForStream(AUDIO_STREAM_MUSIC));
++        if (curDevice == AUDIO_DEVICE_OUT_HDMI_ARC ||
++            curDevice == AUDIO_DEVICE_OUT_WIRED_HEADPHONE ||
++            (curDevice & AUDIO_DEVICE_OUT_SPEAKER)) {
+             volumeDb = 0.0f;
+         }
+-        if (device == AUDIO_DEVICE_OUT_SPEAKER && outputDesc->isStreamActive(stream)) {
++        if (curDevice == AUDIO_DEVICE_OUT_SPEAKER && outputDesc->isStreamActive(stream)) {
+             //ignoring the "index" passed as argument and always use MUSIC stream index
+             //for all stream types works on TV because all stream types are aliases of MUSIC.
+-            int volumeIndex = mVolumeCurves->getVolumeIndex(AUDIO_STREAM_MUSIC, device);
++            int volumeIndex = mVolumeCurves->getVolumeIndex(AUDIO_STREAM_MUSIC, curDevice);
+             int volumeMaxIndex = mVolumeCurves->getVolumeIndexMax(AUDIO_STREAM_MUSIC);
+             float mediaVolume = (float) volumeIndex / (float) volumeMaxIndex;
+-            outputDesc->updateGain(stream, device, mediaVolume);
++
++            if (volumeMaxIndex == 1) {
++                char defaultMediaVolume[PROPERTY_VALUE_MAX];
++                char volumeStep[PROPERTY_VALUE_MAX];
++                if (property_get("ro.config.media_vol_default", defaultMediaVolume, NULL)
++                        && property_get("ro.config.media_vol_steps", volumeStep, NULL)) {
++                   mediaVolume = ((float)atoi(defaultMediaVolume)) / ((float)atoi(volumeStep));
++                } else {
++                   mediaVolume = 0.25f;
++                }
++            }
++            outputDesc->updateGain(stream, curDevice, mediaVolume);
+         }
+     }
+ 
+-- 
+1.9.1
+

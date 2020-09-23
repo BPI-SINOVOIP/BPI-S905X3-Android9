@@ -1,0 +1,5 @@
+sf_probe.c:466:5:spi_flash_std_write	0	static
+sf_probe.c:474:5:spi_flash_std_erase	0	static
+sf_probe.c:458:12:spi_flash_std_read	0	static
+sf_probe.c:325:5:spi_flash_probe_slave	80	static
+sf_probe.c:481:5:spi_flash_std_probe	32	static

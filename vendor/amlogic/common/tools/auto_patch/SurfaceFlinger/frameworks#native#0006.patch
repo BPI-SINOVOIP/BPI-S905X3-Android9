@@ -1,0 +1,179 @@
+From b0c5c7568c79e83b67226be15cf84cd9b204ed09 Mon Sep 17 00:00:00 2001
+From: haiyuan xiong <haiyuan.xiong@amlogic.com>
+Date: Tue, 29 Jan 2019 21:47:52 +0800
+Subject: [PATCH] Display: enable hotplug function [2/2]
+
+Problem:
+Netflix requires Hotplug detection for updating refresh-rate and DPI
+
+Solution:
+Check whether dpi changes after hotplug
+
+Verify:
+Need FAE to verify
+
+Change-Id: I99fcf873c88d3412f37194f4d66d8ffd4a08f2b8
+Signed-off-by: haiyuan xiong <haiyuan.xiong@amlogic.com>
+---
+ services/surfaceflinger/Android.bp                 |  1 +
+ services/surfaceflinger/DisplayHardware/HWC2.cpp   | 34 ++++++++++++++++++++++
+ .../surfaceflinger/DisplayHardware/HWComposer.cpp  | 19 ++++++++++--
+ services/surfaceflinger/SurfaceFlinger.cpp         | 11 +++++++
+ services/surfaceflinger/SurfaceFlinger.h           |  7 ++++-
+ 5 files changed, 69 insertions(+), 3 deletions(-)
+
+diff --git a/services/surfaceflinger/Android.bp b/services/surfaceflinger/Android.bp
+index 0564fa6..b906800 100644
+--- a/services/surfaceflinger/Android.bp
++++ b/services/surfaceflinger/Android.bp
+@@ -141,6 +141,7 @@ cc_library_shared {
+         "-fvisibility=hidden",
+         "-Werror=format",
+         "-DREDUCE_VIDEO_WORKLOAD",
++        "-DUSE_AML_HW_ACTIVE_MODE",
+     ],
+     srcs: [
+         ":libsurfaceflinger_sources",
+diff --git a/services/surfaceflinger/DisplayHardware/HWC2.cpp b/services/surfaceflinger/DisplayHardware/HWC2.cpp
+index 1a60c83..4bdb78c 100644
+--- a/services/surfaceflinger/DisplayHardware/HWC2.cpp
++++ b/services/surfaceflinger/DisplayHardware/HWC2.cpp
+@@ -454,10 +454,37 @@ Error Display::getDataspaceSaturationMatrix(Dataspace dataspace, android::mat4*
+ 
+ std::vector<std::shared_ptr<const Display::Config>> Display::getConfigs() const
+ {
++#ifdef USE_AML_HW_ACTIVE_MODE
++    ALOGV("[%" PRIu64 "] getConfigs", mId);
++    hwc2_config_t activeConfigId = 0;
++    auto intError = mComposer.getActiveConfig(mId, &activeConfigId);
++    auto error = static_cast<Error>(intError);
++    if (error != Error::None) {
++        ALOGE("[%" PRIu64 "] mGetActiveConfig error", mId);
++    }
++    if (mConfigs.count(activeConfigId) == 0) {
++        ALOGE("[%" PRIu64 "] getActiveConfig returned unknown config %u", mId,
++                activeConfigId);
++    }
++#endif
++
+     std::vector<std::shared_ptr<const Config>> configs;
+     for (const auto& element : mConfigs) {
++#ifdef USE_AML_HW_ACTIVE_MODE
++    // Skip active configid, need to add to the front of configs.
++        if (element.first == activeConfigId) {
++            continue;
++        }
++#endif
+         configs.emplace_back(element.second);
+     }
++
++#ifdef USE_AML_HW_ACTIVE_MODE
++    if (mConfigs.count(activeConfigId) != 0) {
++        // Add active config to the front of configs.
++        configs.emplace(configs.begin(), mConfigs.at(activeConfigId));
++    }
++#endif
+     return configs;
+ }
+ 
+@@ -742,6 +769,13 @@ void Display::loadConfigs()
+         return;
+     }
+ 
++#ifdef USE_AML_HW_ACTIVE_MODE
++    // Primary display need update configs when hotplug happens.
++    if (mId == HWC_DISPLAY_PRIMARY) {
++        mConfigs.clear();
++    }
++#endif
++
+     for (auto configId : configIds) {
+         loadConfig(configId);
+     }
+diff --git a/services/surfaceflinger/DisplayHardware/HWComposer.cpp b/services/surfaceflinger/DisplayHardware/HWComposer.cpp
+index f5f7a82..57e52a7 100644
+--- a/services/surfaceflinger/DisplayHardware/HWComposer.cpp
++++ b/services/surfaceflinger/DisplayHardware/HWComposer.cpp
+@@ -145,8 +145,17 @@ void HWComposer::onHotplug(hwc2_display_t displayId, int32_t displayType,
+     // Disconnect is handled through HWComposer::disconnectDisplay via
+     // SurfaceFlinger's onHotplugReceived callback handling
+     if (connection == HWC2::Connection::Connected) {
+-        mDisplayData[displayType].hwcDisplay = mHwcDevice->getDisplayById(displayId);
+-        mHwcDisplaySlots[displayId] = displayType;
++#ifdef USE_AML_HW_ACTIVE_MODE
++        if (displayId == DisplayDevice::DISPLAY_PRIMARY){
++            if (!mDisplayData[0].hwcDisplay){
++#endif
++                mDisplayData[displayType].hwcDisplay = mHwcDevice->getDisplayById(displayId);
++                mHwcDisplaySlots[displayId] = displayType;
++#ifdef USE_AML_HW_ACTIVE_MODE
++            }
++        }
++#endif
++
+     }
+ }
+ 
+@@ -289,6 +298,12 @@ std::vector<std::shared_ptr<const HWC2::Display::Config>>
+ 
+     auto& displayData = mDisplayData[displayId];
+     auto configs = mDisplayData[displayId].hwcDisplay->getConfigs();
++
++#ifdef USE_AML_HW_ACTIVE_MODE
++    // need to clear configMap to update configs.
++    displayData.configMap.clear();
++#endif
++
+     if (displayData.configMap.empty()) {
+         for (size_t i = 0; i < configs.size(); ++i) {
+             displayData.configMap[i] = configs[i];
+diff --git a/services/surfaceflinger/SurfaceFlinger.cpp b/services/surfaceflinger/SurfaceFlinger.cpp
+index 7513ac8..53e22c8 100644
+--- a/services/surfaceflinger/SurfaceFlinger.cpp
++++ b/services/surfaceflinger/SurfaceFlinger.cpp
+@@ -2326,6 +2326,10 @@ void SurfaceFlinger::processDisplayHotplugEventsLocked() {
+                         "Built-in Screen" : "External Screen";
+                 mCurrentState.displays.add(mBuiltinDisplays[displayType], info);
+                 mInterceptor->saveDisplayCreation(info);
++                } else {
++#ifdef USE_AML_HW_ACTIVE_MODE
++                setTransactionFlags(eDisplayTransactionNeeded | ePrimaryHotplugTranscation);
++#endif
+             }
+         } else {
+             ALOGV("Removing built in display %d", displayType);
+@@ -2598,6 +2602,13 @@ void SurfaceFlinger::handleTransactionLocked(uint32_t transactionFlags)
+      */
+ 
+     if (transactionFlags & eDisplayTransactionNeeded) {
++#ifdef USE_AML_HW_ACTIVE_MODE
++        // deal Primary display hotplug
++        if (transactionFlags & ePrimaryHotplugTranscation) {
++            mEventThread->onHotplugReceived(DisplayDevice::DISPLAY_PRIMARY, true);
++        }
++#endif
++
+         processDisplayChangesLocked();
+         processDisplayHotplugEventsLocked();
+     }
+diff --git a/services/surfaceflinger/SurfaceFlinger.h b/services/surfaceflinger/SurfaceFlinger.h
+index 0148ab6..8da4cf8 100644
+--- a/services/surfaceflinger/SurfaceFlinger.h
++++ b/services/surfaceflinger/SurfaceFlinger.h
+@@ -121,7 +121,12 @@ enum {
+     eTraversalNeeded          = 0x02,
+     eDisplayTransactionNeeded = 0x04,
+     eDisplayLayerStackChanged = 0x08,
+-    eTransactionMask          = 0x0f,
++#ifndef USE_AML_HW_ACTIVE_MODE
++    eTransactionMask          = 0x07 
++#else
++    ePrimaryHotplugTranscation = 0x10,
++    eTransactionMask		   = 0x1f
++#endif
+ };
+ 
+ enum class DisplayColorSetting : int32_t {
+-- 
+2.7.4
+

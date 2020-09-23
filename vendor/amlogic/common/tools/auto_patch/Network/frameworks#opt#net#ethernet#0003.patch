@@ -1,0 +1,41 @@
+From 276bc144dfb2af23fb8eb40b90d35ae54ca9c2af Mon Sep 17 00:00:00 2001
+From: Gongwei Chen <gongwei.chen@amlogic.com>
+Date: Wed, 26 Dec 2018 16:07:40 +0800
+Subject: [PATCH] Connect with ethernet,change the static IP fail [1/1]
+
+PD#SWPL-953
+
+Problem:
+Connect with ethernet,change the static IP fail
+
+Solution:
+Stop and start ethernet after set staic ip or DHCP
+
+Verify:
+Verify by Android P franklin
+
+Change-Id: Ie0b80b812a17ed57821b69cb1a3560104e1dd10d
+Signed-off-by: GongWei Chen <gongwei.chen@amlogic.com>
+---
+ java/com/android/server/ethernet/EthernetNetworkFactory.java | 2 ++
+ 1 file changed, 2 insertions(+)
+ mode change 100644 => 100755 java/com/android/server/ethernet/EthernetNetworkFactory.java
+
+diff --git a/java/com/android/server/ethernet/EthernetNetworkFactory.java b/java/com/android/server/ethernet/EthernetNetworkFactory.java
+old mode 100644
+new mode 100755
+index de0a691..6790459
+--- a/java/com/android/server/ethernet/EthernetNetworkFactory.java
++++ b/java/com/android/server/ethernet/EthernetNetworkFactory.java
+@@ -183,6 +183,8 @@ public class EthernetNetworkFactory extends NetworkFactory {
+         NetworkInterfaceState network = mTrackingInterfaces.get(iface);
+         if (network != null) {
+             network.setIpConfig(ipConfiguration);
++            network.stop();
++            network.start();
+         }
+     }
+ 
+-- 
+1.9.1
+

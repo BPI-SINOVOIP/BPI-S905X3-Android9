@@ -1,0 +1,176 @@
+From 226be23add886c19b1794c2c4ce35b98a3acb045 Mon Sep 17 00:00:00 2001
+From: xian <an.xi@amlogic.com>
+Date: Wed, 5 Jun 2019 08:19:25 -0400
+Subject: [PATCH] TV: fix memory leak [1/2]
+
+PD#SWPL-9378
+
+Problem:
+memory leak happens in MainActivity
+
+Solution:
+remove the listener which holds the reference of MainActivity when destroyed
+
+Verify:
+verify it on Ampere
+
+Change-Id: I7edb27eac557c23310bad527057abd79f60a7535
+Signed-off-by: an.xi <an.xi@amlogic.com>
+---
+ api/system-current.txt                             |  1 +
+ api/test-current.txt                               |  2 +-
+ core/java/android/hardware/hdmi/HdmiTvClient.java  | 24 +++++++++++++++++++---
+ .../android/hardware/hdmi/IHdmiControlService.aidl |  1 +
+ .../android/server/hdmi/HdmiControlService.java    | 24 ++++++++++++++++++++++
+ 5 files changed, 48 insertions(+), 4 deletions(-)
+ mode change 100644 => 100755 core/java/android/hardware/hdmi/HdmiTvClient.java
+ mode change 100644 => 100755 services/core/java/com/android/server/hdmi/HdmiControlService.java
+
+diff --git a/api/system-current.txt b/api/system-current.txt
+index 3b4a0be..9083a90 100644
+--- a/api/system-current.txt
++++ b/api/system-current.txt
+@@ -1539,6 +1539,7 @@ package android.hardware.hdmi {
+     method public java.util.List<android.hardware.hdmi.HdmiDeviceInfo> getDeviceList();
+     method public int getDeviceType();
+     method public void portSelect(int, android.hardware.hdmi.HdmiTvClient.SelectCallback);
++    method public void removeInputChangeListener();
+     method public void sendMhlVendorCommand(int, int, int, byte[]);
+     method public void sendStandby(int);
+     method public void setHdmiMhlVendorCommandListener(android.hardware.hdmi.HdmiTvClient.HdmiMhlVendorCommandListener);
+diff --git a/api/test-current.txt b/api/test-current.txt
+index e34614e..2bd60b8 100644
+--- a/api/test-current.txt
++++ b/api/test-current.txt
+@@ -248,8 +248,8 @@ package android.content.pm {
+   public abstract class PackageManager {
+     method public abstract java.lang.String getDefaultBrowserPackageNameAsUser(int);
+     method public abstract int getInstallReason(java.lang.String, android.os.UserHandle);
+-    method public abstract java.util.List<android.content.pm.PackageInfo> getInstalledPackagesAsUser(int, int);
+     method public abstract java.util.List<android.content.pm.ApplicationInfo> getInstalledApplicationsAsUser(int, int);
++    method public abstract java.util.List<android.content.pm.PackageInfo> getInstalledPackagesAsUser(int, int);
+     method public abstract java.lang.String[] getNamesForUids(int[]);
+     method public abstract java.lang.String getPermissionControllerPackageName();
+     method public abstract java.lang.String getServicesSystemSharedLibraryPackageName();
+diff --git a/core/java/android/hardware/hdmi/HdmiTvClient.java b/core/java/android/hardware/hdmi/HdmiTvClient.java
+old mode 100644
+new mode 100755
+index a336e5c..73770ef
+--- a/core/java/android/hardware/hdmi/HdmiTvClient.java
++++ b/core/java/android/hardware/hdmi/HdmiTvClient.java
+@@ -38,6 +38,8 @@ import java.util.List;
+ public final class HdmiTvClient extends HdmiClient {
+     private static final String TAG = "HdmiTvClient";
+ 
++    IHdmiInputChangeListener mInputChangeListener;
++
+     /**
+      * Size of MHL register for vendor command
+      */
+@@ -143,13 +145,29 @@ public final class HdmiTvClient extends HdmiClient {
+         }
+     }
+ 
+-    private static IHdmiInputChangeListener getListenerWrapper(final InputChangeListener listener) {
+-        return new IHdmiInputChangeListener.Stub() {
++    /**
++     * Remove the listener used to get informed of the input change event.
++     *
++     * @param listener listener object
++     */
++    public void removeInputChangeListener() {
++        if (mInputChangeListener != null) {
++            try {
++                mService.removeInputChangeListener(mInputChangeListener);
++            } catch (RemoteException e) {
++                Log.e("TAG", "Failed to remove InputChangeListener:", e);
++            }
++        }
++    }
++
++    private IHdmiInputChangeListener getListenerWrapper(final InputChangeListener listener) {
++        mInputChangeListener = new IHdmiInputChangeListener.Stub() {
+             @Override
+             public void onChanged(HdmiDeviceInfo info) {
+                 listener.onChanged(info);
+             }
+         };
++        return mInputChangeListener;
+     }
+ 
+     /**
+@@ -239,7 +257,7 @@ public final class HdmiTvClient extends HdmiClient {
+         }
+     }
+ 
+-    private static IHdmiRecordListener getListenerWrapper(final HdmiRecordListener callback) {
++    private IHdmiRecordListener getListenerWrapper(final HdmiRecordListener callback) {
+         return new IHdmiRecordListener.Stub() {
+             @Override
+             public byte[] getOneTouchRecordSource(int recorderAddress) {
+diff --git a/core/java/android/hardware/hdmi/IHdmiControlService.aidl b/core/java/android/hardware/hdmi/IHdmiControlService.aidl
+index 67e2d18..302666d 100644
+--- a/core/java/android/hardware/hdmi/IHdmiControlService.aidl
++++ b/core/java/android/hardware/hdmi/IHdmiControlService.aidl
+@@ -58,6 +58,7 @@ interface IHdmiControlService {
+     void setSystemAudioVolume(int oldIndex, int newIndex, int maxIndex);
+     void setSystemAudioMute(boolean mute);
+     void setInputChangeListener(IHdmiInputChangeListener listener);
++    void removeInputChangeListener(IHdmiInputChangeListener listener);
+     List<HdmiDeviceInfo> getInputDevices();
+     List<HdmiDeviceInfo> getDeviceList();
+     void sendVendorCommand(int deviceType, int targetAddress, in byte[] params,
+diff --git a/services/core/java/com/android/server/hdmi/HdmiControlService.java b/services/core/java/com/android/server/hdmi/HdmiControlService.java
+old mode 100644
+new mode 100755
+index b06dba9..7792a02
+--- a/services/core/java/com/android/server/hdmi/HdmiControlService.java
++++ b/services/core/java/com/android/server/hdmi/HdmiControlService.java
+@@ -1439,6 +1439,12 @@ public final class HdmiControlService extends SystemService {
+         }
+ 
+         @Override
++        public void removeInputChangeListener(final IHdmiInputChangeListener listener) {
++            enforceAccessPermission();
++            HdmiControlService.this.removeInputChangeListener(listener);
++        }
++
++        @Override
+         public List<HdmiDeviceInfo> getInputDevices() {
+             enforceAccessPermission();
+             // No need to hold the lock for obtaining TV device as the local device instance
+@@ -1848,6 +1854,8 @@ public final class HdmiControlService extends SystemService {
+ 
+     private void setInputChangeListener(IHdmiInputChangeListener listener) {
+         synchronized (mLock) {
++            // Todo
++            // For now there can only be one listener to maintain.
+             mInputChangeListenerRecord = new InputChangeListenerRecord(listener);
+             try {
+                 listener.asBinder().linkToDeath(mInputChangeListenerRecord, 0);
+@@ -1858,6 +1866,22 @@ public final class HdmiControlService extends SystemService {
+         }
+     }
+ 
++    private void removeInputChangeListener(IHdmiInputChangeListener listener) {
++        synchronized (mLock) {
++            Slog.d(TAG, "removeInputChangeListener");
++            if (null == listener) {
++                return;
++            }
++            try {
++                listener.asBinder().unlinkToDeath(mInputChangeListenerRecord, 0);
++            } catch (Exception e) {
++                Slog.w(TAG, "Listener already died");
++                return;
++            }
++            mInputChangeListenerRecord = null;
++        }
++    }
++
+     void invokeInputChangeListener(HdmiDeviceInfo info) {
+         synchronized (mLock) {
+             if (mInputChangeListenerRecord != null) {
+-- 
+2.7.4
+

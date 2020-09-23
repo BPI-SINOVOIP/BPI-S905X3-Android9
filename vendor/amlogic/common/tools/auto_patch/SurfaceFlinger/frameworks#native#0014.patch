@@ -1,0 +1,48 @@
+From e92f714fcd44f86cf2db3133bed938b45a61c9f8 Mon Sep 17 00:00:00 2001
+From: binqi zhang <binqi.zhang@amlogic.com>
+Date: Fri, 13 Mar 2020 22:04:36 +0800
+Subject: [PATCH] Display: enable AFBC on dual display products [2/5]
+
+PD#SWPL-22030
+
+Problem:
+AFBC is disabed in default on dual display products
+
+Solution:
+Main screen enable afbc, sub screen disable afbc
+
+Verify:
+adb shell dumpsys SurfaceFlinger
+cat /sys/class/graphics/fb0/osd_afbcd
+dual display show ok
+
+Change-Id: I25ccc553c9953dd13d31dc1ea32e0f55ab5b84af
+
+diff --git a/services/surfaceflinger/DisplayHardware/FramebufferSurface.cpp b/services/surfaceflinger/DisplayHardware/FramebufferSurface.cpp
+old mode 100644
+new mode 100755
+index 21a8da1..2d642d0
+--- a/services/surfaceflinger/DisplayHardware/FramebufferSurface.cpp
++++ b/services/surfaceflinger/DisplayHardware/FramebufferSurface.cpp
+@@ -75,9 +75,15 @@ FramebufferSurface::FramebufferSurface(HWComposer& hwc, int disp,
+ 
+     mName = "FramebufferSurface";
+     mConsumer->setConsumerName(mName);
+-    mConsumer->setConsumerUsageBits(GRALLOC_USAGE_HW_FB |
+-                                       GRALLOC_USAGE_HW_RENDER |
+-                                       GRALLOC_USAGE_HW_COMPOSER);
++    if (disp > 0)
++        mConsumer->setConsumerUsageBits(GRALLOC_USAGE_HW_FB |
++                                           GRALLOC_USAGE_HW_RENDER |
++                                           GRALLOC_USAGE_EXTERNAL_DISP |
++                                           GRALLOC_USAGE_HW_COMPOSER);
++    else
++        mConsumer->setConsumerUsageBits(GRALLOC_USAGE_HW_FB |
++                                           GRALLOC_USAGE_HW_RENDER |
++                                           GRALLOC_USAGE_HW_COMPOSER);
+ 
+ #ifdef USE_AML_REAL_MODE
+     int width = getInt32< ISurfaceFlingerConfigs,
+-- 
+2.7.4
+

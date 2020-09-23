@@ -1,0 +1,1835 @@
+From 3194ebb276a9e2e551ac8b5ccfdbe9d8b154b16f Mon Sep 17 00:00:00 2001
+From: Jinping Wang <jinping.wang@amlogic.com>
+Date: Tue, 21 May 2019 15:59:22 +0800
+Subject: [PATCH] cec: discover device may block [1/1]
+
+PD# SWPL-8733
+
+Problem:
+discover device may block, not recognise
+cec device
+
+Solution:
+revert patch in DeviceDiscoveryAction
+
+Verify:
+test ok using p321
+
+Change-Id: Ib54fbbd400eb1ca8e66bca832567669c3f5424ea
+Signed-off-by: Jinping Wang <jinping.wang@amlogic.com>
+---
+ core/java/android/hardware/hdmi/Constants.java     | 518 +++++++++++++++++++++
+ .../android/hardware/hdmi/HdmiControlManager.java  |  26 ++
+ .../android/hardware/hdmi/HdmiSwitchClient.java    | 134 ++++++
+ .../java/com/android/server/hdmi/Constants.java    | 269 +++++++++++
+ .../android/server/hdmi/DeviceDiscoveryAction.java |  21 +-
+ .../android/server/hdmi/HdmiCecFeatureAction.java  |   4 +
+ .../server/hdmi/HdmiCecLocalDeviceAudioSystem.java |  27 +-
+ .../android/server/hdmi/HdmiCecMessageBuilder.java |  14 +
+ .../android/server/hdmi/HdmiControlService.java    | 107 ++++-
+ .../java/com/android/server/hdmi/HdmiUtils.java    | 382 +++++++++++++++
+ 10 files changed, 1478 insertions(+), 24 deletions(-)
+ create mode 100644 core/java/android/hardware/hdmi/Constants.java
+ create mode 100644 core/java/android/hardware/hdmi/HdmiSwitchClient.java
+ mode change 100644 => 100755 services/core/java/com/android/server/hdmi/DeviceDiscoveryAction.java
+
+diff --git a/core/java/android/hardware/hdmi/Constants.java b/core/java/android/hardware/hdmi/Constants.java
+new file mode 100644
+index 0000000..829d61c
+--- /dev/null
++++ b/core/java/android/hardware/hdmi/Constants.java
+@@ -0,0 +1,518 @@
++/*
++ * Copyright (C) 2014 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.server.hdmi;
++
++import android.annotation.IntDef;
++import android.annotation.StringDef;
++import android.hardware.hdmi.HdmiDeviceInfo;
++import java.lang.annotation.Retention;
++import java.lang.annotation.RetentionPolicy;
++
++/**
++ * Defines constants related to HDMI-CEC protocol internal implementation.
++ * If a constant will be used in the public api, it should be located in
++ * {@link android.hardware.hdmi.HdmiControlManager}.
++ */
++final class Constants {
++
++    /** Logical address for TV */
++    public static final int ADDR_TV = 0;
++
++    /** Logical address for recorder 1 */
++    public static final int ADDR_RECORDER_1 = 1;
++
++    /** Logical address for recorder 2 */
++    public static final int ADDR_RECORDER_2 = 2;
++
++    /** Logical address for tuner 1 */
++    public static final int ADDR_TUNER_1 = 3;
++
++    /** Logical address for playback 1 */
++    public static final int ADDR_PLAYBACK_1 = 4;
++
++    /** Logical address for audio system */
++    public static final int ADDR_AUDIO_SYSTEM = 5;
++
++    /** Logical address for tuner 2 */
++    public static final int ADDR_TUNER_2 = 6;
++
++    /** Logical address for tuner 3 */
++    public static final int ADDR_TUNER_3 = 7;
++
++    /** Logical address for playback 2 */
++    public static final int ADDR_PLAYBACK_2 = 8;
++
++    /** Logical address for recorder 3 */
++    public static final int ADDR_RECORDER_3 = 9;
++
++    /** Logical address for tuner 4 */
++    public static final int ADDR_TUNER_4 = 10;
++
++    /** Logical address for playback 3 */
++    public static final int ADDR_PLAYBACK_3 = 11;
++
++    /** Logical address reserved for future usage */
++    public static final int ADDR_RESERVED_1 = 12;
++
++    /** Logical address reserved for future usage */
++    public static final int ADDR_RESERVED_2 = 13;
++
++    /** Logical address for TV other than the one assigned with {@link #ADDR_TV} */
++    public static final int ADDR_SPECIFIC_USE = 14;
++
++    /** Logical address for devices to which address cannot be allocated */
++    public static final int ADDR_UNREGISTERED = 15;
++
++    /** Logical address used in the destination address field for broadcast messages */
++    public static final int ADDR_BROADCAST = 15;
++
++    /** Logical address used to indicate it is not initialized or invalid. */
++    public static final int ADDR_INVALID = -1;
++
++    /** Logical address used to indicate the source comes from internal device. */
++    public static final int ADDR_INTERNAL = HdmiDeviceInfo.ADDR_INTERNAL;
++
++    @Retention(RetentionPolicy.SOURCE)
++    @IntDef({
++        MESSAGE_FEATURE_ABORT,
++        MESSAGE_IMAGE_VIEW_ON,
++        MESSAGE_TUNER_STEP_INCREMENT,
++        MESSAGE_TUNER_STEP_DECREMENT,
++        MESSAGE_TUNER_DEVICE_STATUS,
++        MESSAGE_GIVE_TUNER_DEVICE_STATUS,
++        MESSAGE_RECORD_ON,
++        MESSAGE_RECORD_STATUS,
++        MESSAGE_RECORD_OFF,
++        MESSAGE_TEXT_VIEW_ON,
++        MESSAGE_RECORD_TV_SCREEN,
++        MESSAGE_GIVE_DECK_STATUS,
++        MESSAGE_DECK_STATUS,
++        MESSAGE_SET_MENU_LANGUAGE,
++        MESSAGE_CLEAR_ANALOG_TIMER,
++        MESSAGE_SET_ANALOG_TIMER,
++        MESSAGE_TIMER_STATUS,
++        MESSAGE_STANDBY,
++        MESSAGE_PLAY,
++        MESSAGE_DECK_CONTROL,
++        MESSAGE_TIMER_CLEARED_STATUS,
++        MESSAGE_USER_CONTROL_PRESSED,
++        MESSAGE_USER_CONTROL_RELEASED,
++        MESSAGE_GIVE_OSD_NAME,
++        MESSAGE_SET_OSD_NAME,
++        MESSAGE_SET_OSD_STRING,
++        MESSAGE_SET_TIMER_PROGRAM_TITLE,
++        MESSAGE_SYSTEM_AUDIO_MODE_REQUEST,
++        MESSAGE_GIVE_AUDIO_STATUS,
++        MESSAGE_SET_SYSTEM_AUDIO_MODE,
++        MESSAGE_REPORT_AUDIO_STATUS,
++        MESSAGE_GIVE_SYSTEM_AUDIO_MODE_STATUS,
++        MESSAGE_SYSTEM_AUDIO_MODE_STATUS,
++        MESSAGE_ROUTING_CHANGE,
++        MESSAGE_ROUTING_INFORMATION,
++        MESSAGE_ACTIVE_SOURCE,
++        MESSAGE_GIVE_PHYSICAL_ADDRESS,
++        MESSAGE_REPORT_PHYSICAL_ADDRESS,
++        MESSAGE_REQUEST_ACTIVE_SOURCE,
++        MESSAGE_SET_STREAM_PATH,
++        MESSAGE_DEVICE_VENDOR_ID,
++        MESSAGE_VENDOR_COMMAND,
++        MESSAGE_VENDOR_REMOTE_BUTTON_DOWN,
++        MESSAGE_VENDOR_REMOTE_BUTTON_UP,
++        MESSAGE_GIVE_DEVICE_VENDOR_ID,
++        MESSAGE_MENU_REQUEST,
++        MESSAGE_MENU_STATUS,
++        MESSAGE_GIVE_DEVICE_POWER_STATUS,
++        MESSAGE_REPORT_POWER_STATUS,
++        MESSAGE_GET_MENU_LANGUAGE,
++        MESSAGE_SELECT_ANALOG_SERVICE,
++        MESSAGE_SELECT_DIGITAL_SERVICE,
++        MESSAGE_SET_DIGITAL_TIMER,
++        MESSAGE_CLEAR_DIGITAL_TIMER,
++        MESSAGE_SET_AUDIO_RATE,
++        MESSAGE_INACTIVE_SOURCE,
++        MESSAGE_CEC_VERSION,
++        MESSAGE_GET_CEC_VERSION,
++        MESSAGE_VENDOR_COMMAND_WITH_ID,
++        MESSAGE_CLEAR_EXTERNAL_TIMER,
++        MESSAGE_SET_EXTERNAL_TIMER,
++        MESSAGE_REPORT_SHORT_AUDIO_DESCRIPTOR,
++        MESSAGE_REQUEST_SHORT_AUDIO_DESCRIPTOR,
++        MESSAGE_INITIATE_ARC,
++        MESSAGE_REPORT_ARC_INITIATED,
++        MESSAGE_REPORT_ARC_TERMINATED,
++        MESSAGE_REQUEST_ARC_INITIATION,
++        MESSAGE_REQUEST_ARC_TERMINATION,
++        MESSAGE_TERMINATE_ARC,
++        MESSAGE_CDC_MESSAGE,
++        MESSAGE_ABORT,
++    })
++    public @interface FeatureOpcode {}
++
++    static final int MESSAGE_FEATURE_ABORT = 0x00;
++    static final int MESSAGE_IMAGE_VIEW_ON = 0x04;
++    static final int MESSAGE_TUNER_STEP_INCREMENT = 0x05;
++    static final int MESSAGE_TUNER_STEP_DECREMENT = 0x06;
++    static final int MESSAGE_TUNER_DEVICE_STATUS = 0x07;
++    static final int MESSAGE_GIVE_TUNER_DEVICE_STATUS = 0x08;
++    static final int MESSAGE_RECORD_ON = 0x09;
++    static final int MESSAGE_RECORD_STATUS = 0x0A;
++    static final int MESSAGE_RECORD_OFF = 0x0B;
++    static final int MESSAGE_TEXT_VIEW_ON = 0x0D;
++    static final int MESSAGE_RECORD_TV_SCREEN = 0x0F;
++    static final int MESSAGE_GIVE_DECK_STATUS = 0x1A;
++    static final int MESSAGE_DECK_STATUS = 0x1B;
++    static final int MESSAGE_SET_MENU_LANGUAGE = 0x32;
++    static final int MESSAGE_CLEAR_ANALOG_TIMER = 0x33;
++    static final int MESSAGE_SET_ANALOG_TIMER = 0x34;
++    static final int MESSAGE_TIMER_STATUS = 0x35;
++    static final int MESSAGE_STANDBY = 0x36;
++    static final int MESSAGE_PLAY = 0x41;
++    static final int MESSAGE_DECK_CONTROL = 0x42;
++    static final int MESSAGE_TIMER_CLEARED_STATUS = 0x043;
++    static final int MESSAGE_USER_CONTROL_PRESSED = 0x44;
++    static final int MESSAGE_USER_CONTROL_RELEASED = 0x45;
++    static final int MESSAGE_GIVE_OSD_NAME = 0x46;
++    static final int MESSAGE_SET_OSD_NAME = 0x47;
++    static final int MESSAGE_SET_OSD_STRING = 0x64;
++    static final int MESSAGE_SET_TIMER_PROGRAM_TITLE = 0x67;
++    static final int MESSAGE_SYSTEM_AUDIO_MODE_REQUEST = 0x70;
++    static final int MESSAGE_GIVE_AUDIO_STATUS = 0x71;
++    static final int MESSAGE_SET_SYSTEM_AUDIO_MODE = 0x72;
++    static final int MESSAGE_REPORT_AUDIO_STATUS = 0x7A;
++    static final int MESSAGE_GIVE_SYSTEM_AUDIO_MODE_STATUS = 0x7D;
++    static final int MESSAGE_SYSTEM_AUDIO_MODE_STATUS = 0x7E;
++    static final int MESSAGE_ROUTING_CHANGE = 0x80;
++    static final int MESSAGE_ROUTING_INFORMATION = 0x81;
++    static final int MESSAGE_ACTIVE_SOURCE = 0x82;
++    static final int MESSAGE_GIVE_PHYSICAL_ADDRESS = 0x83;
++    static final int MESSAGE_REPORT_PHYSICAL_ADDRESS = 0x84;
++    static final int MESSAGE_REQUEST_ACTIVE_SOURCE = 0x85;
++    static final int MESSAGE_SET_STREAM_PATH = 0x86;
++    static final int MESSAGE_DEVICE_VENDOR_ID = 0x87;
++    static final int MESSAGE_VENDOR_COMMAND = 0x89;
++    static final int MESSAGE_VENDOR_REMOTE_BUTTON_DOWN = 0x8A;
++    static final int MESSAGE_VENDOR_REMOTE_BUTTON_UP = 0x8B;
++    static final int MESSAGE_GIVE_DEVICE_VENDOR_ID = 0x8C;
++    static final int MESSAGE_MENU_REQUEST = 0x8D;
++    static final int MESSAGE_MENU_STATUS = 0x8E;
++    static final int MESSAGE_GIVE_DEVICE_POWER_STATUS = 0x8F;
++    static final int MESSAGE_REPORT_POWER_STATUS = 0x90;
++    static final int MESSAGE_GET_MENU_LANGUAGE = 0x91;
++    static final int MESSAGE_SELECT_ANALOG_SERVICE = 0x92;
++    static final int MESSAGE_SELECT_DIGITAL_SERVICE = 0x93;
++    static final int MESSAGE_SET_DIGITAL_TIMER = 0x97;
++    static final int MESSAGE_CLEAR_DIGITAL_TIMER = 0x99;
++    static final int MESSAGE_SET_AUDIO_RATE = 0x9A;
++    static final int MESSAGE_INACTIVE_SOURCE = 0x9D;
++    static final int MESSAGE_CEC_VERSION = 0x9E;
++    static final int MESSAGE_GET_CEC_VERSION = 0x9F;
++    static final int MESSAGE_VENDOR_COMMAND_WITH_ID = 0xA0;
++    static final int MESSAGE_CLEAR_EXTERNAL_TIMER = 0xA1;
++    static final int MESSAGE_SET_EXTERNAL_TIMER = 0xA2;
++    static final int MESSAGE_REPORT_SHORT_AUDIO_DESCRIPTOR = 0xA3;
++    static final int MESSAGE_REQUEST_SHORT_AUDIO_DESCRIPTOR = 0xA4;
++    static final int MESSAGE_INITIATE_ARC = 0xC0;
++    static final int MESSAGE_REPORT_ARC_INITIATED = 0xC1;
++    static final int MESSAGE_REPORT_ARC_TERMINATED = 0xC2;
++    static final int MESSAGE_REQUEST_ARC_INITIATION = 0xC3;
++    static final int MESSAGE_REQUEST_ARC_TERMINATION = 0xC4;
++    static final int MESSAGE_TERMINATE_ARC = 0xC5;
++    static final int MESSAGE_CDC_MESSAGE = 0xF8;
++    static final int MESSAGE_ABORT = 0xFF;
++
++    static final int UNKNOWN_VENDOR_ID = 0xFFFFFF;
++
++    static final int TRUE = 1;
++    static final int FALSE = 0;
++
++    @Retention(RetentionPolicy.SOURCE)
++    @IntDef({
++        ABORT_NO_ERROR,
++        ABORT_UNRECOGNIZED_OPCODE,
++        ABORT_NOT_IN_CORRECT_MODE,
++        ABORT_CANNOT_PROVIDE_SOURCE,
++        ABORT_INVALID_OPERAND,
++        ABORT_REFUSED,
++        ABORT_UNABLE_TO_DETERMINE,
++    })
++    public @interface AbortReason {}
++
++    // Internal abort error code. It's the same as success.
++    static final int ABORT_NO_ERROR = -1;
++    // Constants related to operands of HDMI CEC commands.
++    // Refer to CEC Table 29 in HDMI Spec v1.4b.
++    // [Abort Reason]
++    static final int ABORT_UNRECOGNIZED_OPCODE = 0;
++    static final int ABORT_NOT_IN_CORRECT_MODE = 1;
++    static final int ABORT_CANNOT_PROVIDE_SOURCE = 2;
++    static final int ABORT_INVALID_OPERAND = 3;
++    static final int ABORT_REFUSED = 4;
++    static final int ABORT_UNABLE_TO_DETERMINE = 5;
++
++    // [Audio Status]
++    static final int SYSTEM_AUDIO_STATUS_OFF = 0;
++    static final int SYSTEM_AUDIO_STATUS_ON = 1;
++
++    // [Menu State]
++    static final int MENU_STATE_ACTIVATED = 0;
++    static final int MENU_STATE_DEACTIVATED = 1;
++
++    // Audio Format Codes
++    // Refer to CEA Standard (CEA-861-D), Table 37 Audio Format Codes.
++    @Retention(RetentionPolicy.SOURCE)
++    @IntDef({
++        AUDIO_CODEC_NONE,
++        AUDIO_CODEC_LPCM,
++        AUDIO_CODEC_DD,
++        AUDIO_CODEC_MPEG1,
++        AUDIO_CODEC_MP3,
++        AUDIO_CODEC_MPEG2,
++        AUDIO_CODEC_AAC,
++        AUDIO_CODEC_DTS,
++        AUDIO_CODEC_ATRAC,
++        AUDIO_CODEC_ONEBITAUDIO,
++        AUDIO_CODEC_DDP,
++        AUDIO_CODEC_DTSHD,
++        AUDIO_CODEC_TRUEHD,
++        AUDIO_CODEC_DST,
++        AUDIO_CODEC_WMAPRO,
++        AUDIO_CODEC_MAX,
++    })
++    public @interface AudioCodec {}
++
++    static final int AUDIO_CODEC_NONE = 0x0;
++    static final int AUDIO_CODEC_LPCM = 0x1; // Support LPCMs
++    static final int AUDIO_CODEC_DD = 0x2; // Support DD
++    static final int AUDIO_CODEC_MPEG1 = 0x3; // Support MPEG1
++    static final int AUDIO_CODEC_MP3 = 0x4; // Support MP3
++    static final int AUDIO_CODEC_MPEG2 = 0x5; // Support MPEG2
++    static final int AUDIO_CODEC_AAC = 0x6; // Support AAC
++    static final int AUDIO_CODEC_DTS = 0x7; // Support DTS
++    static final int AUDIO_CODEC_ATRAC = 0x8; // Support ATRAC
++    static final int AUDIO_CODEC_ONEBITAUDIO = 0x9; // Support One-Bit Audio
++    static final int AUDIO_CODEC_DDP = 0xA; // Support DDP
++    static final int AUDIO_CODEC_DTSHD = 0xB; // Support DTSHD
++    static final int AUDIO_CODEC_TRUEHD = 0xC; // Support MLP/TRUE-HD
++    static final int AUDIO_CODEC_DST = 0xD; // Support DST
++    static final int AUDIO_CODEC_WMAPRO = 0xE; // Support WMA-Pro
++    static final int AUDIO_CODEC_MAX = 0xF;
++
++    @StringDef({
++        AUDIO_DEVICE_ARC_IN,
++        AUDIO_DEVICE_SPDIF,
++    })
++    public @interface AudioDevice {}
++
++    static final String AUDIO_DEVICE_ARC_IN = "ARC_IN";
++    static final String AUDIO_DEVICE_SPDIF = "SPDIF";
++
++    // Bit mask used to get the routing path of the top level device.
++    // When &'d with the path 1.2.2.0 (0x1220), for instance, gives 1.0.0.0.
++    static final int ROUTING_PATH_TOP_MASK = 0xF000;
++    static final int ROUTING_PATH_TOP_SHIFT = 12;
++
++    static final int INVALID_PORT_ID = HdmiDeviceInfo.PORT_INVALID;
++    static final int INVALID_PHYSICAL_ADDRESS = HdmiDeviceInfo.PATH_INVALID;
++    static final int PATH_INTERNAL = HdmiDeviceInfo.PATH_INTERNAL;
++
++    // Strategy for device polling.
++    // Should use "OR(|) operation of POLL_STRATEGY_XXX and POLL_ITERATION_XXX.
++    static final int POLL_STRATEGY_MASK = 0x3;  // first and second bit.
++    static final int POLL_STRATEGY_REMOTES_DEVICES = 0x1;
++    static final int POLL_STRATEGY_SYSTEM_AUDIO = 0x2;
++
++    static final int POLL_ITERATION_STRATEGY_MASK = 0x30000;  // first and second bit.
++    static final int POLL_ITERATION_IN_ORDER = 0x10000;
++    static final int POLL_ITERATION_REVERSE_ORDER = 0x20000;
++
++    static final int UNKNOWN_VOLUME = -1;
++
++    // States of property PROPERTY_SYSTEM_AUDIO_CONTROL_ON_POWER_ON
++    // to decide if turn on the system audio control when power on the device
++    @IntDef({
++        ALWAYS_SYSTEM_AUDIO_CONTROL_ON_POWER_ON,
++        USE_LAST_STATE_SYSTEM_AUDIO_CONTROL_ON_POWER_ON,
++        NEVER_SYSTEM_AUDIO_CONTROL_ON_POWER_ON
++    })
++    @interface SystemAudioControlOnPowerOn {}
++    static final int ALWAYS_SYSTEM_AUDIO_CONTROL_ON_POWER_ON = 0;
++    static final int USE_LAST_STATE_SYSTEM_AUDIO_CONTROL_ON_POWER_ON = 1;
++    static final int NEVER_SYSTEM_AUDIO_CONTROL_ON_POWER_ON = 2;
++
++    // Port id to record local active port for Routing Control features
++    // They are used to map to corresponding Inputs
++    // Current interface is only implemented for specific device.
++    // Developers can add more port number and map them to corresponding inputs on demand.
++    @IntDef({
++        CEC_SWITCH_HOME,
++        CEC_SWITCH_HDMI1,
++        CEC_SWITCH_HDMI2,
++        CEC_SWITCH_HDMI3,
++        CEC_SWITCH_HDMI4,
++        CEC_SWITCH_HDMI5,
++        CEC_SWITCH_HDMI6,
++        CEC_SWITCH_HDMI7,
++        CEC_SWITCH_HDMI8,
++        CEC_SWITCH_ARC,
++        CEC_SWITCH_BLUETOOTH,
++        CEC_SWITCH_OPTICAL,
++        CEC_SWITCH_AUX
++    })
++    @interface LocalActivePort {}
++    static final int CEC_SWITCH_HOME = 0;
++    static final int CEC_SWITCH_HDMI1 = 1;
++    static final int CEC_SWITCH_HDMI2 = 2;
++    static final int CEC_SWITCH_HDMI3 = 3;
++    static final int CEC_SWITCH_HDMI4 = 4;
++    static final int CEC_SWITCH_HDMI5 = 5;
++    static final int CEC_SWITCH_HDMI6 = 6;
++    static final int CEC_SWITCH_HDMI7 = 7;
++    static final int CEC_SWITCH_HDMI8 = 8;
++    static final int CEC_SWITCH_ARC = 17;
++    static final int CEC_SWITCH_BLUETOOTH = 18;
++    static final int CEC_SWITCH_OPTICAL = 19;
++    static final int CEC_SWITCH_AUX = 20;
++    static final int CEC_SWITCH_PORT_MAX = 21;
++
++    static final String PROPERTY_PREFERRED_ADDRESS_AUDIO_SYSTEM =
++            "persist.sys.hdmi.addr.audiosystem";
++    static final String PROPERTY_PREFERRED_ADDRESS_PLAYBACK = "persist.sys.hdmi.addr.playback";
++    static final String PROPERTY_PREFERRED_ADDRESS_TV = "persist.sys.hdmi.addr.tv";
++
++    // Property name for the local device configurations.
++    // TODO(OEM): OEM should provide this property, and the value is the comma separated integer
++    //     values which denotes the device type in HDMI Spec 1.4.
++    static final String PROPERTY_DEVICE_TYPE = "ro.hdmi.device_type";
++
++    // TODO(OEM): Set this to false to keep the playback device in sleep upon hotplug event.
++    //            True by default.
++    static final String PROPERTY_WAKE_ON_HOTPLUG = "ro.hdmi.wake_on_hotplug";
++
++    // TODO(OEM): Set this to true to enable 'Set Menu Language' feature. False by default.
++    static final String PROPERTY_SET_MENU_LANGUAGE = "ro.hdmi.set_menu_language";
++
++    /**
++     * Property to save the ARC port id on system audio device.
++     * <p>When ARC is initiated, this port will be used to turn on ARC.
++     */
++    static final String PROPERTY_SYSTEM_AUDIO_DEVICE_ARC_PORT =
++            "ro.hdmi.property_sytem_audio_device_arc_port";
++
++    /**
++     * Property to disable muting logic in System Audio Control handling. Default is true.
++     *
++     * <p>True means enabling muting logic.
++     * <p>False means never mute device.
++     */
++    static final String PROPERTY_SYSTEM_AUDIO_MODE_MUTING_ENABLE =
++        "ro.hdmi.property_system_audio_mode_muting_enable";
++
++    /**
++     * When set to true the HdmiControlService will never request a Logical Address for the
++     * playback device type. Default is false.
++     *
++     * <p> This is useful when HDMI CEC multiple device types is not supported by the cec driver
++     */
++    static final String PROPERTY_HDMI_CEC_NEVER_CLAIM_PLAYBACK_LOGICAL_ADDRESS =
++        "ro.hdmi.property_hdmi_cec_never_claim_playback_logical_address";
++
++    /**
++     * A comma separated list of logical addresses that HdmiControlService
++     * will never assign local CEC devices to.
++     *
++     * <p> This is useful when HDMI CEC hardware module can't assign multiple logical addresses
++     * in the range same range of 0-7 or 8-15.
++     */
++    static final String PROPERTY_HDMI_CEC_NEVER_ASSIGN_LOGICAL_ADDRESSES =
++        "ro.hdmi.property_hdmi_cec_never_assign_logical_addresses";
++
++    // Set to false to allow playback device to go to suspend mode even
++    // when it's an active source. True by default.
++    static final String PROPERTY_KEEP_AWAKE = "persist.sys.hdmi.keep_awake";
++
++    // TODO(UI): Set this from UI to decide if turn on System Audio Mode when power on the device
++    /**
++     * Property to decide if turn on the system audio control when power on the device.
++     * Default is always turn on.
++     * State must be a valid {@link SystemAudioControlOnPowerOn} int.
++     */
++    static final String PROPERTY_SYSTEM_AUDIO_CONTROL_ON_POWER_ON =
++            "persist.sys.hdmi.system_audio_control_on_power_on";
++
++    /**
++     * Property to record last state of system audio control before device powered off.
++     * <p>When {@link #PROPERTY_SYSTEM_AUDIO_CONTROL_ON_POWER_ON} is set to
++     * {@link #USE_LAST_STATE_SYSTEM_AUDIO_CONTROL_ON_POWER_ON}, restoring this state on power on.
++     * <p>State must be true or false. Default true.
++     */
++    static final String PROPERTY_LAST_SYSTEM_AUDIO_CONTROL =
++            "persist.sys.hdmi.last_system_audio_control";
++
++    /**
++     * Property to indicate if device supports ARC or not
++     * <p>Default is true.
++     */
++    static final String PROPERTY_ARC_SUPPORT =
++            "persist.sys.hdmi.property_arc_support";
++
++    /**
++     * Property to save the audio port to switch to when system audio control is on.
++     * <P>Audio system should switch to this port when cec active source is not its child in the tree
++     * or is not itself.
++     *
++     * <p>Default is ARC port.
++     */
++    static final String PROPERTY_SYSTEM_AUDIO_MODE_AUDIO_PORT =
++            "persist.sys.hdmi.property_sytem_audio_mode_audio_port";
++
++    /**
++     * Property to strip local audio of amplifier and use local speaker
++     * when TV does not support system audio mode.
++     *
++     * <p>This property applies to device with both audio system/playback types.
++     * <p>True means using local speaker when TV does not support system audio.
++     * <p>False means passing audio to TV. Default is true.
++     */
++    static final String PROPERTY_STRIP_AUDIO_TV_NO_SYSTEM_AUDIO =
++        "persist.sys.hdmi.property_strip_audio_tv_no_system_audio";
++
++    static final int RECORDING_TYPE_DIGITAL_RF = 1;
++    static final int RECORDING_TYPE_ANALOGUE_RF = 2;
++    static final int RECORDING_TYPE_EXTERNAL_PHYSICAL_ADDRESS = 3;
++    static final int RECORDING_TYPE_OWN_SOURCE = 4;
++
++    // Definitions used for setOption(). These should be in sync with the definition
++    // in hardware/libhardware/include/hardware/mhl.h.
++
++    // If set to disabled, TV does not switch ports when mobile device is connected.
++    static final int OPTION_MHL_INPUT_SWITCHING = 101;
++
++    // If set to enabled, TV disables power charging for mobile device.
++    static final int OPTION_MHL_POWER_CHARGE = 102;
++
++    // If set to disabled, all MHL commands are discarded.
++    static final int OPTION_MHL_ENABLE = 103;
++
++    // If set to disabled, system service yields control of MHL to sub-microcontroller.
++    // If enabled, it takes the control back.
++    static final int OPTION_MHL_SERVICE_CONTROL = 104;
++
++    static final int DISABLED = 0;
++    static final int ENABLED = 1;
++
++    private Constants() { /* cannot be instantiated */ }
++}
+diff --git a/core/java/android/hardware/hdmi/HdmiControlManager.java b/core/java/android/hardware/hdmi/HdmiControlManager.java
+index e34423c..4f7c578 100644
+--- a/core/java/android/hardware/hdmi/HdmiControlManager.java
++++ b/core/java/android/hardware/hdmi/HdmiControlManager.java
+@@ -26,6 +26,7 @@ import android.content.Context;
+ import android.content.pm.PackageManager;
+ import android.annotation.SystemApi;
+ import android.annotation.SystemService;
++import android.os.SystemProperties;
+ import android.os.RemoteException;
+ import android.util.ArrayMap;
+ import android.util.Log;
+@@ -263,6 +264,8 @@ public final class HdmiControlManager {
+     // True if we have a logical device of type TV hosted in the system.
+     private final boolean mHasTvDevice;
+ 
++    private final boolean mHasSwitchDevice;
++
+     /**
+      * {@hide} - hide this constructor because it has a parameter of type IHdmiControlService,
+      * which is a system private class. The right way to create an instance of this class is
+@@ -280,6 +283,10 @@ public final class HdmiControlManager {
+         }
+         mHasTvDevice = hasDeviceType(types, HdmiDeviceInfo.DEVICE_TV);
+         mHasPlaybackDevice = hasDeviceType(types, HdmiDeviceInfo.DEVICE_PLAYBACK);
++        mHasSwitchDevice = hasDeviceType(types, HdmiDeviceInfo.DEVICE_TV)
++            || hasDeviceType(types, HdmiDeviceInfo.DEVICE_TUNER)
++            || hasDeviceType(types, HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM);
++
+     }
+ 
+     private static boolean hasDeviceType(int[] types, int type) {
+@@ -313,6 +320,8 @@ public final class HdmiControlManager {
+                 return mHasTvDevice ? new HdmiTvClient(mService) : null;
+             case HdmiDeviceInfo.DEVICE_PLAYBACK:
+                 return mHasPlaybackDevice ? new HdmiPlaybackClient(mService) : null;
++            case HdmiDeviceInfo.DEVICE_PURE_CEC_SWITCH:
++                return mHasSwitchDevice ? new HdmiSwitchClient(mService) : null;
+             default:
+                 return null;
+         }
+@@ -349,6 +358,23 @@ public final class HdmiControlManager {
+     }
+ 
+     /**
++     * Gets an object that represents an HDMI-CEC logical device of type switch on the system.
++     *
++     * <p>Used to send HDMI control messages to other devices like TV through HDMI bus. It is also
++     * possible to communicate with other logical devices hosted in the same system if the system is
++     * configured to host more than one type of HDMI-CEC logical devices.
++     *
++     * @return {@link HdmiSwitchClient} instance. {@code null} on failure.
++     *
++     * TODO(b/110094868): unhide for Q
++     */
++    @Nullable
++    @SuppressLint("Doclava125")
++    public HdmiSwitchClient getSwitchClient() {
++        return (HdmiSwitchClient) getClient(HdmiDeviceInfo.DEVICE_PURE_CEC_SWITCH);
++    }
++
++    /**
+      * Controls standby mode of the system. It will also try to turn on/off the connected devices if
+      * necessary.
+      *
+diff --git a/core/java/android/hardware/hdmi/HdmiSwitchClient.java b/core/java/android/hardware/hdmi/HdmiSwitchClient.java
+new file mode 100644
+index 0000000..f6c7a9d
+--- /dev/null
++++ b/core/java/android/hardware/hdmi/HdmiSwitchClient.java
+@@ -0,0 +1,134 @@
++/*
++ * Copyright (C) 2018 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++package android.hardware.hdmi;
++
++import android.annotation.NonNull;
++import android.annotation.SystemApi;
++import android.os.RemoteException;
++import android.util.Log;
++
++import java.util.Collections;
++import java.util.List;
++
++/**
++ * HdmiSwitchClient represents HDMI-CEC logical device of type Switch in the Android system which
++ * acts as switch.
++ *
++ * <p>HdmiSwitchClient has a CEC device type of HdmiDeviceInfo.DEVICE_PURE_CEC_SWITCH,
++ * but it is used by all Android TV devices that have multiple HDMI inputs,
++ * even if it is not a "pure" swicth and has another device type like TV or Player.
++ *
++ * @hide
++ * TODO(b/110094868): unhide and add @SystemApi for Q
++ */
++@SystemApi
++public class HdmiSwitchClient extends HdmiClient {
++
++    private static final String TAG = "HdmiSwitchClient";
++
++    /* package */ HdmiSwitchClient(IHdmiControlService service) {
++        super(service);
++    }
++
++    private static IHdmiControlCallback getCallbackWrapper(final SelectCallback callback) {
++        return new IHdmiControlCallback.Stub() {
++            @Override
++            public void onComplete(int result) {
++                callback.onComplete(result);
++            }
++        };
++    }
++
++    // TODO(b/110094868): unhide for Q
++    @Override
++    public int getDeviceType() {
++        return HdmiDeviceInfo.DEVICE_PURE_CEC_SWITCH;
++    }
++
++    /**
++     * Selects a CEC logical device to be a new active source.
++     *
++     * @param logicalAddress logical address of the device to select
++     * @param callback callback to get the result with
++     * @throws {@link IllegalArgumentException} if the {@code callback} is null
++     *
++     * TODO(b/110094868): unhide and add @SystemApi for Q
++     */
++    public void deviceSelect(int logicalAddress, @NonNull SelectCallback callback) {
++        if (callback == null) {
++            throw new IllegalArgumentException("callback must not be null.");
++        }
++        try {
++            mService.deviceSelect(logicalAddress, getCallbackWrapper(callback));
++        } catch (RemoteException e) {
++            Log.e(TAG, "failed to select device: ", e);
++        }
++    }
++
++    /**
++     * Selects a HDMI port to be a new route path.
++     *
++     * @param portId HDMI port to select
++     * @param callback callback to get the result with
++     * @throws {@link IllegalArgumentException} if the {@code callback} is null
++     *
++     * TODO(b/110094868): unhide and add @SystemApi for Q
++     */
++    public void portSelect(int portId, @NonNull SelectCallback callback) {
++        if (callback == null) {
++            throw new IllegalArgumentException("Callback must not be null");
++        }
++        try {
++            mService.portSelect(portId, getCallbackWrapper(callback));
++        } catch (RemoteException e) {
++            Log.e(TAG, "failed to select port: ", e);
++        }
++    }
++
++    /**
++     * Returns all the CEC devices connected to the device.
++     *
++     * <p>This only applies to device with multiple HDMI inputs
++     *
++     * @return list of {@link HdmiDeviceInfo} for connected CEC devices. Empty list is returned if
++     * there is none.
++     *
++     * TODO(b/110094868): unhide and add @SystemApi for Q
++     */
++    public List<HdmiDeviceInfo> getDeviceList() {
++        try {
++            return mService.getDeviceList();
++        } catch (RemoteException e) {
++            Log.e("TAG", "Failed to call getDeviceList():", e);
++            return Collections.<HdmiDeviceInfo>emptyList();
++        }
++    }
++
++    /**
++     * Callback interface used to get the result of {@link #deviceSelect} or {@link #portSelect}.
++     *
++     * TODO(b/110094868): unhide and add @SystemApi for Q
++     */
++    public interface SelectCallback {
++
++        /**
++         * Called when the operation is finished.
++         *
++         * @param result the result value of {@link #deviceSelect} or {@link #portSelect}.
++         */
++        void onComplete(int result);
++    }
++}
+diff --git a/services/core/java/com/android/server/hdmi/Constants.java b/services/core/java/com/android/server/hdmi/Constants.java
+index 0eb18a8..829d61c 100644
+--- a/services/core/java/com/android/server/hdmi/Constants.java
++++ b/services/core/java/com/android/server/hdmi/Constants.java
+@@ -16,7 +16,11 @@
+ 
+ package com.android.server.hdmi;
+ 
++import android.annotation.IntDef;
++import android.annotation.StringDef;
+ import android.hardware.hdmi.HdmiDeviceInfo;
++import java.lang.annotation.Retention;
++import java.lang.annotation.RetentionPolicy;
+ 
+ /**
+  * Defines constants related to HDMI-CEC protocol internal implementation.
+@@ -82,6 +86,82 @@ final class Constants {
+     /** Logical address used to indicate the source comes from internal device. */
+     public static final int ADDR_INTERNAL = HdmiDeviceInfo.ADDR_INTERNAL;
+ 
++    @Retention(RetentionPolicy.SOURCE)
++    @IntDef({
++        MESSAGE_FEATURE_ABORT,
++        MESSAGE_IMAGE_VIEW_ON,
++        MESSAGE_TUNER_STEP_INCREMENT,
++        MESSAGE_TUNER_STEP_DECREMENT,
++        MESSAGE_TUNER_DEVICE_STATUS,
++        MESSAGE_GIVE_TUNER_DEVICE_STATUS,
++        MESSAGE_RECORD_ON,
++        MESSAGE_RECORD_STATUS,
++        MESSAGE_RECORD_OFF,
++        MESSAGE_TEXT_VIEW_ON,
++        MESSAGE_RECORD_TV_SCREEN,
++        MESSAGE_GIVE_DECK_STATUS,
++        MESSAGE_DECK_STATUS,
++        MESSAGE_SET_MENU_LANGUAGE,
++        MESSAGE_CLEAR_ANALOG_TIMER,
++        MESSAGE_SET_ANALOG_TIMER,
++        MESSAGE_TIMER_STATUS,
++        MESSAGE_STANDBY,
++        MESSAGE_PLAY,
++        MESSAGE_DECK_CONTROL,
++        MESSAGE_TIMER_CLEARED_STATUS,
++        MESSAGE_USER_CONTROL_PRESSED,
++        MESSAGE_USER_CONTROL_RELEASED,
++        MESSAGE_GIVE_OSD_NAME,
++        MESSAGE_SET_OSD_NAME,
++        MESSAGE_SET_OSD_STRING,
++        MESSAGE_SET_TIMER_PROGRAM_TITLE,
++        MESSAGE_SYSTEM_AUDIO_MODE_REQUEST,
++        MESSAGE_GIVE_AUDIO_STATUS,
++        MESSAGE_SET_SYSTEM_AUDIO_MODE,
++        MESSAGE_REPORT_AUDIO_STATUS,
++        MESSAGE_GIVE_SYSTEM_AUDIO_MODE_STATUS,
++        MESSAGE_SYSTEM_AUDIO_MODE_STATUS,
++        MESSAGE_ROUTING_CHANGE,
++        MESSAGE_ROUTING_INFORMATION,
++        MESSAGE_ACTIVE_SOURCE,
++        MESSAGE_GIVE_PHYSICAL_ADDRESS,
++        MESSAGE_REPORT_PHYSICAL_ADDRESS,
++        MESSAGE_REQUEST_ACTIVE_SOURCE,
++        MESSAGE_SET_STREAM_PATH,
++        MESSAGE_DEVICE_VENDOR_ID,
++        MESSAGE_VENDOR_COMMAND,
++        MESSAGE_VENDOR_REMOTE_BUTTON_DOWN,
++        MESSAGE_VENDOR_REMOTE_BUTTON_UP,
++        MESSAGE_GIVE_DEVICE_VENDOR_ID,
++        MESSAGE_MENU_REQUEST,
++        MESSAGE_MENU_STATUS,
++        MESSAGE_GIVE_DEVICE_POWER_STATUS,
++        MESSAGE_REPORT_POWER_STATUS,
++        MESSAGE_GET_MENU_LANGUAGE,
++        MESSAGE_SELECT_ANALOG_SERVICE,
++        MESSAGE_SELECT_DIGITAL_SERVICE,
++        MESSAGE_SET_DIGITAL_TIMER,
++        MESSAGE_CLEAR_DIGITAL_TIMER,
++        MESSAGE_SET_AUDIO_RATE,
++        MESSAGE_INACTIVE_SOURCE,
++        MESSAGE_CEC_VERSION,
++        MESSAGE_GET_CEC_VERSION,
++        MESSAGE_VENDOR_COMMAND_WITH_ID,
++        MESSAGE_CLEAR_EXTERNAL_TIMER,
++        MESSAGE_SET_EXTERNAL_TIMER,
++        MESSAGE_REPORT_SHORT_AUDIO_DESCRIPTOR,
++        MESSAGE_REQUEST_SHORT_AUDIO_DESCRIPTOR,
++        MESSAGE_INITIATE_ARC,
++        MESSAGE_REPORT_ARC_INITIATED,
++        MESSAGE_REPORT_ARC_TERMINATED,
++        MESSAGE_REQUEST_ARC_INITIATION,
++        MESSAGE_REQUEST_ARC_TERMINATION,
++        MESSAGE_TERMINATE_ARC,
++        MESSAGE_CDC_MESSAGE,
++        MESSAGE_ABORT,
++    })
++    public @interface FeatureOpcode {}
++
+     static final int MESSAGE_FEATURE_ABORT = 0x00;
+     static final int MESSAGE_IMAGE_VIEW_ON = 0x04;
+     static final int MESSAGE_TUNER_STEP_INCREMENT = 0x05;
+@@ -159,6 +239,18 @@ final class Constants {
+     static final int TRUE = 1;
+     static final int FALSE = 0;
+ 
++    @Retention(RetentionPolicy.SOURCE)
++    @IntDef({
++        ABORT_NO_ERROR,
++        ABORT_UNRECOGNIZED_OPCODE,
++        ABORT_NOT_IN_CORRECT_MODE,
++        ABORT_CANNOT_PROVIDE_SOURCE,
++        ABORT_INVALID_OPERAND,
++        ABORT_REFUSED,
++        ABORT_UNABLE_TO_DETERMINE,
++    })
++    public @interface AbortReason {}
++
+     // Internal abort error code. It's the same as success.
+     static final int ABORT_NO_ERROR = -1;
+     // Constants related to operands of HDMI CEC commands.
+@@ -179,6 +271,55 @@ final class Constants {
+     static final int MENU_STATE_ACTIVATED = 0;
+     static final int MENU_STATE_DEACTIVATED = 1;
+ 
++    // Audio Format Codes
++    // Refer to CEA Standard (CEA-861-D), Table 37 Audio Format Codes.
++    @Retention(RetentionPolicy.SOURCE)
++    @IntDef({
++        AUDIO_CODEC_NONE,
++        AUDIO_CODEC_LPCM,
++        AUDIO_CODEC_DD,
++        AUDIO_CODEC_MPEG1,
++        AUDIO_CODEC_MP3,
++        AUDIO_CODEC_MPEG2,
++        AUDIO_CODEC_AAC,
++        AUDIO_CODEC_DTS,
++        AUDIO_CODEC_ATRAC,
++        AUDIO_CODEC_ONEBITAUDIO,
++        AUDIO_CODEC_DDP,
++        AUDIO_CODEC_DTSHD,
++        AUDIO_CODEC_TRUEHD,
++        AUDIO_CODEC_DST,
++        AUDIO_CODEC_WMAPRO,
++        AUDIO_CODEC_MAX,
++    })
++    public @interface AudioCodec {}
++
++    static final int AUDIO_CODEC_NONE = 0x0;
++    static final int AUDIO_CODEC_LPCM = 0x1; // Support LPCMs
++    static final int AUDIO_CODEC_DD = 0x2; // Support DD
++    static final int AUDIO_CODEC_MPEG1 = 0x3; // Support MPEG1
++    static final int AUDIO_CODEC_MP3 = 0x4; // Support MP3
++    static final int AUDIO_CODEC_MPEG2 = 0x5; // Support MPEG2
++    static final int AUDIO_CODEC_AAC = 0x6; // Support AAC
++    static final int AUDIO_CODEC_DTS = 0x7; // Support DTS
++    static final int AUDIO_CODEC_ATRAC = 0x8; // Support ATRAC
++    static final int AUDIO_CODEC_ONEBITAUDIO = 0x9; // Support One-Bit Audio
++    static final int AUDIO_CODEC_DDP = 0xA; // Support DDP
++    static final int AUDIO_CODEC_DTSHD = 0xB; // Support DTSHD
++    static final int AUDIO_CODEC_TRUEHD = 0xC; // Support MLP/TRUE-HD
++    static final int AUDIO_CODEC_DST = 0xD; // Support DST
++    static final int AUDIO_CODEC_WMAPRO = 0xE; // Support WMA-Pro
++    static final int AUDIO_CODEC_MAX = 0xF;
++
++    @StringDef({
++        AUDIO_DEVICE_ARC_IN,
++        AUDIO_DEVICE_SPDIF,
++    })
++    public @interface AudioDevice {}
++
++    static final String AUDIO_DEVICE_ARC_IN = "ARC_IN";
++    static final String AUDIO_DEVICE_SPDIF = "SPDIF";
++
+     // Bit mask used to get the routing path of the top level device.
+     // When &'d with the path 1.2.2.0 (0x1220), for instance, gives 1.0.0.0.
+     static final int ROUTING_PATH_TOP_MASK = 0xF000;
+@@ -200,6 +341,53 @@ final class Constants {
+ 
+     static final int UNKNOWN_VOLUME = -1;
+ 
++    // States of property PROPERTY_SYSTEM_AUDIO_CONTROL_ON_POWER_ON
++    // to decide if turn on the system audio control when power on the device
++    @IntDef({
++        ALWAYS_SYSTEM_AUDIO_CONTROL_ON_POWER_ON,
++        USE_LAST_STATE_SYSTEM_AUDIO_CONTROL_ON_POWER_ON,
++        NEVER_SYSTEM_AUDIO_CONTROL_ON_POWER_ON
++    })
++    @interface SystemAudioControlOnPowerOn {}
++    static final int ALWAYS_SYSTEM_AUDIO_CONTROL_ON_POWER_ON = 0;
++    static final int USE_LAST_STATE_SYSTEM_AUDIO_CONTROL_ON_POWER_ON = 1;
++    static final int NEVER_SYSTEM_AUDIO_CONTROL_ON_POWER_ON = 2;
++
++    // Port id to record local active port for Routing Control features
++    // They are used to map to corresponding Inputs
++    // Current interface is only implemented for specific device.
++    // Developers can add more port number and map them to corresponding inputs on demand.
++    @IntDef({
++        CEC_SWITCH_HOME,
++        CEC_SWITCH_HDMI1,
++        CEC_SWITCH_HDMI2,
++        CEC_SWITCH_HDMI3,
++        CEC_SWITCH_HDMI4,
++        CEC_SWITCH_HDMI5,
++        CEC_SWITCH_HDMI6,
++        CEC_SWITCH_HDMI7,
++        CEC_SWITCH_HDMI8,
++        CEC_SWITCH_ARC,
++        CEC_SWITCH_BLUETOOTH,
++        CEC_SWITCH_OPTICAL,
++        CEC_SWITCH_AUX
++    })
++    @interface LocalActivePort {}
++    static final int CEC_SWITCH_HOME = 0;
++    static final int CEC_SWITCH_HDMI1 = 1;
++    static final int CEC_SWITCH_HDMI2 = 2;
++    static final int CEC_SWITCH_HDMI3 = 3;
++    static final int CEC_SWITCH_HDMI4 = 4;
++    static final int CEC_SWITCH_HDMI5 = 5;
++    static final int CEC_SWITCH_HDMI6 = 6;
++    static final int CEC_SWITCH_HDMI7 = 7;
++    static final int CEC_SWITCH_HDMI8 = 8;
++    static final int CEC_SWITCH_ARC = 17;
++    static final int CEC_SWITCH_BLUETOOTH = 18;
++    static final int CEC_SWITCH_OPTICAL = 19;
++    static final int CEC_SWITCH_AUX = 20;
++    static final int CEC_SWITCH_PORT_MAX = 21;
++
+     static final String PROPERTY_PREFERRED_ADDRESS_AUDIO_SYSTEM =
+             "persist.sys.hdmi.addr.audiosystem";
+     static final String PROPERTY_PREFERRED_ADDRESS_PLAYBACK = "persist.sys.hdmi.addr.playback";
+@@ -217,10 +405,91 @@ final class Constants {
+     // TODO(OEM): Set this to true to enable 'Set Menu Language' feature. False by default.
+     static final String PROPERTY_SET_MENU_LANGUAGE = "ro.hdmi.set_menu_language";
+ 
++    /**
++     * Property to save the ARC port id on system audio device.
++     * <p>When ARC is initiated, this port will be used to turn on ARC.
++     */
++    static final String PROPERTY_SYSTEM_AUDIO_DEVICE_ARC_PORT =
++            "ro.hdmi.property_sytem_audio_device_arc_port";
++
++    /**
++     * Property to disable muting logic in System Audio Control handling. Default is true.
++     *
++     * <p>True means enabling muting logic.
++     * <p>False means never mute device.
++     */
++    static final String PROPERTY_SYSTEM_AUDIO_MODE_MUTING_ENABLE =
++        "ro.hdmi.property_system_audio_mode_muting_enable";
++
++    /**
++     * When set to true the HdmiControlService will never request a Logical Address for the
++     * playback device type. Default is false.
++     *
++     * <p> This is useful when HDMI CEC multiple device types is not supported by the cec driver
++     */
++    static final String PROPERTY_HDMI_CEC_NEVER_CLAIM_PLAYBACK_LOGICAL_ADDRESS =
++        "ro.hdmi.property_hdmi_cec_never_claim_playback_logical_address";
++
++    /**
++     * A comma separated list of logical addresses that HdmiControlService
++     * will never assign local CEC devices to.
++     *
++     * <p> This is useful when HDMI CEC hardware module can't assign multiple logical addresses
++     * in the range same range of 0-7 or 8-15.
++     */
++    static final String PROPERTY_HDMI_CEC_NEVER_ASSIGN_LOGICAL_ADDRESSES =
++        "ro.hdmi.property_hdmi_cec_never_assign_logical_addresses";
++
+     // Set to false to allow playback device to go to suspend mode even
+     // when it's an active source. True by default.
+     static final String PROPERTY_KEEP_AWAKE = "persist.sys.hdmi.keep_awake";
+ 
++    // TODO(UI): Set this from UI to decide if turn on System Audio Mode when power on the device
++    /**
++     * Property to decide if turn on the system audio control when power on the device.
++     * Default is always turn on.
++     * State must be a valid {@link SystemAudioControlOnPowerOn} int.
++     */
++    static final String PROPERTY_SYSTEM_AUDIO_CONTROL_ON_POWER_ON =
++            "persist.sys.hdmi.system_audio_control_on_power_on";
++
++    /**
++     * Property to record last state of system audio control before device powered off.
++     * <p>When {@link #PROPERTY_SYSTEM_AUDIO_CONTROL_ON_POWER_ON} is set to
++     * {@link #USE_LAST_STATE_SYSTEM_AUDIO_CONTROL_ON_POWER_ON}, restoring this state on power on.
++     * <p>State must be true or false. Default true.
++     */
++    static final String PROPERTY_LAST_SYSTEM_AUDIO_CONTROL =
++            "persist.sys.hdmi.last_system_audio_control";
++
++    /**
++     * Property to indicate if device supports ARC or not
++     * <p>Default is true.
++     */
++    static final String PROPERTY_ARC_SUPPORT =
++            "persist.sys.hdmi.property_arc_support";
++
++    /**
++     * Property to save the audio port to switch to when system audio control is on.
++     * <P>Audio system should switch to this port when cec active source is not its child in the tree
++     * or is not itself.
++     *
++     * <p>Default is ARC port.
++     */
++    static final String PROPERTY_SYSTEM_AUDIO_MODE_AUDIO_PORT =
++            "persist.sys.hdmi.property_sytem_audio_mode_audio_port";
++
++    /**
++     * Property to strip local audio of amplifier and use local speaker
++     * when TV does not support system audio mode.
++     *
++     * <p>This property applies to device with both audio system/playback types.
++     * <p>True means using local speaker when TV does not support system audio.
++     * <p>False means passing audio to TV. Default is true.
++     */
++    static final String PROPERTY_STRIP_AUDIO_TV_NO_SYSTEM_AUDIO =
++        "persist.sys.hdmi.property_strip_audio_tv_no_system_audio";
++
+     static final int RECORDING_TYPE_DIGITAL_RF = 1;
+     static final int RECORDING_TYPE_ANALOGUE_RF = 2;
+     static final int RECORDING_TYPE_EXTERNAL_PHYSICAL_ADDRESS = 3;
+diff --git a/services/core/java/com/android/server/hdmi/DeviceDiscoveryAction.java b/services/core/java/com/android/server/hdmi/DeviceDiscoveryAction.java
+old mode 100644
+new mode 100755
+index db8dedb..dbb7037
+--- a/services/core/java/com/android/server/hdmi/DeviceDiscoveryAction.java
++++ b/services/core/java/com/android/server/hdmi/DeviceDiscoveryAction.java
+@@ -28,7 +28,7 @@ import java.util.List;
+ 
+ /**
+  * Feature action that handles device discovery sequences.
+- * Device discovery is launched when TV device is woken from "Standby" state
++ * Device discovery is launched when device is woken from "Standby" state
+  * or enabled "Control for Hdmi" from disabled state.
+  *
+  * <p>Device discovery goes through the following steps.
+@@ -89,6 +89,8 @@ final class DeviceDiscoveryAction extends HdmiCecFeatureAction {
+     private final DeviceDiscoveryCallback mCallback;
+     private int mProcessedDeviceCount = 0;
+     private int mTimeoutRetry = 0;
++    private boolean mIsTvDevice = localDevice().mService.isTvDevice();
++    private boolean mIsAudioSystemDevice = localDevice().mService.isAudioSystemDevice();
+ 
+     /**
+      * Constructor.
+@@ -265,16 +267,21 @@ final class DeviceDiscoveryAction extends HdmiCecFeatureAction {
+         current.mPhysicalAddress = HdmiUtils.twoBytesToInt(params);
+         current.mPortId = getPortId(current.mPhysicalAddress);
+         current.mDeviceType = params[2] & 0xFF;
++        current.mDisplayName = HdmiUtils.getDefaultDeviceName(current.mDeviceType);
+ 
+-        tv().updateCecSwitchInfo(current.mLogicalAddress, current.mDeviceType,
+-                    current.mPhysicalAddress);
+-
++        // This is to manager CEC device separately in case they don't have address.
++        if (mIsTvDevice) {
++            tv().updateCecSwitchInfo(current.mLogicalAddress, current.mDeviceType,
++                current.mPhysicalAddress);
++        }
+         increaseProcessedDeviceCount();
+         checkAndProceedStage();
+     }
+ 
+     private int getPortId(int physicalAddress) {
+-        return tv().getPortId(physicalAddress);
++        return mIsTvDevice ? tv().getPortId(physicalAddress)
++            : (mIsAudioSystemDevice ? audioSystem().getPortId(physicalAddress)
++            : Constants.INVALID_PORT_ID);
+     }
+ 
+     private void handleSetOsdName(HdmiCecMessage cmd) {
+@@ -345,7 +352,9 @@ final class DeviceDiscoveryAction extends HdmiCecFeatureAction {
+         mCallback.onDeviceDiscoveryDone(result);
+         finish();
+         // Process any commands buffered while device discovery action was in progress.
+-        tv().processAllDelayedMessages();
++        if (mIsTvDevice) {
++            tv().processAllDelayedMessages();
++        }
+     }
+ 
+     private void checkAndProceedStage() {
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecFeatureAction.java b/services/core/java/com/android/server/hdmi/HdmiCecFeatureAction.java
+index d26be57..11faa56 100644
+--- a/services/core/java/com/android/server/hdmi/HdmiCecFeatureAction.java
++++ b/services/core/java/com/android/server/hdmi/HdmiCecFeatureAction.java
+@@ -256,6 +256,10 @@ abstract class HdmiCecFeatureAction {
+         return (HdmiCecLocalDeviceTv) mSource;
+     }
+ 
++    protected final HdmiCecLocalDeviceAudioSystem audioSystem() {
++        return (HdmiCecLocalDeviceAudioSystem) mSource;
++    }
++
+     protected final int getSourceAddress() {
+         return mSource.getDeviceInfo().getLogicalAddress();
+     }
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceAudioSystem.java b/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceAudioSystem.java
+index 9b545c0..ea34c5f 100644
+--- a/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceAudioSystem.java
++++ b/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceAudioSystem.java
+@@ -18,7 +18,11 @@ package com.android.server.hdmi;
+ 
+ import android.hardware.hdmi.HdmiDeviceInfo;
+ import android.os.SystemProperties;
+-
++import android.hardware.hdmi.IHdmiControlCallback;
++import java.util.List;
++import android.hardware.hdmi.HdmiControlManager;
++import com.android.server.hdmi.HdmiAnnotations.ServiceThreadOnly;
++import com.android.internal.annotations.GuardedBy;
+ /**
+  * Represent a logical device of type {@link HdmiDeviceInfo#DEVICE_AUDIO_SYSTEM} residing in
+  * Android system.
+@@ -55,4 +59,25 @@ public class HdmiCecLocalDeviceAudioSystem extends HdmiCecLocalDevice {
+         SystemProperties.set(Constants.PROPERTY_PREFERRED_ADDRESS_AUDIO_SYSTEM,
+                 String.valueOf(addr));
+     }
++
++    @ServiceThreadOnly
++    void doManualPortSwitching(int portId, IHdmiControlCallback callback) {
++        return;
++        //ToDo
++    }
++    @GuardedBy("mLock")
++    List<HdmiDeviceInfo> getSafeCecDevicesLocked() {
++        /*
++        ArrayList<HdmiDeviceInfo> infoList = new ArrayList<>();
++        for (HdmiDeviceInfo info : mSafeAllDeviceInfos) {
++            infoList.add(info);
++        }
++        return infoList;
++        */
++        return null;
++    }
++
++    int getPortId(int physicalAddress) {
++        return mService.pathToPortId(physicalAddress);
++    }
+ }
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecMessageBuilder.java b/services/core/java/com/android/server/hdmi/HdmiCecMessageBuilder.java
+index 9a51e3c..bcb927e 100644
+--- a/services/core/java/com/android/server/hdmi/HdmiCecMessageBuilder.java
++++ b/services/core/java/com/android/server/hdmi/HdmiCecMessageBuilder.java
+@@ -470,6 +470,20 @@ public class HdmiCecMessageBuilder {
+         return buildCommand(src, dest, Constants.MESSAGE_VENDOR_COMMAND_WITH_ID, params);
+     }
+ 
++     /**
++     * Build &lt;Routing Information&gt; command.
++     *
++     * <p>This is a broadcast message sent to all devices on the bus.
++     *
++     * @param src source address of command
++     * @param physicalAddress physical address of the new active routing path
++     * @return newly created {@link HdmiCecMessage}
++     */
++    static HdmiCecMessage buildRoutingInformation(int src, int physicalAddress) {
++        return buildCommand(src, Constants.ADDR_BROADCAST,
++            Constants.MESSAGE_ROUTING_INFORMATION, physicalAddressToParam(physicalAddress));
++    }
++
+     /**
+      * Build &lt;Record On&gt; command.
+      *
+diff --git a/services/core/java/com/android/server/hdmi/HdmiControlService.java b/services/core/java/com/android/server/hdmi/HdmiControlService.java
+index f74008c..2123434 100644
+--- a/services/core/java/com/android/server/hdmi/HdmiControlService.java
++++ b/services/core/java/com/android/server/hdmi/HdmiControlService.java
+@@ -69,6 +69,7 @@ import android.util.Slog;
+ import android.util.SparseArray;
+ import android.util.SparseIntArray;
+ import com.android.internal.annotations.GuardedBy;
++import com.android.internal.annotations.VisibleForTesting;
+ import com.android.internal.util.DumpUtils;
+ import com.android.internal.util.IndentingPrintWriter;
+ import com.android.server.SystemService;
+@@ -198,6 +199,9 @@ public final class HdmiControlService extends SystemService {
+     // Used to synchronize the access to the service.
+     private final Object mLock = new Object();
+ 
++    @GuardedBy("mLock")
++    private int mPhysicalAddress = Constants.INVALID_PHYSICAL_ADDRESS;
++
+     // Type of logical devices hosted in the system. Stored in the unmodifiable list.
+     private final List<Integer> mLocalDevices;
+ 
+@@ -572,6 +576,15 @@ public final class HdmiControlService extends SystemService {
+         Global.putInt(cr, key, toInt(value));
+     }
+ 
++    void writeStringSystemProperty(String key, String value) {
++        SystemProperties.set(key, value);
++    }
++
++    @VisibleForTesting
++    boolean readBooleanSystemProperty(String key, boolean defVal) {
++        return SystemProperties.getBoolean(key, defVal);
++    }
++
+     private void initializeCec(int initiatedBy) {
+         mAddressAllocated = false;
+         mCecController.setOption(OptionKey.SYSTEM_CEC_CONTROL, true);
+@@ -670,6 +683,10 @@ public final class HdmiControlService extends SystemService {
+         assertRunOnServiceThread();
+         HdmiPortInfo[] cecPortInfo = null;
+ 
++        synchronized (mLock) {
++            mPhysicalAddress = getPhysicalAddress();
++        }
++
+         // CEC HAL provides majority of the info while MHL does only MHL support flag for
+         // each port. Return empty array if CEC HAL didn't provide the info.
+         if (mCecController != null) {
+@@ -745,13 +762,34 @@ public final class HdmiControlService extends SystemService {
+     }
+ 
+     /**
+-     * Returns the id of HDMI port located at the top of the hierarchy of
+-     * the specified routing path. For the routing path 0x1220 (1.2.2.0), for instance,
+-     * the port id to be returned is the ID associated with the port address
+-     * 0x1000 (1.0.0.0) which is the topmost path of the given routing path.
++     * Returns the id of HDMI port located at the current device that runs this method.
++     *
++     * For TV with physical address 0x0000, target device 0x1120, we want port physical address
++     * 0x1000 to get the correct port id from {@link #mPortIdMap}. For device with Physical Address
++     * 0x2000, target device 0x2420, we want port address 0x24000 to get the port id.
++     *
++     * <p>Return {@link Constants#INVALID_PORT_ID} if target device does not connect to.
++     *
++     * @param path the target device's physical address.
++     * @return the id of the port that the target device eventually connects to
++     * on the current device.
+      */
+     int pathToPortId(int path) {
+-        int portAddress = path & Constants.ROUTING_PATH_TOP_MASK;
++        int mask = 0xF000;
++        int finalMask = 0xF000;
++        int physicalAddress;
++        synchronized (mLock) {
++            physicalAddress = mPhysicalAddress;
++        }
++        int maskedAddress = physicalAddress;
++
++        while (maskedAddress != 0) {
++            maskedAddress = physicalAddress & mask;
++            finalMask |= mask;
++            mask >>= 4;
++        }
++
++        int portAddress = path & finalMask;
+         return mPortIdMap.get(portAddress, Constants.INVALID_PORT_ID);
+     }
+ 
+@@ -1314,17 +1352,24 @@ public final class HdmiControlService extends SystemService {
+                         return;
+                     }
+                     HdmiCecLocalDeviceTv tv = tv();
+-                    if (tv == null) {
+-                        if (!mAddressAllocated) {
+-                            mSelectRequestBuffer.set(SelectRequestBuffer.newPortSelect(
+-                                    HdmiControlService.this, portId, callback));
+-                            return;
+-                        }
+-                        Slog.w(TAG, "Local tv device not available");
+-                        invokeCallback(callback, HdmiControlManager.RESULT_SOURCE_NOT_AVAILABLE);
++                    if (tv != null) {
++                        tv.doManualPortSwitching(portId, callback);
++                        return;
++                    }
++                    HdmiCecLocalDeviceAudioSystem audioSystem = audioSystem();
++                    if (audioSystem != null) {
++                        audioSystem.doManualPortSwitching(portId, callback);
++                        return;
++                    }
++
++                    if (!mAddressAllocated) {
++                        mSelectRequestBuffer.set(SelectRequestBuffer.newPortSelect(
++                                HdmiControlService.this, portId, callback));
+                         return;
+                     }
+-                    tv.doManualPortSwitching(portId, callback);
++                    Slog.w(TAG, "Local device not available");
++                    invokeCallback(callback, HdmiControlManager.RESULT_SOURCE_NOT_AVAILABLE);
++                    return;
+                 }
+             });
+         }
+@@ -1340,6 +1385,18 @@ public final class HdmiControlService extends SystemService {
+                         device.sendKeyEvent(keyCode, isPressed);
+                         return;
+                     }
++                    if (deviceType == HdmiDeviceInfo.DEVICE_PURE_CEC_SWITCH) {
++                        HdmiCecLocalDeviceTv tv = tv();
++                        if (tv != null) {
++                            tv.sendKeyEvent(keyCode, isPressed);
++                            return;
++                        }
++                        HdmiCecLocalDeviceAudioSystem audioSystem = audioSystem();
++                        if (audioSystem != null) {
++                            audioSystem.sendKeyEvent(keyCode, isPressed);
++                            return;
++                        }
++                    }
+                     if (mCecController != null) {
+                         HdmiCecLocalDevice localDevice = mCecController.getLocalDevice(deviceType);
+                         if (localDevice == null) {
+@@ -1475,10 +1532,17 @@ public final class HdmiControlService extends SystemService {
+         public List<HdmiDeviceInfo> getDeviceList() {
+             enforceAccessPermission();
+             HdmiCecLocalDeviceTv tv = tv();
+-            synchronized (mLock) {
+-                return (tv == null)
++            if (tv != null) {
++                synchronized (mLock) {
++                    return tv.getSafeCecDevicesLocked();
++                }
++            } else {
++                HdmiCecLocalDeviceAudioSystem audioSystem = audioSystem();
++                synchronized (mLock) {
++                    return (audioSystem == null)
+                         ? Collections.<HdmiDeviceInfo>emptyList()
+-                        : tv.getSafeCecDevicesLocked();
++                        : audioSystem.getSafeCecDevicesLocked();
++                }
+             }
+         }
+ 
+@@ -1991,6 +2055,10 @@ public final class HdmiControlService extends SystemService {
+         return mLocalDevices.contains(HdmiDeviceInfo.DEVICE_TV);
+     }
+ 
++    boolean isAudioSystemDevice() {
++        return mLocalDevices.contains(HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM);
++    }
++
+     boolean isTvDeviceEnabled() {
+         return isTvDevice() && tv() != null;
+     }
+@@ -2000,6 +2068,11 @@ public final class HdmiControlService extends SystemService {
+                 mCecController.getLocalDevice(HdmiDeviceInfo.DEVICE_PLAYBACK);
+     }
+ 
++    public HdmiCecLocalDeviceAudioSystem audioSystem() {
++        return (HdmiCecLocalDeviceAudioSystem) mCecController.getLocalDevice(
++                HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM);
++    }
++
+     AudioManager getAudioManager() {
+         return (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
+     }
+diff --git a/services/core/java/com/android/server/hdmi/HdmiUtils.java b/services/core/java/com/android/server/hdmi/HdmiUtils.java
+index 4ac3bba..5902b10 100644
+--- a/services/core/java/com/android/server/hdmi/HdmiUtils.java
++++ b/services/core/java/com/android/server/hdmi/HdmiUtils.java
+@@ -16,19 +16,38 @@
+ 
+ package com.android.server.hdmi;
+ 
++import android.annotation.Nullable;
+ import android.hardware.hdmi.HdmiDeviceInfo;
+ import android.util.Slog;
+ import android.util.SparseArray;
+ 
++import android.util.Xml;
++import com.android.internal.util.HexDump;
++import com.android.internal.util.IndentingPrintWriter;
++
++import com.android.server.hdmi.Constants.AbortReason;
++import com.android.server.hdmi.Constants.AudioCodec;
++import com.android.server.hdmi.Constants.FeatureOpcode;
++import org.xmlpull.v1.XmlPullParser;
++import org.xmlpull.v1.XmlPullParserException;
++
++import java.io.IOException;
++import java.io.InputStream;
++
+ import java.util.ArrayList;
++import java.util.Arrays;
+ import java.util.Collections;
+ import java.util.List;
++import java.util.Map;
++import java.util.Objects;
+ 
+ /**
+  * Various utilities to handle HDMI CEC messages.
+  */
+ final class HdmiUtils {
+ 
++    private static final String TAG = "HdmiUtils";
++
+     private static final int[] ADDRESS_TO_TYPE = {
+         HdmiDeviceInfo.DEVICE_TV,  // ADDR_TV
+         HdmiDeviceInfo.DEVICE_RECORDER,  // ADDR_RECORDER_1
+@@ -65,6 +84,12 @@ final class HdmiUtils {
+         "Secondary_TV",
+     };
+ 
++    /**
++     * Return value of {@link #getLocalPortFromPhysicalAddress(int, int)}
++     */
++    static int TARGET_NOT_UNDER_LOCAL_DEVICE = -1;
++    static int TARGET_SAME_PHYSICAL_ADDRESS = 0;
++
+     private HdmiUtils() { /* cannot be instantiated */ }
+ 
+     /**
+@@ -317,4 +342,361 @@ final class HdmiUtils {
+                 info.getPhysicalAddress(), info.getPortId(), info.getDeviceType(),
+                 info.getVendorId(), info.getDisplayName(), newPowerStatus);
+     }
++
++    /**
++     * Dump a {@link SparseArray} to the print writer.
++     *
++     * <p>The dump is formatted:
++     * <pre>
++     *     name:
++     *        key = value
++     *        key = value
++     *        ...
++     * </pre>
++     */
++    static <T> void dumpSparseArray(IndentingPrintWriter pw, String name,
++            SparseArray<T> sparseArray) {
++        printWithTrailingColon(pw, name);
++        pw.increaseIndent();
++        int size = sparseArray.size();
++        for (int i = 0; i < size; i++) {
++            int key = sparseArray.keyAt(i);
++            T value = sparseArray.get(key);
++            pw.printPair(Integer.toString(key), value);
++            pw.println();
++        }
++        pw.decreaseIndent();
++    }
++
++    private static void printWithTrailingColon(IndentingPrintWriter pw, String name) {
++        pw.println(name.endsWith(":") ? name : name.concat(":"));
++    }
++
++    /**
++     * Dump a {@link Map} to the print writer.
++     *
++     * <p>The dump is formatted:
++     * <pre>
++     *     name:
++     *        key = value
++     *        key = value
++     *        ...
++     * </pre>
++     */
++    static <K,V> void dumpMap(IndentingPrintWriter pw, String name, Map<K, V> map) {
++        printWithTrailingColon(pw, name);
++        pw.increaseIndent();
++        for(Map.Entry<K,V> entry: map.entrySet()){
++            pw.printPair(entry.getKey().toString(),entry.getValue());
++            pw.println();
++        }
++        pw.decreaseIndent();
++    }
++
++    /**
++     * Dump a {@link Map} to the print writer.
++     *
++     * <p>The dump is formatted:
++     * <pre>
++     *     name:
++     *        value
++     *        value
++     *        ...
++     * </pre>
++     */
++    static <T> void dumpIterable(IndentingPrintWriter pw, String name, Iterable<T> values) {
++        printWithTrailingColon(pw, name);
++        pw.increaseIndent();
++        for(T value :values){
++            pw.println( value);
++        }
++        pw.decreaseIndent();
++    }
++
++    /**
++     * Method to parse target physical address to the port number on the current device.
++     *
++     * <p>This check assumes target address is valid.
++     *
++     * @param targetPhysicalAddress is the physical address of the target device
++     * @param myPhysicalAddress is the physical address of the current device
++     * @return
++     * If the target device is under the current device, return the port number of current device
++     * that the target device is connected to. This also applies to the devices that are indirectly
++     * connected to the current device.
++     *
++     * <p>If the target device has the same physical address as the current device, return
++     * {@link #TARGET_SAME_PHYSICAL_ADDRESS}.
++     *
++     * <p>If the target device is not under the current device, return
++     * {@link #TARGET_NOT_UNDER_LOCAL_DEVICE}.
++     */
++    public static int getLocalPortFromPhysicalAddress(
++        int targetPhysicalAddress, int myPhysicalAddress) {
++        if (myPhysicalAddress == targetPhysicalAddress) {
++            return TARGET_SAME_PHYSICAL_ADDRESS;
++        }
++
++        int mask = 0xF000;
++        int finalMask = 0xF000;
++        int maskedAddress = myPhysicalAddress;
++
++        while (maskedAddress != 0) {
++            maskedAddress = myPhysicalAddress & mask;
++            finalMask |= mask;
++            mask >>= 4;
++        }
++
++        int portAddress = targetPhysicalAddress & finalMask;
++        if ((portAddress & (finalMask << 4)) != myPhysicalAddress) {
++            return TARGET_NOT_UNDER_LOCAL_DEVICE;
++        }
++
++        mask <<= 4;
++        int port = portAddress & mask;
++        while ((port >> 4) != 0) {
++            port >>= 4;
++        }
++        return port;
++    }
++
++    /**
++     * Parse the Feature Abort CEC message parameter into a [Feature Opcode].
++     *
++     * @param cmd the CEC message to parse
++     * @return the original opcode of the cec message that got aborted.
++     */
++    @FeatureOpcode
++    static int getAbortFeatureOpcode(HdmiCecMessage cmd) {
++        return cmd.getParams()[0] & 0xFF;
++    }
++
++    /**
++     * Parse the Feature Abort CEC message parameter into an [Abort Reason].
++     *
++     * @param cmd the CEC message to parse
++     * @return The reason to abort the feature.
++     */
++    @AbortReason
++    static int getAbortReason(HdmiCecMessage cmd) {
++        return cmd.getParams()[1];
++    }
++
++    public static class ShortAudioDescriptorXmlParser {
++        // We don't use namespaces
++        private static final String ns = null;
++
++        // return a list of devices config
++        public static List<DeviceConfig> parse(InputStream in)
++            throws XmlPullParserException, IOException {
++            XmlPullParser parser = Xml.newPullParser();
++            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
++            parser.setInput(in, null);
++            parser.nextTag();
++            return readDevices(parser);
++        }
++
++        private static void skip(XmlPullParser parser) throws XmlPullParserException, IOException {
++            if (parser.getEventType() != XmlPullParser.START_TAG) {
++                throw new IllegalStateException();
++            }
++            int depth = 1;
++            while (depth != 0) {
++                switch (parser.next()) {
++                    case XmlPullParser.END_TAG:
++                        depth--;
++                        break;
++                    case XmlPullParser.START_TAG:
++                        depth++;
++                        break;
++                }
++            }
++        }
++
++        private static List<DeviceConfig> readDevices(XmlPullParser parser)
++            throws XmlPullParserException, IOException {
++            List<DeviceConfig> devices = new ArrayList<>();
++
++            parser.require(XmlPullParser.START_TAG, ns, "config");
++            while (parser.next() != XmlPullParser.END_TAG) {
++                if (parser.getEventType() != XmlPullParser.START_TAG) {
++                    continue;
++                }
++                String name = parser.getName();
++                // Starts by looking for the device tag
++                if (name.equals("device")) {
++                    String deviceType = parser.getAttributeValue(null, "type");
++                    DeviceConfig config = null;
++                    if (deviceType != null) {
++                        config = readDeviceConfig(parser, deviceType);
++                    }
++                    if (config != null) {
++                        devices.add(config);
++                    }
++                } else {
++                    skip(parser);
++                }
++            }
++            return devices;
++        }
++
++        // Processes device tags in the config.
++        @Nullable
++        private static DeviceConfig readDeviceConfig(XmlPullParser parser, String deviceType)
++            throws XmlPullParserException, IOException {
++            List<CodecSad> codecSads = new ArrayList<>();
++            int format;
++            byte[] descriptor;
++
++            parser.require(XmlPullParser.START_TAG, ns, "device");
++            while (parser.next() != XmlPullParser.END_TAG) {
++                if (parser.getEventType() != XmlPullParser.START_TAG) {
++                    continue;
++                }
++                String tagName = parser.getName();
++
++                // Starts by looking for the supportedFormat tag
++                if (tagName.equals("supportedFormat")) {
++                    String codecAttriValue = parser.getAttributeValue(null, "format");
++                    String sadAttriValue = parser.getAttributeValue(null, "descriptor");
++                    format = (codecAttriValue) == null ?
++                        Constants.AUDIO_CODEC_NONE : formatNameToNum(codecAttriValue);
++                    descriptor = readSad(sadAttriValue);
++                    if (format != Constants.AUDIO_CODEC_NONE && descriptor != null) {
++                        codecSads.add(new CodecSad(format, descriptor));
++                    }
++                    parser.nextTag();
++                    parser.require(XmlPullParser.END_TAG, ns, "supportedFormat");
++                } else {
++                    skip(parser);
++                }
++            }
++            if (codecSads.size() == 0) {
++                return null;
++            }
++            return new DeviceConfig(deviceType, codecSads);
++        }
++
++        // Processes sad attribute in the supportedFormat.
++        @Nullable
++        private static byte[] readSad(String sad) {
++            if (sad == null || sad.length() == 0) {
++                return null;
++            }
++            byte[] sadBytes = HexDump.hexStringToByteArray(sad);
++            if (sadBytes.length != 3) {
++                Slog.w(TAG, "SAD byte array length is not 3. Length = " + sadBytes.length);
++                return null;
++            }
++            return sadBytes;
++        }
++
++        @AudioCodec
++        private static int formatNameToNum(String codecAttriValue) {
++            switch (codecAttriValue) {
++                case "AUDIO_FORMAT_NONE":
++                    return Constants.AUDIO_CODEC_NONE;
++                case "AUDIO_FORMAT_LPCM":
++                    return Constants.AUDIO_CODEC_LPCM;
++                case "AUDIO_FORMAT_DD":
++                    return Constants.AUDIO_CODEC_DD;
++                case "AUDIO_FORMAT_MPEG1":
++                    return Constants.AUDIO_CODEC_MPEG1;
++                case "AUDIO_FORMAT_MP3":
++                    return Constants.AUDIO_CODEC_MP3;
++                case "AUDIO_FORMAT_MPEG2":
++                    return Constants.AUDIO_CODEC_MPEG2;
++                case "AUDIO_FORMAT_AAC":
++                    return Constants.AUDIO_CODEC_AAC;
++                case "AUDIO_FORMAT_DTS":
++                    return Constants.AUDIO_CODEC_DTS;
++                case "AUDIO_FORMAT_ATRAC":
++                    return Constants.AUDIO_CODEC_ATRAC;
++                case "AUDIO_FORMAT_ONEBITAUDIO":
++                    return Constants.AUDIO_CODEC_ONEBITAUDIO;
++                case "AUDIO_FORMAT_DDP":
++                    return Constants.AUDIO_CODEC_DDP;
++                case "AUDIO_FORMAT_DTSHD":
++                    return Constants.AUDIO_CODEC_DTSHD;
++                case "AUDIO_FORMAT_TRUEHD":
++                    return Constants.AUDIO_CODEC_TRUEHD;
++                case "AUDIO_FORMAT_DST":
++                    return Constants.AUDIO_CODEC_DST;
++                case "AUDIO_FORMAT_WMAPRO":
++                    return Constants.AUDIO_CODEC_WMAPRO;
++                case "AUDIO_FORMAT_MAX":
++                    return Constants.AUDIO_CODEC_MAX;
++                default:
++                    return Constants.AUDIO_CODEC_NONE;
++            }
++        }
++    }
++
++    // Device configuration of its supported Codecs and their Short Audio Descriptors.
++    public static class DeviceConfig {
++        /** Name of the device. Should be {@link Constants.AudioDevice}. **/
++        public final String name;
++        /** List of a {@link CodecSad}. **/
++        public final List<CodecSad> supportedCodecs;
++
++        public DeviceConfig(String name, List<CodecSad> supportedCodecs) {
++            this.name = name;
++            this.supportedCodecs = supportedCodecs;
++        }
++
++        @Override
++        public boolean equals(Object obj) {
++            if (obj instanceof DeviceConfig) {
++                DeviceConfig that = (DeviceConfig) obj;
++                return that.name.equals(this.name)
++                    && that.supportedCodecs.equals(this.supportedCodecs);
++            }
++            return false;
++        }
++
++        @Override
++        public int hashCode() {
++            return Objects.hash(
++                name,
++                supportedCodecs.hashCode());
++        }
++    }
++
++    // Short Audio Descriptor of a specific Codec
++    public static class CodecSad {
++        /** Audio Codec. Should be {@link Constants.AudioCodec}. **/
++        public final int audioCodec;
++        /**
++         * Three-byte Short Audio Descriptor. See HDMI Specification 1.4b CEC 13.15.3 and
++         * ANSI-CTA-861-F-FINAL 7.5.2 Audio Data Block for more details.
++         */
++        public final byte[] sad;
++
++        public CodecSad(int audioCodec, byte[] sad) {
++            this.audioCodec = audioCodec;
++            this.sad = sad;
++        }
++
++        public CodecSad(int audioCodec, String sad) {
++            this.audioCodec = audioCodec;
++            this.sad = HexDump.hexStringToByteArray(sad);
++        }
++
++        @Override
++        public boolean equals(Object obj) {
++            if (obj instanceof CodecSad) {
++                CodecSad that = (CodecSad) obj;
++                return that.audioCodec == this.audioCodec
++                    && Arrays.equals(that.sad, this.sad);
++            }
++            return false;
++        }
++
++        @Override
++        public int hashCode() {
++            return Objects.hash(
++                audioCodec,
++                Arrays.hashCode(sad));
++        }
++    }
+ }
+-- 
+2.10.2
+

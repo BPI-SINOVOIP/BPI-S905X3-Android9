@@ -1,0 +1,42 @@
+From 414f7de6745911870db8b5a4411c4fd59eb37800 Mon Sep 17 00:00:00 2001
+From: kaishuang <kaishuang.zhang@amlogic.com>
+Date: Mon, 25 Mar 2019 20:16:17 +0800
+Subject: [PATCH] Native: Fixed crash of SurfaceFlinger on TL1. [1/1]
+
+PD# SWPL-4099
+
+Problem:
+TL1 full format stresstest, surfaceflinger causing exit.
+
+Solution:
+Modify the Mutex to protect the mQueue.
+
+Verify:
+verify on TL1
+
+Tests:
+Full format stresstest.
+
+Change-Id: Icf359285833034ce8ed1aff20054f359e0dd1285
+Signed-off-by: kaishuang <kaishuang.zhang@amlogic.com>
+---
+ libs/ui/FenceTime.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/libs/ui/FenceTime.cpp b/libs/ui/FenceTime.cpp
+index 1414766..a166cfc 100644
+--- a/libs/ui/FenceTime.cpp
++++ b/libs/ui/FenceTime.cpp
+@@ -291,8 +291,8 @@ void FenceTimeline::push(const std::shared_ptr<FenceTime>& fence) {
+ }
+ 
+ void FenceTimeline::updateSignalTimes() {
++    std::lock_guard<std::mutex> lock(mMutex);
+     while (!mQueue.empty()) {
+-        std::lock_guard<std::mutex> lock(mMutex);
+         std::shared_ptr<FenceTime> fence = mQueue.front().lock();
+         if (!fence) {
+             // The shared_ptr no longer exists and no one cares about the
+-- 
+1.9.1
+

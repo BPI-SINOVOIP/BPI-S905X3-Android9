@@ -1,0 +1,41 @@
+From 3fb4afae658ccaf12015d7d5f36d3591d6f55254 Mon Sep 17 00:00:00 2001
+From: Pengfei Zhao <pengfei.zhao@amlogic.com>
+Date: Thu, 28 Feb 2019 17:07:41 +0800
+Subject: [PATCH] Fix missing call to requestTransparentRegion()
+
+Partial revert of a59c3a5a3a218573fd293d5f3494c6f17903a1b4
+
+Add a call back to requestTransparentRegion() in performDrawFinished()
+to fix a bug where the transparent region is not set correctly for the
+Activity layer in a benchmarking app.
+
+This causes Android to use 2 composited layers are set up instead of 1.
+On at least one device this causes a performance regression.
+
+Fixes issue "ampere:3DMark Scores is too low"
+PD#OTT-314
+
+Test: lunch deadpool-userdebug; make -j50; fastboot flashall ; watch adb shell dumpsys SurfaceFlinger \| grep -A80 layers:
+Bug: 122052559
+Change-Id: Iff3fd6bc2ec6b7be81c43359b6e69b3b21c9cd8e
+Signed-off-by: Pengfei Zhao <pengfei.zhao@amlogic.com>
+(cherry picked from commit 156172011d39d2f14f1f140a161b3e1226538ecb)
+---
+ core/java/android/view/SurfaceView.java | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/core/java/android/view/SurfaceView.java b/core/java/android/view/SurfaceView.java
+index db34856..8498c4a 100644
+--- a/core/java/android/view/SurfaceView.java
++++ b/core/java/android/view/SurfaceView.java
+@@ -272,6 +272,7 @@ public class SurfaceView extends View implements ViewRootImpl.WindowStoppedCallb
+         if (mPendingReportDraws > 0) {
+             mDrawFinished = true;
+             if (mAttachedToWindow) {
++                mParent.requestTransparentRegion(SurfaceView.this);
+                 notifyDrawFinished();
+                 invalidate();
+             }
+-- 
+1.9.1
+

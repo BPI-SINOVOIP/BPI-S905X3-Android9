@@ -1,0 +1,917 @@
+From 772105375ade3c7ff5791ad50e29570f31a4134f Mon Sep 17 00:00:00 2001
+From: Zhigang <zhigang.yu@amlogic.com>
+Date: Thu, 16 Aug 2018 15:52:03 +0800
+Subject: [PATCH] add upgrade function amlogic support [1/1]
+
+PD# 172191
+
+1.add update from Udisk.
+2.add Udisk auto mount.
+3.add update and factorytest once.
+4.add read recovery params from factory_update_param.aml.
+5.add ui display when run recovery with no params.
+
+
+recovery: add recovery.kl parse for key map[1/1]
+
+PD# SWPL-620
+
+add function for parse /etc/recovery.kl.
+
+
+recovery: fixed can't auto reboot after upgrade[1/1]
+
+PD# SWPL-1932
+
+modify recovery update process.
+
+
+recovery: add recovery update.zip from mmcblok0[1/1]
+
+PD# SWPL-2031
+
+add recovery update from /dev/block/mmcblk0.
+
+
+recovery: add update from backup package [1/3]
+
+PD#TV-2110
+
+add update from backup package recovery from mmcblk0
+
+
+recovery: add param partition format support [1/1]
+
+PD#TV-2552
+
+add param partition format by parse --wipe_param
+
+Change-Id: I3bdc23fc0b639b30a4c71fa1184d4a60d4b80aec
+---
+ Android.mk    |   4 ++
+ device.cpp    |  10 +++-
+ device.h      |  15 ++---
+ etc/init.rc   |   2 +
+ install.cpp   | 185 +++++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ recovery.cpp  | 151 +++++++++++++++++++++++++++++++++++++++++++----
+ roots.cpp     |   8 +++
+ screen_ui.cpp |  12 ++--
+ ui.cpp        | 121 +++++++++++++++++++++++++++++++++++++-
+ ui.h          |  34 ++++++++++-
+ 10 files changed, 506 insertions(+), 36 deletions(-)
+
+diff --git a/Android.mk b/Android.mk
+index 7e0ad12..fca6b30 100644
+--- a/Android.mk
++++ b/Android.mk
+@@ -194,6 +194,10 @@ ifeq ($(AB_OTA_UPDATER),true)
+     LOCAL_CFLAGS += -DAB_OTA_UPDATER=1
+ endif
+ 
++ifeq ($(TARGET_RECOVERY_HAS_PARAM),)
++LOCAL_CFLAGS += -DRECOVERY_HAS_PARAM
++endif # TARGET_RECOVERY_HAS_PARAM == true
++
+ LOCAL_MODULE_PATH := $(TARGET_RECOVERY_ROOT_OUT)/sbin
+ 
+ ifeq ($(TARGET_RECOVERY_UI_LIB),)
+diff --git a/device.cpp b/device.cpp
+index 192d47c..20732c6 100644
+--- a/device.cpp
++++ b/device.cpp
+@@ -20,11 +20,14 @@ static const char* MENU_ITEMS[] = {
+   "Reboot system now",
+   "Reboot to bootloader",
+   "Apply update from ADB",
+-  "Apply update from SD card",
++  "Apply update from EXT",
+   "Wipe data/factory reset",
+ #ifndef AB_OTA_UPDATER
+   "Wipe cache partition",
+ #endif  // !AB_OTA_UPDATER
++#ifdef RECOVERY_HAS_PARAM
++  "Wipe param partition",
++#endif
+   "Mount /system",
+   "View recovery logs",
+   "Run graphics test",
+@@ -37,11 +40,14 @@ static const Device::BuiltinAction MENU_ACTIONS[] = {
+   Device::REBOOT,
+   Device::REBOOT_BOOTLOADER,
+   Device::APPLY_ADB_SIDELOAD,
+-  Device::APPLY_SDCARD,
++  Device::APPLY_EXT,
+   Device::WIPE_DATA,
+ #ifndef AB_OTA_UPDATER
+   Device::WIPE_CACHE,
+ #endif  // !AB_OTA_UPDATER
++#ifdef RECOVERY_HAS_PARAM
++  Device::WIPE_PARAM,
++#endif
+   Device::MOUNT_SYSTEM,
+   Device::VIEW_RECOVERY_LOGS,
+   Device::RUN_GRAPHICS_TEST,
+diff --git a/device.h b/device.h
+index 2f2e0a9..bbcc30b 100644
+--- a/device.h
++++ b/device.h
+@@ -58,17 +58,18 @@ class Device {
+   enum BuiltinAction {
+     NO_ACTION = 0,
+     REBOOT = 1,
+-    APPLY_SDCARD = 2,
++    APPLY_EXT = 2,
+     // APPLY_CACHE was 3.
+     APPLY_ADB_SIDELOAD = 4,
+     WIPE_DATA = 5,
+     WIPE_CACHE = 6,
+-    REBOOT_BOOTLOADER = 7,
+-    SHUTDOWN = 8,
+-    VIEW_RECOVERY_LOGS = 9,
+-    MOUNT_SYSTEM = 10,
+-    RUN_GRAPHICS_TEST = 11,
+-    RUN_LOCALE_TEST = 12,
++    WIPE_PARAM = 7,
++    REBOOT_BOOTLOADER = 8,
++    SHUTDOWN = 9,
++    VIEW_RECOVERY_LOGS = 10,
++    MOUNT_SYSTEM = 11,
++    RUN_GRAPHICS_TEST = 12,
++    RUN_LOCALE_TEST = 13,
+   };
+ 
+   // Return the list of menu items (an array of strings, NULL-terminated). The menu_position passed
+diff --git a/etc/init.rc b/etc/init.rc
+index 0fc6c4c..434f618 100644
+--- a/etc/init.rc
++++ b/etc/init.rc
+@@ -27,6 +27,8 @@ on init
+     chown root shell /tmp
+     chmod 0775 /tmp
+ 
++    write /proc/sys/vm/watermark_scale_factor 30
++    write /proc/sys/vm/min_free_kbytes 12288
+     write /proc/sys/kernel/panic_on_oops 1
+     write /proc/sys/vm/max_map_count 1000000
+ 
+diff --git a/install.cpp b/install.cpp
+index d058931..9bbaa5f 100644
+--- a/install.cpp
++++ b/install.cpp
+@@ -48,6 +48,7 @@
+ #include <vintf/VintfObjectRecovery.h>
+ #include <ziparchive/zip_archive.h>
+ 
++#include "bootloader.h"
+ #include "common.h"
+ #include "otautil/SysUtil.h"
+ #include "otautil/ThermalUtil.h"
+@@ -57,6 +58,10 @@
+ #include "ui.h"
+ #include "verifier.h"
+ 
++#define  CACHE_ZIPINFO   "/cache/recovery/zipinfo"
++#define  EMMC_DEVICE      "/dev/block/mmcblk0"
++#define  COPY_SIZE           (10*1024*1024)
++
+ using namespace std::chrono_literals;
+ 
+ // Default allocation of progress bar segments to operations
+@@ -561,9 +566,149 @@ bool verify_package_compatibility(ZipArchiveHandle package_zip) {
+   return false;
+ }
+ 
++int try_recovery_by_zipinfo() {
++    int len = 0;
++    int matches = 0;
++    char buf[256] = {0};
++    char filename[256] = {0};
++    int offset = 0;
++    int filesize = 0;
++
++    //open zipinfo
++    FILE *pf = fopen(CACHE_ZIPINFO, "r");
++    if (pf == NULL) {
++        printf("fopen %s failed!\n", CACHE_ZIPINFO);
++        return -1;
++    }
++
++    //fread data from zipinfo
++    len = fread(buf, 1, 256, pf);
++    fclose(pf);
++    if (len <= 0) {
++        printf("fread %s failed!\n", CACHE_ZIPINFO);
++        return -1;
++    }
++
++    //parse zipinfo
++    matches = sscanf(buf, "%s %d %d", filename, &offset, &filesize);
++    if (matches != 3) {
++        printf("fread %s error data!\n", CACHE_ZIPINFO);
++        return -1;
++    }
++
++    printf("recovery from %s offset(%d*M) length(%d) to %s\n",EMMC_DEVICE, offset, filesize, filename);
++    //open /dev/block/mmcblk0
++    int fd = 0;
++    fd = open(EMMC_DEVICE, O_RDONLY);
++    if (fd <= 0) {
++	printf("open %s failed!\n", EMMC_DEVICE);
++	return -1;
++    }
++
++    //update.zip stored offset offset
++    lseek(fd, offset*1024*1024, SEEK_SET);
++
++    //open /data/update.zip
++    pf = fopen("/data/update.zip", "w+");
++    if (pf == NULL) {
++	printf("fopen %s failed!\n", filename);
++	close(fd);
++	return -1;
++    }
++
++    //malloc buffer
++    unsigned char *tmp = (unsigned char *)malloc(COPY_SIZE);
++    if (tmp == NULL) {
++        printf("malloc 10M failed!\n");
++        close(fd);
++        fclose(pf);
++        return -1;
++    }
++
++    //data copy
++    int write_total = 0;
++    int read_one = 0;
++    printf("start to recovery update.zip!\n");
++    while(write_total < filesize) {
++	memset(tmp, 0, COPY_SIZE);
++	read_one = (filesize - write_total > COPY_SIZE) ? COPY_SIZE : filesize - write_total;
++	read(fd, tmp, read_one);
++	fwrite(tmp, 1, read_one, pf);
++	write_total += read_one;
++	printf("recovery update.zip size:%d\n", write_total);
++    }
++
++    close(fd);
++    fflush(pf);
++    fclose(pf);
++    ensure_path_unmounted("/data");
++
++    return 0;
++}
++
++static void set_new_package_path(void ) {
++    struct bootloader_message boot {};
++    std::string err;
++
++    read_bootloader_message(&boot,  &err);
++
++    printf("boot.command: %s\n", boot.command);
++    printf("boot.recovery: %s\n", boot.recovery);
++
++    strcpy(boot.recovery, "recovery\n--update_package=/data/update.zip");
++
++    printf("boot.recovery: %s\n", boot.recovery);
++
++    printf("write_bootloader_message \n");
++    if (!write_bootloader_message(boot, &err)) {
++        printf("%s\n", err.c_str());
++        printf("write_bootloader_message failed!\n");
++    }
++}
++
++static int try_recovery_update_package(void) {
++   int ret = 0;
++   struct stat st;
++
++    if (stat(CACHE_ZIPINFO, &st) == -1) {
++        printf("no need to recovery update.zip");
++        return -1;
++    }
++
++   ret = ensure_path_mounted("/data");
++   if (ret != 0 ) {
++       printf("mount /data failed, start to format!\n");
++       format_volume("/data");
++       ret = ensure_path_mounted("/data");
++       if (ret != 0) {
++           printf("mount /data after format failed!");
++           return -1;
++       }
++   }
++
++   ret = try_recovery_by_zipinfo();
++   if (ret < 0) {
++       printf("try recovery update package by zipinfo failed!\n");
++       return -1;
++   }
++
++   ret = ensure_path_mounted("/data");
++   if (ret != 0) {
++       printf("mount /data after recovery failed!");
++       return -1;
++   }
++
++   set_new_package_path();
++   unlink(CACHE_ZIPINFO);
++
++   return 0;
++}
++
+ static int really_install_package(const std::string& path, bool* wipe_cache, bool needs_mount,
+                                   std::vector<std::string>* log_buffer, int retry_count,
+                                   int* max_temperature) {
++  int update_flag = 0;
++  std::string new_path("/data/update.zip");
+   ui->SetBackground(RecoveryUI::INSTALLING_UPDATE);
+   ui->Print("Finding update package...\n");
+   // Give verification half the progress bar...
+@@ -576,17 +721,31 @@ static int really_install_package(const std::string& path, bool* wipe_cache, boo
+ 
+   if (needs_mount) {
+     if (path[0] == '@') {
+-      ensure_path_mounted(path.substr(1).c_str());
++      int ret = 0;
++      ret = try_recovery_update_package();
++      if (ret == 0) {
++          update_flag = 1;
++      } else {
++          ensure_path_mounted(path.substr(1).c_str());
++      }
+     } else {
+-      ensure_path_mounted(path.c_str());
++        ensure_path_mounted(path.c_str());
+     }
+   }
+ 
+   MemMapping map;
+-  if (!map.MapFile(path)) {
+-    LOG(ERROR) << "failed to map file";
+-    log_buffer->push_back(android::base::StringPrintf("error: %d", kMapFileFailure));
+-    return INSTALL_CORRUPT;
++  if (update_flag == 1) {
++    if (!map.MapFile(new_path)) {
++      LOG(ERROR) << "failed to map file";
++      log_buffer->push_back(android::base::StringPrintf("error: %d", kMapFileFailure));
++      return INSTALL_CORRUPT;
++    }
++  } else {
++    if (!map.MapFile(path)) {
++      LOG(ERROR) << "failed to map file";
++      log_buffer->push_back(android::base::StringPrintf("error: %d", kMapFileFailure));
++      return INSTALL_CORRUPT;
++    }
+   }
+ 
+   // Verify package.
+@@ -597,7 +756,12 @@ static int really_install_package(const std::string& path, bool* wipe_cache, boo
+ 
+   // Try to open the package.
+   ZipArchiveHandle zip;
+-  int err = OpenArchiveFromMemory(map.addr, map.length, path.c_str(), &zip);
++  int err = 0;
++  if (update_flag == 1) {
++      err = OpenArchiveFromMemory(map.addr, map.length, new_path.c_str(), &zip);
++  } else {
++      err = OpenArchiveFromMemory(map.addr, map.length, path.c_str(), &zip);
++  }
+   if (err != 0) {
+     LOG(ERROR) << "Can't open " << path << " : " << ErrorCodeString(err);
+     log_buffer->push_back(android::base::StringPrintf("error: %d", kZipOpenFailure));
+@@ -619,7 +783,12 @@ static int really_install_package(const std::string& path, bool* wipe_cache, boo
+     ui->Print("Retry attempt: %d\n", retry_count);
+   }
+   ui->SetEnableReboot(false);
+-  int result = try_update_binary(path, zip, wipe_cache, log_buffer, retry_count, max_temperature);
++  int result = 0;
++  if (update_flag == 1) {
++      result = try_update_binary(new_path, zip, wipe_cache, log_buffer, retry_count, max_temperature);
++  } else {
++      result = try_update_binary(path, zip, wipe_cache, log_buffer, retry_count, max_temperature);
++  }
+   ui->SetEnableReboot(true);
+   ui->Print("\n");
+ 
+diff --git a/recovery.cpp b/recovery.cpp
+index 07ec5cf..7f33da9 100644
+--- a/recovery.cpp
++++ b/recovery.cpp
+@@ -79,6 +79,9 @@ static const struct option OPTIONS[] = {
+   { "retry_count", required_argument, NULL, 'n' },
+   { "wipe_data", no_argument, NULL, 'w' },
+   { "wipe_cache", no_argument, NULL, 'c' },
++#ifdef RECOVERY_HAS_PARAM
++  { "wipe_param", no_argument, NULL, 'P' },
++#endif /*RECOVERY_HAS_PARAM */
+   { "show_text", no_argument, NULL, 't' },
+   { "sideload", no_argument, NULL, 's' },
+   { "sideload_auto_reboot", no_argument, NULL, 'a' },
+@@ -110,6 +113,10 @@ static const char *CACHE_ROOT = "/cache";
+ static const char *DATA_ROOT = "/data";
+ static const char* METADATA_ROOT = "/metadata";
+ static const char *SDCARD_ROOT = "/sdcard";
++static const char *UDISK_ROOT = "/udisk";
++#ifdef RECOVERY_HAS_PARAM
++static const char *PARAM_ROOT = "/param";
++#endif
+ static const char *TEMPORARY_LOG_FILE = "/tmp/recovery.log";
+ static const char *TEMPORARY_INSTALL_FILE = "/tmp/last_install";
+ static const char *LAST_KMSG_FILE = "/cache/recovery/last_kmsg";
+@@ -139,6 +146,8 @@ std::string stage;
+ const char* reason = nullptr;
+ struct selabel_handle* sehandle;
+ 
++extern void amlogic_get_args(std::vector<std::string>& args);
++
+ /*
+  * The recovery tool communicates with the main system through /cache files.
+  *   /cache/recovery/command - INPUT - command line for tool, one arg per line
+@@ -369,6 +378,9 @@ static std::vector<std::string> get_args(const int argc, char** const argv) {
+     }
+   }
+ 
++  //add get args from factory_update_param.aml
++  amlogic_get_args(args);
++
+   // Write the arguments (excluding the filename in args[0]) back into the
+   // bootloader control block. So the device will always boot into recovery to
+   // finish the pending work, until finish_recovery() is called.
+@@ -759,6 +771,9 @@ static bool wipe_data(Device* device) {
+       if (has_cache) {
+         success &= erase_volume(CACHE_ROOT);
+       }
++  #ifdef RECOVERY_HAS_PARAM
++        success &= erase_volume(PARAM_ROOT);
++  #endif
+       if (volume_for_mount_point(METADATA_ROOT) != nullptr) {
+         success &= erase_volume(METADATA_ROOT);
+       }
+@@ -796,6 +811,21 @@ static bool prompt_and_wipe_data(Device* device) {
+ }
+ 
+ // Return true on success.
++static bool wipe_param(bool should_confirm, Device* device) {
++
++    if (should_confirm && !yes_no(device, "Wipe param?", "  THIS CAN NOT BE UNDONE!")) {
++        return false;
++    }
++
++    modified_flash = true;
++
++    ui->Print("\n-- Wiping param...\n");
++    bool success = erase_volume("/param");
++    ui->Print("Param wipe %s.\n", success ? "complete" : "failed");
++    return success;
++}
++
++// Return true on success.
+ static bool wipe_cache(bool should_confirm, Device* device) {
+     if (!has_cache) {
+         ui->Print("No /cache partition found.\n");
+@@ -991,6 +1021,84 @@ static void choose_recovery_file(Device* device) {
+   }
+ }
+ 
++static int ext_update(Device* device, bool wipe_cache) {
++    int status = 0;
++    int found_upgrade = 0;
++    std::string  update_package;
++    /*const char** title_headers = NULL;
++    const char* headers[] = { "Confirm update?",
++                    "  THIS CAN NOT BE UNDONE.",
++                    "",
++                    NULL };*/
++    const char* items[] = { " ../",
++                    " Update from sdcard",
++                    " Update from udisk",
++                    NULL };
++
++    int chosen_item = get_menu_selection(nullptr, items, 1, 0, device);
++        if (chosen_item != 1 && chosen_item != 2) {
++        return 1;
++    }
++
++    switch (chosen_item) {
++        case 1:
++            // Some packages expect /cache to be mounted (eg,
++            // standard incremental packages expect to use /cache
++            // as scratch space).
++            ensure_path_mounted(CACHE_ROOT);
++            ensure_path_unmounted(SDCARD_ROOT); // umount, if pull card and then insert card
++            ensure_path_mounted(SDCARD_ROOT);
++            update_package = browse_directory(SDCARD_ROOT, device);
++            if (update_package.empty()) {
++                ui->Print("\n-- No package file selected.\n");
++                break;
++            }
++            found_upgrade = 1;
++            break;
++
++        case 2:
++            ensure_path_mounted(CACHE_ROOT);
++            ensure_path_unmounted(UDISK_ROOT);
++            ensure_path_mounted(UDISK_ROOT);
++            update_package = browse_directory(UDISK_ROOT, device);
++            if (update_package.empty()) {
++                ui->Print("\n-- No package file selected.\n");
++                break;
++            }
++            found_upgrade = 2;
++            break;
++    }
++
++    if (!found_upgrade) return 1;
++
++    ui->Print("\n-- Install %s ...\n", update_package.c_str());
++    set_sdcard_update_bootloader_message();
++    status = install_package(update_package.c_str(), &wipe_cache, TEMPORARY_INSTALL_FILE, true, 0);
++
++    if (status == INSTALL_SUCCESS && wipe_cache) {
++        ui->Print("\n-- Wiping cache (at package request)...\n");
++        if (erase_volume("/cache")) {
++            ui->Print("Cache wipe failed.\n");
++        } else {
++            ui->Print("Cache wipe complete.\n");
++        }
++    }
++
++    if (status >= 0) {
++        if (status != INSTALL_SUCCESS) {
++            ui->SetBackground(RecoveryUI::ERROR);
++            ui->Print("Installation aborted.\n");
++        } else if (!ui->IsTextVisible()) {
++            return 0;   // reboot if logs aren't visible
++        } else {
++            ui->Print("\nInstall from %s complete.\n",
++                (found_upgrade == 1) ? "sdcard" : "udisk");
++        }
++    }
++
++    return 1;
++}
++
+ static void run_graphics_test() {
+   // Switch to graphics screen.
+   ui->ShowText(false);
+@@ -1164,8 +1272,18 @@ static Device::BuiltinAction prompt_and_wait(Device* device, int status) {
+         if (!ui->IsTextVisible()) return Device::NO_ACTION;
+         break;
+ 
++#ifdef RECOVERY_HAS_PARAM
++      case Device::WIPE_PARAM:
++        wipe_param(ui->IsTextVisible(), device);
++        if (!ui->IsTextVisible()) return Device::NO_ACTION;
++        break;
++#endif
++
++      case Device::APPLY_EXT:
++        ext_update(device, should_wipe_cache);
++        break;
++
+       case Device::APPLY_ADB_SIDELOAD:
+-      case Device::APPLY_SDCARD:
+         {
+           bool adb = (chosen_action == Device::APPLY_ADB_SIDELOAD);
+           if (adb) {
+@@ -1441,6 +1559,9 @@ int main(int argc, char **argv) {
+   bool shutdown_after = false;
+   int retry_count = 0;
+   bool security_update = false;
++#ifdef RECOVERY_HAS_PARAM
++  int should_wipe_param = 0;
++#endif /* RECOVERY_HAS_PARAM */
+ 
+   int arg;
+   int option_index;
+@@ -1478,6 +1599,9 @@ int main(int argc, char **argv) {
+       case 'p':
+         shutdown_after = true;
+         break;
++#ifdef RECOVERY_HAS_PARAM
++        case 'P': should_wipe_param = 1; break;
++#endif /* RECOVERY_HAS_PARAM */
+       case 'r':
+         reason = optarg;
+         break;
+@@ -1618,7 +1742,17 @@ int main(int argc, char **argv) {
+         }
+       }
+     }
+-  } else if (should_wipe_data) {
++  }
++
++#ifdef RECOVERY_HAS_PARAM
++    if (should_wipe_param) {
++      if (!wipe_param(false, device)) {
++        status = INSTALL_ERROR;;
++      }
++    }
++#endif /* RECOVERY_HAS_PARAM */
++
++  if (should_wipe_data) {
+     if (!wipe_data(device)) {
+       status = INSTALL_ERROR;
+     }
+@@ -1657,15 +1791,6 @@ int main(int argc, char **argv) {
+     if (sideload_auto_reboot) {
+       ui->Print("Rebooting automatically.\n");
+     }
+-  } else if (!just_exit) {
+-    // If this is an eng or userdebug build, automatically turn on the text display if no command
+-    // is specified. Note that this should be called before setting the background to avoid
+-    // flickering the background image.
+-    if (is_ro_debuggable()) {
+-      ui->ShowText(true);
+-    }
+-    status = INSTALL_NONE;  // No command specified
+-    ui->SetBackground(RecoveryUI::NO_COMMAND);
+   }
+ 
+   if (status == INSTALL_ERROR || status == INSTALL_CORRUPT) {
+@@ -1683,7 +1808,9 @@ int main(int argc, char **argv) {
+   //    without waiting.
+   // 4. In all other cases, reboot the device. Therefore, normal users will observe the device
+   //    reboot after it shows the "error" screen for 5s.
+-  if ((status == INSTALL_NONE && !sideload_auto_reboot) || ui->IsTextVisible()) {
++  if (just_exit) {
++        after = Device::REBOOT;
++  } else if ((status == INSTALL_NONE && !sideload_auto_reboot) || ui->IsTextVisible()) {
+     Device::BuiltinAction temp = prompt_and_wait(device, status);
+     if (temp != Device::NO_ACTION) {
+       after = temp;
+diff --git a/roots.cpp b/roots.cpp
+index 184e799..ef32418 100644
+--- a/roots.cpp
++++ b/roots.cpp
+@@ -45,6 +45,8 @@ static struct fstab* fstab = nullptr;
+ 
+ extern struct selabel_handle* sehandle;
+ 
++extern int ensure_path_mounted_extra(Volume *v);
++
+ void load_volume_table() {
+   fstab = fs_mgr_read_fstab_default();
+   if (!fstab) {
+@@ -125,6 +127,12 @@ int ensure_path_mounted_at(const char* path, const char* mount_point) {
+ 
+   mkdir(mount_point, 0755);  // in case it doesn't already exist
+ 
++    //add usb device(/dev/sd##) mount
++    int ret = ensure_path_mounted_extra(v);
++    if (ret != 2) {
++        return ret;
++    }
++
+   if (strcmp(v->fs_type, "ext4") == 0 || strcmp(v->fs_type, "squashfs") == 0 ||
+       strcmp(v->fs_type, "vfat") == 0) {
+     int result = mount(v->blk_device, mount_point, v->fs_type, v->flags, v->fs_options);
+diff --git a/screen_ui.cpp b/screen_ui.cpp
+index 04071bb..eaddbed 100644
+--- a/screen_ui.cpp
++++ b/screen_ui.cpp
+@@ -416,14 +416,16 @@ static const char* LONG_PRESS_HELP[] = {
+ // Redraws everything on the screen. Does not flip pages. Should only be called with updateMutex
+ // locked.
+ void ScreenRecoveryUI::draw_screen_locked() {
++
++  draw_background_locked();
++  draw_foreground_locked();
++
+   if (!show_text) {
+-    draw_background_locked();
+-    draw_foreground_locked();
+     return;
+   }
+ 
+-  gr_color(0, 0, 0, 255);
+-  gr_clear();
++  //gr_color(0, 0, 0, 255);
++  //gr_clear();
+ 
+   int y = kMarginHeight;
+   if (show_menu) {
+@@ -509,7 +511,7 @@ void ScreenRecoveryUI::ProgressThreadLoop() {
+ 
+     // update the installation animation, if active
+     // skip this if we have a text overlay (too expensive to update)
+-    if ((currentIcon == INSTALLING_UPDATE || currentIcon == ERASING) && !show_text) {
++    if ((currentIcon == INSTALLING_UPDATE || currentIcon == ERASING) /*&& !show_text*/) {
+       if (!intro_done) {
+         if (current_frame == intro_frames - 1) {
+           intro_done = true;
+diff --git a/ui.cpp b/ui.cpp
+index 3c9ded7..d15819c 100644
+--- a/ui.cpp
++++ b/ui.cpp
+@@ -53,6 +53,12 @@ static constexpr const char* BRIGHTNESS_FILE_SDM =
+ static constexpr const char* MAX_BRIGHTNESS_FILE_SDM =
+     "/sys/class/backlight/panel0-backlight/max_brightness";
+ 
++static RecoveryUI::KeyMapItem_t g_presupposed_keymap[] = {
++    { "select", Device::kInvokeItem, {BTN_MOUSE, BTN_LEFT, -1, -1, -1, -1} }
++};
++
++#define NUM_PRESUPPOSED_KEY_MAP (sizeof(g_presupposed_keymap) / sizeof(g_presupposed_keymap[0]))
++
+ RecoveryUI::RecoveryUI()
+     : brightness_normal_(50),
+       brightness_dimmed_(25),
+@@ -78,6 +84,7 @@ RecoveryUI::RecoveryUI()
+   pthread_mutex_init(&key_queue_mutex, nullptr);
+   pthread_cond_init(&key_queue_cond, nullptr);
+   memset(key_pressed, 0, sizeof(key_pressed));
++  load_key_map();
+ }
+ 
+ void RecoveryUI::OnKeyDetected(int key_code) {
+@@ -319,7 +326,12 @@ int RecoveryUI::OnInputEvent(int fd, uint32_t epevents) {
+       }
+     }
+ 
+-    ProcessKey(ev.code, ev.value);
++    int code = getMapKey(ev.code);
++    if (code > 0) {
++        ProcessKey(code, ev.value);
++    } else {
++        ProcessKey(ev.code, ev.value);
++    }
+   }
+ 
+   return 0;
+@@ -408,6 +420,113 @@ void RecoveryUI::time_key(int key_code, int count) {
+   if (long_press) KeyLongPress(key_code);
+ }
+ 
++void RecoveryUI::load_key_map() {
++    FILE* fstab = fopen("/etc/recovery.kl", "r");
++    if (fstab != NULL) {
++        printf("loaded /etc/recovery.kl\n");
++        int alloc = 2;
++        keys_map = (KeyMapItem_t*)malloc(alloc * sizeof(KeyMapItem_t));
++
++        keys_map[0].type = "down";
++        keys_map[0].value = KEY_DOWN;
++        keys_map[0].key[0] = -1;
++        keys_map[0].key[1] = -1;
++        keys_map[0].key[2] = -1;
++        keys_map[0].key[3] = -1;
++        keys_map[0].key[4] = -1;
++        keys_map[0].key[5] = -1;
++        num_keys = 0;
++
++        char buffer[1024];
++        int i;
++        int value = -1;
++        while (fgets(buffer, sizeof(buffer)-1, fstab)) {
++            for (i = 0; buffer[i] && isspace(buffer[i]); ++i);
++
++            if (buffer[i] == '\0' || buffer[i] == '#') continue;
++
++            char* original = strdup(buffer);
++
++            char* type = strtok(original+i, " \t\n");
++            char* key1 = strtok(NULL, " \t\n");
++            char* key2 = strtok(NULL, " \t\n");
++            char* key3 = strtok(NULL, " \t\n");
++            char* key4 = strtok(NULL, " \t\n");
++            char* key5 = strtok(NULL, " \t\n");
++            char* key6 = strtok(NULL, " \t\n");
++
++            value = getKey(type);
++            if (type && key1 && (value > 0)) {
++                while (num_keys >= alloc) {
++                    alloc *= 2;
++                    keys_map = (KeyMapItem_t*)realloc(keys_map, alloc*sizeof(KeyMapItem_t));
++                }
++                keys_map[num_keys].type = strdup(type);
++                keys_map[num_keys].value = value;
++                keys_map[num_keys].key[0] = key1?atoi(key1):-1;
++                keys_map[num_keys].key[1] = key2?atoi(key2):-1;
++                keys_map[num_keys].key[2] = key3?atoi(key3):-1;
++                keys_map[num_keys].key[3] = key4?atoi(key4):-1;
++                keys_map[num_keys].key[4] = key5?atoi(key5):-1;
++                keys_map[num_keys].key[5] = key6?atoi(key6):-1;
++
++                ++num_keys;
++            } else {
++                printf("skipping malformed recovery.lk line: %s\n", original);
++            }
++            free(original);
++        }
++
++        fclose(fstab);
++    } else {
++        printf("failed to open /etc/recovery.kl, use default map\n");
++        num_keys = NUM_DEFAULT_KEY_MAP;
++        keys_map = g_default_keymap;
++    }
++
++    printf("recovery key map table:\n");
++    int i;
++    for (i = 0; i < num_keys; ++i) {
++        KeyMapItem_t* v = &keys_map[i];
++        printf("  %d type:%s value:%d key:%d %d %d %d %d %d\n", i, v->type, v->value,
++              v->key[0], v->key[1], v->key[2], v->key[3], v->key[4], v->key[5]);
++    }
++    printf("\n");
++}
++
++int RecoveryUI::getKey(char *key) {
++    if (key == NULL) return -1;
++
++    unsigned int i;
++    for (i = 0; i < NUM_CTRLINFO; i++) {
++        CtrlInfo_t *info = &g_ctrlinfo[i];
++        if (strcmp(info->type, key) == 0) {
++            return info->value;
++        }
++    }
++    return -1;
++}
++
++int RecoveryUI::getMapKey(int key) {
++    int i,j;
++    for (i = 0; i < num_keys; i++) {
++        KeyMapItem_t* v = &keys_map[i];
++        for (j = 0; j < 6; j++) {
++            if (v->key[j] == key)
++                return v->value;
++        }
++    }
++
++    for (i = 0; i < (int)NUM_PRESUPPOSED_KEY_MAP; i++) {
++        for (j = 0; j < 6; j++) {
++            if (g_presupposed_keymap[i].key[j] == key)
++                return g_presupposed_keymap[i].value;
++        }
++    }
++
++    return -1;
++}
++
+ void RecoveryUI::EnqueueKey(int key_code) {
+   pthread_mutex_lock(&key_queue_mutex);
+   const int queue_max = sizeof(key_queue) / sizeof(key_queue[0]);
+diff --git a/ui.h b/ui.h
+index 4c54d69..4123399 100644
+--- a/ui.h
++++ b/ui.h
+@@ -47,6 +47,12 @@ class RecoveryUI {
+     IGNORE
+   };
+ 
++    struct KeyMapItem_t {
++        const char* type;
++        int value;
++        int key[6];
++    };
++
+   RecoveryUI();
+ 
+   virtual ~RecoveryUI() {}
+@@ -168,6 +174,30 @@ class RecoveryUI {
+     int count;
+   };
+ 
++  int num_keys;
++  KeyMapItem_t* keys_map;
++
++  KeyMapItem_t g_default_keymap[3] = {
++      { "select", KEY_ENTER, {KEY_ENTER, KEY_TAB, KEY_BACK, -1, -1, -1} },
++      { "down", KEY_DOWN, {KEY_DOWN, KEY_VOLUMEDOWN, KEY_PAGEDOWN, -1, -1, -1} },
++      { "up", KEY_UP, {KEY_UP, KEY_VOLUMEUP, KEY_PAGEUP, -1, -1, -1} },
++  };
++
++  #define NUM_DEFAULT_KEY_MAP 3
++
++  struct CtrlInfo_t {
++      const char *type;
++      int value;
++  };
++
++  CtrlInfo_t g_ctrlinfo[3] = {
++      { "select", KEY_ENTER },
++      { "down", KEY_DOWN },
++      { "up", KEY_UP },
++  };
++
++  #define NUM_CTRLINFO 3
++
+   // The sensitivity when detecting a swipe.
+   const int kTouchLowThreshold;
+   const int kTouchHighThreshold;
+@@ -181,7 +211,9 @@ class RecoveryUI {
+ 
+   static void* time_key_helper(void* cookie);
+   void time_key(int key_code, int count);
+-
++  int getKey(char *key);
++  void load_key_map();
++  int getMapKey(int key);
+   bool InitScreensaver();
+ 
+   // Key event input queue
+-- 
+1.9.1
+

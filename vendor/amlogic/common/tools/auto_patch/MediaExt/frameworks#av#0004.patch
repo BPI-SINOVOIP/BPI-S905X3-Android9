@@ -1,0 +1,39 @@
+From 192a730cbe2cf2e76b3fe3f91b488a23cb87ed89 Mon Sep 17 00:00:00 2001
+From: Lianlian Zhu <lianlian.zhu@amlogic.com>
+Date: Thu, 6 Dec 2018 22:03:19 +0800
+Subject: [PATCH] audio: fix android system alwaysForceAC3 issue [1/1]
+
+PD#SWPL-2802
+
+Problem:
+   when connect tv not support dd, ott passthrough
+  dd raw data  to tv.
+
+Solution:
+  do not alwaysForceAC3
+
+Verify:
+  verified by p212
+
+Change-Id: If6e7c0768fd81a822192dec5be240672bc1ffb54
+Signed-off-by: Lianlian Zhu <lianlian.zhu@amlogic.com>
+---
+ services/audiopolicy/managerdefault/AudioPolicyManager.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/services/audiopolicy/managerdefault/AudioPolicyManager.cpp b/services/audiopolicy/managerdefault/AudioPolicyManager.cpp
+index 07998e7..94422ce 100644
+--- a/services/audiopolicy/managerdefault/AudioPolicyManager.cpp
++++ b/services/audiopolicy/managerdefault/AudioPolicyManager.cpp
+@@ -6062,7 +6062,7 @@ void AudioPolicyManager::cleanUpForDevice(const sp<DeviceDescriptor>& deviceDesc
+ void AudioPolicyManager::filterSurroundFormats(FormatVector *formatsPtr) {
+     FormatVector &formats = *formatsPtr;
+     // TODO Set this based on Config properties.
+-    const bool alwaysForceAC3 = true;
++    const bool alwaysForceAC3 = false;
+ 
+     audio_policy_forced_cfg_t forceUse = mEngine->getForceUse(
+             AUDIO_POLICY_FORCE_FOR_ENCODED_SURROUND);
+-- 
+2.7.4
+

@@ -1,0 +1,208 @@
+From a38eda0ec79ef0a7f2e7711f7fe4ed871cd34a0e Mon Sep 17 00:00:00 2001
+From: Chaomin Zheng <chaomin.zheng@amlogic.com>
+Date: Tue, 28 May 2019 22:09:19 +0800
+Subject: [PATCH] TvInput: when audio route changed, update audio patch status
+ [1/1]
+
+PD# SWPL-8945
+
+Problem:
+ATV/DTV channel, the AMP-ARC has no sound after CEC switch set off/on
+
+Solution:
+when audio route changed, update audio patch status
+
+Verify:
+verify by x301
+
+Change-Id: Ie5a9092afc173a135e9ae61471ad19a90266ad38
+Signed-off-by: Chaomin Zheng <chaomin.zheng@amlogic.com>
+---
+ .../android/server/tv/TvInputHardwareManager.java  | 122 ++++++---------------
+ 1 file changed, 35 insertions(+), 87 deletions(-)
+
+diff --git a/services/core/java/com/android/server/tv/TvInputHardwareManager.java b/services/core/java/com/android/server/tv/TvInputHardwareManager.java
+index 940b01f..6924a08 100644
+--- a/services/core/java/com/android/server/tv/TvInputHardwareManager.java
++++ b/services/core/java/com/android/server/tv/TvInputHardwareManager.java
+@@ -19,12 +19,10 @@ package com.android.server.tv;
+ import static android.media.tv.TvInputManager.INPUT_STATE_CONNECTED;
+ import static android.media.tv.TvInputManager.INPUT_STATE_CONNECTED_STANDBY;
+ import static android.media.tv.TvInputManager.INPUT_STATE_DISCONNECTED;
+-import android.bluetooth.BluetoothA2dp;
+ import android.content.BroadcastReceiver;
+ import android.content.Context;
+ import android.content.Intent;
+ import android.content.IntentFilter;
+-import android.content.pm.PackageManager;
+ import android.hardware.hdmi.HdmiControlManager;
+ import android.hardware.hdmi.HdmiDeviceInfo;
+ import android.hardware.hdmi.HdmiHotplugEvent;
+@@ -32,11 +30,6 @@ import android.hardware.hdmi.IHdmiControlService;
+ import android.hardware.hdmi.IHdmiDeviceEventListener;
+ import android.hardware.hdmi.IHdmiHotplugEventListener;
+ import android.hardware.hdmi.IHdmiSystemAudioModeChangeListener;
+-import android.hardware.usb.UsbConfiguration;
+-import android.hardware.usb.UsbConstants;
+-import android.hardware.usb.UsbDevice;
+-import android.hardware.usb.UsbInterface;
+-import android.hardware.usb.UsbManager;
+ import android.media.AudioDevicePort;
+ import android.media.AudioFormat;
+ import android.media.AudioGain;
+@@ -45,7 +38,10 @@ import android.media.AudioManager;
+ import android.media.AudioPatch;
+ import android.media.AudioPort;
+ import android.media.AudioPortConfig;
++import android.media.AudioRoutesInfo;
+ import android.media.AudioSystem;
++import android.media.IAudioRoutesObserver;
++import android.media.IAudioService;
+ import android.media.tv.ITvInputHardware;
+ import android.media.tv.ITvInputHardwareCallback;
+ import android.media.tv.TvInputHardwareInfo;
+@@ -61,7 +57,6 @@ import android.util.ArrayMap;
+ import android.util.Slog;
+ import android.util.SparseArray;
+ import android.util.SparseBooleanArray;
+-import android.view.KeyEvent;
+ import android.view.Surface;
+ 
+ import com.android.internal.util.DumpUtils;
+@@ -113,6 +108,25 @@ class TvInputHardwareManager implements TvInputHal.Callback {
+             handleVolumeChange(context, intent);
+         }
+     };
++    private IAudioService mAudioService;
++    private AudioRoutesInfo mCurAudioRoutesInfo;
++    final IAudioRoutesObserver.Stub mAudioRoutesObserver = new IAudioRoutesObserver.Stub() {
++        @Override
++        public void dispatchAudioRoutesChanged(final AudioRoutesInfo newRoutes) {
++            if ((newRoutes.mainType != mCurAudioRoutesInfo.mainType) ||
++                        (!newRoutes.toString().equals(mCurAudioRoutesInfo.toString()))) {
++                mCurAudioRoutesInfo = newRoutes;
++                synchronized (mLock) {
++                    for (int i = 0; i < mConnections.size(); ++i) {
++                        TvInputHardwareImpl impl = mConnections.valueAt(i).getHardwareImplLocked();
++                        if (impl != null) {
++                            impl.handleAudioSinkUpdated();
++                        }
++                    }
++                }
++            }
++        }
++    };
+     private int mCurrentIndex = 0;
+     private int mCommitedIndex = -1;
+     private int mCurrentMaxIndex = 0;
+@@ -155,75 +169,13 @@ class TvInputHardwareManager implements TvInputHal.Callback {
+             filter.addAction(AudioManager.STREAM_MUTE_CHANGED_ACTION);
+             mContext.registerReceiver(mVolumeReceiver, filter);
+             updateVolume();
+-
+-            BroadcastReceiver hostReceiver = new BroadcastReceiver() {
+-                @Override
+-                public void onReceive(Context context, Intent intent) {
+-                    boolean hasUsbAudioDevice = false;
+-                    UsbDevice device = (UsbDevice) intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+-                    if (device == null) {
+-                        return;
+-                    }
+-                    int count = device.getConfigurationCount();
+-                    for (int i = 0; i < count; i++) {
+-                        UsbConfiguration configuration = device.getConfiguration(i);
+-                        if (configuration == null) {
+-                            return;
+-                        }
+-                        int interfaceCount = configuration.getInterfaceCount();
+-                        for (int j = 0; j < interfaceCount; j++) {
+-                            UsbInterface usbInterface = configuration.getInterface(j);
+-                            if (usbInterface != null &&
+-                                    usbInterface.getInterfaceClass() == UsbConstants.USB_CLASS_AUDIO) {
+-                                hasUsbAudioDevice = true;
+-                            }
+-                        }
+-                    }
+-                    if (hasUsbAudioDevice) {
+-                        mHandler.postDelayed(new Runnable() {
+-                            public void run() {
+-                                synchronized (mLock) {
+-                                    for (int i = 0; i < mConnections.size(); ++i) {
+-                                        TvInputHardwareImpl impl = mConnections.valueAt(i).getHardwareImplLocked();
+-                                        if (impl != null) {
+-                                            impl.handleAudioSinkUpdated();
+-                                        }
+-                                    }
+-                                }
+-                            }
+-                        }, UsbManager.ACTION_USB_DEVICE_ATTACHED.equals(intent.getAction()) ? 0 : 1200);
+-                    }
+-                }
+-            };
+-            final IntentFilter usbFilter =
+-                    new IntentFilter(UsbManager.ACTION_USB_DEVICE_ATTACHED);
+-            usbFilter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
+-            mContext.registerReceiver(hostReceiver, usbFilter);
+-            BroadcastReceiver a2dpReceiver = new BroadcastReceiver() {
+-                @Override
+-                public void onReceive(Context context, Intent intent) {
+-                    int state = intent.getIntExtra(BluetoothA2dp.EXTRA_STATE, -1);
+-                        if (state == BluetoothA2dp.STATE_CONNECTED ||
+-                            state == BluetoothA2dp.STATE_DISCONNECTED) {
+-                            mHandler.postDelayed(new Runnable() {
+-                            public void run() {
+-                                synchronized (mLock) {
+-                                    for (int i = 0; i < mConnections.size(); ++i) {
+-                                        TvInputHardwareImpl impl =
+-                                                mConnections.valueAt(i).getHardwareImplLocked();
+-                                        if (impl != null) {
+-                                            impl.handleAudioSinkUpdated();
+-                                        }
+-                                    }
+-                                }
+-                            }
+-                        }, state == BluetoothA2dp.STATE_CONNECTED ? 600 : 2000);
+-                    }
+-                }
+-            };
+-            final IntentFilter a2dpFilter =
+-                    new IntentFilter(BluetoothA2dp.ACTION_CONNECTION_STATE_CHANGED);
+-            mContext.registerReceiver(a2dpReceiver, a2dpFilter);
++            IBinder b = ServiceManager.getService(Context.AUDIO_SERVICE);
++            mAudioService = IAudioService.Stub.asInterface(b);
++            try {
++                mCurAudioRoutesInfo = mAudioService.startWatchingRoutes(mAudioRoutesObserver);
++            } catch (RemoteException e) {
++                e.printStackTrace();
++            }
+         }
+     }
+ 
+@@ -1431,18 +1383,14 @@ class TvInputHardwareManager implements TvInputHal.Callback {
+         IHdmiSystemAudioModeChangeListener.Stub {
+         @Override
+         public void onStatusChanged(boolean enabled) throws RemoteException {
+-            mHandler.postDelayed(new Runnable() {
+-                public void run() {
+-                    synchronized (mLock) {
+-                        for (int i = 0; i < mConnections.size(); ++i) {
+-                            TvInputHardwareImpl impl = mConnections.valueAt(i).getHardwareImplLocked();
+-                            if (impl != null) {
+-                                impl.handleAudioSinkUpdated();
+-                            }
+-                        }
++            synchronized (mLock) {
++                for (int i = 0; i < mConnections.size(); ++i) {
++                    TvInputHardwareImpl impl = mConnections.valueAt(i).getHardwareImplLocked();
++                    if (impl != null) {
++                        impl.handleAudioSinkUpdated();
+                     }
+                 }
+-            }, enabled ? 0 : 500);
++            }
+         }
+     }
+ }
+-- 
+2.7.4
+

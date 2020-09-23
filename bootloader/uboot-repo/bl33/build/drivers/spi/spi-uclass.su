@@ -1,0 +1,16 @@
+spi-uclass.c:21:12:spi_set_speed_mode	64	static
+spi-uclass.c:96:5:spi_post_bind	16	static
+spi-uclass.c:108:5:spi_post_probe	32	static
+spi-uclass.c:48:5:spi_claim_bus	32	static
+spi-uclass.c:73:6:spi_release_bus	16	static
+spi-uclass.c:83:5:spi_xfer	16	static
+spi-uclass.c:118:5:spi_chip_select	16	static
+spi-uclass.c:125:5:spi_find_chip_select	96	static
+spi-uclass.c:165:5:spi_cs_info	64	static
+spi-uclass.c:150:5:spi_cs_is_valid	48	static
+spi-uclass.c:198:5:spi_find_bus_and_cs	64	static
+spi-uclass.c:220:5:spi_get_bus_and_cs	112	static
+spi-uclass.c:309:19:spi_setup_slave_fdt	48	static
+spi-uclass.c:325:19:spi_setup_slave	32	static
+spi-uclass.c:340:6:spi_free_slave	32	static
+spi-uclass.c:346:5:spi_ofdata_to_platdata	0	static

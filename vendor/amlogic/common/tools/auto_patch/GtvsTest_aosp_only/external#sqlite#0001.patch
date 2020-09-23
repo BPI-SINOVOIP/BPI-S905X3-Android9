@@ -1,0 +1,726 @@
+From 5881629d79d193d5308c233fe4e2ea1d5dbd960f Mon Sep 17 00:00:00 2001
+From: Hui Yu <huiyu@google.com>
+Date: Thu, 27 Dec 2018 15:40:29 -0800
+Subject: [PATCH] security: Security patch from bulletin-2019-02-preview
+ [13/21]
+
+PD# SWPL-6448
+
+RESTRICT AUTOMERGE: Apply security patch to sqlite 3.22.
+
+This patch fixes Magellan SQLite Security Vulnerability as in
+b/121156452
+
+Download from https://www.sqlite.org/src/info/c255889bd95bd543
+Get the Tarball or ZIP Archive, unzip it on linux machine then run:
+mkdir bld; cd bld; ../configure; make sqlite3.c
+
+Copy sqlite3.c, sqlite3.h, sqlite3ext.h, shell.c from bld directory
+to dist/orig.
+
+dist contains a copy of dist/orig, but with the Android.patch
+file applied.
+
+Bug: 121156452
+
+Test: select sqlite_version() - returns 3.22.0
+Test: atest cts/SQLiteDatabaseTest all passed.
+Test: atest cts/SQLSecurityTest
+Change-Id: Iea1cefe2577ac52da84b24b6d51e1769042e449a
+Merged-In: Iad8c3d1d74d8591a75a4c033c8bf9d3956d2fe4f
+(cherry picked from commit 7fbf27c91af1621264154cc09f0fdafb3ba69ed3)
+---
+ README.version      |   5 +-
+ dist/Android.patch  |   8 +--
+ dist/orig/sqlite3.c | 145 ++++++++++++++++++++++++++++++++++++----------------
+ dist/orig/sqlite3.h |   2 +-
+ dist/sqlite3.c      | 145 ++++++++++++++++++++++++++++++++++++----------------
+ dist/sqlite3.h      |   2 +-
+ 6 files changed, 211 insertions(+), 96 deletions(-)
+
+diff --git a/README.version b/README.version
+index 8a1c169..a14d841 100644
+--- a/README.version
++++ b/README.version
+@@ -1,3 +1,4 @@
+-URL: https://www.sqlite.org/2018/sqlite-autoconf-3220000.tar.gz
+-Version: 3.22.0 0c55d179733b46d8
++URL: https://www.sqlite.org/src/info/c255889bd95bd543
++Version: 3.22.0 c255889bd95bd5430dc7ced3317011ae2abb483d6c9af883af3dc7d6c2c2f234
++This patch fixes Magellan SQLite Security Vulnerability as in b/121156452
+ BugComponent: 24950
+diff --git a/dist/Android.patch b/dist/Android.patch
+index 5ff70a7..c5f7e1d 100644
+--- a/dist/Android.patch
++++ b/dist/Android.patch
+@@ -1,6 +1,6 @@
+ diff -r -u -d orig/shell.c ./shell.c
+---- orig/shell.c	2018-01-22 10:57:34.000000000 -0800
+-+++ ./shell.c	2018-02-13 16:03:40.927106364 -0800
++--- orig/shell.c	2018-04-13 17:25:47.747857988 -0700
+++++ ./shell.c	2018-04-13 17:25:47.787857731 -0700
+ @@ -87,6 +87,12 @@
+  #endif
+  #include <ctype.h>
+@@ -39,8 +39,8 @@ diff -r -u -d orig/shell.c ./shell.c
+        char *zSql = sqlite3_mprintf(
+           "CREATE VIRTUAL TABLE zip USING zipfile(%Q);", p->zDbFilename);
+ diff -r -u -d orig/sqlite3.c ./sqlite3.c
+---- orig/sqlite3.c	2018-01-22 10:57:34.000000000 -0800
+-+++ ./sqlite3.c	2018-02-13 15:48:29.453358014 -0800
++--- orig/sqlite3.c	2018-12-27 15:39:18.784267281 -0800
+++++ ./sqlite3.c	2018-12-27 15:39:18.788267250 -0800
+ @@ -34428,7 +34428,7 @@
+    SimulateIOError( rc=1 );
+    if( rc!=0 ){
+diff --git a/dist/orig/sqlite3.c b/dist/orig/sqlite3.c
+index 73c69ef..8e495f1 100644
+--- a/dist/orig/sqlite3.c
++++ b/dist/orig/sqlite3.c
+@@ -1149,7 +1149,7 @@ extern "C" {
+ */
+ #define SQLITE_VERSION        "3.22.0"
+ #define SQLITE_VERSION_NUMBER 3022000
+-#define SQLITE_SOURCE_ID      "2018-01-22 18:45:57 0c55d179733b46d8d0ba4d88e01a25e10677046ee3da1d5b1581e86726f2171d"
++#define SQLITE_SOURCE_ID      "2018-12-19 01:30:22 c255889bd95bd5430dc7ced3317011ae2abb483d6c9af883af3dc7d6c2c2f234"
+ 
+ /*
+ ** CAPI3REF: Run-Time Library Version Numbers
+@@ -150618,7 +150618,7 @@ static int fts3ScanInteriorNode(
+   const char *zCsr = zNode;       /* Cursor to iterate through node */
+   const char *zEnd = &zCsr[nNode];/* End of interior node buffer */
+   char *zBuffer = 0;              /* Buffer to load terms into */
+-  int nAlloc = 0;                 /* Size of allocated buffer */
++  i64 nAlloc = 0;                 /* Size of allocated buffer */
+   int isFirstTerm = 1;            /* True when processing first term on page */
+   sqlite3_int64 iChild;           /* Block id of child node to descend to */
+ 
+@@ -150656,14 +150656,14 @@ static int fts3ScanInteriorNode(
+     zCsr += fts3GetVarint32(zCsr, &nSuffix);
+     
+     assert( nPrefix>=0 && nSuffix>=0 );
+-    if( &zCsr[nSuffix]>zEnd ){
++    if( nPrefix>zCsr-zNode || nSuffix>zEnd-zCsr ){
+       rc = FTS_CORRUPT_VTAB;
+       goto finish_scan;
+     }
+-    if( nPrefix+nSuffix>nAlloc ){
++    if( (i64)nPrefix+nSuffix>nAlloc ){
+       char *zNew;
+-      nAlloc = (nPrefix+nSuffix) * 2;
+-      zNew = (char *)sqlite3_realloc(zBuffer, nAlloc);
++      nAlloc = ((i64)nPrefix+nSuffix) * 2;
++      zNew = (char *)sqlite3_realloc64(zBuffer, nAlloc);
+       if( !zNew ){
+         rc = SQLITE_NOMEM;
+         goto finish_scan;
+@@ -160262,15 +160262,19 @@ static int fts3SegReaderNext(
+   ** safe (no risk of overread) even if the node data is corrupted. */
+   pNext += fts3GetVarint32(pNext, &nPrefix);
+   pNext += fts3GetVarint32(pNext, &nSuffix);
+-  if( nPrefix<0 || nSuffix<=0 
+-   || &pNext[nSuffix]>&pReader->aNode[pReader->nNode] 
++  if( nSuffix<=0
++   || (&pReader->aNode[pReader->nNode] - pNext)<nSuffix
++   || nPrefix>pReader->nTermAlloc
+   ){
+     return FTS_CORRUPT_VTAB;
+   }
+ 
+-  if( nPrefix+nSuffix>pReader->nTermAlloc ){
+-    int nNew = (nPrefix+nSuffix)*2;
+-    char *zNew = sqlite3_realloc(pReader->zTerm, nNew);
++  /* Both nPrefix and nSuffix were read by fts3GetVarint32() and so are
++  ** between 0 and 0x7FFFFFFF. But the sum of the two may cause integer
++  ** overflow - hence the (i64) casts.  */
++  if( (i64)nPrefix+nSuffix>(i64)pReader->nTermAlloc ){
++    i64 nNew = ((i64)nPrefix+nSuffix)*2;
++    char *zNew = sqlite3_realloc64(pReader->zTerm, nNew);
+     if( !zNew ){
+       return SQLITE_NOMEM;
+     }
+@@ -160292,7 +160296,7 @@ static int fts3SegReaderNext(
+   ** b-tree node. And that the final byte of the doclist is 0x00. If either 
+   ** of these statements is untrue, then the data structure is corrupt.
+   */
+-  if( &pReader->aDoclist[pReader->nDoclist]>&pReader->aNode[pReader->nNode] 
++  if( (&pReader->aNode[pReader->nNode] - pReader->aDoclist)<pReader->nDoclist
+    || (pReader->nPopulate==0 && pReader->aDoclist[pReader->nDoclist-1])
+   ){
+     return FTS_CORRUPT_VTAB;
+@@ -162615,6 +162619,9 @@ static int nodeReaderNext(NodeReader *p){
+     }
+     p->iOff += fts3GetVarint32(&p->aNode[p->iOff], &nSuffix);
+ 
++    if( nPrefix>p->iOff || nSuffix>p->nNode-p->iOff ){
++      return SQLITE_CORRUPT_VTAB;
++    }
+     blobGrowBuffer(&p->term, nPrefix+nSuffix, &rc);
+     if( rc==SQLITE_OK ){
+       memcpy(&p->term.a[nPrefix], &p->aNode[p->iOff], nSuffix);
+@@ -162622,6 +162629,9 @@ static int nodeReaderNext(NodeReader *p){
+       p->iOff += nSuffix;
+       if( p->iChild==0 ){
+         p->iOff += fts3GetVarint32(&p->aNode[p->iOff], &p->nDoclist);
++        if( (p->nNode-p->iOff)<p->nDoclist ){
++          return SQLITE_CORRUPT_VTAB;
++        }
+         p->aDoclist = &p->aNode[p->iOff];
+         p->iOff += p->nDoclist;
+       }
+@@ -162629,7 +162639,6 @@ static int nodeReaderNext(NodeReader *p){
+   }
+ 
+   assert( p->iOff<=p->nNode );
+-
+   return rc;
+ }
+ 
+@@ -173110,7 +173119,8 @@ struct rbu_vfs {
+   sqlite3_vfs *pRealVfs;          /* Underlying VFS */
+   sqlite3_mutex *mutex;           /* Mutex to protect pMain */
+   sqlite3rbu *pRbu;               /* Owner RBU object */
+-  rbu_file *pMain;                /* Linked list of main db files */
++  rbu_file *pMain;                /* List of main db files */
++  rbu_file *pMainRbu;             /* List of main db files with pRbu!=0 */
+ };
+ 
+ /*
+@@ -173139,6 +173149,7 @@ struct rbu_file {
+   const char *zWal;               /* Wal filename for this main db file */
+   rbu_file *pWalFd;               /* Wal file descriptor for this main db */
+   rbu_file *pMainNext;            /* Next MAIN_DB file */
++  rbu_file *pMainRbuNext;         /* Next MAIN_DB file with pRbu!=0 */
+ };
+ 
+ /*
+@@ -174517,7 +174528,7 @@ static void rbuCreateImposterTable2(sqlite3rbu *p, RbuObjIter *pIter){
+         int iCid = sqlite3_column_int(pXInfo, 1);
+         int bDesc = sqlite3_column_int(pXInfo, 3);
+         const char *zCollate = (const char*)sqlite3_column_text(pXInfo, 4);
+-        zCols = rbuMPrintf(p, "%z%sc%d %s COLLATE %s", zCols, zComma, 
++        zCols = rbuMPrintf(p, "%z%sc%d %s COLLATE %Q", zCols, zComma,
+             iCid, pIter->azTblType[iCid], zCollate
+         );
+         zPk = rbuMPrintf(p, "%z%sc%d%s", zPk, zComma, iCid, bDesc?" DESC":"");
+@@ -174578,7 +174589,7 @@ static void rbuCreateImposterTable(sqlite3rbu *p, RbuObjIter *pIter){
+         ** "PRIMARY KEY" to the imposter table column declaration. */
+         zPk = "PRIMARY KEY ";
+       }
+-      zSql = rbuMPrintf(p, "%z%s\"%w\" %s %sCOLLATE %s%s", 
++      zSql = rbuMPrintf(p, "%z%s\"%w\" %s %sCOLLATE %Q%s",
+           zSql, zComma, zCol, pIter->azTblType[iCol], zPk, zColl,
+           (pIter->abNotNull[iCol] ? " NOT NULL" : "")
+       );
+@@ -176728,6 +176739,69 @@ static int rbuUpdateTempSize(rbu_file *pFd, sqlite3_int64 nNew){
+ }
+ 
+ /*
++** Add an item to the main-db lists, if it is not already present.
++**
++** There are two main-db lists. One for all file descriptors, and one
++** for all file descriptors with rbu_file.pDb!=0. If the argument has
++** rbu_file.pDb!=0, then it is assumed to already be present on the
++** main list and is only added to the pDb!=0 list.
++*/
++static void rbuMainlistAdd(rbu_file *p){
++  rbu_vfs *pRbuVfs = p->pRbuVfs;
++  rbu_file *pIter;
++  assert( (p->openFlags & SQLITE_OPEN_MAIN_DB) );
++  sqlite3_mutex_enter(pRbuVfs->mutex);
++  if( p->pRbu==0 ){
++    for(pIter=pRbuVfs->pMain; pIter; pIter=pIter->pMainNext);
++    p->pMainNext = pRbuVfs->pMain;
++    pRbuVfs->pMain = p;
++  }else{
++    for(pIter=pRbuVfs->pMainRbu; pIter && pIter!=p; pIter=pIter->pMainRbuNext){}
++    if( pIter==0 ){
++      p->pMainRbuNext = pRbuVfs->pMainRbu;
++      pRbuVfs->pMainRbu = p;
++    }
++  }
++  sqlite3_mutex_leave(pRbuVfs->mutex);
++}
++
++/*
++** Remove an item from the main-db lists.
++*/
++static void rbuMainlistRemove(rbu_file *p){
++  rbu_file **pp;
++  sqlite3_mutex_enter(p->pRbuVfs->mutex);
++  for(pp=&p->pRbuVfs->pMain; *pp && *pp!=p; pp=&((*pp)->pMainNext)){}
++  if( *pp ) *pp = p->pMainNext;
++  p->pMainNext = 0;
++  for(pp=&p->pRbuVfs->pMainRbu; *pp && *pp!=p; pp=&((*pp)->pMainRbuNext)){}
++  if( *pp ) *pp = p->pMainRbuNext;
++  p->pMainRbuNext = 0;
++  sqlite3_mutex_leave(p->pRbuVfs->mutex);
++}
++
++/*
++** Given that zWal points to a buffer containing a wal file name passed to
++** either the xOpen() or xAccess() VFS method, search the main-db list for
++** a file-handle opened by the same database connection on the corresponding
++** database file.
++**
++** If parameter bRbu is true, only search for file-descriptors with
++** rbu_file.pDb!=0.
++*/
++static rbu_file *rbuFindMaindb(rbu_vfs *pRbuVfs, const char *zWal, int bRbu){
++  rbu_file *pDb;
++  sqlite3_mutex_enter(pRbuVfs->mutex);
++  if( bRbu ){
++    for(pDb=pRbuVfs->pMainRbu; pDb && pDb->zWal!=zWal; pDb=pDb->pMainRbuNext){}
++  }else{
++    for(pDb=pRbuVfs->pMain; pDb && pDb->zWal!=zWal; pDb=pDb->pMainNext){}
++  }
++  sqlite3_mutex_leave(pRbuVfs->mutex);
++  return pDb;
++}
++
++/*
+ ** Close an rbu file.
+ */
+ static int rbuVfsClose(sqlite3_file *pFile){
+@@ -176744,17 +176818,14 @@ static int rbuVfsClose(sqlite3_file *pFile){
+   sqlite3_free(p->zDel);
+ 
+   if( p->openFlags & SQLITE_OPEN_MAIN_DB ){
+-    rbu_file **pp;
+-    sqlite3_mutex_enter(p->pRbuVfs->mutex);
+-    for(pp=&p->pRbuVfs->pMain; *pp!=p; pp=&((*pp)->pMainNext));
+-    *pp = p->pMainNext;
+-    sqlite3_mutex_leave(p->pRbuVfs->mutex);
++    rbuMainlistRemove(p);
+     rbuUnlockShm(p);
+     p->pReal->pMethods->xShmUnmap(p->pReal, 0);
+   }
+   else if( (p->openFlags & SQLITE_OPEN_DELETEONCLOSE) && p->pRbu ){
+     rbuUpdateTempSize(p, 0);
+   }
++  assert( p->pMainNext==0 && p->pRbuVfs->pMain!=p );
+ 
+   /* Close the underlying file handle */
+   rc = p->pReal->pMethods->xClose(p->pReal);
+@@ -177013,6 +177084,9 @@ static int rbuVfsFileControl(sqlite3_file *pFile, int op, void *pArg){
+       }else if( rc==SQLITE_NOTFOUND ){
+         pRbu->pTargetFd = p;
+         p->pRbu = pRbu;
++        if( p->openFlags & SQLITE_OPEN_MAIN_DB ){
++          rbuMainlistAdd(p);
++        }
+         if( p->pWalFd ) p->pWalFd->pRbu = pRbu;
+         rc = SQLITE_OK;
+       }
+@@ -177174,20 +177248,6 @@ static int rbuVfsShmUnmap(sqlite3_file *pFile, int delFlag){
+   return rc;
+ }
+ 
+-/*
+-** Given that zWal points to a buffer containing a wal file name passed to 
+-** either the xOpen() or xAccess() VFS method, return a pointer to the
+-** file-handle opened by the same database connection on the corresponding
+-** database file.
+-*/
+-static rbu_file *rbuFindMaindb(rbu_vfs *pRbuVfs, const char *zWal){
+-  rbu_file *pDb;
+-  sqlite3_mutex_enter(pRbuVfs->mutex);
+-  for(pDb=pRbuVfs->pMain; pDb && pDb->zWal!=zWal; pDb=pDb->pMainNext){}
+-  sqlite3_mutex_leave(pRbuVfs->mutex);
+-  return pDb;
+-}
+-
+ /* 
+ ** A main database named zName has just been opened. The following 
+ ** function returns a pointer to a buffer owned by SQLite that contains
+@@ -177266,7 +177326,7 @@ static int rbuVfsOpen(
+       pFd->zWal = rbuMainToWal(zName, flags);
+     }
+     else if( flags & SQLITE_OPEN_WAL ){
+-      rbu_file *pDb = rbuFindMaindb(pRbuVfs, zName);
++      rbu_file *pDb = rbuFindMaindb(pRbuVfs, zName, 0);
+       if( pDb ){
+         if( pDb->pRbu && pDb->pRbu->eStage==RBU_STAGE_OAL ){
+           /* This call is to open a *-wal file. Intead, open the *-oal. This
+@@ -177318,10 +177378,7 @@ static int rbuVfsOpen(
+     ** mutex protected linked list of all such files.  */
+     pFile->pMethods = &rbuvfs_io_methods;
+     if( flags & SQLITE_OPEN_MAIN_DB ){
+-      sqlite3_mutex_enter(pRbuVfs->mutex);
+-      pFd->pMainNext = pRbuVfs->pMain;
+-      pRbuVfs->pMain = pFd;
+-      sqlite3_mutex_leave(pRbuVfs->mutex);
++      rbuMainlistAdd(pFd);
+     }
+   }else{
+     sqlite3_free(pFd->zDel);
+@@ -177369,7 +177426,7 @@ static int rbuVfsAccess(
+   **      file opened instead.
+   */
+   if( rc==SQLITE_OK && flags==SQLITE_ACCESS_EXISTS ){
+-    rbu_file *pDb = rbuFindMaindb(pRbuVfs, zPath);
++    rbu_file *pDb = rbuFindMaindb(pRbuVfs, zPath, 1);
+     if( pDb && pDb->pRbu && pDb->pRbu->eStage==RBU_STAGE_OAL ){
+       if( *pResOut ){
+         rc = SQLITE_CANTOPEN;
+@@ -203333,7 +203390,7 @@ static void fts5SourceIdFunc(
+ ){
+   assert( nArg==0 );
+   UNUSED_PARAM2(nArg, apUnused);
+-  sqlite3_result_text(pCtx, "fts5: 2018-01-22 18:45:57 0c55d179733b46d8d0ba4d88e01a25e10677046ee3da1d5b1581e86726f2171d", -1, SQLITE_TRANSIENT);
++  sqlite3_result_text(pCtx, "fts5: 2018-12-19 01:30:22 c255889bd95bd5430dc7ced3317011ae2abb483d6c9af883af3dc7d6c2c2f234", -1, SQLITE_TRANSIENT);
+ }
+ 
+ static int fts5Init(sqlite3 *db){
+@@ -207601,9 +207658,9 @@ SQLITE_API int sqlite3_stmt_init(
+ #endif /* !defined(SQLITE_CORE) || defined(SQLITE_ENABLE_STMTVTAB) */
+ 
+ /************** End of stmt.c ************************************************/
+-#if __LINE__!=207604
++#if __LINE__!=207661
+ #undef SQLITE_SOURCE_ID
+-#define SQLITE_SOURCE_ID      "2018-01-22 18:45:57 0c55d179733b46d8d0ba4d88e01a25e10677046ee3da1d5b1581e86726f2alt2"
++#define SQLITE_SOURCE_ID      "2018-12-19 01:30:22 c255889bd95bd5430dc7ced3317011ae2abb483d6c9af883af3dc7d6c2c2alt2"
+ #endif
+ /* Return the source-id for this library */
+ SQLITE_API const char *sqlite3_sourceid(void){ return SQLITE_SOURCE_ID; }
+diff --git a/dist/orig/sqlite3.h b/dist/orig/sqlite3.h
+index d8138b7..57669e1 100644
+--- a/dist/orig/sqlite3.h
++++ b/dist/orig/sqlite3.h
+@@ -125,7 +125,7 @@ extern "C" {
+ */
+ #define SQLITE_VERSION        "3.22.0"
+ #define SQLITE_VERSION_NUMBER 3022000
+-#define SQLITE_SOURCE_ID      "2018-01-22 18:45:57 0c55d179733b46d8d0ba4d88e01a25e10677046ee3da1d5b1581e86726f2171d"
++#define SQLITE_SOURCE_ID      "2018-12-19 01:30:22 c255889bd95bd5430dc7ced3317011ae2abb483d6c9af883af3dc7d6c2c2f234"
+ 
+ /*
+ ** CAPI3REF: Run-Time Library Version Numbers
+diff --git a/dist/sqlite3.c b/dist/sqlite3.c
+index a12fd3e..3322b52 100644
+--- a/dist/sqlite3.c
++++ b/dist/sqlite3.c
+@@ -1149,7 +1149,7 @@ extern "C" {
+ */
+ #define SQLITE_VERSION        "3.22.0"
+ #define SQLITE_VERSION_NUMBER 3022000
+-#define SQLITE_SOURCE_ID      "2018-01-22 18:45:57 0c55d179733b46d8d0ba4d88e01a25e10677046ee3da1d5b1581e86726f2171d"
++#define SQLITE_SOURCE_ID      "2018-12-19 01:30:22 c255889bd95bd5430dc7ced3317011ae2abb483d6c9af883af3dc7d6c2c2f234"
+ 
+ /*
+ ** CAPI3REF: Run-Time Library Version Numbers
+@@ -150618,7 +150618,7 @@ static int fts3ScanInteriorNode(
+   const char *zCsr = zNode;       /* Cursor to iterate through node */
+   const char *zEnd = &zCsr[nNode];/* End of interior node buffer */
+   char *zBuffer = 0;              /* Buffer to load terms into */
+-  int nAlloc = 0;                 /* Size of allocated buffer */
++  i64 nAlloc = 0;                 /* Size of allocated buffer */
+   int isFirstTerm = 1;            /* True when processing first term on page */
+   sqlite3_int64 iChild;           /* Block id of child node to descend to */
+ 
+@@ -150656,14 +150656,14 @@ static int fts3ScanInteriorNode(
+     zCsr += fts3GetVarint32(zCsr, &nSuffix);
+     
+     assert( nPrefix>=0 && nSuffix>=0 );
+-    if( &zCsr[nSuffix]>zEnd ){
++    if( nPrefix>zCsr-zNode || nSuffix>zEnd-zCsr ){
+       rc = FTS_CORRUPT_VTAB;
+       goto finish_scan;
+     }
+-    if( nPrefix+nSuffix>nAlloc ){
++    if( (i64)nPrefix+nSuffix>nAlloc ){
+       char *zNew;
+-      nAlloc = (nPrefix+nSuffix) * 2;
+-      zNew = (char *)sqlite3_realloc(zBuffer, nAlloc);
++      nAlloc = ((i64)nPrefix+nSuffix) * 2;
++      zNew = (char *)sqlite3_realloc64(zBuffer, nAlloc);
+       if( !zNew ){
+         rc = SQLITE_NOMEM;
+         goto finish_scan;
+@@ -160274,15 +160274,19 @@ static int fts3SegReaderNext(
+   ** safe (no risk of overread) even if the node data is corrupted. */
+   pNext += fts3GetVarint32(pNext, &nPrefix);
+   pNext += fts3GetVarint32(pNext, &nSuffix);
+-  if( nPrefix<0 || nSuffix<=0 
+-   || &pNext[nSuffix]>&pReader->aNode[pReader->nNode] 
++  if( nSuffix<=0
++   || (&pReader->aNode[pReader->nNode] - pNext)<nSuffix
++   || nPrefix>pReader->nTermAlloc
+   ){
+     return FTS_CORRUPT_VTAB;
+   }
+ 
+-  if( nPrefix+nSuffix>pReader->nTermAlloc ){
+-    int nNew = (nPrefix+nSuffix)*2;
+-    char *zNew = sqlite3_realloc(pReader->zTerm, nNew);
++  /* Both nPrefix and nSuffix were read by fts3GetVarint32() and so are
++  ** between 0 and 0x7FFFFFFF. But the sum of the two may cause integer
++  ** overflow - hence the (i64) casts.  */
++  if( (i64)nPrefix+nSuffix>(i64)pReader->nTermAlloc ){
++    i64 nNew = ((i64)nPrefix+nSuffix)*2;
++    char *zNew = sqlite3_realloc64(pReader->zTerm, nNew);
+     if( !zNew ){
+       return SQLITE_NOMEM;
+     }
+@@ -160304,7 +160308,7 @@ static int fts3SegReaderNext(
+   ** b-tree node. And that the final byte of the doclist is 0x00. If either 
+   ** of these statements is untrue, then the data structure is corrupt.
+   */
+-  if( &pReader->aDoclist[pReader->nDoclist]>&pReader->aNode[pReader->nNode] 
++  if( (&pReader->aNode[pReader->nNode] - pReader->aDoclist)<pReader->nDoclist
+    || (pReader->nPopulate==0 && pReader->aDoclist[pReader->nDoclist-1])
+   ){
+     return FTS_CORRUPT_VTAB;
+@@ -162627,6 +162631,9 @@ static int nodeReaderNext(NodeReader *p){
+     }
+     p->iOff += fts3GetVarint32(&p->aNode[p->iOff], &nSuffix);
+ 
++    if( nPrefix>p->iOff || nSuffix>p->nNode-p->iOff ){
++      return SQLITE_CORRUPT_VTAB;
++    }
+     blobGrowBuffer(&p->term, nPrefix+nSuffix, &rc);
+     if( rc==SQLITE_OK ){
+       memcpy(&p->term.a[nPrefix], &p->aNode[p->iOff], nSuffix);
+@@ -162634,6 +162641,9 @@ static int nodeReaderNext(NodeReader *p){
+       p->iOff += nSuffix;
+       if( p->iChild==0 ){
+         p->iOff += fts3GetVarint32(&p->aNode[p->iOff], &p->nDoclist);
++        if( (p->nNode-p->iOff)<p->nDoclist ){
++          return SQLITE_CORRUPT_VTAB;
++        }
+         p->aDoclist = &p->aNode[p->iOff];
+         p->iOff += p->nDoclist;
+       }
+@@ -162641,7 +162651,6 @@ static int nodeReaderNext(NodeReader *p){
+   }
+ 
+   assert( p->iOff<=p->nNode );
+-
+   return rc;
+ }
+ 
+@@ -173122,7 +173131,8 @@ struct rbu_vfs {
+   sqlite3_vfs *pRealVfs;          /* Underlying VFS */
+   sqlite3_mutex *mutex;           /* Mutex to protect pMain */
+   sqlite3rbu *pRbu;               /* Owner RBU object */
+-  rbu_file *pMain;                /* Linked list of main db files */
++  rbu_file *pMain;                /* List of main db files */
++  rbu_file *pMainRbu;             /* List of main db files with pRbu!=0 */
+ };
+ 
+ /*
+@@ -173151,6 +173161,7 @@ struct rbu_file {
+   const char *zWal;               /* Wal filename for this main db file */
+   rbu_file *pWalFd;               /* Wal file descriptor for this main db */
+   rbu_file *pMainNext;            /* Next MAIN_DB file */
++  rbu_file *pMainRbuNext;         /* Next MAIN_DB file with pRbu!=0 */
+ };
+ 
+ /*
+@@ -174529,7 +174540,7 @@ static void rbuCreateImposterTable2(sqlite3rbu *p, RbuObjIter *pIter){
+         int iCid = sqlite3_column_int(pXInfo, 1);
+         int bDesc = sqlite3_column_int(pXInfo, 3);
+         const char *zCollate = (const char*)sqlite3_column_text(pXInfo, 4);
+-        zCols = rbuMPrintf(p, "%z%sc%d %s COLLATE %s", zCols, zComma, 
++        zCols = rbuMPrintf(p, "%z%sc%d %s COLLATE %Q", zCols, zComma,
+             iCid, pIter->azTblType[iCid], zCollate
+         );
+         zPk = rbuMPrintf(p, "%z%sc%d%s", zPk, zComma, iCid, bDesc?" DESC":"");
+@@ -174590,7 +174601,7 @@ static void rbuCreateImposterTable(sqlite3rbu *p, RbuObjIter *pIter){
+         ** "PRIMARY KEY" to the imposter table column declaration. */
+         zPk = "PRIMARY KEY ";
+       }
+-      zSql = rbuMPrintf(p, "%z%s\"%w\" %s %sCOLLATE %s%s", 
++      zSql = rbuMPrintf(p, "%z%s\"%w\" %s %sCOLLATE %Q%s",
+           zSql, zComma, zCol, pIter->azTblType[iCol], zPk, zColl,
+           (pIter->abNotNull[iCol] ? " NOT NULL" : "")
+       );
+@@ -176740,6 +176751,69 @@ static int rbuUpdateTempSize(rbu_file *pFd, sqlite3_int64 nNew){
+ }
+ 
+ /*
++** Add an item to the main-db lists, if it is not already present.
++**
++** There are two main-db lists. One for all file descriptors, and one
++** for all file descriptors with rbu_file.pDb!=0. If the argument has
++** rbu_file.pDb!=0, then it is assumed to already be present on the
++** main list and is only added to the pDb!=0 list.
++*/
++static void rbuMainlistAdd(rbu_file *p){
++  rbu_vfs *pRbuVfs = p->pRbuVfs;
++  rbu_file *pIter;
++  assert( (p->openFlags & SQLITE_OPEN_MAIN_DB) );
++  sqlite3_mutex_enter(pRbuVfs->mutex);
++  if( p->pRbu==0 ){
++    for(pIter=pRbuVfs->pMain; pIter; pIter=pIter->pMainNext);
++    p->pMainNext = pRbuVfs->pMain;
++    pRbuVfs->pMain = p;
++  }else{
++    for(pIter=pRbuVfs->pMainRbu; pIter && pIter!=p; pIter=pIter->pMainRbuNext){}
++    if( pIter==0 ){
++      p->pMainRbuNext = pRbuVfs->pMainRbu;
++      pRbuVfs->pMainRbu = p;
++    }
++  }
++  sqlite3_mutex_leave(pRbuVfs->mutex);
++}
++
++/*
++** Remove an item from the main-db lists.
++*/
++static void rbuMainlistRemove(rbu_file *p){
++  rbu_file **pp;
++  sqlite3_mutex_enter(p->pRbuVfs->mutex);
++  for(pp=&p->pRbuVfs->pMain; *pp && *pp!=p; pp=&((*pp)->pMainNext)){}
++  if( *pp ) *pp = p->pMainNext;
++  p->pMainNext = 0;
++  for(pp=&p->pRbuVfs->pMainRbu; *pp && *pp!=p; pp=&((*pp)->pMainRbuNext)){}
++  if( *pp ) *pp = p->pMainRbuNext;
++  p->pMainRbuNext = 0;
++  sqlite3_mutex_leave(p->pRbuVfs->mutex);
++}
++
++/*
++** Given that zWal points to a buffer containing a wal file name passed to
++** either the xOpen() or xAccess() VFS method, search the main-db list for
++** a file-handle opened by the same database connection on the corresponding
++** database file.
++**
++** If parameter bRbu is true, only search for file-descriptors with
++** rbu_file.pDb!=0.
++*/
++static rbu_file *rbuFindMaindb(rbu_vfs *pRbuVfs, const char *zWal, int bRbu){
++  rbu_file *pDb;
++  sqlite3_mutex_enter(pRbuVfs->mutex);
++  if( bRbu ){
++    for(pDb=pRbuVfs->pMainRbu; pDb && pDb->zWal!=zWal; pDb=pDb->pMainRbuNext){}
++  }else{
++    for(pDb=pRbuVfs->pMain; pDb && pDb->zWal!=zWal; pDb=pDb->pMainNext){}
++  }
++  sqlite3_mutex_leave(pRbuVfs->mutex);
++  return pDb;
++}
++
++/*
+ ** Close an rbu file.
+ */
+ static int rbuVfsClose(sqlite3_file *pFile){
+@@ -176756,17 +176830,14 @@ static int rbuVfsClose(sqlite3_file *pFile){
+   sqlite3_free(p->zDel);
+ 
+   if( p->openFlags & SQLITE_OPEN_MAIN_DB ){
+-    rbu_file **pp;
+-    sqlite3_mutex_enter(p->pRbuVfs->mutex);
+-    for(pp=&p->pRbuVfs->pMain; *pp!=p; pp=&((*pp)->pMainNext));
+-    *pp = p->pMainNext;
+-    sqlite3_mutex_leave(p->pRbuVfs->mutex);
++    rbuMainlistRemove(p);
+     rbuUnlockShm(p);
+     p->pReal->pMethods->xShmUnmap(p->pReal, 0);
+   }
+   else if( (p->openFlags & SQLITE_OPEN_DELETEONCLOSE) && p->pRbu ){
+     rbuUpdateTempSize(p, 0);
+   }
++  assert( p->pMainNext==0 && p->pRbuVfs->pMain!=p );
+ 
+   /* Close the underlying file handle */
+   rc = p->pReal->pMethods->xClose(p->pReal);
+@@ -177025,6 +177096,9 @@ static int rbuVfsFileControl(sqlite3_file *pFile, int op, void *pArg){
+       }else if( rc==SQLITE_NOTFOUND ){
+         pRbu->pTargetFd = p;
+         p->pRbu = pRbu;
++        if( p->openFlags & SQLITE_OPEN_MAIN_DB ){
++          rbuMainlistAdd(p);
++        }
+         if( p->pWalFd ) p->pWalFd->pRbu = pRbu;
+         rc = SQLITE_OK;
+       }
+@@ -177186,20 +177260,6 @@ static int rbuVfsShmUnmap(sqlite3_file *pFile, int delFlag){
+   return rc;
+ }
+ 
+-/*
+-** Given that zWal points to a buffer containing a wal file name passed to 
+-** either the xOpen() or xAccess() VFS method, return a pointer to the
+-** file-handle opened by the same database connection on the corresponding
+-** database file.
+-*/
+-static rbu_file *rbuFindMaindb(rbu_vfs *pRbuVfs, const char *zWal){
+-  rbu_file *pDb;
+-  sqlite3_mutex_enter(pRbuVfs->mutex);
+-  for(pDb=pRbuVfs->pMain; pDb && pDb->zWal!=zWal; pDb=pDb->pMainNext){}
+-  sqlite3_mutex_leave(pRbuVfs->mutex);
+-  return pDb;
+-}
+-
+ /* 
+ ** A main database named zName has just been opened. The following 
+ ** function returns a pointer to a buffer owned by SQLite that contains
+@@ -177278,7 +177338,7 @@ static int rbuVfsOpen(
+       pFd->zWal = rbuMainToWal(zName, flags);
+     }
+     else if( flags & SQLITE_OPEN_WAL ){
+-      rbu_file *pDb = rbuFindMaindb(pRbuVfs, zName);
++      rbu_file *pDb = rbuFindMaindb(pRbuVfs, zName, 0);
+       if( pDb ){
+         if( pDb->pRbu && pDb->pRbu->eStage==RBU_STAGE_OAL ){
+           /* This call is to open a *-wal file. Intead, open the *-oal. This
+@@ -177330,10 +177390,7 @@ static int rbuVfsOpen(
+     ** mutex protected linked list of all such files.  */
+     pFile->pMethods = &rbuvfs_io_methods;
+     if( flags & SQLITE_OPEN_MAIN_DB ){
+-      sqlite3_mutex_enter(pRbuVfs->mutex);
+-      pFd->pMainNext = pRbuVfs->pMain;
+-      pRbuVfs->pMain = pFd;
+-      sqlite3_mutex_leave(pRbuVfs->mutex);
++      rbuMainlistAdd(pFd);
+     }
+   }else{
+     sqlite3_free(pFd->zDel);
+@@ -177381,7 +177438,7 @@ static int rbuVfsAccess(
+   **      file opened instead.
+   */
+   if( rc==SQLITE_OK && flags==SQLITE_ACCESS_EXISTS ){
+-    rbu_file *pDb = rbuFindMaindb(pRbuVfs, zPath);
++    rbu_file *pDb = rbuFindMaindb(pRbuVfs, zPath, 1);
+     if( pDb && pDb->pRbu && pDb->pRbu->eStage==RBU_STAGE_OAL ){
+       if( *pResOut ){
+         rc = SQLITE_CANTOPEN;
+@@ -203345,7 +203402,7 @@ static void fts5SourceIdFunc(
+ ){
+   assert( nArg==0 );
+   UNUSED_PARAM2(nArg, apUnused);
+-  sqlite3_result_text(pCtx, "fts5: 2018-01-22 18:45:57 0c55d179733b46d8d0ba4d88e01a25e10677046ee3da1d5b1581e86726f2171d", -1, SQLITE_TRANSIENT);
++  sqlite3_result_text(pCtx, "fts5: 2018-12-19 01:30:22 c255889bd95bd5430dc7ced3317011ae2abb483d6c9af883af3dc7d6c2c2f234", -1, SQLITE_TRANSIENT);
+ }
+ 
+ static int fts5Init(sqlite3 *db){
+@@ -207613,9 +207670,9 @@ SQLITE_API int sqlite3_stmt_init(
+ #endif /* !defined(SQLITE_CORE) || defined(SQLITE_ENABLE_STMTVTAB) */
+ 
+ /************** End of stmt.c ************************************************/
+-#if __LINE__!=207604
++#if __LINE__!=207661
+ #undef SQLITE_SOURCE_ID
+-#define SQLITE_SOURCE_ID      "2018-01-22 18:45:57 0c55d179733b46d8d0ba4d88e01a25e10677046ee3da1d5b1581e86726f2alt2"
++#define SQLITE_SOURCE_ID      "2018-12-19 01:30:22 c255889bd95bd5430dc7ced3317011ae2abb483d6c9af883af3dc7d6c2c2alt2"
+ #endif
+ /* Return the source-id for this library */
+ SQLITE_API const char *sqlite3_sourceid(void){ return SQLITE_SOURCE_ID; }
+diff --git a/dist/sqlite3.h b/dist/sqlite3.h
+index d8138b7..57669e1 100644
+--- a/dist/sqlite3.h
++++ b/dist/sqlite3.h
+@@ -125,7 +125,7 @@ extern "C" {
+ */
+ #define SQLITE_VERSION        "3.22.0"
+ #define SQLITE_VERSION_NUMBER 3022000
+-#define SQLITE_SOURCE_ID      "2018-01-22 18:45:57 0c55d179733b46d8d0ba4d88e01a25e10677046ee3da1d5b1581e86726f2171d"
++#define SQLITE_SOURCE_ID      "2018-12-19 01:30:22 c255889bd95bd5430dc7ced3317011ae2abb483d6c9af883af3dc7d6c2c2f234"
+ 
+ /*
+ ** CAPI3REF: Run-Time Library Version Numbers
+-- 
+1.9.1
+

@@ -1,0 +1,48 @@
+From 6de1ac5f302e624b90104ba6b2c60366afa465f2 Mon Sep 17 00:00:00 2001
+From: "qiu.zeng" <qiu.zeng@amlogic.com>
+Date: Thu, 21 Feb 2019 13:35:03 +0800
+Subject: [PATCH] BT: repair bt sperker no sound [1/1]
+
+Change-Id: If01a95e6a2ff22704f718e0415f2e538a1057a72
+---
+ src/com/android/bluetooth/btservice/ActiveDeviceManager.java | 2 +-
+ src/com/android/bluetooth/newavrcp/AvrcpVolumeManager.java   | 4 ++++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
+ mode change 100644 => 100755 src/com/android/bluetooth/btservice/ActiveDeviceManager.java
+ mode change 100644 => 100755 src/com/android/bluetooth/newavrcp/AvrcpVolumeManager.java
+
+diff --git a/src/com/android/bluetooth/btservice/ActiveDeviceManager.java b/src/com/android/bluetooth/btservice/ActiveDeviceManager.java
+old mode 100644
+new mode 100755
+index e1f999d..f221ad2
+--- a/src/com/android/bluetooth/btservice/ActiveDeviceManager.java
++++ b/src/com/android/bluetooth/btservice/ActiveDeviceManager.java
+@@ -501,7 +501,7 @@ class ActiveDeviceManager {
+         if (DBG) {
+             Log.d(TAG, "wiredAudioDeviceConnected");
+         }
+-        setA2dpActiveDevice(null);
++        //setA2dpActiveDevice(null);
+         setHfpActiveDevice(null);
+         setHearingAidActiveDevice(null);
+     }
+diff --git a/src/com/android/bluetooth/newavrcp/AvrcpVolumeManager.java b/src/com/android/bluetooth/newavrcp/AvrcpVolumeManager.java
+old mode 100644
+new mode 100755
+index 4b87fac..c24da76
+--- a/src/com/android/bluetooth/newavrcp/AvrcpVolumeManager.java
++++ b/src/com/android/bluetooth/newavrcp/AvrcpVolumeManager.java
+@@ -153,6 +153,10 @@ class AvrcpVolumeManager extends AudioDeviceCallback {
+                 foundDevice = true;
+                 break;
+             }
++            if (addedDevices[i].getType() == AudioDeviceInfo.TYPE_WIRED_HEADSET) {
++                foundDevice = true;
++                break;
++            }
+         }
+ 
+         if (!foundDevice) {
+-- 
+1.9.1
+

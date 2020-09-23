@@ -1,0 +1,219 @@
+From b36d2da5bf358c25731041ab2eaa6a867891f9d8 Mon Sep 17 00:00:00 2001
+From: Abodunrinwa Toki <toki@google.com>
+Date: Thu, 29 Nov 2018 13:51:56 +0000
+Subject: [PATCH] security: Security patch from bulletin-2019-02-preview [7/21]
+
+PD# SWPL-6448
+
+RESTRICT AUTOMERGE Do not linkify text with RLO/LRO characters.
+
+Also don't show smart actions for selections in text with unsupported
+characters.
+
+Bug: 116321860
+Test: atest android.view.textclassifier.TextClassificationManagerTest \
+            android.text.util.cts.LinkifyTest \
+	    android.text.util.LinkifyTest \
+	    android.widget.TextViewActivityTest
+
+Change-Id: I01b5e936aa4dfc937a98f50e9fc8171666861a61
+(cherry picked from commit a69950ce18f85ea8514083a5e175450e17e93565)
+---
+ core/java/android/text/util/Linkify.java           | 37 ++++++++++++++++++++++
+ .../view/textclassifier/TextClassification.java    |  2 +-
+ .../view/textclassifier/TextLinksParams.java       |  7 ++++
+ .../android/widget/SelectionActionModeHelper.java  |  8 ++++-
+ .../TextClassificationManagerTest.java             | 12 +++++++
+ .../src/android/widget/TextViewActivityTest.java   | 13 ++++++++
+ 6 files changed, 77 insertions(+), 2 deletions(-)
+
+diff --git a/core/java/android/text/util/Linkify.java b/core/java/android/text/util/Linkify.java
+index c905f49..dc68da0 100644
+--- a/core/java/android/text/util/Linkify.java
++++ b/core/java/android/text/util/Linkify.java
+@@ -29,6 +29,7 @@ import android.text.Spanned;
+ import android.text.method.LinkMovementMethod;
+ import android.text.method.MovementMethod;
+ import android.text.style.URLSpan;
++import android.util.Log;
+ import android.util.Patterns;
+ import android.view.textclassifier.TextClassifier;
+ import android.view.textclassifier.TextLinks;
+@@ -77,6 +78,9 @@ import java.util.regex.Pattern;
+  */
+ 
+ public class Linkify {
++
++    private static final String LOG_TAG = "Linkify";
++
+     /**
+      *  Bit field indicating that web URLs should be matched in methods that
+      *  take an options mask
+@@ -246,6 +250,11 @@ public class Linkify {
+ 
+     private static boolean addLinks(@NonNull Spannable text, @LinkifyMask int mask,
+             @Nullable Context context) {
++        if (text != null && containsUnsupportedCharacters(text.toString())) {
++            android.util.EventLog.writeEvent(0x534e4554, "116321860", -1, "");
++            return false;
++        }
++
+         if (mask == 0) {
+             return false;
+         }
+@@ -292,6 +301,29 @@ public class Linkify {
+     }
+ 
+     /**
++     * Returns true if the specified text contains at least one unsupported character for applying
++     * links. Also logs the error.
++     *
++     * @param text the text to apply links to
++     * @hide
++     */
++    public static boolean containsUnsupportedCharacters(String text) {
++        if (text.contains("\u202C")) {
++            Log.e(LOG_TAG, "Unsupported character for applying links: u202C");
++            return true;
++        }
++        if (text.contains("\u202D")) {
++            Log.e(LOG_TAG, "Unsupported character for applying links: u202D");
++            return true;
++        }
++        if (text.contains("\u202E")) {
++            Log.e(LOG_TAG, "Unsupported character for applying links: u202E");
++            return true;
++        }
++        return false;
++    }
++
++    /**
+      *  Scans the text of the provided TextView and turns all occurrences of
+      *  the link types indicated in the mask into clickable links.  If matches
+      *  are found the movement method for the TextView is set to
+@@ -461,6 +493,11 @@ public class Linkify {
+     public static final boolean addLinks(@NonNull Spannable spannable, @NonNull Pattern pattern,
+             @Nullable  String defaultScheme, @Nullable String[] schemes,
+             @Nullable MatchFilter matchFilter, @Nullable TransformFilter transformFilter) {
++        if (spannable != null && containsUnsupportedCharacters(spannable.toString())) {
++            android.util.EventLog.writeEvent(0x534e4554, "116321860", -1, "");
++            return false;
++        }
++
+         final String[] schemesCopy;
+         if (defaultScheme == null) defaultScheme = "";
+         if (schemes == null || schemes.length < 1) {
+diff --git a/core/java/android/view/textclassifier/TextClassification.java b/core/java/android/view/textclassifier/TextClassification.java
+index 9511a9e..49ca969 100644
+--- a/core/java/android/view/textclassifier/TextClassification.java
++++ b/core/java/android/view/textclassifier/TextClassification.java
+@@ -104,7 +104,7 @@ public final class TextClassification implements Parcelable {
+     /**
+      * @hide
+      */
+-    static final TextClassification EMPTY = new TextClassification.Builder().build();
++    public static final TextClassification EMPTY = new TextClassification.Builder().build();
+ 
+     private static final String LOG_TAG = "TextClassification";
+     // TODO(toki): investigate a way to derive this based on device properties.
+diff --git a/core/java/android/view/textclassifier/TextLinksParams.java b/core/java/android/view/textclassifier/TextLinksParams.java
+index be4c3bc..c21206c 100644
+--- a/core/java/android/view/textclassifier/TextLinksParams.java
++++ b/core/java/android/view/textclassifier/TextLinksParams.java
+@@ -107,6 +107,13 @@ public final class TextLinksParams {
+         Preconditions.checkNotNull(textLinks);
+ 
+         final String textString = text.toString();
++
++        if (Linkify.containsUnsupportedCharacters(textString)) {
++            // Do not apply links to text containing unsupported characters.
++            android.util.EventLog.writeEvent(0x534e4554, "116321860", -1, "");
++            return TextLinks.STATUS_NO_LINKS_APPLIED;
++        }
++
+         if (!textString.startsWith(textLinks.getText())) {
+             return TextLinks.STATUS_DIFFERENT_TEXT;
+         }
+diff --git a/core/java/android/widget/SelectionActionModeHelper.java b/core/java/android/widget/SelectionActionModeHelper.java
+index 6cb0eaa..0d88e69 100644
+--- a/core/java/android/widget/SelectionActionModeHelper.java
++++ b/core/java/android/widget/SelectionActionModeHelper.java
+@@ -31,6 +31,7 @@ import android.text.Layout;
+ import android.text.Selection;
+ import android.text.Spannable;
+ import android.text.TextUtils;
++import android.text.util.Linkify;
+ import android.util.Log;
+ import android.view.ActionMode;
+ import android.view.textclassifier.SelectionEvent;
+@@ -1045,7 +1046,12 @@ public final class SelectionActionModeHelper {
+ 
+                 trimText();
+                 final TextClassification classification;
+-                if (mContext.getApplicationInfo().targetSdkVersion >= Build.VERSION_CODES.P) {
++                if (Linkify.containsUnsupportedCharacters(mText)) {
++                    // Do not show smart actions for text containing unsupported characters.
++                    android.util.EventLog.writeEvent(0x534e4554, "116321860", -1, "");
++                    classification = TextClassification.EMPTY;
++                } else if (mContext.getApplicationInfo().targetSdkVersion
++                        >= Build.VERSION_CODES.P) {
+                     final TextClassification.Request request =
+                             new TextClassification.Request.Builder(
+                                     mTrimmedText, mRelativeStart, mRelativeEnd)
+diff --git a/core/tests/coretests/src/android/view/textclassifier/TextClassificationManagerTest.java b/core/tests/coretests/src/android/view/textclassifier/TextClassificationManagerTest.java
+index c8a53cc..9015e92 100644
+--- a/core/tests/coretests/src/android/view/textclassifier/TextClassificationManagerTest.java
++++ b/core/tests/coretests/src/android/view/textclassifier/TextClassificationManagerTest.java
+@@ -39,6 +39,8 @@ import android.service.textclassifier.TextClassifierService;
+ import android.support.test.InstrumentationRegistry;
+ import android.support.test.filters.SmallTest;
+ import android.support.test.runner.AndroidJUnit4;
++import android.text.Spannable;
++import android.text.SpannableString;
+ 
+ import org.hamcrest.BaseMatcher;
+ import org.hamcrest.Description;
+@@ -307,6 +309,16 @@ public class TextClassificationManagerTest {
+     }
+ 
+     @Test
++    public void testApplyLinks_unsupportedCharacter() {
++        if (isTextClassifierDisabled()) return;
++        Spannable url = new SpannableString("\u202Emoc.diordna.com");
++        TextLinks.Request request = new TextLinks.Request.Builder(url).build();
++        assertEquals(
++                TextLinks.STATUS_NO_LINKS_APPLIED,
++                mClassifier.generateLinks(request).apply(url, 0, null));
++    }
++
++    @Test
+     public void testSetTextClassifier() {
+         TextClassifier classifier = mock(TextClassifier.class);
+         mTcm.setTextClassifier(classifier);
+diff --git a/core/tests/coretests/src/android/widget/TextViewActivityTest.java b/core/tests/coretests/src/android/widget/TextViewActivityTest.java
+index 70dc618..90758ba 100644
+--- a/core/tests/coretests/src/android/widget/TextViewActivityTest.java
++++ b/core/tests/coretests/src/android/widget/TextViewActivityTest.java
+@@ -983,6 +983,19 @@ public class TextViewActivityTest {
+     }
+ 
+     @Test
++    public void testNoAssistItemForTextFieldWithUnsupportedCharacters() throws Throwable {
++        useSystemDefaultTextClassifier();
++        final String text = "\u202Emoc.diordna.com";
++        final TextView textView = mActivity.findViewById(R.id.textview);
++        mActivityRule.runOnUiThread(() -> textView.setText(text));
++        mInstrumentation.waitForIdleSync();
++
++        onView(withId(R.id.textview)).perform(longPressOnTextAtIndex(text.indexOf('.')));
++        sleepForFloatingToolbarPopup();
++        assertFloatingToolbarDoesNotContainItem(android.R.id.textAssist);
++    }
++
++    @Test
+     public void testSelectionMetricsLogger_noAbandonAfterCopy() throws Throwable {
+         final List<SelectionEvent> selectionEvents = new ArrayList<>();
+         final TextClassifier classifier = new TextClassifier() {
+-- 
+1.9.1
+

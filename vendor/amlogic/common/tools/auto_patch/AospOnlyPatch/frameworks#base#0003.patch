@@ -1,0 +1,33 @@
+From 5d58cb42bd39fa3efd0cb3522d37b79cd2f4d6c8 Mon Sep 17 00:00:00 2001
+From: Riddle Hsu <riddlehsu@google.com>
+Date: Tue, 26 Jun 2018 18:03:05 +0800
+Subject: [PATCH] Get new surface if it was released from setWindowStopped
+
+If there is no visibility change, when the stopped state
+changed from true to false, there is no valid surface to use.
+
+Bug: 80170221
+Bug: 109774786
+Test: Sample app in bug link
+Test: atest ViewRootImplTest
+Change-Id: I2324ed32980aae5a3ec2efbd612e6c143c9a0022
+(cherry picked from commit af2748b28cb8364facf83d995003f36e1070a6cb)
+---
+ core/java/android/view/ViewRootImpl.java | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/core/java/android/view/ViewRootImpl.java b/core/java/android/view/ViewRootImpl.java
+index 89e1cb8..31556d2 100755
+--- a/core/java/android/view/ViewRootImpl.java
++++ b/core/java/android/view/ViewRootImpl.java
+@@ -1342,6 +1342,7 @@ public final class ViewRootImpl implements ViewParent,
+                 renderer.setStopped(mStopped);
+             }
+             if (!mStopped) {
++                mNewSurfaceNeeded = true;
+                 scheduleTraversals();
+             } else {
+                 if (renderer != null) {
+-- 
+1.9.1
+

@@ -1,0 +1,180 @@
+From ddda4f8dc8603fc5a6b267470599c69f11d7b602 Mon Sep 17 00:00:00 2001
+From: "shipeng.sun" <shipeng.sun@amlogic.com>
+Date: Tue, 2 Apr 2019 10:21:49 +0800
+Subject: [PATCH] sepolicy: Modify dnsmsq sepolicy for miracast [1/1]
+
+PD#SWPL-6136
+
+Problem:
+Modify dnsmsq sepolicy for miracast
+
+Solution:
+Modify dnsmsq sepolicy for miracast
+
+Verify:
+Verify on darwin
+
+Change-Id: If62c4e1643a2cbf156117f77ea7d1befe45c66d4
+Signed-off-by: shipeng.sun <shipeng.sun@amlogic.com>
+
+diff --git a/prebuilts/api/28.0/public/app.te b/prebuilts/api/28.0/public/app.te
+index 439c1f8..13ba8f0 100644
+--- a/prebuilts/api/28.0/public/app.te
++++ b/prebuilts/api/28.0/public/app.te
+@@ -368,7 +368,7 @@ with_asan(`allow appdomain asanwrapper_exec:file rx_file_perms;')
+ 
+ # Superuser capabilities.
+ # bluetooth requires net_admin and wake_alarm.
+-neverallow { appdomain -bluetooth } self:capability_class_set *;
++neverallow { appdomain -bluetooth -shell } self:capability_class_set *;
+ 
+ # Block device access.
+ neverallow appdomain dev_type:blk_file { read write };
+diff --git a/prebuilts/api/28.0/public/dnsmasq.te b/prebuilts/api/28.0/public/dnsmasq.te
+index 3aaefd3..c0cd758 100644
+--- a/prebuilts/api/28.0/public/dnsmasq.te
++++ b/prebuilts/api/28.0/public/dnsmasq.te
+@@ -23,3 +23,10 @@ allow dnsmasq netd:netlink_route_socket { read write };
+ allow dnsmasq netd:unix_stream_socket { read write };
+ allow dnsmasq netd:unix_dgram_socket { read write };
+ allow dnsmasq netd:udp_socket { read write };
++allow dnsmasq netd:fifo_file { getattr ioctl };
++allow dnsmasq netd:unix_stream_socket { getattr };
++allow dnsmasq shell_exec:file { getattr execute read open execute_no_trans };
++allow dnsmasq activity_service:service_manager { find };
++allow dnsmasq system_file:file { execute_no_trans };
++allow dnsmasq servicemanager:binder { call };
++allow dnsmasq system_server:binder { call transfer };
+\ No newline at end of file
+diff --git a/prebuilts/api/28.0/public/domain.te b/prebuilts/api/28.0/public/domain.te
+index e9337b6..806ef60 100644
+--- a/prebuilts/api/28.0/public/domain.te
++++ b/prebuilts/api/28.0/public/domain.te
+@@ -1362,6 +1362,7 @@ neverallow {
+   -vold
+   -vold_prepare_subdirs
+   -zygote
++  -shell
+ } self:capability dac_override;
+ neverallow { domain -traced_probes } self:capability dac_read_search;
+ 
+diff --git a/prebuilts/api/28.0/public/servicemanager.te b/prebuilts/api/28.0/public/servicemanager.te
+index 4c1b4e5..480f20e 100644
+--- a/prebuilts/api/28.0/public/servicemanager.te
++++ b/prebuilts/api/28.0/public/servicemanager.te
+@@ -21,6 +21,9 @@ allow servicemanager service_contexts_file:file r_file_perms;
+ allow servicemanager screen_control:dir { search };
+ allow servicemanager screen_control:file { read open };
+ allow servicemanager screen_control:process { getattr };
++allow servicemanager dnsmasq:dir { search };
++allow servicemanager dnsmasq:file { read open };
++allow servicemanager dnsmasq:process { getattr };
+ # nonplat_service_contexts only accessible on non full-treble devices
+ not_full_treble(`allow servicemanager nonplat_service_contexts_file:file r_file_perms;')
+ 
+diff --git a/prebuilts/api/28.0/public/shell.te b/prebuilts/api/28.0/public/shell.te
+index 307e103..2788cbf 100644
+--- a/prebuilts/api/28.0/public/shell.te
++++ b/prebuilts/api/28.0/public/shell.te
+@@ -198,6 +198,8 @@ allow shell sepolicy_file:file r_file_perms;
+ # Allow shell to start up vendor shell
+ allow shell vendor_shell_exec:file rx_file_perms;
+ 
++# Allow shell capability dac_override
++allow shell self:capability { dac_override };
+ ###
+ ### Neverallow rules
+ ###
+diff --git a/prebuilts/api/28.0/public/system_server.te b/prebuilts/api/28.0/public/system_server.te
+index b7035c3..dc87a47 100644
+--- a/prebuilts/api/28.0/public/system_server.te
++++ b/prebuilts/api/28.0/public/system_server.te
+@@ -5,3 +5,5 @@
+ type system_server, domain;
+ allow system_server screen_control:dir { search };
+ allow system_server screen_control:file { read getattr open };
++allow system_server netd:fifo_file { read getattr open };
++allow system_server dnsmasq:binder { call };
+\ No newline at end of file
+diff --git a/public/app.te b/public/app.te
+index 439c1f8..13ba8f0 100644
+--- a/public/app.te
++++ b/public/app.te
+@@ -368,7 +368,7 @@ with_asan(`allow appdomain asanwrapper_exec:file rx_file_perms;')
+ 
+ # Superuser capabilities.
+ # bluetooth requires net_admin and wake_alarm.
+-neverallow { appdomain -bluetooth } self:capability_class_set *;
++neverallow { appdomain -bluetooth -shell } self:capability_class_set *;
+ 
+ # Block device access.
+ neverallow appdomain dev_type:blk_file { read write };
+diff --git a/public/dnsmasq.te b/public/dnsmasq.te
+index 3aaefd3..c0cd758 100644
+--- a/public/dnsmasq.te
++++ b/public/dnsmasq.te
+@@ -23,3 +23,10 @@ allow dnsmasq netd:netlink_route_socket { read write };
+ allow dnsmasq netd:unix_stream_socket { read write };
+ allow dnsmasq netd:unix_dgram_socket { read write };
+ allow dnsmasq netd:udp_socket { read write };
++allow dnsmasq netd:fifo_file { getattr ioctl };
++allow dnsmasq netd:unix_stream_socket { getattr };
++allow dnsmasq shell_exec:file { getattr execute read open execute_no_trans };
++allow dnsmasq activity_service:service_manager { find };
++allow dnsmasq system_file:file { execute_no_trans };
++allow dnsmasq servicemanager:binder { call };
++allow dnsmasq system_server:binder { call transfer };
+\ No newline at end of file
+diff --git a/public/domain.te b/public/domain.te
+index e9337b6..806ef60 100644
+--- a/public/domain.te
++++ b/public/domain.te
+@@ -1362,6 +1362,7 @@ neverallow {
+   -vold
+   -vold_prepare_subdirs
+   -zygote
++  -shell
+ } self:capability dac_override;
+ neverallow { domain -traced_probes } self:capability dac_read_search;
+ 
+diff --git a/public/servicemanager.te b/public/servicemanager.te
+index 4c1b4e5..480f20e 100644
+--- a/public/servicemanager.te
++++ b/public/servicemanager.te
+@@ -21,6 +21,9 @@ allow servicemanager service_contexts_file:file r_file_perms;
+ allow servicemanager screen_control:dir { search };
+ allow servicemanager screen_control:file { read open };
+ allow servicemanager screen_control:process { getattr };
++allow servicemanager dnsmasq:dir { search };
++allow servicemanager dnsmasq:file { read open };
++allow servicemanager dnsmasq:process { getattr };
+ # nonplat_service_contexts only accessible on non full-treble devices
+ not_full_treble(`allow servicemanager nonplat_service_contexts_file:file r_file_perms;')
+ 
+diff --git a/public/shell.te b/public/shell.te
+index 307e103..2788cbf 100644
+--- a/public/shell.te
++++ b/public/shell.te
+@@ -198,6 +198,8 @@ allow shell sepolicy_file:file r_file_perms;
+ # Allow shell to start up vendor shell
+ allow shell vendor_shell_exec:file rx_file_perms;
+ 
++# Allow shell capability dac_override
++allow shell self:capability { dac_override };
+ ###
+ ### Neverallow rules
+ ###
+diff --git a/public/system_server.te b/public/system_server.te
+index b7035c3..dc87a47 100644
+--- a/public/system_server.te
++++ b/public/system_server.te
+@@ -5,3 +5,5 @@
+ type system_server, domain;
+ allow system_server screen_control:dir { search };
+ allow system_server screen_control:file { read getattr open };
++allow system_server netd:fifo_file { read getattr open };
++allow system_server dnsmasq:binder { call };
+\ No newline at end of file
+-- 
+1.9.1
+

@@ -1,0 +1,150 @@
+From cdce1b9a635333f83a3cc1b38962169d3ab46864 Mon Sep 17 00:00:00 2001
+From: Kuibao Zhang <kuibao.zhang@amlogic.com>
+Date: Tue, 23 Jul 2019 19:56:46 +0800
+Subject: [PATCH] BT: fix the issue caused by isFilterMatched
+
+PD#SWPL-11606
+
+Change-Id: I220a5b45729e2649e44500a9ab54a690417049f0
+---
+ .../AvailableMediaBluetoothDeviceUpdater.java      | 31 +++++++++++++++++----
+ .../bluetooth/ConnectedBluetoothDeviceUpdater.java | 32 ++++++++++++++++++----
+ 2 files changed, 52 insertions(+), 11 deletions(-)
+
+diff --git a/src/com/android/settings/bluetooth/AvailableMediaBluetoothDeviceUpdater.java b/src/com/android/settings/bluetooth/AvailableMediaBluetoothDeviceUpdater.java
+index 1e8515a..dfd515a 100755
+--- a/src/com/android/settings/bluetooth/AvailableMediaBluetoothDeviceUpdater.java
++++ b/src/com/android/settings/bluetooth/AvailableMediaBluetoothDeviceUpdater.java
+@@ -27,6 +27,9 @@ import com.android.settingslib.bluetooth.LocalBluetoothManager;
+ import com.android.settingslib.bluetooth.CachedBluetoothDevice;
+ import android.support.v7.preference.Preference;
+ 
++import com.android.settingslib.bluetooth.LocalBluetoothProfile;
++import com.android.settingslib.bluetooth.A2dpProfile;
++
+ /**
+  * Controller to maintain available media Bluetooth devices
+  */
+@@ -81,16 +84,31 @@ public class AvailableMediaBluetoothDeviceUpdater extends BluetoothDeviceUpdater
+     public boolean isFilterMatched(CachedBluetoothDevice cachedDevice) {
+         final int audioMode = mAudioManager.getMode();
+         final int currentAudioProfile;
++        boolean profileConnected = false;
++        boolean a2dpProfile = false;
++        for (LocalBluetoothProfile profile : cachedDevice.getProfiles()) {
++            int connectionStatus = cachedDevice.getProfileConnectionState(profile);
++            switch (connectionStatus) {
++                case BluetoothProfile.STATE_CONNECTED:
++                    profileConnected = true;
++                    if (profile.isProfileReady()) {
++                        if (profile instanceof A2dpProfile)
++                            a2dpProfile = true;
++                    }
++            break;
++            }
++        }
+ 
+         if (audioMode == AudioManager.MODE_RINGTONE
+                 || audioMode == AudioManager.MODE_IN_CALL
+                 || audioMode == AudioManager.MODE_IN_COMMUNICATION) {
+             // in phone call
+             currentAudioProfile = BluetoothProfile.HEADSET;
+-        } else {
++        } else if (a2dpProfile) {
+             // without phone call
+-            currentAudioProfile = BluetoothProfile.A2DP_SINK;
+-        }
++            currentAudioProfile = BluetoothProfile.A2DP;
++        } else
++            currentAudioProfile = 0;
+ 
+         boolean isFilterMatched = false;
+         if (isDeviceConnected(cachedDevice)) {
+@@ -104,12 +122,15 @@ public class AvailableMediaBluetoothDeviceUpdater extends BluetoothDeviceUpdater
+             // If current audio profile is headset,
+             // show the bluetooth device that have headset profile.
+             switch (currentAudioProfile) {
+-                case BluetoothProfile.A2DP_SINK:
+-                    isFilterMatched = cachedDevice.isA2dpSinkDevice();
++                 case BluetoothProfile.A2DP:
++                     isFilterMatched = cachedDevice.isA2dpDevice();
+                     break;
+                 case BluetoothProfile.HEADSET:
+                     isFilterMatched = cachedDevice.isHfpDevice();
+                     break;
++                default:
++                    isFilterMatched= profileConnected;
++                break;
+             }
+             if (DBG) {
+                 Log.d(TAG, "isFilterMatched() device : " +
+diff --git a/src/com/android/settings/bluetooth/ConnectedBluetoothDeviceUpdater.java b/src/com/android/settings/bluetooth/ConnectedBluetoothDeviceUpdater.java
+index e2a3bed..60e002a 100755
+--- a/src/com/android/settings/bluetooth/ConnectedBluetoothDeviceUpdater.java
++++ b/src/com/android/settings/bluetooth/ConnectedBluetoothDeviceUpdater.java
+@@ -28,6 +28,9 @@ import com.android.settings.dashboard.DashboardFragment;
+ import com.android.settingslib.bluetooth.CachedBluetoothDevice;
+ import com.android.settingslib.bluetooth.LocalBluetoothManager;
+ 
++import com.android.settingslib.bluetooth.LocalBluetoothProfile;
++import com.android.settingslib.bluetooth.A2dpProfile;
++
+ /**
+  * Controller to maintain connected bluetooth devices
+  */
+@@ -81,16 +84,30 @@ public class ConnectedBluetoothDeviceUpdater extends BluetoothDeviceUpdater {
+     public boolean isFilterMatched(CachedBluetoothDevice cachedDevice) {
+         final int audioMode = mAudioManager.getMode();
+         final int currentAudioProfile;
+-
++        boolean profileConnected = false;
++        boolean a2dpProfile = false;
++        for (LocalBluetoothProfile profile : cachedDevice.getProfiles()) {
++            int connectionStatus = cachedDevice.getProfileConnectionState(profile);
++            switch (connectionStatus) {
++                case BluetoothProfile.STATE_CONNECTED:
++                    profileConnected = true;
++                    if (profile.isProfileReady()) {
++                        if (profile instanceof A2dpProfile)
++                            a2dpProfile = true;
++                    }
++            break;
++            }
++        }
+         if (audioMode == AudioManager.MODE_RINGTONE
+                 || audioMode == AudioManager.MODE_IN_CALL
+                 || audioMode == AudioManager.MODE_IN_COMMUNICATION) {
+             // in phone call
+             currentAudioProfile = BluetoothProfile.HEADSET;
+-        } else {
++        } else if (a2dpProfile) {
+             // without phone call
+-            currentAudioProfile = BluetoothProfile.A2DP_SINK;
+-        }
++            currentAudioProfile = BluetoothProfile.A2DP;
++        } else
++            currentAudioProfile=0;
+ 
+         boolean isFilterMatched = false;
+         if (isDeviceConnected(cachedDevice)) {
+@@ -105,12 +122,15 @@ public class ConnectedBluetoothDeviceUpdater extends BluetoothDeviceUpdater {
+             // If current audio profile is headset,
+             // show the bluetooth device that doesn't have headset profile.
+             switch (currentAudioProfile) {
+-                case BluetoothProfile.A2DP_SINK:
+-                    isFilterMatched = !cachedDevice.isA2dpSinkDevice();
++                case BluetoothProfile.A2DP:
++                    isFilterMatched = !cachedDevice.isA2dpDevice();
+                     break;
+                 case BluetoothProfile.HEADSET:
+                     isFilterMatched = !cachedDevice.isHfpDevice();
+                     break;
++                default:
++                    isFilterMatched= profileConnected;
++                break;
+             }
+             if (DBG) {
+                 Log.d(TAG, "isFilterMatched() device : " +
+-- 
+1.9.1
+

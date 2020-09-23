@@ -1,0 +1,118 @@
+From 4b322415dd773636de2d6cde29db69c4a69ee680 Mon Sep 17 00:00:00 2001
+From: baocheng sun <baocheng.sun@amlogic.com>
+Date: Wed, 2 Oct 2019 03:52:12 -0400
+Subject: [PATCH] configstore: add framebuffer configs [1/1]
+
+PD#SWPL-14734
+
+Problem:
+add full active mode
+
+Solution:
+add full active mode
+
+Verify:
+verified on franklin
+
+Change-Id: Ia151f2a3d5a712ef7d52edd0912f986d8b98e59c
+Signed-off-by: baocheng sun <baocheng.sun@amlogic.com>
+---
+ configstore/1.0/ISurfaceFlingerConfigs.hal        |  6 ++++++
+ configstore/1.1/default/SurfaceFlingerConfigs.cpp | 20 ++++++++++++++++++++
+ configstore/1.1/default/SurfaceFlingerConfigs.h   |  3 +++
+ configstore/1.1/default/surfaceflinger.mk         |  8 ++++++++
+ current.txt                                       |  2 +-
+ 5 files changed, 38 insertions(+), 1 deletion(-)
+
+diff --git a/configstore/1.0/ISurfaceFlingerConfigs.hal b/configstore/1.0/ISurfaceFlingerConfigs.hal
+index 5f975bd..29a0ecd 100644
+--- a/configstore/1.0/ISurfaceFlingerConfigs.hal
++++ b/configstore/1.0/ISurfaceFlingerConfigs.hal
+@@ -114,4 +114,10 @@ interface ISurfaceFlingerConfigs {
+      * hardware.graphics.allocator@2.0::IAllocator service.
+      */
+     startGraphicsAllocatorService() generates(OptionalBool value);
++
++    /**
++     * Returns the primary framebuffer width and height
++     */
++    primaryDisplayFramebufferWidth() generates(OptionalInt32 value);
++    primaryDisplayFramebufferHeight() generates(OptionalInt32 value);
+ };
+diff --git a/configstore/1.1/default/SurfaceFlingerConfigs.cpp b/configstore/1.1/default/SurfaceFlingerConfigs.cpp
+index da3081c..849564e 100644
+--- a/configstore/1.1/default/SurfaceFlingerConfigs.cpp
++++ b/configstore/1.1/default/SurfaceFlingerConfigs.cpp
+@@ -191,6 +191,26 @@ Return<void> SurfaceFlingerConfigs::primaryDisplayOrientation(
+     return Void();
+ }
+ 
++Return<void> SurfaceFlingerConfigs::primaryDisplayFramebufferWidth(
++        primaryDisplayFramebufferWidth_cb _hidl_cb) {
++#ifdef CONFIGSTORE_PRIMAY_FRAMEBUFFER_WIDTH
++    _hidl_cb({true, CONFIGSTORE_PRIMAY_FRAMEBUFFER_WIDTH});
++#else
++    _hidl_cb({false, 0});
++#endif
++    return Void();
++}
++
++Return<void> SurfaceFlingerConfigs::primaryDisplayFramebufferHeight(
++        primaryDisplayFramebufferHeight_cb _hidl_cb) {
++#ifdef CONFIGSTORE_PRIMAY_FRAMEBUFFER_HEIGHT
++    _hidl_cb({true, CONFIGSTORE_PRIMAY_FRAMEBUFFER_HEIGHT});
++#else
++    _hidl_cb({false, 0});
++#endif
++    return Void();
++}
++
+ // Methods from ::android::hidl::base::V1_0::IBase follow.
+ 
+ }  // namespace implementation
+diff --git a/configstore/1.1/default/SurfaceFlingerConfigs.h b/configstore/1.1/default/SurfaceFlingerConfigs.h
+index 3714e81..bea7335 100644
+--- a/configstore/1.1/default/SurfaceFlingerConfigs.h
++++ b/configstore/1.1/default/SurfaceFlingerConfigs.h
+@@ -36,6 +36,9 @@ struct SurfaceFlingerConfigs : public ISurfaceFlingerConfigs {
+     // ::android::hardware::configstore::V1_1::ISurfaceFlingerConfigs follow.
+     Return<void> primaryDisplayOrientation(primaryDisplayOrientation_cb _hidl_cb) override;
+ 
++    Return<void> primaryDisplayFramebufferWidth(primaryDisplayFramebufferWidth_cb _hidl_cb) override;
++    Return<void> primaryDisplayFramebufferHeight(primaryDisplayFramebufferHeight_cb _hidl_cb) override;
++
+     // Methods from ::android::hidl::base::V1_0::IBase follow.
+ };
+ 
+diff --git a/configstore/1.1/default/surfaceflinger.mk b/configstore/1.1/default/surfaceflinger.mk
+index 51f06e1..a21f851 100644
+--- a/configstore/1.1/default/surfaceflinger.mk
++++ b/configstore/1.1/default/surfaceflinger.mk
+@@ -62,3 +62,11 @@ endif
+ ifneq ($(SF_PRIMARY_DISPLAY_ORIENTATION),)
+     LOCAL_CFLAGS += -DPRIMARY_DISPLAY_ORIENTATION=$(SF_PRIMARY_DISPLAY_ORIENTATION)
+ endif
++
++ifneq ($(CONFIGSTORE_PRIMAY_FRAMEBUFFER_WIDTH), )
++    LOCAL_CFLAGS += -DCONFIGSTORE_PRIMAY_FRAMEBUFFER_WIDTH=$(CONFIGSTORE_PRIMAY_FRAMEBUFFER_WIDTH)
++endif
++
++ifneq ($(CONFIGSTORE_PRIMAY_FRAMEBUFFER_HEIGHT), )
++    LOCAL_CFLAGS += -DCONFIGSTORE_PRIMAY_FRAMEBUFFER_HEIGHT=$(CONFIGSTORE_PRIMAY_FRAMEBUFFER_HEIGHT)
++endif
+diff --git a/current.txt b/current.txt
+index 4f574e9..4eaca30 100644
+--- a/current.txt
++++ b/current.txt
+@@ -52,7 +52,7 @@ b32f9aeaf1c442195eb06ffc7600968c919d005b2718874f09c57287fae55918 android.hardwar
+ 5ba7947cee515d7a2359bfcbfb9678c1c3a768c288471919ac095b96ae6f3d40 android.hardware.camera.metadata@3.2::types
+ f7e299d85033ac52d1095a35784fcfeaff43603f58c751e4153c85bbade3b330 android.hardware.camera.provider@2.4::ICameraProvider
+ a501ca1aecd09f1b9fd70a9af84205430dbd49a808e8fa395d363b9902e6f58c android.hardware.camera.provider@2.4::ICameraProviderCallback
+-7f5fe8f4f8a24037153c504d8b4d3313c2ce33d81c8c69fe5194ddd2d4080e72 android.hardware.configstore@1.0::ISurfaceFlingerConfigs
++72083151d78bc29bad19b9eb13df91cc0000e1d96422e3c79bc87ee961586f6b android.hardware.configstore@1.0::ISurfaceFlingerConfigs
+ 87beacc481897cf02fb1628d75e68133de6d74d4cffe582cda2f5e16bdd74516 android.hardware.configstore@1.0::types
+ a5ae0fe8667f0b1af09b13e72d29600f4eb3853b257079c45a99b6f4a3360649 android.hardware.contexthub@1.0::IContexthub
+ 2ab3054c2d9302d8417ee7495353a2887fe338f913276f2eb41e80f11395ec2e android.hardware.contexthub@1.0::IContexthubCallback
+-- 
+2.7.4
+

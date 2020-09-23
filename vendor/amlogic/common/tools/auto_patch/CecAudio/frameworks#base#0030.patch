@@ -1,0 +1,337 @@
+From 4f95b1e8c2882b9f4dc5637846bab96e6ceb2e95 Mon Sep 17 00:00:00 2001
+From: xian <an.xi@amlogic.com>
+Date: Tue, 17 Sep 2019 03:24:42 -0400
+Subject: [PATCH] SystemServer: fix audio system platform can't send keyevent
+ issue [1/2]
+
+PD#SWPL-11832
+
+Problem:
+audio system platform can't send keyevent to playback
+
+Solution:
+add framework support
+
+Verify:
+verify it on T962E2 and Ampere
+
+Change-Id: I4734aea4f752599ec2af25983e57ad6fe2ee801b
+Signed-off-by: an.xi <an.xi@amlogic.com>
+---
+ api/system-current.txt                             |  6 ++-
+ .../hardware/hdmi/HdmiAudioSystemClient.java       | 55 ++++++++++++++++++++++
+ .../android/hardware/hdmi/HdmiControlManager.java  | 28 ++++++++---
+ core/java/android/hardware/hdmi/HdmiTvClient.java  |  2 +-
+ media/java/android/media/tv/TvInputManager.java    |  1 +
+ .../server/hdmi/HdmiCecLocalDevicePlayback.java    |  2 +-
+ .../android/server/hdmi/HdmiCecLocalDeviceTv.java  |  6 ++-
+ .../android/server/hdmi/HdmiControlService.java    | 22 +++++----
+ 8 files changed, 103 insertions(+), 19 deletions(-)
+ create mode 100644 core/java/android/hardware/hdmi/HdmiAudioSystemClient.java
+ mode change 100755 => 100644 core/java/android/hardware/hdmi/HdmiTvClient.java
+ mode change 100644 => 100755 services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
+ mode change 100644 => 100755 services/core/java/com/android/server/hdmi/HdmiControlService.java
+
+diff --git a/api/system-current.txt b/api/system-current.txt
+index 9083a90..4153093 100644
+--- a/api/system-current.txt
++++ b/api/system-current.txt
+@@ -1274,6 +1274,9 @@ package android.hardware.display {
+ 
+ package android.hardware.hdmi {
+ 
++  public final class HdmiAudioSystemClient extends android.hardware.hdmi.HdmiTvClient {
++  }
++
+   public abstract class HdmiClient {
+     method public android.hardware.hdmi.HdmiDeviceInfo getActiveSource();
+     method public void sendKeyEvent(int, boolean);
+@@ -1283,6 +1286,7 @@ package android.hardware.hdmi {
+ 
+   public final class HdmiControlManager {
+     method public void addHotplugEventListener(android.hardware.hdmi.HdmiControlManager.HotplugEventListener);
++    method public android.hardware.hdmi.HdmiTvClient getAudioSystemClient();
+     method public android.hardware.hdmi.HdmiClient getClient(int);
+     method public android.hardware.hdmi.HdmiPlaybackClient getPlaybackClient();
+     method public android.hardware.hdmi.HdmiTvClient getTvClient();
+@@ -1533,7 +1537,7 @@ package android.hardware.hdmi {
+   public static final class HdmiTimerRecordSources.TimerRecordSource {
+   }
+ 
+-  public final class HdmiTvClient extends android.hardware.hdmi.HdmiClient {
++  public class HdmiTvClient extends android.hardware.hdmi.HdmiClient {
+     method public void clearTimerRecording(int, int, android.hardware.hdmi.HdmiTimerRecordSources.TimerRecordSource);
+     method public void deviceSelect(int, android.hardware.hdmi.HdmiTvClient.SelectCallback);
+     method public java.util.List<android.hardware.hdmi.HdmiDeviceInfo> getDeviceList();
+diff --git a/core/java/android/hardware/hdmi/HdmiAudioSystemClient.java b/core/java/android/hardware/hdmi/HdmiAudioSystemClient.java
+new file mode 100644
+index 0000000..1bbe6d5
+--- /dev/null
++++ b/core/java/android/hardware/hdmi/HdmiAudioSystemClient.java
+@@ -0,0 +1,55 @@
++/*
++ * Copyright (C) 2014 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++package android.hardware.hdmi;
++
++import android.annotation.NonNull;
++import android.annotation.SystemApi;
++import android.hardware.hdmi.HdmiRecordSources.RecordSource;
++import android.hardware.hdmi.HdmiTimerRecordSources.TimerRecordSource;
++import android.os.RemoteException;
++import android.util.Log;
++
++import libcore.util.EmptyArray;
++
++import java.util.Collections;
++import java.util.List;
++
++/**
++ * HdmiTvClient represents HDMI-CEC logical device of type TV in the Android system
++ * which acts as TV/Display. It provides with methods that manage, interact with other
++ * devices on the CEC bus.
++ *
++ * @hide
++ */
++@SystemApi
++public final class HdmiAudioSystemClient extends HdmiTvClient {
++    private static final String TAG = "HdmiAudioSystemClient";
++
++    /* package */ HdmiAudioSystemClient(IHdmiControlService service) {
++        super(service);
++    }
++
++    // Factory method for HdmiTvClient.
++    // Declared package-private. Accessed by HdmiControlManager only.
++    /* package */ static HdmiAudioSystemClient create(IHdmiControlService service) {
++        return new HdmiAudioSystemClient(service);
++    }
++
++    @Override
++    public int getDeviceType() {
++        return HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM;
++    }
++}
+diff --git a/core/java/android/hardware/hdmi/HdmiControlManager.java b/core/java/android/hardware/hdmi/HdmiControlManager.java
+index 844240e..d2df227 100644
+--- a/core/java/android/hardware/hdmi/HdmiControlManager.java
++++ b/core/java/android/hardware/hdmi/HdmiControlManager.java
+@@ -263,8 +263,8 @@ public final class HdmiControlManager {
+     private final boolean mHasPlaybackDevice;
+     // True if we have a logical device of type TV hosted in the system.
+     private final boolean mHasTvDevice;
+-
+-    private final boolean mHasSwitchDevice;
++    // True if we have a logical device of type AudioSystem hosted in the system.
++    private final boolean mHasAudioSystemDevice;
+ 
+     /**
+      * {@hide} - hide this constructor because it has a parameter of type IHdmiControlService,
+@@ -283,10 +283,7 @@ public final class HdmiControlManager {
+         }
+         mHasTvDevice = hasDeviceType(types, HdmiDeviceInfo.DEVICE_TV);
+         mHasPlaybackDevice = hasDeviceType(types, HdmiDeviceInfo.DEVICE_PLAYBACK);
+-        mHasSwitchDevice = hasDeviceType(types, HdmiDeviceInfo.DEVICE_TV)
+-            || hasDeviceType(types, HdmiDeviceInfo.DEVICE_TUNER)
+-            || hasDeviceType(types, HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM);
+-
++        mHasAudioSystemDevice = hasDeviceType(types, HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM);
+     }
+ 
+     private static boolean hasDeviceType(int[] types, int type) {
+@@ -313,13 +310,17 @@ public final class HdmiControlManager {
+     @SuppressLint("Doclava125")
+     public HdmiClient getClient(int type) {
+         if (mService == null) {
++            Log.e(TAG, "getClient hdmi service null!");
+             return null;
+         }
++        Log.d(TAG, "getClient type " + type);
+         switch (type) {
+             case HdmiDeviceInfo.DEVICE_TV:
+                 return mHasTvDevice ? new HdmiTvClient(mService) : null;
+             case HdmiDeviceInfo.DEVICE_PLAYBACK:
+                 return mHasPlaybackDevice ? new HdmiPlaybackClient(mService) : null;
++            case HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM:
++                return mHasAudioSystemDevice ? new HdmiAudioSystemClient(mService) : null;
+             default:
+                 return null;
+         }
+@@ -356,6 +357,21 @@ public final class HdmiControlManager {
+     }
+ 
+     /**
++     * Gets an object that represents an HDMI-CEC logical device of type AudioSystem on the system.
++     *
++     * <p>Used to send HDMI control messages to other devices and manage them through
++     * HDMI bus. It is also possible to communicate with other logical devices hosted in the same
++     * system if the system is configured to host more than one type of HDMI-CEC logical devices.
++     *
++     * @return {@link HdmiTvClient} instance. {@code null} on failure.
++     */
++    @Nullable
++    @SuppressLint("Doclava125")
++    public HdmiTvClient getAudioSystemClient() {
++        return (HdmiTvClient) getClient(HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM);
++    }
++
++    /**
+      * Controls standby mode of the system. It will also try to turn on/off the connected devices if
+      * necessary.
+      *
+diff --git a/core/java/android/hardware/hdmi/HdmiTvClient.java b/core/java/android/hardware/hdmi/HdmiTvClient.java
+old mode 100755
+new mode 100644
+index 73770ef..66d7ef5
+--- a/core/java/android/hardware/hdmi/HdmiTvClient.java
++++ b/core/java/android/hardware/hdmi/HdmiTvClient.java
+@@ -35,7 +35,7 @@ import java.util.List;
+  * @hide
+  */
+ @SystemApi
+-public final class HdmiTvClient extends HdmiClient {
++public class HdmiTvClient extends HdmiClient {
+     private static final String TAG = "HdmiTvClient";
+ 
+     IHdmiInputChangeListener mInputChangeListener;
+diff --git a/media/java/android/media/tv/TvInputManager.java b/media/java/android/media/tv/TvInputManager.java
+index 143182f..9e26742 100644
+--- a/media/java/android/media/tv/TvInputManager.java
++++ b/media/java/android/media/tv/TvInputManager.java
+@@ -1104,6 +1104,7 @@ public final class TvInputManager {
+             @Override
+             public void onInputAdded(String inputId) {
+                 synchronized (mLock) {
++                    Log.d(TAG, "onInputAdded inputId " + inputId);
+                     mStateMap.put(inputId, INPUT_STATE_CONNECTED);
+                     for (TvInputCallbackRecord record : mCallbackRecords) {
+                         record.postInputAdded(inputId);
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java b/services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java
+index 1afd340..60f8227 100755
+--- a/services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java
++++ b/services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java
+@@ -90,8 +90,8 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
+         startQueuedActions();
+         boolean isOneTouchPlayEnabled =
+             mService.readBooleanSetting("hdmi_control_one_touch_play_enabled", true);
++        Slog.d(TAG, "onAddressAllocated " + logicalAddress + " " + reason + " isOneTouchPlayEnabled " + isOneTouchPlayEnabled);
+         if (isOneTouchPlayEnabled) {
+-            Slog.d(TAG, "onAddressAllocated trigger One Touch Play.");
+             oneTouchPlay(new IHdmiControlCallback.Stub() {
+                     @Override
+                     public void onComplete(int result) {
+diff --git a/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java b/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
+old mode 100644
+new mode 100755
+index d1a5b5e..06c68af
+--- a/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
++++ b/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java
+@@ -181,6 +181,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+     @ServiceThreadOnly
+     private void addTvInput(String inputId, int deviceId) {
+         assertRunOnServiceThread();
++        Slog.d(TAG, "addTvInput inputId " + inputId + " deviceId " + deviceId);
+         mTvInputs.put(inputId, deviceId);
+     }
+ 
+@@ -387,6 +388,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+     @ServiceThreadOnly
+     void updateActiveInput(int path, boolean notifyInputChange) {
+         assertRunOnServiceThread();
++        Slog.d(TAG, "updateActiveInput " + path + " " + notifyInputChange);
+         // Seq #15
+         setActivePath(path);
+         // TODO: Handle PAP/PIP case.
+@@ -487,7 +489,9 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+         int logicalAddress = message.getSource();
+         int physicalAddress = HdmiUtils.twoBytesToInt(message.getParams());
+         HdmiDeviceInfo info = getCecDeviceInfo(logicalAddress);
++        HdmiLogger.debug("handleActiveSource logicalAddress %X physicalAddress %X", logicalAddress, physicalAddress);
+         if (info == null) {
++            Slog.d(TAG, "handleActiveSource device info null");
+             if (!handleNewDeviceAtTheTailOfActivePath(physicalAddress)) {
+                 HdmiLogger.debug("Device info %X not found; buffering the command", logicalAddress);
+                 mDelayedMessageBuffer.add(message);
+@@ -747,6 +751,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+         // but only the display is set to blank. Then the command leads to the effect of
+         // turning on the display by the invocation of PowerManager.wakeUp().
+         if (mService.isPowerStandbyOrTransient() && mAutoWakeup) {
++            Slog.d(TAG, "handleTextViewOn wakeup");
+             mService.wakeUp();
+         }
+         return true;
+@@ -1759,7 +1764,6 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
+     @ServiceThreadOnly
+     void onHotplug(int portId, boolean connected) {
+         assertRunOnServiceThread();
+-
+         if (!connected) {
+             removeCecSwitches(portId);
+         }
+diff --git a/services/core/java/com/android/server/hdmi/HdmiControlService.java b/services/core/java/com/android/server/hdmi/HdmiControlService.java
+old mode 100644
+new mode 100755
+index c7e6f7a..80ad4b1
+--- a/services/core/java/com/android/server/hdmi/HdmiControlService.java
++++ b/services/core/java/com/android/server/hdmi/HdmiControlService.java
+@@ -1382,6 +1382,7 @@ public final class HdmiControlService extends SystemService {
+             runOnServiceThreadAtFrontOfQueue(new Runnable() {
+                 @Override
+                 public void run() {
++                    HdmiLogger.debug("sendKeyEvent deviceType " + deviceType + " keyCode " + keyCode);
+                     HdmiMhlLocalDeviceStub device = mMhlController.getLocalDevice(mActivePortId);
+                     if (device != null) {
+                         device.sendKeyEvent(keyCode, isPressed);
+@@ -1549,18 +1550,20 @@ public final class HdmiControlService extends SystemService {
+         public List<HdmiDeviceInfo> getDeviceList() {
+             enforceAccessPermission();
+             HdmiCecLocalDeviceTv tv = tv();
+-            if (tv != null) {
+-                synchronized (mLock) {
++            synchronized (mLock) {
++                if (tv != null) {
++                    Slog.d(TAG, "getDeviceList tv " + tv);
+                     return tv.getSafeCecDevicesLocked();
+-                }
+-            } else {
+-                HdmiCecLocalDeviceAudioSystem audioSystem = audioSystem();
+-                synchronized (mLock) {
+-                    return (audioSystem == null)
+-                        ? Collections.<HdmiDeviceInfo>emptyList()
+-                        : audioSystem.getSafeCecDevicesLocked();
++                } else {
++                    HdmiCecLocalDeviceAudioSystem audioSystem = audioSystem();
++                    if (audioSystem != null) {
++                        Slog.d(TAG, "getDeviceList audioSystem " + audioSystem);
++                        return audioSystem.getSafeCecDevicesLocked();
++                    }
+                 }
+             }
++            Slog.e(TAG, "getDeviceList empty!");
++            return Collections.<HdmiDeviceInfo>emptyList();
+         }
+ 
+         @Override
+@@ -1937,6 +1940,7 @@ public final class HdmiControlService extends SystemService {
+         @Override
+         public void binderDied() {
+             synchronized (mLock) {
++                Slog.d(TAG, "InputChangeListenerRecord binderDied");
+                 if (mInputChangeListenerRecord == this) {
+                     mInputChangeListenerRecord = null;
+                 }
+-- 
+2.7.4
+

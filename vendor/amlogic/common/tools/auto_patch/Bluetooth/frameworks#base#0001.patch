@@ -1,0 +1,37 @@
+From 85c850fd0b9bdb3260c6f4c010d2580b9250f4e5 Mon Sep 17 00:00:00 2001
+From: "qiu.zeng" <qiu.zeng@amlogic.com>
+Date: Wed, 31 Oct 2018 00:22:21 +0800
+Subject: [PATCH] BT: multi device interference problem [1/1]
+
+Change-Id: I241c2663d4ae5086c240c71c6037d56628b73552
+---
+ core/java/android/bluetooth/BluetoothA2dp.java | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/core/java/android/bluetooth/BluetoothA2dp.java b/core/java/android/bluetooth/BluetoothA2dp.java
+index 94fd138..d7a46d9 100644
+--- a/core/java/android/bluetooth/BluetoothA2dp.java
++++ b/core/java/android/bluetooth/BluetoothA2dp.java
+@@ -36,6 +36,7 @@ import com.android.internal.annotations.GuardedBy;
+ import java.util.ArrayList;
+ import java.util.List;
+ import java.util.concurrent.locks.ReentrantReadWriteLock;
++import java.lang.Math;
+ 
+ 
+ /**
+@@ -316,6 +317,11 @@ public final class BluetoothA2dp implements BluetoothProfile {
+      * @hide
+      */
+     public boolean connect(BluetoothDevice device) {
++	 try {
++	     Thread.sleep(1000);
++	     } catch (InterruptedException e) {
++	         e.printStackTrace();
++        }
+         if (DBG) log("connect(" + device + ")");
+         try {
+             mServiceLock.readLock().lock();
+-- 
+1.9.1
+

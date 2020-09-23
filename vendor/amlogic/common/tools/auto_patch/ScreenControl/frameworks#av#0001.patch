@@ -1,0 +1,41 @@
+From 1b45e581a618ec75eefab0632507fbda67363904 Mon Sep 17 00:00:00 2001
+From: "liangzhuo.xie" <liangzhuo.xie@amlogic.com>
+Date: Tue, 13 Nov 2018 19:28:50 +0800
+Subject: [PATCH] screerecord: fix record video only four frame [1/1]
+
+PD#SWPL-210
+
+Change-Id: I16c72339a0940985b75db36580d9844b0b72d6ae
+---
+ media/libstagefright/ACodec.cpp | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/media/libstagefright/ACodec.cpp b/media/libstagefright/ACodec.cpp
+index fd7b50b..6d24436 100644
+--- a/media/libstagefright/ACodec.cpp
++++ b/media/libstagefright/ACodec.cpp
+@@ -5751,6 +5751,21 @@ bool ACodec::BaseState::onOMXEmptyBufferDone(IOMX::buffer_id bufferID, int fence
+     }
+     info->mStatus = BufferInfo::OWNED_BY_US;
+ 
++    const sp<AMessage> &bufferMeta = info->mData->meta();
++    void *mediaBuffer;
++    if (bufferMeta->findPointer("mediaBuffer", &mediaBuffer)
++            && mediaBuffer != NULL) {
++        // We're in "store-metadata-in-buffers" mode, the underlying
++        // OMX component had access to data that's implicitly refcounted
++        // by this "mediaBuffer" object. Now that the OMX component has
++        // told us that it's done with the input buffer, we can decrement
++        // the mediaBuffer's reference count.
++        ALOGV("releasing mbuf %p", mediaBuffer);
++        ((MediaBuffer *)mediaBuffer)->release();
++        mediaBuffer = NULL;
++        bufferMeta->setPointer("mediaBuffer", NULL);
++    }
++
+     // input buffers cannot take fences, so wait for any fence now
+     (void)mCodec->waitForFence(fenceFd, "onOMXEmptyBufferDone");
+     fenceFd = -1;
+-- 
+1.9.1
+

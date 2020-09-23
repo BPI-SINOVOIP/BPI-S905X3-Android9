@@ -1,0 +1,4 @@
+sdio.c:29:7:cpu_sd_emmc_pwr_prepare	0	static
+sdio.c:55:5:cpu_sd_emmc_init	32	static
+sdio.c:114:13:sd_emmc_detect	48	static
+sdio.c:160:13:sd_emmc_para_config	48	static

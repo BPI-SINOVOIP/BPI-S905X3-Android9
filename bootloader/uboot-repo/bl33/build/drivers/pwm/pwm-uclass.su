@@ -1,0 +1,6 @@
+pwm-uclass.c:12:5:pwm_set_invert	16	static
+pwm-uclass.c:22:5:pwm_set_config	16	static
+pwm-uclass.c:33:5:pwm_set_enable	16	static
+pwm-uclass.c:43:5:pwm_set_times	16	static
+pwm-uclass.c:53:5:pwm_set_blink_times	16	static
+pwm-uclass.c:63:5:pwm_set_blink_enable	16	static

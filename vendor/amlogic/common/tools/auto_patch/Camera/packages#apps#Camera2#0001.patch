@@ -1,0 +1,1248 @@
+From 457a1c4f93bc7a1a685527bd4c132cf39ccb7528 Mon Sep 17 00:00:00 2001
+From: "jie.yuan" <jie.yuan@amlogic.com>
+Date: Mon, 3 Dec 2018 09:54:49 +0800
+Subject: [PATCH] Camera:support diffrent cameras with various resolutions[1/1]
+
+PD# SWPL-1744
+
+Problem:
+s606 usb camera don't support CIF(352 x 288) resolution.  but camera2.apk show the CIF option, so report error when recording.
+
+Solution:
+update the right resolution and show the right option according to camera hal report.
+
+Verify:
+verify on darwin
+
+Change-Id: I927789ec4eb48ab96afbc6502970b48f35dcf225
+Signed-off-by: jie.yuan <jie.yuan@amlogic.com>
+---
+ res/drawable-hdpi/bg_options_indicator_focus.9.png | Bin 0 -> 1335 bytes
+ res/drawable-mdpi/bg_options_indicator_focus.9.png | Bin 0 -> 914 bytes
+ .../bg_options_indicator_focus.9.png               | Bin 0 -> 1887 bytes
+ .../bg_options_indicator_focus.9.png               | Bin 0 -> 2708 bytes
+ res/drawable/ic_grid_off.xml                       |  10 +++
+ res/drawable/ic_grid_on.xml                        |  10 +++
+ res/drawable/ic_timer_10s.xml                      |  10 +++
+ res/drawable/ic_timer_3s.xml                       |  10 +++
+ res/drawable/ic_timer_off.xml                      |  10 +++
+ res/layout/mode_list_layout.xml                    |   3 +-
+ res/layout/mode_selector.xml                       |   3 +-
+ res/values/strings.xml                             |   2 +
+ src/com/android/camera/ButtonManager.java          |   8 +-
+ src/com/android/camera/CameraActivity.java         |  95 +++++++++++++++++++--
+ src/com/android/camera/DisableCameraReceiver.java  |  50 +++++++++--
+ src/com/android/camera/VideoModule.java            |  35 +++++++-
+ src/com/android/camera/app/CameraAppUI.java        |   8 ++
+ src/com/android/camera/app/CameraController.java   |   4 +
+ .../camera/settings/CameraPictureSizesCacher.java  |  32 ++++++-
+ .../camera/settings/CameraSettingsActivity.java    |  67 ++++++++++++++-
+ src/com/android/camera/settings/SettingsUtil.java  |  86 ++++++++++++++++++-
+ src/com/android/camera/ui/BottomBar.java           |   4 +
+ src/com/android/camera/ui/ModeListView.java        |  47 +++++++++-
+ .../android/camera/widget/ModeOptionsOverlay.java  |  19 +++++
+ 24 files changed, 486 insertions(+), 27 deletions(-)
+ create mode 100644 res/drawable-hdpi/bg_options_indicator_focus.9.png
+ create mode 100644 res/drawable-mdpi/bg_options_indicator_focus.9.png
+ create mode 100644 res/drawable-xhdpi/bg_options_indicator_focus.9.png
+ create mode 100644 res/drawable-xxhdpi/bg_options_indicator_focus.9.png
+
+diff --git a/res/drawable-hdpi/bg_options_indicator_focus.9.png b/res/drawable-hdpi/bg_options_indicator_focus.9.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..a5082abd945e8510c4218da1461e9c2712baf277
+GIT binary patch
+literal 1335
+zcmV-71<3k|P)<h;3K|Lk000e1NJLTq002t>002t}1^@s6I8J)%00009a7bBm000Y#
+z000Y#0XNCZtpET3AY({UO#lFTB>(_`g8%^e{{R4h=>PzAFaQARU;qF*m;eA5Z<1fd
+zMgRZ=y-7qtRCwC#oXJw-NDzkqTC`z-XzZSbnA^NZzrs9hze2x9-zH{;0gNqdEw$tv
+z<OZpc<ppD8yYj$+FcId{pILuaC==*sQ18AFQ9r*}UxNX_*Ka@e`iQJ5VO0Ur3ZxaR
+z(SWreYXPb~JI25`2RH{85=?qv(gXJbaL)%AWBY_9_XWrl8ElckWHXR4>;7H!Sz}<7
+z0+2O8az7*yMi9{eOh|Unu&gS{%+t*Pt^WXE7Y{&99>9Z;#90g(#qXxLcY$S#j8r;-
+zEwa6(h%Iv1B8Q%iAqMB<#R<ST>n$v+N>Y=1*dqV9Q_C3W=_B;h6keQ=jFX)yZ8xyU
+zlA4a8XKAxQe`Ht-H626GQ}~x7;z7hd9F{F}Dj#llUz2vFG_6tG{R1&LCqEg!No8+>
+zrP49!bkZL+b%dFv$jcnT)fZyYV|#;T%be8Y0k$j-%2bk4$Z!9GJWsYd05*oDXH!y>
+zhl5blGRvW-kFePs{^*(*7i$CK8-sehKU`4FlN-g|-ymyfx3Gw)e7vg^bwoi*p}hb1
+zrAyugta5w{(<fW7ONEsM%JJ=Pl%>)!nQVU4w+SYjL#1PS6D(Wil{Gkl(CGxW%xODV
+zWT||(J<8Nuc1l+NuceJ)sp+`4uKYdwN;MsCrYx&U(z6t&7<!h%s`8b(zW@0LwZc-9
+z`_oCkmUL8;`}LG%i;O<<ilrBJqR3&3j8?)@Cvy6&woH?5Wm#3yK5sYst*-1<?P|a>
+z^VCu5;KA$tpUGy9P{Y~J8hzt4EK_7B=d0H7U8Yu+USQ>ON2g6)H7>kf&|I_^`UWgA
+zhDd8irY#k<2AS%DkXM$Wa8$a~wcz7mZ3>IDazr{)QPp9&dbO%<y}+{0Uv<J-@L9mJ
+zjz}jgTk~1u-jwX7MGn?>uw1Ma6|DWf$9j0N;KKn_Zv?wo&T7GD@zcTT&c7NgE~Ep}
+z#cIK)N<-;6B3)^?;NxIz3X6MzBhr<I3qA{2zOxS<wt;(o!)Gz>hYn1es{HWzb?|4;
+zAi~IzX^A?Q7g*82k!gcf<MIrP3CXzc3VkyLgT`oH!@7&Xxg*rUqXA1sF_;jJ5&$Md
+zHM_VB78qkrT{TtxG8FZygZARYHP)P09De<E%Y6iE``{_XvLUEe3CTDClc#wT!K8$2
+z5zE(aKNw$P@tJ=)I!Rdm<!I>u=hEWDgXrXny%?OMYdpBKlKaUJ%sY+i8|HcNlVNw=
+zU(s>1V0eRLclO*55Daft&QGuO2uuhTjBbAVj^hM1x&afbCtBAtR8_%eUUGGOsW<$x
+z_C)?h{y+{c7=Xi`k^ZR?&xb#{#wIh;8=EOPxL}M6D#!mFEHEBK2!_AC|MWcoh-kn9
+zA$q<1qRSp^y9{INCXo9f3qJo29vsLGE9dY&jo@F7*tT0k-qh1nC*?Kt(}Yy|2=w$l
+zFCK*OKYf1lj;)<EfHF>)IE%^5pP=U{NU2^ZNrVyPS+^_SJFM!mLNFO8ka6-M`?G3l
+zhZvlr_xrQzePs|t@4K0;CDjgcGh5BeFrEzIU0iLq^RL?|gZm+lX6IkM0}$aEM0f`8
+t;_6_xNdj(9>H5$71mN%Fe<ULOKLBZyNSpUE#I*nb002ovPDHLkV1j*?ePaLs
+
+literal 0
+HcmV?d00001
+
+diff --git a/res/drawable-mdpi/bg_options_indicator_focus.9.png b/res/drawable-mdpi/bg_options_indicator_focus.9.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..87f49522bc7166173a12cd067634acdd666aa9b9
+GIT binary patch
+literal 914
+zcmV;D18w|?P)<h;3K|Lk000e1NJLTq001%o001)x1^@s6)ni)}00009a7bBm000Y#
+z000Y#0XNCZtpET3AY({UO#lFTB>(_`g8%^e{{R4h=>PzAFaQARU;qF*m;eA5Z<1fd
+zMgRZ<7)eAyRCwClnps-nKoo_~tx6>fK@imL=iY}~=*7B)-iNOaA7Eq%Nou(LKu~Bw
+zg9@a&9{Cu~&$)GnN&&}Ne9$jvKKzdyYY_lk-`sxri(HX28x5y(I9-5^20I7v+W#a3
+zNJ<D9fK&w8XhMVy`VNrbtK#iq2D_Mpt*!6@2X+otYam;|OcRilESqh}W(*NVbUYAt
+zZ01wgbOxu3ugABwFtZ8FYyuHAIEcHDjTRjg#LOqGCr^NL2Z?i+XDIRvLWQh)7kfD*
+zs+nN97~Qi@MhAn~0MZ5W;T_C0;cs(<jplrG4>snwX^0tm@&soJ4ttjX5q;VbwubZJ
+z-SHvTmQCl#M-Koy{uBsX%f<MyS~fa#sO1afqsQ0ER~dwvi}3?ok=Lf+xqN|Q{IC;d
+zD@c(HYX$KVX4wKoGOXr^%~H1MthTL)O=qxK%I||Pvwj}czOT~Hqm2;z^ZOTXfS7c8
+z(hOBOGaCbwPIoxM%x0Q+)9spRvf+wY+Z(k=wfppFHcQ_+V*jzqhqbO*tU6koXa0fY
+z*-OP2uP=BwC^BPZfG7tfZ%5pfb^!pa{RLTRUpiuqzmAmJ#VVC~>qx0xtPTbIwZv5)
+zb$wV%5F&pGO6>vwNJ@V>O6?^`;4w(>3L;eK@7^f2mmrbHAki8~)btmm)V|v6<YRaV
+z6@sLsjXEM*v3DTrnm0jwswYI-K}bmQ$rag(K|<2o!v_GWbMA*LL`$t(Pf^NEA9T94
+z=LkC8mrV`;*EhHHrfF1huhs=ps1Pdd?PwY|Z6kGlS<es?0;M+k7-UIZ%Mc5D7Z56>
+z-EI7qrQ#lf_^dV%s@sQbw(0$OWP4^Hb=I#%`=Yvi1abHCkKRB;(clMUyK}NV5%#Y>
+zgaE2Mo+hHOcL5Vdte?k6o9{^}gy&Z~_r(4nt2eefB%>zlWC)ur4qEJjPIsANse0<%
+zYcwPoP&oJrmoHdP6S!|aFP5z~)Y)L8*c}99Z3dtyYVLm*Wyj2Yn!70LKw(58jG(%M
+oliv;k{-^s|HH6<w7c=AU0PPWj=B|n?Jpcdz07*qoM6N<$f_XZVRsaA1
+
+literal 0
+HcmV?d00001
+
+diff --git a/res/drawable-xhdpi/bg_options_indicator_focus.9.png b/res/drawable-xhdpi/bg_options_indicator_focus.9.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..6cbc536342541054564756b636c5501a104eed19
+GIT binary patch
+literal 1887
+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
+Z0|5A654j|gLGu6r002ovPDHLkV1l1SgO~sS
+
+literal 0
+HcmV?d00001
+
+diff --git a/res/drawable-xxhdpi/bg_options_indicator_focus.9.png b/res/drawable-xxhdpi/bg_options_indicator_focus.9.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..87764976c94552c10a7cb882f0374fb95db2da62
+GIT binary patch
+literal 2708
+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
+O0000<MNUMnLSTZ9V>L4X
+
+literal 0
+HcmV?d00001
+
+diff --git a/res/drawable/ic_grid_off.xml b/res/drawable/ic_grid_off.xml
+index 99a6974..824f936 100644
+--- a/res/drawable/ic_grid_off.xml
++++ b/res/drawable/ic_grid_off.xml
+@@ -21,6 +21,16 @@
+             android:gravity="center"
+             android:src="@drawable/ic_grid_off_disabled" />
+     </item>
++    <item android:state_focused="true">
++        <layer-list>
++           <item android:drawable="@drawable/bg_options_indicator_focus" />
++           <item>
++               <bitmap
++                    android:gravity="center"
++                    android:src="@drawable/ic_grid_off_normal" />
++           </item>
++        </layer-list>
++    </item>
+     <item android:state_pressed="true">
+         <layer-list>
+            <item android:drawable="@drawable/button_background_pressed_dark" />
+diff --git a/res/drawable/ic_grid_on.xml b/res/drawable/ic_grid_on.xml
+index 45f96ac..ec47ca9 100644
+--- a/res/drawable/ic_grid_on.xml
++++ b/res/drawable/ic_grid_on.xml
+@@ -21,6 +21,16 @@
+             android:gravity="center"
+             android:src="@drawable/ic_grid_on_disabled" />
+     </item>
++    <item android:state_focused="true">
++        <layer-list>
++           <item android:drawable="@drawable/bg_options_indicator_focus" />
++           <item>
++               <bitmap
++                    android:gravity="center"
++                    android:src="@drawable/ic_grid_on_normal" />
++           </item>
++        </layer-list>
++    </item>
+     <item android:state_pressed="true">
+         <layer-list>
+            <item android:drawable="@drawable/button_background_pressed_dark" />
+diff --git a/res/drawable/ic_timer_10s.xml b/res/drawable/ic_timer_10s.xml
+index 0fc1e76..d15fb1e 100644
+--- a/res/drawable/ic_timer_10s.xml
++++ b/res/drawable/ic_timer_10s.xml
+@@ -21,6 +21,16 @@
+             android:gravity="center"
+             android:src="@drawable/ic_timer_10s_disabled" />
+     </item>
++    <item android:state_focused="true">
++        <layer-list>
++           <item android:drawable="@drawable/bg_options_indicator_focus" />
++           <item>
++               <bitmap
++                    android:gravity="center"
++                    android:src="@drawable/ic_timer_10s_normal" />
++           </item>
++        </layer-list>
++    </item>
+     <item android:state_pressed="true">
+         <layer-list>
+            <item android:drawable="@drawable/button_background_pressed_dark" />
+diff --git a/res/drawable/ic_timer_3s.xml b/res/drawable/ic_timer_3s.xml
+index f691380..f43c3a1 100644
+--- a/res/drawable/ic_timer_3s.xml
++++ b/res/drawable/ic_timer_3s.xml
+@@ -21,6 +21,16 @@
+             android:gravity="center"
+             android:src="@drawable/ic_timer_3s_disabled" />
+     </item>
++    <item android:state_focused="true">
++        <layer-list>
++           <item android:drawable="@drawable/bg_options_indicator_focus" />
++           <item>
++               <bitmap
++                    android:gravity="center"
++                    android:src="@drawable/ic_timer_3s_normal" />
++           </item>
++        </layer-list>
++    </item>
+     <item android:state_pressed="true">
+         <layer-list>
+            <item android:drawable="@drawable/button_background_pressed_dark" />
+diff --git a/res/drawable/ic_timer_off.xml b/res/drawable/ic_timer_off.xml
+index bb041b4..d0d2598 100644
+--- a/res/drawable/ic_timer_off.xml
++++ b/res/drawable/ic_timer_off.xml
+@@ -21,6 +21,16 @@
+             android:gravity="center"
+             android:src="@drawable/ic_timer_off_disabled" />
+     </item>
++    <item android:state_focused="true">
++        <layer-list>
++           <item android:drawable="@drawable/bg_options_indicator_focus" />
++           <item>
++               <bitmap
++                    android:gravity="center"
++                    android:src="@drawable/ic_timer_off_normal" />
++           </item>
++        </layer-list>
++    </item>
+     <item android:state_pressed="true">
+         <layer-list>
+            <item android:drawable="@drawable/button_background_pressed_dark" />
+diff --git a/res/layout/mode_list_layout.xml b/res/layout/mode_list_layout.xml
+index 535212f..5758016 100644
+--- a/res/layout/mode_list_layout.xml
++++ b/res/layout/mode_list_layout.xml
+@@ -26,6 +26,7 @@
+     <LinearLayout
+         android:id="@+id/mode_list"
+         android:orientation="vertical"
++        android:focusable="false"
+         android:layout_gravity="top|left"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content" />
+@@ -38,4 +39,4 @@
+         android:contentDescription="@string/mode_settings"
+         android:background="@drawable/settings_gear_background"
+         android:src="@drawable/ic_settings_normal" />
+-</com.android.camera.ui.ModeListView>
+\ No newline at end of file
++</com.android.camera.ui.ModeListView>
+diff --git a/res/layout/mode_selector.xml b/res/layout/mode_selector.xml
+index 8854b43..28a2981 100644
+--- a/res/layout/mode_selector.xml
++++ b/res/layout/mode_selector.xml
+@@ -18,6 +18,7 @@
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+     android:layout_height="@dimen/mode_selector_item_height"
++    android:focusable="true"
+     android:paddingLeft="16dp"
+     android:paddingTop="6dp"
+     android:paddingBottom="6dp"
+@@ -38,4 +39,4 @@
+         android:layout_gravity="left"
+         android:layout_width="@dimen/mode_selector_icon_block_width"
+         android:layout_height="@dimen/mode_selector_icon_block_width" />
+-</com.android.camera.ui.ModeSelectorItem>
+\ No newline at end of file
++</com.android.camera.ui.ModeSelectorItem>
+diff --git a/res/values/strings.xml b/res/values/strings.xml
+index 923a068..ac93989 100644
+--- a/res/values/strings.xml
++++ b/res/values/strings.xml
+@@ -960,4 +960,6 @@
+ 
+     <!-- Shown to the user while an image/video is being saved to disk. -->
+     <string name="session_saving_image">Saving\u2026</string>
++
++    <string name="video_quality_not_support">This quality is not supported!</string>
+  </resources>
+diff --git a/src/com/android/camera/ButtonManager.java b/src/com/android/camera/ButtonManager.java
+index 15d1acd..4be4f0a 100644
+--- a/src/com/android/camera/ButtonManager.java
++++ b/src/com/android/camera/ButtonManager.java
+@@ -99,6 +99,7 @@ public class ButtonManager implements SettingsManager.OnSettingChangedListener {
+     private boolean mIsCameraButtonBlocked;
+ 
+     private final AppController mAppController;
++    private Context mContext;
+ 
+     /**
+      * Get a new global ButtonManager.
+@@ -106,8 +107,8 @@ public class ButtonManager implements SettingsManager.OnSettingChangedListener {
+     public ButtonManager(AppController app) {
+         mAppController = app;
+ 
+-        Context context = app.getAndroidContext();
+-        sGcamIndex = context.getResources().getInteger(R.integer.camera_mode_gcam);
++        mContext = app.getAndroidContext();
++        sGcamIndex = mContext.getResources().getInteger(R.integer.camera_mode_gcam);
+ 
+         mSettingsManager = app.getSettingsManager();
+         mSettingsManager.addListener(this);
+@@ -177,6 +178,9 @@ public class ButtonManager implements SettingsManager.OnSettingChangedListener {
+         mModeOptions = (ModeOptions) root.findViewById(R.id.mode_options);
+ 
+         mButtonCountdown = (MultiToggleImageButton) root.findViewById(R.id.countdown_toggle_button);
++        mButtonCountdown.setFocusable(true);
++        mButtonCountdown.requestFocus();
++        //mButtonCountdown.setFocusableInTouchMode(true);
+     }
+ 
+     @Override
+diff --git a/src/com/android/camera/CameraActivity.java b/src/com/android/camera/CameraActivity.java
+index 3eceb8f..51ce6da 100644
+--- a/src/com/android/camera/CameraActivity.java
++++ b/src/com/android/camera/CameraActivity.java
+@@ -171,6 +171,14 @@ import java.util.ArrayList;
+ import java.util.HashMap;
+ import java.util.List;
+ 
++import android.hardware.usb.UsbAccessory;
++import android.hardware.usb.UsbConstants;
++import android.hardware.usb.UsbDevice;
++import android.hardware.usb.UsbInterface;
++import android.hardware.usb.UsbManager;
++
++import com.android.camera.settings.CameraPictureSizesCacher;
++
+ public class CameraActivity extends QuickActivity
+         implements AppController, CameraAgent.CameraOpenCallback,
+         ShareActionProvider.OnShareTargetSelectedListener {
+@@ -214,6 +222,7 @@ public class CameraActivity extends QuickActivity
+     /**
+      * This data adapter is used by FilmStripView.
+      */
++    private OneCameraManager mCameraManager;
+     private VideoItemFactory mVideoItemFactory;
+     private PhotoItemFactory mPhotoItemFactory;
+     private LocalFilmstripDataAdapter mDataAdapter;
+@@ -314,6 +323,41 @@ public class CameraActivity extends QuickActivity
+         }
+     };
+ 
++    private final BroadcastReceiver mUsbDeviceReceiver = new BroadcastReceiver() {
++
++        public void onReceive(Context context, Intent intent) {
++            String action = intent.getAction();
++            if (UsbManager.ACTION_USB_DEVICE_ATTACHED.equals(action)) {
++
++            } else if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(action)) {
++                UsbDevice device = (UsbDevice)intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
++                if (isUsbCamera(device))
++                    cleanPictureSizesForCamera();
++            }
++        }
++
++        private boolean isUsbCamera(UsbDevice device) {
++            int count = device.getInterfaceCount();
++
++            for (int i = 0; i < count; i++) {
++                UsbInterface intf = device.getInterface(i);
++                if (intf.getInterfaceClass() == UsbConstants.USB_CLASS_VIDEO) {
++                    return true;
++                }
++            }
++            return false;
++       }
++    };
++
++    private final ActionBar.OnMenuVisibilityListener mOnMenuVisibilityListener =
++            new ActionBar.OnMenuVisibilityListener() {
++        @Override
++        public void onMenuVisibilityChanged(boolean isVisible) {
++            // TODO: Remove this or bring back the original implementation: cancel
++            // auto-hide actionbar.
++        }
++    };
++
+     /**
+      * Whether the screen is kept turned on.
+      */
+@@ -501,6 +545,15 @@ public class CameraActivity extends QuickActivity
+                 }
+             };
+ 
++    private void updatePictureSizesForCamera() {
++        CameraPictureSizesCacher.updatePictureSizesForCamera(
++            CameraActivity.this, mCameraController.getCurrentCamera());
++    }
++
++    private void cleanPictureSizesForCamera() {
++        CameraPictureSizesCacher.cleanPictureSizesForCamera(CameraActivity.this, mCameraController.getCurrentCamera());
++    }
++
+     @Override
+     public void onCameraOpened(CameraAgent.CameraProxy camera) {
+         Log.v(TAG, "onCameraOpened");
+@@ -532,6 +585,7 @@ public class CameraActivity extends QuickActivity
+         }
+         Log.v(TAG, "invoking onChangeCamera");
+         mCameraAppUI.onChangeCamera();
++        cleanPictureSizesForCamera();
+     }
+ 
+     private void resetExposureCompensationToDefault(CameraAgent.CameraProxy camera) {
+@@ -1428,6 +1482,9 @@ public class CameraActivity extends QuickActivity
+ 
+     @Override
+     public void onCreateTasks(Bundle state) {
++        IntentFilter usbFilter = new IntentFilter(UsbManager.ACTION_USB_DEVICE_ATTACHED);
++        usbFilter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
++        registerReceiver(mUsbDeviceReceiver, usbFilter);
+         Profile profile = mProfiler.create("CameraActivity.onCreateTasks").start();
+         CameraPerformanceTracker.onEvent(CameraPerformanceTracker.ACTIVITY_START);
+         mOnCreateTime = System.currentTimeMillis();
+@@ -2157,6 +2214,7 @@ public class CameraActivity extends QuickActivity
+ 
+     @Override
+     public void onDestroyTasks() {
++        unregisterReceiver(mUsbDeviceReceiver);
+         if (mSecureCamera) {
+             unregisterReceiver(mShutdownReceiver);
+         }
+@@ -2212,6 +2270,34 @@ public class CameraActivity extends QuickActivity
+     }
+ 
+     @Override
++    public boolean dispatchKeyEvent ( KeyEvent event ) {
++        if ( event.getAction() == KeyEvent.ACTION_UP ) {
++            return super.dispatchKeyEvent ( event );
++        } else if ( event.getKeyCode() == KeyEvent.KEYCODE_DPAD_RIGHT ) {
++            if ( mModeListVisible ) {
++                mModeListView.onBackPressed();
++                mModeListView.settingsButtonRequestFocus();
++            } else if ( !mModeListVisible && mCameraAppUI.setCaptureOnfocus() ) {
++                mCameraAppUI.showFilmstrip();
++            }
++        } else if ( event.getKeyCode() == KeyEvent.KEYCODE_DPAD_LEFT ) {
++            if ( event.getKeyCode() == KeyEvent.KEYCODE_MENU
++                || event.getKeyCode() == KeyEvent.KEYCODE_DPAD_LEFT ) {
++                if ( !mModeListVisible && !mCameraAppUI.setCaptureOnfocus() ) {
++                    mCameraAppUI.openModeList();
++                }
++            }
++        } else if ( event.getKeyCode() == KeyEvent.KEYCODE_DPAD_UP &&
++            mModeListVisible ) {
++            mModeListView.switchItem ( false, true );
++        } else if ( event.getKeyCode() == KeyEvent.KEYCODE_DPAD_DOWN &&
++            mModeListVisible ) {
++            mModeListView.switchItem ( false, false );
++        }
++        return super.dispatchKeyEvent ( event );
++    }
++
++    @Override
+     public boolean onKeyDown(int keyCode, KeyEvent event) {
+         if (!mFilmstripVisible) {
+             if (mCurrentModule.onKeyDown(keyCode, event)) {
+@@ -2236,13 +2322,8 @@ public class CameraActivity extends QuickActivity
+             // consume the key event.
+             if (mCurrentModule.onKeyUp(keyCode, event)) {
+                 return true;
+-            } else if (keyCode == KeyEvent.KEYCODE_MENU
+-                    || keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+-                // Let the mode list view consume the event.
+-                mCameraAppUI.openModeList();
+-                return true;
+-            } else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
+-                mCameraAppUI.showFilmstrip();
++            }else if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER && mModeListVisible) {
++                mModeListView.switchItem(true, false);
+                 return true;
+             }
+         } else {
+diff --git a/src/com/android/camera/DisableCameraReceiver.java b/src/com/android/camera/DisableCameraReceiver.java
+index 5237c1d..c188989 100644
+--- a/src/com/android/camera/DisableCameraReceiver.java
++++ b/src/com/android/camera/DisableCameraReceiver.java
+@@ -22,7 +22,13 @@ import android.content.Context;
+ import android.content.Intent;
+ import android.content.pm.PackageManager;
+ import android.hardware.Camera.CameraInfo;
++import android.hardware.usb.UsbAccessory;
++import android.hardware.usb.UsbConstants;
++import android.hardware.usb.UsbDevice;
++import android.hardware.usb.UsbInterface;
++import android.hardware.usb.UsbManager;
+ 
++import com.android.camera.settings.CameraPictureSizesCacher;
+ import com.android.camera.debug.Log;
+ 
+ // We want to disable camera-related activities if there is no camera. This
+@@ -31,24 +37,28 @@ import com.android.camera.debug.Log;
+ public class DisableCameraReceiver extends BroadcastReceiver {
+     private static final Log.Tag TAG = new Log.Tag("DisableCamRcver");
+     private static final boolean CHECK_BACK_CAMERA_ONLY = false;
++    private static final boolean DEBUG = false;
+     private static final String ACTIVITIES[] = {
+         "com.android.camera.CameraLauncher",
+     };
+ 
+     @Override
+     public void onReceive(Context context, Intent intent) {
++        Log.d(TAG, "onReceive intent=" + intent);
++        String action = intent.getAction();
+         // Disable camera-related activities if there is no camera.
+         boolean needCameraActivity = CHECK_BACK_CAMERA_ONLY
+             ? hasBackCamera()
+             : hasCamera();
+ 
+-        if (!needCameraActivity) {
+-            Log.i(TAG, "disable all camera activities");
+-            for (int i = 0; i < ACTIVITIES.length; i++) {
+-                disableComponent(context, ACTIVITIES[i]);
++        if (Intent.ACTION_BOOT_COMPLETED.equals(action)) {
++            if (!needCameraActivity) {
++                Log.i(TAG, "disable all camera activities");
++                for (int i = 0; i < ACTIVITIES.length; i++) {
++                    disableComponent(context, ACTIVITIES[i]);
++                }
+             }
+         }
+-
+         // Disable this receiver so it won't run again.
+         disableComponent(context, "com.android.camera.DisableCameraReceiver");
+     }
+@@ -73,6 +83,18 @@ public class DisableCameraReceiver extends BroadcastReceiver {
+         return false;
+     }
+ 
++    private int getBackCameraId() {
++        int n = android.hardware.Camera.getNumberOfCameras();
++        CameraInfo info = new CameraInfo();
++        for (int i = 0; i < n; i++) {
++            android.hardware.Camera.getCameraInfo(i, info);
++            if (info.facing == CameraInfo.CAMERA_FACING_BACK) {
++                return i;
++            }
++        }
++        return -1;
++    }
++
+     private void disableComponent(Context context, String klass) {
+         ComponentName name = new ComponentName(context, klass);
+         PackageManager pm = context.getPackageManager();
+@@ -83,4 +105,22 @@ public class DisableCameraReceiver extends BroadcastReceiver {
+             PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+             PackageManager.DONT_KILL_APP);
+     }
++
++    public boolean isUsbCamera(UsbDevice device) {
++        int count = device.getInterfaceCount();
++        if (DEBUG) {
++            for (int i = 0; i < count; i++) {
++                UsbInterface intf = device.getInterface(i);
++                Log.i(TAG, "isCamera UsbInterface:" + intf);
++            }
++        }
++
++        for (int i = 0; i < count; i++) {
++            UsbInterface intf = device.getInterface(i);
++            if (intf.getInterfaceClass() == UsbConstants.USB_CLASS_VIDEO) {
++                return true;
++            }
++        }
++        return false;
++    }
+ }
+diff --git a/src/com/android/camera/VideoModule.java b/src/com/android/camera/VideoModule.java
+index e8222f6..457a864 100644
+--- a/src/com/android/camera/VideoModule.java
++++ b/src/com/android/camera/VideoModule.java
+@@ -144,6 +144,7 @@ public class VideoModule extends CameraModule
+     private int mOriginalRingerMode;
+ 
+     private boolean mSwitchingCamera;
++    private Size nearestSize = null;
+     private boolean mMediaRecorderRecording = false;
+     private long mRecordingStartTime;
+     private boolean mRecordingTimeCountsDown = false;
+@@ -735,7 +736,9 @@ public class VideoModule extends CameraModule
+             : Keys.KEY_VIDEO_QUALITY_BACK;
+         String videoQuality = settingsManager
+                 .getString(SettingsManager.SCOPE_GLOBAL, videoQualityKey);
+-        int quality = SettingsUtil.getVideoQuality(videoQuality, mCameraId);
++        List<Size> sizes = Size.convert(mCameraCapabilities.getSupportedVideoSizes());
++        int quality = SettingsUtil.getVideoQuality(videoQuality, mCameraId, sizes);
++        //int quality = SettingsUtil.getVideoQuality(videoQuality, mCameraId);
+         Log.d(TAG, "Selected video quality for '" + videoQuality + "' is " + quality);
+ 
+         // Set video quality.
+@@ -1144,7 +1147,11 @@ public class VideoModule extends CameraModule
+         mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
+         mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+         mMediaRecorder.setProfile(mProfile);
+-        mMediaRecorder.setVideoSize(mProfile.videoFrameWidth, mProfile.videoFrameHeight);
++        if (nearestSize != null) {
++            mMediaRecorder.setVideoSize(nearestSize.width(), nearestSize.height());
++            Log.d(TAG, "Trace_videosize, near width:" + nearestSize.width() + " near height:" + nearestSize.height());
++        }
++        //mMediaRecorder.setVideoSize(mProfile.videoFrameWidth, mProfile.videoFrameHeight);
+         mMediaRecorder.setMaxDuration(mMaxVideoDurationInMs);
+ 
+         setRecordLocation();
+@@ -1194,6 +1201,25 @@ public class VideoModule extends CameraModule
+         mMediaRecorder.setOnInfoListener(this);
+     }
+ 
++    private Size getNearestSize(int w, int h) {
++        List<Size> supportedVideo = Size.convert(mCameraCapabilities.getSupportedVideoSizes());
++        int minWidth = 10000;
++        int targetWidth = -1;
++        for (Size sz : supportedVideo) {
++            if (h == sz.height()) {
++                int d = Math.abs(sz.width() - w);
++                if (d < minWidth) {
++                    minWidth = d;
++                    targetWidth = sz.width();
++                }
++            }
++        }
++        if (targetWidth < 0) {
++           return null;
++        }
++        return new Size(targetWidth, h);
++    }
++
+     private static void setCaptureRate(MediaRecorder recorder, double fps) {
+         recorder.setCaptureRate(fps);
+     }
+@@ -1341,6 +1367,11 @@ public class VideoModule extends CameraModule
+     }
+ 
+     private void startVideoRecording() {
++        nearestSize = getNearestSize(mProfile.videoFrameWidth, mProfile.videoFrameHeight);
++        if (nearestSize == null) {
++            Toast.makeText(mActivity, R.string.video_quality_not_support, Toast.LENGTH_SHORT).show();
++            return;
++        }
+         Log.i(TAG, "startVideoRecording: " + Thread.currentThread());
+         mUI.cancelAnimations();
+         mUI.setSwipingEnabled(false);
+diff --git a/src/com/android/camera/app/CameraAppUI.java b/src/com/android/camera/app/CameraAppUI.java
+index 44b4d3b..c614fa4 100644
+--- a/src/com/android/camera/app/CameraAppUI.java
++++ b/src/com/android/camera/app/CameraAppUI.java
+@@ -1810,6 +1810,9 @@ public class CameraAppUI implements ModeListView.ModeSwitchListener,
+         mModeOptionsOverlay.setVisibility(View.INVISIBLE);
+     }
+ 
++   public boolean isModeOptionVisible() {
++        return mModeOptionsOverlay.isModeOptionVisible();
++   }
+     /****************************Bottom bar api ******************************/
+ 
+     /**
+@@ -2287,9 +2290,14 @@ public class CameraAppUI implements ModeListView.ModeSwitchListener,
+ 
+     public void hideFilmstrip() {
+         mFilmstripLayout.hideFilmstrip();
++        mModeOptionsOverlay.closeModeOptions();
+     }
+ 
+     public int getFilmstripVisibility() {
+         return mFilmstripLayout.getVisibility();
+     }
++
++    public boolean setCaptureOnfocus(){
++        return mBottomBar.setCaptureOnfocus();
++    }
+ }
+diff --git a/src/com/android/camera/app/CameraController.java b/src/com/android/camera/app/CameraController.java
+index 7921335..32002eb 100644
+--- a/src/com/android/camera/app/CameraController.java
++++ b/src/com/android/camera/app/CameraController.java
+@@ -179,6 +179,10 @@ public class CameraController implements CameraAgent.CameraOpenCallback, CameraP
+         }
+     }
+ 
++    public CameraAgent.CameraProxy getCurrentCamera() {
++        return mCameraProxy;
++    }
++
+     @Override
+     public void onCameraDisabled(int cameraId) {
+         if (mCallbackReceiver != null) {
+diff --git a/src/com/android/camera/settings/CameraPictureSizesCacher.java b/src/com/android/camera/settings/CameraPictureSizesCacher.java
+index 9cdca20..4b7c7ce 100644
+--- a/src/com/android/camera/settings/CameraPictureSizesCacher.java
++++ b/src/com/android/camera/settings/CameraPictureSizesCacher.java
+@@ -21,7 +21,8 @@ import android.content.SharedPreferences;
+ import android.hardware.Camera;
+ import android.os.Build;
+ import android.preference.PreferenceManager;
+-
++import com.android.ex.camera2.portability.CameraAgent.CameraProxy;
++import com.android.ex.camera2.portability.CameraCapabilities;
+ import com.android.camera.util.Size;
+ import com.google.common.base.Optional;
+ 
+@@ -55,6 +56,35 @@ public class CameraPictureSizesCacher {
+         }
+     }
+ 
++    public static void updatePictureSizesForCamera(Context context, CameraProxy device) {
++        if (device != null) {
++            int cameraId = device.getCameraId();
++            String key_build = PICTURE_SIZES_BUILD_KEY + cameraId;
++            String key_sizes = PICTURE_SIZES_SIZES_KEY + cameraId;
++            SharedPreferences defaultPrefs = PreferenceManager.getDefaultSharedPreferences(context);
++            CameraCapabilities mCapabilities = device.getCapabilities();
++            List<Size> sizes = Size.convert(mCapabilities.getSupportedPhotoSizes());
++            SharedPreferences.Editor editor = defaultPrefs.edit();
++            editor.putString(key_build, Build.DISPLAY);
++            editor.putString(key_sizes, Size.listToString(sizes));
++            editor.apply();
++        }
++    }
++
++    public static void cleanPictureSizesForCamera(Context context, CameraProxy device) {
++         if (device != null) {
++            int cameraId = device.getCameraId();
++            String key_build = PICTURE_SIZES_BUILD_KEY + cameraId;
++            String key_sizes = PICTURE_SIZES_SIZES_KEY + cameraId;
++            SharedPreferences defaultPrefs = PreferenceManager.getDefaultSharedPreferences(context);
++            CameraCapabilities mCapabilities = device.getCapabilities();
++            SharedPreferences.Editor editor = defaultPrefs.edit();
++            editor.putString(key_build, "");
++            editor.putString(key_sizes, "");
++            editor.apply();
++         }
++    }
++
+     /**
+      * Return list of Sizes for provided cameraId.  Check first to see if we
+      * have it in the cache for the current android.os.Build.
+diff --git a/src/com/android/camera/settings/CameraSettingsActivity.java b/src/com/android/camera/settings/CameraSettingsActivity.java
+index 50641fd..ea4b514 100644
+--- a/src/com/android/camera/settings/CameraSettingsActivity.java
++++ b/src/com/android/camera/settings/CameraSettingsActivity.java
+@@ -309,8 +309,8 @@ public class CameraSettingsActivity extends FragmentActivity {
+                 if (pref instanceof PreferenceGroup) {
+                     fillEntriesAndSummaries((PreferenceGroup) pref);
+                 }
+-                setSummary(pref);
+                 setEntries(pref);
++                setSummary(pref);
+             }
+         }
+ 
+@@ -371,12 +371,25 @@ public class CameraSettingsActivity extends FragmentActivity {
+             } else if (listPreference.getKey().equals(Keys.KEY_PICTURE_SIZE_FRONT)) {
+                 setEntriesForSelection(mPictureSizes.frontCameraSizes, listPreference);
+             } else if (listPreference.getKey().equals(Keys.KEY_VIDEO_QUALITY_BACK)) {
++                int backCameraId = SettingsUtil.getCameraId(mInfos, SettingsUtil.CAMERA_FACING_BACK);
++                filterEntries(backCameraId, mPictureSizes.videoQualitiesBack.orNull());
+                 setEntriesForSelection(mPictureSizes.videoQualitiesBack.orNull(), listPreference);
+             } else if (listPreference.getKey().equals(Keys.KEY_VIDEO_QUALITY_FRONT)) {
++                int frontCameraId = SettingsUtil.getCameraId(mInfos, SettingsUtil.CAMERA_FACING_FRONT);
++                filterEntries(frontCameraId, mPictureSizes.videoQualitiesFront.orNull());
+                 setEntriesForSelection(mPictureSizes.videoQualitiesFront.orNull(), listPreference);
+             }
+         }
+ 
++        private void filterEntries(int cameraId, SelectedVideoQualities selectedQualities) {
++            if (!SettingsUtil.supportQuality(cameraId, selectedQualities.large))
++                selectedQualities.largeEnabled = false;
++            if (!SettingsUtil.supportQuality(cameraId, selectedQualities.medium))
++                selectedQualities.mediumEnabled = false;
++            if (!SettingsUtil.supportQuality(cameraId, selectedQualities.small))
++                selectedQualities.smallEnabled = false;
++        }
++
+         /**
+          * Set the summary for the given preference. The given preference needs
+          * to be a {@link ListPreference}.
+@@ -417,13 +430,21 @@ public class CameraSettingsActivity extends FragmentActivity {
+ 
+             String[] entries = new String[selectedSizes.size()];
+             String[] entryValues = new String[selectedSizes.size()];
++            String setting = preference.getValue();
++            boolean valuesExist = false;
+             for (int i = 0; i < selectedSizes.size(); i++) {
+                 Size size = selectedSizes.get(i);
+                 entries[i] = getSizeSummaryString(size);
+                 entryValues[i] = SettingsUtil.sizeToSettingString(size);
++                if (entryValues[i].equals(setting)) {
++                    valuesExist = true;
++                }
+             }
+             preference.setEntries(entries);
+             preference.setEntryValues(entryValues);
++            if (!valuesExist) {
++                preference.setValue(entryValues[0]);
++            }
+         }
+ 
+         /**
+@@ -442,14 +463,34 @@ public class CameraSettingsActivity extends FragmentActivity {
+             // Avoid adding double entries at the bottom of the list which
+             // indicates that not at least 3 qualities are supported.
+             ArrayList<String> entries = new ArrayList<String>();
+-            entries.add(mCamcorderProfileNames[selectedQualities.large]);
+-            if (selectedQualities.medium != selectedQualities.large) {
++            //entries.add(mCamcorderProfileNames[selectedQualities.large]);
++           // if (selectedQualities.medium != selectedQualities.large) {
++           //     entries.add(mCamcorderProfileNames[selectedQualities.medium]);
++           // }
++           // if (selectedQualities.small != selectedQualities.medium) {
++           //     entries.add(mCamcorderProfileNames[selectedQualities.small]);
++           // }
++            //preference.setEntries(entries.toArray(new String[0]));
++            ArrayList<String> resultValues = new ArrayList<String>();
++            String [] values = getResources().getStringArray(R.array.pref_video_quality_entryvalues);
++
++            if (selectedQualities.largeEnabled) {
++                entries.add(mCamcorderProfileNames[selectedQualities.large]);
++                resultValues.add(values[0]);
++            }
++            if (selectedQualities.medium != selectedQualities.large && selectedQualities.mediumEnabled) {
+                 entries.add(mCamcorderProfileNames[selectedQualities.medium]);
++                resultValues.add(values[1]);
+             }
+-            if (selectedQualities.small != selectedQualities.medium) {
++            if (selectedQualities.small != selectedQualities.medium && selectedQualities.smallEnabled) {
+                 entries.add(mCamcorderProfileNames[selectedQualities.small]);
++                resultValues.add(values[2]);
+             }
+             preference.setEntries(entries.toArray(new String[0]));
++            preference.setEntryValues(resultValues.toArray(new String[0]));
++            int selectedQuality = selectedQualities.getFromSetting(preference.getValue());
++            if (!validInSelected(selectedQuality, selectedQualities))
++                preference.setValue((String)resultValues.get(0));
+         }
+ 
+         /**
+@@ -484,9 +525,21 @@ public class CameraSettingsActivity extends FragmentActivity {
+             }
+ 
+             int selectedQuality = selectedQualities.getFromSetting(preference.getValue());
++            if (!validInSelected(selectedQuality, selectedQualities))
++                selectedQuality = selectedQualities.getDefaultQuality();
+             preference.setSummary(mCamcorderProfileNames[selectedQuality]);
+         }
+ 
++        private boolean validInSelected(int quality, SelectedVideoQualities selectedQualities) {
++            if (selectedQualities.large == quality && selectedQualities.largeEnabled)
++                return true;
++            if (selectedQualities.medium == quality && selectedQualities.mediumEnabled)
++                return true;
++            if (selectedQualities.small == quality && selectedQualities.smallEnabled)
++                return true;
++            return false;
++        }
++
+         /**
+          * This method gets the selected picture sizes for S,M,L and populates
+          * {@link #mPictureSizes} accordingly.
+@@ -498,6 +551,12 @@ public class CameraSettingsActivity extends FragmentActivity {
+             }
+             PictureSizeLoader loader = new PictureSizeLoader(getActivity().getApplicationContext());
+             mPictureSizes = loader.computePictureSizes();
++            SelectedVideoQualities selectedBackQualities = mPictureSizes.videoQualitiesBack.orNull();
++            if (selectedBackQualities != null)
++                selectedBackQualities.init();
++            SelectedVideoQualities selectedFrontQualities = mPictureSizes.videoQualitiesFront.orNull();
++            if (selectedFrontQualities != null)
++                selectedFrontQualities.init();
+         }
+ 
+         /**
+diff --git a/src/com/android/camera/settings/SettingsUtil.java b/src/com/android/camera/settings/SettingsUtil.java
+index f83fb8b..e97abc8 100644
+--- a/src/com/android/camera/settings/SettingsUtil.java
++++ b/src/com/android/camera/settings/SettingsUtil.java
+@@ -30,6 +30,7 @@ import com.android.camera.util.Size;
+ import com.android.camera2.R;
+ import com.android.ex.camera2.portability.CameraDeviceInfo;
+ import com.android.ex.camera2.portability.CameraSettings;
++import android.hardware.Camera;
+ 
+ import java.util.ArrayList;
+ import java.util.Collections;
+@@ -98,7 +99,15 @@ public class SettingsUtil {
+         public int large = -1;
+         public int medium = -1;
+         public int small = -1;
+-
++        public boolean largeEnabled;
++        public boolean mediumEnabled;
++        public boolean smallEnabled;
++
++        public void init() {
++            largeEnabled = true;
++            mediumEnabled = true;
++            smallEnabled = true;
++        }
+         public int getFromSetting(String sizeSetting) {
+             // Sanitize the value to be either small, medium or large. Default
+             // to the latter.
+@@ -114,12 +123,21 @@ public class SettingsUtil {
+                 return small;
+             }
+         }
++        public int getDefaultQuality() {
++            if (largeEnabled) {
++                return large;
++            } else if (mediumEnabled) {
++                return medium;
++            } else {
++                return small;
++            }
++        }
+     }
+ 
+     private static final Log.Tag TAG = new Log.Tag("SettingsUtil");
+ 
+     /** Enable debug output. */
+-    private static final boolean DEBUG = false;
++    private static final boolean DEBUG = true;
+ 
+     private static final String SIZE_LARGE = "large";
+     private static final String SIZE_MEDIUM = "medium";
+@@ -291,6 +309,41 @@ public class SettingsUtil {
+         return selectedSizes;
+     }
+ 
++    public static int getVideoQuality(String qualitySetting, int cameraId, List<Size> supported) {
++        SelectedVideoQualities selectedQualities = getSelectedVideoQualities(cameraId);
++        int quality = selectedQualities.getFromSetting(qualitySetting);
++        CamcorderProfile mProfile = CamcorderProfile.get(cameraId, quality);
++        if (profileValid(cameraId, quality, supported)) {
++            return quality;
++        } else {
++            if (profileValid(cameraId, selectedQualities.large, supported))
++                return selectedQualities.large;
++            else
++                selectedQualities.largeEnabled = false;
++            if (profileValid(cameraId, selectedQualities.medium, supported))
++                return selectedQualities.medium;
++            else
++                selectedQualities.mediumEnabled = false;
++            if (profileValid(cameraId, selectedQualities.small, supported))
++                return selectedQualities.small;
++            else
++                selectedQualities.smallEnabled = false;
++        }
++        return quality;
++    }
++
++    private static boolean profileValid(int cameraId, int quality, List<Size> supported) {
++        boolean isValid = false;
++        CamcorderProfile mProfile = CamcorderProfile.get(cameraId, quality);
++        for (Size sz: supported) {
++           if (sz.width() == mProfile.videoFrameWidth && sz.height() == mProfile.videoFrameHeight) {
++               isValid = true;
++               break;
++           }
++        }
++        return isValid;
++    }
++
+     /**
+      * Determines the video quality for large/medium/small for the given camera.
+      * Returns the one matching the given setting. Defaults to 'large' of the
+@@ -319,7 +372,6 @@ public class SettingsUtil {
+         int largeIndex = getNextSupportedVideoQualityIndex(cameraId, -1);
+         int mediumIndex = getNextSupportedVideoQualityIndex(cameraId, largeIndex);
+         int smallIndex = getNextSupportedVideoQualityIndex(cameraId, mediumIndex);
+-
+         SelectedVideoQualities selectedQualities = new SelectedVideoQualities();
+         selectedQualities.large = sVideoQualities[largeIndex];
+         selectedQualities.medium = sVideoQualities[mediumIndex];
+@@ -328,6 +380,34 @@ public class SettingsUtil {
+         return selectedQualities;
+     }
+ 
++    public static boolean supportQuality(int cameraId, int quality) {
++        if (quality < 0)
++            return false;
++        Camera thisCamera;
++        try {
++            thisCamera = Camera.open(cameraId);
++        } catch (RuntimeException e) {
++            // Camera open will fail if already open.
++            return false;
++        }
++        List<Size> sizes = null;
++        if (thisCamera != null) {
++            sizes = Size.buildListFromCameraSizes(thisCamera.getParameters()
++                .getSupportedVideoSizes());
++            thisCamera.release();
++        }
++        CamcorderProfile mProfile = CamcorderProfile.get(cameraId, quality);
++        if (sizes != null && mProfile != null) {
++            for (Size sz :  sizes) {
++                if (sz.width() == mProfile.videoFrameWidth &&
++                    sz.height() == mProfile.videoFrameHeight) {
++                        return true;
++                }
++            }
++        }
++        return false;
++    }
++
+     /**
+      * Starting from 'start' this method returns the next supported video
+      * quality.
+diff --git a/src/com/android/camera/ui/BottomBar.java b/src/com/android/camera/ui/BottomBar.java
+index 7369778..c7e16b1 100644
+--- a/src/com/android/camera/ui/BottomBar.java
++++ b/src/com/android/camera/ui/BottomBar.java
+@@ -333,6 +333,10 @@ public class BottomBar extends FrameLayout {
+         }
+     }
+ 
++    public boolean setCaptureOnfocus(){
++        return mShutterButton.isFocused();
++    }
++
+     /**
+      * Sets a capture layout helper to query layout rect from.
+      */
+diff --git a/src/com/android/camera/ui/ModeListView.java b/src/com/android/camera/ui/ModeListView.java
+index 9692e49..be18444 100644
+--- a/src/com/android/camera/ui/ModeListView.java
++++ b/src/com/android/camera/ui/ModeListView.java
+@@ -67,6 +67,7 @@ public class ModeListView extends FrameLayout
+         PreviewStatusListener.PreviewAreaChangedListener {
+ 
+     private static final Log.Tag TAG = new Log.Tag("ModeListView");
++    private int mFocusId = 0;
+ 
+     // Animation Durations
+     private static final int DEFAULT_DURATION_MS = 200;
+@@ -1163,6 +1164,16 @@ public class ModeListView extends FrameLayout
+         mTotalModes = mSupportedModes.size();
+         initializeModeSelectorItems();
+         mSettingsButton = findViewById(R.id.settings_button);
++        mSettingsButton.setOnFocusChangeListener( new OnFocusChangeListener( ){
++            @Override
++            public void onFocusChange ( View arg0, boolean hasFocus ) {
++                if ( hasFocus ) {
++                    mSettingsButton.setBackgroundDrawable ( getResources().getDrawable ( R.drawable.bg_options_indicator_focus ) );
++                } else {
++                    mSettingsButton.setBackgroundDrawable ( getResources().getDrawable ( R.drawable.bg_options_indicator ) );
++                }
++            }
++        });
+         mSettingsButton.setOnClickListener(new OnClickListener() {
+             @Override
+             public void onClick(View v) {
+@@ -1195,6 +1206,13 @@ public class ModeListView extends FrameLayout
+         mScreenShotProvider = provider;
+     }
+ 
++    public boolean settingsButtonRequestFocus(){
++        mSettingsButton.setFocusable(true);
++        //mSettingsButton.setFocusableInTouchMode(true);
++        mSettingsButton.requestFocus();
++        return true;
++    }
++
+     private void initializeModeSelectorItems() {
+         mModeSelectorItems = new ModeSelectorItem[mTotalModes];
+         // Inflate the mode selector items and add them to a linear layout
+@@ -1218,7 +1236,17 @@ public class ModeListView extends FrameLayout
+             int modeId = getModeIndex(i);
+             selectorItem.setHighlightColor(getResources()
+                     .getColor(CameraUtil.getCameraThemeColorId(modeId, getContext())));
+-
++            selectorItem.setOnFocusChangeListener ( new OnFocusChangeListener() {
++                @Override
++                public void onFocusChange ( View arg0, boolean hasFocus ) {
++                    if ( hasFocus ) {
++                        mFocusId = modeId;
++                        arg0.setBackgroundColor ( 0xFF33B5E5 );
++                    } else {
++                        arg0.setBackgroundColor ( android.graphics.Color.TRANSPARENT );
++                    }
++                }
++            } );
+             // Set image
+             selectorItem.setImageResource(CameraUtil.getCameraModeIconResId(modeId, getContext()));
+ 
+@@ -1519,6 +1547,9 @@ public class ModeListView extends FrameLayout
+     @Override
+     public void onWindowFocusChanged(boolean hasFocus) {
+         super.onWindowFocusChanged(hasFocus);
++        if ( hasFocus ) {
++            onMenuPressed();
++        }
+         mCurrentStateManager.getCurrentState().onWindowFocusChanged(hasFocus);
+     }
+ 
+@@ -2210,4 +2241,18 @@ public class ModeListView extends FrameLayout
+             }
+         }
+     }
++
++    /**
++    *Add function switch between video camera and so on
++    */
++    public void switchItem ( boolean click, boolean inc ) {
++        if ( click && mFocusId > -1 ) {
++            onItemSelected ( mModeSelectorItems[mFocusId] );
++            return;
++        } else {
++            if ( ( !inc && mFocusId == ( mModeSelectorItems.length - 1 ) ) || ( inc && mFocusId == 0 ) ) {
++                settingsButtonRequestFocus();
++            }
++        }
++    }
+ }
+diff --git a/src/com/android/camera/widget/ModeOptionsOverlay.java b/src/com/android/camera/widget/ModeOptionsOverlay.java
+index 21ef493..f163cc8 100644
+--- a/src/com/android/camera/widget/ModeOptionsOverlay.java
++++ b/src/com/android/camera/widget/ModeOptionsOverlay.java
+@@ -86,6 +86,13 @@ public class ModeOptionsOverlay extends FrameLayout
+         mModeOptionsToggle.setClickable(clickable);
+     }
+ 
++    public boolean isModeOptionVisible() {
++        if ( mModeOptionsToggle.isShown() ) {
++            return false;
++        }
++        return true;
++    }
++
+     public void showExposureOptions() {
+         mModeOptions.showExposureOptions();
+     }
+@@ -111,6 +118,18 @@ public class ModeOptionsOverlay extends FrameLayout
+         });
+ 
+         mModeOptionsToggle = (LinearLayout) findViewById(R.id.mode_options_toggle);
++        mModeOptionsToggle.setFocusable(true);
++        //mModeOptionsToggle.setFocusableInTouchMode(true);
++        mModeOptionsToggle.setOnFocusChangeListener ( new OnFocusChangeListener() {
++            @Override
++            public void onFocusChange ( View arg0, boolean hasFocus ) {
++                if ( hasFocus ) {
++                    mModeOptionsToggle.setBackgroundDrawable ( getResources().getDrawable ( R.drawable.bg_options_indicator_focus ) );
++                } else {
++                    mModeOptionsToggle.setBackgroundDrawable ( getResources().getDrawable ( R.drawable.bg_options_indicator ) );
++                }
++            }
++        });
+         mModeOptionsToggle.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+-- 
+2.7.4
+

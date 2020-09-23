@@ -1,0 +1,55 @@
+From b988b5d3d43d21184b1d7d6b32bdbd6f233de18f Mon Sep 17 00:00:00 2001
+From: "deng.liu" <deng.liu@amlogic.com>
+Date: Thu, 14 Mar 2019 20:09:25 +0800
+Subject: [PATCH] common: NN API implementation [3/3]
+
+PD#SWPL-86
+
+Problem:
+Android tensorflow lite ,NN API implementation
+
+Solution:
+NN API implementation
+
+Verify:
+Local on galilei
+
+Change-Id: I8d7fd9924c7429f99a7ecee0ea514647698e8448
+Signed-off-by: deng.liu <deng.liu@amlogic.com>
+---
+ vendor/file_contexts                 | 2 +-
+ vendor/hal_neuralnetworks_default.te | 9 +++++++++
+ 2 files changed, 10 insertions(+), 1 deletion(-)
+ create mode 100644 vendor/hal_neuralnetworks_default.te
+
+diff --git a/vendor/file_contexts b/vendor/file_contexts
+index 22f0dbb..221bc2b 100644
+--- a/vendor/file_contexts
++++ b/vendor/file_contexts
+@@ -52,7 +52,7 @@
+ /(vendor|system/vendor)/bin/hw/hostapd                                        u:object_r:hal_wifi_hostapd_default_exec:s0
+ /(vendor|system/vendor)/bin/hw/wpa_supplicant                                 u:object_r:hal_wifi_supplicant_default_exec:s0
+ /(vendor|system/vendor)/bin/vndservicemanager                                 u:object_r:vndservicemanager_exec:s0
+-
++/(vendor|system/vendor)/bin/hw/android\.hardware\.neuralnetworks@1\.1-service-ovx-driver    u:object_r:hal_neuralnetworks_default_exec:s0
+ #############################
+ # Same process HALs installed by platform into /vendor
+ #
+diff --git a/vendor/hal_neuralnetworks_default.te b/vendor/hal_neuralnetworks_default.te
+new file mode 100644
+index 0000000..8c18ac9
+--- /dev/null
++++ b/vendor/hal_neuralnetworks_default.te
+@@ -0,0 +1,9 @@
++type hal_neuralnetworks_default,domain;
++hal_server_domain(hal_neuralnetworks_default,hal_neuralnetworks)
++type hal_neuralnetworks_default_exec,exec_type,vendor_file_type,file_type;
++init_daemon_domain(hal_neuralnetworks_default)
++
++allow hal_neuralnetworks_default galcore_device:chr_file {open read write getattr ioctl };
++allow hal_neuralnetworks_default system_data_file:file { getattr read };
++allow hal_neuralnetworks_default graphics_device:dir {search};
++allow hal_neuralnetworks_default graphics_device:chr_file {open read write ioctl};
+-- 
+1.9.1
+

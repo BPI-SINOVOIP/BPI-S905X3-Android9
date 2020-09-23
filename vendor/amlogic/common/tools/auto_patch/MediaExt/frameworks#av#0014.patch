@@ -1,0 +1,26 @@
+From c6b1a89d0b31bfc1f63d868fec282a3af45dbfdf Mon Sep 17 00:00:00 2001
+From: peter wang <peter.wang@amlogic.com>
+Date: Tue, 14 May 2019 20:49:36 +0800
+Subject: [PATCH] MPEG2Extractor: add DDLB_VISION=1 build flag to fix cts fail
+ [1/1]
+
+Change-Id: I6c96d3af1c3ae17845bf4fce489271b2b74697f1
+---
+ media/extractors/mpeg2/Android.bp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/media/extractors/mpeg2/Android.bp b/media/extractors/mpeg2/Android.bp
+index 5e4a592..99634e9 100644
+--- a/media/extractors/mpeg2/Android.bp
++++ b/media/extractors/mpeg2/Android.bp
+@@ -39,6 +39,7 @@ cc_library_shared {
+         "-Werror",
+         "-Wall",
+         "-fvisibility=hidden",
++        "-DDLB_VISION=1",
+     ],
+     version_script: "exports.lds",
+ 
+-- 
+1.9.1
+

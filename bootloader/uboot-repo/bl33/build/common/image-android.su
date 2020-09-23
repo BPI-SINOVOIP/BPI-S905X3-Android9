@@ -1,0 +1,7 @@
+image-android.c:79:5:android_image_get_kernel	112	static
+image-android.c:146:5:android_image_check_header	0	static
+image-android.c:151:7:android_image_get_end	0	static
+image-android.c:167:7:android_image_get_kload	0	static
+image-android.c:172:5:android_image_get_ramdisk	0	static
+image-android.c:189:7:android_image_get_comp	0	static
+image-android.c:211:5:android_image_need_move	64	static

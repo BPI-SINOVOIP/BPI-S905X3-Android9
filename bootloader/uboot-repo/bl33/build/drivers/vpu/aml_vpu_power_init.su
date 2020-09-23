@@ -1,0 +1,4 @@
+aml_vpu_power_init.c:28:6:vpu_mem_pd_init_off	0	static
+aml_vpu_power_init.c:36:6:vpu_module_init_config	0	static
+aml_vpu_power_init.c:69:6:vpu_power_on	80	static
+aml_vpu_power_init.c:158:6:vpu_power_off	80	static
