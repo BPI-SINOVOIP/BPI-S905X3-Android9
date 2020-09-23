@@ -1,7 +1,0 @@
-/ltp_tpci.ko
-/*.mod.c
-/modules.order
-/.tmp_versions
-/.*.ko
-/.*.cmd
-/Module.symvers

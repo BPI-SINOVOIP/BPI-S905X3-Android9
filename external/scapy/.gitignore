@@ -1,9 +1,0 @@
-*.pyc
-*.pyo
-dist/
-build/
-MANIFEST
-*.egg-info/
-scapy/VERSION
-test/*.html
-doc/scapy/_build

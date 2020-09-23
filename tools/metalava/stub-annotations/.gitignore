@@ -1,8 +1,0 @@
-*.iml
-.gradle
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/runConfigurations
-/out
-/build
