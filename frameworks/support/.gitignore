@@ -1,0 +1,27 @@
+/unbundled-build
+.classpath
+.gradle
+**/.idea/**
+!**/.idea/codeStyleSettings.xml
+!**/.idea/copyright
+!**/.idea/codeStyles
+!.idea/codeStyles/Project.xml
+!.idea/codeStyles/codeStyleConfig.xml
+!.idea/copyright/AndroidCopyright.xml
+!.idea/copyright/profiles_settings.xml
+!.idea/vcs.xml
+.project
+.settings/
+project.properties
+local.properties
+**/bin
+**/gen
+*.iml
+**/out
+buildSrc/build
+lifecycle/common/build
+jacoco.exec
+
+# When Gradle configuration fails with the --profile option enabled it creates this folder.
+/reports
+/app-toolkit/reports

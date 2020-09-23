@@ -1,0 +1,13 @@
+# Project files and paths.
+.classpath
+.project
+*.iml
+**/*.iml
+.settings/
+bin/
+libs/
+gen/
+.idea/
+
+# ignore OS X metadata
+.DS_Store

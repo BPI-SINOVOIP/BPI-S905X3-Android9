@@ -1,0 +1,16 @@
+# Copyright (C) 2016 and later: Unicode, Inc. and others.
+# License & terms of use: http://www.unicode.org/copyright.html
+/*.jar
+/.project
+/build-local.properties
+/demos/out
+/doc
+/eclipse-build/out
+/lib/*.jar
+/main/*/out
+out
+perf-tests/out
+samples/out
+tools/build/out
+tools/misc/out
+*.jar

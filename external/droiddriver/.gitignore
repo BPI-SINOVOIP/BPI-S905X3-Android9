@@ -1,0 +1,16 @@
+bin/
+gen/
+
+# gradle junk
+.gradle
+build
+
+# Android Studio junk
+.idea/
+*.iml
+
+# Don't check in local.properties
+local.properties
+
+.DS_Store
+
