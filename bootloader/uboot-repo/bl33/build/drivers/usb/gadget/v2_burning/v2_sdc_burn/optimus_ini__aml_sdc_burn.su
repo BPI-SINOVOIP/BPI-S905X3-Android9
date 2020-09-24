@@ -1,6 +1,0 @@
-optimus_ini__aml_sdc_burn.c:371:12:optimus_aml_sdc_ini_check_set_valid	48	static
-optimus_ini__aml_sdc_burn.c:387:12:optimus_aml_sdc_burn_ini_parse_usr_cfg	80	static
-optimus_ini__aml_sdc_burn.c:86:5:print_burn_parts_para	48	static
-optimus_ini__aml_sdc_burn.c:102:5:print_sdc_burn_para	48	static
-optimus_ini__aml_sdc_burn.c:341:5:check_cfg_burn_parts	80	static
-optimus_ini__aml_sdc_burn.c:411:5:parse_ini_cfg_file	8256	dynamic,bounded

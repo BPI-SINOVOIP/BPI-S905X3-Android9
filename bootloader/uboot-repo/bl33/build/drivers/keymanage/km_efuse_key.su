@@ -1,7 +1,0 @@
-km_efuse_key.c:34:5:keymanage_efuse_init	32	static
-km_efuse_key.c:58:5:keymange_efuse_exit	0	static
-km_efuse_key.c:64:5:keymanage_efuse_write	144	static
-km_efuse_key.c:82:9:keymanage_efuse_size	48	static
-km_efuse_key.c:135:5:keymanage_efuse_query_can_read	16	static
-km_efuse_key.c:148:5:keymanage_efuse_read	64	static
-km_efuse_key.c:96:5:keymanage_efuse_exist	48	static

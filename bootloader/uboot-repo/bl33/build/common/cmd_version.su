@@ -1,2 +1,0 @@
-cmd_version.c:33:12:do_bootloadr_version	80	static
-cmd_version.c:18:12:do_version	16	static

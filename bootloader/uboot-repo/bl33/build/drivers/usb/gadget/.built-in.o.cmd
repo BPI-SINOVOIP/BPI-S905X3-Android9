@@ -1,1 +1,0 @@
-cmd_drivers/usb/gadget/built-in.o :=  aarch64-none-elf-ld.bfd     -r -o drivers/usb/gadget/built-in.o drivers/usb/gadget/epautoconf.o drivers/usb/gadget/config.o drivers/usb/gadget/usbstring.o drivers/usb/gadget/g_dnl.o drivers/usb/gadget/f_fastboot.o drivers/usb/gadget/fastboot/dwc_pcd.o drivers/usb/gadget/fastboot/dwc_pcd_irq.o 

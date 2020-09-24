@@ -1,6 +1,0 @@
-boot.c:40:5:get_boot_num	80	static
-boot.c:99:6:nand_info_page_prepare	96	static
-boot.c:191:6:m3_nand_boot_erase_cmd	64	static
-boot.c:216:5:m3_nand_boot_read_page_hwecc	128	static
-boot.c:417:5:m3_nand_boot_write_page_hwecc	80	static
-boot.c:477:5:m3_nand_boot_write_page	96	static

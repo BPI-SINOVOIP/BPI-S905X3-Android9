@@ -1,9 +1,0 @@
-xhci-ring.c:515:13:record_transfer_result	16	static
-xhci-ring.c:181:33:queue_trb	80	static
-xhci-ring.c:210:12:prepare_ring	48	static
-xhci-ring.c:273:6:xhci_queue_command	80	static
-xhci-ring.c:387:6:xhci_acknowledge_event	0	static
-xhci-ring.c:429:17:xhci_wait_for_event	64	static
-xhci-ring.c:480:13:abort_td	64	static
-xhci-ring.c:553:5:xhci_bulk_tx	192	static
-xhci-ring.c:745:5:xhci_ctrl_tx	128	static

@@ -1,6 +1,0 @@
-avb_slot_verify.c:69:28:load_full_partition	80	static
-avb_slot_verify.c:136:28:read_persistent_digest	80	static
-avb_slot_verify.c:459:28:load_and_verify_vbmeta	1184	static
-avb_slot_verify.c:1281:6:avb_slot_verify_data_free	48	static
-avb_slot_verify.c:1105:21:avb_slot_verify	432	static
-avb_slot_verify.c:1317:13:avb_slot_verify_result_to_string	16	static

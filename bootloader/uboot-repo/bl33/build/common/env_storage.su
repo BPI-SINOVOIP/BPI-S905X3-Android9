@@ -1,3 +1,0 @@
-env_storage.c:42:5:env_init	0	static
-env_storage.c:55:5:saveenv	16	static
-env_storage.c:78:6:env_relocate_spec	0	static

@@ -1,8 +1,0 @@
-optimus_buffer_manager.c:79:5:optimus_buf_manager_init	16	static
-optimus_buffer_manager.c:93:5:optimus_buf_manager_exit	0	static
-optimus_buffer_manager.c:98:5:optimus_buf_manager_tplcmd_init	112	static
-optimus_buffer_manager.c:189:5:optimus_buf_manager_get_buf_for_bulk_transfer	48	static
-optimus_buffer_manager.c:231:5:optimus_buf_manager_report_transfer_complete	96	static
-optimus_buffer_manager.c:316:5:is_largest_data_transferring	0	static
-optimus_buffer_manager.c:325:5:set_largest_data_transfer_sta_end	0	static
-optimus_buffer_manager.c:332:5:optimus_buf_manager_get_command_data_for_upload_transfer	48	static

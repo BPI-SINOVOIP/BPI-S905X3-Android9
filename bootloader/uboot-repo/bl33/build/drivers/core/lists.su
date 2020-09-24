@@ -1,4 +1,0 @@
-lists.c:21:16:lists_driver_lookup_name	48	static
-lists.c:37:23:lists_uclass_lookup	0	static
-lists.c:52:5:lists_bind_drivers	96	static
-lists.c:74:5:device_bind_driver	48	static

@@ -1,5 +1,0 @@
-partitions.c:47:5:get_partitions_table	0	static
-partitions.c:56:5:get_partition_count	0	static
-partitions.c:60:20:get_partitions	0	static
-partitions.c:67:6:free_partitions	32	static
-partitions.c:75:5:get_partition_from_dts	160	static

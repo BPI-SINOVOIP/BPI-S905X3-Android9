@@ -1,9 +1,0 @@
-cmd_ui.c:246:12:do_ui	48	static
-cmd_ui.c:223:12:do_ui_debug	16	static
-cmd_ui.c:187:12:do_ui_uinit	48	static
-cmd_ui.c:174:12:do_ui_update	16	static
-cmd_ui.c:158:12:do_ui_rect	48	static
-cmd_ui.c:126:12:do_ui_text	80	static
-cmd_ui.c:110:12:do_ui_setcolor	16	static
-cmd_ui.c:80:12:do_ui_pic	64	static
-cmd_ui.c:56:12:do_ui_init	48	static

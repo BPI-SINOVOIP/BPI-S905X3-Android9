@@ -1,6 +1,0 @@
-cmd_bmp.c:202:12:do_bmp	48	static
-cmd_bmp.c:149:12:do_bmp_scale	16	static
-cmd_bmp.c:98:12:do_bmp_info	32	static
-cmd_bmp.c:91:14:gunzip_bmp	0	static
-cmd_bmp.c:272:5:bmp_display	16	static
-cmd_bmp.c:116:12:do_bmp_display	48	static

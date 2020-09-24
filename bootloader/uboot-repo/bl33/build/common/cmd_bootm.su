@@ -1,3 +1,0 @@
-cmd_bootm.c:131:5:do_bootm	272	static
-cmd_bootm.c:880:5:do_booti	80	static
-cmd_bootm.c:294:5:bootm_maybe_autostart	64	static

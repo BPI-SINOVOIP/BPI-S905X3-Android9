@@ -1,6 +1,0 @@
-clock.c:120:5:clk_get_rate	16	static
-clock.c:393:15:clk_util_ring_msr	0	static
-clock.c:422:15:clk_util_clk_msr	0	static
-clock.c:98:7:get_clk81	32	static
-clock.c:451:5:clk_msr	80	static
-clock.c:479:6:ring_powerinit	0	static

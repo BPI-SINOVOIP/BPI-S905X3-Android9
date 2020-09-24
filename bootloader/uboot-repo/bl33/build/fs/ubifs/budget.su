@@ -1,2 +1,0 @@
-budget.c:173:5:ubifs_calc_min_idx_lebs	0	static
-budget.c:635:11:ubifs_reported_space	0	static

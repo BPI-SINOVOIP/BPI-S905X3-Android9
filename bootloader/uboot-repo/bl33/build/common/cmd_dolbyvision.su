@@ -1,7 +1,0 @@
-cmd_dolbyvision.c:101:12:do_dolby_vision	48	static
-cmd_dolbyvision.c:58:12:do_write_reg	48	static
-cmd_dolbyvision.c:47:12:do_read_reg	32	static
-cmd_dolbyvision.c:35:12:do_dolbyvision_set	16	static
-cmd_dolbyvision.c:41:12:do_hdmi_package	16	static
-cmd_dolbyvision.c:29:12:do_dolbyvision_process	16	static
-cmd_dolbyvision.c:71:12:do_dolbyvision_debug	16	static

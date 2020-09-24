@@ -1,7 +1,0 @@
-optimus_transform.c:53:5:opimus_func_write_raw_img	64	static
-optimus_transform.c:77:5:optimus_simg2part	64	static
-optimus_transform.c:129:5:optimus_sha1sum	288	static
-optimus_transform.c:239:5:optimus_mem_md	64	static
-optimus_transform.c:264:5:set_low_power_for_usb_burn	16	static
-optimus_transform.c:297:5:cb_4_dis_connect_intr	16	static
-optimus_transform.c:362:5:optimus_working	624	static

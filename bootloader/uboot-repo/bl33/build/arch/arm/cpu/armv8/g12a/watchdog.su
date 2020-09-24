@@ -1,6 +1,0 @@
-watchdog.c:29:6:watchdog_init	0	static
-watchdog.c:44:6:watchdog_reset	0	static
-watchdog.c:49:6:watchdog_disable	0	static
-watchdog.c:60:6:set_pwm_to_input	0	static
-watchdog.c:76:6:reset_system	16	static
-watchdog.c:103:6:reset_cpu	16	static

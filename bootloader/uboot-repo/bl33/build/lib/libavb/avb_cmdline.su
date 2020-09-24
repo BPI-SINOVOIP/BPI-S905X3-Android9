@@ -1,8 +1,0 @@
-avb_cmdline.c:158:15:uint64_to_base10	80	static
-avb_cmdline.c:117:12:0	96	static
-avb_cmdline.c:204:12:cmdline_append_hex	48	static
-avb_cmdline.c:36:7:avb_sub_cmdline	240	static
-avb_cmdline.c:218:21:avb_append_options	544	static
-avb_cmdline.c:388:22:avb_new_cmdline_subst_list	0	static
-avb_cmdline.c:392:6:avb_free_cmdline_subst_list	48	static
-avb_cmdline.c:402:21:avb_add_root_digest_substitution	64	static

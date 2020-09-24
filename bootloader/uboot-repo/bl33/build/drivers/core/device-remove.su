@@ -1,3 +1,0 @@
-device-remove.c:67:5:device_unbind	48	static
-device-remove.c:106:6:device_free	32	static
-device-remove.c:132:5:device_remove	64	static

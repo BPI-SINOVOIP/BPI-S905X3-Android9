@@ -1,7 +1,0 @@
-bootm.c:204:13:boot_prep_linux	32	static
-bootm.c:263:13:boot_jump_linux	48	static
-bootm.c:45:6:arch_lmb_reserve	0	static
-bootm.c:189:13:setup_board_tags	0	static
-bootm.c:333:5:do_bootm_linux	48	static
-bootm.c:388:6:boot_prep_vxworks	48	static
-bootm.c:403:6:boot_jump_vxworks	16	static

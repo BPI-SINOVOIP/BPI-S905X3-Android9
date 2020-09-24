@@ -1,1 +1,0 @@
-cmd_arch/arm/cpu/armv8/g12a/hdmitx20/hdmitx20.o := aarch64-none-elf-ld.bfd     -r -o arch/arm/cpu/armv8/g12a/hdmitx20/hdmitx20.o arch/arm/cpu/armv8/g12a/hdmitx20/reg_ops.o arch/arm/cpu/armv8/g12a/hdmitx20/hdmitx_set.o arch/arm/cpu/armv8/g12a/hdmitx20/hdmitx_tvenc.o arch/arm/cpu/armv8/g12a/hdmitx20/enc_clk_config.o 

@@ -1,1 +1,0 @@
-cmd_drivers/display/built-in.o :=  aarch64-none-elf-ld.bfd     -r -o drivers/display/built-in.o drivers/display/canvas/built-in.o drivers/display/osd/built-in.o drivers/display/vout/built-in.o drivers/display/minui/built-in.o 

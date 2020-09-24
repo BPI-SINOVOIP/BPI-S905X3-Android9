@@ -1,2 +1,0 @@
-cmd_clkmsr.c:28:12:do_clkmsr	16	static
-cmd_clkmsr.c:40:12:do_ringmsr	16	static

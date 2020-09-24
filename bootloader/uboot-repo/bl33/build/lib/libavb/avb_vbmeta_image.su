@@ -1,3 +1,0 @@
-avb_vbmeta_image.c:241:6:avb_vbmeta_image_header_to_host_byte_order	32	static
-avb_vbmeta_image.c:32:23:avb_vbmeta_image_verify	944	static
-avb_vbmeta_image.c:277:13:avb_vbmeta_verify_result_to_string	16	static

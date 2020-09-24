@@ -1,8 +1,0 @@
-spifc.c:400:12:spifc_set_mode	32	static
-spifc.c:413:12:spifc_set_wordlen	32	static
-spifc.c:355:12:spifc_set_speed	64	static
-spifc.c:295:12:spifc_release_bus	32	static
-spifc.c:284:12:spifc_claim_bus	32	static
-spifc.c:330:13:spifc_chipselect	80	static
-spifc.c:426:12:spifc_xfer	192	static
-spifc.c:496:12:spifc_probe	64	static

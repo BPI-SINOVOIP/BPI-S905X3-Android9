@@ -1,7 +1,0 @@
-image-fdt.c:28:13:fdt_error	32	static
-image-fdt.c:79:6:boot_fdt_add_mem_rsv_regions	80	static
-image-fdt.c:114:5:boot_relocate_fdt	80	static
-image-fdt.c:225:5:boot_get_fdt	144	static
-image-fdt.c:481:12:ft_verify_fdt	0	static
-image-fdt.c:486:12:arch_fixup_fdt	0	static
-image-fdt.c:491:5:image_setup_libfdt	48	static

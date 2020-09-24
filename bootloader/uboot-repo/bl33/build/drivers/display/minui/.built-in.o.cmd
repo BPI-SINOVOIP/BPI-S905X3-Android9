@@ -1,1 +1,0 @@
-cmd_drivers/display/minui/built-in.o :=  aarch64-none-elf-ld.bfd     -r -o drivers/display/minui/built-in.o drivers/display/minui/graphics.o drivers/display/minui/graphics_fbdev.o drivers/display/minui/resources.o drivers/display/minui/bmp.o drivers/display/minui/render_api.o 

@@ -1,4 +1,0 @@
-optimus_ini_parser.c:90:5:_optimus_parse_buf_2_lines	64	static
-optimus_ini_parser.c:152:5:_optimus_abandon_ini_comment_lines	0	static
-optimus_ini_parser.c:191:5:parse_ini_file_2_valid_lines	80	static
-optimus_ini_parser.c:242:5:optimus_ini_trans_lines_2_usr_params	464	static

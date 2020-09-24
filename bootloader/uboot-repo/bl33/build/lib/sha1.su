@@ -1,9 +1,0 @@
-sha1.c:76:13:sha1_process	80	static
-sha1.c:233:6:0	64	static
-sha1.c:64:6:sha1_starts	0	static
-sha1.c:233:6:sha1_update	0	static
-sha1.c:280:6:sha1_finish	48	static
-sha1.c:309:6:sha1_csum	176	static
-sha1.c:323:6:sha1_csum_wd	176	static
-sha1.c:355:6:sha1_hmac	352	static
-sha1.c:449:5:sha1_self_test	0	static

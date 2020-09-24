@@ -1,8 +1,0 @@
-cmd_ubi.c:67:13:display_ubi_info	32	static
-cmd_ubi.c:213:27:ubi_find_volume	48	static
-cmd_ubi.c:282:12:ubi_volume_continue_write	48	static
-cmd_ubi.c:317:5:ubi_volume_begin_write	64	static
-cmd_ubi.c:343:5:ubi_volume_write	0	static
-cmd_ubi.c:348:5:ubi_volume_read	96	static
-cmd_ubi.c:469:5:ubi_part	240	static
-cmd_ubi.c:548:12:do_ubi	240	static

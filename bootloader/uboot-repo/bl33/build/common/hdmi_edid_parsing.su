@@ -1,3 +1,0 @@
-hdmi_edid_parsing.c:355:13:Edid_DTD_parsing	48	static
-hdmi_edid_parsing.c:785:6:Edid_MonitorCapable861	0	static
-hdmi_edid_parsing.c:799:14:hdmi_edid_parsing	128	static

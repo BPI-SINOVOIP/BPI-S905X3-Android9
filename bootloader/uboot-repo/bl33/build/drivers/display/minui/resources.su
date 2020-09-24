@@ -1,4 +1,0 @@
-resources.c:23:19:malloc_surface	48	static
-resources.c:112:5:res_create_display_surface	128	static
-resources.c:168:5:res_create_alpha_surface	128	static
-resources.c:220:6:res_free_surface	0	static

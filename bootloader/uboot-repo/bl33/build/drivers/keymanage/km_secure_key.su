@@ -1,7 +1,0 @@
-km_secure_key.c:25:5:keymanage_securekey_init	48	static
-km_secure_key.c:33:5:keymanage_securekey_exit	0	static
-km_secure_key.c:38:5:keymanage_secukey_write	528	static
-km_secure_key.c:97:9:keymanage_secukey_size	0	static
-km_secure_key.c:102:5:keymanage_secukey_exist	0	static
-km_secure_key.c:107:5:keymanage_secukey_can_read	16	static
-km_secure_key.c:112:5:keymanage_secukey_read	48	static

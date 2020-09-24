@@ -1,6 +1,0 @@
-fdt_wip.c:17:5:fdt_setprop_inplace_namelen_partial	64	static
-fdt_wip.c:38:5:fdt_setprop_inplace	80	static
-fdt_wip.c:64:5:fdt_nop_property	32	static
-fdt_wip.c:78:5:_fdt_node_end_offset	48	static
-fdt_wip.c:88:5:fdt_nop_node	48	static
-fdt_wip.c:114:5:fdt_find_regions	304	static

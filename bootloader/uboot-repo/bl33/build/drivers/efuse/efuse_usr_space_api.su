@@ -1,6 +1,0 @@
-efuse_usr_space_api.c:143:12:_get_cfg_key_inf_byname	64	static
-efuse_usr_space_api.c:48:5:efuse_usr_api_init_dtb	160	static
-efuse_usr_space_api.c:167:5:efuse_usr_api_get_cfg_key_size	48	static
-efuse_usr_space_api.c:182:5:efuse_usr_api_write_key	64	static
-efuse_usr_space_api.c:207:5:efuse_usr_api_read_key	64	static
-efuse_usr_space_api.c:288:12:do_usr_efuse_api	96	static

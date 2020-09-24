@@ -1,9 +1,0 @@
-cmd_img_osd.c:202:12:do_img_osd	48	static
-cmd_img_osd.c:186:12:do_img_scale	0	static
-cmd_img_osd.c:156:12:do_img_display	64	static
-cmd_img_osd.c:150:12:do_img_uninit	16	static
-cmd_img_osd.c:142:12:do_img_clear	16	static
-cmd_img_osd.c:70:12:do_addr_set	16	static
-cmd_img_osd.c:116:12:do_img_init	48	static
-cmd_img_osd.c:89:12:do_type_set	16	static
-cmd_img_osd.c:43:12:do_mode_set	16	static

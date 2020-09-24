@@ -1,5 +1,0 @@
-efuse.c:31:9:efuse_read	80	static
-efuse.c:52:9:efuse_write	80	static
-efuse.c:80:5:efuse_read_usr	576	static
-efuse.c:98:5:efuse_write_usr	576	static
-efuse.c:126:10:efuse_get_max	48	static

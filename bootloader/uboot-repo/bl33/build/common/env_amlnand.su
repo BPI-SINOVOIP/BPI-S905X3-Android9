@@ -1,3 +1,0 @@
-env_amlnand.c:74:5:amlnand_env_int	0	static
-env_amlnand.c:110:5:amlnand_saveenv	65632	static
-env_amlnand.c:145:6:amlnand_env_relocate_spec	65632	static

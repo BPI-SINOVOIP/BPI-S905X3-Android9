@@ -1,5 +1,0 @@
-arp.c:41:6:ArpInit	0	static
-arp.c:52:6:arp_raw_request	96	static
-arp.c:82:6:ArpRequest	48	static
-arp.c:99:6:ArpTimeoutCheck	32	static
-arp.c:123:6:ArpReceive	80	static

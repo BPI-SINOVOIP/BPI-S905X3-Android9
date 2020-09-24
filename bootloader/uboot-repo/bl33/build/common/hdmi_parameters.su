@@ -1,4 +1,0 @@
-hdmi_parameters.c:2052:26:hdmi_get_fmt_paras	0	static
-hdmi_parameters.c:2083:6:hdmi_parse_attr	64	static
-hdmi_parameters.c:2126:15:hdmi_get_fmt_vic	64	static
-hdmi_parameters.c:2156:26:hdmi_match_dtd_paras	0	static

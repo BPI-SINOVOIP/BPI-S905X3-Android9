@@ -1,3 +1,0 @@
-bmp.c:215:5:load_bmp	96	static
-bmp.c:254:6:load_pic_from_partition	160	static
-bmp.c:275:5:read_bmp	112	static

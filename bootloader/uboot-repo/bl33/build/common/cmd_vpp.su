@@ -1,3 +1,0 @@
-cmd_vpp.c:78:12:do_vpp	64	static
-cmd_vpp.c:58:12:do_hdr_packet	32	static
-cmd_vpp.c:27:12:do_vpp_pq	80	static

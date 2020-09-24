@@ -1,5 +1,0 @@
-part_aml.c:28:12:0	48	static
-part_aml.c:50:5:get_partition_info_aml	0	static
-part_aml.c:56:5:get_partition_info_aml_by_name	0	static
-part_aml.c:63:6:print_part_aml	224	static
-part_aml.c:80:5:test_part_aml	32	dynamic

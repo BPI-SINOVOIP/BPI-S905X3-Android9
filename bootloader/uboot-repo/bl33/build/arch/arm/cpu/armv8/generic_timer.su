@@ -1,2 +1,0 @@
-generic_timer.c:15:15:get_tbclk	0	static
-generic_timer.c:25:15:timer_read_counter	0	static

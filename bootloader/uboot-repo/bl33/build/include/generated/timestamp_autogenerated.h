@@ -1,3 +1,0 @@
-#define U_BOOT_DATE "Sep 23 2020"
-#define U_BOOT_TIME "13:45:32"
-#define U_BOOT_DATE_TIME "200923.134532"

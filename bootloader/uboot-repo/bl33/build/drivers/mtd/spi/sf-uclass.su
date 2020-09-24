@@ -1,4 +1,0 @@
-sf-uclass.c:34:5:spi_flash_probe_bus_cs	128	static
-sf-uclass.c:18:19:spi_flash_probe	32	static
-sf-uclass.c:57:5:spi_flash_remove	0	static
-sf-uclass.c:29:6:spi_flash_free	0	static

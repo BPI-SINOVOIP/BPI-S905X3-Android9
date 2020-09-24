@@ -1,7 +1,0 @@
-cmd_net.c:179:12:netboot_common	96	static
-cmd_net.c:17:12:do_bootp	0	static
-cmd_net.c:78:5:do_rarpb	0	static
-cmd_net.c:91:12:do_dhcp	0	static
-cmd_net.c:28:5:do_tftpb	64	static
-cmd_net.c:449:12:do_ethloop	32	static
-cmd_net.c:261:12:do_ping	32	static

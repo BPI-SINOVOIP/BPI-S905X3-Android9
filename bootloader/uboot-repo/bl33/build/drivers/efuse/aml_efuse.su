@@ -1,2 +1,0 @@
-aml_efuse.c:39:28:IS_FEAT_BOOT_VERIFY	0	static
-aml_efuse.c:56:28:IS_FEAT_BOOT_ENCRYPT	0	static
