@@ -344,7 +344,7 @@ static void amlremote_tasklet(unsigned long data)
 	if (chip->ir_contr[chip->ir_work].get_decode_status)
 		status = chip->ir_contr[chip->ir_work].get_decode_status(chip);
 	if (status == REMOTE_NORMAL) {
-		remote_dbg(chip->dev, "receive scancode=0x%x\n", scancode);
+		dev_info(chip->dev, "receive scancode=0x%x\n", scancode);
 		remote_keydown(chip->r_dev, scancode, status);
 	} else if (status & REMOTE_REPEAT) {
 		remote_dbg(chip->dev, "receive repeat\n");
@@ -765,7 +765,7 @@ static int ir_hardware_init(struct platform_device *pdev)
 		return ret;
 	chip->set_register_config(chip, chip->protocol);
 	ret = request_irq(chip->irqno, ir_interrupt, IRQF_SHARED
-		| IRQF_NO_SUSPEND, "keypad", (void *)chip);
+		| IRQF_NO_SUSPEND, "aml_remote", (void *)chip);
 	if (ret < 0)
 		goto error_irq;
 

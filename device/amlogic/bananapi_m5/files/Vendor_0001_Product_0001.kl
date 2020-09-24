@@ -64,7 +64,7 @@ key 103      DPAD_UP
 key 108      DPAD_DOWN
 key 105      DPAD_LEFT
 key 106      DPAD_RIGHT
-key 158      CLEAR
+#key 158      CLEAR
 key 139      MENU
 key 102      HOME
 key 398      PROG_RED
@@ -85,7 +85,7 @@ key 13       EQUALS
 key 215      AT
 key 130      ZOOM_IN
 key 131      ZOOM_OUT
-key 15       BACK
+key 158      BACK
 key 466      TV_INPUT
 key 111      PAGE_UP
 key 112      PAGE_DOWN
