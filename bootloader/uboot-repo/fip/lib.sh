@@ -140,14 +140,23 @@ function get_versions() {
 
 function git_operate() {
 	# $1: path, $2: other parameters
-	GIT_OPERATE_INFO=`git --git-dir $1/.git --work-tree=$1 ${@:2}`
+	if [ -d $1/.git ]; then
+		GIT_OPERATE_INFO=`git --git-dir $1/.git --work-tree=$1 ${@:2}`
+	else
+		GIT_OPERATE_INFO="xxxx"
+	fi
+
 	dbg "${GIT_OPERATE_INFO}"
 }
 
 function git_operate2() {
 	# use -C. for pull use. don't know why [git_operate pull] doesn't work, server git update?
 	# $1: path, $2: other parameters
-	GIT_OPERATE_INFO="`git -C \"$1\" ${@:2}`"
+	if [ -d $1/.git ]; then
+		GIT_OPERATE_INFO="`git -C \"$1\" ${@:2}`"
+	else
+		GIT_OPERATE_INFO="xxxx"
+	fi
 	#echo "${GIT_OPERATE_INFO}"
 }
 
