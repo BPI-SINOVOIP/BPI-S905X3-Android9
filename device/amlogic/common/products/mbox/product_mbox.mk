@@ -152,8 +152,8 @@ PRODUCT_COPY_FILES += $(foreach file,$(custom_keylayouts),\
 
 
 # bootanimation
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/bootanimation.zip:system/media/bootanimation.zip
+#PRODUCT_COPY_FILES += \
+#    $(LOCAL_PATH)/bootanimation.zip:system/media/bootanimation.zip
 
 #bootvideo
 PRODUCT_COPY_FILES += \

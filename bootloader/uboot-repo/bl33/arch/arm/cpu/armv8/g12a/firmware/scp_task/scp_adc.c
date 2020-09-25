@@ -225,7 +225,12 @@ int check_adc_key_resume(void)
 
 	value = get_adc_sample_gxbb(CONFIG_ADC_POWER_KEY_CHAN);
 	if ((value >= min) && (value <= max))
+	{
+		uart_puts("check adc key resume, return 1");
 		return 1;
-	else
+	}
+	else {
+		uart_puts("check adc key resume, return 0");
 		return 0;
+	}
 }

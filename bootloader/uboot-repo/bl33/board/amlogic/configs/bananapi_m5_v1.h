@@ -65,11 +65,11 @@
 #define CONFIG_SERIAL_MULTI		1
 
 //Enable ir remote wake up for bl30
-#define CONFIG_IR_REMOTE_POWER_UP_KEY_VAL1 0xef10fe01 //amlogic tv ir --- power
-#define CONFIG_IR_REMOTE_POWER_UP_KEY_VAL2 0xFFFFFFFF
-#define CONFIG_IR_REMOTE_POWER_UP_KEY_VAL3 0xF20DFE01 //amlogic tv ir --- ch-
-#define CONFIG_IR_REMOTE_POWER_UP_KEY_VAL4 0XBA45BD02 //amlogic small ir--- power
-#define CONFIG_IR_REMOTE_POWER_UP_KEY_VAL5 0xe51afb04
+#define CONFIG_IR_REMOTE_POWER_UP_KEY_VAL1 0xff00fe01
+#define CONFIG_IR_REMOTE_POWER_UP_KEY_VAL2 0xf10eaf40
+#define CONFIG_IR_REMOTE_POWER_UP_KEY_VAL3 0xFFFFFFFF
+#define CONFIG_IR_REMOTE_POWER_UP_KEY_VAL4 0XFFFFFFFF
+#define CONFIG_IR_REMOTE_POWER_UP_KEY_VAL5 0xFFFFFFFF
 #define CONFIG_IR_REMOTE_POWER_UP_KEY_VAL6 0xFFFFFFFF
 #define CONFIG_IR_REMOTE_POWER_UP_KEY_VAL7 0xFFFFFFFF
 #define CONFIG_IR_REMOTE_POWER_UP_KEY_VAL8 0xFFFFFFFF
@@ -94,8 +94,8 @@
         "cvbsmode=576cvbs\0" \
         "display_width=1920\0" \
         "display_height=1080\0" \
-        "display_bpp=16\0" \
-        "display_color_index=16\0" \
+        "display_bpp=24\0" \
+        "display_color_index=24\0" \
         "display_layer=osd0\0" \
         "display_color_fg=0xffff\0" \
         "display_color_bg=0\0" \

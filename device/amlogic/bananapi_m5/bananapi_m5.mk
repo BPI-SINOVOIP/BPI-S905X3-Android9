@@ -208,8 +208,8 @@ endif
 #                           Tuner
 #
 ########################################################################
-TUNER_MODULE := cxd2856
-include device/amlogic/common/tuner/tuner.mk
+#TUNER_MODULE := cxd2856
+#include device/amlogic/common/tuner/tuner.mk
 
 ########################################################################
 #
@@ -238,7 +238,7 @@ PRODUCT_PACKAGES += \
 #
 #                                                DTVKit
 ##########################################################################
-PRODUCT_SUPPORT_DTVKIT := true
+PRODUCT_SUPPORT_DTVKIT := false
 
 #########################################################################
 #
@@ -281,7 +281,7 @@ include hardware/amlogic/wifi/configs/wifi.mk
 #
 #########################################################################
 
-BOARD_HAVE_BLUETOOTH := true
+BOARD_HAVE_BLUETOOTH := false
 BLUETOOTH_MODULE := QCABT
 include hardware/amlogic/bluetooth/configs/bluetooth.mk
 
