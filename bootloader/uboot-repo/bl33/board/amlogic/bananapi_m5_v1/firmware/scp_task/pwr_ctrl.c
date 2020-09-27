@@ -96,27 +96,14 @@ static void power_on_at_24M(unsigned int suspend_from)
 void get_wakeup_source(void *response, unsigned int suspend_from)
 {
 	struct wakeup_info *p = (struct wakeup_info *)response;
-	struct wakeup_gpio_info *gpio;
 	unsigned val;
 	unsigned i = 0;
 
+	p->gpio_info_count = i;
 	p->status = RESPONSE_OK;
-	val = (POWER_KEY_WAKEUP_SRC | AUTO_WAKEUP_SRC | REMOTE_WAKEUP_SRC |
-	       BT_WAKEUP_SRC | CECB_WAKEUP_SRC);
+	val = (POWER_KEY_WAKEUP_SRC | AUTO_WAKEUP_SRC | REMOTE_WAKEUP_SRC);
 
 	p->sources = val;
-	p->gpio_info_count = i;
-
-/*bt wake host*/
-	gpio = &(p->gpio_info[i]);
-	gpio->wakeup_id = BT_WAKEUP_SRC;
-	gpio->gpio_in_idx = GPIOX_18;
-	gpio->gpio_in_ao = 0;
-	gpio->gpio_out_idx = -1;
-	gpio->gpio_out_ao = -1;
-	gpio->irq = IRQ_GPIO1_NUM;
-	gpio->trig_type = GPIO_IRQ_FALLING_EDGE;
-	p->gpio_info_count = ++i;
 }
 extern void __switch_idle_task(void);
 

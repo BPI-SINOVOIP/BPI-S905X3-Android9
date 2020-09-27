@@ -39,9 +39,9 @@
 
 /* configs for CEC */
 #define CONFIG_CEC_OSD_NAME		"AML_TV"
-#define CONFIG_CEC_WAKEUP
+/*#define CONFIG_CEC_WAKEUP*/
 /*if use bt-wakeup,open it*/
-#define CONFIG_BT_WAKEUP
+/*#define CONFIG_BT_WAKEUP*/
 /* SMP Definitinos */
 #define CPU_RELEASE_ADDR		secondary_boot_func
 
@@ -531,8 +531,8 @@
 	#define CONFIG_USB_STORAGE      1
 	#define CONFIG_USB_XHCI		1
 	#define CONFIG_USB_XHCI_AMLOGIC_V2 1
-	#define CONFIG_USB_GPIO_PWR  			GPIOEE(GPIOH_6)
-	#define CONFIG_USB_GPIO_PWR_NAME		"GPIOH_6"
+	#define CONFIG_USB_GPIO_PWR  			GPIOEE(GPIOH_8)
+	#define CONFIG_USB_GPIO_PWR_NAME		"GPIOH_8"
 	//#define CONFIG_USB_XHCI_AMLOGIC_USB3_V2		1
 #endif //#if defined(CONFIG_CMD_USB)
 
@@ -685,7 +685,7 @@
 
 /* Choose One of Ethernet Type */
 #undef CONFIG_ETHERNET_NONE
-#define ETHERNET_INTERNAL_PHY
+#undef ETHERNET_INTERNAL_PHY
 #undef ETHERNET_EXTERNAL_PHY
 
 #define CONFIG_HIGH_TEMP_COOL 90
