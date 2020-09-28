@@ -281,8 +281,9 @@ include hardware/amlogic/wifi/configs/wifi.mk
 #
 #########################################################################
 
-BOARD_HAVE_BLUETOOTH := false
-BLUETOOTH_MODULE := QCABT
+BOARD_HAVE_BLUETOOTH := true
+BLUETOOTH_MODULE := RTKBT
+BLUETOOTH_INF := USB
 include hardware/amlogic/bluetooth/configs/bluetooth.mk
 
 #########################################################################
