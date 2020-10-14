@@ -978,13 +978,13 @@
 &usb3_phy_v2 {
 	status = "okay";
 	portnum = <1>;
-	otg = <0>;
+	otg = <1>;
 };
 
 &dwc2_a {
 	status = "okay";
 	/** 0: normal, 1: otg+dwc3 host only, 2: otg+dwc3 device only*/
-	controller-type = <1>;
+	controller-type = <3>;
 };
 &ethmac {
 	status = "okay";
@@ -1223,3 +1223,8 @@
 			REMOTE_KEY(0x11, KEY_MUTE)>;
 	};
 };
+
+&irblaster {
+	status = "disable";
+};
+
