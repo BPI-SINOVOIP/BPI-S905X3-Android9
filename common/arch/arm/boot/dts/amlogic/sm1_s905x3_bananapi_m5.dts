@@ -196,6 +196,7 @@
 			label="sys_led";
 			gpios=<&gpio_ao GPIOAO_11 GPIO_ACTIVE_LOW>;
 			default-state ="on";
+			linux,default-trigger = "timer";
 		};
 	};
 
