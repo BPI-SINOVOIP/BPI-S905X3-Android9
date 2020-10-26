@@ -27,7 +27,36 @@
 #include <asm/arch/bl31_apis.h>
 #include <asm/arch/watchdog.h>
 #include <partition_table.h>
+#include <asm/arch/mailbox.h>
 
+/* USB BOOT FUNC sub command list*/
+#define CLEAR_USB_BOOT                  1
+#define FORCE_USB_BOOT                  2
+#define RUN_COMD_USB_BOOT               3
+#define PANIC_DUMP_USB_BOOT             4
+
+int set_sd_usb_boot(char *dev)
+{
+    if (!dev) {
+        printf("reboot dev: normal\n");
+    }
+    else {
+        printf("reboot dev: %s\n", dev);
+
+        if (strcmp(dev, "usb") == 0) {
+            printf("BPI: set rom boot from usb after reset\n");
+            set_boot_first_timeout(SCPI_CMD_USB_UNBOOT);
+        }
+        else if (strcmp(dev, "sd") == 0) {
+            printf("BPI: set rom boot from sdcard after reset\n");
+            set_boot_first_timeout(SCPI_CMD_SDCARD_BOOT);
+        }
+
+		run_command("reset",0);
+    }
+
+    return 0;
+}
 
 /*
 run get_rebootmode  //set reboot_mode env with current mode
@@ -194,6 +223,10 @@ int do_reboot (cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 			reboot_mode_val = AMLOGIC_KERNEL_PANIC;
 		else if (strcmp(mode, "rpmbp") == 0)
 			reboot_mode_val = AMLOGIC_RPMBP_REBOOT;
+		else if (strcmp(mode, "sdboot") == 0)
+			set_sd_usb_boot("sd");
+		else if (strcmp(mode, "usbboot") == 0)
+			set_sd_usb_boot("usb");
 		else {
 			printf("Can not find match reboot mode, use normal by default\n");
 			reboot_mode_val = AMLOGIC_NORMAL_BOOT;
