@@ -70,7 +70,7 @@ endif
 export Q
 
 ifeq (${GIT_VERSION},)
-	GIT_VERSION := $(shell git describe --abbrev=7 --dirty --always --tags)
+	GIT_VERSION := ""
 endif
 ifeq (${BUILDER},)
 	BUILDER := ${USER}@$(shell hostname)
