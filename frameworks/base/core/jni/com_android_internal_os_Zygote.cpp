@@ -277,6 +277,7 @@ static bool EnableKeepCapabilities(std::string* error_msg) {
 }
 
 static bool DropCapabilitiesBoundingSet(std::string* error_msg) {
+#ifdef BPI_CUSTOM_ROOT
   for (int i = 0; prctl(PR_CAPBSET_READ, i, 0, 0, 0) >= 0; i++) {
     int rc = prctl(PR_CAPBSET_DROP, i, 0, 0, 0);
     if (rc == -1) {
@@ -289,6 +290,7 @@ static bool DropCapabilitiesBoundingSet(std::string* error_msg) {
       }
     }
   }
+#endif
   return true;
 }
 
