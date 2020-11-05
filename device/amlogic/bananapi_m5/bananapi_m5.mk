@@ -527,3 +527,21 @@ ifeq ($(AB_OTA_UPDATER),true)
 $(warning $(shell ($(AUTO_PATCH_AB) $(PRODUCT_DIR))))
 endif
 endif
+#########################################################################
+#
+#                            factory test
+#
+#########################################################################
+RTK_FACTORY_TEST := false
+ifeq ($(RTK_FACTORY_TEST), true)
+PRODUCT_PACKAGES += ProductTest
+PRODUCT_PACKAGES += bpi-daemon
+PRODUCT_PACKAGES += DragonAging
+PRODUCT_PACKAGES += DragonFire
+PRODUCT_PACKAGES += DragonPhone
+PRODUCT_PACKAGES += memtester
+PRODUCT_PACKAGES += AndroidStressTest
+
+PRODUCT_PROPERTY_OVERRIDES += \
+	sys.test.producttest=true
+endif
