@@ -63,9 +63,9 @@ static void set_vddee_voltage(unsigned int target_voltage)
 
 static void power_off_at_24M(unsigned int suspend_from)
 {
-	/*set gpioH_8 high to power off vcc 5v*/
-	writel(readl(PREG_PAD_GPIO3_EN_N) | (1 << 8), PREG_PAD_GPIO3_EN_N);
-	writel(readl(PERIPHS_PIN_MUX_C) & (~(0xf)), PERIPHS_PIN_MUX_C);
+	/*set gpioH_6 low to power off vcc 5v*/
+	writel(readl(PREG_PAD_GPIO3_EN_N) & (~(1 << 6)), PREG_PAD_GPIO3_EN_N);
+	writel(readl(PERIPHS_PIN_MUX_B) & (~(0xf << 24)), PERIPHS_PIN_MUX_B);
 
 	/*set test_n low to power off vcck*/
 	writel(readl(AO_GPIO_O) & (~(1 << 31)), AO_GPIO_O);
@@ -88,8 +88,8 @@ static void power_on_at_24M(unsigned int suspend_from)
 	_udelay(100);
 
 	/*set gpioH_8 low to power on vcc 5v*/
-	writel(readl(PREG_PAD_GPIO3_EN_N) & (~(1 << 8)), PREG_PAD_GPIO3_EN_N);
-	writel(readl(PERIPHS_PIN_MUX_C) & (~(0xf)), PERIPHS_PIN_MUX_C);
+	writel(readl(PREG_PAD_GPIO3_EN_N) & (1 << 6), PREG_PAD_GPIO3_EN_N);
+	writel(readl(PERIPHS_PIN_MUX_B) & (~(0xf << 24)), PERIPHS_PIN_MUX_B);
 	_udelay(10000);
 }
 
