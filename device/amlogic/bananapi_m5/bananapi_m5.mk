@@ -532,10 +532,9 @@ endif
 #                            factory test
 #
 #########################################################################
-RTK_FACTORY_TEST := false
+RTK_FACTORY_TEST := true
 ifeq ($(RTK_FACTORY_TEST), true)
 PRODUCT_PACKAGES += ProductTest
-PRODUCT_PACKAGES += bpi-daemon
 PRODUCT_PACKAGES += DragonAging
 PRODUCT_PACKAGES += DragonFire
 PRODUCT_PACKAGES += DragonPhone
