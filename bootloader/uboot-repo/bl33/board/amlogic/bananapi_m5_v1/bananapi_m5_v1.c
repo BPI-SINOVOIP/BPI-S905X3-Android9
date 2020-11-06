@@ -78,7 +78,7 @@ int serial_set_pin_port(unsigned long port_base)
 
 int dram_init(void)
 {
-	gd->ram_size = PHYS_SDRAM_1_SIZE;
+	gd->ram_size = (((readl(AO_SEC_GP_CFG0)) & 0xFFFF0000) << 4);
 	return 0;
 }
 
@@ -303,7 +303,6 @@ static void sd_emmc_pwr_off(unsigned port)
 	return;
 }
 
-// #define CONFIG_TSD      1
 static void board_mmc_register(unsigned port)
 {
 	struct aml_card_sd_info *aml_priv=cpu_sd_emmc_get(port);
@@ -326,16 +325,12 @@ static void board_mmc_register(unsigned port)
 }
 int board_mmc_init(bd_t	*bis)
 {
-#ifdef CONFIG_VLSI_EMULATOR
-	//board_mmc_register(SDIO_PORT_A);
-#else
-	//board_mmc_register(SDIO_PORT_B);
-#endif
-	board_mmc_register(SDIO_PORT_B);
-	board_mmc_register(SDIO_PORT_C);
-//	board_mmc_register(SDIO_PORT_B1);
+	board_mmc_register(SDIO_PORT_B);  //sd
+	board_mmc_register(SDIO_PORT_C);  //emmc
+	
 	return 0;
 }
+#endif
 
 #ifdef CONFIG_SYS_I2C_AML
 #if 0
@@ -386,7 +381,6 @@ static void board_i2c_init(void)
 
 	udelay(10);
 }
-#endif
 #endif
 #endif
 
@@ -546,7 +540,6 @@ U_BOOT_DEVICE(spifc) = {
 };
 #endif /* CONFIG_AML_SPIFC */
 
-extern void aml_pwm_cal_init(int mode);
 
 #ifdef CONFIG_SYS_I2C_MESON
 static const struct meson_i2c_platdata i2c_data[] = {
@@ -577,24 +570,6 @@ void set_i2c_ao_pinmux(void)
 }
 #endif /*end CONFIG_SYS_I2C_MESON*/
 
-#ifdef CONFIG_PWM_MESON
-static const struct meson_pwm_platdata pwm_data[] = {
-	{ PWM_AB, 0xffd1b000, IS_DOUBLE_CHANNEL, IS_BLINK },
-	{ PWM_CD, 0xffd1a000, IS_DOUBLE_CHANNEL, IS_BLINK },
-	{ PWM_EF, 0xffd19000, IS_DOUBLE_CHANNEL, IS_BLINK },
-	{ PWMAO_AB, 0xff807000, IS_DOUBLE_CHANNEL, IS_BLINK },
-	{ PWMAO_CD, 0xff802000, IS_DOUBLE_CHANNEL, IS_BLINK },
-};
-
-U_BOOT_DEVICES(meson_pwm) = {
-	{ "amlogic,general-pwm", &pwm_data[0] },
-	{ "amlogic,general-pwm", &pwm_data[1] },
-	{ "amlogic,general-pwm", &pwm_data[2] },
-	{ "amlogic,general-pwm", &pwm_data[3] },
-	{ "amlogic,general-pwm", &pwm_data[4] },
-};
-#endif /*end CONFIG_PWM_MESON*/
-
 int board_init(void)
 {
     //Please keep CONFIG_AML_V2_FACTORY_BURN at first place of board_init
@@ -604,18 +579,17 @@ int board_init(void)
 				aml_try_factory_usb_burning(0, gd->bd);
 	}
 #endif// #ifdef CONFIG_AML_V2_FACTORY_BURN
+
 #ifdef CONFIG_USB_XHCI_AMLOGIC_V2
 	board_usb_pll_disable(&g_usb_config_GXL_skt);
 	board_usb_init(&g_usb_config_GXL_skt,BOARD_USB_MODE_HOST);
 #endif /*CONFIG_USB_XHCI_AMLOGIC*/
 
-#if 0
-	aml_pwm_cal_init(0);
-#endif//
 #ifdef CONFIG_AML_NAND
 	extern int amlnf_init(unsigned char flag);
 	amlnf_init(0);
 #endif
+
 #ifdef CONFIG_SYS_I2C_MESON
 	set_i2c_ao_pinmux();
 #endif
@@ -736,6 +710,7 @@ int board_late_init(void)
 #endif
 
 #ifdef CONFIG_AML_V2_FACTORY_BURN
+	printf("BPI: board_late_init, try factory burn\n");
 	if (0x1b8ec003 == readl(P_PREG_STICKY_REG2))
 		aml_try_factory_usb_burning(1, gd->bd);
 		aml_try_factory_sdcard_burning(0, gd->bd);
