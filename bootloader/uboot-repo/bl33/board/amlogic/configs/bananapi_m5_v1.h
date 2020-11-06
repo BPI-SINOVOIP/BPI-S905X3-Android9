@@ -116,6 +116,7 @@
         "sdcburncfg=aml_sdc_burn.ini\0"\
         "boot_scripts=boot.ini\0"\
         "sdc_burning=sdc_burn ${sdcburncfg}\0"\
+        "rom_sdboot=reboot sdboot\0"\
         "wipe_data=successful\0"\
         "wipe_cache=successful\0"\
         "EnableSelinux=enforcing\0" \
@@ -326,7 +327,12 @@
             "get_avb_mode;"\
             "get_valid_slot;"\
             "\0"\
-        "upgrade_key="\
+        "rom_sdboot_key="\
+            "if gpio input GPIOAO_3; then "\
+                "echo detect rom_sdboot key; run rom_sdboot;"\
+            "fi;"\
+            "\0"\
+		"upgrade_key="\
             "if gpio input GPIOAO_3; then "\
                 "echo detect upgrade key; run update;"\
             "fi;"\
