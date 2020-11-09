@@ -181,6 +181,17 @@
 		key_tolerance = <40>;
         };
 
+	gpio-keys {
+		compatible = "gpio-keys";
+		status = "okay";
+
+		install-button {
+			lable = "Volume Mute";
+			gpios = <&gpio_ao GPIOAO_3 GPIO_ACTIVE_LOW>;
+			linux,code = <KEY_VOLUMEDOWN>;
+		};
+	};
+
 	gpioleds {
 		compatible = "gpio-leds";
 		status = "okay";
