@@ -273,21 +273,6 @@ static void sd_emmc_pwr_on(unsigned port)
 		case SDIO_PORT_A:
 			break;
 		case SDIO_PORT_B:
-			printf("BPI-sd: set sd power on\n");
-			/* set gpioH_8 output/external pull high to power on sd vdd_en*/
-			writel(readl(PREG_PAD_GPIO3_EN_N) | (1 << 8), PREG_PAD_GPIO3_EN_N);
-			writel(readl(PERIPHS_PIN_MUX_C) & (~(0xf)), PERIPHS_PIN_MUX_C);
-
-			/* set gpioE_2 output/high to power on sd vddio */
-			writel(readl(AO_GPIO_O) | (1 << 18), AO_GPIO_O);
-			writel(readl(AO_GPIO_O_EN_N) | (1 << 18), AO_GPIO_O_EN_N);
-			writel(readl(AO_RTI_PINMUX_REG1) & (~(0xf << 24)), AO_RTI_PINMUX_REG1);
-
-			/* set gpioAO_6 output/low to set sd 3v3_1v8_en to 3v3 default */
-			writel(readl(AO_GPIO_O) & (~(1 << 6)), AO_GPIO_O);
-			writel(readl(AO_GPIO_O_EN_N) & (~(1 << 6)), AO_GPIO_O_EN_N);
-			writel(readl(AO_RTI_PINMUX_REG0) & (~(0xf << 24)), AO_RTI_PINMUX_REG0);
-	
 			break;
 		case SDIO_PORT_C:
 			break;
@@ -333,8 +318,28 @@ static void board_mmc_register(unsigned port)
 
 	sd_emmc_register(aml_priv);
 }
+
+static void board_mmc_power_enable(void)
+{
+	printf("BPI-sd: set sd power on\n");
+	/* set gpioH_8 output/external pull high to power on sd vdd_en*/
+	writel(readl(PREG_PAD_GPIO3_EN_N) | (1 << 8), PREG_PAD_GPIO3_EN_N);
+	writel(readl(PERIPHS_PIN_MUX_C) & (~(0xf)), PERIPHS_PIN_MUX_C);
+
+	/* set gpioE_2 output/high to power on sd vddio */
+	writel(readl(AO_GPIO_O) | (1 << 18), AO_GPIO_O);
+	writel(readl(AO_GPIO_O_EN_N) | (1 << 18), AO_GPIO_O_EN_N);
+	writel(readl(AO_RTI_PINMUX_REG1) & (~(0xf << 24)), AO_RTI_PINMUX_REG1);
+
+	/* set gpioAO_6 output/low to set sd 3v3_1v8_en to 3v3 default */
+	writel(readl(AO_GPIO_O) & (~(1 << 6)), AO_GPIO_O);
+	writel(readl(AO_GPIO_O_EN_N) & (~(1 << 6)), AO_GPIO_O_EN_N);
+	writel(readl(AO_RTI_PINMUX_REG0) & (~(0xf << 24)), AO_RTI_PINMUX_REG0);
+}
+
 int board_mmc_init(bd_t	*bis)
 {
+	board_mmc_power_enable();
 	board_mmc_register(SDIO_PORT_B);  //sd
 	board_mmc_register(SDIO_PORT_C);  //emmc
 	
