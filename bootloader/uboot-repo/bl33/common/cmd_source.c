@@ -26,8 +26,6 @@
 #endif
 
 #define CONFIG_ODROID_COMMON
-#define CONFIG_DEVICE_PRODUCT_TEST "odroidc4"
-
 
 #if defined(CONFIG_ODROID_COMMON)
 #include <linux/ctype.h>
@@ -158,7 +156,7 @@ source (ulong addr, const char *fit_uname)
 #endif
 	default:
 #if defined(CONFIG_ODROID_COMMON)
-		size = check_odroid_script(addr, CONFIG_DEVICE_PRODUCT_TEST);
+		size = check_odroid_script(addr, CONFIG_DEVICE_PRODUCT);
 		if (size > 0) {
 			data = (u32*)(addr + size);
 			len = simple_strtoul(getenv("filesize"), NULL, 16) - size;
