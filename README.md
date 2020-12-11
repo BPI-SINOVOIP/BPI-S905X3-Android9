@@ -1,5 +1,7 @@
 # BPI-S905X3-Android9
 
+----------
+
 **Prepare**
 
 Get the docker image from [Sinovoip Docker Hub](https://hub.docker.com/r/sinovoip/bpi-build-android-7/) , Build the android source with this docker environment.
@@ -13,9 +15,13 @@ Download the [toolchains](https://download.banana-pi.dev/d/3ebbfa04265d4dddb81b/
     $ export PATH=$PATH:/opt/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin
     $ export PATH=$PATH:/opt/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin
 
+----------
+
 Get source code
 
     $ git clone https://github.com/Dangku/BPI-S905X3-Android9
+
+Because github limit 100MB size for single file, please download the [oversize files](https://download.banana-pi.dev/d/3ebbfa04265d4dddb81b/files/?p=/Source_Code/m5/android_github_oversize_files.zip) and merge them to correct directory before build.
 
 ----------
 
@@ -34,8 +40,6 @@ Get source code
     Select compile Android verion type lists:
     [NUM]   [Android Version]
     [  1]   [AOSP]
-    [  2]   [ DRM]                        //not support
-    [  3]   [GTVS](need google gms zip)   //not support
     ---------------------------------------------------------------
     Please select Android Version (default 1 (AOSP)):1
     including device/amlogic/ac214/vendorsetup.sh
