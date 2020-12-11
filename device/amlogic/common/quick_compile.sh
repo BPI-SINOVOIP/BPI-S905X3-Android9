@@ -82,8 +82,6 @@ read_android_type() {
         "Select compile Android verion type lists:\n"\
         "[NUM]   [Android Version]\n" \
         "[  1]   [AOSP]\n" \
-        "[  2]   [ DRM]\n" \
-        "[  3]   [GTVS](need google gms zip)\n" \
         "--------------------------------------------\n"
 
         read -p "Please select Android Version (default 1 (AOSP)):" uboot_drm_type
@@ -91,8 +89,8 @@ read_android_type() {
             uboot_drm_type=1
             break
         fi
-        if [[ $uboot_drm_type -lt 1 || $uboot_drm_type -gt 3 ]];then
-            echo -e "The Android Version is illegal, please select again [1 ~ 3]}\n"
+        if [[ $uboot_drm_type -ne 1 ]];then
+            echo -e "The Android Version is illegal, please select again [1]}\n"
         else
             break
         fi
