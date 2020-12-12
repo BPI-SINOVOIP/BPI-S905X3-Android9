@@ -19,7 +19,7 @@ Download the [toolchains](https://download.banana-pi.dev/d/3ebbfa04265d4dddb81b/
 
 Get source code
 
-    $ git clone https://github.com/Dangku/BPI-S905X3-Android9
+    $ git clone https://github.com/BPI-SINOVOIP/BPI-S905X3-Android9
 
 Because github limit 100MB size for single file, please download the [oversize files](https://download.banana-pi.dev/d/3ebbfa04265d4dddb81b/files/?p=/Source_Code/m5/android_github_oversize_files.zip) and merge them to correct directory before build.
 
