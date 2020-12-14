@@ -14,11 +14,11 @@ else ifeq (1, $(shell expr $(PLATFORM_SDK_VERSION) \>= 23))
 HARDWARE_PATH := $(TOP)/hardware/amlogic
 endif
 
-ifeq ($(shell test -e $(LOCAL_PATH)/update_version.sh && echo 1),1)
-    $(shell (cd $(LOCAL_PATH) && sh ./update_version.sh>/dev/null 2>&1))
-else
-    $(error update_version.sh not found!)
-endif
+#ifeq ($(shell test -e $(LOCAL_PATH)/update_version.sh && echo 1),1)
+#    $(shell (cd $(LOCAL_PATH) && sh ./update_version.sh>/dev/null 2>&1))
+#else
+#    $(error update_version.sh not found!)
+#endif
 
 ##############################################################
 CTC_SRC_FILES :=	\
