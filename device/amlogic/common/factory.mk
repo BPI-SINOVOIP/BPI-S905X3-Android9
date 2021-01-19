@@ -161,8 +161,13 @@ ifeq ($(BOARD_AVB_ENABLE),true)
 endif
 
 $(BOARD_PREBUILT_DTBOIMAGE): $(INSTALLED_BOARDDTB_TARGET) | $(DTCTOOL) $(DTIMGTOOL)
-	$(DTCTOOL) -@ -O dtb -o $(PRODUCT_OUT)/$(DTBO_DEVICETREE).dtbo $(KERNEL_ROOTDIR)/$(KERNEL_DEVICETREE_DIR)/$(DTBO_DEVICETREE).dts
-	$(DTIMGTOOL) create $@ $(PRODUCT_OUT)/$(DTBO_DEVICETREE).dtbo
+	$(hide) $(foreach file,$(DTBO_DEVICETREE), \
+		$(DTCTOOL) -@ -O dtb -o $(PRODUCT_OUT)/$(file).dtbo $(KERNEL_ROOTDIR)/$(KERNEL_DEVICETREE_DIR)/overlay/$(TARGET_PRODUCT)/$(file).dts; \
+		)
+	$(DTIMGTOOL) create $@ \
+	$(foreach file,$(DTBO_DEVICETREE), \
+		$(PRODUCT_OUT)/$(file).dtbo \
+	)
 
 .PHONY: dtbimage
 dtbimage: $(INSTALLED_BOARDDTB_TARGET)

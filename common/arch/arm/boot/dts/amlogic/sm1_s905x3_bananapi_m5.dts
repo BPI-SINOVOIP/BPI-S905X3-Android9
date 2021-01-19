@@ -267,6 +267,7 @@
 		status = "disabled";
 		gpio_reset = <&gpio       GPIOX_17       GPIO_ACTIVE_HIGH>;
 		gpio_hostwake = <&gpio       GPIOX_19       GPIO_ACTIVE_HIGH>;
+		gpio_btwakeup = <&gpio  GPIOX_18        GPIO_ACTIVE_HIGH>;
 	};
 
 	wifi{
@@ -276,7 +277,8 @@
 		interrupt_pin = <&gpio       GPIOX_7       GPIO_ACTIVE_HIGH>;
 		irq_trigger_type = "GPIO_IRQ_LOW";
 		power_on_pin = <&gpio       GPIOX_6       GPIO_ACTIVE_HIGH>;
-		dhd_static_buf;	//if use bcm wifi, config dhd_static_buf
+		/*if use bcm wifi, config dhd_static_buf*/
+		/*dhd_static_buf;*/
 		pinctrl-names = "default";
 		pinctrl-0 = <&pwm_e_pins>;
 		pwm_config = <&wifi_pwm_conf>;
@@ -415,7 +417,7 @@
 	unifykey{
 		compatible = "amlogic, unifykey";
 		status = "ok";
-		unifykey-num = <17>;
+		unifykey-num = <18>;
 		unifykey-index-0 = <&keysn_0>;
 		unifykey-index-1 = <&keysn_1>;
 		unifykey-index-2 = <&keysn_2>;
@@ -426,13 +428,14 @@
 		unifykey-index-7 = <&keysn_7>;
 		unifykey-index-8 = <&keysn_8>;
 		unifykey-index-9 = <&keysn_9>;
-		unifykey-index-10= <&keysn_10>;
-		unifykey-index-11= <&keysn_11>;
-		unifykey-index-12= <&keysn_12>;
-		unifykey-index-13= <&keysn_13>;
-		unifykey-index-14= <&keysn_14>;
-		unifykey-index-15= <&keysn_15>;
-		unifykey-index-16= <&keysn_16>;
+		unifykey-index-10 = <&keysn_10>;
+		unifykey-index-11 = <&keysn_11>;
+		unifykey-index-12 = <&keysn_12>;
+		unifykey-index-13 = <&keysn_13>;
+		unifykey-index-14 = <&keysn_14>;
+		unifykey-index-15 = <&keysn_15>;
+		unifykey-index-16 = <&keysn_16>;
+		unifykey-index-17 = <&keysn_17>;
 		keysn_0: key_0{
 			key-name = "usid";
 			key-device = "normal";
@@ -517,8 +520,13 @@
 			key-permit = "read","write","del";
 		};
 		keysn_16:key_16{
-			key-name = "attestationdevidbox";// attest dev id box
-			key-device = "secure";
+			key-name = "dtbo";// dtbo idx
+			key-device = "normal";
+			key-permit = "read","write","del";
+		};
+		keysn_17:key_17{
+			key-name = "test";// test
+			key-device = "normal";
 			key-permit = "read","write","del";
 		};
 	};//End unifykey
@@ -884,7 +892,7 @@
 /* Audio Related End */
 
 &pwm_ef {
-	status = "okay";
+	status = "disabled";
 };
 
 &dwc3 {

@@ -223,7 +223,6 @@
             "fi; \0" \
          "boot_from_sd_udisk="\
             "echo BPI: try boot from sd/udisk;"\
-            "run init_display; run storeargs;"\
             "if mmcinfo; then "\
                 "run boot_from_sdcard;"\
             "fi;"\
@@ -320,6 +319,13 @@
                     "setenv bootargs ${bootargs} androidboot.oem.key1=${oemkey};"\
                 "else "\
                     "setenv bootargs ${bootargs} androidboot.oem.key1=ATV00104319;"\
+                "fi;"\
+                "if keyman read dtbo ${loadaddr} str; then "\
+                    "setenv bootargs ${bootargs} androidboot.dtbo_idx=${dtbo};"\
+                    "setenv androidboot.dtbo_idx ${dtbo};"\
+                "else "\
+                    "setenv bootargs ${bootargs} androidboot.dtbo_idx=0;"\
+                    "setenv androidboot.dtbo_idx 0;"\
                 "fi;"\
             "fi;"\
             "\0"\

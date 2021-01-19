@@ -60,8 +60,7 @@ KERNEL_DEVICETREE := sm1_s905x3_bananapi_m5
 KERNEL_DEFCONFIG := meson64_defconfig
 KERNEL_ARCH := arm64
 
-DTBO_DEVICETREE := android_p_overlay_dt
-
+DTBO_DEVICETREE := android_p_overlay_dt wifi_bt_rtl8822cs
 
 KERNEL_OUT := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ
 
