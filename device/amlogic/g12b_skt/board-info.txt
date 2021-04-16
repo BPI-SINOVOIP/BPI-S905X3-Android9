@@ -1,2 +1,0 @@
-require board=g12b_skt
-require version-bootloader=01.01.180822.152145

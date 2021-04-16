@@ -1,2 +1,0 @@
-require board=galilei
-require version-bootloader=01.01.180822.152145

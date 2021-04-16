@@ -14,7 +14,7 @@ cc_library_static {
         "bootable/recovery",
         "system/vold",
         "system/core/adb",
-        "device/amlogic/common/recovery",
+        "device/bananapi/common/recovery",
         "system/core/base/include",
         "system/core/libziparchive/include",
         "system/core/libcutils/include",

@@ -74,7 +74,7 @@ public class KeyButtonView extends ImageView implements ButtonInterface {
     private final Runnable mCheckLongPress = new Runnable() {
         public void run() {
             if (isPressed()) {
-                // Log.d("KeyButtonView", "longpressed: " + this);
+                //Log.d("KeyButtonView", "longpressed: " + this);
                 if (isLongClickable()) {
                     // Just an old-fashioned ImageView
                     performLongClick();
@@ -267,6 +267,10 @@ public class KeyButtonView extends ImageView implements ButtonInterface {
                     performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
                 }
                 if (mCode != 0) {
+                    if (mCode == 89) {
+                        PoweroffUtils.Poweroff();
+                    }
+
                     if (doIt) {
                         sendEvent(KeyEvent.ACTION_UP, 0);
                         sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_CLICKED);

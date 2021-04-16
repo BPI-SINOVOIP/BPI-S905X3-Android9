@@ -758,6 +758,16 @@ public class NavigationBarFragment extends Fragment implements Callbacks {
         homeButton.setOnTouchListener(this::onHomeTouch);
         homeButton.setOnLongClickListener(this::onHomeLongClick);
 
+        ButtonDispatcher volumeAddButton = mNavigationBarView.getVolumeAddButton();
+        ButtonDispatcher volumeSubButton = mNavigationBarView.getVolumeSubButton();
+        ButtonDispatcher screenshotButton = mNavigationBarView.getScreenshotButton();
+        ButtonDispatcher poweroffButton = mNavigationBarView.getPoweroffButton();
+
+        volumeAddButton.setVisibility(View.VISIBLE);
+        volumeSubButton.setVisibility(View.VISIBLE);
+        screenshotButton.setVisibility(View.VISIBLE);
+        poweroffButton.setVisibility(View.VISIBLE);
+
         ButtonDispatcher accessibilityButton = mNavigationBarView.getAccessibilityButton();
         accessibilityButton.setOnClickListener(this::onAccessibilityClick);
         accessibilityButton.setOnLongClickListener(this::onAccessibilityLongClick);

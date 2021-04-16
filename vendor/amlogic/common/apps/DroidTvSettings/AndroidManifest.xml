@@ -19,6 +19,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="com.netflix.ninja.permission.ESN" />
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS"/>
+    <uses-permission android:name="android.permission.SHUTDOWN" />
 
     <application
         android:banner="@drawable/ic_launcher_banner_settings"
@@ -42,6 +43,7 @@
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DROIDLOGIC_TVSETTINGS" />
             </intent-filter>
 
             <!--
@@ -101,6 +103,19 @@
             android:configChanges="keyboard|keyboardHidden|navigation"
             android:exported="true"
             android:theme="@style/Theme.Settings.Transparent" />
+        <activity
+            android:name=".display.screen.RotationActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:exported="true"
+            android:theme="@style/Theme.Settings.Transparent" />
+        <receiver
+            android:exported="true"
+            android:name=".display.screen.RotationReceiver"
+            android:enabled="true" >
+            <intent-filter android:priority="1000" >
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
         <activity
             android:name=".display.position.DisplayPositionActivity"
             android:configChanges="keyboard|keyboardHidden|navigation"

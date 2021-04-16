@@ -83,7 +83,7 @@
 
     <dimen name="fab_margin">24dp</dimen>
 
-    <dimen name="navigation_key_width">128dp</dimen>
+    <dimen name="navigation_key_width">64dp</dimen>
     <dimen name="navigation_key_padding">25dp</dimen>
 
     <!-- Keyboard shortcuts helper -->

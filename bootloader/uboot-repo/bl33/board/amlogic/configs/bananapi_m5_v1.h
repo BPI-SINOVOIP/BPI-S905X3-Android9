@@ -148,6 +148,7 @@
             "\0"\
         "switch_bootmode="\
             "get_rebootmode;"\
+            "echo BPI: reboot mode: ${reboot_mode};"\
             "if test ${reboot_mode} = factory_reset; then "\
                     "setenv reboot_mode_android ""normal"";"\
                     "run storeargs;"\
@@ -270,14 +271,14 @@
             "get_valid_slot;"\
             "echo active_slot: ${active_slot};"\
             "if test ${active_slot} = normal; then "\
-                "setenv bootargs ${bootargs} ${fs_type} aml_dt=${aml_dt} recovery_part={recovery_part} recovery_offset={recovery_offset};"\
+                "setenv bootargs ${bootargs} ${fs_type} aml_dt=${aml_dt} recovery_part={recovery_part} recovery_offset={recovery_offset} androidboot.selinux=permissive;"\
                 "if itest ${upgrade_step} == 3; then "\
                     "if ext4load mmc 1:2 ${dtb_mem_addr} /recovery/dtb.img; then echo cache dtb.img loaded; fi;"\
                     "if ext4load mmc 1:2 ${loadaddr} /recovery/recovery.img; then echo cache recovery.img loaded; wipeisb; bootm ${loadaddr}; fi;"\
                 "else fi;"\
                 "if imgread kernel ${recovery_part} ${loadaddr} ${recovery_offset}; then wipeisb; bootm ${loadaddr}; fi;"\
             "else "\
-                "setenv bootargs ${bootargs} ${fs_type} aml_dt=${aml_dt} recovery_part=${boot_part} recovery_offset=${recovery_offset};"\
+                "setenv bootargs ${bootargs} ${fs_type} aml_dt=${aml_dt} recovery_part=${boot_part} recovery_offset=${recovery_offset} androidboot.selinux=permissive;"\
                 "if imgread kernel ${boot_part} ${loadaddr}; then bootm ${loadaddr}; fi;"\
             "fi;"\
             "\0"\
@@ -338,7 +339,7 @@
                 "echo detect rom_sdboot key; run rom_sdboot;"\
             "fi;"\
             "\0"\
-		"upgrade_key="\
+	"upgrade_key="\
             "if gpio input GPIOAO_3; then "\
                 "echo detect upgrade key; run update;"\
             "fi;"\
@@ -361,7 +362,6 @@
             "run upgrade_check;"\
             "run init_display;"\
             "run storeargs;"\
-            "run upgrade_key;" \
             "bcb uboot-command;"\
             "run switch_bootmode;"
 

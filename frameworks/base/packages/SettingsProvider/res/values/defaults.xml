@@ -217,4 +217,10 @@
 
     <!-- Default for Settings.System.VIBRATE_WHEN_RINGING -->
     <bool name="def_vibrate_when_ringing">false</bool>
+
+    <!-- Default enabled input method -->
+    <string name="enabled_input_methods" translatable="false"></string>
+
+    <!-- Default input method -->
+    <string name="def_input_method" translatable="false"></string>
 </resources>

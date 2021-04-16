@@ -22,7 +22,7 @@
 
 / {
 	model = "Amlogic";
-	amlogic-dt-id = "sm1_ac214_2g";
+	amlogic-dt-id = "bananapi_m5_4g";
 	compatible = "amlogic, g12a";
 	interrupt-parent = <&gic>;
 	#address-cells = <1>;
@@ -177,6 +177,11 @@
 		};
 	};
 
+	shutdown_sysfs {
+		compatible = "shutdown-sysfs";
+		status = "okay";
+	};
+
 	adc_keypad {
 		compatible = "amlogic, adc_keypad";
 		status = "okay";
@@ -192,7 +197,7 @@
 
 	gpio-keys {
 		compatible = "gpio-keys";
-		status = "okay";
+		status = "disabled";
 
 		install-button {
 			lable = "Volume Mute";
@@ -583,7 +588,7 @@
 		compatible = "amlogic, aml_dummy_codec";
 		status = "okay";
 	};
-	amlogic_codec:t9015{
+	amlogic_codec: t9015{
 		#sound-dai-cells = <0>;
 		compatible = "amlogic, aml_codec_T9015";
 		reg = <0xFF632000 0x2000>;
@@ -595,7 +600,7 @@
 
 		status = "okay";
 	};
-	audio_effect:eqdrc{
+	audio_effect: eqdrc{
 		/*eq_enable = <1>;*/
 		/*drc_enable = <1>;*/
 		/*
@@ -611,7 +616,7 @@
 		/* max 0xff, each bit for one channel */
 		channel_mask = <0x3>;
 	};
-	auge_sound {
+	auge_sound: auge_sound {
 		compatible = "amlogic, g12a-sound-card";
 		aml-audio-card,name = "AML-AUGESOUND";
 
@@ -811,19 +816,40 @@
 &i2c2 {
 	status = "disabled";
 	pinctrl-names="default";
-	pinctrl-0=<&i2c2_master_pins2>;
+	pinctrl-0=<&i2c2_master_pins1>;
 	clock-frequency = <300000>;
 };
 
 &i2c3 {
 	status = "disabled";
-	pinctrl-names="default","gpio_periphs";
+	pinctrl-names="default";
 	pinctrl-0=<&i2c3_master_pins2>;
-	pinctrl-1 = <&i2c3_to_gpioa>;
 	clock-frequency = <300000>; /* default 100k */
 };
 
 &audiobus {
+	tdmb: tdm@1 {
+		compatible = "amlogic, sm1-snd-tdmb";
+		#sound-dai-cells = <0>;
+		dai-tdm-lane-slot-mask-in = <0 1 0 0>;
+		dai-tdm-lane-slot-mask-out = <1 0 0 0>;
+		dai-tdm-clk-sel = <1>;
+		clocks = <&clkaudio CLKID_AUDIO_MCLK_B
+				&clkaudio CLKID_AUDIO_MCLK_PAD0
+				&clkc CLKID_MPLL0>;
+		clock-names = "mclk", "mclk_pad", "clk_srcpll";
+		pinctrl-names = "tdm_pins";
+		pinctrl-0 = <&tdmb_mclk_ao &tdmout_b_ao>;
+
+		/*enable default mclk(12.288M), before extern codec start*/
+		start_clk_enable = <1>;
+
+		/*tdm clk tuning enable*/
+		clk_tuning_enable = <1>;
+
+		status = "disabled";
+	};
+
 	tdmc: tdm@2 {
                 compatible = "amlogic, sm1-snd-tdmc";
                 #sound-dai-cells = <0>;
@@ -874,15 +900,6 @@
 }; /* end of audiobus */
 
 &pinctrl_periphs {
-	i2c3_to_gpioa: i2c3_gpioa {
-		mux {
-			groups = "GPIOA_14",
-				"GPIOA_15";
-			function = "gpio_periphs";
-			drive-strength = <2>;
-		};
-	};
-
 }; /* end of pinctrl_periphs */
 
 &audio_data {
@@ -931,6 +948,10 @@
 	status = "disabled";
 };
 
+&uart_B {
+	status = "disabled";
+};
+
 /*if you want to use vdin just modify status to "ok"*/
 &vdin0 {
 	memory-region = <&vdin0_cma_reserved>;
@@ -954,6 +975,12 @@
 	 *bit3:support 12bit
 	 */
 	tv_bit_mode = <1>;
+};
+
+&reboot {
+	sd_volsw_gpio = <&gpio_ao GPIOAO_6 GPIO_ACTIVE_HIGH>;
+	sd_power_gpio = <&gpio GPIOH_8 GPIO_ACTIVE_HIGH>;
+	sd_vddio_gpio = <&gpio_ao GPIOE_2 GPIO_ACTIVE_HIGH>;
 };
 
 /* emmc */
@@ -1117,6 +1144,24 @@
 		mux { /* gpiao_10 */
 			groups = "spdif_out_ao";
 			function = "spdif_out_ao";
+		};
+	};
+
+	tdmb_mclk_ao: mclk0_ao {
+		mux { /* GPIOAO_9 */
+			groups = "mclk0_ao";
+			function = "mclk0_ao";
+			drive-strength = <2>;
+		};
+	};
+
+	tdmout_b_ao: tdmout_b {
+		mux { /* GPIOAO_8, GPIOAO_7, GPIOAO_4 */
+			groups = "tdmb_sclk_ao",
+				"tdmb_fs_ao",
+				"tdmb_dout0_ao";
+			function = "tdmb_out_ao";
+			drive-strength = <2>;
 		};
 	};
 };

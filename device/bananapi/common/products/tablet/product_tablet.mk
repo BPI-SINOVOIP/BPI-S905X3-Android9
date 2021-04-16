@@ -1,0 +1,1 @@
+$(call inherit-product, device/bananapi/common/core_amlogic.mk)

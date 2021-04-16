@@ -1,0 +1,58 @@
+typeattribute system_server mlstrustedsubject;
+
+#allow system_server vendor_file:file { getattr read open execute };
+allow system_server vendor_framework_file:dir { search getattr };
+allow system_server vendor_framework_file:file { read getattr open };
+allow system_server bluetooth:file { open read write };
+
+get_prop(system_server, media_prop)
+get_prop(system_server, vendor_platform_prop)
+
+# For writing to /proc/<tid>/timerslack_ns (XXX - this is probably wrong)
+allow system_server priv_app:file write;
+allow system_server untrusted_app:file write;
+allow system_server untrusted_app_25:file write;
+allow system_server platform_app:file write;
+allow system_server system_app:file write;
+allow system_server isolated_app:file write;
+allow system_server bluetooth:file write;
+
+allow system_server audioserver:file write;
+
+allow system_server socket_device:sock_file { write };
+allow system_server hidraw_device:chr_file { rw_file_perms };
+allow system_server audio_prop:property_service { set };
+allow system_server uhid_device:chr_file { rw_file_perms };
+
+allow system_server wifi_data_file:dir rw_dir_perms;
+allow system_server wifi_data_file:file { read create };
+
+allow system_server sysfs:file { getattr };
+
+allow system_server sysfs_rtc:file { read write open getattr };
+allow system_server sysfs_hdmi:file { read write open getattr };
+allow system_server sysfs_amhdmitx:file { open read write getattr };
+
+allow system_server sysfs_display:lnk_file { read write open getattr };
+allow system_server sysfs_display:file { read write open getattr };
+
+allow system_server hal_audio_default:file write;
+
+allow system_server update_engine:binder call;
+
+allow system_server mediaprovider:file { write open };
+
+allow system_server dvb_device:chr_file rw_file_perms;
+
+allow system_server sysfs_cec:file { read open write getattr };
+
+allow system_server vendor_video_device:dir r_dir_perms;
+allow system_server vendor_video_device:chr_file rw_file_perms;
+
+allow system_server servicemanager:process { signal };
+allow system_server system_control:process { signal };
+allow system_server tvserver:process { signal };
+allow system_server hal_tv_input_default:process { signal };
+allow system_server hdmicecd:process { signal };
+allow system_server hal_graphics_allocator_default:process { signal };
+allow system_server hal_graphics_composer_default:process { signal };

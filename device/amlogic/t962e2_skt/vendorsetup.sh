@@ -1,3 +1,0 @@
-add_lunch_combo t962e2_skt-eng
-add_lunch_combo t962e2_skt-user
-add_lunch_combo t962e2_skt-userdebug

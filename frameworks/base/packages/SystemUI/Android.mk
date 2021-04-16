@@ -58,6 +58,7 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
 
 LOCAL_JAVA_LIBRARIES := telephony-common \
     android.car
+LOCAL_JNI_SHARED_LIBRARIES := libpoweroff_jni
 
 LOCAL_PACKAGE_NAME := SystemUI
 LOCAL_PRIVATE_PLATFORM_APIS := true

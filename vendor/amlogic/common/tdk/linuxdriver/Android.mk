@@ -52,7 +52,7 @@ $(GEN_OPTEE_ARMTZ): $(PRODUCT_OUT)/obj/optee_modules/optee.ko | $(ACP)
 LOCAL_PREBUILT_MODULE_FILE := $(GEN_OPTEE_ARMTZ)
 else
 # TARGET_BOOTLOADER_BOARD_NAME currently defined the same as platform device name
-LOCAL_SRC_FILES := device/amlogic/$(TARGET_BOOTLOADER_BOARD_NAME)-kernel/optee_armtz.ko
+LOCAL_SRC_FILES := device/bananapi/$(TARGET_BOOTLOADER_BOARD_NAME)-kernel/optee_armtz.ko
 endif
 
 LOCAL_MODULE_SUFFIX := .ko
@@ -73,7 +73,7 @@ $(GEN_OPTEE): $(PRODUCT_OUT)/obj/optee_modules/optee.ko | $(ACP)
 LOCAL_PREBUILT_MODULE_FILE := $(GEN_OPTEE)
 else
 LOCAL_SRC_FILES  :=  \
-    device/amlogic/$(TARGET_BOOTLOADER_BOARD_NAME)-kernel/optee.ko
+    device/bananapi/$(TARGET_BOOTLOADER_BOARD_NAME)-kernel/optee.ko
 
 endif
 LOCAL_MODULE_TAGS := optional

@@ -1,3 +1,0 @@
-add_lunch_combo galilei-eng
-add_lunch_combo galilei-user
-add_lunch_combo galilei-userdebug

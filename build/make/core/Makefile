@@ -1377,6 +1377,7 @@ define build-recoveryimage-target
     cp -rf $(item) $(TARGET_RECOVERY_ROOT_OUT)/$(newline))
   $(hide) $(foreach item,$(recovery_fstab), \
     cp -f $(item) $(TARGET_RECOVERY_ROOT_OUT)/etc/recovery.fstab)
+  $(hide) ln -sf recovery.fstab $(TARGET_RECOVERY_ROOT_OUT)/etc/fstab
   $(if $(strip $(recovery_wipe)), \
     $(hide) cp -f $(recovery_wipe) $(TARGET_RECOVERY_ROOT_OUT)/etc/recovery.wipe)
   $(hide) cp $(RECOVERY_INSTALL_OTA_KEYS) $(TARGET_RECOVERY_ROOT_OUT)/res/keys

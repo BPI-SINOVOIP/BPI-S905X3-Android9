@@ -19,7 +19,7 @@ cc_library_static {
         "system/core/libutils/include",
         "system/core/libziparchive/include",
         "bootable/recovery/bootloader_message/include",
-        "device/amlogic/common/recovery",
+        "device/bananapi/common/recovery",
         "vendor/amlogic/common/external/recovery",
     ],
     cflags: ["-Werror"],

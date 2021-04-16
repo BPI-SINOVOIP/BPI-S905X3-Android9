@@ -2098,8 +2098,8 @@ public class StatusBar extends SystemUI implements DemoMode,
      * or not when showing the bouncer.
      *
      * We want to hide it when:
-     * • User swipes up on the keyguard
-     * • Locked activity that doesn't show a status bar requests the bouncer
+     * User swipes up on the keyguard
+     * Locked activity that doesn't show a status bar requests the bouncer
      *
      * @param animate should the change of the icons be animated.
      */

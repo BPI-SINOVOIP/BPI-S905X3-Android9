@@ -24,32 +24,31 @@
         android:id="@+id/nav_buttons"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingStart="@dimen/rounded_corner_content_padding"
-        android:paddingEnd="@dimen/rounded_corner_content_padding"
+        android:paddingTop="@dimen/rounded_corner_content_padding"
+        android:paddingBottom="@dimen/rounded_corner_content_padding"
         android:clipChildren="false"
         android:clipToPadding="false">
 
-        <LinearLayout
+        <com.android.systemui.statusbar.phone.ReverseLinearLayout
             android:id="@+id/ends_group"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:paddingStart="@dimen/nav_content_padding"
-            android:paddingEnd="@dimen/nav_content_padding"
-            android:clipToPadding="false"
-            android:clipChildren="false" />
+            android:orientation="vertical"
+            android:paddingTop="@dimen/nav_content_padding"
+            android:paddingBottom="@dimen/nav_content_padding"
+            android:clipChildren="false"
+            android:clipToPadding="false" />
 
-        <LinearLayout
+        <com.android.systemui.statusbar.phone.ReverseLinearLayout
             android:id="@+id/center_group"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingStart="@dimen/nav_content_padding"
-            android:paddingEnd="@dimen/nav_content_padding"
-            android:clipToPadding="false"
-            android:clipChildren="false" />
+            android:orientation="vertical"
+            android:paddingTop="@dimen/nav_content_padding"
+            android:paddingBottom="@dimen/nav_content_padding"
+            android:clipChildren="false"
+            android:clipToPadding="false" />
 
     </com.android.systemui.statusbar.phone.NearestTouchFrame>
 

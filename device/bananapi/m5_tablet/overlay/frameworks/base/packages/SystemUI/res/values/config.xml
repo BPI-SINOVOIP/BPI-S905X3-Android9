@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="config_enableKeyguardService">false</bool>
+    <string name="config_statusBarComponent" translatable="false">com.android.systemui.statusbar.phone.StatusBar</string>
+
+    <!-- The default tiles to display in QuickSettings -->
+    <string name="quick_settings_tiles_default" translatable="false">
+        wifi,bt,airplane,cast
+    </string>
+</resources>

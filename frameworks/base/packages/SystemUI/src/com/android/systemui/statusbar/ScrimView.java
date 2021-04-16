@@ -37,7 +37,7 @@ import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Interpolator;
-
+import android.view.MotionEvent;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.colorextraction.ColorExtractor;
 import com.android.internal.colorextraction.drawable.GradientDrawable;
@@ -82,6 +82,11 @@ public class ScrimView extends View implements ConfigurationController.Configura
 
     public ScrimView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return false;
     }
 
     public ScrimView(Context context, AttributeSet attrs, int defStyleAttr) {

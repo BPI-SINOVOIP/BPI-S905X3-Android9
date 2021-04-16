@@ -105,6 +105,8 @@ using namespace android;
 
 #define DISPLAY_HPD_STATE               "/sys/class/amhdmitx/amhdmitx0/hpd_state"
 #define DISPLAY_HDMI_EDID               "/sys/class/amhdmitx/amhdmitx0/disp_cap"//RX support display mode
+#define DISPLAY_HDMI_EDID_VESA          "/sys/class/amhdmitx/amhdmitx0/vesa_cap" //RX VESA support display mode
+
 #define DISPLAY_HDMI_DISP_CAP_3D        "/sys/class/amhdmitx/amhdmitx0/disp_cap_3d"//RX support display 3d mode
 #define DISPLAY_HDMI_DEEP_COLOR         "/sys/class/amhdmitx/amhdmitx0/dc_cap"//RX supoort deep color
 #define DISPLAY_HDMI_HDR                "/sys/class/amhdmitx/amhdmitx0/hdr_cap"
@@ -296,6 +298,52 @@ using namespace android;
 #define FULL_HEIGHT_4K2KSMPTE           2160
 #define FULL_WIDTH_PANEL                1024
 #define FULL_HEIGHT_PANEL               600
+//vesa mode
+#define FULL_WIDTH_1024x768             1024
+#define FULL_HEIGHT_1024x768            768
+#define FULL_WIDTH_1440x900             1440
+#define FULL_HEIGHT_1440x900            900
+#define FULL_WIDTH_640x480              640
+#define FULL_HEIGHT_640x480             480
+#define FULL_WIDTH_1280x1024            1280
+#define FULL_HEIGHT_1280x1024           1024
+#define FULL_WIDTH_800x600              800
+#define FULL_HEIGHT_800x600             600
+#define FULL_WIDTH_1680x1050            1680
+#define FULL_HEIGHT_1680x1050           1050
+
+#define FULL_WIDTH_1024x600             1024
+#define FULL_HEIGHT_1024x600           600
+#define FULL_WIDTH_2560x1600              2560
+#define FULL_HEIGHT_2560x1600             1600
+#define FULL_WIDTH_2560x1440            2560
+#define FULL_HEIGHT_2560x1440           1440
+#define FULL_WIDTH_2560x1080              2560
+#define FULL_HEIGHT_2560x1080             1080
+#define FULL_WIDTH_1920x1200            1920
+#define FULL_HEIGHT_1920x1200           1200
+
+#define FULL_WIDTH_1600x1200             1600
+#define FULL_HEIGHT_1600x1200           1200
+#define FULL_WIDTH_1600x900              1600
+#define FULL_HEIGHT_1600x900             900
+#define FULL_WIDTH_1360x768           1360
+#define FULL_HEIGHT_1360x768           768
+#define FULL_WIDTH_1280x800              1280
+#define FULL_HEIGHT_1280x800             800
+#define FULL_WIDTH_480x320            480
+#define FULL_HEIGHT_480x320           320
+#define FULL_WIDTH_800x480            800
+#define FULL_HEIGHT_800x480           480
+#define FULL_WIDTH_1280x480            1280
+#define FULL_HEIGHT_1280x480           480
+
+
+
+
+
+
+
 
 enum {
     EVENT_OUTPUT_MODE_CHANGE            = 0,
@@ -340,7 +388,33 @@ enum {
 #define MODE_PANEL                      "panel"
 #define MODE_PAL_M                      "pal_m"
 #define MODE_PAL_N                      "pal_n"
-#define MODE_NTSC_M                      "ntsc_m"
+#define MODE_NTSC_M                     "ntsc_m"
+//vesa mode
+#define MODE_1024x768P                  "1024x768phz"
+#define MODE_1440x900P                  "1440x900phz"
+#define MODE_640x480P                   "640x480phz"
+#define MODE_1280x1024P                 "1280x1024phz"
+#define MODE_800x600P                   "800x600phz" 
+#define MODE_1680x1050P                 "1680x1050phz"
+
+#define MODE_1024x600P           "1024x600phz"
+#define MODE_2560x1600P          "2560x1600phz"
+#define MODE_2560x1440P         "2560x1440phz"
+#define MODE_2560x1080P          "2560x1080phz"
+#define MODE_1920x1200P          "1920x1200phz"
+
+#define MODE_1600x1200P           "1600x1200phz"
+#define MODE_1600x900P            "1600x900phz"
+#define MODE_1360x768P            "1360x768phz"
+#define MODE_1280x800P            "1280x800phz"
+#define MODE_480x320P             "480x320phz"
+
+
+#define MODE_800x480P             "800x480phz"
+#define MODE_1280x480P            "1280x480phz"
+
+
+
 
 #define MODE_480I_PREFIX                "480i"
 #define MODE_480P_PREFIX                "480p"
@@ -352,6 +426,32 @@ enum {
 #define MODE_1080P_PREFIX               "1080p"
 #define MODE_4K2K_PREFIX                "2160p"
 #define MODE_4K2KSMPTE_PREFIX           "smpte"
+//vesa mode
+#define MODE_1024x768P_PREFIX           "1024x768p"
+#define MODE_1440x900P_PREFIX           "1440x900p"
+#define MODE_640x480P_PREFIX            "640x480p"
+#define MODE_1280x1024P_PREFIX          "1280x1024p"
+#define MODE_800x600P_PREFIX            "800x600p"
+#define MODE_1680x1050P_PREFIX          "1680x1050p"
+
+#define MODE_1024x600P_PREFIX           "1024x600p"
+#define MODE_2560x1600P_PREFIX          "2560x1600p"
+#define MODE_2560x1440P_PREFIX          "2560x1440p"
+#define MODE_2560x1080P_PREFIX          "2560x1080p"
+#define MODE_1920x1200P_PREFIX          "1920x1200p"
+
+#define MODE_1600x1200P_PREFIX           "1600x1200p"
+#define MODE_1600x900P_PREFIX            "1600x900p"
+#define MODE_1360x768P_PREFIX            "1360x768p"
+#define MODE_1280x800P_PREFIX            "1280x800p"
+#define MODE_480x320P_PREFIX             "480x320p"
+#define MODE_800x480P_PREFIX             "800x480p"
+#define MODE_1280x480P_PREFIX            "1280x480p"
+
+
+
+
+
 
 //DOLBY_VISION_HDR10_POLICY : /sys/module/amdolby_vision/parameters/dolby_vision_hdr10_policy
 #define DV_HDR_SINK_SOURCE_BYPASS       "0"
@@ -391,8 +491,26 @@ enum {
     DISPLAY_MODE_PANEL                  = 23,
     DISPLAY_MODE_PAL_M                  = 24,
     DISPLAY_MODE_PAL_N                  = 25,
-    DISPLAY_MODE_NTSC_M                  = 26,
-    DISPLAY_MODE_TOTAL                  = 27
+    DISPLAY_MODE_NTSC_M                 = 26,
+    DISPLAY_MODE_1024x768P              = 27,
+    DISPLAY_MODE_1440x900P              = 28,
+    DISPLAY_MODE_640x480P               = 29,
+    DISPLAY_MODE_1280x1024P             = 30,
+    DISPLAY_MODE_800x600P               = 31,
+    DISPLAY_MODE_1680x1050P             = 32,
+	DISPLAY_MODE_1024x600P              = 33,
+    DISPLAY_MODE_2560x1600P               = 34,
+    DISPLAY_MODE_2560x1440P             = 35,
+    DISPLAY_MODE_2560x1080P               = 36,
+    DISPLAY_MODE_1920x1200P             = 37,    
+	DISPLAY_MODE_1600x1200P              = 38,
+    DISPLAY_MODE_1600x900P               = 39,
+    DISPLAY_MODE_1360x768P             = 40,
+    DISPLAY_MODE_1280x800P               = 41,
+    DISPLAY_MODE_480x320P             = 42,
+    DISPLAY_MODE_800x480P             = 43,
+    DISPLAY_MODE_1280x480P             = 44,
+    DISPLAY_MODE_TOTAL                  = 45
 };
 
 typedef enum {

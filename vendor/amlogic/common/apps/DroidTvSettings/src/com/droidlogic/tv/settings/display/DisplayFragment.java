@@ -36,6 +36,7 @@ public class DisplayFragment extends LeanbackPreferenceFragment {
 	private static final String KEY_HDR = "hdr";
 	private static final String KEY_SDR = "sdr";
 	private static final String KEY_DOLBY_VISION    = "dolby_vision";
+	private static final String KEY_SCREEN_ROTATION = "screen_rotation";
 
 	private boolean mTvUiMode;
 
@@ -58,6 +59,7 @@ public class DisplayFragment extends LeanbackPreferenceFragment {
 		final Preference outputmodePref = findPreference(KEY_OUTPUTMODE);
 		outputmodePref.setVisible(SettingsConstant.needScreenResolutionFeture(getContext()) && !tvFlag);
 
+		final Preference rotationPref = findPreference(KEY_SCREEN_ROTATION);
 		final Preference screenPositionPref = findPreference(KEY_POSITION);
 		screenPositionPref.setVisible(!tvFlag);
 

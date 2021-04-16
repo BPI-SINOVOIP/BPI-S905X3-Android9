@@ -1,3 +1,0 @@
-add_lunch_combo einstein-eng
-add_lunch_combo einstein-user
-add_lunch_combo einstein-userdebug

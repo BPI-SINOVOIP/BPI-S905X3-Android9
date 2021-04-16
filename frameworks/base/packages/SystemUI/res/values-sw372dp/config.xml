@@ -21,5 +21,5 @@
      for different hardware and product builds. -->
 <resources>
     <!-- Nav bar button default ordering/layout -->
-    <string name="config_navBarLayout" translatable="false">left[.25W],back[.5WC];home;recent[.5WC],right[.25W]</string>
+    <string name="config_navBarLayout" translatable="false">left[.25W],screenshot,volume_sub,back[.5WC];home;recent[.5WC],volume_add,poweroff,right[.25W]</string>
 </resources>

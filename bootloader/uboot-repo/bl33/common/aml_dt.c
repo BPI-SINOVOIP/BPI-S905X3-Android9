@@ -189,8 +189,8 @@ unsigned long __attribute__((unused))
 						dt_info[x][z] = '\0';
 					}
 				}
-				//printf("dt_info[x]: %s\n", dt_info[x]);
-				//printf("strlen(dt_info[x]): %d\n", strlen(dt_info[x]));
+				printf("dt_info[%d]: %s\n", x, dt_info[x]);
+				printf("strlen(dt_info[%d]): %zu\n", x, strlen(dt_info[x]));
 			}
 			if (dt_tool_version == 1)
 				printf("        dtb %d soc: %.4s   plat: %.4s   vari: %.4s\n", i, (char *)(dt_info[0]), (char *)(dt_info[1]), (char *)(dt_info[2]));
@@ -204,7 +204,7 @@ unsigned long __attribute__((unused))
 					match_str_counter++;
 			}
 			if (match_str_counter == AML_DT_ID_VARI_TOTAL) {
-				//printf("Find match dtb\n");
+				printf("Find match dtb\n");
 				dtb_match_num = i;
 			}
 			for (z=0; z<AML_DT_ID_VARI_TOTAL; z++) {

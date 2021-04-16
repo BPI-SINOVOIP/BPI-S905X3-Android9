@@ -66,8 +66,8 @@ public class MainFragment extends LeanbackPreferenceFragment {
     private static final String KEY_DISPLAY = "display";
     private static final String KEY_MBOX_SOUNDS = "mbox_sound";
     private static final String KEY_POWERKEY = "powerkey_action";
+    private static final String MORE_SETTINGS_APP_PACKAGE = "com.android.tv.settings";
     private static final String KEY_POWERONMODE = "poweronmode_action";
-    private static final String MORE_SETTINGS_APP_PACKAGE = "com.android.settings";
     private static final String KEY_UPGRADE_BLUTOOTH_REMOTE = "upgrade_bluetooth_remote";
     private static final String KEY_PLAYBACK_SETTINGS = "playback_settings";
     private static final String KEY_SOUNDS = "sound_effects";

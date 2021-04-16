@@ -1,3 +1,0 @@
-add_lunch_combo sm1_skt-eng
-add_lunch_combo sm1_skt-user
-add_lunch_combo sm1_skt-userdebug

@@ -1,3 +1,0 @@
-add_lunch_combo s905y2_skt-eng
-add_lunch_combo s905y2_skt-user
-add_lunch_combo s905y2_skt-userdebug

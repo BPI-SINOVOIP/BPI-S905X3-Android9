@@ -251,6 +251,9 @@ static void synthesizeButtonKeys(InputReaderContext* context, int32_t action,
     synthesizeButtonKey(context, action, when, deviceId, source, policyFlags,
             lastButtonState, currentButtonState,
             AMOTION_EVENT_BUTTON_FORWARD, AKEYCODE_FORWARD);
+    synthesizeButtonKey(context, action, when, deviceId, source, policyFlags,
+            lastButtonState, currentButtonState,
+            AMOTION_EVENT_BUTTON_HOME, AKEYCODE_HOME);
 }
 
 
@@ -1407,7 +1410,7 @@ uint32_t CursorButtonAccumulator::getButtonState() const {
         result |= AMOTION_EVENT_BUTTON_BACK;
     }
     if (mBtnMiddle) {
-        result |= AMOTION_EVENT_BUTTON_TERTIARY;
+        result |= AMOTION_EVENT_BUTTON_HOME;
     }
     if (mBtnBack || mBtnSide) {
         result |= AMOTION_EVENT_BUTTON_BACK;

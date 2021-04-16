@@ -405,13 +405,24 @@ void amlogic_init() {
 }
 
 void amlogic_get_args(std::vector<std::string>& args) {
+    std::string content_udisk;
+    std::string content_sdcard;
+
+    bool udisk_file_path = (ensure_path_mounted(UDISK_COMMAND_FILE) == 0) && android::base::ReadFileToString(UDISK_COMMAND_FILE, &content_udisk);
+    bool sdcard_file_path = (ensure_path_mounted(SDCARD_COMMAND_FILE) == 0) && android::base::ReadFileToString(SDCARD_COMMAND_FILE, &content_sdcard);
+
+    LOG(INFO) << "amlogic_get_args(), args size is " << args.size() << "udisk_file_path: " << udisk_file_path << "sdcard_file_path: " << sdcard_file_path;
+
+    if (udisk_file_path || sdcard_file_path) {
+        if (args.size() > 1) {
+            args.erase(args.begin() + 1, args.end());
+            LOG(INFO) << "erase element from 2 to end for opengapps, args size is " << args.size();
+        }
+    }
 
     if (args.size() == 1) {
-        std::string content;
-        if (ensure_path_mounted(UDISK_COMMAND_FILE) == 0 &&
-            android::base::ReadFileToString(UDISK_COMMAND_FILE, &content)) {
-
-            std::vector<std::string> tokens = android::base::Split(content, "\n");
+        if (udisk_file_path) {
+            std::vector<std::string> tokens = android::base::Split(content_udisk, "\n");
             for (auto it = tokens.begin(); it != tokens.end(); it++) {
                 // Skip empty and '\0'-filled tokens.
                 if (!it->empty() && (*it)[0] != '\0') {
@@ -427,11 +438,8 @@ void amlogic_get_args(std::vector<std::string>& args) {
     }
 
     if (args.size() == 1) {
-        std::string content;
-        if (ensure_path_mounted(SDCARD_COMMAND_FILE) == 0 &&
-            android::base::ReadFileToString(SDCARD_COMMAND_FILE, &content)) {
-
-            std::vector<std::string> tokens = android::base::Split(content, "\n");
+        if (sdcard_file_path) {
+            std::vector<std::string> tokens = android::base::Split(content_sdcard, "\n");
             for (auto it = tokens.begin(); it != tokens.end(); it++) {
                 // Skip empty and '\0'-filled tokens.
                 if (!it->empty() && (*it)[0] != '\0') {

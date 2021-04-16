@@ -1,3 +1,0 @@
-add_lunch_combo sm1_ac223-eng
-add_lunch_combo sm1_ac223-user
-add_lunch_combo sm1_ac223-userdebug

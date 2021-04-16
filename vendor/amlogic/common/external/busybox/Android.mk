@@ -294,3 +294,24 @@ ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 26 && echo OK),OK)
 LOCAL_PROPRIETARY_MODULE := true
 endif
 include $(BUILD_EXECUTABLE)
+
+$(LOCAL_MODULE_PATH):
+	@mkdir -p $@
+
+BUSYBOX_LINKS := $(shell cat $(BB_PATH)/busybox-$(BUSYBOX_CONFIG).links)
+# nc is provided by external/netcat
+exclude := nc which
+SYMLINKS := $(addprefix $(TARGET_RECOVERY_ROOT_OUT)/sbin/,$(filter-out $(exclude),$(notdir $(BUSYBOX_LINKS))))
+$(SYMLINKS): BUSYBOX_BINARY := $(LOCAL_MODULE_STEM)
+$(SYMLINKS): $(LOCAL_INSTALLED_MODULE)
+	@echo -e ${CL_CYN}"Symlink:"${CL_RST}" $@ -> $(BUSYBOX_BINARY)"
+	@mkdir -p $(dir $@)
+	@rm -rf $@
+	$(hide) ln -sf $(BUSYBOX_BINARY) $@
+
+ALL_DEFAULT_INSTALLED_MODULES += $(SYMLINKS)
+
+# We need this so that the installed files could be picked up based on the
+# local module name
+ALL_MODULES.$(LOCAL_MODULE).INSTALLED := \
+    $(ALL_MODULES.$(LOCAL_MODULE).INSTALLED) $(SYMLINKS)

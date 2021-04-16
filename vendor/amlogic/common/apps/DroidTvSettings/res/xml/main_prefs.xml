@@ -84,8 +84,8 @@
         android:key="more"
         android:title="@string/system_more_setting" >
         <intent
-            android:targetClass="com.android.settings.Settings"
-            android:targetPackage="com.android.settings" />
+            android:targetClass="com.android.tv.settings.MainSettings"
+            android:targetPackage="com.android.tv.settings" />
     </Preference>
     <Preference
         android:icon="@drawable/ic_settings_tv"

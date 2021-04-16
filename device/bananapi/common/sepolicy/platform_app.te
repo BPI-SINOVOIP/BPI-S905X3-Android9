@@ -1,0 +1,35 @@
+typeattribute platform_app mlstrustedsubject;
+get_prop(platform_app, media_prop)
+get_prop(platform_app, vendor_platform_prop)
+
+#allow platform_app vendor_file:file { getattr read open execute };
+
+allow platform_app video_device:chr_file {open ioctl};
+allow platform_app systemcontrol_hwservice:hwservice_manager { find };
+allow platform_app system_control:binder { call transfer};
+allow platform_app droidmount_service:service_manager { find };
+allow platform_app subtitle_service:service_manager { find };
+allow platform_app iso9660:dir { search open read getattr };
+allow platform_app iso9660:file { open read getattr };
+
+allow platform_app droidvold_hwservice:hwservice_manager { find };
+allow platform_app droidvold:binder { call transfer };
+
+allow platform_app tvserver_hwservice:hwservice_manager { find };
+allow platform_app tvserver:binder { call transfer };
+
+allow platform_app subtitleserver_hwservice:hwservice_manager { find };
+allow platform_app subtitleserver:binder { call transfer };
+
+allow platform_app imageserver_hwservice:hwservice_manager { find };
+allow platform_app imageserver:binder { call transfer };
+
+allow platform_app dtvkitserver_hwservice:hwservice_manager { find };
+allow platform_app dtvkitserver:binder {call transfer};
+allow platform_app debugfs_mali:dir search;
+
+allow platform_app vendor_platform_prop:file { read open getattr };
+allow platform_app param_tv_file:file { create open read write setattr getattr lock unlink };
+allow platform_app param_tv_file:dir { search read open write add_name remove_name getattr };
+
+allow platform_app shutdown_sysfs:file { read getattr open write };

@@ -35,6 +35,19 @@
 #include <linux/arm-smccc.h>
 
 static void __iomem *reboot_reason_vaddr;
+#include <linux/gpio.h>
+#include <linux/of_gpio.h>
+
+int sd_volsw_gpio;
+int sd_power_gpio;
+int sd_vddio_gpio;
+
+#define CHECK_RET(ret) { \
+	if (ret) \
+	pr_err("[%s] gpio op failed(%d) at line %d\n",\
+			__func__, ret, __LINE__); \
+}
+
 static u32 psci_function_id_restart;
 static u32 psci_function_id_poweroff;
 static char *kernel_panic;
@@ -107,13 +120,74 @@ void meson_common_restart(char mode, const char *cmd)
 		meson_smc_restart((u64)psci_function_id_restart,
 						(u64)reboot_reason);
 }
+
+void odroid_card_reset(void)
+{
+	int ret = 0;
+
+	if ((sd_volsw_gpio == 0) && (sd_power_gpio == 0))
+		return;
+
+	if (is_meson_g12b_cpu() && is_meson_rev_a()) {
+		gpio_free(sd_volsw_gpio);
+		gpio_free(sd_power_gpio);
+		ret = gpio_request_one(sd_volsw_gpio,
+				GPIOF_OUT_INIT_LOW, "REBOOT");
+		CHECK_RET(ret);
+		mdelay(10);
+		ret = gpio_direction_output(sd_volsw_gpio, 1);
+		CHECK_RET(ret);
+		ret = gpio_request_one(sd_power_gpio,
+				GPIOF_OUT_INIT_LOW, "REBOOT");
+		CHECK_RET(ret);
+		mdelay(10);
+		ret = gpio_direction_output(sd_volsw_gpio, 0);
+		CHECK_RET(ret);
+		ret = gpio_direction_output(sd_power_gpio, 1);
+		CHECK_RET(ret);
+		mdelay(5);
+		gpio_free(sd_volsw_gpio);
+		gpio_free(sd_power_gpio);
+	} else {
+		if (sd_vddio_gpio == 0)
+			return;
+
+		gpio_free(sd_volsw_gpio);
+		gpio_free(sd_vddio_gpio);
+		gpio_free(sd_power_gpio);
+
+		ret = gpio_request_one(sd_volsw_gpio,
+				GPIOF_OUT_INIT_LOW, "REBOOT");
+		CHECK_RET(ret);
+		ret = gpio_request_one(sd_vddio_gpio,
+				GPIOF_OUT_INIT_LOW, "REBOOT");
+		CHECK_RET(ret);
+		ret = gpio_request_one(sd_power_gpio,
+				GPIOF_OUT_INIT_LOW, "REBOOT");
+		CHECK_RET(ret);
+		mdelay(100);
+		ret = gpio_direction_input(sd_vddio_gpio);
+		CHECK_RET(ret);
+		ret = gpio_direction_input(sd_power_gpio);
+		CHECK_RET(ret);
+		ret = gpio_direction_input(sd_volsw_gpio);
+		CHECK_RET(ret);
+		mdelay(5);
+		gpio_free(sd_vddio_gpio);
+		gpio_free(sd_power_gpio);
+		gpio_free(sd_volsw_gpio);
+	}
+}
+
 static void do_aml_restart(enum reboot_mode reboot_mode, const char *cmd)
 {
+	odroid_card_reset();
 	meson_common_restart(reboot_mode, cmd);
 }
 
 static void do_aml_poweroff(void)
 {
+	odroid_card_reset();
 	/* TODO: Add poweroff capability */
 	__invoke_psci_fn_smc(0x82000042, 1, 0, 0);
 	__invoke_psci_fn_smc(psci_function_id_poweroff,
@@ -149,6 +223,7 @@ DEVICE_ATTR(reboot_reason, 0444, reboot_reason_show, NULL);
 
 static int aml_restart_probe(struct platform_device *pdev)
 {
+	struct device_node *of_node;
 	u32 id;
 	int ret;
 	u32 paddr = 0;
@@ -170,6 +245,15 @@ static int aml_restart_probe(struct platform_device *pdev)
 		reboot_reason_vaddr = ioremap(paddr, 0x4);
 		device_create_file(&pdev->dev, &dev_attr_reboot_reason);
 	}
+
+	of_node = pdev->dev.of_node;
+	sd_volsw_gpio = 0;
+	sd_power_gpio = 0;
+	sd_vddio_gpio = 0;
+
+	sd_volsw_gpio = of_get_named_gpio(of_node, "sd_volsw_gpio", 0);
+	sd_power_gpio = of_get_named_gpio(of_node, "sd_power_gpio", 0);
+	sd_vddio_gpio = of_get_named_gpio(of_node, "sd_vddio_gpio", 0);
 
 	ret = register_die_notifier(&panic_notifier);
 	if (ret != 0) {

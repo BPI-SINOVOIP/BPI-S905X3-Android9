@@ -28,7 +28,7 @@
     <string name="device_hdr_policy">HDR policy</string>
     <string name="device_outputmode_confirm_mode">Confirm turn off deep color mode</string>
     <string name="device_outputmode_confirm_deepcolor">Confirm turn on deep color mode</string>
-    <string name="device_outputmode_change">Confirm change to mode:</string>
+    <string name="device_outputmode_change">System reboot and change to mode:</string>
     <string name="device_outputmode_countdown"> seconds later restore old mode</string>
     <string name="device_position">Screen position</string>
     <string name="device_position_zoomout">Zoom out screen</string>
@@ -152,6 +152,13 @@
     <string name="device_tv_audio_speaker">Speaker</string>
     <string name="device_tv_audio_arc">Arc</string>
     <string name="device_audio_spdif">Spdif</string>
+
+    <string name="screen_brightness">Screen brightness</string>
+    <string name="screen_rotation">Screen rotation</string>
+    <string name="screen_rotation_0">0</string>
+    <string name="screen_rotation_90">90</string>
+    <string name="screen_rotation_180">180</string>
+    <string name="screen_rotation_270">270</string>
 
     <!-- Image description for the sync failed icon. -->
     <string name="sync_failed">Sync failed</string>
@@ -420,4 +427,11 @@
     <string name="tv_fbc_upgrade_detail">Please make sure to upgrade now.</string>
     <string name="hdmi_audio_latency">HDMI Audio Latency</string>
     <string name="arc_hdmi_audio_latency">HDMI ARC Audio Latency</string>
+    <string name="screen_density">Screen density control</string>
+    <string name="screen_density_120">120</string>
+    <string name="screen_density_160">160</string>
+    <string name="screen_density_200">200</string>
+    <string name="screen_density_240">240</string>
+    <string name="screen_density_280">280</string>
+    <string name="screen_density_320">320</string>
 </resources>

@@ -1,0 +1,5 @@
+config AMLOGIC_SHUTDOWN_SYSFS
+	bool "amlogic soft shutdown sysfs support"
+	default y
+	help
+	   Amlogic shutdown sysfs

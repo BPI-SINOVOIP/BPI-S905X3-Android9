@@ -61,12 +61,12 @@
 #include <amlogic/spifc.h>
 #endif
 #include <asm/arch/timer.h>
+#include <asm/saradc.h>
 
 DECLARE_GLOBAL_DATA_PTR;
 
 //new static eth setup
 struct eth_board_socket*  eth_board_skt;
-
 
 int serial_set_pin_port(unsigned long port_base)
 {
@@ -585,6 +585,63 @@ void set_i2c_ao_pinmux(void)
 }
 #endif /*end CONFIG_SYS_I2C_MESON*/
 
+void usb_wifi_power_on(void)
+{
+	printf("BPI: set m2pro usb wifi power on\n");
+	/*set gpioH_4 high to power on vcc 5v*/
+	writel(readl(PREG_PAD_GPIO3_O) | (1 << 4), PREG_PAD_GPIO3_O);
+	writel(readl(PREG_PAD_GPIO3_EN_N) & (~(1 << 4)), PREG_PAD_GPIO3_EN_N);
+	writel(readl(PERIPHS_PIN_MUX_B) & (~(0xf << 16)), PERIPHS_PIN_MUX_B);	
+	return;
+}
+
+#define IS_RANGE(x, min, max)   ((x) > (min) && (x) < (max))
+/*
+ * Board revision in the form of YYYYMMDD as hexadecimal
+ * ex) BOARD_REVISION(2018, 07, 16)  -> 0x20180716
+ */
+
+#define BOARD_REVISION(y,m,d)   (((0x##y & 0xffff) << 16) \
+                | ((0x##m & 0xff) << 8) | ((0x##d & 0xff) << 0))
+
+#define BANANAPI_M5_V1		0x20201026
+#define BANANAPI_M2_PRO_V1	0x20210129
+
+int get_hw_revision(void)
+{
+	int val;
+	int hwrev = -1;
+	int channel = 1;
+
+	saradc_enable();
+	(void)get_adc_sample_gxbb(channel);     /* THROW AWAY !! */
+	val = get_adc_sample_gxbb(channel);
+	saradc_disable();
+
+	printf("ADC=%d\n", val);
+		
+	if (IS_RANGE(val, 80, 100)) {     /* avg : 90 */
+		printf("BPI hw revision: Bananapi M5 v1\n");
+		hwrev = BOARD_REVISION(2020, 10, 26);
+
+		/* set env for linux image dtb load */
+		setenv("variant", "bananapi_m5");
+		setenv("board", "bpi-m5");
+	} 
+	else if (IS_RANGE(val, 240, 260)) { /* avg : 251 */
+		printf("BPI hw revision: Bananapi M2 Pro v1\n");
+		hwrev = BOARD_REVISION(2021, 01, 29);
+
+		/* set env for linux image dtb load */
+		setenv("variant", "bananapi_m2_pro");
+		setenv("board", "bpi-m2pro");
+		
+		usb_wifi_power_on();
+	}
+
+	return hwrev;
+}
+
 int board_init(void)
 {
     //Please keep CONFIG_AML_V2_FACTORY_BURN at first place of board_init
@@ -616,52 +673,11 @@ int board_init(void)
 void aml_config_dtb(void)
 {
 	cpu_id_t cpuid = get_cpu_id();
-	if (MESON_CPU_MAJOR_ID_G12A != cpuid.family_id)
+	if (MESON_CPU_MAJOR_ID_SM1 != cpuid.family_id)
 		return;
 
-	run_command("fdt address $dtb_mem_addr", 0);
-	printf("%s %d\n", __func__, __LINE__);
-	if (cpuid.chip_rev == 0xA) {
-		printf("%s %d\n", __func__, __LINE__);
-		run_command("fdt set /emmc/emmc co_phase <0x2>", 0);
-		run_command("fdt rm /emmc/emmc caps2", 0);
-		run_command("fdt set /emmc/emmc f_max <0x02625a00>", 0);
-
-		run_command("fdt set /sdio status okay", 0);
-		run_command("fdt set /sd1 status okay", 0);
-		run_command("fdt set /pinctrl@ff634480/sd_clk_cmd_pins/mux drive-strength <1>", 0);
-		run_command("fdt set /pinctrl@ff634480/sd_clk_cmd_pins/mux1 drive-strength <1>", 0);
-		run_command("fdt set /pinctrl@ff634480/sd_all_pins/mux drive-strength <1>", 0);
-		run_command("fdt set /pinctrl@ff634480/sd_all_pins/mux1 drive-strength <1>", 0);
-		run_command("fdt set /pinctrl@ff634480/sdio_clk_cmd_pins/mux drive-strength <2>", 0);
-		run_command("fdt set /pinctrl@ff634480/sdio_all_pins/mux drive-strength <1>", 0);
-		/* debug */
-		run_command("fdt print /emmc/emmc co_phase", 0);
-		run_command("fdt print /emmc/emmc caps2", 0);
-		run_command("fdt print /emmc/emmc f_max", 0);
-
-		run_command("fdt print /sdio status", 0);
-		run_command("fdt print /sd1 status ", 0);
-		run_command("fdt print /pinctrl@ff634480/sd_clk_cmd_pins/mux drive-strength", 0);
-		run_command("fdt print /pinctrl@ff634480/sd_clk_cmd_pins/mux1 drive-strength", 0);
-		run_command("fdt print /pinctrl@ff634480/sd_all_pins/mux drive-strength", 0);
-		run_command("fdt print /pinctrl@ff634480/sd_all_pins/mux1 drive-strength", 0);
-		run_command("fdt print /pinctrl@ff634480/sdio_clk_cmd_pins/mux drive-strength", 0);
-		run_command("fdt print /pinctrl@ff634480/sdio_all_pins/mux drive-strength", 0);
-	} else {
-
-		printf("%s %d\n", __func__, __LINE__);
-		run_command("fdt set /emmc/emmc co_phase <0x3>", 0);
-		run_command("fdt set /sdio status disabled", 0);
-		run_command("fdt set /sd2 status okay", 0);
-		/* debug */
-		run_command("fdt print /emmc/emmc co_phase", 0);
-		run_command("fdt print /emmc/emmc caps2", 0);
-		run_command("fdt print /emmc/emmc f_max", 0);
-		run_command("fdt print /sdio status", 0);
-		run_command("fdt print /sd2 status", 0);
-	}
-
+	printf("%s %d, cpuid.chip_rev=%X\n", __func__, __LINE__, cpuid.chip_rev);
+	
 	return;
 }
 
@@ -736,6 +752,7 @@ int board_late_init(void)
 	}
 	/**/
 	aml_config_dtb();
+	get_hw_revision();
 
 	TE(__func__);
 	return 0;
@@ -786,50 +803,28 @@ int checkhw(char * name)
 	for (i=0; i<CONFIG_NR_DRAM_BANKS; i++) {
 		ddr_size += gd->bd->bi_dram[i].size;
 	}
+
+	printf("checkhw: ddr_size=%x\n", ddr_size);
+	
 #if defined(CONFIG_SYS_MEM_TOP_HIDE)
 	ddr_size += CONFIG_SYS_MEM_TOP_HIDE;
 #endif
-	char *ddr_mode = getenv("mem_size");
+
 	if (MESON_CPU_MAJOR_ID_SM1 == cpu_id.family_id) {
 		switch (ddr_size) {
+			case 0xE0000000:
+				strcpy(loc_name, "bananapi_m5_4g\0");
+				break;
 			case 0x80000000:
-				if (!strcmp(ddr_mode, "1g")) {
-					strcpy(loc_name, "bananapi_m5_1g\0");
-					break;
-				}
-				strcpy(loc_name, "bananapi_m5_2g\0");
-				break;
-			case 0x40000000:
-				strcpy(loc_name, "bananapi_m5_1g\0");
-				break;
-			case 0x2000000:
-				strcpy(loc_name, "bananapi_m5_512m\0");
+				strcpy(loc_name, "bananapi_m2p_2g\0");
 				break;
 			default:
-				strcpy(loc_name, "bananapi_m5_unsupport");
+				strcpy(loc_name, "unsupport");
 				break;
 		}
 	}
-	else {
-		switch (ddr_size) {
-			case 0x80000000:
-				if (!strcmp(ddr_mode, "1g")) {
-					strcpy(loc_name, "g12a_u212_1g\0");
-					break;
-				}
-				strcpy(loc_name, "g12a_u212_2g\0");
-				break;
-			case 0x40000000:
-				strcpy(loc_name, "g12a_u212_1g\0");
-				break;
-			case 0x2000000:
-				strcpy(loc_name, "g12a_u212_512m\0");
-				break;
-			default:
-				strcpy(loc_name, "g12a_u212_unsupport");
-				break;
-		}
-	}
+
+	printf("checkhw: loc_name is %s\n", loc_name);
 
 	strcpy(name, loc_name);
 	setenv("aml_dt", loc_name);

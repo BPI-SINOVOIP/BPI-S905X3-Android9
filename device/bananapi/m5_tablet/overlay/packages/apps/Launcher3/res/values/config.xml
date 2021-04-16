@@ -1,0 +1,5 @@
+<resources>
+    <!-- Hotseat -->
+    <bool name="hotseat_transpose_layout_with_orientation">false</bool>
+</resources>
+

@@ -19,7 +19,7 @@ Download the [toolchains](https://download.banana-pi.dev/d/3ebbfa04265d4dddb81b/
 
 Get source code
 
-    $ git clone https://github.com/BPI-SINOVOIP/BPI-S905X3-Android9
+    $ git clone https://github.com/Dangku/BPI-S905X3-Android9
 
 Because github limit 100MB size for single file, please download the [oversize files](https://download.banana-pi.dev/d/3ebbfa04265d4dddb81b/files/?p=/Source_Code/m5/android_github_oversize_files.zip) and merge them to correct directory before build.
 
@@ -28,26 +28,23 @@ Because github limit 100MB size for single file, please download the [oversize f
 **Build**
 
     $ source env.sh
-    $ ./device/amlogic/common/quick_compile.sh
+    $ ./device/bananapi/common/quick_compile.sh
     
-    [NUM]   [        PROJECT]  [       SOC TYPE]  [  HARDWARE TYPE]
+    [NUM]   [       PROJECT]     [  SOC TYPE]  [      HARDWARE TYPE]
     ---------------------------------------------------------------
+    [ 1]    [       m5_mbox]     [    S905X3]  [        BANANAPI_M5]
+    [ 2]    [     m5_tablet]     [    S905X3]  [        BANANAPI_M5]
     ...
-    [ 28]   [          AC214]  [         S905X3]  [          AC214]
-    [ 29]   [    bananapi_m5]  [         S905X3]  [    BANANAPI_M5]
     ---------------------------------------------------------------
-    please select platform type (default 1(Ampere)):29
+    please select platform type (default 1(Ampere)):2
     Select compile Android verion type lists:
     [NUM]   [Android Version]
     [  1]   [AOSP]
     ---------------------------------------------------------------
     Please select Android Version (default 1 (AOSP)):1
-    including device/amlogic/ac214/vendorsetup.sh
-    including device/amlogic/ampere/vendorsetup.sh
-    including device/amlogic/anning/vendorsetup.sh
     ...
 
 ----------
 **Flash**
 
-The target usb download image is out/target/product/bananapi_m5/aml_upgrade_package.img, flash it to your device by AML Usb_Burning_Tool or Burn_Card_Maker. Please refer to [Bananapi M5 wiki](http://wiki.banana-pi.org/Getting_Started_with_BPI-M5) for how to flash the target image.
+The target usb download image is out/target/product/bananapi_*/aml_upgrade_package.img, flash it to your device by AML Usb_Burning_Tool or Burn_Card_Maker. Please refer to [Bananapi M5 wiki](http://wiki.banana-pi.org/Getting_Started_with_BPI-M5) for how to flash the target image.

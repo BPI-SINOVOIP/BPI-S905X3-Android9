@@ -1,0 +1,3 @@
+add_lunch_combo m5_mbox-eng
+add_lunch_combo m5_mbox-user
+add_lunch_combo m5_mbox-userdebug
