@@ -505,7 +505,7 @@ public class OutputModeManager {
         return list;
     }
 
-    public String getHdmiVesaSupportList() {
+	public String getHdmiVesaSupportList() {
         String list = readSupportList(HDMI_VESA_SUPPORT_LIST).replaceAll("[*]", "");
 
         if (DEBUG)

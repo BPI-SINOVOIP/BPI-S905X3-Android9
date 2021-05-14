@@ -61,24 +61,7 @@ int32_t HwcDisplayPipe::init(std::map<uint32_t, std::shared_ptr<HwcDisplay>> & h
         stat->hwcDisplay = dispIt->second;
         /*set modeMgr*/
         uint32_t fbW = 0, fbH = 0;
-#if defined(ODROID)
-        std::string mode;
-        sc_get_display_mode(mode);
-        MESON_LOGE("Get hdmimode(%s) from systemcontrol service", mode.c_str());
-        int calibrateCoordinates[4];
-        std::string dispModeStr(mode);
-        if (0 == sc_get_osd_position(dispModeStr, calibrateCoordinates)) {
-            fbW = calibrateCoordinates[2];
-            fbH = calibrateCoordinates[3];
-        }
-        /* limit fb size to 1920x1080 in case of higher resolution than 2560x1080 */
-        if ((fbW >= 2560) && (fbH > 1080)) {
-            fbW = 1920;
-            fbH = 1080;
-	}
-#else
         HwcConfig::getFramebufferSize (hwcId, fbW, fbH);
-#endif
         std::shared_ptr<HwcModeMgr> modeMgr =
         createModeMgr(HwcConfig::getModePolicy(hwcId));
         modeMgr->setFramebufferSize(fbW, fbH);

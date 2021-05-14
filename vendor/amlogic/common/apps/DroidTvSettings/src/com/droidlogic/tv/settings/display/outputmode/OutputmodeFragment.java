@@ -23,7 +23,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.support.annotation.Keep;
 import android.support.v17.preference.LeanbackPreferenceFragment;
 import android.support.v7.preference.CheckBoxPreference;
@@ -161,6 +160,7 @@ public class OutputmodeFragment extends LeanbackPreferenceFragment implements On
                 preMode = mOutputUiManager.getCurrentMode().trim();
                 curMode = radioPreference.getKey();
                 curPreference = radioPreference;
+                mOutputUiManager.change2NewMode(curMode);
                 showDialog();
                 curPreference.setChecked(true);
             } else {
@@ -225,26 +225,11 @@ public class OutputmodeFragment extends LeanbackPreferenceFragment implements On
                 if (mAlertDialog != null) {
                     mAlertDialog.dismiss();
                     prePreference = curPreference;
-					mOutputUiManager.change2NewMode(curMode);
-                    reboot();
                 }
                 break;
         }
         task.cancel();
     }
-
-    private void reboot() {
-		Intent intent = new Intent(Intent.ACTION_REBOOT);
-		intent.putExtra("nowait", 1);
-		intent.putExtra("interval", 1);
-		intent.putExtra("window", 1);
-		try {
-			startActivity(intent);
-		} catch (Exception e) {
-			Log.e(LOG_TAG, e.getMessage());
-		}
-    }
-
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {

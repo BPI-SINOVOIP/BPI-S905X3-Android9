@@ -26,9 +26,13 @@ static int save_dtbo_idx(const char *cmdline)
 	char *dtbo_chosen_idx_end = NULL;
 	char *dtbo_idx = NULL;
 
+	printf("BPI: save_dtbo_idx()\n");
+
 	if (!getenv("androidboot.dtbo_idx")) {
 		if (!cmdline)
 			return -1;
+
+		printf("BPI: cmdline(%s)\n", cmdline);
 
 		dtbo_chosen_idx_start = strstr(cmdline, "androidboot.dtbo_idx");
 		if (!dtbo_chosen_idx_start) {

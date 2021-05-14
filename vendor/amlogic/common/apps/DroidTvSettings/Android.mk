@@ -22,6 +22,7 @@ LOCAL_CERTIFICATE := platform
 LOCAL_MODULE_TAGS := optional
 LOCAL_PROGUARD_FLAG_FILES := proguard.cfg
 LOCAL_USE_AAPT2 := true
+
 LOCAL_PRIVILEGED_MODULE := true
 LOCAL_PRIVATE_PLATFORM_APIS := true
 
@@ -48,7 +49,6 @@ LOCAL_SRC_FILES := \
     $(call all-Iaidl-files-under, src)
 #include frameworks/opt/setupwizard/library/common-gingerbread.mk
 #include frameworks/base/packages/SettingsLib/common.mk
-
 
 FILE := device/*/$(TARGET_PRODUCT)/files/DroidTvSettings/AndroidManifest-common.xml
 FILES := $(foreach v,$(wildcard $(FILE)),$(v))

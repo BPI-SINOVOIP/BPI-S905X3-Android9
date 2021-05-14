@@ -42,18 +42,9 @@ service opengapp /sbin/opengapp.sh -d
     oneshot
     seclabel u:r:shell:s0
 
-service remotecfg3 /sbin/remotecfg -c /etc/remote.cfg -t /etc/remote.tab3 -d
+service remotecfg /sbin/remotecfg -c /etc/remote.cfg -t /etc/remote.tab -d
     oneshot
     seclabel u:r:shell:s0
-
-service remotecfg1 /sbin/remotecfg -c /etc/remote.cfg -t /etc/remote.tab1 -d
-    oneshot
-    seclabel u:r:shell:s0
-
-service remotecfg2 /sbin/remotecfg -c /etc/remote.cfg -t /etc/remote.tab2 -d
-    oneshot
-    seclabel u:r:shell:s0
-
 
 on property:sys.usb.config=none && property:sys.usb.configfs=1
     setprop sys.usb.ffs.ready 0

@@ -585,16 +585,6 @@ void set_i2c_ao_pinmux(void)
 }
 #endif /*end CONFIG_SYS_I2C_MESON*/
 
-void usb_wifi_power_on(void)
-{
-	printf("BPI: set m2pro usb wifi power on\n");
-	/*set gpioH_4 high to power on vcc 5v*/
-	writel(readl(PREG_PAD_GPIO3_O) | (1 << 4), PREG_PAD_GPIO3_O);
-	writel(readl(PREG_PAD_GPIO3_EN_N) & (~(1 << 4)), PREG_PAD_GPIO3_EN_N);
-	writel(readl(PERIPHS_PIN_MUX_B) & (~(0xf << 16)), PERIPHS_PIN_MUX_B);	
-	return;
-}
-
 #define IS_RANGE(x, min, max)   ((x) > (min) && (x) < (max))
 /*
  * Board revision in the form of YYYYMMDD as hexadecimal
@@ -635,8 +625,6 @@ int get_hw_revision(void)
 		/* set env for linux image dtb load */
 		setenv("variant", "bananapi_m2_pro");
 		setenv("board", "bpi-m2pro");
-		
-		usb_wifi_power_on();
 	}
 
 	return hwrev;

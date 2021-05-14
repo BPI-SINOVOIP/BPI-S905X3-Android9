@@ -11,3 +11,5 @@ allow shell unlabeled:dir getattr;
 
 allow shell sysfs_audio_cap:file getattr;
 allow shell hdcptx_device:chr_file { open read write getattr ioctl };
+
+allow shell remotecfg_exec:file {entrypoint read execute getattr};

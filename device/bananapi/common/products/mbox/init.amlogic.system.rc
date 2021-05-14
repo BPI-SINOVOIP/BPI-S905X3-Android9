@@ -452,10 +452,10 @@ on property:ro.debuggable=1
     write /sys/module/kgdboc/parameters/kgdboc ttyFIQ2
     write /sys/module/fiq_debugger/parameters/kgdb_enable 1
 
-service remotecfg /vendor/bin/remotecfg /vendor/etc/remote.conf
+service remotecfg /vendor/bin/remotecfg -c /vendor/etc/remote.cfg -t /vendor/etc/remote.tab -d
     class main
     oneshot
-    seclabel u:r:remotecfg:s0
+    seclabel u:r:shell:s0
 
 service hdcp_tx22 /vendor/bin/hdcp_tx22 \
     -f /vendor/etc/firmware/firmware.le

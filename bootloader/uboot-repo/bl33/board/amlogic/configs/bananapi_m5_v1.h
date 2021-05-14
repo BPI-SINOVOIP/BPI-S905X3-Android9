@@ -324,9 +324,6 @@
                 "if keyman read dtbo ${loadaddr} str; then "\
                     "setenv bootargs ${bootargs} androidboot.dtbo_idx=${dtbo};"\
                     "setenv androidboot.dtbo_idx ${dtbo};"\
-                "else "\
-                    "setenv bootargs ${bootargs} androidboot.dtbo_idx=0;"\
-                    "setenv androidboot.dtbo_idx 0;"\
                 "fi;"\
             "fi;"\
             "\0"\
