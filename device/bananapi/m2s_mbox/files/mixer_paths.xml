@@ -1,0 +1,14 @@
+<mixer>
+  <!-- dummy xml conf, do nothing here -->
+  <path name="speaker">
+  </path>
+
+  <path name="headphone">
+  </path>
+
+  <path name="main_mic">
+  </path>
+
+  <path name="headset-mic">
+  </path>
+</mixer>

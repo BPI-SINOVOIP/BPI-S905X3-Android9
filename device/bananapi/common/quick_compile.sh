@@ -12,9 +12,10 @@ if [ $# -eq 1 ] && [ $1 == "help" ]; then
     printf "    select project name number and drm type to compile sub-image\n\n"
     exit
 fi
-#Project Name                  SOC Name                 Hardware Name                   device/bananapi project name     uboot compile params             tdk path
-project[1]="m5_mbox"      ;soc[1]="S905X3"        ;hardware[1]="BANANAPI_M5"     ; module[1]="m5_mbox"      ;        uboot[1]="bananapi_m5_v1"      ;tdk[1]="g12a/bl32.img"
-project[2]="m5_tablet"    ;soc[2]="S905X3"        ;hardware[2]="BANANAPI_M5"     ; module[2]="m5_tablet"    ;        uboot[2]="bananapi_m5_v1"      ;tdk[2]="g12a/bl32.img"
+#Project Name             SOC Name                Hardware Name                  device/bananapi project name   uboot compile params                 tdk path
+project[1]="m5_mbox"      ;soc[1]="S905X3"        ;hardware[1]="BANANAPI_M5"     ;module[1]="m5_mbox"           ;uboot[1]="bananapi_m5_v1"           ;tdk[1]="g12a/bl32.img"
+project[2]="m5_tablet"    ;soc[2]="S905X3"        ;hardware[2]="BANANAPI_M5"     ;module[2]="m5_tablet"         ;uboot[2]="bananapi_m5_v1"           ;tdk[2]="g12a/bl32.img"
+project[3]="m2s_mbox"     ;soc[3]="S922x/S922Z"   ;hardware[3]="BANANAPI_M2S"    ;module[3]="m2s_mbox"          ;uboot[3]="g12b_bananapi_m2s_v1"     ;tdk[3]="g12a/bl32.img"
 
 platform_avb_param=""
 platform_type=1
@@ -151,7 +152,7 @@ if [ $# -eq 1 ]; then
     || [ $1 == "vendorimage" ] \
     || [ $1 == "odm_image" ] \
     || [ $1 == "dtbimage" ] ; then
-        make $1 -j8
+        make $1 -j1
         exit
     fi
 fi
