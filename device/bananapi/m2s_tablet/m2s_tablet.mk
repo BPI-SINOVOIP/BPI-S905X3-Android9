@@ -512,6 +512,18 @@ $(warning $(shell ($(AUTO_PATCH_AB) $(PRODUCT_DIR))))
 endif
 endif
 
+#########################################################################
+#
+#                            apps
+#
+#########################################################################
+PRODUCT_PACKAGES += \
+    Launcher3
+
+#Add Simple setupwizard to set Settings.Secure.USER_SETUP=1 for notice that user setup complete
+PRODUCT_PACKAGES += \
+    Provision
+    
 PRODUCT_PACKAGES += \
     Settings \
     SettingsIntelligence
