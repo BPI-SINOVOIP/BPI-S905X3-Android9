@@ -1,0 +1,8 @@
+#This file contains a history of sha1 hashes of the bootloader.img file.
+#The version string must equal the bootloader-version reported by fastboot.
+#When the .img file is updated, you must add its hash and the version numuber to this file.
+
+8379e52ca261689416cbf4b4c914e9d9adf4a9b3 01.01.180611.150224
+e1d080e424efc1629b6dd9f5c5e3a670e96d5730 01.01.180628.142502
+55467f1a824a20016d0b76cd8ff10329a8a267dd 01.01.180807.170521
+b8dc80f1e49b01eed9069fb9f9117e79fb7ea115 01.01.180822.152145

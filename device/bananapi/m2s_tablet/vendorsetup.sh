@@ -1,0 +1,3 @@
+add_lunch_combo m2s_tablet-eng
+add_lunch_combo m2s_tablet-user
+add_lunch_combo m2s_tablet-userdebug
