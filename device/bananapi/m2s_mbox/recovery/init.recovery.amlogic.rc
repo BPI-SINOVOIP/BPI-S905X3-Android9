@@ -21,8 +21,8 @@ on boot
     write /config/usb_gadget/g1/bcdUSB 0x0200
     mkdir /config/usb_gadget/g1/strings/0x409 0770
     write /config/usb_gadget/g1/strings/0x409/serialnumber ${ro.serialno}
-    write /config/usb_gadget/g1/strings/0x409/manufacturer amlogic
-    write /config/usb_gadget/g1/strings/0x409/product p212
+    write /config/usb_gadget/g1/strings/0x409/manufacturer sinovoip
+    write /config/usb_gadget/g1/strings/0x409/product bananapi
     mkdir /config/usb_gadget/g1/functions/ffs.adb
     mkdir /config/usb_gadget/g1/functions/mtp.gs0
     mkdir /config/usb_gadget/g1/configs/b.1 0770 shell shell

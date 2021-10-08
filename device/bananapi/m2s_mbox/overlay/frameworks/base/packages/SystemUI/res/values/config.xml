@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <bool name="config_enableKeyguardService">false</bool>
-    <!--<string name="config_statusBarComponent" translatable="false">com.android.systemui.statusbar.tv.TvStatusBar</string>-->
-    <string name="config_statusBarComponent" translatable="false">com.android.systemui.statusbar.phone.StatusBar</string>
+    <string name="config_statusBarComponent" translatable="false">com.android.systemui.statusbar.tv.TvStatusBar</string>
 </resources>

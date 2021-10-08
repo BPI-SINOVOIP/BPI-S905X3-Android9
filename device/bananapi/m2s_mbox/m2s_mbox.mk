@@ -415,10 +415,10 @@ BOARD_USES_USB_PM := true
 include device/bananapi/common/software.mk
 ifeq ($(TARGET_BUILD_GOOGLE_ATV),true)
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.sf.lcd_density=160
+    ro.sf.lcd_density=320
 else
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.sf.lcd_density=160
+    ro.sf.lcd_density=240
 endif
 
 
@@ -511,7 +511,11 @@ ifeq ($(AB_OTA_UPDATER),true)
 $(warning $(shell ($(AUTO_PATCH_AB) $(PRODUCT_DIR))))
 endif
 endif
-
+#########################################################################
+#
+#                            apps
+#
+#########################################################################
 PRODUCT_PACKAGES += \
-    Settings \
-    SettingsIntelligence
+	MboxLauncher \
+	LeanKeyKeyboardPro
