@@ -19,7 +19,7 @@
 
 #include "partition_mbox_normal_P_32.dtsi"
 #include "mesong12b.dtsi"
-#include "mesong12b_skt-panel.dtsi"
+#include "g12b_a311d_bananapi_panel.dtsi"
 
 / {
 	model = "Amlogic";
@@ -182,17 +182,26 @@
 	gpioleds {
 		compatible = "gpio-leds";
 		status = "okay";
+
+		remote_led {
+			label = "remote_led";
+			gpios = <&gpio_ao GPIOAO_11 GPIO_ACTIVE_LOW>;
+			default-state = "on";
+			linux,default-trigger = "rc_feedback";
+		};
+
 		sys_led {
 			label="sys_led";
-			gpios=<&gpio_ao GPIOAO_11 GPIO_ACTIVE_HIGH>;
+			gpios=<&gpio_ao GPIOAO_2 GPIO_ACTIVE_LOW>;
 			default-state ="on";
+			linux,default-trigger = "timer";
 		};
 	};
 
 	cvbsout {
 		compatible = "amlogic, cvbsout-g12b";
 		dev_name = "cvbsout";
-		status = "okay";
+		status = "disabled";
 		clocks = <&clkc CLKID_VCLK2_ENCI
 			&clkc CLKID_VCLK2_VENCI0
 			&clkc CLKID_VCLK2_VENCI1
@@ -227,19 +236,21 @@
 	bt-dev{
 		compatible = "amlogic, bt-dev";
 		dev_name = "bt-dev";
-		status = "okay";
+		status = "disabled";
 		gpio_reset = <&gpio GPIOX_17 GPIO_ACTIVE_HIGH>;
 		gpio_hostwake = <&gpio GPIOX_19 GPIO_ACTIVE_HIGH>;
+		gpio_btwakeup = <&gpio GPIOX_18 GPIO_ACTIVE_HIGH>;
 	};
 
 	wifi{
 		compatible = "amlogic, aml_wifi";
 		dev_name = "aml_wifi";
-		status = "okay";
+		status = "disabled";
 		interrupt_pin = <&gpio GPIOX_7 GPIO_ACTIVE_HIGH>;
 		irq_trigger_type = "GPIO_IRQ_LOW";
 		power_on_pin = <&gpio GPIOX_6 GPIO_ACTIVE_HIGH>;
-		dhd_static_buf;	//if use bcm wifi, config dhd_static_buf
+		/* if use bcm wifi, config dhd_static_buf */
+		/*dhd_static_buf;*/
 		pinctrl-names = "default";
 		pinctrl-0 = <&pwm_e_pins>;
 		pwm_config = <&wifi_pwm_conf>;
@@ -335,7 +346,7 @@
 
 	gpio_keypad {
 		compatible = "amlogic, gpio_keypad";
-		status = "okay";
+		status = "disabled";
 		scan_period = <20>;
 		key_num = <1>;
 		key_name = "power";
@@ -344,22 +355,29 @@
 		detect_mode = <0>;/*0:polling mode, 1:irq mode*/
 	};
 
+
+	/* poweroff button of android navigation bar */
+	shutdown_sysfs {
+		compatible = "shutdown-sysfs";
+		status = "okay";
+	};
+
 	adc_keypad {
 		compatible = "amlogic, adc_keypad";
 		status = "okay";
-		key_name = "vol-", "vol+", "enter";
-		key_num = <3>;
+		key_name = "power";
+		key_num = <1>;
 		io-channels = <&saradc SARADC_CH2>;
 		io-channel-names = "key-chan-2";
 		key_chan = <SARADC_CH2 SARADC_CH2 SARADC_CH2>;
-		key_code = <114 115 28>;
-		key_val = <143 266 389>; //val=voltage/1800mV*1023
-		key_tolerance = <40 40 40>;
+		key_code = <116>;
+		key_val = <0>; //val=voltage/1800mV*1023
+		key_tolerance = <40>;
 	};
 
 	unifykey{
 		compatible = "amlogic, unifykey";
-		status = "ok";
+		status = "disabled";
 		unifykey-num = <17>;
 		unifykey-index-0 = <&keysn_0>;
 		unifykey-index-1 = <&keysn_1>;
@@ -519,7 +537,7 @@
 	pdm_codec:dummy{
 		#sound-dai-cells = <0>;
 		compatible = "amlogic, pdm_dummy_codec";
-		status = "okay";
+		status = "disabled";
 	};
 	dummy_codec:dummy{
 		#sound-dai-cells = <0>;
@@ -554,40 +572,13 @@
 		compatible = "amlogic, g12a-sound-card";
 		aml-audio-card,name = "AML-AUGESOUND";
 
-		//aml-audio-card,aux-devs = <&amlogic_codec>;
 		/*avout mute gpio*/
-		avout_mute-gpios = <&gpio_ao GPIOAO_2 GPIO_ACTIVE_HIGH>;
+		/*avout_mute-gpios = <&gpio_ao GPIOAO_2 GPIO_ACTIVE_HIGH>;*/
+
 		/*for audio effect ,eqdrc */
 		aml-audio-card,effect = <&audio_effect>;
 
 		aml-audio-card,dai-link@0 {
-			format = "dsp_a";
-			mclk-fs = <512>;
-			//continuous-clock;
-			//bitclock-inversion;
-			//frame-inversion;
-			//bitclock-master = <&tdmacodec>;
-			//frame-master = <&tdmacodec>;
-			/* suffix-name, sync with android audio hal
-			 * what's the dai link used for
-			 */
-			suffix-name = "alsaPORT-pcm";
-			tdmacpu: cpu {
-				sound-dai = <&aml_tdma>;
-				dai-tdm-slot-tx-mask =
-							<1 1 1 1 1 1 1 1>;
-				dai-tdm-slot-rx-mask =
-							<1 1 1 1 1 1 1 1>;
-				dai-tdm-slot-num = <8>;
-				dai-tdm-slot-width = <32>;
-				system-clock-frequency = <24576000>;
-			};
-			tdmacodec: codec {
-				sound-dai = <&dummy_codec &dummy_codec>;
-			};
-		};
-
-		aml-audio-card,dai-link@1 {
 			format = "i2s";
 			mclk-fs = <256>;
 			continuous-clock;
@@ -611,50 +602,11 @@
 			};
 			tdmbcodec: codec {
 				sound-dai = <&dummy_codec &dummy_codec
-				&amlogic_codec &ad82584f_62>;
+				&amlogic_codec>;
 			};
 		};
-
-		aml-audio-card,dai-link@2 {
-			format = "i2s";
-			mclk-fs = <256>;
-			//continuous-clock;
-			//bitclock-inversion;
-			//frame-inversion;
-			bitclock-master = <&aml_tdmc>;
-			frame-master = <&aml_tdmc>;
-			/* suffix-name, sync with android audio hal
-			 * what's the dai link used for
-			 */
-			//suffix-name = "alsaPORT-tdm";
-			cpu {
-				sound-dai = <&aml_tdmc>;
-				dai-tdm-slot-tx-mask = <1 1>;
-				dai-tdm-slot-rx-mask = <1 1>;
-				dai-tdm-slot-num = <2>;
-				dai-tdm-slot-width = <32>;
-				system-clock-frequency = <12288000>;
-			};
-			codec {
-				sound-dai = <&dummy_codec &dummy_codec>;
-			};
-		};
-
-		aml-audio-card,dai-link@3 {
-			mclk-fs = <64>;
-			/* suffix-name, sync with android audio hal
-			 * what's the dai link used for
-			 */
-			suffix-name = "alsaPORT-pdm";
-			cpu {
-				sound-dai = <&aml_pdm>;
-			};
-			codec {
-				sound-dai = <&pdm_codec>;
-			};
-		};
-
-		aml-audio-card,dai-link@4 {
+		
+		aml-audio-card,dai-link@1 {
 			mclk-fs = <128>;
 			continuous-clock;
 			/* suffix-name, sync with android audio hal
@@ -664,18 +616,6 @@
 			cpu {
 				sound-dai = <&aml_spdif>;
 				system-clock-frequency = <6144000>;
-			};
-			codec {
-				sound-dai = <&dummy_codec>;
-			};
-		};
-		aml-audio-card,dai-link@6 {
-			mclk-fs = <256>;
-			continuous-clock;
-			suffix-name = "alsaPORT-loopback";
-			cpu {
-				sound-dai = <&loopback>;
-				system-clock-frequency = <12288000>;
 			};
 			codec {
 				sound-dai = <&dummy_codec>;
@@ -697,7 +637,7 @@
 		interrupt-names = "irq";
 		frequency = <49000000>; /* pll */
 		dividor = <49>; /* locker's parent */
-		status = "okay";
+		status = "disabled";
 	};
 	/* Audio Related end */
 
@@ -808,7 +748,7 @@
 
 	sensor: sensor {
 		compatible = "soc, sensor";
-		status = "okay";
+		status = "disabled";
 		sensor-name = "os08a10"; /*imx290;os08a10;imx227*/
 		pinctrl-names="default";
 		pinctrl-0=<&clk12_24_z_pins>;
@@ -821,34 +761,18 @@
 
 	iq: iq {
 		compatible = "soc, iq";
-		status = "okay";
+		status = "disabled";
 		sensor-name = "os08a10"; /*imx290;os08a10;imx227*/
 	};
 }; /* end of / */
 
-&i2c2 {
-	status = "okay";
-	pinctrl-names="default";
-	pinctrl-0=<&i2c2_master_pins2>;
-	clock-frequency = <100000>; /* default 100k */
-	sensor-i2c@6c {
-		compatible = "arm, i2c-sensor";
-		reg = <0x6c>;
-		reg-names = "i2c-sensor";
-		slave-addr = <0x6c>;
-		reg-type = <2>;
-		reg-data-type = <1>;
-		link-device = <&phycsi>;
-	};
-};
-
 &isp {
-	status = "okay";
+	status = "disabled";
 	memory-region = <&isp_cma_reserved>;
 };
 
 &adapter {
-	status = "okay";
+	status = "disabled";
 	memory-region = <&adapt_cma_reserved>;
 };
 
@@ -862,107 +786,46 @@
 };
 
 &pwm_ab {
-		status = "okay";
-	};
+	status = "okay";
+};
 
 &pwm_ef {
-		status = "okay";
-	};
+	status = "okay";
+};
 
 &pwm_AO_cd {
-		status = "okay";
-	};
+	status = "okay";
+};
 
 &i2c0 {
-	status = "okay";
+	status = "disabled";
 	pinctrl-names = "default";
 	pinctrl-0 = <&i2c0_master_pins2>;
 	clock-frequency = <400000>;
+};
 
-	touchscreen@5d {
-		compatible = "goodix,gt9xx";
-		status = "disabled";
-		reg = <0x5d>;
-		reset-gpio = <&gpio GPIOZ_9 GPIO_ACTIVE_HIGH>;
-		irq-gpio = <&gpio GPIOZ_3 GPIO_ACTIVE_HIGH>;
-		goodix,cfg-group0 = [
-			41 00 04 58 02 05 0C 00 02 54 07
-			0F 50 2D 03 05 00 00 00 00 40 00
-			04 20 10 F3 AA 07 28 0A 2C 2E 7C
-			06 00 00 00 C9 03 24 00 01 00 00
-			00 00 FF 5D 66 98 32 28 64 94 C5
-			02 08 00 00 01 91 2C 00 8A 34 00
-			8A 3F 00 7E 4C 00 78 5B 00 78 00
-			00 00 00 00 00 00 00 00 00 00 00
-			00 00 00 00 00 00 00 00 00 00 00
-			00 00 00 00 00 00 00 00 00 00 00
-			00 00 02 04 06 08 0A 0C 0E 10 12
-			14 FF FF FF FF 00 00 00 00 00 00
-			00 00 00 00 00 00 00 00 00 00 00
-			02 04 06 08 0A 0C 1D 1E 1F 20 21
-			22 24 26 FF FF FF FF FF FF FF FF
-			FF FF FF 00 00 00 00 00 00 00 00
-			00 00 00 00 00 00 00 00 E3 01];
-	};
+&i2c1 {
+	status = "disabled";
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c1_master_pins3>; /* GPIOH_6,GPIOH_7 */
+	clock-frequency = <400000>;
+};
 
-	touchscreen@38 {
-		compatible = "focaltech,fts";
-		status = "okay";
-		reg = <0x38>;
-		reset-gpio = <&gpio GPIOZ_9 GPIO_ACTIVE_HIGH>;
-		irq-gpio = <&gpio GPIOZ_3 GPIO_ACTIVE_HIGH>;
-		x_max = <1280>;
-		y_max = <720>;
-		rotation = <1>;
-		max-touch-number = <10>;
-	};
+&i2c2 {
+	status = "disabled";
+	pinctrl-names="default";
+	pinctrl-0=<&i2c2_master_pins2>;
+	clock-frequency = <100000>; /* default 100k */
 };
 
 &i2c3 {
-	status = "okay";
+	status = "disabled";
 	pinctrl-names="default";
 	pinctrl-0=<&i2c3_master_pins2>;
 	clock-frequency = <100000>; /* default 100k */
-
-	/* for ref board */
-	ad82584f_62: ad82584f_62@62 {
-		compatible = "ESMT, ad82584f";
-		#sound-dai-cells = <0>;
-		reg = <0x31>;
-		status = "okay";
-		reset_pin = <&gpio GPIOA_5 0>;
-		no_mclk;
-	};
-
-	tlv320adc3101_32: tlv320adc3101_32@32 {
-		compatible = "ti,tlv320adc3101";
-		#sound-dai-cells = <0>;
-		reg = <0x19>;
-		differential_pair = <1>;
-		status = "disabled";
-	};
-
-	bl_extern_i2c {
-		compatible = "bl_extern, i2c";
-		dev_name = "lp8556";
-		reg = <0x2c>;
-		status = "disabled";
-	};
 };
 
 &audiobus {
-	aml_tdma: tdma {
-		compatible = "amlogic, g12a-snd-tdma";
-		#sound-dai-cells = <0>;
-		dai-tdm-lane-slot-mask-in = <0 1>;
-		dai-tdm-oe-lane-slot-mask-out = <1 0>;
-		dai-tdm-clk-sel = <0>;
-		clocks = <&clkaudio CLKID_AUDIO_MCLK_A
-				&clkc CLKID_MPLL0>;
-		clock-names = "mclk", "clk_srcpll";
-		pinctrl-names = "tdm_pins";
-		pinctrl-0 = <&tdmout_a &tdmin_a>;
-	};
 
 	aml_tdmb: tdmb {
 		compatible = "amlogic, g12a-snd-tdmb";
@@ -989,44 +852,6 @@
 		samesource_sel = <3>;
 	};
 
-	aml_tdmc: tdmc {
-		compatible = "amlogic, g12a-snd-tdmc";
-		#sound-dai-cells = <0>;
-		dai-tdm-lane-slot-mask-in = <1 0 0 0>;
-		#dai-tdm-lane-slot-mask-out = <1 0 1 1>;
-		#dai-tdm-lane-oe-slot-mask-in = <0 0 0 0>;
-		#dai-tdm-lane-oe-slot-mask-out = <1 0 0 0>;
-		dai-tdm-clk-sel = <2>;
-		clocks = <&clkaudio CLKID_AUDIO_MCLK_C
-				&clkc CLKID_MPLL2>;
-		clock-names = "mclk", "clk_srcpll";
-		pinctrl-names = "tdm_pins";
-		pinctrl-0 = <&tdmc_mclk &tdmout_c &tdmin_c>;
-		mclk_pad = <1>;  /* 0: mclk_0; 1: mclk_1 */
-	};
-
-	tdmlb: tdm@3 {
-		compatible = "amlogic, g12a-snd-tdmlb";
-		#sound-dai-cells = <0>;
-		dai-tdm-lane-lb-slot-mask-in = <1 0 0 0>;
-		dai-tdm-clk-sel = <1>;
-		clocks = <&clkaudio CLKID_AUDIO_MCLK_B
-				&clkc CLKID_MPLL1>;
-		clock-names = "mclk", "clk_srcpll";
-		/*
-		 * select tdmin_lb src;
-		 *0: TDMOUTA
-		 *1: TDMOUTB
-		 *2: TDMOUTC
-		 *3: PAD_TDMINA
-		 *4: PAD_TDMINB
-		 *5: PAD_TDMINC
-		 */
-		lb-src-sel = <1>;
-
-		status = "disabled";
-	};
-
 	aml_spdif: spdif {
 		compatible = "amlogic, g12a-snd-spdif-a";
 		#sound-dai-cells = <0>;
@@ -1038,14 +863,12 @@
 				&clkaudio CLKID_AUDIO_SPDIFOUT_CTRL>;
 		clock-names = "sysclk", "fixed_clk", "gate_spdifin",
 				"gate_spdifout", "clk_spdifin", "clk_spdifout";
-		interrupts =
-				<GIC_SPI 151 IRQ_TYPE_EDGE_RISING>;
+		interrupts = <GIC_SPI 151 IRQ_TYPE_EDGE_RISING>;
 
 		interrupt-names = "irq_spdifin";
-		pinctrl-names = "spdif_pins",
-					"spdif_pins_mute";
+		pinctrl-names = "spdif_pins", "spdif_pins_mute";
 		pinctrl-0 = <&spdifout>;
-		pinctrl-1 = <&spdifout_a_mute>;
+		pinctrl-1 = <&spdifout_mute>;
 		status = "okay";
 	};
 	aml_spdif_b: spdif_b {
@@ -1074,7 +897,7 @@
 		pinctrl-names = "pdm_pins";
 		pinctrl-0 = <&pdmin>;
 		filter_mode = <1>; /* mode 0~4, defalut:1 */
-		status = "okay";
+		status = "disabled";
 	};
 
 	loopback:loopback@0 {
@@ -1129,7 +952,7 @@
 		/* config which data pin as loopback */
 		datalb-lane-mask-in = <1 0 0 0>;
 
-		status = "okay";
+		status = "disabled";
 	};
 
 	audioresample: resample {
@@ -1177,24 +1000,8 @@
 }; /* end of audiobus */
 
 &pinctrl_periphs {
-	tdmout_a: tdmout_a {
-		mux { /* GPIOX_11, GPIOX_10, GPIOX_9 */
-			groups = "tdma_sclk",
-				"tdma_fs",
-				"tdma_dout0";
-			function = "tdma_out";
-		};
-	};
-
-	tdmin_a: tdmin_a {
-		mux { /* GPIOX_8 */
-			groups = "tdma_din1";
-			function = "tdma_in";
-		};
-	};
-
 	tdmb_mclk: tdmb_mclk {
-		mux {
+		mux { /* GPIOA_0 */
 			groups = "mclk0_a";
 			function = "mclk0";
 			drive-strength = <2>;
@@ -1219,63 +1026,34 @@
 		};
 	};
 
-	tdmc_mclk: tdmc_mclk {
-		mux { /* GPIOA_11 */
-			groups = "mclk1_a";
-			function = "mclk1";
+	spdifout: spdifout {
+		mux { /* GPIOH_4 */
+			groups = "spdif_out_h";
+			function = "spdif_out";
 		};
 	};
 
-	tdmout_c:tdmout_c {
-		mux { /* GPIOA_12, GPIOA_13, GPIOA_8, GPIOA_7*/
-			groups = "tdmc_sclk_a",
-				"tdmc_fs_a",
-				"tdmc_dout0_a"
-				/*,	"tdmc_dout2",
-				 * "tdmc_dout3"
-				 */;
-			function = "tdmc_out";
+	spdifout_mute: spdifout_mute {
+		mux { /* GPIOH_4 */
+			groups = "GPIOH_4";
+			function = "gpio_periphs";
 		};
 	};
-
-	tdmin_c:tdmin_c {
-		mux { /* GPIOA_10 */
-			groups = "tdmc_din0_a";
-			function = "tdmc_in";
-		};
-	};
-
-	spdifin: spdifin {
-		mux {/* GPIOH_5 */
-			groups = "spdif_in_h";
-			function = "spdif_in";
-		};
-	};
-
-	/* GPIOH_4 */
-	/*
-	 * spdifout: spdifout {
-	 *	mux {
-	 *		groups = "spdif_out_h";
-	 *		function = "spdif_out";
-	 *	};
-	 *};
-	 */
-
+	
 	pdmin: pdmin {
 		mux { /* gpioa_5, gpioa_6, gpioa_7, gpioa_8, gpioa_9*/
-			groups = "pdm_din0_a",
-			/*"pdm_din1_a",*/
-			"pdm_din2_a",
-			/*"pdm_din3_a",*/
-			"pdm_dclk_a";
+			groups = "pdm_din0_x",
+			/*"pdm_din1_x",*/
+			"pdm_din2_x",
+			/*"pdm_din3_x",*/
+			"pdm_dclk_x";
 			function = "pdm";
 		};
 	};
-
+	
 	bl_pwm_off_pins:bl_pwm_off_pin {
 		mux {
-			pins = "GPIOH_5";
+			pins = "GPIOA_11";
 			function = "gpio_periphs";
 			output-high;
 		};
@@ -1291,19 +1069,6 @@
 }; /* end of pinctrl_periphs */
 
 &pinctrl_aobus {
-	spdifout: spdifout {
-		mux { /* gpiao_10 */
-			groups = "spdif_out_ao";
-			function = "spdif_out_ao";
-		};
-	};
-
-	spdifout_a_mute: spdifout_a_mute {
-		mux { /* gpiao_10 */
-			groups = "GPIOAO_10";
-			function = "gpio_aobus";
-		};
-	};
 };  /* end of pinctrl_aobus */
 
 &irblaster {
@@ -1317,7 +1082,7 @@
 /*if you want to use vdin just modify status to "ok"*/
 &vdin0 {
 	memory-region = <&vdin0_cma_reserved>;
-	status = "okay";
+	status = "disabled";
 	/*vdin write mem color depth support:
 	 *bit0:support 8bit
 	 *bit1:support 9bit
@@ -1327,9 +1092,10 @@
 	 */
 	tv_bit_mode = <0x15>;
 };
+
 &vdin1 {
 	memory-region = <&vdin1_cma_reserved>;
-	status = "okay";
+	status = "disabled";
 	/*vdin write mem color depth support:
 	 *bit0:support 8bit
 	 *bit1:support 9bit
@@ -1337,6 +1103,12 @@
 	 *bit3:support 12bit
 	 */
 	tv_bit_mode = <1>;
+};
+
+&reboot {
+	sd_volsw_gpio = <&gpio_ao GPIOAO_9 GPIO_ACTIVE_HIGH>;
+	sd_power_gpio = <&gpio_ao GPIOAO_8 GPIO_ACTIVE_HIGH>;
+	sd_vddio_gpio = <&gpio_ao GPIOAO_3 GPIO_ACTIVE_HIGH>;
 };
 
 &sd_emmc_c {
@@ -1359,17 +1131,28 @@
 
 &sd_emmc_b {
 	status = "okay";
+	sd-uhs-sdr25;
+	sd-uhs-sdr50;
+	sd-uhs-sdr104;
+	max-frequency = <200000000>;
 	sd {
 		caps = "MMC_CAP_4_BIT_DATA",
-			 "MMC_CAP_MMC_HIGHSPEED",
-			 "MMC_CAP_SD_HIGHSPEED";
+			"MMC_CAP_UHS_SDR25",
+			"MMC_CAP_UHS_SDR50",
+			"MMC_CAP_UHS_SDR104",
+			"MMC_CAP_MMC_HIGHSPEED",
+			"MMC_CAP_SD_HIGHSPEED",
+			"MMC_CAP_ERASE",
+			"MMC_CAP_CMD23";
+		vol_switch = <&gpio_ao GPIOAO_9 GPIO_ACTIVE_HIGH>;
+		vol_switch_18 = <1>;
 		f_min = <400000>;
-		f_max = <50000000>;
+		f_max = <200000000>;
 	};
 };
 
 &sd_emmc_a {
-	status = "okay";
+	status = "disabled";
 	sdio {
 		caps = "MMC_CAP_4_BIT_DATA",
 			 "MMC_CAP_MMC_HIGHSPEED",
@@ -1386,72 +1169,6 @@
 	};
 };
 
-&nand {
-	status = "disabled";
-	plat-names = "bootloader","nandnormal";
-	plat-num = <2>;
-	plat-part-0 = <&bootloader>;
-	plat-part-1 = <&nandnormal>;
-	bootloader: bootloader{
-		enable_pad ="ce0";
-		busy_pad = "rb0";
-		timming_mode = "mode5";
-		bch_mode = "bch8_1k";
-		t_rea = <20>;
-		t_rhoh = <15>;
-		chip_num = <1>;
-		part_num = <0>;
-		rb_detect = <1>;
-	};
-	nandnormal: nandnormal{
-		enable_pad ="ce0";
-		busy_pad = "rb0";
-		timming_mode = "mode5";
-		bch_mode = "bch8_1k";
-		plane_mode = "twoplane";
-		t_rea = <20>;
-		t_rhoh = <15>;
-		chip_num = <2>;
-		part_num = <3>;
-		partition = <&nand_partitions>;
-		rb_detect = <1>;
-	};
-	nand_partitions:nand_partition{
-		/*
-		 * if bl_mode is 1, tpl size was generate by
-		 * fip_copies * fip_size which
-		 * will not skip bad when calculating
-		 * the partition size;
-		 *
-		 * if bl_mode is 0,
-		 * tpl partition must be comment out.
-		 */
-		tpl{
-			offset=<0x0 0x0>;
-			size=<0x0 0x0>;
-		};
-		logo{
-			offset=<0x0 0x0>;
-			size=<0x0 0x200000>;
-		};
-		recovery{
-			offset=<0x0 0x0>;
-			size=<0x0 0x1000000>;
-		};
-		boot{
-			offset=<0x0 0x0>;
-			size=<0x0 0x1000000>;
-		};
-		system{
-			offset=<0x0 0x0>;
-			size=<0x0 0x4000000>;
-		};
-		data{
-			offset=<0xffffffff 0xffffffff>;
-			size=<0x0 0x0>;
-		};
-	};
-};
 &dwc3 {
 	status = "okay";
 };
@@ -1463,10 +1180,8 @@
 
 &usb3_phy_v2 {
 	status = "okay";
-	portnum = <1>;
+	portnum = <0>;
 	otg = <1>;
-	gpio-vbus-power = "GPIOH_6";
-	gpios = <&gpio GPIOH_6 GPIO_ACTIVE_HIGH>;
 };
 
 &dwc2_a {
@@ -1476,22 +1191,22 @@
 };
 &ethmac {
 	status = "okay";
-/*	//conflict with isp i2c
-	pinctrl-names = "internal_eth_pins";
-	pinctrl-0 = <&internal_eth_pins>;
-*/
-	mc_val = <0x4be04>;
+	pinctrl-names = "external_eth_pins";
+	pinctrl-0 = <&external_eth_pins>;
+	mc_val = <0x1621>;
+	internal_phy=<0>;
 
-	internal_phy=<1>;
+	/* reset */
+	rst_pin-gpios = <&gpio GPIOZ_15 GPIO_ACTIVE_LOW>;
 };
 
 &uart_A {
-	status = "okay";
+	status = "disabled";
 };
 
 &pcie_A {
 	reset-gpio = <&gpio GPIOX_7 GPIO_ACTIVE_HIGH>;
-	status = "disable";
+	status = "okay";
 };
 
 &saradc {
