@@ -377,8 +377,8 @@
 
 	unifykey{
 		compatible = "amlogic, unifykey";
-		status = "disabled";
-		unifykey-num = <17>;
+		status = "okay";
+		unifykey-num = <18>;
 		unifykey-index-0 = <&keysn_0>;
 		unifykey-index-1 = <&keysn_1>;
 		unifykey-index-2 = <&keysn_2>;
@@ -396,6 +396,7 @@
 		unifykey-index-14= <&keysn_14>;
 		unifykey-index-15= <&keysn_15>;
 		unifykey-index-16= <&keysn_16>;
+		unifykey-index-17= <&keysn_17>;
 
 		keysn_0: key_0{
 			key-name = "usid";
@@ -481,6 +482,11 @@
 			key-permit = "read","write","del";
 		};
 		keysn_16:key_16{
+			key-name = "dtbo";// dtbo idx
+			key-device = "normal";
+			key-permit = "read","write","del";
+		};
+		keysn_17:key_17{
 			key-name = "attestationdevidbox";// attest dev id box
 			key-device = "secure";
 			key-permit = "read","write","del";
@@ -790,7 +796,7 @@
 };
 
 &pwm_ef {
-	status = "okay";
+	status = "disabled";
 };
 
 &pwm_AO_cd {
@@ -1189,6 +1195,7 @@
 	/** 0: normal, 1: otg+dwc3 host only, 2: otg+dwc3 device only*/
 	controller-type = <3>;
 };
+
 &ethmac {
 	status = "okay";
 	pinctrl-names = "external_eth_pins";

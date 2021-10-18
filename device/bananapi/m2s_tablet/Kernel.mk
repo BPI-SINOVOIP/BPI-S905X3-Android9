@@ -63,7 +63,7 @@ KERNEL_DEVICETREE := g12b_a311d_bananapi_m2s
 KERNEL_DEFCONFIG := meson64_defconfig
 KERNEL_ARCH := arm64
 
-DTBO_DEVICETREE := android_p_overlay_dt
+DTBO_DEVICETREE := android_p_overlay_dt wifi_bt_rtl8822cs i2c1 i2c2 sdio uart1 uart1_cts_rts uart2 hifi_pcm5122
 
 KERNEL_OUT := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ
 

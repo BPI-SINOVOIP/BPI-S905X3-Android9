@@ -257,7 +257,8 @@ include hardware/amlogic/wifi/configs/wifi.mk
 #########################################################################
 
 BOARD_HAVE_BLUETOOTH := true
-BLUETOOTH_MODULE := BCMBT
+BLUETOOTH_MODULE := RTKBT
+BLUETOOTH_INF := USB
 include hardware/amlogic/bluetooth/configs/bluetooth.mk
 
 
@@ -523,7 +524,3 @@ PRODUCT_PACKAGES += \
 #Add Simple setupwizard to set Settings.Secure.USER_SETUP=1 for notice that user setup complete
 PRODUCT_PACKAGES += \
     Provision
-    
-PRODUCT_PACKAGES += \
-    Settings \
-    SettingsIntelligence

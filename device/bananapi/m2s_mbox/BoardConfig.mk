@@ -48,7 +48,6 @@ TARGET_NO_RADIOIMAGE := true
 
 TARGET_BOARD_PLATFORM := g12b
 TARGET_BOOTLOADER_BOARD_NAME := m2s_mbox
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/bananapi/m2s_mbox/bluetooth
 
 # Allow passing `--second` to mkbootimg via 2ndbootloader.
 TARGET_BOOTLOADER_IS_2ND := true
