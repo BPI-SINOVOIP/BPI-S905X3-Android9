@@ -39,3 +39,6 @@ on boot
 #NET LED
     chmod 666 sys/class/leds/net_green/brightness
     chmod 666 sys/class/leds/net_red/brightness
+
+# Power Off trigger node
+    chmod 0222 /sys/class/shutdown_sysfs/poweroff_trigger
