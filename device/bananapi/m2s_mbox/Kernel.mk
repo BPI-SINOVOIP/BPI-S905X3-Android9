@@ -95,7 +95,8 @@ TARGET_AMLOGIC_INT_KERNEL := $(KERNEL_OUT)/arch/$(KERNEL_ARCH)/boot/uImage
 TARGET_AMLOGIC_INT_RECOVERY_KERNEL := $(KERNEL_OUT)/arch/$(KERNEL_ARCH)/boot/Image_recovery
 
 BOARD_VENDOR_KERNEL_MODULES += \
-	$(PRODUCT_OUT)/obj/lib_vendor/ddr_window_64.ko
+	$(PRODUCT_OUT)/obj/lib_vendor/ddr_window_64.ko \
+	$(PRODUCT_OUT)/obj/lib_vendor/r8168.ko
 
 BOARD_VENDOR_KERNEL_MODULES	+= $(DEFAULT_MEDIA_KERNEL_MODULES)
 BOARD_VENDOR_KERNEL_MODULES += $(DEFAULT_WIFI_KERNEL_MODULES)
@@ -108,6 +109,7 @@ define cp-modules
 	mkdir -p $(KERNEL_KO_OUT)
 	-cp $(KERNEL_OUT)/drivers/usb/dwc3/dwc3.ko $(KERNEL_KO_OUT)/
 	-cp $(KERNEL_OUT)/drivers/amlogic/usb/dwc_otg/310/dwc_otg.ko $(KERNEL_KO_OUT)/
+	cp $(KERNEL_OUT)/drivers/net/ethernet/realtek/r8168/r8168.ko $(KERNEL_KO_OUT)/
 #	cp $(WIFI_OUT)/broadcom/drivers/ap6xxx/broadcm_40181/dhd.ko $(TARGET_OUT)/lib/
 #	cp $(KERNEL_OUT)/../hardware/amlogic/pmu/aml_pmu_dev.ko $(TARGET_OUT)/lib/
 #	cp $(shell pwd)/hardware/amlogic/thermal/aml_thermal.ko $(TARGET_OUT)/lib/
