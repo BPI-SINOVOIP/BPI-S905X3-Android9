@@ -319,12 +319,9 @@
                 "else "\
                     "setenv bootargs ${bootargs} androidboot.oem.key1=ATV00104319;"\
                 "fi;"\
-		"if keyman read dtbo ${loadaddr} str; then "\
+                "if keyman read dtbo ${loadaddr} str; then "\
                     "setenv bootargs ${bootargs} androidboot.dtbo_idx=${dtbo};"\
                     "setenv androidboot.dtbo_idx ${dtbo};"\
-                "else "\
-                    "setenv bootargs ${bootargs} androidboot.dtbo_idx=0;"\
-                    "setenv androidboot.dtbo_idx 0;"\
                 "fi;"\
             "fi;"\
             "\0"\
