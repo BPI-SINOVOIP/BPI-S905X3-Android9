@@ -70,7 +70,8 @@ PRODUCT_COPY_FILES += \
     device/bananapi/$(PRODUCT_DIR)/files/remote.cfg:recovery/root/etc/remote.cfg \
     device/bananapi/$(PRODUCT_DIR)/files/remote.tab:recovery/root/etc/remote.tab \
     device/bananapi/common/recovery/resize2fs:recovery/root/sbin/resize2fs \
-    device/bananapi/$(PRODUCT_DIR)/recovery/sh:recovery/root/sbin/sh
+    device/bananapi/$(PRODUCT_DIR)/recovery/sh:recovery/root/sbin/sh \
+    device/bananapi/$(PRODUCT_DIR)/files/opengapp.sh:recovery/root/sbin/opengapp.sh
 
 # remote IME config file
 PRODUCT_COPY_FILES += \

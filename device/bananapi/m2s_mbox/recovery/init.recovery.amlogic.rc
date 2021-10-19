@@ -37,6 +37,11 @@ service console /sbin/sh
     seclabel u:r:shell:s0
     console
 
+# symlink etc, because opengapp check and modify system partition mount point of fstab for system_root_image
+service opengapp /sbin/opengapp.sh -d
+    oneshot
+    seclabel u:r:shell:s0
+
 service remotecfg /sbin/remotecfg -c /etc/remote.cfg -t /etc/remote.tab -d
     oneshot
     seclabel u:r:shell:s0
