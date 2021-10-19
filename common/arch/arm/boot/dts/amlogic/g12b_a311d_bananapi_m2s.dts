@@ -17,8 +17,8 @@
 
 /dts-v1/;
 
-#include "partition_mbox_normal_P_32.dtsi"
 #include "mesong12b.dtsi"
+#include "partition_mbox_normal_P_32.dtsi"
 #include "g12b_a311d_bananapi_panel.dtsi"
 
 / {
@@ -1220,3 +1220,54 @@
 	status = "okay";
 };
 
+&remote {
+	status = "disabled";
+};
+
+&custom_maps {
+	mapnum = <2>;
+	map0 = <&map_0>;
+	map1 = <&map_1>;
+	map_0: map_0{
+		mapname = "amlogic-remote-1";
+		customcode = <0xfe01>;
+		release_delay = <80>;
+		size  = <13>;   /*keymap size*/
+		keymap = <REMOTE_KEY(0x00, KEY_POWER)
+			REMOTE_KEY(0x01, KEY_MENU)
+			REMOTE_KEY(0x09, KEY_HOME)
+			REMOTE_KEY(0x02, KEY_LEFT)
+			REMOTE_KEY(0x0a, KEY_RIGHT)
+			REMOTE_KEY(0x05, KEY_UP)
+			REMOTE_KEY(0x04, KEY_DOWN)
+			REMOTE_KEY(0x06, KEY_ENTER)
+			REMOTE_KEY(0x03, KEY_VOLUMEDOWN)
+			REMOTE_KEY(0x0b, KEY_VOLUMEUP)
+			REMOTE_KEY(0x40, KEY_BACK)
+			REMOTE_KEY(0x48, KEY_PLAYPAUSE)
+			REMOTE_KEY(0x44, KEY_MUTE)>;
+	};
+	map_1: map_1{
+		mapname = "amlogic-remote-2";
+		customcode = <0xaf40>;
+		release_delay = <80>;
+		size  = <13>;
+		keymap = <REMOTE_KEY(0x0e, KEY_POWER)
+			REMOTE_KEY(0x07, KEY_MENU)
+			REMOTE_KEY(0x02, KEY_HOME)
+			REMOTE_KEY(0x01, KEY_LEFT)
+			REMOTE_KEY(0x03, KEY_RIGHT)
+			REMOTE_KEY(0x19, KEY_UP)
+			REMOTE_KEY(0x05, KEY_DOWN)
+			REMOTE_KEY(0x06, KEY_ENTER)
+			REMOTE_KEY(0x12, KEY_VOLUMEDOWN)
+			REMOTE_KEY(0x04, KEY_VOLUMEUP)
+			REMOTE_KEY(0x0f, KEY_BACK)
+			REMOTE_KEY(0x0d, KEY_PLAYPAUSE)
+			REMOTE_KEY(0x11, KEY_MUTE)>;
+	};
+};
+
+&irblaster {
+	status = "disable";
+};
