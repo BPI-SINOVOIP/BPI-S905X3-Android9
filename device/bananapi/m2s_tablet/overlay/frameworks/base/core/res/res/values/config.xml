@@ -93,9 +93,6 @@
     <!-- Whether the device uses the default focus highlight when focus state isn't specified. -->
     <bool name="config_useDefaultFocusHighlight">false</bool>
 
-    <!-- Keyguard component -->
-    <string name="config_keyguardComponent" translatable="false">com.droidlogic/com.droidlogic.StubKeyguardService</string>
-
     <bool name="config_showNavigationBar">true</bool>
     <!-- disable wallpaper, which may consume too much boot time -->
     <!-- cannot disable wallpaper, com.android.settings will crash! -->
