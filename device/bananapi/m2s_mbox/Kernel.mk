@@ -59,7 +59,7 @@ else
 -include device/bananapi/common/arm_isp_modules.mk
 -include device/bananapi/common/tb_modules.mk
 
-KERNEL_DEVICETREE := g12b_a311d_bananapi_m2s
+KERNEL_DEVICETREE := g12b_a311d_bananapi_m2s g12b_a311d_bananapi_m2s_2g
 KERNEL_DEFCONFIG := meson64_defconfig
 KERNEL_ARCH := arm64
 

@@ -23,7 +23,7 @@
 
 / {
 	model = "Amlogic";
-	amlogic-dt-id = "g12b_bananapi_m2s";
+	amlogic-dt-id = "bananapi_m2s_4g";
 	compatible = "amlogic, g12b";
 	interrupt-parent = <&gic>;
 	#address-cells = <1>;

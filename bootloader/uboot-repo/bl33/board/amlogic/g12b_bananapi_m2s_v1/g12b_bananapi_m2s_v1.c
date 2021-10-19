@@ -780,6 +780,12 @@ phys_size_t get_effective_memsize(void)
 int checkhw(char * name)
 {
 	/*
+         * set aml_dt according to chip and dram capacity
+         */
+	unsigned int ddr_size=0;
+	int i;
+
+	/*
 	 * use rev id to identify revA/revB
 	 */
 	cpu_id_t cpu_id;
@@ -788,19 +794,36 @@ int checkhw(char * name)
 
 	printf("cpu_id.chip_rev: %x\n", cpu_id.chip_rev);
 
-	switch (cpu_id.chip_rev) {
-		case 0xA:
-			/* revA */
-			strcpy(loc_name, "g12b_bananapi_m2s_a\0");
-			break;
-		case 0xB:
-			/* revB */
-			strcpy(loc_name, "g12b_bananapi_m2s_b\0");
-			break;
-		default:
-			strcpy(loc_name, "g12b_bananapi_m2s_unsupport\0");
-			break;
+	for (i=0; i<CONFIG_NR_DRAM_BANKS; i++) {
+                ddr_size += gd->bd->bi_dram[i].size;
+        }
+
+
+#if defined(CONFIG_SYS_MEM_TOP_HIDE)
+	ddr_size += CONFIG_SYS_MEM_TOP_HIDE;
+#endif
+
+        printf("checkhw: ddr_size=%x\n", ddr_size);
+
+	if (cpu_id.chip_rev == 0xB) {
+		switch (ddr_size) {
+			case 0xE0000000:
+				strcpy(loc_name, "bananapi_m2s_4g\0");
+				break;
+			case 0x80000000:
+				strcpy(loc_name, "bananapi_m2s_2g\0");
+				break;
+			default:
+				strcpy(loc_name, "unsupport");
+				break;
+		}
 	}
+	else {
+		printf("chip_rev is not revB(A311D)\n");
+	}
+
+	printf("checkhw: loc_name is %s\n", loc_name);
+
 	strcpy(name, loc_name);
 	setenv("aml_dt", loc_name);
 	return 0;
