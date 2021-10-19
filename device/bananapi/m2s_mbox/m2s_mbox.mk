@@ -520,3 +520,20 @@ endif
 PRODUCT_PACKAGES += \
 	MboxLauncher \
 	LeanKeyKeyboardPro
+#########################################################################
+#
+#                            factory test
+#
+#########################################################################
+BPI_FACTORY_TEST := false
+ifeq ($(BPI_FACTORY_TEST), true)
+PRODUCT_PACKAGES += ProductTest
+PRODUCT_PACKAGES += DragonAging
+PRODUCT_PACKAGES += DragonFire
+PRODUCT_PACKAGES += DragonPhone
+PRODUCT_PACKAGES += memtester
+PRODUCT_PACKAGES += AndroidStressTest
+
+PRODUCT_PROPERTY_OVERRIDES += \
+	sys.test.producttest=true
+endif
