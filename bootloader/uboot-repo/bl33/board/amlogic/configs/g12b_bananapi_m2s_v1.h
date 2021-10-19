@@ -38,9 +38,9 @@
 
 /* configs for CEC */
 #define CONFIG_CEC_OSD_NAME		"AML_TV"
-#define CONFIG_CEC_WAKEUP
+/*#define CONFIG_CEC_WAKEUP*/
 /*if use bt-wakeup,open it*/
-#define CONFIG_BT_WAKEUP
+/*#define CONFIG_BT_WAKEUP*/
 /* SMP Definitinos */
 #define CPU_RELEASE_ADDR		secondary_boot_func
 
@@ -65,11 +65,11 @@
 #define CONFIG_SERIAL_MULTI		1
 
 //Enable ir remote wake up for bl30
-#define CONFIG_IR_REMOTE_POWER_UP_KEY_VAL1 0xef10fe01 //amlogic tv ir --- power
-#define CONFIG_IR_REMOTE_POWER_UP_KEY_VAL2 0XBB44FB04 //amlogic tv ir --- ch+
-#define CONFIG_IR_REMOTE_POWER_UP_KEY_VAL3 0xF20DFE01 //amlogic tv ir --- ch-
-#define CONFIG_IR_REMOTE_POWER_UP_KEY_VAL4 0XBA45BD02 //amlogic small ir--- power
-#define CONFIG_IR_REMOTE_POWER_UP_KEY_VAL5 0xe51afb04
+#define CONFIG_IR_REMOTE_POWER_UP_KEY_VAL1 0xff00fe01
+#define CONFIG_IR_REMOTE_POWER_UP_KEY_VAL2 0xf10eaf40
+#define CONFIG_IR_REMOTE_POWER_UP_KEY_VAL3 0xFFFFFFFF
+#define CONFIG_IR_REMOTE_POWER_UP_KEY_VAL4 0XFFFFFFFF
+#define CONFIG_IR_REMOTE_POWER_UP_KEY_VAL5 0xFFFFFFFF
 #define CONFIG_IR_REMOTE_POWER_UP_KEY_VAL6 0xFFFFFFFF
 #define CONFIG_IR_REMOTE_POWER_UP_KEY_VAL7 0xFFFFFFFF
 #define CONFIG_IR_REMOTE_POWER_UP_KEY_VAL8 0xFFFFFFFF

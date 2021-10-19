@@ -105,45 +105,23 @@ static void power_on_at_24M(unsigned int suspend_from)
 void get_wakeup_source(void *response, unsigned int suspend_from)
 {
 	struct wakeup_info *p = (struct wakeup_info *)response;
-	struct wakeup_gpio_info *gpio;
 	unsigned val;
 	unsigned i = 0;
 
+	p->gpio_info_count = i;
 	p->status = RESPONSE_OK;
-	val = (POWER_KEY_WAKEUP_SRC | AUTO_WAKEUP_SRC | REMOTE_WAKEUP_SRC |
-	       BT_WAKEUP_SRC | CECB_WAKEUP_SRC);
+	val = (POWER_KEY_WAKEUP_SRC | AUTO_WAKEUP_SRC | REMOTE_WAKEUP_SRC);
 
 	p->sources = val;
-
-	/* Power Key: AO_GPIO[3]*/
-	gpio = &(p->gpio_info[i]);
-	gpio->wakeup_id = POWER_KEY_WAKEUP_SRC;
-	gpio->gpio_in_idx = GPIOAO_3;
-	gpio->gpio_in_ao = 1;
-	gpio->gpio_out_idx = -1;
-	gpio->gpio_out_ao = -1;
-	gpio->irq = IRQ_AO_GPIO0_NUM;
-	gpio->trig_type = GPIO_IRQ_FALLING_EDGE;
-	p->gpio_info_count = ++i;
-#ifdef CONFIG_BT_WAKEUP
-	gpio = &(p->gpio_info[i]);
-	gpio->wakeup_id = BT_WAKEUP_SRC;
-	gpio->gpio_in_idx = GPIOX_18;
-	gpio->gpio_in_ao = 0;
-	gpio->gpio_out_idx = -1;
-	gpio->gpio_out_ao = -1;
-	gpio->irq = IRQ_GPIO1_NUM;
-	gpio->trig_type	= GPIO_IRQ_FALLING_EDGE;
-	p->gpio_info_count = ++i;
-#endif
-
 }
 extern void __switch_idle_task(void);
 
 static unsigned int detect_key(unsigned int suspend_from)
 {
 	int exit_reason = 0;
+	unsigned char adc_key_cnt = 0;
 	unsigned *irq = (unsigned *)WAKEUP_SRC_IRQ_ADDR_BASE;
+	uart_puts("enter detect key\n");
 	init_remote();
 #ifdef CONFIG_CEC_WAKEUP
 		if (hdmi_cec_func_config & 0x1) {
@@ -153,29 +131,41 @@ static unsigned int detect_key(unsigned int suspend_from)
 #endif
 
 	do {
-		#ifdef CONFIG_CEC_WAKEUP
+#ifdef CONFIG_CEC_WAKEUP
 		if (irq[IRQ_AO_CECB] == IRQ_AO_CEC2_NUM) {
 			irq[IRQ_AO_CECB] = 0xFFFFFFFF;
 			if (cec_power_on_check())
 				exit_reason = CEC_WAKEUP;
 		}
-		#endif
+#endif
+		/* adc key */
+		if (irq[IRQ_AO_TIMERA] == IRQ_AO_TIMERA_NUM) {
+			irq[IRQ_AO_TIMERA] = 0xFFFFFFFF;
+			saradc_enable();
+			if (check_adc_key_resume()) {
+				adc_key_cnt++;
+				/*using variable 'adc_key_cnt' to eliminate the dithering of the key*/
+				if (2 == adc_key_cnt)
+					exit_reason = POWER_KEY_WAKEUP;
+			} else {
+				adc_key_cnt = 0;
+			}
+			saradc_disable();
+		}
+		
+		/* ir-remote */
 		if (irq[IRQ_AO_IR_DEC] == IRQ_AO_IR_DEC_NUM) {
 			irq[IRQ_AO_IR_DEC] = 0xFFFFFFFF;
 			if (remote_detect_key())
 				exit_reason = REMOTE_WAKEUP;
 		}
 
+		/* vrtc */
 		if (irq[IRQ_VRTC] == IRQ_VRTC_NUM) {
 			irq[IRQ_VRTC] = 0xFFFFFFFF;
 			exit_reason = RTC_WAKEUP;
 		}
 
-		if (irq[IRQ_AO_GPIO0] == IRQ_AO_GPIO0_NUM) {
-			irq[IRQ_AO_GPIO0] = 0xFFFFFFFF;
-			if ((readl(AO_GPIO_I) & (1<<3)) == 0)
-				exit_reason = POWER_KEY_WAKEUP;
-		}
 #ifdef CONFIG_BT_WAKEUP
 		if (irq[IRQ_GPIO1] == IRQ_GPIO1_NUM) {
 			irq[IRQ_GPIO1] = 0xFFFFFFFF;
