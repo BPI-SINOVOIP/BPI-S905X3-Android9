@@ -25,4 +25,10 @@
     <bool name="def_wifi_on">false</bool>
     <bool name="def_bluetooth_on">false</bool>
     <bool name="def_lockscreen_disabled">true</bool>
+
+    <!-- Default enabled input method -->
+    <string name="enabled_input_methods" translatable="false">com.android.inputmethod.latin/.LatinIME</string>
+
+    <!-- Default input method -->
+    <string name="def_input_method" translatable="false">com.android.inputmethod.latin/.LatinIME</string>
 </resources>
