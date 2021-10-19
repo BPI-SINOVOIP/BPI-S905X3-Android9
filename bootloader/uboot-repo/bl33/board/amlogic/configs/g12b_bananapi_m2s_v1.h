@@ -114,6 +114,7 @@
         "fdt_high=0x20000000\0"\
         "try_auto_burn=update 700 750;\0"\
         "sdcburncfg=aml_sdc_burn.ini\0"\
+        "boot_scripts=boot.ini\0"\
         "sdc_burning=sdc_burn ${sdcburncfg}\0"\
         "wipe_data=successful\0"\
         "wipe_cache=successful\0"\
@@ -219,6 +220,15 @@
                 "fi;"\
                 "run recovery_from_flash;"\
             "fi; \0" \
+         "boot_from_sd_udisk="\
+            "echo BPI: try boot from sd/udisk;"\
+            "if mmcinfo; then "\
+                "run boot_from_sdcard;"\
+            "fi;"\
+            "if usb start 0; then "\
+                "run boot_from_udisk;"\
+            "fi;"\
+            "\0"\
          "update="\
             /*first usb burning, second sdc_burn, third ext-sd autoscr/recovery, last udisk autoscr/recovery*/\
             "run usb_burning; "\
@@ -230,6 +240,14 @@
                 "run recovery_from_udisk;"\
             "fi;"\
             "run recovery_from_flash;"\
+            "\0"\
+        "boot_from_sdcard="\
+            "echo BPI: try boot from sdcard;"\
+            "if fatload mmc 0 ${loadaddr} ${boot_scripts}; then source ${loadaddr}; fi;"\
+            "\0"\
+        "boot_from_udisk="\
+            "echo BPI: try boot from udisk;"\
+            "if fatload usb 0 ${loadaddr} ${boot_scripts}; then source ${loadaddr}; fi;"\
             "\0"\
         "recovery_from_sdcard="\
             "if fatload mmc 0 ${loadaddr} aml_autoscript; then autoscr ${loadaddr}; fi;"\
@@ -332,6 +350,7 @@
 
 #define CONFIG_PREBOOT  \
             "run bcb_cmd; "\
+            "run boot_from_sd_udisk;"\
             "run factory_reset_poweroff_protect;"\
             "run upgrade_check;"\
             "run init_display;"\
@@ -594,7 +613,7 @@
 #define CONFIG_USBDOWNLOAD_GADGET 1
 #define CONFIG_SYS_CACHELINE_SIZE 64
 #define CONFIG_FASTBOOT_MAX_DOWN_SIZE	0x8000000
-#define CONFIG_DEVICE_PRODUCT	"galilei"
+#define CONFIG_DEVICE_PRODUCT	"bananapi_m2s"
 
 //UBOOT Facotry usb/sdcard burning config
 #define CONFIG_AML_V2_FACTORY_BURN              1       //support facotry usb burning
@@ -654,6 +673,11 @@
 #define CONFIG_CMD_AUTOSCRIPT 1
 #define CONFIG_CMD_MISC 1
 #define CONFIG_CMD_PLLTEST 1
+#define CONFIG_CMD_SOURCE 1
+
+/* Compression commands */
+#define CONFIG_CMD_UNZIP 1
+#define CONFIG_LZMA	1
 
 /*file system*/
 #define CONFIG_DOS_PARTITION 1
