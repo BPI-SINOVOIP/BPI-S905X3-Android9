@@ -86,10 +86,10 @@ int dram_init(void)
 
 int enableLcdVcc(void)
 {
-	/* set gpioz_8 low to enable lcd vcc*/
-	writel(readl(PREG_PAD_GPIO4_O) & (~(1 << 8)), PREG_PAD_GPIO4_O);
-	writel(readl(PREG_PAD_GPIO4_EN_N) & (~(1 << 8)), PREG_PAD_GPIO4_EN_N);
-	writel(readl(PERIPHS_PIN_MUX_7) & (~(0xf)), PERIPHS_PIN_MUX_7);
+	/* set gpioa_9 high to enable lcd vcc*/
+	writel(readl(PREG_PAD_GPIO5_EN_N) | (1 << 9), PREG_PAD_GPIO5_EN_N);
+	writel(readl(PREG_PAD_GPIO5_O) | (1 << 9), PREG_PAD_GPIO5_O);
+	writel(readl(PERIPHS_PIN_MUX_E) & (~(0xf << 4)), PERIPHS_PIN_MUX_E);
 	return 0;
 }
 
@@ -284,9 +284,6 @@ static void sd_emmc_pwr_on(unsigned port)
 		case SDIO_PORT_A:
 			break;
 		case SDIO_PORT_B:
-//            clrbits_le32(P_PREG_PAD_GPIO5_O,(1<<31)); //CARD_8
-//            clrbits_le32(P_PREG_PAD_GPIO5_EN_N,(1<<31));
-			/// @todo NOT FINISH
 			break;
 		case SDIO_PORT_C:
 			break;
@@ -303,8 +300,6 @@ static void sd_emmc_pwr_off(unsigned port)
 		case SDIO_PORT_A:
 			break;
 		case SDIO_PORT_B:
-//            setbits_le32(P_PREG_PAD_GPIO5_O,(1<<31)); //CARD_8
-//            clrbits_le32(P_PREG_PAD_GPIO5_EN_N,(1<<31));
 			break;
 		case SDIO_PORT_C:
 			break;
@@ -314,7 +309,6 @@ static void sd_emmc_pwr_off(unsigned port)
 	return;
 }
 
-// #define CONFIG_TSD      1
 static void board_mmc_register(unsigned port)
 {
 	struct aml_card_sd_info *aml_priv=cpu_sd_emmc_get(port);
@@ -335,18 +329,36 @@ static void board_mmc_register(unsigned port)
 
 	sd_emmc_register(aml_priv);
 }
+
+static void board_mmc_power_enable(void)
+{
+	printf("BPI-sd: set sd power on\n");
+
+	/* set gpioAO_3 output/high to set sd_power enable */
+	writel(readl(AO_GPIO_O) | (1 << 3), AO_GPIO_O);
+	writel(readl(AO_GPIO_O_EN_N) | (1 << 3), AO_GPIO_O_EN_N);
+	writel(readl(AO_RTI_PINMUX_REG0) & (~(0xf << 12)), AO_RTI_PINMUX_REG0);
+
+	/* set gpioAO_8 output/high to set sd_power enable */
+	writel(readl(AO_GPIO_O) | (1 << 8), AO_GPIO_O);
+	writel(readl(AO_GPIO_O_EN_N) | (1 << 8), AO_GPIO_O_EN_N);
+	writel(readl(AO_RTI_PINMUX_REG1) & (~(0xf << 0)), AO_RTI_PINMUX_REG1);
+
+	/* set gpioAO_9 output/low to set sd 3v3_1v8_en to 3v3 default */
+	writel(readl(AO_GPIO_O) & (~(1 << 9)), AO_GPIO_O);
+	writel(readl(AO_GPIO_O_EN_N) & (~(1 << 9)), AO_GPIO_O_EN_N);
+	writel(readl(AO_RTI_PINMUX_REG1) & (~(0xf << 4)), AO_RTI_PINMUX_REG1);
+}
+
 int board_mmc_init(bd_t	*bis)
 {
-#ifdef CONFIG_VLSI_EMULATOR
-	//board_mmc_register(SDIO_PORT_A);
-#else
-	//board_mmc_register(SDIO_PORT_B);
-#endif
-	board_mmc_register(SDIO_PORT_B);
-	board_mmc_register(SDIO_PORT_C);
-//	board_mmc_register(SDIO_PORT_B1);
+	board_mmc_power_enable();
+	board_mmc_register(SDIO_PORT_B);  //sd
+	board_mmc_register(SDIO_PORT_C);  //emmc
+	
 	return 0;
 }
+#endif
 
 #ifdef CONFIG_SYS_I2C_AML
 #if 0
@@ -397,7 +409,6 @@ static void board_i2c_init(void)
 
 	udelay(10);
 }
-#endif
 #endif
 #endif
 
@@ -652,24 +663,21 @@ int board_init(void)
 				aml_try_factory_usb_burning(0, gd->bd);
 	}
 #endif// #ifdef CONFIG_AML_V2_FACTORY_BURN
+
 #ifdef CONFIG_USB_XHCI_AMLOGIC_V2
 	board_usb_pll_disable(&g_usb_config_GXL_skt);
 	board_usb_init(&g_usb_config_GXL_skt,BOARD_USB_MODE_HOST);
 #endif /*CONFIG_USB_XHCI_AMLOGIC*/
 
-#if 0
-	aml_pwm_cal_init(0);
-#endif//
 #ifdef CONFIG_AML_NAND
 	extern int amlnf_init(unsigned char flag);
 	amlnf_init(0);
 #endif
+
 #ifdef CONFIG_SYS_I2C_MESON
 	set_i2c_m1_pinmux();
 #endif
-	/* power on GPIOZ_5 : CMD_VDD_EN */
-	clrbits_le32(PREG_PAD_GPIO4_EN_N, (1 << 5));
-	clrbits_le32(PREG_PAD_GPIO4_O, (1 << 5));
+
 	return 0;
 }
 
@@ -732,8 +740,8 @@ int board_late_init(void)
 	lcd_probe();
 #endif
 
-//enable Lcd VCC
-enableLcdVcc();
+	//enable Lcd VCC
+	enableLcdVcc();
 
 #ifdef CONFIG_AML_V2_FACTORY_BURN
 	if (0x1b8ec003 == readl(P_PREG_STICKY_REG2))
@@ -795,15 +803,15 @@ int checkhw(char * name)
 	printf("cpu_id.chip_rev: %x\n", cpu_id.chip_rev);
 
 	for (i=0; i<CONFIG_NR_DRAM_BANKS; i++) {
-                ddr_size += gd->bd->bi_dram[i].size;
-        }
+		ddr_size += gd->bd->bi_dram[i].size;
+	}
 
 
 #if defined(CONFIG_SYS_MEM_TOP_HIDE)
 	ddr_size += CONFIG_SYS_MEM_TOP_HIDE;
 #endif
 
-        printf("checkhw: ddr_size=%x\n", ddr_size);
+	printf("checkhw: ddr_size=%x\n", ddr_size);
 
 	if (cpu_id.chip_rev == 0xB) {
 		switch (ddr_size) {
