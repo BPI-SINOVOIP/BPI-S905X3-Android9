@@ -486,8 +486,8 @@
 			key-permit = "read","write","del";
 		};
 		keysn_17:key_17{
-			key-name = "attestationdevidbox";// attest dev id box
-			key-device = "secure";
+			key-name = "eth_exphy_para";
+			key-device = "normal";
 			key-permit = "read","write","del";
 		};
 	};//End unifykey
