@@ -162,15 +162,14 @@
 			compatible = "shared-dma-pool";
 			reusable;
 			status = "okay";
-			size = <0x06800000>;
+			size = <0x8000000>;
 			alignment = <0x400000>;
 		};
 		adapt_cma_reserved:linux,adapt_cma {
 			compatible = "shared-dma-pool";
 			reusable;
 			status = "okay";
-			size = <0x01800000>;
-			alignment = <0x400000>;
+			size = <0x1800000>;
 		};
 	};
 
@@ -754,21 +753,21 @@
 
 	sensor: sensor {
 		compatible = "soc, sensor";
-		status = "disabled";
-		sensor-name = "os08a10"; /*imx290;os08a10;imx227*/
+		status = "okay";
+		sensor-name = "imx481"; /*imx290;os08a10;imx227*/
 		pinctrl-names="default";
-		pinctrl-0=<&clk12_24_z_pins>;
-		clocks = <&clkc CLKID_24M>;
-		clock-names = "g12a_24m";
-		reset = <&gpio GPIOZ_12 GPIO_ACTIVE_HIGH>;
-		ir_cut_gpio = <&gpio GPIOZ_11 GPIO_ACTIVE_HIGH
-				&gpio GPIOZ_7 GPIO_ACTIVE_HIGH>;
+		pinctrl-0=<&gen_clk_ee_ao>;
+		clocks = <&clkc CLKID_GEN_CLK>;
+		clock-names = "gen_clk";
+		power-enable = <&gpio GPIOA_13 GPIO_ACTIVE_HIGH>;
+		reset = <&gpio GPIOA_14 GPIO_ACTIVE_HIGH>;
+		pwdn = <&gpio GPIOA_15 GPIO_ACTIVE_HIGH>;
 	};
 
 	iq: iq {
 		compatible = "soc, iq";
-		status = "disabled";
-		sensor-name = "os08a10"; /*imx290;os08a10;imx227*/
+		status = "okay";
+		sensor-name = "imx481"; /*imx290;os08a10;imx227*/
 	};
 
 	pwmgpio:pwmgpio {
@@ -827,12 +826,17 @@
 };
 
 &isp {
-	status = "disabled";
+	status = "okay";
+	temper-line-offset = <0x1E00>;
+	temper-buf-size = <32>;
+	temper-frame-num = <1>;
+	temper-frame-size = <0x1FA4000>;
 	memory-region = <&isp_cma_reserved>;
 };
 
 &adapter {
-	status = "disabled";
+	status = "okay";
+	mem_alloc = <24>;
 	memory-region = <&adapt_cma_reserved>;
 };
 
@@ -865,10 +869,20 @@
 };
 
 &i2c1 {
-	status = "disabled";
+	status = "okay";
 	pinctrl-names = "default";
 	pinctrl-0 = <&i2c1_master_pins3>; /* GPIOH_6,GPIOH_7 */
 	clock-frequency = <400000>;
+
+	sensor-i2c@6c {
+		compatible = "arm, i2c-sensor";
+		reg = <0x6c>;
+		reg-names = "i2c-sensor";
+		slave-addr = <0x6c>;
+		reg-type = <2>;
+		reg-data-type = <1>;
+		link-device = <&phycsi>;
+	};
 };
 
 &i2c2 {
@@ -1118,17 +1132,16 @@
 			output-high;
 		};
 	};
-
-	clk12_24_z_pins:clk12_24_z_pins {
-		mux {
-			groups = "clk12_24_z";
-			function = "clk12_24_ee";
-			drive-strength = <3>;
-		};
-	};
 }; /* end of pinctrl_periphs */
 
 &pinctrl_aobus {
+	gen_clk_ee_ao: gen_clk_ee_ao {
+		mux {
+			groups="gen_clk_ee_ao";
+			function="gen_clk_ee_ao";
+			drive-strength = <3>;
+		};
+	};
 };  /* end of pinctrl_aobus */
 
 &irblaster {
