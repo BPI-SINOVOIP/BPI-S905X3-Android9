@@ -20,10 +20,8 @@ project[4]="m2s_tablet"   ;soc[4]="S922x/S922Z"   ;hardware[4]="BANANAPI_M2S"   
 
 platform_avb_param=""
 platform_type=1
-uboot_drm_type=1
 project_path="null"
 uboot_name="null"
-tdk_name="null"
 
 read_platform_type() {
     while true :
@@ -47,39 +45,11 @@ read_platform_type() {
     done
     project_path=${module[platform_type]}
     uboot_name=${uboot[platform_type]}
-    tdk_name=${tdk[platform_type]}
-}
-
-read_android_type() {
-    while true :
-    do
-        echo -e \
-        "Select compile Android verion type lists:\n"\
-        "[NUM]   [Android Version]\n" \
-        "[  1]   [AOSP]\n" \
-        "--------------------------------------------\n"
-
-        read -p "Please select Android Version (default 1 (AOSP)):" uboot_drm_type
-        if [ ${#uboot_drm_type} -eq 0 ]; then
-            uboot_drm_type=1
-            break
-        fi
-        if [[ $uboot_drm_type -ne 1 ]];then
-            echo -e "The Android Version is illegal, please select again [1]}\n"
-        else
-            break
-        fi
-    done
 }
 
 compile_uboot(){
-    if [ $uboot_drm_type -gt 1 ]; then
-        echo -e "[./mk $uboot_name --bl32 ../../vendor/amlogic/common/tdk/secureos/$tdk_name --systemroot]\n"
-        ./mk $uboot_name --bl32 ../../vendor/amlogic/common/tdk/secureos/$tdk_name --systemroot ;
-    else
-        echo -e "[./mk $uboot_name --systemroot]"
-        ./mk $uboot_name --systemroot;
-    fi
+    echo -e "[./mk $uboot_name --systemroot]"
+    ./mk $uboot_name --systemroot;
 
     cp build/u-boot.bin ../../device/bananapi/$project_path/bootloader.img;
     cp build/u-boot.bin.usb.bl2 ../../device/bananapi/$project_path/upgrade/u-boot.bin.usb.bl2;
@@ -87,65 +57,11 @@ compile_uboot(){
     cp build/u-boot.bin.sd.bin ../../device/bananapi/$project_path/upgrade/u-boot.bin.sd.bin;
 }
 
-if [ $# -eq 1 ]; then
-    if [ $1 == "uboot" ]; then
-        read_platform_type
-        read_android_type
-        cd bootloader/uboot-repo
-        compile_uboot
-        cd ../../
-        exit
-    fi
-
-    if [ $1 == "all" ]; then
-        read_android_type
-        cd bootloader/uboot-repo
-        for platform_type in `seq ${#project[@]}`;do
-            project_path=${module[platform_type]}
-            uboot_name=${uboot[platform_type]}
-            tdk_name=${tdk[platform_type]}
-            compile_uboot
-        done
-        cd ../../
-        echo -e "device: update uboot [1/1]\n"
-        echo -e "PD#SWPL-919\n"
-        echo -e "Problem:"
-        echo -e "need update bootloader\n"
-        echo "Solution:"
-        cd bootloader/uboot-repo/bl2/bin/
-        echo "bl2       : "$(git log --pretty=format:"%H" -1); cd ../../../../
-        cd bootloader/uboot-repo/bl30/bin/
-        echo "bl30      : "$(git log --pretty=format:"%H" -1); cd ../../../../
-        cd bootloader/uboot-repo/bl31/bin/
-        echo "bl31      : "$(git log --pretty=format:"%H" -1); cd ../../../../
-        cd bootloader/uboot-repo/bl31_1.3/bin/
-        echo "bl31_1.3  : "$(git log --pretty=format:"%H" -1); cd ../../../../
-        cd bootloader/uboot-repo/bl33/v2015
-        echo "bl33      : "$(git log --pretty=format:"%H" -1); cd ../../../../
-        cd bootloader/uboot-repo/fip/
-        echo "fip       : "$(git log --pretty=format:"%H" -1)
-        echo -e; cd ../../../../
-        echo "Verify:"; echo "no need verify"
-        exit
-    fi
-fi
-
 read_platform_type
-read_android_type
 source build/envsetup.sh
-if [ $uboot_drm_type -eq 2 ]; then
-    export  BOARD_COMPILE_CTS=true
-elif [ $uboot_drm_type -eq 3 ]; then
-    if [ ! -d "vendor/google" ];then
-        echo "==========================================="
-        echo "There is not Google GMS in vendor directory"
-        echo "==========================================="
-        exit
-    fi
-    export  BOARD_COMPILE_ATV=true
-fi
 lunch "${project_path}-userdebug"
 make installclean
+
 if [ $# -eq 1 ]; then
     if [ $1 == "bootimage" ] \
     || [ $1 == "logoimg" ] \
@@ -158,8 +74,10 @@ if [ $# -eq 1 ]; then
         exit
     fi
 fi
+
 cd bootloader/uboot-repo
 compile_uboot
+
 cd ../../
 make otapackage -j8
 

@@ -37,11 +37,6 @@ Because github limit 100MB size for single file, please download the [oversize f
     ...
     ---------------------------------------------------------------
     please select platform type (default 1(Ampere)):2
-    Select compile Android verion type lists:
-    [NUM]   [Android Version]
-    [  1]   [AOSP]
-    ---------------------------------------------------------------
-    Please select Android Version (default 1 (AOSP)):1
     ...
 
 ----------
