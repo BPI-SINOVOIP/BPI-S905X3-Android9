@@ -28,4 +28,5 @@
 
 /*fix bt crash about init */
 #define KERNEL_MISSING_CLOCK_BOOTTIME_ALARM TRUE
+
 #endif

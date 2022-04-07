@@ -1,6 +1,6 @@
 
 /*
- * board/amlogic/g12b_bananapi_m2s_v1/eth_setup.c
+ * board/amlogic/bananapi_m2s_v1/eth_setup.c
  *
  * Copyright (C) 2018 Amlogic, Inc. All rights reserved.
  *

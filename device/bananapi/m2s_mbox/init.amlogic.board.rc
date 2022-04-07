@@ -18,10 +18,10 @@ on post-fs-data
     insmod /vendor/lib/modules/dovi.ko
     insmod /vendor/lib/sl_hdr.ko
     insmod /vendor/lib/modules/galcore.ko
-    insmod /vendor/lib/modules/iv009_isp_iq.ko
-    insmod /vendor/lib/modules/iv009_isp_lens.ko
-    insmod /vendor/lib/modules/iv009_isp_sensor.ko
-    insmod /vendor/lib/modules/iv009_isp.ko
+    #insmod /vendor/lib/modules/iv009_isp_iq.ko
+    #insmod /vendor/lib/modules/iv009_isp_lens.ko
+    #insmod /vendor/lib/modules/iv009_isp_sensor.ko
+    #insmod /vendor/lib/modules/iv009_isp.ko
 on boot
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor interactive

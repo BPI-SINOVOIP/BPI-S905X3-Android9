@@ -1,5 +1,5 @@
 /*
- * arch/arm/boot/dts/amlogic/g12b_a311d_bananapi_m2s.dts
+ * arch/arm/boot/dts/amlogic/g12b_s922x_bananapi_m2s.dts
  *
  * Copyright (C) 2017 Amlogic, Inc. All rights reserved.
  *
@@ -17,7 +17,7 @@
 
 /dts-v1/;
 
-#include "g12b_a311d_bananapi_m2s.dts"
+#include "g12b_s922x_bananapi_m2s.dts"
 
 / {
         model = "Amlogic";

@@ -1,6 +1,6 @@
 
 /*
- * board/amlogic/g12b_bananapi_m2s_v1/g12b_bananapi_m2s_v1.c
+ * board/amlogic/bananapi_m2s_v1/bananapi_m2s_v1.c
  *
  * Copyright (C) 2018 Amlogic, Inc. All rights reserved.
  *
@@ -81,15 +81,6 @@ int serial_set_pin_port(unsigned long port_base)
 int dram_init(void)
 {
 	gd->ram_size = PHYS_SDRAM_1_SIZE;
-	return 0;
-}
-
-int enableLcdVcc(void)
-{
-	/* set gpioa_9 high to enable lcd vcc*/
-	writel(readl(PREG_PAD_GPIO5_EN_N) | (1 << 9), PREG_PAD_GPIO5_EN_N);
-	writel(readl(PREG_PAD_GPIO5_O) | (1 << 9), PREG_PAD_GPIO5_O);
-	writel(readl(PERIPHS_PIN_MUX_E) & (~(0xf << 4)), PERIPHS_PIN_MUX_E);
 	return 0;
 }
 
@@ -733,9 +724,6 @@ int board_late_init(void)
 #ifdef CONFIG_AML_LCD
 	lcd_probe();
 #endif
-
-	//enable Lcd VCC
-	enableLcdVcc();
 
 #ifdef CONFIG_AML_V2_FACTORY_BURN
 	if (0x1b8ec003 == readl(P_PREG_STICKY_REG2))

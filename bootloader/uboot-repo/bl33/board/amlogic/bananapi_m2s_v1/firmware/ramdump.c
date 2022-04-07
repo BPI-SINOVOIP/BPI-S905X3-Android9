@@ -1,5 +1,5 @@
 /*
- * board/amlogic/g12b_bananapi_m2s_v1/firmware/ramdump.c
+ * board/amlogic/bananapi_m2s_v1/firmware/ramdump.c
  *
  * Copyright (C) 2017 Amlogic, Inc. All rights reserved.
  *

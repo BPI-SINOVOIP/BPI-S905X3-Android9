@@ -30,10 +30,12 @@ Because github limit 100MB size for single file, please download the [oversize f
     $ source env.sh
     $ ./device/bananapi/common/quick_compile.sh
     
-    [NUM]   [       PROJECT]     [  SOC TYPE]  [      HARDWARE TYPE]
+    [NUM]   [       PROJECT]     [  SOC TYPE]  [   HARDWARE TYPE]
     ---------------------------------------------------------------
-    [ 1]    [       m5_mbox]     [    S905X3]  [        BANANAPI_M5]
-    [ 2]    [     m5_tablet]     [    S905X3]  [        BANANAPI_M5]
+    [ 1]    [       m5_mbox]     [    S905X3]  [     BANANAPI_M5]
+    [ 2]    [     m5_tablet]     [    S905X3]  [     BANANAPI_M5]
+    [ 3]    [      m2s_mbox]     [     S922X]  [    BANANAPI_M2S]
+    [ 4]    [    m2s_tablet]     [     S922X]  [    BANANAPI_M2S]
     ...
     ---------------------------------------------------------------
     please select platform type (default 1(Ampere)):2
