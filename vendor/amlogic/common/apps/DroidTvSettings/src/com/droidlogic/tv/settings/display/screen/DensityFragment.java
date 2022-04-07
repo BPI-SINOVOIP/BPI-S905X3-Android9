@@ -43,7 +43,7 @@ public class DensityFragment extends LeanbackPreferenceFragment {
 	private static final String DENSITY_RADIO_GROUP = "density";
 	private static final String ACTION_DENSITY_120 = "120";
 	private static final String ACTION_DENSITY_160 = "160";
-	private static final String ACTION_DENSITY_200 = "200";
+	private static final String ACTION_DENSITY_213 = "213";
 	private static final String ACTION_DENSITY_240 = "240";
 	private static final String ACTION_DENSITY_280 = "280";
 	private static final String ACTION_DENSITY_320 = "320";
@@ -111,8 +111,8 @@ public class DensityFragment extends LeanbackPreferenceFragment {
 				.checked(density == 120).build());
 		actions.add(new Action.Builder().key(ACTION_DENSITY_160).title(getString(R.string.screen_density_160))
 				.checked(density == 160).build());
-		actions.add(new Action.Builder().key(ACTION_DENSITY_200).title(getString(R.string.screen_density_200))
-				.checked(density == 200).build());
+		actions.add(new Action.Builder().key(ACTION_DENSITY_213).title(getString(R.string.screen_density_213))
+				.checked(density == 213).build());
 		actions.add(new Action.Builder().key(ACTION_DENSITY_240).title(getString(R.string.screen_density_240))
 				.checked(density == 240).build());
 		actions.add(new Action.Builder().key(ACTION_DENSITY_280).title(getString(R.string.screen_density_280))
@@ -156,8 +156,8 @@ public class DensityFragment extends LeanbackPreferenceFragment {
 				if (key.equals(ACTION_DENSITY_160)) {
 					setDensity(160);
 				}
-				if (key.equals(ACTION_DENSITY_200)) {
-					setDensity(200);
+				if (key.equals(ACTION_DENSITY_213)) {
+					setDensity(213);
 				}
 				if (key.equals(ACTION_DENSITY_240)) {
 					setDensity(240);
