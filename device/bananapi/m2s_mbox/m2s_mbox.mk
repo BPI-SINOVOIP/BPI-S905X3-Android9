@@ -438,7 +438,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.sf.lcd_density=320
 else
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.sf.lcd_density=213
+    ro.sf.lcd_density=240
 endif
 
 
