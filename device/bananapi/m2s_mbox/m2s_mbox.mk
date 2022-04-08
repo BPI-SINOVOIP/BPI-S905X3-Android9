@@ -283,8 +283,27 @@ PRODUCT_PACKAGES += \
     HdmiIn
 endif
 
+#########################################################################
+#
+#                            Ethernet
+#
+#########################################################################
+
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.ethernet.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.ethernet.xml
+
+PRODUCT_PROPERTY_OVERRIDES += \
+        ro.net.eth_primary=eth0 \
+        ro.net.eth_secondary=eth1
+
+# 0-dhcp, 1-static
+PRODUCT_PROPERTY_OVERRIDES += \
+        persist.net.eth1.mode=1 \
+        persist.net.eth1.staticinfo=172.16.1.1,24,172.16.1.1,114.114.114.114,8.8.8.8 \
+        persist.dhcpserver.enable=1 \
+        persist.dhcpserver.start=172.16.1.100 \
+        persist.dhcpserver.end=172.16.1.150
+#########################################################################
 
 # Audio
 #

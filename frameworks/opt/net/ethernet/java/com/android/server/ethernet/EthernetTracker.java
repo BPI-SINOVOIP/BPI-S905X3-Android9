@@ -32,6 +32,7 @@ import android.os.INetworkManagementService;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.os.SystemProperties;
 import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.Log;
@@ -65,7 +66,7 @@ final class EthernetTracker {
     private final static boolean DBG = EthernetNetworkFactory.DBG;
 
     /** Product-dependent regular expression of interface names we track. */
-    private final String mIfaceMatch;
+    private String mIfaceMatch = null;
 
     /** Mapping between {iface name | mac address} -> {NetworkCapabilities} */
     private final ConcurrentHashMap<String, NetworkCapabilities> mNetworkCapabilities =
@@ -77,6 +78,8 @@ final class EthernetTracker {
     private final Handler mHandler;
     private final EthernetNetworkFactory mFactory;
     private final EthernetConfigStore mConfigStore;
+    private Context mContext;
+    private EthernetNetworkFactoryExt mEthernetNetworkFactoryExt;
 
     private final RemoteCallbackList<IEthernetServiceListener> mListeners =
             new RemoteCallbackList<>();
@@ -85,14 +88,19 @@ final class EthernetTracker {
 
     EthernetTracker(Context context, Handler handler) {
         mHandler = handler;
+        mContext = context;
 
         // The services we use.
         IBinder b = ServiceManager.getService(Context.NETWORKMANAGEMENT_SERVICE);
         mNMService = INetworkManagementService.Stub.asInterface(b);
 
         // Interface match regex.
-        mIfaceMatch = context.getResources().getString(
+		// bpi, set primary eth
+		mIfaceMatch = SystemProperties.get("ro.net.eth_primary", null);
+		if (mIfaceMatch == null) {
+            mIfaceMatch = context.getResources().getString(
                 com.android.internal.R.string.config_ethernet_iface_regex);
+		}
 
         // Read default Ethernet interface configuration from resources
         final String[] interfaceConfigs = context.getResources().getStringArray(
@@ -106,6 +114,8 @@ final class EthernetTracker {
         NetworkCapabilities nc = createNetworkCapabilities(true /* clear default capabilities */);
         mFactory = new EthernetNetworkFactory(handler, context, nc);
         mFactory.register();
+
+        mEthernetNetworkFactoryExt = new EthernetNetworkFactoryExt();
     }
 
     void start() {
@@ -125,6 +135,8 @@ final class EthernetTracker {
         }
 
         mHandler.post(this::trackAvailableInterfaces);
+
+        mEthernetNetworkFactoryExt.start(mContext, mNMService);
     }
 
     void updateIpConfiguration(String iface, IpConfiguration ipConfiguration) {
@@ -272,16 +284,25 @@ final class EthernetTracker {
                 Log.i(TAG, "interfaceLinkStateChanged, iface: " + iface + ", up: " + up);
             }
             mHandler.post(() -> updateInterfaceState(iface, up));
+
+            /* bpi, tracking secondary eth */
+            mEthernetNetworkFactoryExt.interfaceLinkStateChanged(iface, up);
         }
 
         @Override
         public void interfaceAdded(String iface) {
             mHandler.post(() -> maybeTrackInterface(iface));
+
+            /* bpi, add secondary eth */
+            mEthernetNetworkFactoryExt.interfaceAdded(iface);
         }
 
         @Override
         public void interfaceRemoved(String iface) {
             mHandler.post(() -> removeInterface(iface));
+
+            /* bpi, remove secondary eth */
+            mEthernetNetworkFactoryExt.interfaceRemoved(iface);
         }
     }
 
