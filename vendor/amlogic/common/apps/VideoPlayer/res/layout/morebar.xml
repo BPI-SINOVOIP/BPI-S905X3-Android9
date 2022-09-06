@@ -58,8 +58,8 @@
         android:gravity="center">
     </ImageButton>
     <ImageButton
-        android:id="@+id/ttPageBtn"
-        android:src="@drawable/tt_page"
+        android:id="@+id/audioTunningBtn"
+        android:src="@drawable/audio_tunning"
         android:background="@drawable/btn_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -10,7 +10,6 @@
       <string-array name="play_mode">
         <item>repeat list</item>
         <item>repeat one</item>
-        <item>repeat none</item>
      </string-array>
      
       <string-array name="audio_trace">

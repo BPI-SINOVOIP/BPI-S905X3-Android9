@@ -60,7 +60,7 @@
         </ImageView>
     </RelativeLayout>
 
-     <RelativeLayout
+    <RelativeLayout
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:layout_centerInParent="true">
@@ -524,7 +524,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/LinearLayout_ttPage"
+            android:id="@+id/LinearLayout_audioTuning"
             android:orientation="vertical"
             android:background="@drawable/minding_bk"
             android:layout_gravity="center"
@@ -533,7 +533,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/ttPage_title"
+                android:id="@+id/audioTuning_title"
                 android:layout_gravity="center_horizontal">
                 <TextView
                     android:id="@+id/TextView01"
@@ -541,29 +541,14 @@
                     android:layout_height="56dp"
                     android:textSize="24sp"
                     android:layout_width="wrap_content"
-                    android:text="@string/setting_ttPage"
+                    android:text="@string/setting_audioTuning"
                     android:textColor="@drawable/white">
                 </TextView>
             </LinearLayout>
             <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/instruction"
-            android:layout_gravity="center_horizontal">
-            <TextView
-                android:id="@+id/operations_instruciton"
-                android:gravity="center"
-                android:layout_height="56dp"
-                android:textSize="24sp"
-                android:layout_width="wrap_content"
-                android:text="@string/operation_instruciton"
-                android:textColor="@drawable/red">
-            </TextView>
-            </LinearLayout>
-            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/gotoPage"
+                android:id="@+id/delay_range"
                 android:orientation="horizontal"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="60dp"
@@ -574,129 +559,75 @@
                     android:layout_width="140dp"
                     android:layout_height="60dp"
                     android:textSize="24sp"
-                    android:text="@string/gotoPage"
+                    android:text="@string/delay_range"
                     android:layout_marginLeft="6dp"
                     android:textColor="@drawable/black">
                 </TextView>
-
-                <EditText
-                    android:id="@+id/tt_page_no"
+                <TextView
+                    android:id="@+id/switch_l"
+                    android:layout_width="90dp"
+                    android:layout_height="80dp"
+                    android:textSize="20sp"
+                    android:text="-200ms">
+                </TextView>
+                <TextView
+                    android:id="@+id/switch_r"
+                    android:layout_width="90dp"
+                    android:layout_height="80dp"
+                    android:textSize="20sp"
+                    android:text="200ms">
+                </TextView>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cur_value"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp">
+                <TextView
+                    android:layout_width="140dp"
+                    android:layout_height="60dp"
+                    android:gravity="left|center"
+                    android:textSize="24sp"
+                    android:text="@string/cur_value"
+                    android:layout_marginLeft="6dp"
+                    android:textColor="@drawable/black"
+                    android:id="@+id/cur_value">
+                </TextView>
+                <ImageButton
+                    android:id="@+id/audio_reduce_l"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/sub_larrow">
+                </ImageButton>
+                <TextView
                     android:layout_width="94dp"
                     android:layout_height="60dp"
-                    android:ems="10"
-                    android:inputType="textPersonName"
+                    android:gravity="center"
                     android:textSize="24sp"
-                    android:text="888"
-                    android:textColor="@drawable/red">
-                 </EditText>
-                 <EditText
-                     android:id="@+id/tt_sub_page_no"
-                     android:layout_width="94dp"
-                     android:layout_height="60dp"
-                     android:ems="10"
-                     android:inputType="textPersonName"
-                     android:textSize="24sp"
-                     android:text="0" >
-                  </EditText>
-                  <Button
-                      android:id="@+id/tt_button_ok"
-                      android:text="@string/str_ok"
-                      android:layout_width="120dp"
-                      android:layout_gravity="center"
-                      android:layout_marginRight="20dp"
-                      android:layout_height="wrap_content"
-                      android:textSize="24sp"
-                      android:textColor="@drawable/black">
-                  </Button>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/nextPage"
-                android:orientation="horizontal"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="60dp">
-                <TextView
-                    android:id="@+id/TextView02"
-                    android:gravity="left"
-                    android:layout_width="180dp"
-                    android:layout_height="60dp"
-                    android:textSize="24sp"
-                    android:text="@string/nextPage"
-                    android:layout_marginLeft="6dp"
+                    android:text="0"
+                    android:id="@+id/audio_tuning_curV"
                     android:textColor="@drawable/black">
                 </TextView>
                 <ImageButton
-                    android:id="@+id/tt_last_page"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/sub_larrow">
-                </ImageButton>
-                <ImageButton
-                    android:id="@+id/tt_next_page"
+                    android:id="@+id/audio_add_r"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:src="@drawable/sub_rarrow">
                 </ImageButton>
             </LinearLayout>
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/next_Sub_Page"
-                android:orientation="horizontal"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="60dp">
-                <TextView
-                    android:id="@+id/TextView03"
-                    android:gravity="left"
-                    android:layout_width="180dp"
-                    android:layout_height="60dp"
-                    android:textSize="24sp"
-                    android:text="@string/nextSubPage"
-                    android:layout_marginLeft="6dp"
-                    android:textColor="@drawable/black">
-                </TextView>
-                <ImageButton
-                    android:id="@+id/tt_last_sub_page"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/sub_larrow">
-                </ImageButton>
-                <ImageButton
-                    android:id="@+id/tt_next_sub_page"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/sub_rarrow">
-                </ImageButton>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/gohome"
-                android:orientation="horizontal"
-                android:layout_marginLeft="60dp">
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/tt_btn"
+                android:id="@+id/sub_ok_on"
                 android:orientation="horizontal"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center" >
                 <Button
-                    android:id="@+id/tt_button_canncel"
-                    android:text="@string/str_cancel"
-                    android:layout_width="120dp"
-                    android:layout_gravity="center"
-                    android:layout_height="wrap_content"
-                    android:textSize="24sp"
-                    android:textColor="@drawable/black">
-                </Button>
-                <Button
-                    android:id="@+id/go_home"
-                    android:text="@string/gohome"
+                    android:id="@+id/prop_button_ok"
+                    android:text="@string/str_ok"
                     android:layout_width="120dp"
                     android:layout_gravity="center"
                     android:layout_marginRight="20dp"
@@ -704,10 +635,17 @@
                     android:textSize="24sp"
                     android:textColor="@drawable/black">
                 </Button>
-
+                <Button
+                    android:id="@+id/prop_button_canncel"
+                    android:text="@string/str_cancel"
+                    android:layout_width="120dp"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:textColor="@drawable/black">
+                </Button>
             </LinearLayout>
         </LinearLayout>
-
         <LinearLayout
             android:id="@+id/LinearLayout_other"
             android:orientation="vertical"
@@ -737,50 +675,7 @@
                 android:cacheColorHint="#00000000"
                 android:gravity="center">
             </ListView>
-            <LinearLayout
-                android:id="@+id/audio_dts_drc"
-                android:layout_width="340dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginBottom="4dp"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
-            <SeekBar
-                android:id="@+id/seekbar_dts_drc"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:max="100"/>
-            <TextView
-                android:id="@+id/dts_drc"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:textSize="15sp"
-                android:textColor="@drawable/black"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/audio_offset"
-                android:layout_width="340dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginBottom="4dp"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
-            <SeekBar
-                android:id="@+id/seekbar_audio_offset"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:max="40"/>
-            <TextView
-                android:id="@+id/text_audio_offset"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:textSize="15sp"
-                android:textColor="@drawable/black"/>
-            </LinearLayout>
         </LinearLayout>
-
         <LinearLayout
             android:id="@+id/dialog_layout"
             android:orientation="vertical"

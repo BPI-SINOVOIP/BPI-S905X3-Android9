@@ -3,7 +3,6 @@
   <drawable name="white">#FFFFFFFF</drawable>
   <drawable name="black">#000000</drawable>
   <drawable name="blue">#0000FF</drawable>
-  <drawable name="red">#FF0000</drawable>
   <drawable name="trans">#00000000</drawable>
 
   <color name="background">#FF000000</color>
