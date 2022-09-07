@@ -66,10 +66,7 @@ public class RotationFragment extends LeanbackPreferenceFragment {
 	}
 
 	private boolean hasAutoRotate() {
-		if (Build.MODEL.equals("VIM3") || Build.MODEL.equals("VIM3L"))
-			return true;
-		else
-			return false;
+		return false;
 	}
 
 	@Override
