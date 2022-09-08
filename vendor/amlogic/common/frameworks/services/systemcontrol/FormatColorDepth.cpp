@@ -33,6 +33,14 @@
 #include "DisplayMode.h"
 #include "FormatColorDepth.h"
 #include "common.h"
+
+//this is check hdmi mode list
+static const char* COLOR_ATTRIBUTE_LIST[] = {
+    COLOR_RGB_8BIT,
+    COLOR_YCBCR444_8BIT,
+    COLOR_YCBCR420_8BIT,
+    COLOR_YCBCR422_8BIT,
+};
 //this is prior selected list  of 4k2k50hz, 4k2k60hz smpte50hz, smpte60hz
 static const char* COLOR_ATTRIBUTE_LIST1[] = {
     COLOR_YCBCR420_12BIT,
@@ -184,6 +192,7 @@ void FormatColorDepth::getBestHdmiDeepColorAttr(const char *outputmode, char* co
     const char **colorList = NULL;
     char supportedColorList[MAX_STR_LEN];
     if (!initColorAttribute(supportedColorList, MAX_STR_LEN)) {
+        SYS_LOGE("initColorAttribute fail\n");
         return;
     }
 
@@ -239,17 +248,44 @@ void FormatColorDepth::setFilterEdidList(std::map<int, std::string> filterEdidLi
 bool FormatColorDepth::isModeSupportDeepColorAttr(const char *mode, const char * color) {
     char valueStr[10] = {0};
     char outputmode[MODE_LEN] = {0};
-    SYS_LOGI("isModeSupportDeepColorAttr mode = %s, color = %s",mode,color);
+
     strcpy(outputmode, mode);
     strcat(outputmode, color);
+
     if (isFilterEdid() && !strstr(color,"8bit")) {
         SYS_LOGI("this mode has been filtered");
         return false;
     }
+
     //try support or not
     mSysWrite.writeSysfs(DISPLAY_HDMI_VALID_MODE, outputmode);
     mSysWrite.readSysfs(DISPLAY_HDMI_VALID_MODE, valueStr);
+
     return atoi(valueStr) ? true : false;
+}
+
+bool FormatColorDepth::isSupportHdmiMode(const char *hdmi_mode, const char *supportedColorList) {
+    int length = 0;
+    const char **colorList = NULL;
+
+    colorList = COLOR_ATTRIBUTE_LIST;
+    length    = ARRAY_SIZE(COLOR_ATTRIBUTE_LIST);
+
+    if (strstr(hdmi_mode, "2160p60hz")  != NULL
+        || strstr(hdmi_mode,"2160p50hz") != NULL
+        || strstr(hdmi_mode,"smpte50hz") != NULL
+        || strstr(hdmi_mode,"smpte60hz") != NULL) {
+        for (int i = 0; i < length; i++) {
+            if (strstr(supportedColorList, colorList[i]) != NULL) {
+                if (isModeSupportDeepColorAttr(hdmi_mode, colorList[i])) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    return true;
 }
 
 bool FormatColorDepth::getBootEnv(const char* key, char* value) {

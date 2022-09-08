@@ -12,10 +12,17 @@
 #include <MesonLog.h>
 #include "AmFramebuffer.h"
 #include "AmVinfo.h"
+#include <string>
+#include <systemcontrol.h>
 
 ConnectorPanel::ConnectorPanel(int32_t drvFd, uint32_t id)
     :   HwDisplayConnector(drvFd, id) {
-    snprintf(mName, 64, "Panel-%d", id);
+    parseLcdInfo();
+    if (mTabletMode) {
+        snprintf(mName, 64, "Tablet-%d", id);
+    } else {
+        snprintf(mName, 64, "TV-%d", id);
+    }
 }
 
 ConnectorPanel::~ConnectorPanel() {
@@ -51,27 +58,106 @@ bool ConnectorPanel::isSecure(){
     return true;
 }
 
+int32_t ConnectorPanel::parseLcdInfo() {
+    /*
+    typical info:
+    "lcd vinfo:\n"
+    "    lcd_mode:              %s\n"
+    "    name:                  %s\n"
+    "    mode:                  %d\n"
+    "    width:                 %d\n"
+    "    height:                %d\n"
+    "    field_height:          %d\n"
+    "    aspect_ratio_num:      %d\n"
+    "    aspect_ratio_den:      %d\n"
+    "    sync_duration_num:     %d\n"
+    "    sync_duration_den:     %d\n"
+    "    screen_real_width:     %d\n"
+    "    screen_real_height:    %d\n"
+    "    htotal:                %d\n"
+    "    vtotal:                %d\n"
+    "    fr_adj_type:           %d\n"
+    "    video_clk:             %d\n"
+    "    viu_color_fmt:         %d\n"
+    "    viu_mux:               %d\n\n",
+    */
+
+    const char * lcdInfoPath = "/sys/class/lcd/vinfo";
+    const int valLenMax = 64;
+    std::string lcdInfo;
+
+    if (sc_read_sysfs(lcdInfoPath, lcdInfo) == 0 &&
+        lcdInfo.size() > 0) {
+       // MESON_LOGD("Lcdinfo:(%s)", lcdInfo.c_str());
+
+        std::size_t lineStart = 0;
+
+        /*parse lcd mode*/
+        const char * modeStr = " lcd_mode: ";
+        lineStart = lcdInfo.find(modeStr);
+        lineStart += strlen(modeStr);
+        std::string valStr = lcdInfo.substr(lineStart, valLenMax);
+        MESON_LOGD("lcd_mode: value [%s]", valStr.c_str());
+        if (valStr.find("tablet", 0) != std::string::npos) {
+            mTabletMode = true;
+        } else {
+            mTabletMode = false;
+        }
+
+        if (mTabletMode) {
+            /*parse display info mode*/
+            const char * infoPrefix[] = {
+                " width:",
+                " height:",
+                " sync_duration_num:",
+                " sync_duration_den:",
+            };
+            const int infoValueIdx[] = {
+                LCD_WIDTH,
+                LCD_HEIGHT,
+                LCD_SYNC_DURATION_NUM,
+                LCD_SYNC_DURATION_DEN,
+            };
+            static int infoNum = sizeof(infoValueIdx) / sizeof(int);
+
+            MESON_LOGD("------------Lcdinfo parse start------------\n");
+            for (int i = 0; i < infoNum; i ++) {
+                lineStart = lcdInfo.find(infoPrefix[i], lineStart);
+                lineStart += strlen(infoPrefix[i]);
+                std::string valStr = lcdInfo.substr(lineStart, valLenMax);
+                mLcdValues[infoValueIdx[i]] = (uint32_t)std::stoul(valStr);
+                MESON_LOGD("[%s] : [%d]\n", infoPrefix[i], mLcdValues[infoValueIdx[i]]);
+            }
+            MESON_LOGD("------------Lcdinfo parse end------------\n");
+        }
+    } else {
+        MESON_LOGE("parseLcdInfo ERROR.");
+    }
+
+    return 0;
+}
+
 int32_t ConnectorPanel::loadDisplayModes() {
     mDisplayModes.clear();
 
-    std::string dispmode;
-    vmode_e vmode = VMODE_MAX;
-    if (NULL != mCrtc) {
-        mCrtc->readCurDisplayMode(dispmode);
-        vmode = vmode_name_to_mode(dispmode.c_str());
-    }
-
-    if (vmode == VMODE_MAX) {
+    if (mTabletMode) {
         drm_mode_info_t modeInfo = {
             "panel",
             DEFAULT_DISPLAY_DPI,
             DEFAULT_DISPLAY_DPI,
-            1920,
-            1080,
-            60};
+            mLcdValues[LCD_WIDTH],
+            mLcdValues[LCD_HEIGHT],
+            (float)mLcdValues[LCD_SYNC_DURATION_NUM]/mLcdValues[LCD_SYNC_DURATION_DEN]};
         mDisplayModes.emplace(mDisplayModes.size(), modeInfo);
-        MESON_LOGE("use default value,get display mode: %s", dispmode.c_str());
+        MESON_LOGE("use default value,get display mode: %s", modeInfo.name);
     } else {
+        std::string dispmode;
+        vmode_e vmode = VMODE_MAX;
+        if (NULL != mCrtc) {
+            mCrtc->readCurDisplayMode(dispmode);
+            vmode = vmode_name_to_mode(dispmode.c_str());
+        }
+
         addDisplayMode(dispmode);
 
         //for tv display mode.

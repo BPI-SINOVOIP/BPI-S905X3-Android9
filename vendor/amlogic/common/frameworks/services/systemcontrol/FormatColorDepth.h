@@ -61,14 +61,15 @@ public:
     ~FormatColorDepth();
     void getHdmiColorAttribute(const char *outputmode, char * colorAttribute, int state);
     bool isModeSupportDeepColorAttr(const char *mode, const char * color);
+    bool isSupportHdmiMode(const char *hdmi_mode, const char *supportedColorList);
     void getBestHdmiDeepColorAttr(const char *outputmode, char *colorAttribute);
     void setFilterEdidList(std::map<int, std::string> filterEdidList);
+    bool initColorAttribute(char* supportedColorList, int len);
 private:
     bool getBootEnv(const char* key, char* value);
 
     Ubootenv *mUbootenv;
     void getProperHdmiColorArrtibute(const char * outputmode, char * colorAttribute);
-    bool initColorAttribute(char* supportedColorList, int len);
     bool isFilterEdid();
     SysWrite mSysWrite;
     std::map<int, std::string> mFilterEdid;

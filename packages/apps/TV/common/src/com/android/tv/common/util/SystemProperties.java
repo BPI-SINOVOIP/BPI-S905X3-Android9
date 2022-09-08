@@ -73,6 +73,9 @@ public final class SystemProperties {
     public static final BooleanSystemProperty USE_DEBUG_LOCK =
             new BooleanSystemProperty("tv_use_debug_lock", false);
 
+    public static final BooleanSystemProperty USE_DEBUG_RESET_LOCK =
+            new BooleanSystemProperty("tv_use_debug_reset_lock", true);
+
     static {
         updateSystemProperties();
     }

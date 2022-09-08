@@ -671,7 +671,7 @@ EXPORT_SYMBOL(hdmirx_get_connect_info);
  */
 void hdmirx_get_color_fmt(struct tvin_sig_property_s *prop)
 {
-	int format = rx.pre.colorspace;
+	int format = rx.cur.colorspace;
 
 	if (rx.pre.sw_dvi == 1)
 		format = E_COLOR_RGB;

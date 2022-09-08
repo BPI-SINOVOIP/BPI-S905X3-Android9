@@ -288,6 +288,16 @@ bool am_gralloc_is_omx_metadata_buffer(
     return ret;
 }
 
+ int am_gralloc_set_omx_video_type(const native_handle_t * hnd, int video_type) {
+    private_handle_t * buffer = hnd ? private_handle_t::dynamicCast(hnd) : NULL;
+
+    if (buffer)
+        return -1;
+    if (video_type)
+        return -1;
+
+    return -1;
+ }
 typedef struct am_sideband_handle {
    native_handle_t base;
    unsigned int id;
@@ -392,3 +402,17 @@ int am_gralloc_get_vpu_afbc_mask(const native_handle_t * hnd) {
     return 0;
 }
 
+int am_gralloc_get_omx_v4l_file(const native_handle_t * hnd) {
+    private_handle_t const* buffer = hnd ? private_handle_t::dynamicCast(hnd) : NULL;
+
+    if (buffer)
+        return -1;
+    return -1;
+}
+int am_gralloc_attr_set_omx_v4l_producer_flag(native_handle_t * hnd) {
+    private_handle_t * buffer = hnd ? private_handle_t::dynamicCast(hnd) : NULL;
+
+    if (buffer)
+        return -1;
+    return -1;
+}

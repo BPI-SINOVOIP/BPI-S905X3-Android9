@@ -145,6 +145,8 @@ public:
     void returnGpuMode();
 #endif
 
+    bool isVideoOverlay() const override;
+
 private:
     void onFirstRef() override;
 

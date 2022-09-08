@@ -92,6 +92,7 @@ MODULE_AMLOG(LOG_LEVEL_ERROR, 0, LOG_DEFAULT_LEVEL_DESC, LOG_MASK_DESC);
 #include <linux/amlogic/pm.h>
 #endif
 #include <linux/math64.h>
+#include <linux/fence.h>
 
 static int get_count;
 static int get_count_pip;
@@ -936,6 +937,7 @@ static inline void pip_vf_put(struct vframe_s *vf)
 
 static inline struct vframe_s *video_vf_peek(void)
 {
+	int ret = 0;
 	struct vframe_s *vf = vf_peek(RECEIVER_NAME);
 
 	if (hist_test_flag) {
@@ -951,6 +953,24 @@ static inline struct vframe_s *video_vf_peek(void)
 		vf->disp_pts = 0;
 		vf->disp_pts_us64 = 0;
 	}
+
+	if (vf && vf->fence) {
+		/*
+		 * the ret of fence status.
+		 * 0: has not been signaled.
+		 * 1: signaled without err.
+		 * other: fence err.
+		 */
+		ret = fence_get_status(vf->fence);
+		if (ret < 0) {
+			vf = vf_get(RECEIVER_NAME);
+			if (vf)
+				vf_put(vf, RECEIVER_NAME);
+		} else if (ret == 0) {
+			vf = NULL;
+		}
+	}
+
 	return vf;
 }
 
@@ -1035,8 +1055,8 @@ static inline struct vframe_s *video_vf_get(void)
 		receive_frame_count++;
 #endif
 	}
-	return vf;
 
+	return vf;
 }
 
 static int video_vf_get_states(struct vframe_states *states)
@@ -1928,10 +1948,10 @@ static inline bool vpts_expire(struct vframe_s *cur_vf,
 			hold_property_changed = 0;
 	}
 	/* check video PTS discontinuity */
-	else if ((enable_video_discontinue_report) &&
-		 (first_frame_toggled) &&
-		 (abs(systime - pts) > tsync_vpts_discontinuity_margin()) &&
-		 ((next_vf->flag & VFRAME_FLAG_NO_DISCONTINUE) == 0)) {
+	if ((enable_video_discontinue_report) &&
+	    (first_frame_toggled) &&
+	    (AM_ABSSUB(systime, pts) > tsync_vpts_discontinuity_margin()) &&
+	    ((next_vf->flag & VFRAME_FLAG_NO_DISCONTINUE) == 0)) {
 		/*
 		 * if paused ignore discontinue
 		 */
@@ -1943,11 +1963,19 @@ static inline bool vpts_expire(struct vframe_s *cur_vf,
 			 */
 			return false;
 		}
+
 		pts =
 		    timestamp_vpts_get() +
 		    (cur_vf ? DUR2PTS(cur_vf->duration) : 0);
 		/* pr_info("system=0x%x vpts=0x%x\n", systime,*/
 		/*timestamp_vpts_get()); */
+
+		if (debug_flag & DEBUG_FLAG_OMX_DEBUG_DROP_FRAME) {
+			pr_info("pts= %x,systime = %x,vpts = %x, next=0x%x\n",
+				pts, systime, timestamp_vpts_get(),
+				next_vf->pts);
+			pr_info("vsync_pts_align=%d\n", vsync_pts_align);
+		}
 		if ((int)(systime - pts) >= 0) {
 			if (next_vf->pts != 0)
 				tsync_avevent_locked(VIDEO_TSTAMP_DISCONTINUITY,
@@ -1965,7 +1993,9 @@ static inline bool vpts_expire(struct vframe_s *cur_vf,
 			 */
 
 			/* pts==0 is a keep frame maybe. */
-			if (systime > next_vf->pts || next_vf->pts == 0)
+			if (systime > next_vf->pts || next_vf->pts == 0 ||
+			    (systime < pts &&
+			    (pts > 0xFFFFFFFF - TIME_UNIT90K)))
 				return true;
 			if (omx_secret_mode == true
 					&& cur_omx_index >= next_vf->omx_index)
@@ -2132,8 +2162,12 @@ static inline bool vpts_expire(struct vframe_s *cur_vf,
 			video_frame_repeat_count = 0;
 		}
 	}
-
-	expired = (int)(timestamp_pcrscr_get() + vsync_pts_align - pts) >= 0;
+	if (tsync_get_mode() == TSYNC_MODE_PCRMASTER)
+		expired = (timestamp_pcrscr_get() + vsync_pts_align >= pts) ?
+				true : false;
+	else
+		expired = (int)(timestamp_pcrscr_get() +
+				vsync_pts_align - pts) >= 0;
 
 #ifdef PTS_THROTTLE
 	if (expired && next_vf && next_vf->next_vf_pts_valid &&
@@ -3679,7 +3713,7 @@ static irqreturn_t vsync_isr_in(int irq, void *dev_id)
 
 	while (vf) {
 		if (debug_flag & DEBUG_FLAG_OMX_DEBUG_DROP_FRAME) {
-			pr_info("next pts= %d,index %d,pcr = %d,vpts = %d\n",
+			pr_info("next pts= %x,index %d,pcr = %x,vpts = %x\n",
 				vf->pts, vf->omx_index,
 				timestamp_pcrscr_get(), timestamp_vpts_get());
 		}

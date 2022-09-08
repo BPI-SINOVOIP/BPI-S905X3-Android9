@@ -1,0 +1,4 @@
+#ifndef __SUBTITLE_PACKAGE_PROTO_H__
+#define __SUBTITLE_PACKAGE_PROTO_H__
+
+#endif

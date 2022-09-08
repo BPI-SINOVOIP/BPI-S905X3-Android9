@@ -39,12 +39,17 @@ enum
     GRU_INPUT_WEIGHT_H2R   = 4,
     GRU_INPUT_WEIGHT_H2Z   = 5,
 
-    GRU_INPUT_BIAS_R       = 6,
-    GRU_INPUT_BIAS_Z       = 7,
+    GRU_INPUT_BIAS_I2R     = 6,
+    GRU_INPUT_BIAS_I2Z     = 7,
 
-    GRU_INPUT_WEIGHT_I2C   = 8,
-    GRU_INPUT_WEIGHT_R2C   = 9,
-    GRU_INPUT_BIAS_C       = 10,
+    GRU_INPUT_BIAS_H2R     = 8,
+    GRU_INPUT_BIAS_H2Z     = 9,
+
+    GRU_INPUT_WEIGHT_I2C   = 10,
+    GRU_INPUT_WEIGHT_H2C   = 11,
+
+    GRU_INPUT_BIAS_I2C     = 12,
+    GRU_INPUT_BIAS_H2C     = 13,
 
     GRU_INPUT_CNT,
 
@@ -56,9 +61,12 @@ enum
 
 typedef struct _vsi_nn_gru_ovxlib_param
 {
-    uint32_t weights;
+    uint32_t num_units;
     vsi_bool time_major;
     vsi_nn_activation_e activation;
+    vsi_nn_activation_e recurrent_activation;
+    vsi_bool return_sequences;
+    uint32_t linear_before_reset;
     vsi_nn_dtype_t internal_dtype[GRUCELL_QUANTIZE_PARAM_COUNT];
 } vsi_nn_gru_ovxlib_param;
 

@@ -44,13 +44,15 @@ enum PORT_MSG {
 };
 const char *port_msg_to_str(enum PORT_MSG msg);
 
-enum MIXER_INPUT_PORT {
-    MIXER_INPUT_PORT_INVAL          = -1,
-    MIXER_INPUT_PORT_PCM_SYSTEM     = 0,
-    MIXER_INPUT_PORT_PCM_DIRECT     = 1,
-    //MIXER_INPUT_PORT_BITSTREAM_RAW  = 2,
-    MIXER_INPUT_PORT_NUM
-};
+typedef enum AML_MIXER_INPUT_PORT_TYPE{
+    AML_MIXER_INPUT_PORT_INVAL          = -1,
+    AML_MIXER_INPUT_PORT_PCM_SYSTEM     = 0,
+    AML_MIXER_INPUT_PORT_PCM_DIRECT     = 1,
+    AML_MIXER_INPUT_PORT_PCM_MMAP       = 2,
+    //AML_MIXER_INPUT_PORT_BITSTREAM_RAW  = 3,
+
+    AML_MIXER_INPUT_PORT_BUTT           = 3,
+} aml_mixer_input_port_type_e;
 
 struct fade_out {
     float vol;
@@ -73,21 +75,19 @@ typedef int (*meta_data_cbk_t)(void *cookie,
             int *diff_ms);
 
 struct input_port {
-    enum MIXER_INPUT_PORT port_index;
+    aml_mixer_input_port_type_e enInPortType;
     struct audioCfg cfg;
-    struct ring_buffer *r_buf;
-    size_t rbuf_frames;
-    size_t rbuf_size;
-    char *data;
-    size_t data_buf_frame_cnt;
-    size_t data_len_bytes;
+
+    struct ring_buffer *r_buf;              /* input port ring buffer. */
+    char *data;                             /* input port temp buffer. */
+    size_t data_buf_frame_cnt;              /* input port temp buffer, data frames for one cycle. */
+    size_t data_len_bytes;                  /* input port temp buffer, data size for one cycle. */
+
     int data_valid;
-    size_t bytes_to_insert;
-    size_t bytes_to_skip;
+    size_t bytes_to_insert;                 /* insert 0 data count index. Units: Byte */
+    size_t bytes_to_skip;                   /* drop data count index. Units: Byte */
     bool is_hwsync;
     size_t consumed_bytes;
-    audio_format_t format;
-    size_t frame_size;
     enum port_state port_status;
     ssize_t (*write)(struct input_port *port, const void *buffer, int bytes);
     ssize_t (*read)(struct input_port *port, void *buffer, int bytes);
@@ -98,16 +98,12 @@ struct input_port {
     void *input_avail_cbk_data;
     int (*on_input_avail_cbk)(void *data);
     void *meta_data_cbk_data;
-    //int (*meta_data_cbk)(void *cookie,
-    //        uint32_t offset,
-    //        struct hw_avsync_header *header,
-    //        int *diff_ms);
+
     meta_data_cbk_t meta_data_cbk;
     float volume;
     struct fade_out fout;
     struct listnode msg_list;
     pthread_mutex_t msg_lock;
-    //nsecs_t last_write_nsec;
     struct timespec timestamp;
     /* get from out stream when init */
     uint64_t initial_frames;
@@ -126,9 +122,8 @@ enum MIXER_OUTPUT_PORT {
 };
 
 struct output_port {
-    enum MIXER_OUTPUT_PORT port_index;
+    enum MIXER_OUTPUT_PORT enOutPortType;
     struct audioCfg cfg;
-    struct ring_buffer *r_buf;
     // data buf to hold tmp out data
     char *data_buf;
     size_t buf_frames;
@@ -137,8 +132,6 @@ struct output_port {
     size_t data_buf_frame_cnt;
     size_t data_buf_len;
     struct pcm *pcm_handle;
-    //audio_format_t format;
-    //size_t frame_size;
     enum port_state port_status;
     pthread_mutex_t lock;
     pthread_cond_t cond;
@@ -150,10 +143,10 @@ struct output_port {
     // not sending audio data to ALSA
     bool dummy;
 };
-bool is_inport_valid(enum MIXER_INPUT_PORT index);
+bool is_inport_valid(aml_mixer_input_port_type_e index);
 bool is_outport_valid(enum MIXER_OUTPUT_PORT index);
 
-enum MIXER_INPUT_PORT get_input_port_index(struct audio_config *config,
+aml_mixer_input_port_type_e get_input_port_index(struct audio_config *config,
         audio_output_flags_t flags);
 
 struct input_port *new_input_port(
@@ -199,4 +192,5 @@ int set_inport_pts_valid(struct input_port *in_port, bool valid);
 bool is_inport_pts_valid(struct input_port *in_port);
 int outport_stop_pcm(struct output_port *port);
 int outport_set_dummy(struct output_port *port, bool en);
+const char *inportType2Str(aml_mixer_input_port_type_e enInportType);
 #endif /* _AUDIO_PORT_H_ */

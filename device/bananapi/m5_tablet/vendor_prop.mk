@@ -106,7 +106,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # low memory for 1G
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.config.low_ram=false
+    ro.config.low_ram=true
 
 # crypto volume
 PRODUCT_PROPERTY_OVERRIDES += \

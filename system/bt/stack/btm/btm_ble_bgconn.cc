@@ -442,7 +442,9 @@ bool btm_ble_start_auto_conn(bool start) {
 #if (BLE_PRIVACY_SPT == TRUE)
       if (btm_cb.ble_ctr_cb.rl_state != BTM_BLE_RL_IDLE &&
           controller_get_interface()->supports_ble_privacy()) {
+    #if ( BLE_LOCAL_PRIVACY_ENABLED == TRUE)
         own_addr_type |= BLE_ADDR_TYPE_ID_BIT;
+    #endif
         peer_addr_type |= BLE_ADDR_TYPE_ID_BIT;
       }
 #endif

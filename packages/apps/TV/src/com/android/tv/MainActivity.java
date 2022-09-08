@@ -2657,14 +2657,17 @@ public class MainActivity extends Activity implements OnActionClickListener, OnP
     }
 
     private void blockOrUnblockScreenByType(TunableTvView tvView, boolean blockOrUnblock, boolean byUser) {
-        boolean lastBlockStatus = mQuickKeyInfo.getBooleanValue(DroidLogicTvUtils.TV_CURRENT_CHANNELBLOCK_STATUS, false);
-        if (!mShowLockedChannelsTemporarily && !isUnderShrunkenTvView() &&
-                !byUser && tvView != null /*&& tvView.getResetBlockUiStatus()*/ /*&& !TextUtils.isEmpty(valueStr)*/) {
-            long lastChannelId = getChannelIdForAtvDtvMode();
-            Channel currentOne = tvView.getCurrentChannel();
-            if (currentOne != null && currentOne.getId() == lastChannelId) {
-                Log.d(TAG, "blockOrUnblockScreen init last channel lastBlockStatus = " + lastBlockStatus + ", blockOrUnblock = " + blockOrUnblock);
-                blockOrUnblock = lastBlockStatus;
+        if (!SystemProperties.USE_DEBUG_RESET_LOCK.getValue()) {
+            //use prop to control process
+            boolean lastBlockStatus = mQuickKeyInfo.getBooleanValue(DroidLogicTvUtils.TV_CURRENT_CHANNELBLOCK_STATUS, false);
+            if (!mShowLockedChannelsTemporarily && !isUnderShrunkenTvView() &&
+                    !byUser && tvView != null /*&& tvView.getResetBlockUiStatus() && !TextUtils.isEmpty(valueStr)*/) {
+                long lastChannelId = getChannelIdForAtvDtvMode();
+                Channel currentOne = tvView.getCurrentChannel();
+                if (currentOne != null && currentOne.getId() == lastChannelId) {
+                    Log.d(TAG, "blockOrUnblockScreen init last channel lastBlockStatus = " + lastBlockStatus + ", blockOrUnblock = " + blockOrUnblock);
+                    blockOrUnblock = lastBlockStatus;
+                }
             }
         }
         tvView.blockOrUnblockScreen(blockOrUnblock);
@@ -3813,6 +3816,7 @@ public class MainActivity extends Activity implements OnActionClickListener, OnP
      * @param fastTuning {@code true} if fast tuning is requested.
      */
     private void moveToAdjacentChannel(boolean channelUp, boolean fastTuning) {
+        mQuickKeyInfo.printCallBackTraceIfNeeded("moveToAdjacentChannel " + channelUp);
         if (mChannelTuner.moveToAdjacentBrowsableChannel(channelUp)) {
             mOverlayManager.updateChannelBannerAndShowIfNeeded(
                     fastTuning
@@ -4124,20 +4128,25 @@ public class MainActivity extends Activity implements OnActionClickListener, OnP
         protected void handleMessage(Message msg, @NonNull MainActivity mainActivity) {
             switch (msg.what) {
                 case MSG_CHANNEL_DOWN_PRESSED:
+                    if (DEBUG) Log.d(TAG, "MSG_CHANNEL_DOWN_PRESSED");
                     long startTime = (Long) msg.obj;
                     // message re-sending should be done before moving channel, because we use the
                     // existence of message to decide if users are switching channel.
                     sendMessageDelayed(Message.obtain(msg), getDelay(startTime));
-                    mainActivity.moveToAdjacentChannel(false, true);
+                    //no need to send again
+                    //mainActivity.moveToAdjacentChannel(false, true);
                     break;
                 case MSG_CHANNEL_UP_PRESSED:
+                    if (DEBUG) Log.d(TAG, "MSG_CHANNEL_UP_PRESSED");
                     startTime = (Long) msg.obj;
                     // message re-sending should be done before moving channel, because we use the
                     // existence of message to decide if users are switching channel.
                     sendMessageDelayed(Message.obtain(msg), getDelay(startTime));
-                    mainActivity.moveToAdjacentChannel(true, true);
+                    //no need to send again
+                    //mainActivity.moveToAdjacentChannel(true, true);
                     break;
                 case MSG_TUNE_TO_CEC_DEV:
+                    if (DEBUG) Log.d(TAG, "MSG_TUNE_TO_CEC_DEV");
                     mainActivity.tuneToChannel(ChannelImpl.createPassthroughChannel((String)msg.obj));
                     break;
                 case MSG_TUNE_CHANNEL:

@@ -484,6 +484,7 @@ extern bool pd_detect_en;
 
 #define CSC_FLAG_TOGGLE_FRAME	1
 #define CSC_FLAG_CHECK_OUTPUT	2
+#define CSC_FLAG_FORCE_SIGNAL	4
 
 extern int amvecm_on_vs(
 	struct vframe_s *display_vf,

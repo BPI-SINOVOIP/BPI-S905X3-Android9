@@ -54,7 +54,8 @@ enum cvbs_cpu_type {
 };
 
 struct meson_cvbsout_data {
-	unsigned int cntl0_val;
+	unsigned int vdac_vref_adj;
+	unsigned int vdac_gsw;
 	enum cvbs_cpu_type cpu_id;
 	const char *name;
 };
@@ -65,6 +66,10 @@ struct performance_config_s {
 	struct reg_s *reg_table;
 };
 
+/* cvbs driver flag */
+#define CVBS_FLAG_EN_ENCI   BIT(0)
+#define CVBS_FLAG_EN_VDAC   BIT(1)
+
 struct cvbs_drv_s {
 	struct vinfo_s *vinfo;
 	struct cdev   *cdev;
@@ -74,8 +79,8 @@ struct cvbs_drv_s {
 	struct meson_cvbsout_data *cvbs_data;
 	struct performance_config_s perf_conf_pal;
 	struct performance_config_s perf_conf_ntsc;
-	struct delayed_work dv_dwork;
-	bool dwork_flag;
+	struct delayed_work vdac_dwork;
+	unsigned int flag;
 
 	/* clktree */
 	unsigned int clk_gate_state;

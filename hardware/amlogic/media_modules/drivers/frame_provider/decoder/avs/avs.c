@@ -151,7 +151,7 @@ static struct vframe_provider_s vavs_vf_prov;
 #define RV_AI_BUFF_START_ADDR	 0x01a00000
 #define LONG_CABAC_RV_AI_BUFF_START_ADDR	 0x00000000
 
-static u32 vf_buf_num = 4;
+static u32 vf_buf_num = 8;
 static u32 vf_buf_num_used;
 static u32 canvas_base = 128;
 #ifdef NV21
@@ -479,7 +479,7 @@ static void vavs_isr(void)
 				(((reg >> 8) & 0x3) << 3) - 1) & 0x1f;
 		else
 			buffer_index =
-				((reg & 0x7) - 1) & 3;
+				((reg & 0x7) - 1) & 7;
 
 		picture_type = (reg >> 3) & 7;
 #ifdef DEBUG_PTS
@@ -969,13 +969,14 @@ void vavs_recover(void)
 
 	WRITE_VREG(DOS_SW_RESET0, (1 << 9) | (1 << 8));
 	WRITE_VREG(DOS_SW_RESET0, 0);
-
+	WRITE_VREG(AV_SCRATCH_H, 0);
 	if (firmware_sel == 1) {
 		WRITE_VREG(POWER_CTL_VLD, 0x10);
 		WRITE_VREG_BITS(VLD_MEM_VIFIFO_CONTROL, 2,
 			MEM_FIFO_CNT_BIT, 2);
 		WRITE_VREG_BITS(VLD_MEM_VIFIFO_CONTROL, 8,
 			MEM_LEVEL_CNT_BIT, 6);
+		WRITE_VREG(AV_SCRATCH_H, 1); // 8 buf flag to ucode
 	}
 
 
@@ -1078,6 +1079,7 @@ static int vavs_prot_init(void)
 	/*************************************************************/
 
 	r = vavs_canvas_init();
+	WRITE_VREG(AV_SCRATCH_H, 0);
 #ifdef NV21
 		if (firmware_sel == 0) {
 			/* fixed canvas index */
@@ -1095,12 +1097,7 @@ static int vavs_prot_init(void)
 						<< 16)
 				);
 			}
-			/*
-			 *WRITE_VREG(AV_SCRATCH_0, 0x010100);
-			 *WRITE_VREG(AV_SCRATCH_1, 0x040403);
-			 *WRITE_VREG(AV_SCRATCH_2, 0x070706);
-			 *WRITE_VREG(AV_SCRATCH_3, 0x0a0a09);
-			 */
+			WRITE_VREG(AV_SCRATCH_H, 1); // 8 buf flag to ucode
 		}
 #else
 	/* index v << 16 | u << 8 | y */
@@ -1660,9 +1657,9 @@ static int amvdec_avs_probe(struct platform_device *pdev)
 		firmware_sel = 1;
 
 	if (firmware_sel == 1) {
-		vf_buf_num = 4;
+		vf_buf_num = 8;
 		canvas_base = 0;
-		canvas_num = 3;
+		canvas_num = 2;
 	} else {
 
 		canvas_base = 128;

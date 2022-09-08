@@ -437,6 +437,7 @@ struct vframe_s {
 	 *****************/
 	u32 di_pulldown;
 	u32 di_gmv;
+	struct fence *fence;
 } /*vframe_t */;
 
 #if 0

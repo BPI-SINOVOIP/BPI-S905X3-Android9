@@ -7598,6 +7598,8 @@ static AM_ErrorCode_t aml_switch_ts_audio_fmt(AM_AV_Device_t *dev, AV_TSData_t *
 	AM_Bool_t has_audio = AM_FALSE;
 	AM_Bool_t has_video = AM_FALSE;
 	AM_Bool_t has_pcr = AM_FALSE;
+	uint16_t sub_apid;
+	AM_AV_AFormat_t sub_afmt;
 
 	if (!ts || !tp) {
 		AM_DEBUG(1, "do switch ts audio, illegal operation, current mode [%d]", dev->mode);
@@ -7626,8 +7628,29 @@ static AM_ErrorCode_t aml_switch_ts_audio_fmt(AM_AV_Device_t *dev, AV_TSData_t *
 	has_video = VALID_VIDEO(tp->vpid, tp->vfmt);
 	has_pcr = VALID_PCR(tp->pcrpid);
 
-	aml_set_ad_source(&ts->ad, 0, 0, 0, ts->adec);
-	audio_ops->adec_set_decode_ad(0, 0, 0, ts->adec);
+	switch (dev->mode) {
+		case AV_PLAY_TS:
+			sub_apid = dev->ts_player.play_para.sub_apid;
+			sub_afmt = dev->ts_player.play_para.sub_afmt;
+			break;
+		case AV_INJECT:
+			sub_apid = dev->inject_player.para.sub_aud_pid;
+			sub_afmt = dev->inject_player.para.sub_aud_fmt;
+			break;
+		case AV_TIMESHIFT:
+			sub_apid = ((AV_TimeshiftData_t*)dev->timeshift_player.drv_data)->tp.sub_apid;
+			sub_afmt = ((AV_TimeshiftData_t*)dev->timeshift_player.drv_data)->tp.sub_afmt;
+			break;
+		default:
+			AM_DEBUG(1, "only valid in TS/INJ/TIMESHIFT mode");
+			return AM_AV_ERR_NOT_SUPPORTED;
+	}
+
+	if (sub_apid != tp->sub_apid || sub_afmt != tp->sub_afmt)
+	{
+		aml_set_ad_source(&ts->ad, 0, 0, 0, ts->adec);
+		audio_ops->adec_set_decode_ad(0, 0, 0, ts->adec);
+	}
 	audio_ops->adec_stop_decode(&ts->adec);
 
 	/*Set Audio PID & fmt*/
@@ -7673,7 +7696,7 @@ static AM_ErrorCode_t aml_switch_ts_audio_fmt(AM_AV_Device_t *dev, AV_TSData_t *
 		aml_calc_sync_mode(dev, has_audio, has_video, has_pcr, tp->afmt, NULL));
 	audio_ops->adec_start_decode(ts->fd, tp->afmt, has_video, &ts->adec);
 
-	if (VALID_PID(tp->sub_apid))
+	if (VALID_PID(tp->sub_apid) && (sub_apid != tp->sub_apid || sub_afmt != tp->sub_afmt))
 		aml_set_audio_ad(dev, 1, tp->sub_apid, tp->sub_afmt);
 #endif /*ENABLE_PCR*/
 	AM_DEBUG(1, "switch ts audio: end");
@@ -7929,8 +7952,10 @@ static AM_ErrorCode_t aml_set_audio_ad(AM_AV_Device_t *dev, int enable, uint16_t
 
 	/*assume ad is enabled if ad handle is not NULL*/
 	if ((enable && *pad && (apid == sub_apid) && (afmt == sub_afmt))
-		|| (!enable && !*pad))
+		|| (!enable && !*pad)) {
+		AM_DEBUG(1, "AD aml pad:%p *pad:%p apid:sub_apid = [%d:%d], afmt:sub_afmt = [%d:%d]", pad, *pad, apid, sub_apid, afmt, sub_afmt);
 		return AM_SUCCESS;
+	}
 
 	if (enable && is_valid_audio) {
 

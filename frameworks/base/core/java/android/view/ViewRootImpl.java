@@ -2099,7 +2099,8 @@ public final class ViewRootImpl implements ViewParent,
                         // all at once.
                         newSurface = true;
                         mFullRedrawNeeded = true;
-                        mPreviousTransparentRegion.setEmpty();
+                        //remove it as transparent region error after resume
+                        //mPreviousTransparentRegion.setEmpty();
 
                         // Only initialize up-front if transparent regions are not
                         // requested, otherwise defer to see if the entire window

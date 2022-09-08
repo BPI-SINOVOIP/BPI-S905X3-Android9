@@ -34,7 +34,7 @@ typedef struct _vsi_nn_reducesum_lcl_data_t
 
 typedef struct _vsi_nn_reducesum_internal_param
 {
-    vx_uint32   *axis;
+    vx_int32    *axis;
     vx_uint32   axis_num;
     vx_bool     keep_dim;
     vsi_nn_reducesum_lcl_data_t* local;

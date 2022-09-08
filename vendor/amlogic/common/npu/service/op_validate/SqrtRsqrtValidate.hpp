@@ -35,9 +35,9 @@ class SqrtRsqrtValidate : public OperationValidate<T_model, T_Operation> {
    public:
     SqrtRsqrtValidate(const T_model& model, const T_Operation& operation)
         : OperationValidate<T_model, T_Operation>(model, operation) {}
-    virtual bool SignatureCheck() override {
-        return hal::limitation::nnapi::match("SqrtRsqrtInput", this->m_InputArgTypes) &&
-               hal::limitation::nnapi::match("SqrtRsqrtOutput", this->m_OutputArgTypes);
+    bool SignatureCheck(std::string& reason) override {
+        return ::hal::limitation::nnapi::match("SqrtRsqrtInput", this->InputArgTypes()) &&
+               ::hal::limitation::nnapi::match("SqrtRsqrtOutput", this->OutputArgTypes());
     };
 };
 

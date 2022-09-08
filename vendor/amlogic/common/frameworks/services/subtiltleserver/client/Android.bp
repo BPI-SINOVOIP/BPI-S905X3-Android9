@@ -1,0 +1,77 @@
+
+
+cc_library_static {
+    name: "libsubtitleclient_static",
+    vendor_available: true,
+
+    export_include_dirs: ["."],
+    srcs: ["SubtitleServerClient.cpp"],
+
+    shared_libs: [
+        "libbase",
+        "libhidlbase",
+        "libhidltransport",
+        "libutils",
+        "libfmq",
+        "libutilscallstack",
+        "libcutils",
+        "liblog",
+        "libstagefright_foundation",
+        "libamavutils",
+        "libsubtitlebinder",
+        "libfmq",
+        "libhidlmemory",
+        "android.hidl.memory@1.0",
+        "vendor.amlogic.hardware.subtitleserver@1.0",
+    ],
+}
+
+cc_library_shared {
+    name: "libSubtitleClient",
+
+    static_libs: ["libsubtitleclient_static"],
+
+    srcs: [
+        // Deprecated, but need for CTC use.
+        // TODO: remove it!
+        "SubtitleClient.cpp",
+        "SubtitleClientPrivate.cpp",
+        "ClientAdapter_V2.cpp",
+
+        // API impl. We add here for compatibility
+        "SubtitleNativeAPI.cpp",
+        "SubtitleReportAPI.cpp",
+    ],
+    cflags: [
+        // Android Q
+        "-DANDROID_PLATFORM_SDK_VERSION=29",
+        "-Wno-unused-parameter",
+    ],
+
+    include_dirs: [
+        "system/libhidl/transport/include/hidl",
+        "system/libhidl/libhidlmemory/include",
+        "system/libfmq/include",
+        "hardware/amlogic/media/amcodec/include",
+        "hardware/amlogic/media/amavutils/include",
+    ],
+
+    shared_libs: [
+        "libbase",
+        "libhidlbase",
+        "libhidltransport",
+        "libutils",
+        "libfmq",
+        "libutilscallstack",
+        "libcutils",
+        "liblog",
+        "libstagefright_foundation",
+        "libamavutils",
+        "libsubtitlebinder",
+        "libfmq",
+        "libhidlmemory",
+        "android.hidl.memory@1.0",
+        "vendor.amlogic.hardware.subtitleserver@1.0",
+    ],
+
+}

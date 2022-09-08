@@ -84,6 +84,7 @@ public class ScrimView extends View implements ConfigurationController.Configura
         this(context, attrs, 0);
     }
 
+	/* bpi, fix SystemUI notification bar initial fail */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         return false;

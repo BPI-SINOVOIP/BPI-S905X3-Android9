@@ -213,7 +213,7 @@ public class PQSettingsManager {
     }
 
     public int getAspectRatioStatus () {
-        int itemPosition = mSystemControlManager.GetDisplayMode(TvControlManager.SourceInput.XXXX.toInt());
+        int itemPosition = mSystemControlManager.GetDisplayMode(SystemControlManager.SourceInput.XXXX.toInt());
         if (CanDebug()) Log.d(TAG, "getAspectRatioStatus:" + itemPosition);
         if (itemPosition == SystemControlManager.Display_Mode.DISPLAY_MODE_MODE43.toInt())
             return 1;

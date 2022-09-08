@@ -50,6 +50,8 @@ HDCPTxAuth::HDCPTxAuth() :
     pthreadIdHdcpTx(0),
     mBootAnimFinished(false) {
 
+    setSuspendResume(false);
+
     if (sem_init(&pthreadTxSem, 0, 0) < 0) {
         SYS_LOGE("HDCPTxAuth, sem_init failed\n");
         exit(0);
@@ -201,8 +203,6 @@ bool HDCPTxAuth::authInit(bool *pHdcp22, bool *pHdcp14) {
     //stop hdcp_tx
     stopVerAll();
 
-    //char cap[MAX_STR_LEN] = {0};
-    //pSysWrite->readSysfsOriginal(DISPLAY_HDMI_EDID, cap);
     if (REPEATER_RX_VERSION_22 == mRepeaterRxVer) {
         SYS_LOGI("hdcp_tx 2.2 supported for RxSupportHdcp2.2Auth\n");
         useHdcp22 = true;
@@ -317,6 +317,22 @@ void HDCPTxAuth::stopVerAll() {
     usleep(2000);
 }
 
+void HDCPTxAuth::setSuspendResume(bool status) {
+   mSuspendResume = status;
+}
+
+bool HDCPTxAuth::getSuspendResume(void) {
+   return mSuspendResume;
+}
+
+void HDCPTxAuth::setSysCtrlReady(bool status) {
+    if (status == true) {
+        mSysWrite.writeSysfs(DISPLAY_HDMI_SYSCTRL_READY, "1");
+    } else {
+        mSysWrite.writeSysfs(DISPLAY_HDMI_SYSCTRL_READY, "0");
+    }
+}
+
 // HDMI TX uevent prcessed in this loop
 void* HDCPTxAuth::TxUenventThreadLoop(void* data) {
     HDCPTxAuth *pThiz = (HDCPTxAuth*)data;
@@ -337,70 +353,83 @@ void* HDCPTxAuth::TxUenventThreadLoop(void* data) {
 #ifdef FRAME_RATE_AUTO_ADAPTER
     ueventObserver.addMatch(HDMI_TVOUT_FRAME_RATE_UEVENT);
 #endif
+    //systemcontrol ready for driver
+    pThiz->setSysCtrlReady(true);
 
     while (true) {
         ueventObserver.waitForNextEvent(&ueventData);
         SYS_LOGI("HDCP TX switch_name: %s ,switch_state: %s\n", ueventData.switchName, ueventData.switchState);
 
-        //hot plug string is the hdmi audio, hdmi power, hdmi hdr substring
-        if (!strcmp(ueventData.matchName, HDMI_TX_PLUG_UEVENT) && !strcmp(ueventData.switchName, HDMI_UEVENT_HDMI) && (NULL != pThiz->mpCallback)) {
-            pThiz->mpCallback->onTxEvent(ueventData.switchName, ueventData.switchState, OUPUT_MODE_STATE_POWER);
-        }
-        else if (!strcmp(ueventData.matchName, HDMI_TX_POWER_UEVENT) && !strcmp(ueventData.switchName, HDMI_UEVENT_HDMI_POWER)) {
-            //0: hdmi suspend  1: hdmi resume
-            if (!strcmp(ueventData.switchState, HDMI_TX_RESUME) && (NULL != pThiz->mpCallback)) {
+        if (pThiz->getSuspendResume()) {
+            if ((!strcmp(ueventData.matchName, HDMI_TX_POWER_UEVENT)) &&
+                (!strcmp(ueventData.switchName, HDMI_UEVENT_HDMI_POWER)) &&
+                (!strcmp(ueventData.switchState, HDMI_TX_RESUME)) &&
+                (NULL != pThiz->mpCallback)) {
+                pThiz->setSuspendResume(false);
                 pThiz->mpCallback->onTxEvent(ueventData.switchName, ueventData.switchState, OUPUT_MODE_STATE_POWER);
             }
-            else if (!strcmp(ueventData.switchState, HDMI_TX_SUSPEND)) {
-                pThiz->mSysWrite.writeSysfs(DISPLAY_HDMI_HDCP_POWER, "1");
+        } else {
+            //hot plug string is the hdmi audio, hdmi power, hdmi hdr substring
+            if (!strcmp(ueventData.matchName, HDMI_TX_PLUG_UEVENT) && !strcmp(ueventData.switchName, HDMI_UEVENT_HDMI) && (NULL != pThiz->mpCallback)) {
+                pThiz->mpCallback->onTxEvent(ueventData.switchName, ueventData.switchState, OUPUT_MODE_STATE_POWER);
             }
-        }
-        else if (!strcmp(ueventData.matchName, HDMI_TX_HDR_UEVENT) && !strcmp(ueventData.switchName, HDMI_UEVENT_HDMI_HDR)) {
-            //0: exit hdr mode  1: enter hdr mode
-            char hdrState[MODE_LEN] = {0};
-            pThiz->mSysWrite.readSysfs(HDMI_TX_SWITCH_HDR, hdrState);
-            if (!strcmp(hdrState, "0")) {
-                pThiz->mSysWrite.writeSysfs(DISPLAY_HDMI_AVMUTE, "1");
-                usleep(100000);//100ms
-                pThiz->stopVerAll();
-                pThiz->stop();
-                pThiz->mSysWrite.writeSysfs(DISPLAY_HDMI_PHY, "0"); /* Turn off TMDS PHY */
-                usleep(200000);//200ms
-                pThiz->mSysWrite.writeSysfs(DISPLAY_HDMI_PHY, "1"); /* Turn on TMDS PHY */
-                pThiz->start();
+            else if (!strcmp(ueventData.matchName, HDMI_TX_POWER_UEVENT) && !strcmp(ueventData.switchName, HDMI_UEVENT_HDMI_POWER)) {
+                //0: hdmi suspend  1: hdmi resume
+                if (!strcmp(ueventData.switchState, HDMI_TX_RESUME) && (NULL != pThiz->mpCallback)) {
+                    pThiz->setSuspendResume(false);
+                    pThiz->mpCallback->onTxEvent(ueventData.switchName, ueventData.switchState, OUPUT_MODE_STATE_POWER);
+                }
+                else if (!strcmp(ueventData.switchState, HDMI_TX_SUSPEND) && (NULL != pThiz->mpCallback)) {
+                    pThiz->setSuspendResume(true);
+                    pThiz->mSysWrite.writeSysfs(DISPLAY_HDMI_HDCP_POWER, "1");
+                    pThiz->mpCallback->onTxEvent(ueventData.switchName, ueventData.switchState, OUPUT_MODE_STATE_POWER);
+                }
             }
-        }
-        else if (!strcmp(ueventData.matchName, HDMI_TX_HDCP_UEVENT) && !strcmp(ueventData.switchName, HDMI_UEVENT_HDCP)) {
-            //0: hdcp failure -> mute a/v
-            //if (!strcmp(ueventData.switchState, "0"))
-                //pThiz->mute(true);
-            //1:  hdcp success -> unmute a/v
-            //else
-                //pThiz->mute(false);
-        }
-        else if (!strcmp(ueventData.matchName, HDMI_TX_HDCP14_LOG_UEVENT) && !strcmp(ueventData.switchName, HDMI_UEVENT_HDCP_LOG)) {
-            //char logBuf[MAX_STR_LEN+1] = {0};
-            //pThiz->mSysWrite.readSysfsOriginal(HDMI_TX_HDCP14_LOG_SYS, logBuf);
-
-            //SYS_LOGI("HDCP log:%s", logBuf);
-        }
-        else if (!strcmp(ueventData.matchName, HDMI_TVOUT_FRAME_RATE_UEVENT)) {
-               pThiz->mFRAutoAdpt->onTxUeventReceived(&ueventData);
-        }
-        else if (!strcmp(ueventData.matchName, HDMI_TX_HDMI_AUDIO_UEVENT) && !strcmp(ueventData.switchName, HDMI_UEVENT_HDMI_AUDIO)  && (NULL != pThiz->mpCallback)) {
-               pThiz->mpCallback->onTxEvent(ueventData.switchName, ueventData.switchState, OUPUT_MODE_STATE_POWER);
-        }
+            else if (!strcmp(ueventData.matchName, HDMI_TX_HDR_UEVENT) && !strcmp(ueventData.switchName, HDMI_UEVENT_HDMI_HDR)) {
+                //0: exit hdr mode  1: enter hdr mode
+                char hdrState[MODE_LEN] = {0};
+                pThiz->mSysWrite.readSysfs(HDMI_TX_SWITCH_HDR, hdrState);
+                if (!strcmp(hdrState, "0")) {
+                    pThiz->mSysWrite.writeSysfs(DISPLAY_HDMI_AVMUTE, "1");
+                    usleep(100000);//100ms
+                    pThiz->stopVerAll();
+                    pThiz->stop();
+                    pThiz->mSysWrite.writeSysfs(DISPLAY_HDMI_PHY, "0"); /* Turn off TMDS PHY */
+                    usleep(200000);//200ms
+                    pThiz->mSysWrite.writeSysfs(DISPLAY_HDMI_PHY, "1"); /* Turn on TMDS PHY */
+                    pThiz->start();
+                }
+            }
+            else if (!strcmp(ueventData.matchName, HDMI_TX_HDCP_UEVENT) && !strcmp(ueventData.switchName, HDMI_UEVENT_HDCP)) {
+                //0: hdcp failure -> mute a/v
+                //if (!strcmp(ueventData.switchState, "0"))
+                    //pThiz->mute(true);
+                //1:  hdcp success -> unmute a/v
+                //else
+                    //pThiz->mute(false);
+            }
+            else if (!strcmp(ueventData.matchName, HDMI_TX_HDCP14_LOG_UEVENT) && !strcmp(ueventData.switchName, HDMI_UEVENT_HDCP_LOG)) {
+                //char logBuf[MAX_STR_LEN+1] = {0};
+                //pThiz->mSysWrite.readSysfsOriginal(HDMI_TX_HDCP14_LOG_SYS, logBuf);
+                //SYS_LOGI("HDCP log:%s", logBuf);
+            }
+            else if (!strcmp(ueventData.matchName, HDMI_TVOUT_FRAME_RATE_UEVENT)) {
+                   pThiz->mFRAutoAdpt->onTxUeventReceived(&ueventData);
+            }
+            else if (!strcmp(ueventData.matchName, HDMI_TX_HDMI_AUDIO_UEVENT) && !strcmp(ueventData.switchName, HDMI_UEVENT_HDMI_AUDIO)  && (NULL != pThiz->mpCallback)) {
+                   pThiz->mpCallback->onTxEvent(ueventData.switchName, ueventData.switchState, OUPUT_MODE_STATE_POWER);
+            }
 #ifndef RECOVERY_MODE
-        if (!strcmp(ueventData.matchName, VIDEO_LAYER1_UEVENT)) {
-            //0: no aml video data, 1: aml video data aviliable
-            if (!strcmp(ueventData.switchName, "video_layer1") && !strcmp(ueventData.switchState, "1")) {
-                SYS_LOGI("Video Layer1 switch_state: %s switch_name: %s\n", ueventData.switchState, ueventData.switchName);
-                pThiz->sfRepaintEverything();
+            if (!strcmp(ueventData.matchName, VIDEO_LAYER1_UEVENT)) {
+                //0: no aml video data, 1: aml video data aviliable
+                if (!strcmp(ueventData.switchName, "video_layer1") && !strcmp(ueventData.switchState, "1")) {
+                    SYS_LOGI("Video Layer1 switch_state: %s switch_name: %s\n", ueventData.switchState, ueventData.switchName);
+                    pThiz->sfRepaintEverything();
+                }
             }
-        }
 #endif
+        }
     }
-
     return NULL;
 }
 

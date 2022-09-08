@@ -22,7 +22,7 @@ DualDisplayPipe::DualDisplayPipe()
         /*Todo:init status need to get from??*/
         mPrimaryConnectorType = DRM_MODE_CONNECTOR_INVALID;
         mExtendConnectorType = DRM_MODE_CONNECTOR_INVALID;
-        mHdmi_connected = true;
+        mHdmi_connected = false;
 }
 
 DualDisplayPipe::~DualDisplayPipe() {
@@ -30,6 +30,12 @@ DualDisplayPipe::~DualDisplayPipe() {
 
 int32_t DualDisplayPipe::init(
     std::map<uint32_t, std::shared_ptr<HwcDisplay>> & hwcDisps) {
+    /*update hdmi connect status*/
+    std::shared_ptr<HwDisplayConnector> hwConnector;
+    getConnector(DRM_MODE_CONNECTOR_HDMI, hwConnector);
+    hwConnector->update();
+    mHdmi_connected = hwConnector->isConnected();
+
     HwcDisplayPipe::init(hwcDisps);
 
     MESON_ASSERT(HwcConfig::getDisplayNum() == 2,
@@ -48,7 +54,7 @@ int32_t DualDisplayPipe::init(
     if (init == true)
         return 0;
     /*reinit dual display pipeline display mode*/
-    static drm_mode_info_t displayMode = {
+    drm_mode_info_t displayMode = {
         DRM_DISPLAY_MODE_NULL,
         0, 0,
         0, 0,
@@ -76,7 +82,12 @@ int32_t DualDisplayPipe::init(
                             prefdisplayMode = DRM_DISPLAY_MODE_DEFAULT;
                             MESON_LOGI("sc_get_pref_display_mode fail! use default mode");
                         } else {
-                            strcpy(displayMode.name, prefdisplayMode.c_str());
+                            if (strcmp("null", prefdisplayMode.c_str()) == 0 ) {
+                                strcpy(displayMode.name, DRM_DISPLAY_MODE_DEFAULT);
+                                prefdisplayMode = DRM_DISPLAY_MODE_DEFAULT;
+                            } else {
+                                strcpy(displayMode.name, prefdisplayMode.c_str());
+                            }
                         }
                         sc_set_display_mode(prefdisplayMode);
                     }
@@ -99,10 +110,6 @@ int32_t DualDisplayPipe::init(
 
 int32_t DualDisplayPipe::getPipeCfg(uint32_t hwcid, PipeCfg & cfg) {
     /*get hdmi hpd state firstly for init default config*/
-    std::shared_ptr<HwDisplayConnector> hwConnector;
-    getConnector(DRM_MODE_CONNECTOR_HDMI, hwConnector);
-    hwConnector->update();
-    mHdmi_connected = hwConnector->isConnected();
     drm_connector_type_t  connector = getConnetorCfg(hwcid);
     if (hwcid == 0) {
         if (HwcConfig::dynamicSwitchViuEnabled() == true &&
@@ -154,89 +161,92 @@ void DualDisplayPipe::handleEvent(drm_display_event event, int val) {
         MESON_LOGD("Hotplug handle value %d.",val);
         bool connected = (val == 0) ? false : true;
         mHdmi_connected = connected;
-        static drm_mode_info_t displayMode = {
+        drm_mode_info_t displayMode = {
             DRM_DISPLAY_MODE_NULL,
             0, 0,
             0, 0,
             60.0
         };
-        if (mPrimaryConnectorType != DRM_MODE_CONNECTOR_INVALID &&
-            mExtendConnectorType != DRM_MODE_CONNECTOR_INVALID) {
-            for (auto statIt : mPipeStats) {
-                PipeCfg cfg;
-                getPipeCfg(statIt.second->hwcId, cfg);
-                if ((statIt.second->cfg.modeConnectorType != cfg.modeConnectorType) ||
-                        (statIt.second->cfg.hwcCrtcId != cfg.hwcCrtcId)) {
-                    /* If display pip stat resource change, then
-                     * reset vout displaymode, for we need do pipeline switch*/
-                    statIt.second->hwcCrtc->unbind();
-                }
+
+        MESON_LOGD("SET display mode null.");
+        /*reset vout displaymode, for we need do pipeline switch*/
+        for (auto statIt : mPipeStats) {
+            //TODO: need disable vsycn before setmode to null.
+            std::string curMode;
+            statIt.second->modeCrtc->readCurDisplayMode(curMode);
+            if (strcmp(curMode.c_str(), "panel") == 0) {
+                statIt.second->modeCrtc->setMode(displayMode);
+                MESON_LOGE("set panel to NULL  displaymode ");
             }
-            /*update display pipe.*/
-            for (auto statIt : mPipeStats) {
-                updatePipe(statIt.second);
-            }
-            /*update display mode*/
+        }
+
+        if (connected == false) {
             for (auto statIt : mPipeStats) {
                 if (statIt.second->modeConnector->getType() == DRM_MODE_CONNECTOR_HDMI) {
-                    std::string displayattr(DRM_DISPLAY_ATTR_DEFAULT);
-                    std::string prefdisplayMode;
-                    if (connected == false) {
-                        strcpy(displayMode.name, DRM_DISPLAY_MODE_NULL);
-                        prefdisplayMode = DRM_DISPLAY_MODE_NULL;
+                    statIt.second->modeConnector->update();
+                    statIt.second->hwcDisplay->onHotplug(false);
+                }
+            }
+        }
+
+        MESON_LOGD("Update pipeline");
+        /*update display pipe.*/
+        for (auto statIt : mPipeStats) {
+            updatePipe(statIt.second);
+        }
+
+        /*update display mode*/
+        /*handle hdmi firstly, for vout2 bug which cost too much time may caused
+         */
+        for (auto statIt : mPipeStats) {
+            MESON_LOGD("Update display mode for HDMI");
+            if (statIt.second->modeConnector->getType() == DRM_MODE_CONNECTOR_HDMI) {
+                std::string displayattr(DRM_DISPLAY_ATTR_DEFAULT);
+                std::string prefdisplayMode;
+                if (connected == false) {
+                    strcpy(displayMode.name, DRM_DISPLAY_MODE_NULL);
+                    prefdisplayMode = DRM_DISPLAY_MODE_NULL;
+                } else {
+                    /*get hdmi prefect display mode*/
+                    if (sc_get_pref_display_mode(prefdisplayMode) == false) {
+                        strcpy(displayMode.name, DRM_DISPLAY_MODE_DEFAULT);
+                        prefdisplayMode = DRM_DISPLAY_MODE_DEFAULT;
+                        MESON_LOGD("sc_get_pref_display_mode fail! use default mode");
                     } else {
-                        /*get hdmi prefect display mode*/
-                        if (sc_get_pref_display_mode(prefdisplayMode) == false) {
+                        if (strcmp("null", prefdisplayMode.c_str()) == 0 ) {
                             strcpy(displayMode.name, DRM_DISPLAY_MODE_DEFAULT);
                             prefdisplayMode = DRM_DISPLAY_MODE_DEFAULT;
-                            MESON_LOGI("sc_get_pref_display_mode fail! use default mode");
                         } else {
                             strcpy(displayMode.name, prefdisplayMode.c_str());
                         }
                     }
-                    sc_set_display_mode(prefdisplayMode);
-                } else if (statIt.second->modeConnector->getType() == DRM_MODE_CONNECTOR_PANEL) {
-                    std::string lcd_mute("8");
-                    sc_write_sysfs(LCD_MUTE, lcd_mute);
-                    MESON_LOGD("DualDisplayPipe::handleEvent lcd mute");
-                    strcpy(displayMode.name, DRM_DISPLAY_MODE_PANEL);
-                    statIt.second->modeCrtc->setMode(displayMode);
-                    /*mode change config move here for dual display panle*/
-                    statIt.second->modeCrtc->loadProperities();
-                    statIt.second->modeCrtc->update();
-                    statIt.second->modeMgr->update();
-                    statIt.second->hwcDisplay->onModeChanged(val);
-                    /*update display dynamic info.*/
-                    drm_mode_info_t mode;
-                    if (HwcConfig::softwareVsyncEnabled()) {
-                        if (0 == statIt.second->modeMgr->getDisplayMode(mode)) {
-                            statIt.second->hwcVsync->setPeriod(1e9 / mode.refreshRate);
-                        }
-                    }
-                    if (mode.refreshRate)
-                        usleep(1000000 / mode.refreshRate);
-                    else
-                        usleep(20000);
-                    std::string lcd_unmute("0");
-                    sc_write_sysfs(LCD_MUTE, lcd_unmute);
-                    MESON_LOGD("HwcDisplayPipe::handleEvent lcd unmute");
-                } else {
-                    strcpy(displayMode.name, DRM_DISPLAY_MODE_NULL);
-                    statIt.second->modeCrtc->setMode(displayMode);
                 }
-                MESON_LOGI("DualDisplayPipe::handleEvent set mode (%s)",displayMode.name);
-                statIt.second->modeMgr->setDisplayResources(statIt.second->modeCrtc, statIt.second->modeConnector);
-                statIt.second->modeMgr->update();
+
+                MESON_LOGD("HDMI SET display mode %s.", prefdisplayMode.c_str());
+                sc_set_display_mode(prefdisplayMode);
+
+                if (connected) {
+                    statIt.second->modeConnector->update();
+                    statIt.second->hwcDisplay->onHotplug(true);
+                }
             }
         }
+
         for (auto statIt : mPipeStats) {
-            if (statIt.second->modeConnector->getType() == DRM_MODE_CONNECTOR_HDMI) {
-                statIt.second->modeConnector->update();
-                statIt.second->hwcDisplay->onHotplug(connected);
+            MESON_LOGD("Update display mode for PANEL");
+            if (statIt.second->modeConnector->getType() == DRM_MODE_CONNECTOR_PANEL) {
+                std::string lcd_mute("8");
+                sc_write_sysfs(LCD_MUTE, lcd_mute);
+                strcpy(displayMode.name, DRM_DISPLAY_MODE_PANEL);
+                statIt.second->modeCrtc->setMode(displayMode);
+                usleep(20000);
+                std::string lcd_unmute("0");
+                sc_write_sysfs(LCD_MUTE, lcd_unmute);
+                MESON_LOGD("HwcDisplayPipe::handleEvent lcd unmute");
             }
         }
+
     } else {
-        MESON_LOGI("Receive DualDisplayPipe unhandled event %d", event);
         HwcDisplayPipe::handleEvent(event, val);
     }
 }

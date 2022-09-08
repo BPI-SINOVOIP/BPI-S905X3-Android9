@@ -47,11 +47,17 @@ static void atv_demod_afc_sync_frontend(struct atv_demod_afc *afc,
 	struct v4l2_frontend *v4l2_fe =
 				container_of(fe, struct v4l2_frontend, fe);
 	struct analog_parameters *param = &priv->atvdemod_param.param;
+	s32 tuner_afc = 0;
 
 	v4l2_fe->params.frequency = param->frequency + freq_offset;
 
 	/* just play mode need sync */
 	if (!(v4l2_fe->params.flag & ANALOG_FLAG_ENABLE_AFC)) {
+		/* Get tuners internally correct frequency offset */
+		if (fe->ops.tuner_ops.get_afc)
+			fe->ops.tuner_ops.get_afc(fe, &tuner_afc);
+
+		freq_offset += tuner_afc;
 		v4l2_fe->params.frequency = param->frequency + freq_offset;
 
 		pr_afc("%s, sync frequency: %d.\n", __func__,

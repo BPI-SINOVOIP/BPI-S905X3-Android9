@@ -1,2 +1,4 @@
 allow hal_ir_default sysfs_ir:dir { search };
 allow hal_ir_default sysfs_ir:file rw_file_perms;
+allow hal_ir_default sysfs_ir:lnk_file {open read write getattr};
+allow hal_ir_default sysfs:file rw_file_perms;

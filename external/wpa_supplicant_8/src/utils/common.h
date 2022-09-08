@@ -81,7 +81,9 @@ typedef int socklen_t;
 #undef close
 #define close closesocket
 #endif /* _MSC_VER */
-
+#ifdef MULTI_WIFI_SUPPORT
+int is_wifi_driver_loaded(const char *module_tag);
+#endif
 
 /* Define platform specific integer types */
 

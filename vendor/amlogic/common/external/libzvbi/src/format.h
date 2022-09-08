@@ -249,6 +249,11 @@ typedef struct vbi_char {
 	unsigned	unicode		: 16;
 } vbi_char;
 
+/**\Teletext subtitle mode*/
+typedef enum {
+    VBI_TELETEXT_NON_BITMAP_SUBTITLE = -1,     /** NON bitmap subtitle*/
+    VBI_TELETEXT_BITMAP_SUBTITLE     = 1,      /**< ttx bitmap subtitle*/
+}vbi_subtitle_mode;
 struct vbi_font_descr;
 
 /**
@@ -394,6 +399,8 @@ typedef struct vbi_page {
 
 	vbi_opacity		page_opacity[2];
 	vbi_opacity		boxed_opacity[2];
+	vbi_subtitle_mode subtitleMode;
+	vbi_bool have_flof;
 } vbi_page;
 
 /* Private */

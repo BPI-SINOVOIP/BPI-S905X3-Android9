@@ -80,8 +80,8 @@ struct vdec_input_s {
 	bool swap_valid;
 	bool swap_needed;
 	bool eos;
-	struct page *swap_page;
-	unsigned long swap_page_phys;
+	void *swap_page;
+	dma_addr_t swap_page_phys;
 	u64 total_wr_count;
 	u64 total_rd_count;
 	u64 streaming_rp;

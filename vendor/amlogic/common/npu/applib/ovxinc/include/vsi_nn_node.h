@@ -50,6 +50,21 @@ extern "C"{
 /*------------------------------------
                 Types
   -----------------------------------*/
+typedef enum _vsi_nn_cache_const_tensor_e
+{
+    VSI_NN_CACHE_CONST_TENSOR_DISABLED,
+    VSI_NN_CACHE_CONST_TENSOR_CURRENT_GRAPH,
+    VSI_NN_CACHE_CONST_TENSOR_PERMANENT,
+
+    VSI_NN_CACHE_CONST_TENSOR_CNT
+} vsi_nn_cache_const_tensor_e;
+
+typedef struct _vsi_nn_node_attr_t
+{
+    int32_t cache_const_tensor_type;
+    int32_t reserved[7];
+} vsi_nn_node_attr_t;
+
 /** Node structure */
 struct _vsi_nn_node
 {
@@ -88,6 +103,7 @@ struct _vsi_nn_node
     uint32_t uid;
     /** Node's internal node wksp */
     void* internal_node_wksp;
+    vsi_nn_node_attr_t attr;
 };
 
 /*------------------------------------

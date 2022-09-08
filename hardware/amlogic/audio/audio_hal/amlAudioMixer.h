@@ -46,14 +46,14 @@ struct amlAudioMixer *newAmlAudioMixer(
  */
 void freeAmlAudioMixer(struct amlAudioMixer *audio_mixer);
 void mixer_set_hwsync_input_port(struct amlAudioMixer *audio_mixer,
-        enum MIXER_INPUT_PORT port_index);
+        aml_mixer_input_port_type_e port_index);
 void set_mixer_hwsync_frame_size(struct amlAudioMixer *audio_mixer,
         uint32_t frame_size);
 uint32_t get_mixer_hwsync_frame_size(struct amlAudioMixer *audio_mixer);
 uint32_t get_mixer_inport_consumed_frames(
-        struct amlAudioMixer *audio_mixer, enum MIXER_INPUT_PORT port_index);
+        struct amlAudioMixer *audio_mixer, aml_mixer_input_port_type_e port_index);
 int set_mixer_inport_volume(struct amlAudioMixer *audio_mixer,
-        enum MIXER_INPUT_PORT port_index, float vol);
+        aml_mixer_input_port_type_e port_index, float vol);
 
 int init_mixer_input_port(struct amlAudioMixer *audio_mixer,
         struct audio_config *config,
@@ -67,44 +67,45 @@ int init_mixer_input_port(struct amlAudioMixer *audio_mixer,
         float volume);
 
 int delete_mixer_input_port(struct amlAudioMixer *audio_mixer,
-        enum MIXER_INPUT_PORT port_index);
+        aml_mixer_input_port_type_e port_index);
 int send_mixer_inport_message(struct amlAudioMixer *audio_mixer,
-        enum MIXER_INPUT_PORT port_index , enum PORT_MSG msg);
+        aml_mixer_input_port_type_e port_index , enum PORT_MSG msg);
 
 int mixer_write_inport(struct amlAudioMixer *audio_mixer,
-        enum MIXER_INPUT_PORT port_index, const void *buffer, int bytes);
+        aml_mixer_input_port_type_e port_index, const void *buffer, int bytes);
 
 int mixer_read_inport(struct amlAudioMixer *audio_mixer,
-        enum MIXER_INPUT_PORT port_index, void *buffer, int bytes);
+        aml_mixer_input_port_type_e port_index, void *buffer, int bytes);
 int mixer_set_inport_state(struct amlAudioMixer *audio_mixer,
-        enum MIXER_INPUT_PORT port_index, enum port_state state);
+        aml_mixer_input_port_type_e port_index, enum port_state state);
 
 int mixer_flush_inport(struct amlAudioMixer *audio_mixer,
-        enum MIXER_INPUT_PORT port_index);
+        aml_mixer_input_port_type_e port_index);
 
 int pcm_mixer_thread_run(struct amlAudioMixer *audio_mixer);
 int pcm_mixer_thread_exit(struct amlAudioMixer *audio_mixer);
 uint32_t mixer_get_inport_latency_frames(struct amlAudioMixer *audio_mixer,
-        enum MIXER_INPUT_PORT port_index);
+        aml_mixer_input_port_type_e port_index);
 uint32_t mixer_get_outport_latency_frames(struct amlAudioMixer *audio_mixer);
 int64_t mixer_latency_frames(struct amlAudioMixer *audio_mixer);
 int mixer_get_presentation_position(
         struct amlAudioMixer *audio_mixer,
-        enum MIXER_INPUT_PORT port_index,
+        aml_mixer_input_port_type_e port_index,
         uint64_t *frames,
         struct timespec *timestamp);
 int mixer_set_padding_size(
         struct amlAudioMixer *audio_mixer,
-        enum MIXER_INPUT_PORT port_index,
+        aml_mixer_input_port_type_e port_index,
         int padding_bytes);
 
 int mixer_set_continuous_output(struct amlAudioMixer *audio_mixer,
-		bool continuous_output);
+        bool continuous_output);
 int mixer_idle_sleep_time_us(struct amlAudioMixer *audio_mixer);
 int mixer_stop_outport_pcm(struct amlAudioMixer *audio_mixer);
 int mixer_output_standby(struct amlAudioMixer *audio_mixer);
 int mixer_output_dummy(struct amlAudioMixer *audio_mixer, bool en);
-
+struct pcm * get_mixer_output_pcm_handle(struct amlAudioMixer *audio_mixer, enum MIXER_OUTPUT_PORT enOutputIndex);
+void mixer_dump(int s32Fd, const struct aml_audio_device *pstAmlDev);
 __END_DECLS
 
 #endif

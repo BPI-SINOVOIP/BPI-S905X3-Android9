@@ -119,9 +119,13 @@ ssize_t stb_store_tuner_setting(struct class *class,
 			if (frontend[i] == NULL)
 				continue;
 
-			if (dvb_attach_tuner(frontend[i], tuner, &s_tuner_type[i]) < 0) {
-				pr_error("attach tuner %d failed\n", dvb->tuner_cur);
+			if (aml_attach_tuner(tuner->cfg.id, frontend[i], &tuner->cfg) == NULL) {
+				s_tuner_type[i] = AM_TUNER_NONE;
+				pr_error("tuner[%d] [type = %d] attach error.\n", dvb->tuner_cur, tuner->cfg.id);
 				goto EXIT;
+			} else {
+				s_tuner_type[i] = tuner->cfg.id;
+				pr_error("tuner[%d] [type = %d] attach sucess.\n", dvb->tuner_cur, tuner->cfg.id);
 			}
 		}
 
@@ -137,6 +141,7 @@ EXIT:
 int frontend_probe(struct platform_device *pdev)
 {
 	struct demod_config config;
+	struct tuner_config *tuner_cfg = NULL;
 	char buf[32];
 	const char *str = NULL;
 	struct device_node *node_tuner = NULL;
@@ -157,16 +162,18 @@ int frontend_probe(struct platform_device *pdev)
 		if (ret) {
 			continue;
 		}
-		if (!strcmp(str,"internal")) {
-			config.mode = 0;
 
-			frontend[i] = dvb_attach_demod(&config, &s_demod_type[i], "internal");
+		if (!strcmp(str, "internal")) {
+			config.mode = 0;
+			config.id = AM_DTV_DEMOD_AMLDTV;
+			frontend[i] = aml_attach_dtvdemod(config.id, &config);
 			if (frontend[i] == NULL) {
-				pr_error("dvb attach demod error\n");
+				s_demod_type[i] = AM_DTV_DEMOD_NONE;
+				pr_error("internal dtvdemod [type = %d] attach error.\n", config.id);
 				goto error_fe;
 			} else {
-				pr_inf("dtvdemod attatch sucess\n");
-				s_demod_type[i] = AM_DTV_DEMOD_AML;
+				s_demod_type[i] = config.id;
+				pr_error("internal dtvdemod [type = %d] attach success.\n", config.id);
 			}
 
 			memset(buf, 0, 32);
@@ -204,22 +211,9 @@ int frontend_probe(struct platform_device *pdev)
 					ret = 0;
 					continue;
 				} else {
-					if (!strncmp(str, "mxl661_tuner", 12))
-						advb->tuners[j].cfg.id = AM_TUNER_MXL661;
-					else if (!strncmp(str, "si2151_tuner", 12))
-						advb->tuners[j].cfg.id = AM_TUNER_SI2151;
-					else if (!strncmp(str, "si2159_tuner", 12))
-						advb->tuners[j].cfg.id = AM_TUNER_SI2159;
-					else if (!strncmp(str, "r840_tuner", 10))
-						advb->tuners[j].cfg.id = AM_TUNER_R840;
-					else if (!strncmp(str, "r842_tuner", 10))
-						advb->tuners[j].cfg.id = AM_TUNER_R842;
-					else if (!strncmp(str, "atbm2040_tuner", 14))
-						advb->tuners[i].cfg.id = AM_TUNER_ATBM2040;
-					else {
-						pr_err("nonsupport tuner: %s.\n", str);
-						advb->tuners[j].cfg.id = AM_TUNER_NONE;
-					}
+					advb->tuners[j].cfg.id = aml_get_tuner_type(str);
+					if (advb->tuners[j].cfg.id == AM_TUNER_NONE)
+						pr_err("can't support tuner: %s.\n", str);
 				}
 
 				snprintf(buf, sizeof(buf), "tuner_i2c_adap_%d", j);
@@ -227,9 +221,9 @@ int frontend_probe(struct platform_device *pdev)
 				if (!node_i2c) {
 					pr_error("tuner_i2c_adap_id error\n");
 				} else {
-					advb->tuners[j].i2c_adp = of_find_i2c_adapter_by_node(node_i2c);
+					advb->tuners[j].cfg.i2c_adap = of_find_i2c_adapter_by_node(node_i2c);
 					of_node_put(node_i2c);
-					if (advb->tuners[j].i2c_adp == NULL) {
+					if (advb->tuners[j].cfg.i2c_adap == NULL) {
 						pr_error("i2c_get_adapter error\n");
 						of_node_put(node_tuner);
 						goto error_fe;
@@ -272,9 +266,14 @@ int frontend_probe(struct platform_device *pdev)
 			frontend[i]->callback = NULL;
 
 			if (advb->tuner_cur >= 0) {
-				if (dvb_attach_tuner(frontend[i], &advb->tuners[advb->tuner_cur], &s_tuner_type[i]) < 0) {
-					pr_error("attach tuner failed\n");
+				tuner_cfg = &advb->tuners[advb->tuner_cur].cfg;
+				if (aml_attach_tuner(tuner_cfg->id, frontend[i], tuner_cfg) == NULL) {
+					s_tuner_type[i] = AM_TUNER_NONE;
+					pr_error("tuner [type = %d] attach error.\n", tuner_cfg->id);
 					goto error_fe;
+				} else {
+					s_tuner_type[i] = tuner_cfg->id;
+					pr_error("tuner [type = %d] attach sucess.\n", tuner_cfg->id);
 				}
 			}
 
@@ -283,127 +282,35 @@ int frontend_probe(struct platform_device *pdev)
 				pr_error("register dvb frontend failed\n");
 				goto error_fe;
 			}
-		} else if(!strcmp(str,"external")) {
-			const char *name = NULL;
-
+		} else if(!strcmp(str, "external")) {
 			config.mode = 1;
-			config.dev_id = i;
-			memset(buf, 0, 32);
-			snprintf(buf, sizeof(buf), "fe%d_demod",i);
-			ret = of_property_read_string(pdev->dev.of_node, buf, &name);
+			config.id = AM_DTV_DEMOD_NONE;
+			ret = aml_get_dts_demod_config(pdev->dev.of_node, &config, i);
 			if (ret) {
-				ret = 0;
+				pr_err("can't find demod %d.\n", i);
 				continue;
 			}
 
 			memset(buf, 0, 32);
-			snprintf(buf, sizeof(buf), "fe%d_i2c_adap_id",i);
-			node_i2c = of_parse_phandle(pdev->dev.of_node,buf,0);
-			if (!node_i2c) {
-				pr_error("demod%d_i2c_adap_id error\n", i);
-			} else {
-				config.i2c_adap = of_find_i2c_adapter_by_node(node_i2c);
-				of_node_put(node_i2c);
-				if (config.i2c_adap == NULL) {
-					pr_error("i2c_get_adapter error\n");
-					goto error_fe;
-				}
-			}
-
-			memset(buf, 0, 32);
-			snprintf(buf, sizeof(buf), "fe%d_demod_i2c_addr",i);
-			ret = of_property_read_u32(pdev->dev.of_node, buf,&config.i2c_addr);
-			if (ret) {
-				pr_error("i2c_addr error\n");
-				goto error_fe;
-			}
-
-			memset(buf, 0, 32);
-			snprintf(buf, sizeof(buf), "fe%d_ts",i);
-			ret = of_property_read_u32(pdev->dev.of_node, buf,&config.ts);
-			if (ret) {
-				pr_error("ts error\n");
-				goto error_fe;
-			}
-
-			memset(buf, 0, 32);
-			snprintf(buf, sizeof(buf), "fe%d_reset_gpio",i);
-			ret = of_property_read_string(pdev->dev.of_node, buf, &str);
-			if (!ret) {
-				config.reset_gpio =
-				     of_get_named_gpio_flags(pdev->dev.of_node,
-				     buf, 0, NULL);
-				pr_inf("%s: %d\n", buf, config.reset_gpio);
-			} else {
-				config.reset_gpio = -1;
-				pr_error("cannot find resource \"%s\"\n", buf);
-				goto error_fe;
-			}
-
-			memset(buf, 0, 32);
-			snprintf(buf, sizeof(buf), "fe%d_reset_value",i);
-			ret = of_property_read_u32(pdev->dev.of_node, buf,&config.reset_value);
-			if (ret) {
-				pr_error("reset_value error\n");
-				config.reset_value = 0;
-				goto error_fe;
-			}
-
-			memset(buf, 0, 32);
-			snprintf(buf, sizeof(buf), "fe%d_ant_power_gpio", i);
-			ret = of_property_read_string(pdev->dev.of_node, buf, &str);
-			if (!ret) {
-				config.ant_power_gpio =
-					 of_get_named_gpio_flags(pdev->dev.of_node,
-					 buf, 0, NULL);
-				pr_inf("%s: %d\n", buf, config.ant_power_gpio);
-			} else {
-				config.ant_power_gpio = -1;
-				pr_error("cannot find resource \"%s\"\n", buf);
-			}
-
-			memset(buf, 0, 32);
-			snprintf(buf, sizeof(buf), "fe%d_ant_poweron_value", i);
-			ret = of_property_read_u32(pdev->dev.of_node, buf, &config.ant_power_value);
-			if (ret) {
-				pr_error("ant_power_value error\n");
-				config.ant_power_value = 0;
-			}
-
-			memset(buf, 0, 32);
-			snprintf(buf, sizeof(buf), "fe%d_tuner0_i2c_addr",i);
-			ret = of_property_read_u32(pdev->dev.of_node, buf,&config.tuner0_i2c_addr);
-			if (ret) {
-				pr_error("no tuner0 i2c_addr define\n");
-			}
-
-			memset(buf, 0, 32);
-			snprintf(buf, sizeof(buf), "fe%d_tuner1_i2c_addr",i);
-			ret = of_property_read_u32(pdev->dev.of_node, buf,&config.tuner1_i2c_addr);
-			if (ret) {
-				pr_error("no tuner1 addr define\n");
-			}
-
-			memset(buf, 0, 32);
-			snprintf(buf, sizeof(buf), "fe%d_tuner0_code",i);
-			ret = of_property_read_u32(pdev->dev.of_node, buf,&config.tuner0_code);
-			if (ret) {
-				pr_error("no tuner0_code define\n");
-			}
-
-			memset(buf, 0, 32);
-			snprintf(buf, sizeof(buf), "fe%d_tuner1_code",i);
-			ret = of_property_read_u32(pdev->dev.of_node, buf,&config.tuner1_code);
-			if (ret) {
-				pr_error("no tuner1_code define\n");
-			}
-
-			frontend[i] = dvb_attach_demod(&config, &s_demod_type[i], name);
-			if (frontend[i] == NULL) {
-				pr_error("dvb attach demod error\n");
-				goto error_fe;
+			snprintf(buf, sizeof(buf), "fe%d_tuner", i);
+			node_tuner = of_parse_phandle(pdev->dev.of_node, buf, 0);
+			if (node_tuner) {
+				aml_get_dts_tuner_config(node_tuner, &config.tuner0, 0);
+				aml_get_dts_tuner_config(node_tuner, &config.tuner1, 1);
 			} else
-				pr_inf("dtvdemod attatch sucess\n");
+				pr_err("can't find %s.\n", buf);
+
+			of_node_put(node_tuner);
+
+			frontend[i] = aml_attach_dtvdemod(config.id, &config);
+			if (frontend[i] == NULL) {
+				s_demod_type[i] = AM_DTV_DEMOD_NONE;
+				pr_error("external dtvdemod [type = %d] attach error.\n", config.id);
+				goto error_fe;
+			} else {
+				s_demod_type[i] = config.id;
+				pr_error("external dtvdemod [type = %d] attach success.\n", config.id);
+			}
 
 			if (frontend[i]) {
 				ret = dvb_register_frontend(&advb->dvb_adapter, frontend[i]);
@@ -419,11 +326,11 @@ int frontend_probe(struct platform_device *pdev)
 	return 0;
 error_fe:
 	for (i=0; i<FE_DEV_COUNT; i++) {
-		dvb_detach_demod(&s_demod_type[i]);
+		aml_detach_dtvdemod(s_demod_type[i]);
 		frontend[i] = NULL;
 		s_demod_type[i] = AM_DTV_DEMOD_NONE;
 
-		dvb_detach_tuner(&s_tuner_type[i]);
+		aml_detach_tuner(s_tuner_type[i]);
 		s_tuner_type[i] = AM_TUNER_NONE;
 	}
 
@@ -438,9 +345,9 @@ int frontend_remove(void)
 	int i;
 
 	for (i=0; i<FE_DEV_COUNT; i++) {
-		dvb_detach_demod(&s_demod_type[i]);
+		aml_detach_dtvdemod(s_demod_type[i]);
 
-		dvb_detach_tuner(&s_tuner_type[i]);
+		aml_detach_tuner(s_tuner_type[i]);
 
 		if (frontend[i] &&
 			((s_tuner_type[i] == AM_TUNER_SI2151)

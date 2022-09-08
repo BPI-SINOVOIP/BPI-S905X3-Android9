@@ -104,7 +104,7 @@ using namespace android;
 #define DISPLAY_HDMI_HDCP_POWER         "/sys/class/amhdmitx/amhdmitx0/hdcp_pwr"//write to 1, force hdcp_tx22 quit safely
 
 #define DISPLAY_HPD_STATE               "/sys/class/amhdmitx/amhdmitx0/hpd_state"
-#define DISPLAY_HDMI_EDID               "/sys/class/amhdmitx/amhdmitx0/disp_cap"//RX support display mode
+#define DISPLAY_HDMI_DISP_CAP           "/sys/class/amhdmitx/amhdmitx0/disp_cap"//RX support display mode
 #define DISPLAY_HDMI_EDID_VESA          "/sys/class/amhdmitx/amhdmitx0/vesa_cap" //RX VESA support display mode
 
 #define DISPLAY_HDMI_DISP_CAP_3D        "/sys/class/amhdmitx/amhdmitx0/disp_cap_3d"//RX support display 3d mode
@@ -128,6 +128,7 @@ using namespace android;
 #define AUDIO_DSP_DIGITAL_RAW           "/sys/class/audiodsp/digital_raw"
 #define AV_HDMI_CONFIG                  "/sys/class/amhdmitx/amhdmitx0/config"
 #define AV_HDMI_3D_SUPPORT              "/sys/class/amhdmitx/amhdmitx0/support_3d"
+#define DISPLAY_HDMI_SYSCTRL_READY      "/sys/class/amhdmitx/amhdmitx0/sysctrl_enable"
 
 #define HDMI_TX_PLUG_UEVENT             "DEVPATH=/devices/virtual/amhdmitx/amhdmitx0/hdmi"//hdmi hot plug event
 #define HDMI_TX_POWER_UEVENT            "DEVPATH=/devices/virtual/amhdmitx/amhdmitx0/hdmi_power"
@@ -530,7 +531,7 @@ typedef enum {
 }hdmi_sink_type;
 
 typedef struct hdmi_data {
-    char edid[MAX_STR_LEN];
+    char disp_cap[MAX_STR_LEN];
     int sinkType;
     char current_mode[MODE_LEN];
     char ubootenv_hdmimode[MODE_LEN];
@@ -586,13 +587,15 @@ public:
 
     void setVideoPlayingAxis();
     void getHdmiData(hdmi_data_t* data);
-
+    bool isHdmiEdidParseOK(void);
+    bool isHdmiHpd(void);
+    bool doblyEnabled();
+    bool doblyFilterEdid(char *edid);
     int readHdcpRX22Key(char *value, int size);
     bool writeHdcpRX22Key(const char *value, const int size);
     int readHdcpRX14Key(char *value, int size);
     bool writeHdcpRX14Key(const char *value, const int size);
     bool writeHdcpRXImg(const char *path);
-
     HDCPTxAuth *geTxAuth();
 #ifndef RECOVERY_MODE
     void notifyEvent(int event);
@@ -623,6 +626,8 @@ private:
     void filterHdmiMode(char * mode, hdmi_data_t* data);
     void getHdmiOutputMode(char *mode, hdmi_data_t* data);
     void setAutoSwitchFrameRate(int state);
+    //void setAutoSwitchFrameRate(int state);
+    void filterHdmiDispcap(hdmi_data_t* data);
     void updateDefaultUI();
     void updateDeepColor(bool cvbsMode, output_mode_state state, const char* outputmode);
     void updateFreeScaleAxis();

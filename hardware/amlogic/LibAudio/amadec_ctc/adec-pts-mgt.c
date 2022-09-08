@@ -324,6 +324,11 @@ int adec_pts_droppcm(aml_audio_dec_t *audec)
 
     int samplerate = 0;
     int channels = 0;
+    if (0 == audec->has_video)
+    {
+        adec_print("no video no need to drop pcm\n");
+        return 0;
+    }
     //ARM based decoder,should got from decoder
     adec_print("adec_pts_droppcm start get audio sr/ch info \n");
     while (!audec->need_stop) {

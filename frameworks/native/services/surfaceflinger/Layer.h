@@ -591,6 +591,8 @@ public:
     int32_t getZ() const;
     void pushPendingState();
 
+    virtual bool isVideoOverlay() const { return false; }
+
 protected:
     // constant
     sp<SurfaceFlinger> mFlinger;

@@ -113,6 +113,11 @@ PRODUCT_PACKAGES += \
     libmetadataretriever_ext
 endif
 
+#resource manage
+PRODUCT_PACKAGES += \
+    libmediahal_resman \
+    libmediahal_resman.system \
+
 #########################################################################
 #
 #                                                PlayReady DRM

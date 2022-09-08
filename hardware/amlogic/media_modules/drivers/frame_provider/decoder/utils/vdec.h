@@ -34,6 +34,7 @@
 
 #include "vdec_input.h"
 #include "frame_check.h"
+#include "vdec_sync.h"
 
 s32 vdec_dev_register(void);
 s32 vdec_dev_unregister(void);
@@ -262,6 +263,7 @@ struct vdec_s {
 	atomic_t inirq_thread_flag;
 	atomic_t inirq_flag;
 	int parallel_dec;
+	struct vdec_sync sync;
 	volatile u64 isr_ns;
 	volatile u64 tfn_ns;
 };
@@ -435,6 +437,9 @@ struct vdec_s *vdec_get_vdec_by_id(int vdec_id);
 extern void vdec_set_step_mode(void);
 #endif
 int vdec_get_debug_flags(void);
+
+void VDEC_PRINT_FUN_LINENO(const char *fun, int line);
+
 
 unsigned char is_mult_inc(unsigned int);
 

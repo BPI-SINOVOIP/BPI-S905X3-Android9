@@ -141,23 +141,25 @@ static inline stream_usecase_t attr_to_usecase(uint32_t devices __unused,
     if ((flags & AUDIO_OUTPUT_FLAG_HW_AV_SYNC) && (format != AUDIO_FORMAT_IEC61937)) {
         if (audio_is_linear_pcm(format)) {
             return STREAM_PCM_HWSYNC;
-        }
-
-        if (is_digital_raw_format(format)) {
+        } else if (is_digital_raw_format(format)) {
             return STREAM_RAW_HWSYNC;
+        } else {
+            return STREAM_USECASE_MAX;
         }
-
-        return STREAM_USECASE_INVAL;
     }
 
     // non hwsync cases
     if (/*devices == AUDIO_DEVICE_OUT_HDMI ||*/
         is_digital_raw_format(format)) {
         return STREAM_RAW_DIRECT;
-    }
-    //multi-channel LPCM or hi-res LPCM
-    else if ((flags & AUDIO_OUTPUT_FLAG_DIRECT) && audio_is_linear_pcm(format)) {
-        return STREAM_PCM_DIRECT;
+    } else if ((flags & AUDIO_OUTPUT_FLAG_DIRECT) && audio_is_linear_pcm(format)) {
+        if (flags & AUDIO_OUTPUT_FLAG_MMAP_NOIRQ) {
+            // AAudio case
+            return STREAM_PCM_MMAP;
+        } else {
+            //multi-channel LPCM or hi-res LPCM
+            return STREAM_PCM_DIRECT;
+        }
     } else {
         return STREAM_PCM_NORMAL;
     }
@@ -172,7 +174,7 @@ static inline stream_usecase_t convert_usecase_mask_to_stream_usecase(usecase_ma
     }
     ALOGI("%s mask %#x i %d", __func__, mask, i);
     if (i >= STREAM_USECASE_MAX) {
-        return STREAM_USECASE_INVAL;
+        return STREAM_USECASE_MAX;
     } else {
         return (stream_usecase_t)i;
     }

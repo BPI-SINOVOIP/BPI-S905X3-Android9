@@ -1,16 +1,38 @@
 type subtitleserver, domain;
 type subtitleserver_exec, exec_type, vendor_file_type, file_type;
 
-
 init_daemon_domain(subtitleserver)
 
-allow subtitleserver vndbinder_device:chr_file { read write open ioctl };
-allow subtitleserver vndservicemanager:binder { call transfer };
+vndbinder_use(subtitleserver)
 
-allow subtitleserver hwservicemanager:binder { call transfer };
-allow subtitleserver { subtitleserver_hwservice  hidl_base_hwservice }:hwservice_manager { add };
+hwbinder_use(subtitleserver)
+add_hwservice(subtitleserver, subtitleserver_hwservice)
 
-allow subtitleserver hwservicemanager_prop:file { open read getattr };
+hal_client_domain(subtitleserver, hal_allocator)
+hal_client_domain(subtitleserver, hal_graphics_allocator)
 
-#allow subtitleserver default_prop:file { read };
+get_prop(subtitleserver, hwservicemanager_prop)
+get_prop(subtitleserver, vendor_platform_prop)
+
+allow subtitleserver subtitle_device:chr_file rw_file_perms;
+allow subtitleserver dvb_device:chr_file rw_file_perms;
+allow subtitleserver codec_device:chr_file r_file_perms;
+allow subtitleserver sysfs_xbmc:file rw_file_perms;
+allow subtitleserver sysfs_video:file rw_file_perms;
+allow subtitleserver sysfs_video:dir search;
+allow subtitleserver sysfs:file { open read write };
+allow subtitleserver vbi_device:chr_file { read write open ioctl };
+
 allow subtitleserver system_app:binder { call };
+allow subtitleserver mediaserver:binder { call };
+allow subtitleserver platform_app:binder { call };
+
+allow subtitleserver hidl_memory_hwservice:hwservice_manager find;
+
+r_dir_file(subtitleserver, sdcard_type)
+allow subtitleserver platform_app:fd { use };
+
+allow subtitleserver tv_prop:file { read open getattr };
+allow subtitleserver system_file:dir { open read };
+
+allow netd subtitleserver:fd use;

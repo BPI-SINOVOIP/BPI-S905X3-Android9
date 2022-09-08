@@ -3098,6 +3098,11 @@ static void config_sao_hw(struct AVS2Decoder_s *dec)
 #endif
 	}
 #endif
+	if (get_double_write_mode(dec) == 0)
+		data32 |= 0x2; /*disable double write*/
+	else if (get_double_write_mode(dec) & 0x10)
+		data32 |= 0x1; /*disable cm*/
+
 	WRITE_VREG(HEVC_SAO_CTRL1, data32);
 
 	if (get_double_write_mode(dec) & 0x10) {

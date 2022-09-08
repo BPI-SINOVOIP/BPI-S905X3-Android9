@@ -41,6 +41,7 @@ enum class OperationType: uint32_t {
     MUL,
     DIV,
     SUB,
+    ADDN,
 
     CONCATENATION,
     SPLIT,
@@ -90,7 +91,6 @@ enum class OperationType: uint32_t {
     INSTANCE_NORMALIZATION = INSTANCE_NORM,
 
     DATA_CONVERT,
-    CAST = DATA_CONVERT,
 
     RESHAPE,
     SQUEEZE,
@@ -199,6 +199,8 @@ enum class OperationType: uint32_t {
     PAD_V2,
 
     LINEAR, // A_TIMES_B_PLUS_C
+    CAST,
+    QUANTIZED_16BIT_LSTM,
 };
 
 enum class OperandType: uint8_t {
@@ -220,6 +222,7 @@ enum class OperandType: uint8_t {
     TENSOR_FLOAT32,
     TENSOR_INT32,
     TENSOR_QUANT8_ASYMM,
+    TENSOR_QUANT_INT8_ASYMM,
     TENSOR_QUANT8_SYMM,
     TENSOR_QUANT16_ASYMM,
     TENSOR_QUANT16_SYMM,
@@ -274,6 +277,9 @@ enum class Rounding {
 
 enum class PadMode {
     CONSTANT,
+    REPLICATE,
+    SYMMETRIC,
+    REFLECT,
 };
 
 /*

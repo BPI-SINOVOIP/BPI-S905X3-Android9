@@ -14,6 +14,8 @@ import java.util.Iterator;
 import android.widget.Toast;
 import android.content.Context;
 import android.util.Log;
+import com.droidlogic.app.SystemControlManager;
+
 
 //simple list control
 public class PlayList {
@@ -24,6 +26,8 @@ public class PlayList {
         protected String rootPath = null;
         private List<Boolean> hErrorList = null;
         private static Context mContext = null;
+        private SystemControlManager mSystemControl1 = SystemControlManager.getInstance();
+
         public static void setContext (Context context) {
             mContext = context;
         }
@@ -90,15 +94,25 @@ public class PlayList {
             }
         }
 
+        private boolean isRepeatPlayModeOnce() {
+            boolean ret = mSystemControl1.getPropertyBoolean("vendor.sys.isRepeatPlayModeOnce.enable", false);
+            return ret;
+        }
+
         public String movenext() {
             if (pos < hfilelist.size() - 1) {
                 pos ++;
             }
-            else {
+            else if (isRepeatPlayModeOnce()){
+                if (pos == hfilelist.size() - 1) {
+                    return null;
+                }
+            } else {
                 pos = 0;
             }
             return safeGetList (pos);
         }
+
 
         public String moveprev() {
             if (pos > 0) {

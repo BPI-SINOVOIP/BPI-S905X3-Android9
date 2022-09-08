@@ -77,6 +77,9 @@ public class BootComplete extends BroadcastReceiver {
 
         new PlayBackManager(context).initHdmiSelfadaption();
 
+        if (SystemProperties.getBoolean("ro.vendor.subtitle.enable_fallback_display", true)) {
+            context.startService(new Intent(context, SubtitleDisplayer.class));
+        }
         //start optimization service
         context.startService(new Intent(context, Optimization.class));
 

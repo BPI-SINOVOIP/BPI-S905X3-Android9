@@ -3,11 +3,11 @@
 hidl_interface {
     name: "vendor.amlogic.hardware.subtitleserver@1.0",
     root: "vendor.amlogic.hardware",
-    vendor: true,
+    product_specific: true,
     srcs: [
         "types.hal",
+        "ISubtitleCallback.hal",
         "ISubtitleServer.hal",
-        "ISubtitleServerCallback.hal",
     ],
     interfaces: [
         "android.hidl.base@1.0",
@@ -17,6 +17,6 @@ hidl_interface {
         "ConnectType",
         "SubtitleHidlParcel",
     ],
-    gen_java: true,
+    gen_java: false,
 }
 

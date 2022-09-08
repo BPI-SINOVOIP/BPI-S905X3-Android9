@@ -36,9 +36,9 @@ class SoftmaxValidate : public OperationValidate<T_model, T_Operation> {
    public:
     SoftmaxValidate(const T_model& model, const T_Operation& operation)
         : OperationValidate<T_model, T_Operation>(model, operation) {}
-    virtual bool SignatureCheck() override {
-        return hal::limitation::nnapi::match("SoftmaxInput", this->m_InputArgTypes) &&
-               hal::limitation::nnapi::match("SoftmaxOutput", this->m_OutputArgTypes);
+    bool SignatureCheck(std::string& reason) override {
+        return ::hal::limitation::nnapi::match("SoftmaxInput", this->InputArgTypes()) &&
+               ::hal::limitation::nnapi::match("SoftmaxOutput", this->OutputArgTypes());
     };
 };
 

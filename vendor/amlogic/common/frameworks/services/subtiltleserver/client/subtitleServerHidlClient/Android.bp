@@ -1,0 +1,33 @@
+cc_library_shared {
+    name: "libsubtitlebinder",
+    vendor_available:true,
+
+    srcs: ["SubtitleServerHidlClient.cpp"],
+
+    shared_libs: [
+        "vendor.amlogic.hardware.subtitleserver@1.0",
+        "libbase",
+        "libhidlbase",
+        "libhidltransport",
+        "liblog",
+        "libcutils",
+        "libutilscallstack",
+        "libutils",
+    ],
+
+    include_dirs: [
+        "system/libhidl/transport/include/hidl",
+        "system/libhidl/libhidlmemory/include",
+    ] + ["external/libcxx/include"],
+
+    cflags: [
+        "-std=c++14",
+        "-Wno-unused-parameter",
+        "-Wno-unused-variable",
+    ],
+
+    //ifeq ($(shell test $(PLATFORM_SDK_VERSION) -ge 26 && echo OK),OK)
+    //LOCAL_PROPRIETARY_MODULE := true
+    //endif
+
+}

@@ -490,7 +490,7 @@ int aml_audio_get_ddp_frame_size()
 
 bool is_stream_using_mixer(struct aml_stream_out *out)
 {
-    return is_inport_valid(out->port_index);
+    return is_inport_valid(out->enInputPortType);
 }
 
 uint32_t out_get_outport_latency(const struct audio_stream_out *stream)
@@ -555,12 +555,13 @@ uint32_t out_get_latency_frames(const struct audio_stream_out *stream)
 
         if (adev->sink_format == AUDIO_FORMAT_E_AC3)
             mul = 4;
-
     } else {
         if (is_4x_rate_fmt(codec_type))
             mul = 4;
     }
-
+    if (out->out_device & AUDIO_DEVICE_OUT_ALL_A2DP) {
+        return a2dp_out_get_latency(stream)*out->hal_rate/1000 + decoder_latency_frames + ringbuf_latency_frames;
+    }
     whole_latency_frames = out->config.period_size * out->config.period_count;
     if (!out->pcm || !pcm_is_ready(out->pcm)) {
         return whole_latency_frames / mul;
@@ -830,3 +831,18 @@ void aml_audio_switch_output_mode(int16_t *buf, size_t bytes, AM_AOUT_OutputMode
     }
 }
 
+int aml_set_thread_priority(char *pName, pthread_t threadId)
+{
+    struct sched_param  params = {0};
+    int                 ret = 0;
+    int                 policy = SCHED_FIFO; /* value:1 [pthread.h] */
+    params.sched_priority = 5;
+    ret = pthread_setschedparam(threadId, SCHED_FIFO, &params);
+    if (ret != 0) {
+        ALOGW("[%s:%d] set scheduled param error, ret:%#x", __func__, __LINE__, ret);
+    }
+    ret = pthread_getschedparam(threadId, &policy, &params);
+    ALOGD("[%s:%d] thread:%s set priority, ret:%d policy:%d priority:%d",
+        __func__, __LINE__, pName, ret, policy, params.sched_priority);
+    return ret;
+}

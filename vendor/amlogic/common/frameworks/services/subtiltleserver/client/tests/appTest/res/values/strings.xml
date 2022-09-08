@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">SimpleSubtitleDemo</string>
+
+
+    <string name="title_activity_player">PlayerActivity</string>
+    <string name="show_startPlay">Start Play</string>
+    <string name="show_subtitle">Show Subtitle</string>
+    <string name="hide_subtitle">Hide Subtitle</string>
+    <string name="displayRect">set Subtitle DisplayRegion</string>
+    <string name="x"> x: </string>
+    <string name="y"> y: </string>
+    <string name="w"> w: </string>
+    <string name="h"> h: </string>
+
+    <string name="tt_page_num"> page number: </string>
+    <string name="tt_goto_page">Go</string>
+    <string name="tt_next_page">Next Page</string>
+    <string name="tt_next_sub_page">Next Sub Page</string>
+    <string name="tt_go_home">Go Home</string>
+</resources>

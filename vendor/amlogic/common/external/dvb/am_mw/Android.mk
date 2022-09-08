@@ -163,7 +163,7 @@ ifeq ($(BOARD_COMPILE_IN_SYSTEM), true)
 else
     LOCAL_CFLAGS += -DUSE_VENDOR_ICU
     LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../icu/icu4c/source/common
-    LOCAL_STATIC_LIBRARIES+= libsqlite libicuuc libam_adp libzvbi
+    LOCAL_STATIC_LIBRARIES+= libsqlite libicuuc libam_adp libzvbi_static
     LOCAL_SHARED_LIBRARIES+= liblog libdl libc libcutils
 endif
 else

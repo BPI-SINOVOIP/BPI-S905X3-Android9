@@ -2428,6 +2428,38 @@ static void mode420_half_horizontal_para(void)
 	hdmitx_wr_reg(HDMITX_DWC_FC_HSYNCINWIDTH1, ((hsync >> 8) & 0x3));
 }
 
+void hdmitx_set_dith(struct hdmitx_dev* hdev)
+{
+	unsigned int hs_flag = 0;
+
+	switch (hdev->para->cd) {
+	case HDMI_COLOR_DEPTH_30B:
+	case HDMI_COLOR_DEPTH_36B:
+	case HDMI_COLOR_DEPTH_48B:
+		/* 12-10 dithering on */
+		hd_set_reg_bits(P_VPU_HDMI_FMT_CTRL, 0, 4, 1);
+		hs_flag = (hd_read_reg(P_VPU_HDMI_SETTING) >> 2) & 0x3;
+		hd_set_reg_bits(P_VPU_HDMI_SETTING, 0, 2, 2);
+		/* 12-10 rounding off */
+		hd_set_reg_bits(P_VPU_HDMI_FMT_CTRL, 0, 10, 1);
+		/* 10-8 dithering off (2x2 old dither) */
+		hd_set_reg_bits(P_VPU_HDMI_DITH_CNTL, 0, 4, 1);
+		/* set hsync/vsync */
+		hd_set_reg_bits(P_VPU_HDMI_DITH_CNTL, hs_flag, 2, 2);
+		break;
+	default:
+		/* 12-10 dithering off */
+		hd_set_reg_bits(P_VPU_HDMI_FMT_CTRL, 0, 4, 1);
+		/* 12-10 rounding on */
+		hd_set_reg_bits(P_VPU_HDMI_FMT_CTRL, 1, 10, 1);
+		/* 10-8 dithering on (2x2 old dither) */
+		hd_set_reg_bits(P_VPU_HDMI_DITH_CNTL, 1, 4, 1);
+		/* set hsync/vsync as default 0 */
+		hd_set_reg_bits(P_VPU_HDMI_DITH_CNTL, 0, 2, 2);
+		break;
+	}
+}
+
 static void set_tmds_clk_div40(unsigned int div40)
 {
 	if (div40 == 1) {
@@ -2997,9 +3029,6 @@ static void hdmitx_set_hw(struct hdmitx_dev* hdev)
 		enc_vpu_bridge_reset(1);
 		break;
 	}
-
-	if (hdev->para->cs == HDMI_COLOR_FORMAT_420)
-		mode420_half_horizontal_para();
 
 	switch (hdev->vic) {
 	case HDMI_3840x2160p50_16x9:

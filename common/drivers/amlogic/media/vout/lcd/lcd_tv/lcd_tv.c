@@ -209,6 +209,7 @@ static void lcd_vmode_vinfo_update(enum vmode_e mode)
 	pconf = lcd_drv->lcd_config;
 	lcd_output_vmode = lcd_get_vmode(mode);
 	info = &lcd_vmode_info[lcd_output_vmode];
+	memset(lcd_output_name, 0, sizeof(lcd_output_name));
 	sprintf(lcd_output_name, "%s%dhz", info->name, info->frame_rate);
 	if (lcd_debug_print_flag) {
 		LCDPR("%s vmode = %d, lcd_vmode = %d, outputmode = %s\n",
@@ -742,9 +743,11 @@ static void lcd_vinfo_update_default(void)
 	h_total = lcd_vcbus_read(ENCL_VIDEO_MAX_PXCNT) + 1;
 	v_total = lcd_vcbus_read(ENCL_VIDEO_MAX_LNCNT) + 1;
 
+	memset(lcd_output_name, 0, sizeof(lcd_output_name));
+	snprintf(lcd_output_name, sizeof(lcd_output_name), "%s", mode);
 	vinfo = lcd_drv->lcd_info;
 	if (vinfo) {
-		vinfo->name = mode;
+		vinfo->name = lcd_output_name;
 		vinfo->mode = VMODE_LCD;
 		vinfo->width = h_active;
 		vinfo->height = v_active;
@@ -1595,7 +1598,6 @@ int lcd_tv_probe(struct device *dev)
 	struct aml_lcd_drv_s *lcd_drv = aml_lcd_get_driver();
 	int ret;
 
-	memset(lcd_output_name, 0, sizeof(lcd_output_name));
 	lcd_drv->driver_init_pre = lcd_tv_driver_init_pre;
 	lcd_drv->driver_disable_post = lcd_tv_driver_disable_post;
 	lcd_drv->driver_init = lcd_tv_driver_init;

@@ -13925,6 +13925,10 @@ F:	drivers/amlogic/media/enhancement/amvecm/dnlp_algorithm/*
 F:	include/linux/amlogic/media/amvecm/*
 F:	drivers/amlogic/media/enhancement/amvecm/hdr/*
 F:  drivers/amlogic/media/enhancement/amvecm/amprime_sl/*
+F:	drivers/amlogic/media/enhancement/amvecm/hdr/am_hdr10_tm.c
+F:	drivers/amlogic/media/enhancement/amvecm/hdr/am_hdr10_tm.h
+F:	drivers/amlogic/media/enhancement/amvecm/hdr/gamut_convert.c
+F:	drivers/amlogic/media/enhancement/amvecm/hdr/gamut_convert.h
 
 AMLOGIC GXL ADD SKT DTS
 M: Yun Cai <yun.cai@amlogic.com>
@@ -14481,8 +14485,13 @@ F:	drivers/amlogic/media/vout/lcd/lcd_extern/mipi_TL050FHV02CT.c
 AMLOGIC ATV DEMOD DRIVER
 M:      nengwen.chen <nengwen.chen@amlogic.com>
 F:      drivers/amlogic/atv_demod/*
+
+AMLOGIC DVB COMPAT DRIVER
+M:      nengwen.chen <nengwen.chen@amlogic.com>
+F:      drivers/amlogic/dvb/*
 F:      include/linux/amlogic/aml_atvdemod.h
 F:      include/linux/amlogic/aml_dtvdemod.h
+F:      include/linux/amlogic/aml_tuner.h
 F:      include/linux/amlogic/aml_demod_common.h
 
 AMLOGIC ADD EXT MIPI DEFAULT DRIVER
@@ -15203,3 +15212,11 @@ F:  arch/arm64/boot/dts/amlogic/tm2_t962x3_ab301_drm.dts
 F:  arch/arm64/boot/dts/amlogic/tm2_t962e2_ab311_drm.dts
 F:  arch/arm64/boot/dts/amlogic/mesontm2_drm.dtsi
 F:  arch/arm/boot/dts/amlogic/mesontm2_drm.dtsi
+
+AMLOGIC DECODE RESOURCE MANAGE
+M: Baoguo Chen <baoguo.chen@amlogic.com>
+F: drivers/amlogic/media/common/resource_mgr/*
+
+AMLOGIC HDMI DRM
+M: Hang Cheng <hang.cheng@amlogic.com>
+F: drivers/amlogic/media/vout/hdmitx/hdmi_tx_20/hdmi_tx_main_drm.c

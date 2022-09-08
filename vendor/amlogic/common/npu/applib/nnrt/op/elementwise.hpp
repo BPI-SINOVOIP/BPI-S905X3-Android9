@@ -29,55 +29,43 @@
 namespace nnrt {
 namespace op {
 
-struct AddOperation : Operation {
-    AddOperation() : Operation(OperationType::ADD) {}
+struct EltwiseOperation : Operation {
+    EltwiseOperation(OperationType type) : Operation(type) {}
     virtual void handleLayoutInferenceOnInputs(
         nnrt::Model& model,
         std::unordered_map<uint32_t, nnrt::layout_inference::IPermuteVectorPtr>& out_permute_vectors)
         override;
 };
 
-struct MulOperation : Operation {
-    MulOperation() : Operation(OperationType::MUL) {}
-    virtual void handleLayoutInferenceOnInputs(
-        nnrt::Model& model,
-        std::unordered_map<uint32_t, nnrt::layout_inference::IPermuteVectorPtr>& out_permute_vectors)
-        override;
+struct AddOperation : EltwiseOperation {
+    AddOperation() : EltwiseOperation(OperationType::ADD) {}
 };
 
-struct SubOperation : Operation {
-    SubOperation() : Operation(OperationType::SUB) {}
-    virtual void handleLayoutInferenceOnInputs(
-        nnrt::Model& model,
-        std::unordered_map<uint32_t, nnrt::layout_inference::IPermuteVectorPtr>& out_permute_vectors)
-        override;
+struct AddNOperation : EltwiseOperation {
+    AddNOperation() : EltwiseOperation(OperationType::ADDN) {}
 };
 
-struct DivOperation : Operation {
-    DivOperation() : Operation(OperationType::DIV) {}
-    virtual void handleLayoutInferenceOnInputs(
-        nnrt::Model& model,
-        std::unordered_map<uint32_t, nnrt::layout_inference::IPermuteVectorPtr>& out_permute_vectors)
-        override;
+struct MulOperation : EltwiseOperation {
+    MulOperation() : EltwiseOperation(OperationType::MUL) {}
 };
 
-struct MinimumOperation : Operation {
-    MinimumOperation() : Operation(OperationType::MINIMUM) {}
-    virtual void handleLayoutInferenceOnInputs(
-        nnrt::Model& model,
-        std::unordered_map<uint32_t, nnrt::layout_inference::IPermuteVectorPtr>& out_permute_vectors)
-        override;
+struct SubOperation : EltwiseOperation {
+    SubOperation() : EltwiseOperation(OperationType::SUB) {}
 };
 
-struct MaximumOperation : Operation {
-    MaximumOperation() : Operation(OperationType::MAXIMUM) {}
-    virtual void handleLayoutInferenceOnInputs(
-        nnrt::Model& model,
-        std::unordered_map<uint32_t, nnrt::layout_inference::IPermuteVectorPtr>& out_permute_vectors)
-        override;
+struct DivOperation : EltwiseOperation {
+    DivOperation() : EltwiseOperation(OperationType::DIV) {}
 };
 
-}
-}
+struct MinimumOperation : EltwiseOperation {
+    MinimumOperation() : EltwiseOperation(OperationType::MINIMUM) {}
+};
+
+struct MaximumOperation : EltwiseOperation {
+    MaximumOperation() : EltwiseOperation(OperationType::MAXIMUM) {}
+};
+
+} // namespace op
+} // namespace nnrt
 
 #endif

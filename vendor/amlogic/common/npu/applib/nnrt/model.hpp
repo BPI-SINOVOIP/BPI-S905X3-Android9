@@ -99,11 +99,11 @@ class Model {
 
     op::OperationPtr addOperation(op::OperationPtr new_operation, uint32_t* out_index = nullptr);
 
-    op::OperandPtr cloneOperand(op::OperandPtr operand, int* out_index = nullptr);
+    op::OperandPtr cloneOperand(op::OperandPtr operand, int32_t* out_index = nullptr);
 
     op::OperandPtr addOperand(op::OperandPtr new_operand = nullptr, uint32_t* out_index = nullptr);
 
-    int getOperandIndex(op::OperandPtr operand);
+    int32_t getOperandIndex(op::OperandPtr operand);
 
     template <typename T>
     static T* getBuffer(const mem_pool::shared_ref& ref) {
@@ -138,13 +138,13 @@ class Model {
 
     bool addBuffer(const void* buffer, size_t length, uint32_t index);
 
-    int setOperandValue(op::OperandPtr operand, const void* buffer, size_t length);
+    int32_t setOperandValue(op::OperandPtr operand, const void* buffer, size_t length);
 
-    int setOperandValue(uint32_t operand_index, const void* buffer, size_t length);
+    int32_t setOperandValue(uint32_t operand_index, const void* buffer, size_t length);
 
-    int setOperandValueFromMemory(op::OperandPtr operand, const Memory* memory, size_t offset, size_t length);
+    int32_t setOperandValueFromMemory(op::OperandPtr operand, const Memory* memory, size_t offset, size_t length);
 
-    int setOperandValueFromMemory(uint32_t operand_index, const Memory* memory, size_t offset, size_t length);
+    int32_t setOperandValueFromMemory(uint32_t operand_index, const Memory* memory, size_t offset, size_t length);
 
     void relax(bool fast_model);
 
@@ -170,7 +170,7 @@ class Model {
 
     void removeOperand(uint32_t index);
 
-    int updateOperand(uint32_t index, const op::OperandPtr operand_type);
+    int32_t updateOperand(uint32_t index, const op::OperandPtr operand_type);
 
     void echo();
 

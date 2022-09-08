@@ -392,6 +392,15 @@ static u32 udebug_pause_decode_idx;
 
 static u32 without_display_mode;
 
+/*
+ *[3:0] 0: default use config from omx.
+ *      1: force enable fence.
+ *      2: disable fence.
+ *[7:4] 0: fence use for driver.
+ *      1: fence fd use for app.
+ */
+static u32 force_config_fence;
+
 #define DEBUG_REG
 #ifdef DEBUG_REG
 void WRITE_VREG_DBG2(unsigned int adr, unsigned int val)
@@ -577,6 +586,8 @@ struct PIC_BUFFER_CONFIG_s {
 	int max_mv;
 	int min_mv;
 	int avg_mv;
+	/* vdec sync. */
+	struct fence *fence;
 } PIC_BUFFER_CONFIG;
 
 enum BITSTREAM_PROFILE {
@@ -1183,6 +1194,8 @@ struct VP9Decoder_s {
 	int frameinfo_enable;
 	struct vframe_qos_s vframe_qos;
 	u32 mem_map_mode;
+	bool enable_fence;
+	int fence_usage;
 };
 
 static int vp9_print(struct VP9Decoder_s *pbi,
@@ -2630,6 +2643,31 @@ int vp9_bufmgr_process(struct VP9Decoder_s *pbi, union param_u *params)
 	 *(" last_intra_only %d last_show_frame %d last_frame_type %d)\n",
 	 *cm->last_intra_only, cm->last_show_frame, cm->last_frame_type);
 	 */
+
+	if (pbi->enable_fence && cm->show_frame) {
+		struct PIC_BUFFER_CONFIG_s *pic = &cm->cur_frame->buf;
+		struct vdec_s *vdec = hw_to_vdec(pbi);
+
+		/* create fence for each buffers. */
+		ret = vdec_timeline_create_fence(&vdec->sync);
+		if (ret < 0)
+			return ret;
+
+		pic->fence		= vdec->sync.fence;
+		pic->bit_depth		= cm->bit_depth;
+		pic->slice_type		= cm->frame_type;
+		pic->stream_offset	= pbi->pre_stream_offset;
+
+		if (pbi->chunk) {
+			pic->pts	= pbi->chunk->pts;
+			pic->pts64	= pbi->chunk->pts64;
+			pic->timestamp	= pbi->chunk->timestamp;
+		}
+
+		/* post video vframe. */
+		prepare_display_buf(pbi, pic);
+	}
+
 	return 0;
 }
 
@@ -2759,6 +2797,7 @@ int vp9_bufmgr_init(struct VP9Decoder_s *pbi, struct BuffInfo_s *buf_spec_i,
 
 int vp9_bufmgr_postproc(struct VP9Decoder_s *pbi)
 {
+	struct vdec_s *vdec = hw_to_vdec(pbi);
 	struct VP9_Common_s *cm = &pbi->common;
 	struct PIC_BUFFER_CONFIG_s sd;
 
@@ -2782,7 +2821,14 @@ int vp9_bufmgr_postproc(struct VP9Decoder_s *pbi)
 	if (vp9_get_raw_frame(pbi, &sd) == 0) {
 		/*pr_info("Display frame index %d\r\n", sd.index);*/
 		sd.stream_offset = pbi->pre_stream_offset;
-		prepare_display_buf(pbi, &sd);
+
+		if (pbi->enable_fence) {
+			/* notify signal to wake up wq of fence. */
+			vdec_timeline_increase(&vdec->sync, 1);
+		} else {
+			prepare_display_buf(pbi, &sd);
+		}
+
 		pbi->pre_stream_offset = READ_VREG(HEVC_SHIFT_BYTE_COUNT);
 	}
 
@@ -5309,13 +5355,12 @@ static void config_sao_hw(struct VP9Decoder_s *pbi, union param_u *params)
 	data32 &= (~0xff0);
 	/* data32 |= 0x670;  // Big-Endian per 64-bit */
 	data32 |= endian;	/* Big-Endian per 64-bit */
-	if  (get_cpu_major_id() < AM_MESON_CPU_MAJOR_ID_G12A) {
-		data32 &= (~0x3); /*[1]:dw_disable [0]:cm_disable*/
-		if (get_double_write_mode(pbi) == 0)
-			data32 |= 0x2; /*disable double write*/
+	data32 &= (~0x3); /*[1]:dw_disable [0]:cm_disable*/
+	if (get_double_write_mode(pbi) == 0)
+		data32 |= 0x2; /*disable double write*/
 	else if (get_double_write_mode(pbi) & 0x10)
 		data32 |= 0x1; /*disable cm*/
-	} else { /* >= G12A dw write control */
+	 if  (get_cpu_major_id() >= AM_MESON_CPU_MAJOR_ID_G12A) { /* >= G12A dw write control */
 		unsigned int data;
 		data = READ_VREG(HEVC_DBLK_CFGB);
 		data &= (~0x300); /*[8]:first write enable (compress)  [9]:double write enable (uncompress)*/
@@ -5696,9 +5741,13 @@ void vp9_loop_filter_init(struct VP9Decoder_s *pbi)
 		(0x3 << 10) | // (dw fifo thres not r/b)
 		(0x3 << 8) | // 1st/2nd write both enable
 		(0x1 << 0); // vp9 video format
+		if (get_double_write_mode(pbi) == 0x10)
+			 data32 &= (~0x100);
 	} else if (get_cpu_major_id() >= AM_MESON_CPU_MAJOR_ID_G12A) {
 		data32 = (0x57 << 8) |  /*1st/2nd write both enable*/
 			(0x1  << 0); /*vp9 video format*/
+		if (get_double_write_mode(pbi) == 0x10)
+			 data32 &= (~0x100);
 	} else
 		data32 = 0x40400001;
 
@@ -6684,6 +6733,12 @@ static void vvp9_vf_put(struct vframe_s *vf, void *op_arg)
 	struct VP9Decoder_s *pbi = (struct VP9Decoder_s *)op_arg;
 	uint8_t index = vf->index & 0xff;
 
+	if (pbi->enable_fence && vf->fence) {
+		vdec_fence_put(vf->fence);
+		vf->fence = NULL;
+	}
+
+
 	kfifo_put(&pbi->newframe_q, (const struct vframe_s *)vf);
 	pbi->vf_put_count++;
 	if (index < pbi->used_buf_num) {
@@ -6875,7 +6930,11 @@ static int prepare_display_buf(struct VP9Decoder_s *pbi,
 				((struct aml_vcodec_ctx *)(pbi->v4l2_ctx))->id,
 				__func__, vf->v4l_mem_handle);
 		}
-
+		if (pbi->enable_fence) {
+			/* fill fence information. */
+			if (pbi->fence_usage == FENCE_USE_FOR_DRIVER)
+				vf->fence	= pic_config->fence;
+		}
 #ifdef MULTI_INSTANCE_SUPPORT
 		if (vdec_frame_based(hw_to_vdec(pbi))) {
 			vf->pts = pic_config->pts;
@@ -9199,6 +9258,36 @@ static int amvdec_vp9_probe(struct platform_device *pdev)
 	return 0;
 }
 
+static void vdec_fence_release(struct VP9Decoder_s *pbi,
+			       struct vdec_sync *sync)
+{
+	ulong expires;
+	int i;
+
+	/* notify signal to wake up all fences. */
+	vdec_timeline_increase(sync, VF_POOL_SIZE);
+
+	expires = jiffies + msecs_to_jiffies(2000);
+	while (!check_objs_all_signaled(sync)) {
+		if (time_after(jiffies, expires)) {
+			pr_err("wait fence signaled timeout.\n");
+			break;
+		}
+	}
+
+	for (i = 0; i < VF_POOL_SIZE; i++) {
+		struct vframe_s *vf = &pbi->vfpool[i];
+
+		if (vf->fence) {
+			vdec_fence_put(vf->fence);
+			vf->fence = NULL;
+		}
+	}
+
+	/* decreases refcnt of timeline. */
+	vdec_timeline_put(sync);
+}
+
 static int amvdec_vp9_remove(struct platform_device *pdev)
 {
 	struct VP9Decoder_s *pbi = gHevc;
@@ -9228,6 +9317,9 @@ static int amvdec_vp9_remove(struct platform_device *pdev)
 		   pbi->pts_missed, pbi->pts_hit, pbi->frame_dur);
 #endif
 	mem_map_mode = 0;
+
+	if (pbi->enable_fence)
+		vdec_fence_release(pbi, &vdec->sync);
 
 	vfree(pbi);
 	mutex_unlock(&vvp9_mutex);
@@ -10286,6 +10378,16 @@ static int ammvdec_vp9_probe(struct platform_device *pdev)
 			pbi->max_pic_h = vp9_buf_height;
 			vp9_print(pbi, 0, "use buf resolution\n");
 		}
+
+		if (get_config_int(pdata->config,
+			"parm_enable_fence",
+			&config_val) == 0)
+			pbi->enable_fence = config_val;
+
+		if (get_config_int(pdata->config,
+			"parm_fence_usage",
+			&config_val) == 0)
+			pbi->fence_usage = config_val;
 #endif
 		if (get_config_int(pdata->config, "HDRStaticInfo",
 				&vf_dp.present_flag) == 0
@@ -10338,6 +10440,20 @@ static int ammvdec_vp9_probe(struct platform_device *pdev)
 			pbi->max_pic_w, pbi->max_pic_h);
 		return -1;
 	}
+
+	if (force_config_fence) {
+		pbi->enable_fence = true;
+		pbi->fence_usage =
+			(force_config_fence >> 4) & 0xf;
+		if (force_config_fence & 0x2)
+			pbi->enable_fence = false;
+		vp9_print(pbi, 0, "enable fence: %d, fence usage: %d\n",
+			pbi->enable_fence, pbi->fence_usage);
+	}
+
+	if (pbi->enable_fence)
+		pdata->sync.usage = pbi->fence_usage;
+
 	pbi->mmu_enable = 1;
 	video_signal_type = pbi->video_signal_type;
 
@@ -10432,6 +10548,12 @@ static int ammvdec_vp9_probe(struct platform_device *pdev)
 					| CORE_MASK_COMBINE);
 #endif
 	pbi->pic_list_init_done2 = true;
+
+	if (pbi->enable_fence) {
+		/* creat timeline. */
+		vdec_timeline_create(&pdata->sync, DRIVER_NAME);
+	}
+
 	return 0;
 }
 
@@ -10469,6 +10591,8 @@ static int ammvdec_vp9_remove(struct platform_device *pdev)
 		}
 	}
 
+	if (pbi->enable_fence)
+		vdec_fence_release(pbi, &vdec->sync);
 
 #ifdef DEBUG_PTS
 	pr_info("pts missed %ld, pts hit %ld, duration %d\n",
@@ -10582,17 +10706,17 @@ static int __init amvdec_vp9_driver_init_module(void)
 			if (get_cpu_major_id() < AM_MESON_CPU_MAJOR_ID_TXLX) {
 				if (vdec_is_support_4k())
 					amvdec_vp9_profile.profile =
-						"4k, 10bit, dwrite, compressed";
+			"8k, 10bit, dwrite, compressed, fence";
 				else
 					amvdec_vp9_profile.profile =
 						"10bit, dwrite, compressed";
 			} else {
 				if (vdec_is_support_4k())
 					amvdec_vp9_profile.profile =
-						"4k, 10bit, dwrite, compressed, no_head";
+				"4k, 10bit, dwrite, compressed, fence";
 				else
 					amvdec_vp9_profile.profile =
-						"10bit, dwrite, compressed, no_head";
+				"10bit, dwrite, compressed, fence";
 			}
 
 	} else {
@@ -10794,6 +10918,9 @@ MODULE_PARM_DESC(udebug_pause_decode_idx, "\n udebug_pause_decode_idx\n");
 
 module_param(without_display_mode, uint, 0664);
 MODULE_PARM_DESC(without_display_mode, "\n without_display_mode\n");
+
+module_param(force_config_fence, uint, 0664);
+MODULE_PARM_DESC(force_config_fence, "\n force enable fence\n");
 
 module_init(amvdec_vp9_driver_init_module);
 module_exit(amvdec_vp9_driver_remove_module);

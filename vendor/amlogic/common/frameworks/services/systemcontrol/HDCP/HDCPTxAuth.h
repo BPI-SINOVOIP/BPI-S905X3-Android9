@@ -58,6 +58,9 @@ public:
     int stop();
     void stopVerAll();
     void isAuthSuccess(int *status);
+    void setSuspendResume(bool status);
+    bool getSuspendResume(void);
+    void setSysCtrlReady(bool status);
 
     #ifndef RECOVERY_MODE
     void sfRepaintEverything();
@@ -81,6 +84,7 @@ private:
 
     bool mMute;
     bool mBootAnimFinished;
+    bool mSuspendResume;
 
     pthread_mutex_t pthreadTxMutex;
     sem_t pthreadTxSem;

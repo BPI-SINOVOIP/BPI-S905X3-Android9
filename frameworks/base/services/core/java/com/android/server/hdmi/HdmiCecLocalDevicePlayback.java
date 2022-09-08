@@ -90,8 +90,8 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
         startQueuedActions();
         boolean isOneTouchPlayEnabled =
             mService.readBooleanSetting("hdmi_control_one_touch_play_enabled", true);
-        Slog.d(TAG, "onAddressAllocated " + logicalAddress + " " + reason + " isOneTouchPlayEnabled " + isOneTouchPlayEnabled);
         if (isOneTouchPlayEnabled) {
+            Slog.d(TAG, "onAddressAllocated trigger One Touch Play.");
             oneTouchPlay(new IHdmiControlCallback.Stub() {
                     @Override
                     public void onComplete(int result) {

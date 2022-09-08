@@ -19,6 +19,8 @@ ifndef CONFIG_ROME_IF
 	CONFIG_ROME_IF = pci
 endif
 
+CONFIG_CLD_REGDB := y
+
 ifeq ($(KERNEL_BUILD),1)
 	# These are provided in external module based builds
 	# Need to explicitly define for Kernel-based builds

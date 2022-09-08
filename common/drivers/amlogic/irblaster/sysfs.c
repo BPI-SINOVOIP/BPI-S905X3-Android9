@@ -25,6 +25,8 @@
 #ifdef CONFIG_AMLOGIC_IRBLASTER_PROTOCOL
 #include <linux/amlogic/irblaster_encoder.h>
 #endif
+int irblaster_debug;
+
 static ssize_t send_store(struct device *dev,
 			  struct device_attribute *attr,
 			  const char *buf, size_t count)
@@ -201,7 +203,23 @@ static ssize_t protocol_store(struct device *dev,
 }
 #endif
 
-//static DEVICE_ATTR(debug, 0644, show_debug, store_debug);
+static ssize_t debug_store(struct device *dev,
+			   struct device_attribute *attr,
+			   const char *buf, size_t count)
+{
+	int ret, debug;
+
+	ret = kstrtoint(buf, 10, &debug);
+	if (ret) {
+		pr_err("Invalid input for debug\n");
+		return ret;
+	}
+
+	irblaster_debug = debug;
+
+	return count;
+}
+
 static DEVICE_ATTR_WO(send);
 #ifdef CONFIG_AMLOGIC_IRBLASTER_PROTOCOL
 static DEVICE_ATTR_WO(send_key);
@@ -211,9 +229,9 @@ static DEVICE_ATTR_RW(duty_cycle);
 #ifdef CONFIG_AMLOGIC_IRBLASTER_PROTOCOL
 static DEVICE_ATTR_RW(protocol);
 #endif
+static DEVICE_ATTR_WO(debug);
 
 static struct attribute *irblaster_chip_attrs[] = {
-//	&dev_attr_debug.attr,
 	&dev_attr_send.attr,
 #ifdef CONFIG_AMLOGIC_IRBLASTER_PROTOCOL
 	&dev_attr_send_key.attr,
@@ -223,6 +241,7 @@ static struct attribute *irblaster_chip_attrs[] = {
 #ifdef CONFIG_AMLOGIC_IRBLASTER_PROTOCOL
 	&dev_attr_protocol.attr,
 #endif
+	&dev_attr_debug.attr,
 	NULL,
 };
 ATTRIBUTE_GROUPS(irblaster_chip);
@@ -246,7 +265,7 @@ void irblasterchip_sysfs_export(struct irblaster_chip *chip)
 	 * If device_create() fails the irblaster_chip is still usable by
 	 * the kernel its just not exported.
 	 */
-	parent = device_create(&irblaster_class, chip->dev, MKDEV(0, 0), chip,
+	parent = device_create(&irblaster_class, NULL, MKDEV(0, 0), chip,
 			       "irblaster%d", chip->base);
 	if (IS_ERR(parent)) {
 		dev_warn(chip->dev,

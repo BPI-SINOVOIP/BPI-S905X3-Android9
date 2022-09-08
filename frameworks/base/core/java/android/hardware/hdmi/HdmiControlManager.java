@@ -22,12 +22,12 @@ import android.annotation.RequiresPermission;
 import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.pm.PackageManager;
 import android.annotation.SystemApi;
 import android.annotation.SystemService;
-import android.os.SystemProperties;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.RemoteException;
+import android.os.SystemProperties;
 import android.util.ArrayMap;
 import android.util.Log;
 
@@ -263,14 +263,12 @@ public final class HdmiControlManager {
     private final boolean mHasPlaybackDevice;
     // True if we have a logical device of type TV hosted in the system.
     private final boolean mHasTvDevice;
-    // True if we have a logical device of type AudioSystem hosted in the system.
+    // True if we have a logical device of type audio system hosted in the system.
     private final boolean mHasAudioSystemDevice;
 
-    /**
-     * {@hide} - hide this constructor because it has a parameter of type IHdmiControlService,
-     * which is a system private class. The right way to create an instance of this class is
-     * using the factory Context.getSystemService.
-     */
+    // True if we have a logical device of type audio system hosted in the system.
+    private final boolean mHasSwitchDevice;
+
     public HdmiControlManager(IHdmiControlService service) {
         mService = service;
         int[] types = null;
@@ -284,6 +282,9 @@ public final class HdmiControlManager {
         mHasTvDevice = hasDeviceType(types, HdmiDeviceInfo.DEVICE_TV);
         mHasPlaybackDevice = hasDeviceType(types, HdmiDeviceInfo.DEVICE_PLAYBACK);
         mHasAudioSystemDevice = hasDeviceType(types, HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM);
+        mHasSwitchDevice = hasDeviceType(types, HdmiDeviceInfo.DEVICE_TV)
+            || hasDeviceType(types, HdmiDeviceInfo.DEVICE_TUNER)
+            || hasDeviceType(types, HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM);
     }
 
     private static boolean hasDeviceType(int[] types, int type) {
@@ -305,15 +306,14 @@ public final class HdmiControlManager {
      * @return {@link HdmiClient} instance. {@code null} on failure.
      * See {@link HdmiDeviceInfo#DEVICE_PLAYBACK}
      * See {@link HdmiDeviceInfo#DEVICE_TV}
+     * See {@link HdmiDeviceInfo#DEVICE_AUDIO_SYSTEM}
      */
     @Nullable
     @SuppressLint("Doclava125")
     public HdmiClient getClient(int type) {
         if (mService == null) {
-            Log.e(TAG, "getClient hdmi service null!");
             return null;
         }
-        Log.d(TAG, "getClient type " + type);
         switch (type) {
             case HdmiDeviceInfo.DEVICE_TV:
                 return mHasTvDevice ? new HdmiTvClient(mService) : null;
@@ -357,18 +357,21 @@ public final class HdmiControlManager {
     }
 
     /**
-     * Gets an object that represents an HDMI-CEC logical device of type AudioSystem on the system.
+     * Gets an object that represents an HDMI-CEC logical device of type audio system on the system.
      *
-     * <p>Used to send HDMI control messages to other devices and manage them through
-     * HDMI bus. It is also possible to communicate with other logical devices hosted in the same
-     * system if the system is configured to host more than one type of HDMI-CEC logical devices.
+     * <p>Used to send HDMI control messages to other devices like TV through HDMI bus. It is also
+     * possible to communicate with other logical devices hosted in the same system if the system is
+     * configured to host more than one type of HDMI-CEC logical devices.
      *
-     * @return {@link HdmiTvClient} instance. {@code null} on failure.
+     * @return {@link HdmiAudioSystemClient} instance. {@code null} on failure.
+     *
+     * TODO(b/110094868): unhide for Q
+     * @hide
      */
     @Nullable
     @SuppressLint("Doclava125")
-    public HdmiTvClient getAudioSystemClient() {
-        return (HdmiTvClient) getClient(HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM);
+    public HdmiAudioSystemClient getAudioSystemClient() {
+        return (HdmiAudioSystemClient) getClient(HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM);
     }
 
     /**

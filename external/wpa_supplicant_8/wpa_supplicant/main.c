@@ -20,7 +20,7 @@
 #include <dlfcn.h>
 static const char SUPP_CONFIG_TEMPLATE[]= "/vendor/etc/wifi/wpa_supplicant.conf";
 static const char P2P_CONFIG_FILE[]     = "/data/vendor/wifi/wpa/p2p_supplicant.conf";
-static int is_wifi_driver_loaded(const char *module_tag)
+int is_wifi_driver_loaded(const char *module_tag)
 {
     FILE *proc;
     char line[sizeof(module_tag)+10];

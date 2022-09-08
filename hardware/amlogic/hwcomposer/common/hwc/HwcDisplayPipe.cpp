@@ -207,8 +207,13 @@ int32_t HwcDisplayPipe::updatePipe(std::shared_ptr<PipeStat> & stat) {
         resChanged = true;
     }
 
+    MESON_LOGD("HwcDisplayPipe::updatePipe (%d) [%s], crtc (%d) connector (%d)",
+        stat->hwcId, resChanged ? "CHANGED" : "NOT-CHANGED",
+        cfg.hwcCrtcId, cfg.hwcConnectorType);
+
     if (resChanged) {
-        MESON_LOGD("HwcDisplayPipe::updatePipe %d changed", stat->hwcId);
+        /*reset vout displaymode, it will be null.*/
+        stat->hwcCrtc->unbind();
         stat->hwcCrtc->bind(stat->hwcConnector, stat->hwcPlanes);
         stat->hwcCrtc->loadProperities();
         stat->hwcCrtc->update();
@@ -216,6 +221,7 @@ int32_t HwcDisplayPipe::updatePipe(std::shared_ptr<PipeStat> & stat) {
         if (cfg.modeCrtcId != cfg.hwcCrtcId) {
             std::vector<std::shared_ptr<HwDisplayPlane>> planes;
             getPlanes (cfg.modeCrtcId,  planes);
+            stat->modeCrtc->unbind();
             stat->modeCrtc->bind(stat->modeConnector, planes);
             stat->modeCrtc->loadProperities();
             stat->modeCrtc->update();
@@ -228,6 +234,11 @@ int32_t HwcDisplayPipe::updatePipe(std::shared_ptr<PipeStat> & stat) {
             stat->hwcVsync->setSoftwareMode();
         } else {
             stat->hwcVsync->setHwMode(stat->modeCrtc);
+        }
+
+        drm_mode_info_t mode;
+        if (0 == stat->modeMgr->getDisplayMode(mode)) {
+            stat->hwcVsync->setPeriod(1e9 / mode.refreshRate);
         }
 
         stat->hwcDisplay->setVsync(stat->hwcVsync);

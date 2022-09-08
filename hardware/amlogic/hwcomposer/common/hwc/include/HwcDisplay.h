@@ -39,6 +39,7 @@ public:
     virtual void onHotplug(bool connected) = 0;
     virtual void onUpdate(bool bHdcp) = 0;
     virtual void onModeChanged(int stage) = 0;
+    virtual void cleanupBeforeDestroy() = 0;
 };
 
 #endif

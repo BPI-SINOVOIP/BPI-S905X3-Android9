@@ -15,12 +15,30 @@
  */
 
 package vendor.amlogic.hardware.subtitleserver@1.0;
+import android.hidl.memory.token@1.0::IMemoryToken;
 
 enum Result : uint32_t {
     OK,                  // Success
     FAIL,                // Failure, unknown reason
 };
 
+enum OpenType : int32_t {
+    TYPE_MIDDLEWARE = 0,  // from middleware, which no UI.
+    TYPE_APPSDK,          // use SubtitleManager java SDK
+};
+
+enum FallthroughUiCmd : int32_t {
+    CMD_UI_SHOW = 0,
+    CMD_UI_HIDE,
+    CMD_UI_SET_TEXTCOLOR,
+    CMD_UI_SET_TEXTSIZE,
+    CMD_UI_SET_GRAVITY,
+    CMD_UI_SET_TEXTSTYLE,
+    CMD_UI_SET_POSHEIGHT,
+    CMD_UI_SET_IMGRATIO,
+    CMD_UI_SET_SUBDEMISION,
+    CMD_UI_SET_SURFACERECT,
+};
 /**
  * connect to server type
  */
@@ -31,9 +49,11 @@ enum ConnectType : int32_t {
 };
 
 struct SubtitleHidlParcel {
+    uint32_t msgOwner; // which callback own this?
     uint32_t msgType;
 
     vec<int32_t> bodyInt;
     vec<string> bodyString;
     vec<float> bodyFloat;
+    memory mem;
 };

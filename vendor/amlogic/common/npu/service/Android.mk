@@ -90,13 +90,25 @@ LOCAL_SHARED_LIBRARIES += libfmq \
                           libui \
                           android.hardware.neuralnetworks@1.2
 
-LOCAL_MODULE      := android.hardware.neuralnetworks@1.2-service-ovx-driver
+ifeq ($(shell expr $(PLATFORM_VERSION) ">=" R),1)
+LOCAL_SHARED_LIBRARIES += \
+                          android.hardware.neuralnetworks@1.3
 
+LOCAL_CFLAGS += -DANDROID_NN_API=30
+endif
+
+LOCAL_MODULE      := android.hardware.neuralnetworks@1.2-service-ovx-driver
+LOCAL_INIT_RC := android.hardware.neuralnetworks@1.2-service-ovx-driver.rc
 else
 LOCAL_SHARED_LIBRARIES += libneuralnetworks
 LOCAL_MODULE      := android.hardware.neuralnetworks@1.1-service-ovx-driver
+LOCAL_INIT_RC := android.hardware.neuralnetworks@1.1-service-ovx-driver.rc
 endif
 
+
+else
+
+LOCAL_MODULE      := android.hardware.neuralnetworks@1.0-service-ovx-driver
 endif
 
 LOCAL_CFLAGS += -DANDROID_SDK_VERSION=$(PLATFORM_SDK_VERSION)  -Wno-error=unused-parameter
@@ -109,8 +121,8 @@ else
 LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)
 endif
 
-LOCAL_INIT_RC := android.hardware.neuralnetworks@1.1-service-ovx-driver.rc
 LOCAL_MODULE_RELATIVE_PATH := hw
+#LOCAL_INIT_RC := android.hardware.neuralnetworks@1.1-service-ovx-driver.rc
 
 LOCAL_CFLAGS += -DANDROID_SDK_VERSION=$(PLATFORM_SDK_VERSION)  -Wno-error=unused-parameter\
                 -Wno-unused-private-field \

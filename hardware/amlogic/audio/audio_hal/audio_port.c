@@ -29,8 +29,26 @@
 #include "audio_hw_utils.h"
 #include "audio_hwsync.h"
 
-#define BUFF_CNT 4
-#define SYS_BUFF_CNT 4
+#define BUFF_CNT                    (4)
+#define SYS_BUFF_CNT                (4)
+
+#define ENUM_INPUT_PORT_TYPE_TO_STR(x, pStr)              ENUM_TYPE_TO_STR(x, strlen("AML_MIXER_INPUT_PORT_"), pStr)
+
+const char *inportType2Str(aml_mixer_input_port_type_e enInportType)
+{
+    static char acTypeStr[ENUM_TYPE_STR_MAX_LEN];
+    char *pStr = "INVALID";
+    switch (enInportType) {
+        ENUM_INPUT_PORT_TYPE_TO_STR(AML_MIXER_INPUT_PORT_INVAL, pStr)
+        ENUM_INPUT_PORT_TYPE_TO_STR(AML_MIXER_INPUT_PORT_PCM_SYSTEM, pStr)
+        ENUM_INPUT_PORT_TYPE_TO_STR(AML_MIXER_INPUT_PORT_PCM_DIRECT, pStr)
+        ENUM_INPUT_PORT_TYPE_TO_STR(AML_MIXER_INPUT_PORT_PCM_MMAP, pStr)
+        ENUM_INPUT_PORT_TYPE_TO_STR(AML_MIXER_INPUT_PORT_BUTT, pStr)
+    }
+    sprintf(acTypeStr, "[%d]%s", enInportType, pStr);
+    return acTypeStr;
+}
+
 static ssize_t input_port_write(struct input_port *port, const void *buffer, int bytes)
 {
     unsigned char *data = (unsigned char *)buffer;
@@ -39,9 +57,9 @@ static ssize_t input_port_write(struct input_port *port, const void *buffer, int
 
     written = ring_buffer_write(port->r_buf, data, bytes_to_write, UNCOVER_WRITE);
     if (getprop_bool("media.audiohal.inport")) {
-        if (port->port_index == MIXER_INPUT_PORT_PCM_SYSTEM)
+        if (port->enInPortType == AML_MIXER_INPUT_PORT_PCM_SYSTEM)
             aml_audio_dump_audio_bitstreams("/data/audio/inportSys.raw", buffer, written);
-        //else if (port->port_index == MIXER_INPUT_PORT_PCM_DIRECT)
+        //else if (port->port_index == AML_MIXER_INPUT_PORT_PCM_DIRECT)
             //aml_audio_dump_audio_bitstreams("/data/audio/inportDirect.raw", buffer, written);
     }
 
@@ -70,7 +88,7 @@ bool ring_buf_ready(struct input_port *port)
 
     if (0) {
         ALOGI("%s, port index %d, avail %d, chunk len %d",
-            __func__, port->port_index, read_avail, port->data_len_bytes);
+            __func__, port->enInPortType, read_avail, port->data_len_bytes);
     }
 
     return (read_avail >= (int)port->data_len_bytes);
@@ -85,16 +103,16 @@ uint32_t inport_get_latency_frames(struct input_port *port) {
     uint32_t latency_frames = inport_buffer_level(port) / frame_size;
     // return full frames latency when no data in ring buffer
     if (latency_frames == 0)
-        return port->rbuf_size / frame_size;
+        return port->r_buf->size / frame_size;
 
     return latency_frames;
 }
 
-enum MIXER_INPUT_PORT get_input_port_index(struct audio_config *config,
+aml_mixer_input_port_type_e get_input_port_index(struct audio_config *config,
         audio_output_flags_t flags)
 {
     int channel_cnt = 2;
-    enum MIXER_INPUT_PORT port_index = MIXER_INPUT_PORT_PCM_SYSTEM;
+    aml_mixer_input_port_type_e enPortType = AML_MIXER_INPUT_PORT_PCM_SYSTEM;
 
     channel_cnt = audio_channel_count_from_out_mask(config->channel_mask);
     switch (config->format) {
@@ -104,10 +122,12 @@ enum MIXER_INPUT_PORT get_input_port_index(struct audio_config *config,
             if (1) {
                 ALOGI("%s(), samplerate %d", __func__, config->sample_rate);
                 // FIXME: remove channel check when PCM_SYSTEM_SOUND supports multi-channel
-                if (is_direct_flags(flags) || channel_cnt > 2) {
-                    port_index = MIXER_INPUT_PORT_PCM_DIRECT;
+                if (AUDIO_OUTPUT_FLAG_MMAP_NOIRQ & flags) {
+                    enPortType = AML_MIXER_INPUT_PORT_PCM_MMAP;
+                } else if (is_direct_flags(flags) || channel_cnt > 2) {
+                    enPortType = AML_MIXER_INPUT_PORT_PCM_DIRECT;
                 } else {
-                    port_index = MIXER_INPUT_PORT_PCM_SYSTEM;
+                    enPortType = AML_MIXER_INPUT_PORT_PCM_SYSTEM;
                 }
                 break;
             }
@@ -120,7 +140,7 @@ enum MIXER_INPUT_PORT get_input_port_index(struct audio_config *config,
                     __func__, config->format);
     }
 
-    return port_index;
+    return enPortType;
 }
 
 void inport_reset(struct input_port *port)
@@ -223,7 +243,7 @@ static int inport_padding_zero(struct input_port *port, size_t bytes)
 {
     char *feed_mem = NULL;
     ALOGI("%s(), padding size %d 0s to inport %d",
-            __func__, bytes, port->port_index);
+            __func__, bytes, port->enInPortType);
     feed_mem = calloc(1, bytes);
     if (!feed_mem) {
         ALOGE("%s(), no memory", __func__);
@@ -243,7 +263,7 @@ int set_inport_padding_size(struct input_port *port, size_t bytes)
 }
 
 struct input_port *new_input_port(
-        //enum MIXER_INPUT_PORT port_index,
+        //aml_mixer_input_port_type_e port_index,
         //audio_format_t format//,
         size_t buf_frames,
         struct audio_config *config,
@@ -253,10 +273,11 @@ struct input_port *new_input_port(
 {
     struct input_port *port = NULL;
     struct ring_buffer *ringbuf = NULL;
-    enum MIXER_INPUT_PORT port_index;
+    aml_mixer_input_port_type_e enPortType;
     int channel_cnt = 2;
     char *data = NULL;
-    int rbuf_size = 0, thunk_size = 0;
+    int input_port_rbuf_size = 0;
+    int thunk_size = 0;
     int ret = 0;
 
     port = calloc(1, sizeof(struct input_port));
@@ -279,28 +300,25 @@ struct input_port *new_input_port(
         goto err_rbuf;
     }
 
-    port_index = get_input_port_index(config, flags);
+    enPortType = get_input_port_index(config, flags);
     // system buffer larger than direct to cache more for mixing?
-    if (port_index == MIXER_INPUT_PORT_PCM_SYSTEM) {
-        rbuf_size = thunk_size * SYS_BUFF_CNT;
+    if (enPortType == AML_MIXER_INPUT_PORT_PCM_SYSTEM) {
+        input_port_rbuf_size = thunk_size * SYS_BUFF_CNT;
     } else {
-        rbuf_size = thunk_size * BUFF_CNT;
+        input_port_rbuf_size = thunk_size * BUFF_CNT;
     }
 
-    ALOGD("%s(), index:%d, rbuf size:%d, direct_on:%d",
-            __func__, port_index, rbuf_size, direct_on);
-    ALOGD("%s(), fmt %#x, rate %d",
-            __func__, port->cfg.format, port->cfg.sampleRate);
-    ret = ring_buffer_init(ringbuf, rbuf_size);
+    ALOGD("[%s:%d] inport:%s, rbuf size:%d, direct_on:%d, format:%#x, rate:%d", __func__, __LINE__,
+        inportType2Str(enPortType), input_port_rbuf_size, direct_on, port->cfg.format, port->cfg.sampleRate);
+    ret = ring_buffer_init(ringbuf, input_port_rbuf_size);
     if (ret) {
-        ALOGE("init ring buffer fail, buffer_size = %d", rbuf_size);
+        ALOGE("init ring buffer fail, buffer_size = %d", input_port_rbuf_size);
         goto err_rbuf_init;
     }
 
-    port->port_index = port_index;
+    port->enInPortType = enPortType;
     //port->format = config->format;
     port->r_buf = ringbuf;
-    port->rbuf_size = rbuf_size;
     port->data_valid = 0;
     port->data = data;
     port->data_buf_frame_cnt = buf_frames;
@@ -316,8 +334,8 @@ struct input_port *new_input_port(
     list_init(&port->msg_list);
     //TODO
     //set_inport_hwsync(port);
-    //if (port_index == MIXER_INPUT_PORT_PCM_SYSTEM && !direct_on) {
-    //if (port_index == MIXER_INPUT_PORT_PCM_SYSTEM) {
+    //if (port_index == AML_MIXER_INPUT_PORT_PCM_SYSTEM && !direct_on) {
+    //if (port_index == AML_MIXER_INPUT_PORT_PCM_SYSTEM) {
     //    inport_padding_zero(port, rbuf_size);
     //}
     return port;
@@ -395,16 +413,6 @@ err_rbuf_init:
     return ret;
 }
 
-void set_inport_hwsync(struct input_port *port)
-{
-    ALOGD("%s()", __func__);
-    port->is_hwsync = true;
-}
-bool is_inport_hwsync(struct input_port *port)
-{
-    return port->is_hwsync;
-}
-
 void set_inport_volume(struct input_port *port, float vol)
 {
     ALOGD("%s(), volume %f", __func__, vol);
@@ -436,7 +444,7 @@ int set_port_meta_data_cbk(struct input_port *port,
         meta_data_cbk_t meta_data_cbk,
         void *data)
 {
-    if (!is_inport_hwsync(port)) {
+    if (false == port->is_hwsync) {
         ALOGE("%s(), can't set meta data callback", __func__);
         return -EINVAL;
     }
@@ -474,6 +482,7 @@ static ssize_t output_port_start(struct output_port *port)
     pcm_cfg.rate = cfg.sampleRate;
     pcm_cfg.period_size = DEFAULT_PLAYBACK_PERIOD_SIZE;
     pcm_cfg.period_count = DEFAULT_PLAYBACK_PERIOD_CNT;
+    pcm_cfg.start_threshold = pcm_cfg.period_size * pcm_cfg.period_count / 2;
     //pcm_cfg.stop_threshold = pcm_cfg.period_size * pcm_cfg.period_count - 128;
     //pcm_cfg.silence_threshold = pcm_cfg.stop_threshold;
     //pcm_cfg.silence_size = 1024;
@@ -556,6 +565,15 @@ static ssize_t output_port_write_alsa(struct output_port *port, void *buffer, in
         usleep(5000);
         return bytes;
     }
+    if (buffer == NULL) {
+        ALOGE("[%s:%d] buffer is null", __func__, __LINE__);
+        return bytes;
+    }
+
+    if (port->pcm_handle == NULL) {
+        ALOGE("[%s:%d] pcm_handle is null", __func__, __LINE__);
+        return bytes;
+    }
 
     if (port->sound_track_mode == 3)
            port->sound_track_mode = AM_AOUT_OUTPUT_LRMIX;
@@ -606,10 +624,8 @@ struct output_port *new_output_port(
         size_t buf_frames)
 {
     struct output_port *port = NULL;
-    struct ring_buffer *ringbuf = NULL;
     char *data = NULL;
     int rbuf_size = buf_frames * cfg.frame_size;
-    int ret = 0;
 
     port = calloc(1, sizeof(struct output_port));
     if (!port) {
@@ -622,37 +638,19 @@ struct output_port *new_output_port(
         ALOGE("%s(), no memory", __func__);
         goto err_data;
     }
-    /* not used */
-    ringbuf = calloc(1, sizeof(struct ring_buffer));
-    if (!ringbuf) {
-        ALOGE("%s(), no memory", __func__);
-        goto err_rbuf;
-    }
-    ret = ring_buffer_init(ringbuf, rbuf_size *2);
-    if (ret) {
-        ALOGE("init ring buffer fail, buffer_size = %d", rbuf_size*2);
-        goto err_rbuf_init;
-    }
-    //ret = pthread_create(&port->out_port_tid, NULL, port_threadloop, port);
-    //if (ret < 0)
-    //    ALOGE("%s() thread run failed.", __func__);
 
-    port->port_index = port_index;
+    port->enOutPortType = port_index;
     port->cfg = cfg;
-    port->r_buf = ringbuf;
     port->data_buf_frame_cnt = buf_frames;
     port->data_buf_len = rbuf_size;
     port->data_buf = data;
     port->start = output_port_start;
     port->standby = output_port_standby;
-    //port->write = output_port_write;
     port->write = output_port_write_alsa;
     port->port_status = STOPPED;
 
     return port;
 
-err_rbuf_init:
-    free(ringbuf);
 err_rbuf:
     free(data);
 err_data:
@@ -668,11 +666,8 @@ int free_output_port(struct output_port *port)
         return -EINVAL;
     }
 
-    ring_buffer_release(port->r_buf);
-    free(port->r_buf);
     free(port->data_buf);
     free(port);
-
     return 0;
 }
 
@@ -704,9 +699,9 @@ err_data:
     return ret;
 }
 
-bool is_inport_valid(enum MIXER_INPUT_PORT index)
+bool is_inport_valid(aml_mixer_input_port_type_e index)
 {
-    return (index >= 0 && index < MIXER_INPUT_PORT_NUM);
+    return (index >= AML_MIXER_INPUT_PORT_PCM_SYSTEM && index < AML_MIXER_INPUT_PORT_BUTT);
 }
 
 bool is_outport_valid(enum MIXER_OUTPUT_PORT index)

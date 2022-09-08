@@ -6275,11 +6275,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             }
 
             case KeyEvent.KEYCODE_POWER: {
-		boolean productTest = SystemProperties.getBoolean("sys.test.producttest", false);
-		if (productTest) {
-			Log.d(TAG, "BPI Ignore power key sleep for product test");
-			break;
-		}
+               /* bpi, factory test */
+               boolean productTest = SystemProperties.getBoolean("sys.test.producttest", false);
+               if (productTest) {
+                     Log.d(TAG, "BPI Ignore power key sleep for product test");
+                     break;
+               }
 
                 // Any activity on the power button stops the accessibility shortcut
                 cancelPendingAccessibilityShortcutAction();

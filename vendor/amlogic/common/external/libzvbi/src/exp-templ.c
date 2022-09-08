@@ -123,7 +123,7 @@ tmpl_options[] = {
 static vbi_option_info *
 option_enum(vbi_export *e, int index)
 {
-	e = e;
+	(void)e;
 
 	/* Enumeration 0 ... n */
 	if (index < 0 || index >= (int) elements(tmpl_options))

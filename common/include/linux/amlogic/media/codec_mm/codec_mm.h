@@ -112,6 +112,7 @@ struct codec_mm_s {
 	int mem_id;
 	int next_bit;
 	struct list_head list;
+	u32 tvp_handle;
 };
 struct codec_mm_s *codec_mm_alloc(const char *owner, int size,
 		int align2n, int memflags);
@@ -150,6 +151,8 @@ int codec_mm_get_total_size(void);
 int codec_mm_get_free_size(void);
 int codec_mm_get_reserved_size(void);
 int codec_mm_enough_for_size(int size, int with_wait);
+int codec_mm_disable_tvp(void);
+int codec_mm_enable_tvp(void);
 int codec_mm_video_tvp_enabled(void);
 void *codec_mm_dma_alloc_coherent(const char *owner, int size,
 			dma_addr_t *dma_handle, gfp_t flag, int memflags);
@@ -160,5 +163,6 @@ struct device *v4l_get_dev_from_codec_mm(void);
 struct codec_mm_s *v4l_reqbufs_from_codec_mm(const char *owner,
 	unsigned int addr, unsigned int size, unsigned int index);
 void v4l_freebufs_back_to_codec_mm(const char *owner, struct codec_mm_s *mem);
+void codec_mm_memset(ulong phys, u32 val, u32 size);
 
 #endif

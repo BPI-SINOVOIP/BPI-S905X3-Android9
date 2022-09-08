@@ -73,7 +73,7 @@ struct GroupedConv2DOperation : Operation {
     std::vector<int32_t> dilations;
     std::vector<int32_t> pad;
     PadType padType{PadType::AUTO};
-    int groups{1};
+    int32_t groups{1};
 };
 
 struct DepthwiseConv2DOperation : Operation {

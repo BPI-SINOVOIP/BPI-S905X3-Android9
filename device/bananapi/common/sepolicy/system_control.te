@@ -88,6 +88,7 @@ set_prop(system_control, ctl_bugreport_prop)
 allow system_control block_device:dir r_dir_perms;
 
 allow system_control sysfs_audio_cap:file {open getattr read};
+allow system_control sysfs_audio:dir {search};
 allow system_control sysfs_audio:file {open getattr read};
 allow system_control sysfs_video:file rw_file_perms;
 allow system_control { sysfs_video sysfs_cec sysfs_am_vecm }:dir { search };

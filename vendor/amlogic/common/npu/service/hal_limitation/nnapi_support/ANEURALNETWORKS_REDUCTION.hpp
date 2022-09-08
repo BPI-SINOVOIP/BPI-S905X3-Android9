@@ -238,14 +238,14 @@ OP_SPEC_BEGIN()
 OP_SPEC_END()
 
 // order of argument is important
-MAKE_SPEC(float16_base)
-    .input_(nnrt::OperandType::TENSOR_FLOAT16)
+MAKE_SPEC(base)
+    .input_(nnrt::OperandType::TENSOR_FLOAT32)
     .axes_(nnrt::OperandType::TENSOR_INT32)
     .keep_dim_(nnrt::OperandType::BOOL));
 
-    OVERRIDE_SPEC(float16_base, float32)
-    .input_(nnrt::OperandType::TENSOR_FLOAT32)
-    );
+    // OVERRIDE_SPEC(base, float16)
+    // .input_(nnrt::OperandType::TENSOR_FLOAT16)
+    // );
 
 #undef ARG_NAMES
 #undef ARGC

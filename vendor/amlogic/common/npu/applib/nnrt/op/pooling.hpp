@@ -121,8 +121,8 @@ struct L2Pool2DOperation : TPoolOperation<OperationType::L2_POOL_2D> {
 
 struct Unpool2DOperation : Operation {
     Unpool2DOperation() : Operation(OperationType::UNPOOL_2D) {}
-    int output_height;
-    int output_width;
+    int32_t output_height;
+    int32_t output_width;
 };
 }
 }

@@ -855,8 +855,8 @@ _vbi_strndup_iconv		(unsigned long *	out_size,
 		return strndup_identity (out_size, src, src_size);
 	} else if (same_codeset (src_codeset, "UCS2")) {
 		if (NULL != src && 0 != (src_size & 1)) {
-			if (NULL != out_size)
-				*out_size = 0;
+			//if (NULL != out_size)
+			//	*out_size = 0;
 			errno = EILSEQ;
 			return NULL;
 		}

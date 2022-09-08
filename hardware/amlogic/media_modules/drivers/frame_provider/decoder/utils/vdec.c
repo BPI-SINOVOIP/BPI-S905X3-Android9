@@ -86,12 +86,25 @@ static int keep_vdec_mem;
 static unsigned int debug_trace_num = 16 * 20;
 static int step_mode;
 static unsigned int clk_config;
+
 /*
-   &1: sched_priority to MAX_RT_PRIO -1.
-   &2: always reload firmware.
-   &4: vdec canvas debug enable
-  */
-static unsigned int debug = 2;
+ * 0x1  : sched_priority to MAX_RT_PRIO -1.
+ * 0x2  : always reload firmware.
+ * 0x4  : vdec canvas debug enable
+ * 0x100: enable vdec fence.
+ */
+#define VDEC_DBG_SCHED_PRIO	(0x1)
+#define VDEC_DBG_ALWAYS_LOAD_FW	(0x2)
+#define VDEC_DBG_CANVAS_STATUS	(0x4)
+#define VDEC_DBG_ENABLE_FENCE	(0x100)
+
+static u32 debug = VDEC_DBG_ALWAYS_LOAD_FW;
+
+u32 vdec_get_debug(void)
+{
+    return debug;
+}
+EXPORT_SYMBOL(vdec_get_debug);
 
 static int hevc_max_reset_count;
 
@@ -111,6 +124,8 @@ static DEFINE_SPINLOCK(vdec_spin_lock);
 
 #define PRINT_FRAME_INFO 1
 #define DISABLE_FRAME_INFO 2
+
+#define RESET7_REGISTER_LEVEL 0x1127
 
 static int frameinfo_flag = 0;
 //static int path_debug = 0;
@@ -189,6 +204,23 @@ static const char * const vdec_status_string[] = {
 	"VDEC_STATUS_CONNECTED",
 	"VDEC_STATUS_ACTIVE"
 };
+/*
+bit [28] enable print
+bit [23:16] etc
+bit [15:12]
+	none 0 and not 0x1: force single
+	none 0 and 0x1: force multi
+bit [8]
+	1: force dual
+bit [3]
+	1: use mavs for single mode
+bit [2]
+	1: force vfm path for frame mode
+bit [1]
+	1: force esparser auto mode
+bit [0]
+	1: disable audo manual mode ??
+*/
 
 static int debugflags;
 
@@ -237,6 +269,13 @@ int vdec_get_debug_flags(void)
 	return debugflags;
 }
 EXPORT_SYMBOL(vdec_get_debug_flags);
+
+void VDEC_PRINT_FUN_LINENO(const char *fun, int line)
+{
+	if (debugflags & 0x10000000)
+		pr_info("%s, %d\n", fun, line);
+}
+EXPORT_SYMBOL(VDEC_PRINT_FUN_LINENO);
 
 unsigned char is_mult_inc(unsigned int type)
 {
@@ -928,7 +967,7 @@ static const char * const vdec_device_name[] = {
 static const char *get_dev_name(bool use_legacy_vdec, int format)
 {
 #ifdef CONFIG_AMLOGIC_MEDIA_MULTI_DEC
-	if (use_legacy_vdec)
+	if (use_legacy_vdec && (debugflags & 0x8) == 0)
 		return vdec_device_name[format * 2];
 	else
 		return vdec_device_name[format * 2 + 1];
@@ -2106,7 +2145,7 @@ s32 vdec_init(struct vdec_s *vdec, int is_4k)
 			vdec->format == VFORMAT_VP9) ?
 				VDEC_INPUT_TARGET_HEVC :
 				VDEC_INPUT_TARGET_VLD);
-	if (vdec_single(vdec))
+	if (vdec_single(vdec) || (vdec_get_debug_flags() & 0x2))
 		vdec_enable_DMC(vdec);
 	p->cma_dev = vdec_core->cma_dev;
 	p->get_canvas = get_canvas;
@@ -2118,6 +2157,8 @@ s32 vdec_init(struct vdec_s *vdec, int is_4k)
 	/* todo */
 	if (!vdec_dual(vdec))
 		p->use_vfm_path = vdec_stream_based(vdec);
+	if (debugflags & 0x4)
+		p->use_vfm_path = 1;
 	/* vdec_dev_reg.flag = 0; */
 	if (vdec->id >= 0)
 		id = vdec->id;
@@ -2252,6 +2293,33 @@ s32 vdec_init(struct vdec_s *vdec, int is_4k)
 				vdec->vf_receiver_name, "amvideo");
 			snprintf(vdec->vfm_map_id, VDEC_MAP_NAME_SIZE,
 				"vdec-map-%d", vdec->id);
+		} else if (p->frame_base_video_path ==
+				FRAME_BASE_PATH_V4LVIDEO) {
+#ifdef CONFIG_AMLOGIC_V4L_VIDEO3
+			r = v4lvideo_assign_map(&vdec->vf_receiver_name,
+					&vdec->vf_receiver_inst);
+#else
+			r = -1;
+#endif
+			if (r < 0) {
+				pr_err("V4lVideo frame receiver allocation failed.\n");
+				mutex_lock(&vdec_mutex);
+				inited_vcodec_num--;
+				mutex_unlock(&vdec_mutex);
+				goto error;
+			}
+			snprintf(vdec->vfm_map_chain, VDEC_MAP_NAME_SIZE,
+				"%s %s", vdec->vf_provider_name,
+				vdec->vf_receiver_name);
+			snprintf(vdec->vfm_map_id, VDEC_MAP_NAME_SIZE,
+				"vdec-map-%d", vdec->id);
+		} else if (p->frame_base_video_path ==
+			FRAME_BASE_PATH_AMLVIDEO_FENCE) {
+			snprintf(vdec->vfm_map_chain, VDEC_MAP_NAME_SIZE,
+				"%s %s", vdec->vf_provider_name,
+				"amlvideo amvideo");
+			snprintf(vdec->vfm_map_id, VDEC_MAP_NAME_SIZE,
+				"vdec-map-%d", vdec->id);
 		}
 
 		if (vfm_map_add(vdec->vfm_map_id,
@@ -2347,6 +2415,34 @@ error:
 }
 EXPORT_SYMBOL(vdec_init);
 
+/*
+ *Remove the vdec after timeout happens both in vdec_disconnect
+ *and platform_device_unregister. Then after, we can release the vdec.
+ */
+static void vdec_connect_list_force_clear(struct vdec_core_s *core, struct vdec_s *v_ref)
+{
+	struct vdec_s *vdec, *tmp;
+	unsigned long flags;
+
+	flags = vdec_core_lock(core);
+
+	list_for_each_entry_safe(vdec, tmp,
+		&core->connected_vdec_list, list) {
+		if ((vdec->status == VDEC_STATUS_DISCONNECTED) &&
+		    (vdec == v_ref)) {
+		    pr_err("%s, vdec = %p, active vdec = %p\n",
+				__func__, vdec, core->active_vdec);
+			if (core->active_vdec == v_ref)
+				core->active_vdec = NULL;
+			if (core->last_vdec == v_ref)
+				core->last_vdec = NULL;
+			list_del(&vdec->list);
+		}
+	}
+
+	vdec_core_unlock(core, flags);
+}
+
 /* vdec_create/init/release/destroy are applied to both dual running decoders
  */
 void vdec_release(struct vdec_s *vdec)
@@ -2399,6 +2495,8 @@ void vdec_release(struct vdec_s *vdec)
 	if (atomic_read(&vdec_core->vdec_nr) == 1)
 		vdec_disable_DMC(vdec);
 	platform_device_unregister(vdec->dev);
+	/*Check if the vdec still in connected list, if yes, delete it*/
+	vdec_connect_list_force_clear(vdec_core, vdec);
 	pr_debug("vdec_release instance %p, total %d\n", vdec,
 		atomic_read(&vdec_core->vdec_nr));
 	if (vdec->use_vfm_path) {
@@ -2791,13 +2889,13 @@ void vdec_prepare_run(struct vdec_s *vdec, unsigned long mask)
 	if (!vdec_core_with_input(mask))
 		return;
 
-	if (secure && vdec_stream_based(vdec) && force_nosecure_even_drm)
+	if (vdec_stream_based(vdec) && !vdec_secure(vdec))
 	{
 		/* Verimatrix ultra webclient (HLS) was played in drmmode and used hw demux. In drmmode VDEC only can access secure.
 		Now HW demux parsed es data to no-secure buffer. So the VDEC input was no-secure, VDEC playback failed. Forcing
 		use nosecure for verimatrix webclient HLS. If in the future HW demux can parse es data to secure buffer, make
 		VDEC r/w secure.*/
-		secure = 0;
+		tee_config_device_secure(DMC_DEV_ID_PARSER, 0);
 		//pr_debug("allow VDEC can access nosecure even in drmmode\n");
 	}
 	if (input->target == VDEC_INPUT_TARGET_VLD)
@@ -3839,6 +3937,7 @@ void hevc_reset_core(struct vdec_s *vdec)
 {
 	unsigned long flags;
 	unsigned int mask = 0;
+	int cpu_type;
 
 	mask = 1 << 4; /*bit4: hevc*/
 	if (get_cpu_major_id() >= AM_MESON_CPU_MAJOR_ID_G12A)
@@ -3857,11 +3956,16 @@ void hevc_reset_core(struct vdec_s *vdec)
 	if (vdec == NULL || input_frame_based(vdec))
 		WRITE_VREG(HEVC_STREAM_CONTROL, 0);
 
+
+	WRITE_VREG(HEVC_SAO_MMU_RESET_CTRL,
+			READ_VREG(HEVC_SAO_MMU_RESET_CTRL) | 1);
+
 		/*
 	 * 2: assist
 	 * 3: parser
 	 * 4: parser_state
 	 * 8: dblk
+	 * 10:wrrsp lmem
 	 * 11:mcpu
 	 * 12:ccpu
 	 * 13:ddr
@@ -3871,13 +3975,49 @@ void hevc_reset_core(struct vdec_s *vdec)
 	 * 18:mpred
 	 * 19:sao
 	 * 24:hevc_afifo
+	 * 26:rst_mmu_n
 	 */
 	WRITE_VREG(DOS_SW_RESET3,
-		(1<<3)|(1<<4)|(1<<8)|(1<<11)|
+		(1<<3)|(1<<4)|(1<<8)|(1<<10)|(1<<11)|
 		(1<<12)|(1<<13)|(1<<14)|(1<<15)|
-		(1<<17)|(1<<18)|(1<<19)|(1<<24));
+		(1<<17)|(1<<18)|(1<<19)|(1<<24)|(1<<26));
 
 	WRITE_VREG(DOS_SW_RESET3, 0);
+	while (READ_VREG(HEVC_WRRSP_LMEM) & 0xfff)
+		;
+	WRITE_VREG(HEVC_SAO_MMU_RESET_CTRL,
+			READ_VREG(HEVC_SAO_MMU_RESET_CTRL) & (~1));
+	cpu_type = get_cpu_major_id();
+	if (cpu_type == AM_MESON_CPU_MAJOR_ID_TL1 &&
+			is_meson_rev_b())
+		cpu_type = AM_MESON_CPU_MAJOR_ID_G12B;
+	switch (cpu_type) {
+	case AM_MESON_CPU_MAJOR_ID_G12B:
+		WRITE_RESET_REG((RESET7_REGISTER_LEVEL),
+				READ_RESET_REG(RESET7_REGISTER_LEVEL) & (~((1<<13)|(1<<14))));
+		WRITE_RESET_REG((RESET7_REGISTER_LEVEL),
+				READ_RESET_REG((RESET7_REGISTER_LEVEL)) | ((1<<13)|(1<<14)));
+		break;
+	case AM_MESON_CPU_MAJOR_ID_G12A:
+	case AM_MESON_CPU_MAJOR_ID_SM1:
+	case AM_MESON_CPU_MAJOR_ID_TL1:
+	case AM_MESON_CPU_MAJOR_ID_TM2:
+		WRITE_RESET_REG((RESET7_REGISTER_LEVEL),
+				READ_RESET_REG(RESET7_REGISTER_LEVEL) & (~((1<<13))));
+		WRITE_RESET_REG((RESET7_REGISTER_LEVEL),
+				READ_RESET_REG((RESET7_REGISTER_LEVEL)) | ((1<<13)));
+		break;
+	#if 0
+	case AM_MESON_CPU_MAJOR_ID_SC2:
+		WRITE_RESET_REG(P_RESETCTRL_RESET5_LEVEL,
+				READ_RESET_REG(P_RESETCTRL_RESET5_LEVEL) & (~((1<<1)|(1<<12)|(1<<13))));
+		WRITE_RESET_REG(P_RESETCTRL_RESET5_LEVEL,
+				READ_RESET_REG(P_RESETCTRL_RESET5_LEVEL) | ((1<<1)|(1<<12)|(1<<13)));
+		break;
+	#endif
+	default:
+		break;
+	}
 
 
 	spin_lock_irqsave(&vdec_spin_lock, flags);

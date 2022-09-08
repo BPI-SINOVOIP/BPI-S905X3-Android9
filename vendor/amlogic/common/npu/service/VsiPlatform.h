@@ -40,13 +40,21 @@
 
 /*alias namespace for Model*/
 #if ANDROID_SDK_VERSION >= 29
+    using android::hardware::hidl_array;
+    using android::hardware::hidl_memory;
+    using android::hidl::memory::V1_0::IMemory;
+#endif
+
+#if ANDROID_SDK_VERSION >= 29
     using android::sp;
     using HidlToken = hidl_array<uint8_t, ANEURALNETWORKS_BYTE_SIZE_OF_CACHE_TOKEN>;
 #endif
 
 namespace android {
 namespace nn {
+namespace hal {}
 namespace vsi_driver {
+    using namespace hal;
 
     template<int ANDROID_VERSION>
     struct Hal{};
@@ -60,6 +68,9 @@ namespace vsi_driver {
         using Operation         = V1_0::Operation;
         using OperationType     = V1_0::OperationType;
         using Model             = V1_0::Model;
+        using OperandLifeTime   = V1_0::OperandLifeTime;
+        using ErrorStatus       = V1_0::ErrorStatus;
+        using Request           = V1_0::Request;
 
         template<typename T_type>
         static inline T_type convertVersion(const T_type& variable){
@@ -82,6 +93,9 @@ namespace vsi_driver {
         using Operation         = V1_1::Operation;
         using OperationType     = V1_1::OperationType;
         using Model             = V1_1::Model;
+        using OperandLifeTime   = V1_0::OperandLifeTime;
+        using ErrorStatus       = V1_0::ErrorStatus;
+        using Request           = V1_0::Request;
 
         template<typename T_type>
         static auto inline convertVersion(T_type variable){
@@ -105,6 +119,9 @@ namespace vsi_driver {
         using Operation         = V1_2::Operation;
         using OperationType     = V1_2::OperationType;
         using Model             = V1_2::Model;
+        using OperandLifeTime   = V1_0::OperandLifeTime;
+        using ErrorStatus       = V1_0::ErrorStatus;
+        using Request           = V1_0::Request;
 
         template<typename T_type>
         static auto inline convertVersion(const T_type& variable) {
@@ -123,6 +140,12 @@ using HalPlatform = struct Hal<29>;
 #else
 using HalPlatform = struct Hal<ANDROID_SDK_VERSION>;
 #endif
+
+using ErrorStatus       = HalPlatform::ErrorStatus;
+using Request           = HalPlatform::Request;
+using OperandLifeTime   = HalPlatform::OperandLifeTime;
+using OperandType       = HalPlatform::OperandType;
+using OperationType     = HalPlatform::OperationType;
 }
 }
 }

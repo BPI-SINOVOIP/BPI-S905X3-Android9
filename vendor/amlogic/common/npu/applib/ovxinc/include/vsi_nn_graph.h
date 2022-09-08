@@ -59,6 +59,14 @@
  * */
 #define VSI_NN_POSTPROC_NODE_UID_BASE   20000
 
+/**
+ * Default data convert node base uid.
+ * When add new data convert node in
+ * graph, node uid is set based on it.
+ * @see vsi_nn_AddPreprocNode
+ * */
+#define VSI_NN_DATACONVERT_NODE_UID_BASE    30000
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -230,6 +238,23 @@ OVXLIB_API vsi_status vsi_nn_VerifyGraph
 OVXLIB_API vsi_status vsi_nn_RunGraph
     (
     vsi_nn_graph_t * graph
+    );
+
+/**
+ * Run graph in asynch way
+ * Invoke the all nodes in graph.
+ *
+ * @param[in] graph Graph handle
+ * @return VSI_SUCCESS on success, or appropriate error code otherwise
+ */
+OVXLIB_API vsi_status vsi_nn_AsyncRunGraph
+    (
+    vsi_nn_graph_t * graph
+    );
+
+OVXLIB_API vsi_status vsi_nn_AsyncRunWait
+    (
+        vsi_nn_graph_t * graph
     );
 
 /**

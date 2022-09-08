@@ -23,7 +23,7 @@
 #define VIDEO_HOLD_SLOWSYNC_THRESHOLD        (TIME_UNIT90K / 10)
 #define AV_DISCONTINUE_THREDHOLD_MIN    (TIME_UNIT90K * 3)
 #define AV_DISCONTINUE_THREDHOLD_MAX    (TIME_UNIT90K * 60)
-
+#define AM_ABSSUB(a, b) (((a) >= (b)) ? ((a)-(b)) : ((b)-(a)))
 enum avevent_e {
 	VIDEO_START,
 	VIDEO_PAUSE,

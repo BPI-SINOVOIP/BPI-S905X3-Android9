@@ -267,6 +267,7 @@ public class KeyButtonView extends ImageView implements ButtonInterface {
                     performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
                 }
                 if (mCode != 0) {
+					//bpi, poweroff button
                     if (mCode == 89) {
                         PoweroffUtils.Poweroff();
                     }

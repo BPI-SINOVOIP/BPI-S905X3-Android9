@@ -192,5 +192,13 @@ aaudio_result_t AAudioServiceEndpointShared::getFreeRunningPosition(int64_t *pos
 
 aaudio_result_t AAudioServiceEndpointShared::getTimestamp(int64_t *positionFrames,
                                                           int64_t *timeNanos) {
-    return mStreamInternal->getTimestamp(CLOCK_MONOTONIC, positionFrames, timeNanos);
+    aaudio_result_t result = mStreamInternal->getTimestamp(CLOCK_MONOTONIC, positionFrames, timeNanos);
+    if (result == AAUDIO_ERROR_INVALID_STATE) {
+        // getTimestamp() can return AAUDIO_ERROR_INVALID_STATE if the stream has
+        // not completely started. This can cause a race condition that kills the
+        // timestamp service thread.  So we reduce the error to a less serious one
+        // that allows the timestamp thread to continue.
+        result = AAUDIO_ERROR_UNAVAILABLE;
+    }
+    return result;
 }

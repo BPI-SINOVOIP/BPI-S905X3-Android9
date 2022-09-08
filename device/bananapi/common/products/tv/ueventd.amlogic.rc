@@ -44,6 +44,7 @@
 /dev/jpegenc		  0660   media     system
 /dev/display              0660   media    graphics
 /dev/videosync            0660   media    graphics
+/dev/amresource_mgr       0666   media     system
 
 #audio data
 /dev/audio_data_debug     0660   mediacodec audio

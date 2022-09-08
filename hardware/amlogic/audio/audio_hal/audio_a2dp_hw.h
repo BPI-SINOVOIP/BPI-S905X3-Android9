@@ -150,6 +150,7 @@ struct a2dp_stream_out {
     aml_audio_resample_t *pstResampler;
     uint32_t rate;
     void * vir_buf_handle;
+    uint64_t last_write_time;
 
 #if defined(AUDIO_EFFECT_EXTERN_DEVICE)
     float bt_gain;

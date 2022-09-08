@@ -409,8 +409,6 @@ vbi_teletext_unicode(vbi_character_set s, vbi_national_subset n, unsigned int c)
 			if (n > 0) {
 				assert(n < 14);
 				/* Ugly change */
-				if (n == 4)
-					n = 2;
 
 				for (i = 0; i < 13; i++)
 					if (c == national_subset[0][i])
@@ -541,7 +539,7 @@ vbi_teletext_composed_unicode(unsigned int a, unsigned int c)
 
 	if (a == 0)
 		return vbi_teletext_unicode(LATIN_G0, NO_SUBSET, c);
-
+	unsigned int reserved  = c;
 	c += a << 12;
 	//Patch: l'--> 7b -->0x2049
 	if (c == 0x206c)
@@ -550,7 +548,7 @@ vbi_teletext_composed_unicode(unsigned int a, unsigned int c)
 	for (i = 0; i < sizeof(composed) / sizeof(composed[0]); i++)
 		if (composed[i] == c)
 			return 0x00C0u + i;
-	return 0;
+	return reserved;
 }
 
 static inline int

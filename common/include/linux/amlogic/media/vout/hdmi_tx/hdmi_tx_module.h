@@ -27,7 +27,7 @@
 #include <linux/pinctrl/consumer.h>
 
 /* HDMITX driver version */
-#define HDMITX_VER "20190815"
+#define HDMITX_VER "20200617.1"
 
 /* chip type */
 #define MESON_CPU_ID_M8B		0
@@ -410,7 +410,8 @@ struct hdmitx_dev {
 	unsigned char EDID_buf1[EDID_MAX_BLOCK*128]; /* for second read */
 	unsigned char tmp_edid_buf[128*EDID_MAX_BLOCK];
 	unsigned char *edid_ptr;
-	unsigned int edid_parsing; /* Indicator that RX edid data integrated */
+	/* indicate RX edid data integrated, HEAD valid and checksum pass */
+	unsigned int edid_parsing;
 	unsigned char EDID_hash[20];
 	struct rx_cap rxcap;
 	struct hdmitx_vidpara *cur_video_param;
@@ -481,6 +482,7 @@ struct hdmitx_dev {
 	unsigned int hdr10plus_feature;
 	enum eotf_type hdmi_current_eotf_type;
 	enum mode_type hdmi_current_tunnel_mode;
+	bool hdmi_current_signal_sdr;
 	unsigned int flag_3dfp:1;
 	unsigned int flag_3dtb:1;
 	unsigned int flag_3dss:1;
@@ -488,6 +490,7 @@ struct hdmitx_dev {
 	unsigned int cedst_en:1; /* configure in DTS */
 	unsigned int hdr_priority:1;
 	unsigned int drm_feature;/*Direct Rander Management*/
+	bool systemcontrol_on;
 };
 
 #define CMD_DDC_OFFSET          (0x10 << 24)
@@ -566,6 +569,7 @@ struct hdmitx_dev {
 #define CONF_CLR_VSDB_PACKET    (CMD_CONF_OFFSET + 0x05)
 #define CONF_VIDEO_MAPPING	(CMD_CONF_OFFSET + 0x06)
 #define CONF_GET_HDMI_DVI_MODE	(CMD_CONF_OFFSET + 0x07)
+#define CONF_CLR_DV_VS10_SIG	(CMD_CONF_OFFSET + 0x10)
 
 #define CONF_AUDIO_MUTE_OP      (CMD_CONF_OFFSET + 0x1000 + 0x00)
 #define AUDIO_MUTE          0x1
@@ -663,6 +667,8 @@ extern void hdmitx_edid_ram_buffer_clear(struct hdmitx_dev *hdmitx_device);
 extern void hdmitx_edid_buf_compare_print(struct hdmitx_dev *hdmitx_device);
 
 extern const char *hdmitx_edid_get_native_VIC(struct hdmitx_dev *hdmitx_device);
+bool hdmitx_check_edid_all_zeros(unsigned char *buf);
+bool hdmitx_edid_notify_ng(unsigned char *buf);
 
 /* VSIF: Vendor Specific InfoFrame
  * It has multiple purposes:
@@ -761,6 +767,7 @@ extern int get_hpd_state(void);
 extern int hdmitx_event_notifier_regist(struct notifier_block *nb);
 extern int hdmitx_event_notifier_unregist(struct notifier_block *nb);
 extern void hdmitx_event_notify(unsigned long state, void *arg);
+bool is_tv_changed(void);
 extern void hdmitx_hdcp_status(int hdmi_authenticated);
 #else
 static inline struct hdmitx_dev *get_hdmitx_device(void)
@@ -877,5 +884,13 @@ extern unsigned int hdmitx_rd_check_reg(unsigned int addr,
 	unsigned int exp_data,
 	unsigned int mask);
 extern void vsem_init_cfg(struct hdmitx_dev *hdev);
+void update_current_para(struct hdmitx_dev *hdev);
 
+enum hdmi_tf_type hdmitx_get_cur_hdr_st(void);
+enum hdmi_tf_type hdmitx_get_cur_dv_st(void);
+enum hdmi_tf_type hdmitx_get_cur_hdr10p_st(void);
+bool hdmitx_hdr_en(void);
+bool hdmitx_dv_en(void);
+bool hdmitx_hdr10p_en(void);
+int hdmitx_uboot_already_display(void);
 #endif

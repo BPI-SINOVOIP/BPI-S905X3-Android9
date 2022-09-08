@@ -35,9 +35,9 @@ class ExpandDimsValidate : public OperationValidate<T_model, T_Operation> {
    public:
     ExpandDimsValidate(const T_model& model, const T_Operation& operation)
         : OperationValidate<T_model, T_Operation>(model, operation) {}
-    virtual bool SignatureCheck() override {
-        return hal::limitation::nnapi::match("ExpandDimsInput", this->m_InputArgTypes) &&
-               hal::limitation::nnapi::match("ExpandDimsOutput", this->m_OutputArgTypes);
+    bool SignatureCheck(std::string& reason) override {
+        return ::hal::limitation::nnapi::match("ExpandDimsInput", this->InputArgTypes()) &&
+               ::hal::limitation::nnapi::match("ExpandDimsOutput", this->OutputArgTypes());
     };
 };
 

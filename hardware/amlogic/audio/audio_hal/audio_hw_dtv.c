@@ -2070,14 +2070,6 @@ static int dtv_patch_pcm_write(unsigned char *pcm_data, int size,
         }
     }
 
-    if (aml_dev->tv_mute) {
-        memset(write_buf, 0, write_size);
-        if (aml_dev->need_reset_ringbuffer) {
-            ring_buffer_reset(ringbuffer);
-            aml_dev->need_reset_ringbuffer = 0;
-        }
-    }
-
     ring_buffer_write(ringbuffer, (unsigned char *)write_buf, write_size,
                       UNCOVER_WRITE);
 

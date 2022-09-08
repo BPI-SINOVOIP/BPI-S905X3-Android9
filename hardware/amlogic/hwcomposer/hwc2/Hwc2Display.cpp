@@ -29,6 +29,7 @@ Hwc2Display::Hwc2Display(std::shared_ptr<Hwc2DisplayObserver> observer) {
     mPowerMode  = std::make_shared<HwcPowerMode>();
     mSignalHpd = false;
     mValidateDisplay = false;
+    mVsyncState = false;
     memset(&mHdrCaps, 0, sizeof(mHdrCaps));
     memset(mColorMatrix, 0, sizeof(float) * 16);
     memset(&mCalibrateCoordinates, 0, sizeof(int) * 4);
@@ -138,10 +139,17 @@ int32_t Hwc2Display::setPostProcessor(
 
 int32_t Hwc2Display::setVsync(std::shared_ptr<HwcVsync> vsync) {
     std::lock_guard<std::mutex> lock(mMutex);
-    if (vsync)
-        vsync->setObserver(this);
+    if (mVsync != vsync) {
+        if (mVsync.get()) {
+            mVsync->setEnabled(false);
+            mVsync->setObserver(NULL);
+        } else {
+            mVsync = vsync;
+            mVsync->setObserver(this);
+            mVsync->setEnabled(mVsyncState);
+        }
+    }
 
-    mVsync = vsync;
     return 0;
 }
 
@@ -206,6 +214,7 @@ hwc2_error_t Hwc2Display::getFrameMetadataKeys(
 #endif
 
 hwc2_error_t Hwc2Display::setVsyncEnable(hwc2_vsync_t enabled) {
+    std::lock_guard<std::mutex> lock(mMutex);
     bool state;
     switch (enabled) {
         case HWC2_VSYNC_ENABLE:
@@ -218,7 +227,10 @@ hwc2_error_t Hwc2Display::setVsyncEnable(hwc2_vsync_t enabled) {
             MESON_LOGE("[%s]: set vsync state invalid %d.", __func__, enabled);
             return HWC2_ERROR_BAD_PARAMETER;
     }
-    mVsync->setEnabled(state);
+
+    mVsyncState = state;
+    if (mVsync.get())
+        mVsync->setEnabled(mVsyncState);
     return HWC2_ERROR_NONE;
 }
 
@@ -238,8 +250,7 @@ void Hwc2Display::onHotplug(bool connected) {
             return;
         }
         mPowerMode->setConnectorStatus(false);
-        if (mObserver != NULL && mModeMgr->getPolicyType() != FIXED_SIZE_POLICY
-            && mModeMgr->getPolicyType() != ACTIVE_MODE_POLICY) {
+        if (mObserver != NULL ) {
             bSendPlugOut = true;
         }
     }
@@ -247,6 +258,21 @@ void Hwc2Display::onHotplug(bool connected) {
     /*call hotplug out of lock, SF may call some hwc function to cause deadlock.*/
     if (bSendPlugOut)
         mObserver->onHotplug(false);
+}
+
+/* clear all layers and blank display when extend display plugout,
+    So the resource used by display drvier can be released.
+    Or framebuffer may allocate fail when do plug in/out quickly.
+*/
+void Hwc2Display::cleanupBeforeDestroy() {
+    {/*clear framebuffer reference by gpu composer*/
+        std::lock_guard<std::mutex> lock(mMutex);
+        std::shared_ptr<IComposer> clientComposer = mComposers.find(MESON_CLIENT_COMPOSER)->second;
+        clientComposer->prepare();
+    }
+
+    /*clear framebuffer reference by driver*/
+    blankDisplay();
 }
 
 void Hwc2Display::onUpdate(bool bHdcp) {
@@ -265,6 +291,8 @@ void Hwc2Display::onUpdate(bool bHdcp) {
 void Hwc2Display::onVsync(int64_t timestamp) {
     if (mObserver != NULL) {
         mObserver->onVsync(timestamp);
+    } else {
+        MESON_LOGE("Hwc2Display (%p) observer is NULL", this);
     }
 }
 

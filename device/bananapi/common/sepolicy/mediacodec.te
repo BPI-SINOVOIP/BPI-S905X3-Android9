@@ -25,3 +25,6 @@ allow mediacodec sysfs_audio:file { open read write };
 allow mediacodec vendor_platform_prop:file { open read getattr };
 allow mediacodec sysfs_amhdmitx:file rw_file_perms;
 allow mediacodec sysfs_amhdmitx:dir search;
+allow mediacodec sysfs_devices_system_cpu:file { write };
+allow mediacodec sysfs_display:file { open read write };
+allow mediacodec mediacodec:capability sys_nice;

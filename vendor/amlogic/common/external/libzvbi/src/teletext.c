@@ -47,6 +47,10 @@
 #endif
 
 
+//teletext graphics subtitle blackground
+//#define TELETEXT_GRAPHICS_SUBTITLE_BLACKGROUND
+
+
 extern const char _zvbi_intl_domainname[];
 
 #include "intl-priv.h"
@@ -58,6 +62,7 @@ extern const char _zvbi_intl_domainname[];
 #define LOGI(...) printf(__VA_ARGS__)
 #endif
 
+#define SUBPAGE_NUMBER_FORMATE 16  //16 for the hexadecimal;10 for the decimal
 
 #ifndef TELETEXT_DEBUG
 #  define TELETEXT_DEBUG 0
@@ -69,13 +74,17 @@ do {									\
 		fprintf (stderr, templ ,##args);			\
 } while (0)
 
-#define ROWS			25
+#define ROWS			26
 #define COLUMNS			40
 #define EXT_COLUMNS		41
-#define LAST_ROW		((ROWS - 1) * EXT_COLUMNS)
-
+#define LAST_ROW		((ROWS - 2) * EXT_COLUMNS)
+#define LAST_LAST_ROW		((ROWS - 1) * EXT_COLUMNS)
+#define ENABLE_PAGE_BAR  TRUE
+#define SUBPAGE_MASK 0x3f7f
 extern vbi_bool
 _vbi_cache_get_sub_info(vbi_cache *ca, vbi_subno pgno, int *subs, int *len);
+extern vbi_bool
+vbi_get_sub_info(vbi_decoder *vbi, vbi_pgno pgno, int *subs, int *len);
 
 
 /*
@@ -85,8 +94,89 @@ _vbi_cache_get_sub_info(vbi_cache *ca, vbi_subno pgno, int *subs, int *len);
 static const vbi_color
 flof_link_col[4] = { VBI_RED, VBI_GREEN, VBI_YELLOW, VBI_CYAN };
 
+static inline void flof_clear_subpage_bar(vbi_decoder *vbi, vbi_page *pg, cache_page *vtp)
+{
+	vbi_char bc;
+	memset(&bc, 0, sizeof(bc));
+
+	bc.foreground	= VBI_WHITE;
+	bc.background	= VBI_MAGENTA;
+	bc.opacity	= VBI_TRANSPARENT_SPACE;//VBI_TRANSPARENT_FULL;//pg->page_opacity[1];
+	bc.unicode	= 0x0020;
+
+	for (int i = 0; i < EXT_COLUMNS; i++) {
+		pg->text[LAST_LAST_ROW + i] = bc;
+	}
+}
+static inline void flof_subpage_bar(vbi_decoder *vbi, vbi_page *pg, cache_page *vtp)
+{
+	vbi_char ac;
+	vbi_char bc;
+	int n, i, ii, iii;
+	memset(&bc, 0, sizeof(bc));
+	memset(&ac, 0, sizeof(ac));
+	ac.foreground	= VBI_WHITE;
+	ac.background	= VBI_MAGENTA;
+	ac.opacity	= VBI_OPAQUE;//pg->page_opacity[1];
+	ac.unicode	= 0x0020;
+
+	bc.foreground	= VBI_WHITE;
+	bc.background	= VBI_MAGENTA;
+	bc.opacity	= VBI_OPAQUE;//pg->page_opacity[1];
+	bc.unicode	= 0x0020;
+
+	for (i = 0; i < EXT_COLUMNS; i++) {
+		pg->text[LAST_LAST_ROW + i] = bc;
+	}
+	for (i = 0; (vtp->data.lop.link[i].subno > 0) && (vtp->data.lop.link[i].subno != SUBPAGE_MASK); i++) {
+		if (vbi->vt.current_subno == vtp->data.lop.link[i].subno) {
+			bc.background = VBI_RED;
+			ac.background = VBI_RED;
+		} else {
+			bc.background = VBI_MAGENTA;
+			ac.background = VBI_MAGENTA;
+		}
+		iii = i*3 + 3;
+		if (vtp->data.lop.link[i].subno < 10 ) {
+		n = vtp->data.lop.link[i].subno + '0';
+		if (n > '9')
+			n += 'A' - '9';
+		bc.unicode = n;
+		ac.unicode = 0x0030;
+		} else {
+			n = vtp->data.lop.link[i].subno%SUBPAGE_NUMBER_FORMATE + '0';
+			if (n > '9')
+				n += 'A' - '9';
+			bc.unicode = n;
+			n = (vtp->data.lop.link[i].subno/SUBPAGE_NUMBER_FORMATE)%SUBPAGE_NUMBER_FORMATE + '0';
+			if (n > '9')
+				n += 'A' - '9';
+			ac.unicode = n;
+		}
+		ac.foreground = VBI_BLACK;
+		bc.foreground = VBI_BLACK;
+		pg->text[LAST_LAST_ROW + iii -1] = ac;
+		pg->text[LAST_LAST_ROW + iii ] = bc;
+	}
+}
+static inline void array_sort(int *a, int len)
+{
+	int i, j, tmp;
+	for (i = 0; i < len - 1; i++)
+	{
+		for (j = i + 1; j < len; j++)
+		{
+			if (a[i] > a[j])
+			{
+				tmp = a[i];
+				a[i] = a[j];
+				a[j] = tmp;
+			}
+		}
+	}
+}
 static inline void
-flof_navigation_bar(vbi_page *pg, cache_page *vtp)
+flof_navigation_bar(vbi_decoder *vbi, vbi_page *pg, cache_page *vtp)
 {
 	vbi_char ac;
 	int n, i, k, ii;
@@ -113,7 +203,13 @@ flof_navigation_bar(vbi_page *pg, cache_page *vtp)
 				n += 'A' - '9';
 
 			ac.unicode = n;
-			ac.foreground = flof_link_col[i];
+			if (vbi->vt.use_subtitleserver) {
+				ac.background = flof_link_col[i];
+				ac.foreground = VBI_BLACK;//flof_link_col[i];
+			} else {
+				ac.foreground = flof_link_col[i];
+			}
+
 			pg->text[LAST_ROW + ii + k] = ac;
 			pg->nav_index[ii + k] = i;
 		}
@@ -121,6 +217,7 @@ flof_navigation_bar(vbi_page *pg, cache_page *vtp)
 		pg->nav_link[i].pgno = vtp->data.lop.link[i].pgno;
 		pg->nav_link[i].subno = vtp->data.lop.link[i].subno;
 	}
+	pg->have_flof = FALSE;
 }
 
 static inline void
@@ -145,8 +242,8 @@ flof_links(vbi_page *pg, cache_page *vtp)
 					pg->nav_index[j] = k;
 				}
 
-		    		pg->nav_link[k].pgno = vtp->data.lop.link[k].pgno;
-		    		pg->nav_link[k].subno = vtp->data.lop.link[k].subno;
+				pg->nav_link[k].pgno = vtp->data.lop.link[k].pgno;
+				pg->nav_link[k].subno = vtp->data.lop.link[k].subno;
 			} else if (k < 4) {
 				pg->nav_link[k].pgno = 0;
 			}
@@ -163,6 +260,28 @@ flof_links(vbi_page *pg, cache_page *vtp)
 	}
 }
 
+static inline void draw_subpage_line(vbi_decoder *vbi, vbi_page *pg, cache_page *vtp) {
+    if (vbi->vt.current_pgno == pg->pgno) {
+        int temp_pgno = vbi->vt.current_pgno;
+        int subsarray[36]; //36 is the size of the vtp->data.lop.link
+        int length = 36;
+        vbi_bool ret = vbi_get_sub_info(vbi, temp_pgno, subsarray, &length);
+        if (ret && (length > 1)) {
+            array_sort(subsarray, length);
+            if (length >= 1) {
+                for (int t=0; t<length; t++) {
+                    vtp->data.lop.link[t].subno = subsarray[t];
+                }
+            if (length< 36) {
+                vtp->data.lop.link[length].subno = SUBPAGE_MASK;
+            }
+            flof_subpage_bar(vbi, pg, vtp);
+            }
+        } else {
+            flof_clear_subpage_bar(vbi, pg, vtp);
+        }
+    }
+}
 /*
  *  TOP navigation
  */
@@ -208,7 +327,7 @@ top_label(vbi_decoder *vbi, vbi_page *pg, struct vbi_font_descr *font,
 				if (ait->link.pgno == pgno) {
 					pg->nav_link[index].pgno = pgno;
 					pg->nav_link[index].subno = VBI_ANY_SUBNO;
-
+					pg->have_flof = TRUE;
 					for (i = 11; i >= 0; i--)
 						if (ait->text[i] > 0x20)
 							break;
@@ -481,7 +600,7 @@ top_index(vbi_decoder *vbi, vbi_page *pg, int subno)
 			break;
 
 		default:
-    			k = 1;
+			k = 1;
 		}
 
 		for (j = 0; j <= i; j++) {
@@ -499,7 +618,7 @@ top_index(vbi_decoder *vbi, vbi_page *pg, int subno)
 				n += 'A' - '9';
 
 			acp[j + 35].unicode = n;
- 		}
+		}
 
 		acp += EXT_COLUMNS;
 
@@ -929,6 +1048,30 @@ zap_links(vbi_page *pg, int row)
 	}
 }
 
+void vbi_teletext_set_current_page(vbi_decoder *vbi, vbi_pgno pgno, vbi_subno subno)
+{
+	vbi->vt.current_pgno = pgno;
+	vbi->vt.current_subno = subno;
+}
+
+void vbi_set_subtitle_flag(vbi_decoder *vbi, int flag, int subtitleMode, vbi_bool useSubtitleserver)
+{
+	vbi->vt.subtitle = flag;
+	vbi->vt.subtitleMode = subtitleMode;
+	vbi->vt.use_subtitleserver = useSubtitleserver;
+}
+
+vbi_bool
+vbi_get_sub_info(vbi_decoder *vbi, vbi_pgno pgno, int *subs, int *len)
+{
+	return _vbi_cache_get_sub_info(vbi->ca, pgno, subs, len);
+}
+
+void vbi_set_subtitle_page(vbi_decoder *vbi, int index)
+{
+	vbi->vt.goto_page = index;
+}
+
 /**
  * @param pg With vbi_fetch_vt_page() obtained vbi_page.
  * @param column Column 0 ... pg->columns - 1 of the character in question.
@@ -1065,7 +1208,7 @@ vbi_page_title(vbi_decoder *vbi, int pgno, int subno, char *buf)
 	struct ttx_ait_title *ait;
 	int i, j;
 
-	subno = subno;
+	(void)subno;
 
 	if (vbi->cn->have_top) {
 		for (i = 0; i < 8; i++)
@@ -1701,9 +1844,16 @@ enhance(vbi_decoder *vbi,
 						pgno = vtp->data.lop.link[24].pgno;
 
 						if (NO_PAGE(pgno)) {
-							if (max_level < VBI_WST_LEVEL_3p5
-							    || NO_PAGE(pgno = mag->pop_link[0][8].pgno))
-								pgno = mag->pop_link[0][0].pgno;
+							if (vbi->vt.use_subtitleserver) {
+								if (max_level < VBI_WST_LEVEL_3p5
+									|| NO_PAGE(pgno = mag->pop_link[1][0].pgno))
+									pgno = mag->pop_link[0][0].pgno;
+							} else {
+								if (max_level < VBI_WST_LEVEL_3p5
+									|| NO_PAGE(pgno = mag->pop_link[0][8].pgno))
+									pgno = mag->pop_link[0][0].pgno;
+							}
+
 						} else
 							printv("... X/27/4 GPOP overrides MOT\n");
 					} else {
@@ -1920,7 +2070,7 @@ enhance(vbi_decoder *vbi,
 				break;
 
 			case 0x08:		/* modified G0 and G2 character set designation */
-				LOGI("modified G0 and G2 character set designation pgno %x %d", pg->pgno);
+				LOGI("modified G0 and G2 character set designation pgno %x %d", pg->pgno, pg->pgno);
 				if (max_level >= VBI_WST_LEVEL_2p5) {
 					if (column > active_column)
 						flush(column);
@@ -2014,9 +2164,16 @@ enhance(vbi_decoder *vbi,
 						pgno = vtp->data.lop.link[26].pgno;
 
 						if (NO_PAGE(pgno)) {
-							if (max_level < VBI_WST_LEVEL_3p5
-							    || NO_PAGE(pgno = mag->drcs_link[0][8]))
-								pgno = mag->drcs_link[0][0];
+							if (vbi->vt.use_subtitleserver) {
+								if (max_level < VBI_WST_LEVEL_3p5
+									|| NO_PAGE(pgno = mag->drcs_link[1][0]))
+									pgno = mag->drcs_link[0][0];
+							} else {
+								if (max_level < VBI_WST_LEVEL_3p5
+									|| NO_PAGE(pgno = mag->drcs_link[0][8]))
+									pgno = mag->drcs_link[0][0];
+							}
+
 						} else
 							printv("... X/27/4 GDRCS overrides MOT\n");
 					} else {
@@ -2113,7 +2270,7 @@ enhance(vbi_decoder *vbi,
 				while (row < ROWS && count > 0) {
 					for (col = inv_column + column; col < COLUMNS; col++) {
 						acp[col].italic = italic;
-		    				acp[col].bold = bold;
+						acp[col].bold = bold;
 						acp[col].proportional = proportional;
 					}
 
@@ -2477,6 +2634,7 @@ vbi_format_vt_page(vbi_decoder *vbi,
 	pg->dirty.y1 = ROWS - 1;
 	pg->dirty.roll = 0;
 
+	pg->subtitleMode = VBI_TELETEXT_NON_BITMAP_SUBTITLE;
 	mag = (max_level <= VBI_WST_LEVEL_1p5) ?
 		&vbi->vt.default_magazine
 		: cache_network_magazine (vbi->cn, vtp->pgno);
@@ -2530,8 +2688,22 @@ vbi_format_vt_page(vbi_decoder *vbi,
 
 	/* Current page number in header */
 
-	snprintf (buf, sizeof (buf),
-		  "P%x     ", vtp->pgno);
+	//snprintf (buf, sizeof (buf),
+	if (vbi->vt.use_subtitleserver) {
+		if ((vbi->vt.goto_page >0x99) && (vbi->vt.goto_page <0x900)) {
+			snprintf (buf, sizeof (buf), "P%x	  ", vbi->vt.goto_page);
+		} else	if((vbi->vt.goto_page >0) && (vbi->vt.goto_page <0x10)){
+			snprintf (buf, sizeof (buf), "P%x--    ", vbi->vt.goto_page);
+		} else	if(vbi->vt.goto_page == 0){
+			  vbi->vt.goto_page = 0x100;
+			snprintf (buf, sizeof (buf), "P%x	 ", vbi->vt.goto_page);
+		} else {
+			snprintf (buf, sizeof (buf), "P%x-	 ", vbi->vt.goto_page);
+		}
+	} else {
+		snprintf (buf, sizeof (buf),
+			"P%x	   ", vtp->pgno);
+	}
 
 	/* Level 1 formatting */
 
@@ -2540,6 +2712,9 @@ vbi_format_vt_page(vbi_decoder *vbi,
 
 	//bottom row of display row is used for displaying sub pg no.
 	//So skip it.
+	if (vbi->vt.use_subtitleserver && !(vbi->vt.subtitle) && (vbi->vt.current_pgno != pg->pgno)) {
+		display_rows = 1;
+	}
 	for (row = 0; row < display_rows; row++) {
 		struct vbi_font_descr *font;
 		int mosaic_unicodes; /* 0xEE00 separate, 0xEE20 contiguous */
@@ -2550,9 +2725,11 @@ vbi_format_vt_page(vbi_decoder *vbi,
 		vbi_char ac, *acp = &pg->text[row * EXT_COLUMNS];
 
 		held_mosaic_unicode = 0xEE20; /* G1 block mosaic, blank, contiguous */
-
 		memset(&ac, 0, sizeof(ac));
 
+		/*if ((ROWS - 1 ) == row) {
+		    break;
+		}*/
 		ac.unicode      = 0x0020;
 		ac.foreground	= ext->foreground_clut + VBI_WHITE;
 		ac.background	= ext->background_clut + VBI_BLACK;
@@ -2643,11 +2820,11 @@ vbi_format_vt_page(vbi_decoder *vbi,
 
 				wide_char = /*!!*/(ac.size & VBI_DOUBLE_WIDTH);
 				if (wide_char) {
-                            		if (column < (COLUMNS - 1)) {
-                                    		acp[column + 1] = ac;
-                                    		acp[column + 1].size = VBI_OVER_TOP;
+					if (column < (COLUMNS - 1)) {
+						acp[column + 1] = ac;
+						acp[column + 1].size = VBI_OVER_TOP;
 					} else {
-                                    		acp[column].size = VBI_NORMAL_SIZE;
+						acp[column].size = VBI_NORMAL_SIZE;
 						wide_char = FALSE;
 					}
 				}
@@ -2719,6 +2896,14 @@ vbi_format_vt_page(vbi_decoder *vbi,
 				font = pg->font[esc ^= 1];
 				break;
 			}
+
+			//keep bitmap subtitle first info bar data for project special requirement
+#ifdef TELETEXT_GRAPHICS_SUBTITLE_BLACKGROUND
+			if (row == 0 && vbi->vt.subtitle && vbi->vt.subtitleMode == VBI_TELETEXT_BITMAP_SUB) {
+				pg->text[column].unicode = _vbi_to_ascii((unsigned)vtp->data.lop.raw[0][column]);
+				pg->subtitleMode = VBI_TELETEXT_BITMAP_SUBTITLE;
+			}
+#endif
 		}
 
 
@@ -2802,7 +2987,10 @@ vbi_format_vt_page(vbi_decoder *vbi,
 
 	/* Navigation */
 
+	//if (!(vbi->vt.subtitle) && navigation) {
 	if (navigation) {
+		if (vbi->vt.current_pgno != pg->pgno || !vbi->vt.use_subtitleserver)
+			display_rows = ROWS;
 		pg->nav_link[5].pgno = vbi->cn->initial_page.pgno;
 		pg->nav_link[5].subno = vbi->cn->initial_page.subno;
 
@@ -2817,26 +3005,62 @@ vbi_format_vt_page(vbi_decoder *vbi,
 					pg->nav_link[5].pgno = vtp->data.lop.link[5].pgno;
 					pg->nav_link[5].subno = vtp->data.lop.link[5].subno;
 				}
-
-				if (vtp->lop_packets & (1 << 24))
+				if (vtp->lop_packets & (1 << 24)) {
 					flof_links(pg, vtp);
-				else
-					flof_navigation_bar(pg, vtp);
-			} else if (vbi->cn->have_top)
+					draw_subpage_line (vbi, pg, vtp);
+				} else {
+					flof_navigation_bar(vbi, pg, vtp);
+				    draw_subpage_line (vbi, pg, vtp);
+				}
+			} else if (vbi->cn->have_top) {
 				top_navigation_bar(vbi, pg, vtp);
+				draw_subpage_line (vbi, pg, vtp);
+			} else if (ENABLE_PAGE_BAR && vbi->vt.use_subtitleserver) {
+				int len =0;
+				int temp_pgno = vbi->vt.current_pgno;
+				int temp_subpg = 1;
+				vbi_get_next_pgno(vbi, 1, &temp_pgno, &temp_subpg);
+				vtp->data.lop.link[0].pgno = temp_pgno;
+		              vbi_get_next_pgno(vbi, 1, &temp_pgno, &temp_subpg);
+				vtp->data.lop.link[1].pgno = temp_pgno;
+				vbi_get_next_pgno(vbi, 1, &temp_pgno, &temp_subpg);
+				vtp->data.lop.link[2].pgno = temp_pgno;
+				vbi_get_next_pgno(vbi, 1, &temp_pgno, &temp_subpg);
+				vtp->data.lop.link[3].pgno = temp_pgno;
+				if (!(vbi->vt.subtitle)) {
+				    flof_navigation_bar(vbi, pg, vtp);
+				}
+				//only afer display page then display subpage bar
+				//search state not display
+								draw_subpage_line (vbi, pg, vtp);
+
+			    }
 
 			//pdc_method_a(pg, vtp, NULL);
 		}
 	}
 
 	column_41 (pg, ext);
-
+	if (ENABLE_PAGE_BAR && !(vbi->vt.subtitle) && (vbi->vt.current_pgno != pg->pgno) && vbi->vt.use_subtitleserver) {
+		vbi_char ac;
+		LOGI(" vtp->flags = 0x%x",vtp->flags);
+		memset(&ac, 0, sizeof(ac));
+		ac.foreground	= VBI_WHITE;
+		ac.background	= VBI_MAGENTA;
+		ac.opacity	= VBI_TRANSPARENT_FULL;//VBI_TRANSPARENT_FULL;//pg->page_opacity[1];
+		ac.unicode	= 0x0020;
+		for (row = 2; row < 25; row++) {
+			for (column = 0; column < EXT_COLUMNS; ++column) {
+				      //LOGE("####aa row * column=%d ",(row-1)*EXT_COLUMNS + column);
+					pg->text[(row-1)*EXT_COLUMNS + column] = ac;
+			}
+		}
+	}
 	if (0) {
 		vbi_char *acp;
 		unsigned int i;
 
-		for (row = 0, acp = pg->text + EXT_COLUMNS * row;
-		     row < ROWS; row++) {
+		for (row = 0, acp = pg->text + EXT_COLUMNS * row; row < ROWS; row++) {
 			fprintf(stderr, "%2d: ", row);
 
 			for (column = 0; column < COLUMNS; acp++, column++) {
@@ -2962,7 +3186,7 @@ vbi_get_next_pgno(vbi_decoder *vbi, int dir, vbi_pgno *pgno, vbi_pgno *subno)
 
 	vtp = _vbi_cache_find_next_page_2 (vbi->ca, dir, pg, sub);
 
-	if(vtp) {
+	if (vtp) {
 		*pgno  = vtp->pgno;
 		*subno = vtp->subno;
 		cache_page_unref (vtp);
@@ -2985,7 +3209,7 @@ vbi_get_next_sub_pgno(vbi_decoder *vbi, int dir, vbi_pgno *pgno, vbi_pgno *subno
 
 	vtp = _vbi_cache_find_next_page (vbi->ca, dir, pg, sub);
 
-	if(vtp) {
+	if (vtp) {
 		*pgno  = vtp->pgno;
 		*subno = vtp->subno;
 		cache_page_unref (vtp);
@@ -2993,12 +3217,6 @@ vbi_get_next_sub_pgno(vbi_decoder *vbi, int dir, vbi_pgno *pgno, vbi_pgno *subno
 	}
 
 	return FALSE;
-}
-
-vbi_bool
-vbi_get_sub_info(vbi_decoder *vbi, vbi_pgno pgno, int *subs, int *len)
-{
-	return _vbi_cache_get_sub_info(vbi->ca, pgno, subs, len);
 }
 
 

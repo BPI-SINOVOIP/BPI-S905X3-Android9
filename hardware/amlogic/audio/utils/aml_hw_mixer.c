@@ -41,6 +41,7 @@ int aml_hw_mixer_init(struct aml_hw_mixer *mixer)
         goto exit;
     }
     mixer->need_cache_flag = 1;
+    mixer->mute_main_flag = 0;
 
 exit:
     pthread_mutex_unlock(&mixer->lock);
@@ -165,6 +166,9 @@ int aml_hw_mixer_mixing(struct aml_hw_mixer *mixer, void *buffer, int bytes, aud
     int32_t cached_bytes, read_bytes = bytes;
 
     pthread_mutex_lock(&mixer->lock);
+    if (mixer->mute_main_flag) {
+        memset(buffer, 0, bytes);
+    }
     cached_bytes = aml_hw_mixer_get_content_l(mixer);
     if (cached_bytes < bytes) {
         ALOGV("%s: no enough aux data for mixing, cached %d, need %d\n", __func__, cached_bytes, bytes);

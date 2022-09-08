@@ -13,4 +13,6 @@ genfscon debugfs  /ion/heaps         u:object_r:debugfs_ion:s0
 genfscon debugfs  /demod       u:object_r:debugfs_demod:s0
 genfscon proc    /sys/vm/watermark_scale_factor u:object_r:proc_vm_writable:s0
 genfscon proc    /sys/vm/min_free_kbytes u:object_r:proc_vm_writable:s0
+genfscon sysfs /class/astream u:object_r:sysfs_audio:s0
+genfscon sysfs /devices/virtual/astream/astream-dev u:object_r:sysfs_audio:s0
 

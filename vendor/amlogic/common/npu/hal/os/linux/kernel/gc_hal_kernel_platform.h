@@ -81,6 +81,10 @@ typedef struct _gcsMODULE_PARAMETERS
     gctPHYS_ADDR_T          externalBase;
     gctSIZE_T               externalSize;
 
+    /* External memory pool. */
+    gctPHYS_ADDR_T          exclusiveBase;
+    gctSIZE_T               exclusiveSize;
+
     /* Per-core SRAM. */
     gctPHYS_ADDR_T          sRAMBases[gcvCORE_COUNT][gcvSRAM_INTER_COUNT];
     gctUINT32               sRAMSizes[gcvCORE_COUNT][gcvSRAM_INTER_COUNT];
@@ -291,6 +295,46 @@ typedef struct _gcsPLATFORM_OPERATIONS
         OUT gctUINT32_PTR PolicyID,
         OUT gctUINT32_PTR AXIConfig
         );
+
+    /*******************************************************************************
+    **
+    ** syncMemory
+    **
+    ** sync invisible memory by dma if support.
+    */
+    gceSTATUS
+    (*syncMemory)(
+        IN gctPOINTER Object,
+        IN gctPOINTER Node,
+        IN gctUINT32 Reason
+    );
+
+/*******************************************************************************
+**
+**  _ExternalCacheOperation
+**
+**  External device cache operation, if support. If the core has any additional caches
+**  they must be invalidated after this function returns. If the core does not
+**  have any addional caches the externalCacheOperation in the platform->ops should
+**  remain NULL.
+**
+**  INPUT:
+**
+**      gckOS Os
+**          Pointer to an gckOS object.
+**
+**      gceCACHEOPERATION Operation
+**          Cache Operation: gcvCACHE_FLUSH, gcvCACHE_CLEAN or gcvCACHE_INVALIDATE.
+**
+**  OUTPUT:
+**
+**      Nothing.
+*/
+    void
+    (*externalCacheOperation)(
+        IN gcsPLATFORM *Platform,
+        IN gceCACHEOPERATION Operation
+    );
 }
 gcsPLATFORM_OPERATIONS;
 

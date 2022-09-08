@@ -631,7 +631,9 @@ public class FileList extends ListActivity {
         }
 
         public void searchFile (File file) {
+            Log.i(TAG, "[searchFile]");
             String curPath = file.getPath();
+            Log.i(TAG, "[searchFile]curPath:" + curPath + ",root_path:" + root_path);
             List<Map<String, Object>> the_Files;
             if (curPath.equals (root_path)) {
                 the_Files = mFileListManager.getDevices();

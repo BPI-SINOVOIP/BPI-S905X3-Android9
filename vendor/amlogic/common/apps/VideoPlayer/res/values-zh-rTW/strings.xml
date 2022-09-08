@@ -15,10 +15,13 @@
     <string name="setting_playmode">播放模式</string>
     <string name="setting_playmode_repeatall">目錄循環</string>
     <string name="setting_playmode_repeatone">單首循環</string>
+    <string name="setting_playmode_repeatnone">不重復循環</string>
     <string name="setting_audiooption">聲音設置</string>
     <string name="setting_soundtrack">聲道</string>
     <string name="setting_audiotrack">音軌</string>
     <string name="setting_videotrack">視頻軌道</string>
+    <string name="setting_dtsdrc">音频轨道</string>
+    <string name="setting_audio_offset">音频偏移</string>
     <string name="setting_audiodtsapresent">Audio DTS Apresentation</string>
     <string name="setting_audiodtsasset">Audio DTS Asset</string>
     <string name="setting_soundtrack_stereo">立體聲</string>

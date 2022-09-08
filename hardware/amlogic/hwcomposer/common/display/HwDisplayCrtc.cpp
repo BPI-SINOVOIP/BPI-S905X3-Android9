@@ -65,7 +65,14 @@ int32_t HwDisplayCrtc::bind(
 }
 
 int32_t HwDisplayCrtc::unbind() {
+    /*TODO: temp disable here.
+    * systemcontrol and hwc set display mode
+    * at the same time, there is a timing issue now.
+    * Just disable it here, later will remove systemcontrol
+    * set displaymode when hotplug.
+    */
     if (mBinded) {
+        #if 0
         static drm_mode_info_t nullMode = {
             DRM_DISPLAY_MODE_NULL,
             0, 0,
@@ -74,6 +81,7 @@ int32_t HwDisplayCrtc::unbind() {
         };
         std::string dispmode(nullMode.name);
         writeCurDisplayMode(dispmode);
+        #endif
         if (mConnector.get())
             mConnector->setCrtc(NULL);
         mConnector.reset();
@@ -164,7 +172,15 @@ int32_t HwDisplayCrtc::update() {
                 mId, displayMode.c_str(), mModes.size(), mCurModeInfo.name);
         }
     } else {
+        /*clear mode info.*/
+        memset(&mCurModeInfo, 0, sizeof(mCurModeInfo));
+        /* TODO: temp disable mode setting in HWC. */
+        #if 0
+        strcpy(mCurModeInfo.name, DRM_DISPLAY_MODE_NULL);
+        setMode(mCurModeInfo);
+        #else//amlogic fix
         MESON_LOGD("crtc(%d) update with no connector", mId);
+        #endif
     }
 
     return 0;

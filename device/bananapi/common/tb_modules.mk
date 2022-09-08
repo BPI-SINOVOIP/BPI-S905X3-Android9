@@ -17,15 +17,4 @@
 DEFAULT_TB_DETECT_KERNEL_MODULES := \
 	$(PRODUCT_OUT)/obj/lib_vendor/tb_detect.ko
 
-ifeq ($(wildcard hardware/amlogic/tb_modules/tb_detect.mk),)
-DETECT_IN=device/bananapi/common/tb_detect
-define tb-modules
-$(TB_DETECT_KO):
-	mkdir -p $(PRODUCT_OUT)/obj/lib_vendor
-	rm $(PRODUCT_OUT)/obj/lib_vendor/tb_detect.ko -f
-	cp $(DETECT_IN)/tb_detect.ko $(PRODUCT_OUT)/obj/lib_vendor/tb_detect.ko -airf
-	@echo "copy Amlogic TB Detect module from $(DETECT_IN) to $(PRODUCT_OUT)/vendor/lib/modules"
-endef
-else
 include hardware/amlogic/tb_modules/tb_detect.mk
-endif

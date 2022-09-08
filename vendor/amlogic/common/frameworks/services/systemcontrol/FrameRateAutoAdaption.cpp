@@ -44,7 +44,7 @@ FrameRateAutoAdaption::~FrameRateAutoAdaption() {
 void FrameRateAutoAdaption::readSinkEdid(char *edid) {
     int count = 0;
     while (true) {
-        mSysWrite.readSysfsOriginal(DISPLAY_HDMI_EDID, edid);
+        mSysWrite.readSysfsOriginal(DISPLAY_HDMI_DISP_CAP, edid);
         if (strlen(edid) > 0)
             break;
 

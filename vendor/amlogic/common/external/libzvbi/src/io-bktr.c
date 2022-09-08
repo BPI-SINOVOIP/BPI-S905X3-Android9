@@ -376,11 +376,11 @@ vbi_capture_bktr_new		(const char *		dev_name,
 				 char **		errstr,
 				 vbi_bool		trace)
 {
-	dev_name = dev_name;
-	scanning = scanning;
-	services = services;
-	strict = strict;
-	trace = trace;
+	(void) dev_name;
+	(void) scanning;
+	(void) services;
+	(void) strict;
+	(void) trace;
 
 	pthread_once (&vbi_init_once, vbi_init);
 

@@ -2042,24 +2042,6 @@ static void vpp_set_super_scaler(
 		next_frame_par->supsc1_hori_ratio = 0;
 	}
 
-	/*double check core0 input width for core0_vert_ratio!!!*/
-	if (next_frame_par->supsc0_vert_ratio &&
-	    (width_out >> next_frame_par->supsc0_hori_ratio >
-	     sr->core0_v_enable_width_max)) {
-		next_frame_par->supsc0_vert_ratio = 0;
-		if (next_frame_par->supsc0_hori_ratio == 0)
-			next_frame_par->supsc0_enable = 0;
-	}
-
-	/*double check core1 input width for core1_vert_ratio!!!*/
-	if (next_frame_par->supsc1_vert_ratio &&
-		(width_out >> next_frame_par->supsc1_hori_ratio >
-		sr->core1_v_enable_width_max)) {
-		next_frame_par->supsc1_vert_ratio = 0;
-		if (next_frame_par->supsc1_hori_ratio == 0)
-			next_frame_par->supsc1_enable = 0;
-	}
-
 	/* option add patch */
 	if ((ver_sc_multiple_num <= super_scaler_v_ratio) &&
 		(src_height >= sr->core0_v_enable_width_max) &&
@@ -2112,6 +2094,30 @@ static void vpp_set_super_scaler(
 			next_frame_par->supscl_path = CORE0_PPS_CORE1;
 	} else
 		next_frame_par->supscl_path = scaler_path_sel;
+
+	/*double check core0 input width for core0_vert_ratio!!!*/
+	if (next_frame_par->supsc0_vert_ratio &&
+	    ((next_frame_par->supscl_path ==
+	      CORE0_AFTER_PPS) ||
+	     (next_frame_par->supscl_path ==
+	      PPS_CORE0_CORE1) ||
+	     (next_frame_par->supscl_path ==
+	      PPS_CORE0_POSTBLEND_CORE1)) &&
+	    (width_out >> next_frame_par->supsc0_hori_ratio >
+	     sr->core0_v_enable_width_max)) {
+		next_frame_par->supsc0_vert_ratio = 0;
+		if (next_frame_par->supsc0_hori_ratio == 0)
+			next_frame_par->supsc0_enable = 0;
+	}
+
+	/*double check core1 input width for core1_vert_ratio!!!*/
+	if (next_frame_par->supsc1_vert_ratio &&
+	    (width_out >> next_frame_par->supsc1_hori_ratio >
+	     sr->core1_v_enable_width_max)) {
+		next_frame_par->supsc1_vert_ratio = 0;
+		if (next_frame_par->supsc1_hori_ratio == 0)
+			next_frame_par->supsc1_enable = 0;
+	}
 
 	/*patch for width align 2*/
 	if (super_scaler && (width_out%2) &&

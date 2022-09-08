@@ -221,9 +221,9 @@ idl_b_demux_feed		(vbi_idl_demux *	dx,
 {
 	/* TODO */
 
-	dx = dx;
-	buffer = buffer;
-	ft = ft;
+	(void) dx;
+	(void)buffer;
+	(void) ft;
 
 	return FALSE;
 }
@@ -237,8 +237,8 @@ datavideo_demux_feed		(vbi_idl_demux *	dx,
 {
 	/* TODO */
 
-	dx = dx;
-	buffer = buffer;
+	(void) dx;
+	(void)buffer;
 
 	return FALSE;
 }
@@ -252,8 +252,8 @@ audetel_demux_feed		(vbi_idl_demux *	dx,
 {
 	/* TODO */
 
-	dx = dx;
-	buffer = buffer;
+	(void) dx;
+	(void) buffer;
 
 	return FALSE;
 }
@@ -264,8 +264,8 @@ lbra_demux_feed			(vbi_idl_demux *	dx,
 {
 	/* TODO */
 
-	dx = dx;
-	buffer = buffer;
+	(void) dx;
+	(void) buffer;
 
 	return FALSE;
 }

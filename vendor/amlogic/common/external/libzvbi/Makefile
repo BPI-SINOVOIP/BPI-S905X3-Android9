@@ -12,7 +12,6 @@ SRC_FILES = $(wildcard src/*.c)
 CFLAGS   := -c -Wall -shared -fPIC -Wno-unknown-pragmas -Wno-format -O3 -fexceptions -fnon-call-exceptions
 
 LOCAL_C_INCLUDES := -I $(LOCAL_PATH)
-LOCAL_C_INCLUDES += -I $(LOCAL_PATH)/../aml_dvb-1.0/include/am_adp
 
 CFLAGS += $(LOCAL_C_INCLUDES) $(DEFINES)
 ifeq ($(ARCH_IS_64), y)
@@ -30,6 +29,8 @@ $(OUTPUT) : $(OBJS)
 
 install:
 	-install -m 555 ${OUTPUT} $(INSTALL_DIR)
+	-install -m 644 $(LOCAL_PATH)/src/libzvbi.h $(STAGING_DIR)/usr/include/
+	-install -m 644 $(LOCAL_PATH)/src/dtvcc.h $(STAGING_DIR)/usr/include/
 
 clean:
 	@rm -f $(OBJS)

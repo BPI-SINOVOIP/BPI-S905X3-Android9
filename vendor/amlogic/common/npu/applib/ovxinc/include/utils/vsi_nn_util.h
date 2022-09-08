@@ -48,6 +48,10 @@ extern "C" {
 #define vsi_nn_safe_free( _PTR ) if( _PTR ){ \
     free( _PTR ); _PTR = NULL; }
 
+#define END_OF_VARIADIC_ARGUMENTS       0xbadcaffe
+#define FOREACH_ARGS(_args, _next, _arg_type) \
+    while(((_arg_type)((size_t)END_OF_VARIADIC_ARGUMENTS)) != (_next = va_arg(_args, _arg_type)))
+
 /*-------------------------------------------
                   Functions
 -------------------------------------------*/
@@ -352,6 +356,12 @@ static inline void vsi_nn_reorder_tensor
 }
 
 void vsi_nn_print_int_array( int32_t* array, size_t size );
+
+float vsi_nn_activation
+    (
+    float value,
+    vsi_nn_activation_e activation
+    );
 
 #ifdef __cplusplus
 }

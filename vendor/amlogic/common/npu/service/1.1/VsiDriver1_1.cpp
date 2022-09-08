@@ -12,9 +12,9 @@ namespace vsi_driver {
             capabilities.quantized8Performance = {.execTime = 0.9f, .powerUsage = 0.9f};
             capabilities.relaxedFloat32toFloat16Performance = {.execTime = 1.5f, .powerUsage = 1.5f};
         } else {
-            capabilities.float32Performance = {.execTime = 0.9f, .powerUsage = 0.9f};
+            capabilities.float32Performance = {.execTime = 1.9f, .powerUsage = 1.9f};
             capabilities.quantized8Performance = {.execTime = 0.9f, .powerUsage = 0.9f};
-            capabilities.relaxedFloat32toFloat16Performance = {.execTime = 0.5f, .powerUsage = 0.5f};
+            capabilities.relaxedFloat32toFloat16Performance = {.execTime = 1.5f, .powerUsage = 1.5f};
         }
         cb(ErrorStatus::NONE, capabilities);
         return Void();

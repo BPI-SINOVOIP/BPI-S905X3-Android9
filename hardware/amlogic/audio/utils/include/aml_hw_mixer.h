@@ -29,6 +29,7 @@ struct aml_hw_mixer {
     unsigned int rp;
     unsigned int buf_size;
     unsigned char need_cache_flag;//flag to check if need cache some data before write to mix
+    bool mute_main_flag;
     pthread_mutex_t lock;
 };
 

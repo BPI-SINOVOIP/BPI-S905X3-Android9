@@ -420,7 +420,7 @@ static unsigned int hdmitx_get_format(void)
 	return ret;
 }
 
-static int hdmitx_uboot_already_display(void)
+int hdmitx_uboot_already_display(void)
 {
 	int ret = 0;
 
@@ -2188,6 +2188,8 @@ static void hdmitx_set_scdc(struct hdmitx_dev *hdev)
 
 void hdmitx_set_enc_hw(struct hdmitx_dev *hdev)
 {
+	unsigned int data32 = 0;
+
 	set_vmode_enc_hw(hdev);
 
 	if (hdev->flag_3dfp) {
@@ -2244,6 +2246,25 @@ void hdmitx_set_enc_hw(struct hdmitx_dev *hdev)
 		hd_set_reg_bits(P_VPU_HDMI_SETTING, 0, 4, 4);
 	}
 
+	switch (hdev->cur_video_param->VIC) {
+	case HDMI_480i60:
+	case HDMI_480i60_16x9:
+	case HDMI_576i50:
+	case HDMI_576i50_16x9:
+	case HDMI_480i60_16x9_rpt:
+	case HDMI_576i50_16x9_rpt:
+		data32 = (1 << 0) | /* 2b01: ENCI  2b10: ENCP */
+			 (0 << 2) | /* INV_HSYNC */
+			 (0 << 3) | /* INV_VSYNC */
+			 (4 << 5) | /* 0 CrYCb/BGR 1 YCbCr/RGB 2 YCrCb/RBG.. */
+			 (1 << 8) | /* WR_RATE */
+			 (1 << 12); /* RD_RATE */
+		hd_write_reg(P_VPU_HDMI_SETTING, data32);
+		break;
+	default:
+		break;
+	}
+
 	switch (hdev->para->cd) {
 	case COLORDEPTH_30B:
 	case COLORDEPTH_36B:
@@ -2282,7 +2303,6 @@ void hdmitx_set_enc_hw(struct hdmitx_dev *hdev)
 		}
 	break;
 	}
-
 	switch (hdev->cur_video_param->VIC) {
 	case HDMI_480i60:
 	case HDMI_480i60_16x9:
@@ -2319,6 +2339,105 @@ static int hdmitx_set_dispmode(struct hdmitx_dev *hdev)
 	hdmitx_set_hw(hdev);
 
 	return 0;
+}
+
+enum hdmi_tf_type hdmitx_get_cur_hdr_st(void)
+{
+	enum hdmi_tf_type type = HDMI_NONE;
+	unsigned int val = 0;
+
+	if (!hdmitx_get_bit(HDMITX_DWC_FC_DATAUTO3, 6) ||
+	    !hdmitx_get_bit(HDMITX_DWC_FC_PACKET_TX_EN, 7))
+		return type;
+
+	val = hdmitx_rd_reg(HDMITX_DWC_FC_DRM_PB00);
+	switch (val) {
+	case 0:
+		type = HDMI_HDR_SDR;
+		break;
+	case 1:
+		type = HDMI_HDR_HDR;
+		break;
+	case 2:
+		type = HDMI_HDR_SMPTE_2084;
+		break;
+	case 3:
+		type = HDMI_HDR_HLG;
+		break;
+	default:
+		type = HDMI_HDR_TYPE;
+		break;
+	};
+
+	return type;
+}
+
+static bool hdmitx_vsif_en(void)
+{
+	if (!hdmitx_get_bit(HDMITX_DWC_FC_DATAUTO0, 3) ||
+	    !hdmitx_get_bit(HDMITX_DWC_FC_PACKET_TX_EN, 4))
+		return 0;
+	else
+		return 1;
+}
+
+#define GET_IEEEOUI() \
+	(hdmitx_rd_reg(HDMITX_DWC_FC_VSDIEEEID0) | \
+	hdmitx_rd_reg(HDMITX_DWC_FC_VSDIEEEID1) << 8 | \
+	hdmitx_rd_reg(HDMITX_DWC_FC_VSDIEEEID2) << 16)
+
+enum hdmi_tf_type hdmitx_get_cur_dv_st(void)
+{
+	enum hdmi_tf_type type = HDMI_NONE;
+	unsigned int ieee_code = 0;
+	unsigned int size = hdmitx_rd_reg(HDMITX_DWC_FC_VSDSIZE);
+	unsigned int cs = hdmitx_rd_reg(HDMITX_DWC_FC_AVICONF0) & 0x3;
+
+	if (!hdmitx_vsif_en())
+		return type;
+
+	ieee_code = GET_IEEEOUI();
+
+	if ((ieee_code == HDMI_IEEEOUI && size == 0x18) ||
+	    (ieee_code == DOVI_IEEEOUI && size == 0x1b)) {
+		if (cs == 0x1) /* Y422 */
+			type = HDMI_DV_VSIF_LL;
+		if (cs == 0x0) /* RGB */
+			type = HDMI_DV_VSIF_STD;
+	}
+	return type;
+}
+
+enum hdmi_tf_type hdmitx_get_cur_hdr10p_st(void)
+{
+	enum hdmi_tf_type type = HDMI_NONE;
+	unsigned int ieee_code = 0;
+
+	if (!hdmitx_vsif_en())
+		return type;
+
+	ieee_code = GET_IEEEOUI();
+
+	if (ieee_code == HDR10PLUS_IEEEOUI)
+		type = HDMI_HDR10P_DV_VSIF;
+
+	return type;
+}
+
+bool hdmitx_hdr_en(void)
+{
+	return (hdmitx_get_cur_hdr_st() & HDMI_HDR_TYPE) == HDMI_HDR_TYPE;
+}
+
+bool hdmitx_dv_en(void)
+{
+	return (hdmitx_get_cur_dv_st() & HDMI_DV_TYPE) == HDMI_DV_TYPE;
+}
+
+bool hdmitx_hdr10p_en(void)
+{
+	return (hdmitx_get_cur_hdr10p_st() & HDMI_HDR10P_TYPE) ==
+		HDMI_HDR10P_TYPE;
 }
 
 static void hdmitx_set_packet(int type, unsigned char *DB, unsigned char *HB)
@@ -2832,9 +2951,19 @@ static int hdmitx_set_audmode(struct hdmitx_dev *hdev,
 		/* Wait for 40 us for TX I2S decoder to settle */
 		msleep(20);
 	}
+	data32 = hdmitx_rd_reg(HDMITX_DWC_FC_PACKET_TX_EN);
+	pr_info(HW "[0x10e3] = 0x%x\n", data32);
 	set_aud_fifo_rst();
 	udelay(10);
 	hdmitx_wr_reg(HDMITX_DWC_AUD_N1, hdmitx_rd_reg(HDMITX_DWC_AUD_N1));
+	/* double confirm that ACR packet is enabled
+	 * simultaneously with audio sample packet
+	 */
+	data32 = hdmitx_rd_reg(HDMITX_DWC_FC_PACKET_TX_EN);
+	if ((data32 & 0x9) == 0x8) {
+		hdmitx_set_reg_bits(HDMITX_DWC_FC_PACKET_TX_EN, 1, 0, 1);
+		pr_info(HW "enable ACR: [0x10e3] = 0x%x\n", data32);
+	}
 	hdmitx_set_reg_bits(HDMITX_DWC_FC_DATAUTO3, 1, 0, 1);
 
 	return 1;
@@ -5034,6 +5163,7 @@ static int hdmitx_cntl_config(struct hdmitx_dev *hdev, unsigned int cmd,
 	unsigned int argv)
 {
 	int ret = 0;
+	unsigned int ieee_code = 0;
 
 	if ((cmd & CMD_CONF_OFFSET) != CMD_CONF_OFFSET) {
 		pr_err(HW "config: invalid cmd 0x%x\n", cmd);
@@ -5088,6 +5218,18 @@ static int hdmitx_cntl_config(struct hdmitx_dev *hdev, unsigned int cmd,
 		}
 		if (argv == CLR_AVI_BT2020)
 			hdmitx_set_avi_colorimetry(hdev->para);
+		break;
+	case CONF_CLR_DV_VS10_SIG:
+/* if current is DV/VSIF.DOVI, next will swith to HDR, need set
+ * Dolby_Vision_VS10_Signal_Type as 0
+ */
+		ieee_code = GET_IEEEOUI();
+		if (ieee_code == DOVI_IEEEOUI) {
+			hdmitx_set_reg_bits(HDMITX_DWC_FC_VSDPAYLOAD0, 0, 1, 1);
+			return 1;
+		} else {
+			return 0;
+		}
 		break;
 	case CONF_AVI_RGBYCC_INDIC:
 		hdmitx_set_reg_bits(HDMITX_DWC_FC_AVICONF0, argv, 0, 2);
@@ -5216,7 +5358,10 @@ static int hdmitx_cntl_misc(struct hdmitx_dev *hdev, unsigned int cmd,
 	case MISC_HPD_GPI_ST:
 		return hdmitx_hpd_hw_op(HPD_READ_HPD_GPIO);
 	case MISC_TRIGGER_HPD:
-		hdmitx_wr_reg(HDMITX_TOP_INTR_STAT, 1 << 1);
+		if (argv == 1)
+			hdmitx_wr_reg(HDMITX_TOP_INTR_STAT, 1 << 1);
+		else
+			hdmitx_wr_reg(HDMITX_TOP_INTR_STAT, 1 << 2);
 		return 0;
 	case MISC_HPLL_FAKE:
 		hdmitx_set_fake_vic(hdev);
@@ -5553,6 +5698,36 @@ static void config_hdmi20_tx(enum hdmi_vic vic,
 			vid_map = 0x14;
 		else
 			vid_map = 0x12;
+	}
+
+	switch (para->vic) {
+	case HDMI_720x480i60_4x3:
+	case HDMI_720x480i60_16x9:
+	case HDMI_2880x480i60_4x3:
+	case HDMI_2880x480i60_16x9:
+	case HDMI_720x576i50_4x3:
+	case HDMI_720x576i50_16x9:
+	case HDMI_2880x576i50_4x3:
+	case HDMI_2880x576i50_16x9:
+	case HDMI_720x576i100_4x3:
+	case HDMI_720x576i100_16x9:
+	case HDMI_720x480i120_4x3:
+	case HDMI_720x480i120_16x9:
+	case HDMI_720x576i200_4x3:
+	case HDMI_720x576i200_16x9:
+	case HDMI_720x480i240_4x3:
+	case HDMI_720x480i240_16x9:
+		if (output_color_format == COLORSPACE_YUV422) {
+			if (color_depth == COLORDEPTH_24B)
+				vid_map = 0x09;
+			if (color_depth == COLORDEPTH_30B)
+				vid_map = 0x0b;
+			if (color_depth == COLORDEPTH_36B)
+				vid_map = 0x0d;
+		}
+		break;
+	default:
+		break;
 	}
 
 	data32  = 0;

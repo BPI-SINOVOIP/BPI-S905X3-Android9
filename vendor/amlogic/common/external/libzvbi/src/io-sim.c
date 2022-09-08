@@ -2336,7 +2336,7 @@ sim_read			(vbi_capture *		cap,
 	vbi_capture_sim *sim = PARENT (cap, vbi_capture_sim, cap);
 	unsigned int n_lines;
 
-	timeout = timeout;
+	(void)timeout;
 
 	n_lines = 0;
 
@@ -2472,7 +2472,7 @@ sim_parameters			(vbi_capture *		cap)
 static int
 sim_get_fd			(vbi_capture *		cap)
 {
-	cap = cap; /* unused */
+	(void)cap; /* unused */
 
 	return -1; /* not available */
 }

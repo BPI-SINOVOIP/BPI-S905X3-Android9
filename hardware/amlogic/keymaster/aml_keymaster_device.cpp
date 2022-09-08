@@ -48,6 +48,7 @@
 	       __typeof__(exp) _rc;                   \
 	       int count = 0;                         \
 	       do {                                   \
+	        usleep(10000);                        \
 	         _rc = (exp);                         \
 	         count ++;                            \
 	       } while (_rc != TEEC_SUCCESS && count < retry); \
@@ -133,7 +134,7 @@ AmlKeymasterDevice::AmlKeymasterDevice(const hw_module_t* module) {
     KM_session.session_id = 0;
 
 
-    TEEC_Result rc = KEYMASTER_TEMP_FAILURE_RETRY(aml_keymaster_connect(&KM_context, &KM_session), 100);
+    TEEC_Result rc = KEYMASTER_TEMP_FAILURE_RETRY(aml_keymaster_connect(&KM_context, &KM_session), 1000);
     error_ = translate_error(rc);
     if (rc != TEEC_SUCCESS) {
         ALOGE("failed to connect to keymaster (0x%x)", rc);

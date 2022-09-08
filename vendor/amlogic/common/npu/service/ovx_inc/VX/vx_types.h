@@ -650,8 +650,6 @@ enum vx_direction_e {
     VX_INPUT = VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_DIRECTION) + 0x0,
     /*! \brief The parameter is an output only. */
     VX_OUTPUT = VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_DIRECTION) + 0x1,
-    /*! \brief The parameter is both an input and output. */
-    VX_BIDIRECTIONAL = VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_DIRECTION) + 0x2,
 };
 
 /*! \brief These enumerations are given to the <tt>\ref vxHint</tt> API to enable/disable platform
@@ -777,6 +775,11 @@ enum vx_df_image_e {
      * This uses the BT709 full range by default.
      */
     VX_DF_IMAGE_YUV4 = VX_DF_IMAGE('Y','U','V','4'),
+    /*! \brief A single plane of unsigned 1-bit data packed eight pixels per byte.
+     * The least significant bit is the first pixel in each byte.
+     * See <tt>\ref vx_imagepatch_addressing_t</tt> for more details.
+     */
+    VX_DF_IMAGE_U1 = VX_DF_IMAGE('U','0','0','1'),
     /*! \brief A single plane of unsigned 8-bit data.
      * The range of data is not specified, as it may be extracted from a YUV or
      * generated.
@@ -975,6 +978,8 @@ enum vx_parameter_attribute_e {
     VX_PARAMETER_STATE = VX_ATTRIBUTE_BASE(VX_ID_KHRONOS, VX_TYPE_PARAMETER) + 0x3,
     /*! \brief Use to extract the reference contained in the parameter. Read-only. Use a <tt>\ref vx_reference</tt> parameter.  */
     VX_PARAMETER_REF = VX_ATTRIBUTE_BASE(VX_ID_KHRONOS, VX_TYPE_PARAMETER) + 0x4,
+    /*! \brief Use to extract the meta format contained in the parameter. Read-only. Use a <tt>\ref vx_meta_format</tt> parameter.  */
+    VX_PARAMETER_META_FORMAT = VX_ATTRIBUTE_BASE(VX_ID_KHRONOS, VX_TYPE_PARAMETER) + 0x5,
 };
 
 /*! \brief The image attributes list.
@@ -1385,6 +1390,8 @@ enum vx_parameter_state_e {
      * to deference optional parameters until it is certain they are valid.
      */
     VX_PARAMETER_STATE_OPTIONAL = VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_PARAMETER_STATE) + 0x1,
+
+    VX_NODE_ATTRIBUTE_WEIGHT_BIAS_CACHE = VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_PARAMETER_STATE) + 0x2,
 };
 
 /*! \brief The border mode list.
@@ -1582,12 +1589,13 @@ typedef struct _vx_imagepatch_addressing_t {
     vx_uint32 scale_y;      /*!< \brief Scale of Y dimension. For sub-sampled planes this is the scaling factor of the dimension of the plane in relation to the zero plane. Use <tt>\ref VX_SCALE_UNITY</tt> in the numerator.  */
     vx_uint32 step_x;       /*!< \brief Step of X dimension in pixels. */
     vx_uint32 step_y;       /*!< \brief Step of Y dimension in pixels. */
+    vx_uint16 stride_x_bits; /*!< \brief Stride in X dimension in bits. Used when stride_x is not an integer number of bytes. */
 } vx_imagepatch_addressing_t;
 
 /*! \brief Use to initialize a <tt>\ref vx_imagepatch_addressing_t</tt> structure on the stack.
  * \ingroup group_image
  */
-#define VX_IMAGEPATCH_ADDR_INIT {0u, 0u, 0, 0, 0u, 0u, 0u, 0u}
+#define VX_IMAGEPATCH_ADDR_INIT {0u, 0u, 0, 0, 0u, 0u, 0u, 0u, 0u}
 
 /*! \brief The performance measurement structure. The time or durations are in units of nano seconds.
  * \ingroup group_performance
@@ -1742,6 +1750,7 @@ typedef union _vx_pixel_value_t {
     vx_uint8 RGB[3]; /*!< \brief <tt>\ref VX_DF_IMAGE_RGB</tt> format in the R,G,B order */
     vx_uint8 RGBX[4]; /*!< \brief <tt>\ref VX_DF_IMAGE_RGBX</tt> format in the R,G,B,X order */
     vx_uint8 YUV[3]; /*!< \brief All YUV formats in the Y,U,V order */
+    vx_bool U1; /*!< \brief <tt>\ref VX_DF_IMAGE_U1</tt> */
     vx_uint8 U8; /*!< \brief <tt>\ref VX_DF_IMAGE_U8</tt> */
     vx_uint16 U16; /*!< \brief <tt>\ref VX_DF_IMAGE_U16</tt> */
     vx_int16 S16; /*!< \brief <tt>\ref VX_DF_IMAGE_S16</tt> */

@@ -50,6 +50,34 @@ auto microsecondsDuration(decltype(now()) end, decltype(now()) start) {
     return std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
 };
 
+static Return<ErrorStatus> convertResultCodeToErrorStatus(int resultCode) {
+    switch (resultCode) {
+        case NNA_NO_ERROR:
+            return ErrorStatus::NONE;
+
+        case NNA_BAD_DATA:
+        case NNA_UNEXPECTED_NULL:
+            LOG(ERROR)<<"INVALID_ARGUMENT";
+            return ErrorStatus::INVALID_ARGUMENT;
+
+        case NNA_OUTPUT_INSUFFICIENT_SIZE:
+            LOG(ERROR)<<"output insufficient size";
+            return ErrorStatus::OUTPUT_INSUFFICIENT_SIZE;
+
+        default:
+            LOG(ERROR) << "Unknown result code " << resultCode
+                       << " mapped to ErrorStatus::GENERAL_FAILURE";
+            return ErrorStatus::GENERAL_FAILURE;
+        case NNA_BAD_STATE:
+        case NNA_INCOMPLETE:
+        case NNA_OP_FAILED:
+        case NNA_OUT_OF_MEMORY:
+        case NNA_UNMAPPABLE:
+            LOG(ERROR)<<"GENERAL_FAILURE";
+            return ErrorStatus::GENERAL_FAILURE;
+    }
+}
+
 Return<void> VsiPreparedModel::notify(const sp<V1_0::IExecutionCallback>& callback, const ErrorStatus& status,
                            const hidl_vec<OutputShape>&, Timing) {
     return callback->notify(status);

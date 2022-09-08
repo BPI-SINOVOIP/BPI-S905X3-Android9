@@ -159,6 +159,19 @@ static Return<ErrorStatus> convertResultCodeToErrorStatus(int resultCode) {
             MAP_OP(SPLIT);
             MAP_OP(LOG_SOFTMAX);
             MAP_OP(GATHER);
+            MAP_OP(CAST);
+            MAP_OP(HEATMAP_MAX_KEYPOINT);
+            MAP_OP(QUANTIZE);
+            MAP_OP(RANDOM_MULTINOMIAL);
+            MAP_OP(SELECT);
+            MAP_OP(ROI_ALIGN);
+            MAP_OP(GROUPED_CONV_2D);
+            MAP_OP(CHANNEL_SHUFFLE);
+            MAP_OP(TRANSPOSE_CONV_2D);
+            case HalPlatform::OperationType::TOPK_V2: {
+                LOG(INFO) << "add operation: TOPK_V2";
+                return nnrt::OperationType::TOPK;
+            };
 #endif
 #undef MAP_OP
 
@@ -266,7 +279,17 @@ static Return<ErrorStatus> convertResultCodeToErrorStatus(int resultCode) {
         ovx_operand->quant.scalar.scale = hal_operand.scale;
         ovx_operand->quant.scalar.zeroPoint = hal_operand.zeroPoint;
         ovx_operand->dimensions = hal_operand.dimensions;
-
+#if ANDROID_SDK_VERSION >= 29
+        if(ovx_nnrt_type == nnrt::OperandType::TENSOR_QUANT8_SYMM_PER_CHANNEL){
+            auto& channelQuant = hal_operand.extraParams.channelQuant();
+            ovx_operand->quant.vec.channelDim = channelQuant.channelDim;
+            ovx_operand->quant.vec.scale.resize(channelQuant.scales.size());
+            ovx_operand->quant.vec.zeroPoint.resize(channelQuant.scales.size(), 0);
+            for(size_t i = 0; i < channelQuant.scales.size(); i++){
+                ovx_operand->quant.vec.scale[i] = channelQuant.scales[i];
+            }
+        }
+#endif
         // TODO: add check error
         switch (ovx_operand->type) {
             case nnrt::OperandType::FLOAT32:
@@ -307,11 +330,14 @@ static Return<ErrorStatus> convertResultCodeToErrorStatus(int resultCode) {
             fill_operand_value(ovx_operand, hal_operand);
         }
 
+        std::string not_supported_reason;
         for (const auto& hal_op : model_.operations) {
-            if(!VsiDriver::isSupportedOperation(hal_op, model_)){
-                LOG(ERROR)<<"Device do not support operation type: "<<static_cast<int>(hal_op.type);
+            if (!VsiDriver::isSupportedOperation(hal_op, model_, not_supported_reason)) {
+                LOG(ERROR) << "Device do not support operation type: "
+                           << static_cast<int>(hal_op.type);
+                LOG(INFO) << not_supported_reason;
                 return ErrorStatus::INVALID_ARGUMENT;
-                }
+            }
 
             auto ovx_op_type = op_code_mapping(hal_op.type);
             if( nnrt::OperationType::NONE == ovx_op_type){

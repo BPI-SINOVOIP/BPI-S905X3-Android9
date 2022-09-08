@@ -46,7 +46,9 @@ LOCAL_CFLAGS+=-DCAMHAL_HOSTNAME=\"${CAMHAL_HOSTNAME}\"
 LOCAL_CFLAGS+=-DCAMHAL_IP=\"${CAMHAL_IP}\"
 LOCAL_CFLAGS+=-DCAMHAL_PATH=\"${CAMHAL_PATH}\"
 ########################################################################################################
-
+GE2D_ENABLE := false
+GE2D_VERSION_2 := false
+ISP_ENABLE := false
 LOCAL_SHARED_LIBRARIES:= \
     libbinder \
     liblog \
@@ -59,8 +61,21 @@ LOCAL_SHARED_LIBRARIES:= \
     libexpat \
     libexif \
     libcamera_metadata \
-    libispaaa
+    libamgralloc_ext \
+    libmediandk
 
+ifeq ($(GE2D_ENABLE),true)
+ifeq ($(GE2D_VERSION_2),true)
+LOCAL_SHARED_LIBRARIES += libge2d-2.0
+else
+LOCAL_SHARED_LIBRARIES += libge2d
+endif
+LOCAL_CFLAGS += -DGE2D_ENABLE
+endif
+ifeq ($(ISP_ENABLE),true)
+LOCAL_SHARED_LIBRARIES += libispaaa
+LOCAL_CFLAGS += -DISP_ENABLE
+endif
 LOCAL_STATIC_LIBRARIES := \
     libyuv_static \
     android.hardware.camera.common@1.0-helper
@@ -75,9 +90,9 @@ ifeq ($(GPU_ARCH),midgard)
 LOCAL_KK:=1
 endif
 ifeq ($(LOCAL_KK),1)
-	LOCAL_CFLAGS += -DMALI_AFBC_GRALLOC=1
+    LOCAL_CFLAGS += -DMALI_AFBC_GRALLOC=1
 else
-	LOCAL_CFLAGS += -DMALI_AFBC_GRALLOC=0
+    LOCAL_CFLAGS += -DMALI_AFBC_GRALLOC=0
 endif
 
 MESON_GRALLOC_DIR ?= hardware/amlogic/gralloc
@@ -85,7 +100,15 @@ MESON_GRALLOC_DIR ?= hardware/amlogic/gralloc
 LOCAL_C_INCLUDES += external/jpeg \
                     external/jhead/ \
                     frameworks/native/include/media/hardware \
+                    $(TOP)/frameworks/native/libs/nativebase/include \
+                    $(TOP)/frameworks/native/libs/ui/include \
+                    $(TOP)/frameworks/native/libs/arect/include \
+                    $(TOP)/frameworks/native/libs/nativewindow/include/ \
+                    $(TOP)/frameworks/native/include \
+                    $(TOP)/frameworks/native/include/media/openmax \
+                    $(TOP)/frameworks/native/libs/binder/include \
                     external/libyuv/files/include/ \
+                    $(TOP)/system/core/include \
                     $(TOP)/system/core/libion/include \
                     $(TOP)/system/core/libion/kernel-headers \
                     $(TOP)/$(MESON_GRALLOC_DIR) \
@@ -93,7 +116,17 @@ LOCAL_C_INCLUDES += external/jpeg \
                     $(call include-path-for, camera) \
                     $(TOP)/external/expat/lib \
                     $(TOP)/external/libexif \
-                    $(LOCAL_PATH)/isplib/inc
+                    $(LOCAL_PATH)/isplib/inc \
+                    $(TOP)/frameworks/av/media/ndk/include \
+                    $(TOP)/frameworks/av/media/libstagefright/include/media/
+
+ifeq ($(GE2D_ENABLE),true)
+ifeq ($(GE2D_VERSION_2),true)
+LOCAL_C_INCLUDES += $(TOP)/vendor/common/system/libge2d/v2/include/
+else
+LOCAL_C_INCLUDES += $(TOP)/vendor/common/system/libge2d/include/
+endif
+endif
 
 LOCAL_SRC_FILES := \
     EmulatedCameraHal.cpp \
@@ -101,27 +134,38 @@ LOCAL_SRC_FILES := \
     EmulatedCameraHotplugThread.cpp \
     EmulatedBaseCamera.cpp \
     EmulatedCamera.cpp \
-        EmulatedCameraDevice.cpp \
-        EmulatedQemuCamera.cpp \
-        EmulatedQemuCameraDevice.cpp \
-        EmulatedFakeCamera.cpp \
-        EmulatedFakeCameraDevice.cpp \
-        Converters.cpp \
-        PreviewWindow.cpp \
-        CallbackNotifier.cpp \
-        QemuClient.cpp \
-        JpegCompressor.cpp \
-        fake-pipeline2/Scene.cpp \
-        fake-pipeline2/Sensor.cpp \
-        fake-pipeline2/ge2d_stream.cpp \
-        fake-pipeline2/JpegCompressor.cpp \
-        fake-pipeline2/NV12_resize.c \
-        fake-pipeline2/util.c \
+    EmulatedCameraDevice.cpp \
+    EmulatedQemuCamera.cpp \
+    EmulatedQemuCameraDevice.cpp \
+    EmulatedFakeCamera.cpp \
+    EmulatedFakeCameraDevice.cpp \
+    Converters.cpp \
+    PreviewWindow.cpp \
+    CallbackNotifier.cpp \
+    QemuClient.cpp \
+    JpegCompressor.cpp \
+    fake-pipeline2/Scene.cpp \
+    fake-pipeline2/Sensor.cpp \
+    fake-pipeline2/JpegCompressor.cpp \
+    fake-pipeline2/NV12_resize.c \
+    fake-pipeline2/CameraUtil.cpp \
     EmulatedCamera3.cpp \
-        EmulatedFakeCamera3.cpp \
-        EmulatedFakeCamera3Info.cpp \
-        fake-pipeline2/camera_hw.cpp \
-        VendorTags.cpp \
+    EmulatedFakeCamera3.cpp \
+    EmulatedFakeCamera3Info.cpp \
+    fake-pipeline2/camera_hw.cpp \
+    fake-pipeline2/util.c \
+    VendorTags.cpp \
+    fake-pipeline2/USBSensor.cpp \
+    fake-pipeline2/MIPISensor.cpp \
+    fake-pipeline2/OMXDecoder.cpp \
+    fake-pipeline2/HalMediaCodec.cpp \
+    fake-pipeline2/CameraIO.cpp \
+    fake-pipeline2/CameraDevice.cpp
+
+ifeq ($(GE2D_ENABLE),true)
+LOCAL_SRC_FILES += fake-pipeline2/ge2d_stream.cpp \
+                   fake-pipeline2/ion_if.cpp
+endif
 
 ifeq ($(TARGET_PRODUCT),vbox_x86)
 LOCAL_MODULE := camera.vbox_x86

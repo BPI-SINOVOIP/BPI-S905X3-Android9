@@ -108,7 +108,7 @@ typedef struct _vsi_nn_reducemin_lcl_data
 typedef struct _vsi_nn_reducemin_internal_param
 {
     vsi_nn_reducemin_lcl_data  local;
-    vx_uint32   *axis;
+    vx_int32    *axis;
     vx_uint32   axis_num;
     vx_bool     keep_dim;
 } vsi_nn_reducemin_internal_param;

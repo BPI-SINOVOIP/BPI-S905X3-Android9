@@ -68,9 +68,9 @@ MAKE_SPEC(output)
     .input_(nnrt::OperandType::TENSOR_FLOAT32)
     .output_(nnrt::OperandType::TENSOR_FLOAT32));
 
-    OVERRIDE_SPEC(output, 0)
-    .input_(nnrt::OperandType::TENSOR_FLOAT16)
-    .output_(nnrt::OperandType::TENSOR_FLOAT16));
+    // OVERRIDE_SPEC(output, 0)
+    // .input_(nnrt::OperandType::TENSOR_FLOAT16)
+    // .output_(nnrt::OperandType::TENSOR_FLOAT16));
 
 #undef ARG_NAMES
 #undef ARGC

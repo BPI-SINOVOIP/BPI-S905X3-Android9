@@ -1,0 +1,99 @@
+cc_library_static {
+    vendor_available: true,
+    name: "libzvbi_static",
+
+    srcs: [
+        "src/bit_slicer.c",
+        "src/cache.c",
+        "src/caption.c",
+        "src/conv.c",
+        "src/dvb_mux.c",
+        "src/dvb_demux.c",
+        "src/exp-html.c",
+        "src/exp-templ.c",
+        "src/exp-txt.c",
+        "src/exp-vtx.c",
+        "src/exp-gfx.c",
+        "src/export.c",
+        "src/hamm.c",
+        "src/idl_demux.c",
+        "src/io.c",
+        "src/io-bktr.c",
+        "src/io-dvb.c",
+        "src/io-sim.c",
+        "src/io-v4l.c",
+        "src/io-v4l2.c",
+        "src/io-v4l2k.c",
+        "src/lang.c",
+        "src/misc.c",
+        "src/packet.c",
+        "src/teletext.c",
+        "src/page_table.c",
+        "src/pfc_demux.c",
+        "src/proxy-client.c",
+        "src/raw_decoder.c",
+        "src/sampling_par.c",
+        "src/search.c",
+        "src/ure.c",
+        "src/sliced_filter.c",
+        "src/tables.c",
+        "src/trigger.c",
+        "src/vbi.c",
+        "src/vps.c",
+        "src/wss.c",
+        "src/xds_demux.c",
+        "src/decoder.c",
+        "src/dtvcc.c",
+    ],
+
+    cflags: [
+        "-D_REENTRANT",
+        "-D_GNU_SOURCE",
+        "-DENABLE_DVB=1",
+        "-DENABLE_V4L=1",
+        "-DENABLE_V4L2=1",
+        "-DHAVE_ICONV=1",
+        "-DPACKAGE=\"zvbi\"",
+        "-DVERSION=\"0.2.33\"",
+        "-DANDROID",
+    ],
+    clang_cflags: ["-Wno-error=tautological-pointer-compare"],
+
+    arch: {
+        arm: {
+            instruction_set: "arm",
+        },
+    },
+
+    // TODO: include library
+    include_dirs: [
+        "vendor/amlogic/common/external/dvb/include/am_adp",
+        "vendor/amlogic/common/external/dvb/include/am_mw",
+        "vendor/amlogic/common/external/icu/icu4c/source/common",
+        //"external/icu/libandroidicu/include/",
+        //"external/icu/android_icu4c/include",
+        //"external/icu/icu4c/source/common",
+    ],
+    shared_libs: [
+       "liblog",
+    ],
+}
+
+cc_library_shared {
+    vendor: true,
+    name: "libzvbi",
+    shared_libs: [
+       "liblog",
+    ],
+    export_include_dirs: ["src"],
+    whole_static_libs: [
+       "libzvbi_static",
+    ],
+    static_libs: [
+       "libicui18n_prebuilt",
+       "libicuuc_prebuilt",
+       "libicuuc_stubdata_prebuilt",
+       "libam_adp_prebuilt",
+       "libam_mw_prebuilt",
+    ],
+}

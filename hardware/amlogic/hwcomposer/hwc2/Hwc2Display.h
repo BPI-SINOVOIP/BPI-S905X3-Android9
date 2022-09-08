@@ -113,6 +113,7 @@ public:
     virtual void onUpdate(bool bHdcp);
     virtual void onModeChanged(int stage);
     virtual void getDispMode(drm_mode_info_t & dispMode);
+    virtual void cleanupBeforeDestroy();
 
 protected:
     /* For compose. */
@@ -190,6 +191,8 @@ protected:
     std::vector<drm_hdr_meatadata_t> mHdrKeys;
 #endif
     std::mutex mMutex;
+
+    bool mVsyncState;
 };
 
 #endif/*HWC2_DISPLAY_H*/

@@ -44,6 +44,7 @@
 /dev/videosync            0660   media     system
 /dev/ac_sbuf0             0660   system    camera
 /dev/ac_isp4uf            0660   system    camera
+/dev/amresource_mgr       0666   media     system
 
 
 #audio data

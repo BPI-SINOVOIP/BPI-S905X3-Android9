@@ -25,6 +25,7 @@
 #include <hardware/camera_common.h>
 #include <system/camera_vendor_tags.h>
 #include "VendorTags.h"
+#include "fake-pipeline2/CameraDevice.h"
 namespace android {
 
 #ifndef ARRAY_SIZE
@@ -154,8 +155,6 @@ public:
 
     void onStatusChanged(int cameraId, int newStatus);
 
-    int getValidCameraId(void);
-
     /****************************************************************************
      * Private API
      ***************************************************************************/
@@ -179,6 +178,7 @@ private:
      ***************************************************************************/
 
 private:
+	CameraVirtualDevice* mCameraVirtualDevice;
     /* Connection to the camera service in the emulator. */
     FactoryQemuClient   mQemuClient;
 

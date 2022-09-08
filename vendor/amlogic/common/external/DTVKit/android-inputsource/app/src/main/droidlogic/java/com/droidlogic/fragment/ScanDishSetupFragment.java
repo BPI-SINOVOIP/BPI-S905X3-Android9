@@ -65,6 +65,7 @@ public class ScanDishSetupFragment extends Fragment {
     private TextView mStrengthTextView;
     private TextView mQualityTextView;
     private DialogManager mDialogManager = null;
+    private boolean mStartTuneActionSuccessful = false;
 
     private TimerTask task = new TimerTask() {
         public void run() {
@@ -74,8 +75,12 @@ public class ScanDishSetupFragment extends Fragment {
                     if (mParameterMananer == null) {
                         return;
                     }
-                    int strength = mParameterMananer.getStrengthStatus();
-                    int quality = mParameterMananer.getQualityStatus();
+                    int strength = 0;
+                    int quality = 0;
+                    if (mStartTuneActionSuccessful) {
+                        strength = mParameterMananer.getStrengthStatus();
+                        quality = mParameterMananer.getQualityStatus();
+                    }
                     if (mStrengthProgressBar != null && mQualityProgressBar != null &&
                             mStrengthTextView != null && mQualityTextView != null) {
                         mStrengthProgressBar.setProgress(strength);
@@ -111,7 +116,13 @@ public class ScanDishSetupFragment extends Fragment {
                     case MSG_START_TUNE_ACTION:
                         if (mParameterMananer != null) {
                             mIsStarted = true;
-                            mParameterMananer.startTuneAction();
+                            if (null == mParameterMananer.startTuneAction()) {
+                                Log.d(TAG, "mStartTuneActionSuccessful = false");
+                                mStartTuneActionSuccessful = false;
+                            } else {
+                                Log.d(TAG, "mStartTuneActionSuccessful = true");
+                                mStartTuneActionSuccessful = true;
+                            }
                         }
                         break;
                     case MSG_STOP_TUNE_ACTION:

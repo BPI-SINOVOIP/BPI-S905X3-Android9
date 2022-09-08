@@ -94,6 +94,7 @@ include $(BUILD_PREBUILT)
         aml_audio_timer.c \
         audio_virtual_buf.c \
         aml_audio_ease.c \
+        aml_mmap_audio.c \
         ../amlogic_AQ_tools/audio_eq_drc_compensation.c \
         ../amlogic_AQ_tools/audio_eq_drc_parser.c \
         ../amlogic_AQ_tools/ini/dictionary.c \
@@ -104,6 +105,7 @@ include $(BUILD_PREBUILT)
         system/media/audio_utils/include \
         system/media/audio_effects/include \
         system/media/audio_route/include \
+        system/core/libion/include \
         system/core/include \
         hardware/libhardware/include \
         $(LOCAL_PATH)/../libms12/include \
@@ -132,7 +134,8 @@ include $(BUILD_PREBUILT)
         libaudioutils libdl libaudioroute libutils \
         libdroidaudiospdif libamaudioutils libamlaudiorc libamadec \
         libnano \
-        libdtvad
+        libdtvad \
+        libion
 
 ifeq ($(BOARD_COMPILE_IN_SYSTEM), true)
     LOCAL_SHARED_LIBRARIES += libam_adp_vendor

@@ -4579,6 +4579,10 @@ static void wpas_p2p_deinit_global(struct wpa_global *global)
 
 static int wpas_p2p_create_iface(struct wpa_supplicant *wpa_s)
 {
+#ifdef MULTI_WIFI_SUPPORT
+	if (!is_wifi_driver_loaded("dhd") && !is_wifi_driver_loaded("bcmdhd"))
+		wpa_s->conf->p2p_no_group_iface=1;
+#endif
 	if (wpa_s->conf->p2p_no_group_iface)
 		return 0; /* separate interface disabled per configuration */
 	if (wpa_s->drv_flags &

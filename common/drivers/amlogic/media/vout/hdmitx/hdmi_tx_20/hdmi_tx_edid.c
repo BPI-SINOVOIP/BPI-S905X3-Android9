@@ -199,7 +199,6 @@ static void store_vesa_idx(struct rx_cap *prxcap, enum hdmi_vic vesa_timing)
 		if (prxcap->vesa_timing[i] == vesa_timing)
 			break;
 	}
-	pr_info("hdmitx: reach vesa idx MAX\n");
 }
 
 static void Edid_EstablishedTimings(struct rx_cap *prxcap, unsigned char *data)
@@ -1296,7 +1295,7 @@ static int Edid_Y420CMDB_fill_all_vic(struct hdmitx_dev *hdmitx_device)
 		memset(&(info->y420cmdb_bitmap[0]), 0xff, a);
 
 	if ((b != 0) && (a < Y420CMDB_MAX))
-		info->y420cmdb_bitmap[a] = (((1 << b) - 1) << (8-b));
+		info->y420cmdb_bitmap[a] = (1 << b) - 1;
 
 	info->bitmap_length = (b == 0) ? a : (a + 1);
 	info->bitmap_valid = (info->bitmap_length != 0)?1:0;
@@ -1820,10 +1819,11 @@ static void hdmitx_edid_set_default_vic(struct hdmitx_dev *hdmitx_device)
 {
 	struct rx_cap *prxcap = &hdmitx_device->rxcap;
 
-	prxcap->VIC_count = 0x3;
+	prxcap->VIC_count = 0x4;
 	prxcap->VIC[0] = HDMI_720x480p60_16x9;
 	prxcap->VIC[1] = HDMI_1280x720p60_16x9;
-	prxcap->VIC[2] = HDMI_1920x1080p60_16x9;
+	prxcap->VIC[2] = HDMI_1920x1080i60_16x9;
+	prxcap->VIC[3] = HDMI_1920x1080p60_16x9;
 	prxcap->native_VIC = HDMI_720x480p60_16x9;
 	hdmitx_device->vic_count = prxcap->VIC_count;
 	pr_info(EDID "set default vic\n");
@@ -2108,7 +2108,8 @@ next:
 			prxcap->dtd_idx, para->vic);
 		prxcap->dtd_idx++;
 	} else
-		dump_dtd_info(t);
+		if (0) /* for debug usage */
+			dump_dtd_info(t);
 }
 
 static void edid_check_pcm_declare(struct rx_cap *prxcap)
@@ -2733,10 +2734,6 @@ bool hdmitx_edid_check_valid_mode(struct hdmitx_dev *hdev,
 			if (para->cd != COLORDEPTH_24B)
 				return 0;
 		break;
-	case HDMI_720x480i60_16x9:
-	case HDMI_720x576i50_16x9:
-		if (para->cs == COLORSPACE_YUV422)
-			return 0;
 	default:
 		break;
 	}
@@ -2863,7 +2860,14 @@ enum hdmi_vic hdmitx_edid_get_VIC(struct hdmitx_dev *hdev,
 	struct rx_cap *prxcap = &hdev->rxcap;
 	int  j;
 	enum hdmi_vic vic = hdmitx_edid_vic_tab_map_vic(disp_mode);
+	struct hdmi_format_para *para = NULL;
+	enum hdmi_vic *vesa_t = &hdev->rxcap.vesa_timing[0];
+	enum hdmi_vic vesa_vic;
 
+	if (vic >= HDMITX_VESA_OFFSET)
+		vesa_vic = vic;
+	else
+		vesa_vic = HDMI_Unknown;
 	if (vic != HDMI_Unknown) {
 		if (force_flag == 0) {
 			for (j = 0 ; j < prxcap->VIC_count ; j++) {
@@ -2872,6 +2876,19 @@ enum hdmi_vic hdmitx_edid_get_VIC(struct hdmitx_dev *hdev,
 			}
 			if (j >= prxcap->VIC_count)
 				vic = HDMI_Unknown;
+		}
+	}
+	if ((vic == HDMI_Unknown) &&
+		(vesa_vic != HDMI_Unknown)) {
+		for (j = 0; vesa_t[j] && j < VESA_MAX_TIMING; j++) {
+			para = hdmi_get_fmt_paras(vesa_t[j]);
+			if (para) {
+				if ((para->vic >= HDMITX_VESA_OFFSET) &&
+					(vesa_vic == para->vic)) {
+					vic = para->vic;
+					break;
+				}
+			}
 		}
 	}
 	return vic;
@@ -2966,9 +2983,7 @@ static unsigned int hdmitx_edid_check_valid_blocks(unsigned char *buf)
 			tmp_chksum += buf[i + j*128];
 		if (tmp_chksum != 0) {
 			valid_blk_no++;
-			if ((tmp_chksum & 0xff) == 0)
-				pr_info(EDID "check sum valid\n");
-			else
+			if (tmp_chksum & 0xff)
 				pr_info(EDID "check sum invalid\n");
 		}
 		tmp_chksum = 0;
@@ -3180,4 +3195,63 @@ int hdmitx_edid_dump(struct hdmitx_dev *hdmitx_device, char *buffer,
 			edid_checkvalue[3]);
 
 	return pos;
+}
+
+bool hdmitx_check_edid_all_zeros(unsigned char *buf)
+{
+	unsigned int i = 0, j = 0;
+	unsigned int chksum = 0;
+
+	for (j = 0; j < EDID_MAX_BLOCK; j++) {
+		chksum = 0;
+		for (i = 0; i < 128; i++)
+			chksum += buf[i + j * 128];
+		if (chksum != 0)
+			return false;
+	}
+	return true;
+}
+
+static bool hdmitx_edid_header_invalid(unsigned char *buf)
+{
+	bool base_blk_invalid = false;
+	bool ext_blk_invalid = false;
+	bool ret = false;
+	int i = 0;
+
+	if ((buf[0] != 0) || (buf[7] != 0)) {
+		base_blk_invalid = true;
+	} else {
+		for (i = 1; i < 7; i++) {
+			if (buf[i] != 0xff) {
+				base_blk_invalid = true;
+				break;
+			}
+		}
+	}
+	/* judge header strickly, only if both header invalid */
+	if (buf[0x7e] > 0) {
+		if ((buf[0x80] != 0x2) && (buf[0x80] != 0xf0))
+			ext_blk_invalid = true;
+		ret = base_blk_invalid && ext_blk_invalid;
+	} else {
+		ret = base_blk_invalid;
+	}
+
+	return ret;
+}
+
+bool hdmitx_edid_notify_ng(unsigned char *buf)
+{
+	if (!buf)
+		return true;
+	/* notify EDID NG to systemcontrol */
+	if (hdmitx_check_edid_all_zeros(buf))
+		return true;
+	else if ((buf[0x7e] > 3) &&
+		hdmitx_edid_header_invalid(buf))
+		return true;
+	/* may extend NG case here */
+
+	return false;
 }

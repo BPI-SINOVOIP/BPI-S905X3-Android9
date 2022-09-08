@@ -1,23 +1,4 @@
-android-rpcservice
-commit: 9fb02b5be7aa4a804e6f7528625cb930a3daf6d3
-
-dtvkit-amlogic
-commit: 8bc6b643b5c8317d59b05290c7ed280535bc03ce
-
-DVBCore
-commit: 60fc4e62f8a22b8259c22afbf2b337d58aa116ec
-
-CI-PLUS
-commit: 5727aba6de6f8b6382d5c991889eb1efa7d79b46
-
-DSMCC
-commit: 0773253b3f11cd6d60fb6237e8db8d5ba68dbe04
-
-MHEG5
-commit: 21f86c9b3deb27472a64218faef0ee5e806de8a6
-
-DVB
-commit: 5affb79364454ab15eb38088c7cb29b107004b03
+具体依赖模块见commit info.
 
 增加环境变量PRODUCT_SUPPORT_CIPLUS，控制CI-PLUS功能，默认打开。
 export PRODUCT_SUPPORT_CIPLUS=true    //CI-PLUS enable

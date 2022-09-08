@@ -331,8 +331,10 @@ int SingleplaneComposition::commit() {
     if (mComposer.get()) {
         mComposer->start();
         composeOutput = mComposer->getOutput();
-        mDisplayPairs.push_back(DisplayPair{composeOutput, mOsdPlane});
-        mOsdPlane.reset();
+        if (composeOutput.get()) {
+            mDisplayPairs.push_back(DisplayPair{composeOutput, mOsdPlane});
+            mOsdPlane.reset();
+        }
     }
 
     display_zoom_info_t osdDisplayFrame;

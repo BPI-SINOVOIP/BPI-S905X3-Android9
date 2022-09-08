@@ -49,6 +49,7 @@ static inline vsi_bool type_is_integer
     case VSI_NN_TYPE_UINT16:
     case VSI_NN_TYPE_UINT32:
     case VSI_NN_TYPE_UINT64:
+    case VSI_NN_TYPE_BOOL8:
         ret = TRUE;
         break;
     default:

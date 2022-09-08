@@ -20,8 +20,27 @@
 #include <linux/videodev2.h>
 #include "Base.h"
 #include "camera_hw.h"
-#include "ge2d.h"
+#include <aml_ge2d.h>
+#include <ge2d_port.h>
 
-int fillStream(struct VideoInfo *src, uintptr_t physAddr, const android::StreamBuffer &dst);
-
+namespace android {
+class ge2dDevice {
+public:
+	enum {
+		NV12,
+		RGB
+	};
+	static int fillStream(VideoInfo *src, uintptr_t physAddr, const android::StreamBuffer &dst);
+	static int ge2d_copy(int dst_fd, int src_fd, size_t width, size_t height);
+	static int imageScaler();
+	static int ge2d_rotation(int dst_fd,size_t src_w, size_t src_h, int fmt,
+															int degree,aml_ge2d_t& amlge2d);
+	static char* ge2d_alloc(size_t width, size_t height,int* share_fd,int fmt,aml_ge2d_t& amlge2d);
+	static int ge2d_free(aml_ge2d_t& amlge2d);
+	static int ge2d_copy_dma(int dst_fd, int src_fd, size_t width, size_t height);
+private:
+	static int ge2d_copy_internal(int dst_fd, int dst_alloc_type,int src_fd,
+										   int src_alloc_type, size_t width, size_t height);
+};
+}
 #endif

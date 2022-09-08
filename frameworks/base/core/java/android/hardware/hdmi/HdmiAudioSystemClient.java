@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 The Android Open Source Project
+ * Copyright (C) 2018 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,39 +15,48 @@
  */
 package android.hardware.hdmi;
 
-import android.annotation.NonNull;
-import android.annotation.SystemApi;
-import android.hardware.hdmi.HdmiRecordSources.RecordSource;
-import android.hardware.hdmi.HdmiTimerRecordSources.TimerRecordSource;
+import android.annotation.Nullable;
+import android.os.Handler;
 import android.os.RemoteException;
-import android.util.Log;
 
-import libcore.util.EmptyArray;
-
-import java.util.Collections;
-import java.util.List;
+import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.annotations.VisibleForTesting.Visibility;
 
 /**
- * HdmiTvClient represents HDMI-CEC logical device of type TV in the Android system
- * which acts as TV/Display. It provides with methods that manage, interact with other
- * devices on the CEC bus.
+ * HdmiAudioSystemClient represents HDMI-CEC logical device of type Audio System in the Android
+ * system which acts as an audio system device such as sound bar.
+ *
+ * <p>HdmiAudioSystemClient provides methods that control, get information from TV/Display device
+ * connected through HDMI bus.
  *
  * @hide
  */
-@SystemApi
-public final class HdmiAudioSystemClient extends HdmiTvClient {
+public final class HdmiAudioSystemClient extends HdmiClient {
     private static final String TAG = "HdmiAudioSystemClient";
 
-    /* package */ HdmiAudioSystemClient(IHdmiControlService service) {
+    private static final int REPORT_AUDIO_STATUS_INTERVAL_MS = 500;
+
+    private final Handler mHandler;
+    private boolean mCanSendAudioStatus = true;
+    private boolean mPendingReportAudioStatus;
+
+    private int mLastVolume;
+    private int mLastMaxVolume;
+    private boolean mLastIsMute;
+
+    @VisibleForTesting(visibility = Visibility.PACKAGE)
+    public HdmiAudioSystemClient(IHdmiControlService service) {
+        this(service, null);
+    }
+
+    @VisibleForTesting(visibility = Visibility.PACKAGE)
+    public HdmiAudioSystemClient(IHdmiControlService service, @Nullable Handler handler) {
         super(service);
+        mHandler = handler == null ? new Handler() : handler;
     }
 
-    // Factory method for HdmiTvClient.
-    // Declared package-private. Accessed by HdmiControlManager only.
-    /* package */ static HdmiAudioSystemClient create(IHdmiControlService service) {
-        return new HdmiAudioSystemClient(service);
-    }
-
+    /** @hide */
+    // TODO(b/110094868): unhide and add @SystemApi for Q
     @Override
     public int getDeviceType() {
         return HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM;

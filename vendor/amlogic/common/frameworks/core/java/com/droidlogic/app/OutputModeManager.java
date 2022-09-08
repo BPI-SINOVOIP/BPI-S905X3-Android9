@@ -303,8 +303,6 @@ public class OutputModeManager {
     public static final String HDMI_480                     = "480";
     public static final String HDMI_576                     = "576";
     public static final String HDMI_720                     = "720p";
-
-
     public static final String HDMI_1080                    = "1080";
     public static final String HDMI_4K2K                    = "2160p";
     public static final String HDMI_SMPTE                   = "smpte";
@@ -347,6 +345,20 @@ public class OutputModeManager {
         "1080p60hz",
         "2160p50hz",
         "2160p60hz",
+    };
+    private static final String[] HDMI_COLOR_LIST = {
+        "444,12bit",
+        "444,10bit",
+        "444,8bit",
+        "422,12bit",
+        "422,10bit",
+        "422,8bit",
+        "420,12bit",
+        "420,10bit",
+        "420,8bit",
+        "rgb,12bit",
+        "rgb,10bit",
+        "rgb,8bit"
     };
     private static String currentColorAttribute = null;
     private static String currentOutputmode = null;
@@ -586,6 +598,25 @@ public class OutputModeManager {
         return getHighestMatchResolution();
     }
 
+    private boolean isSupportHdmiMode(String hdmi_mode) {
+        String curMode        = null;
+        curMode = hdmi_mode.replaceAll("[*]", "");
+        if (curMode.contains("2160p60hz") || curMode.contains("2160p50hz")
+            || curMode.contains("smpte60hz") || curMode.contains("smpte50hz")) {
+            for (int j = 0; j < HDMI_COLOR_LIST.length; j++) {
+                String colorvalue      = null;
+                colorvalue                = HDMI_COLOR_LIST[j];
+                if (colorvalue.contains("8bit"))  {
+                    if (isModeSupportColor(curMode, colorvalue)) {
+                        return true ;
+                    }
+                }
+            }
+            return false ;
+        }
+        return true ;
+    }
+
     private String readSupportList(String path) {
         String str = null;
         String value = "";
@@ -601,6 +632,11 @@ public class OutputModeManager {
                         && (str.contains("2160p50") || str.contains("2160p60") || str.contains("smpte"))) {
                         continue;
                     }
+
+                    if (!isSupportHdmiMode(str)) {
+                       continue;
+                    }
+
                     value += str + ",";
                 }
             }

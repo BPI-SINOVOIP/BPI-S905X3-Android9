@@ -56,6 +56,7 @@ For modules to get/set omx video pipeline.
 int am_gralloc_get_omx_metadata_tunnel(const native_handle_t * hnd, int * tunnel);
 int am_gralloc_set_omx_metadata_tunnel(const native_handle_t * hnd, int tunnel);
 
+int am_gralloc_set_omx_video_type(const native_handle_t * hnd, int video_type);
 /*
 For modules create sideband handle.
 */
@@ -88,4 +89,6 @@ typedef enum {
 int am_gralloc_get_vpu_afbc_mask(const native_handle_t * hnd);
 
 
+int am_gralloc_get_omx_v4l_file(const native_handle_t * hnd);
+int am_gralloc_attr_set_omx_v4l_producer_flag(native_handle_t * hnd);
 #endif/*AM_GRALLOC_EXT_H*/

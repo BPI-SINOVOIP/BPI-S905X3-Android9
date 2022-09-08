@@ -52,7 +52,8 @@ PRODUCT_PROPERTY_OVERRIDES +=  \
 
 # Low memory platform
 PRODUCT_PROPERTY_OVERRIDES +=  \
-    ro.vendor.platform.support.dolbyvision=false
+    ro.config.low_ram=true \
+    ro.vendor.platform.support.dolbyvision=true
 
 #the prop is used for enable or disable
 #DD+/DD force output when HDMI EDID is not supported
@@ -64,7 +65,7 @@ PRODUCT_PROPERTY_OVERRIDES +=  \
 #Dolby DD+ decoder option
 #this prop to for videoplayer display the DD+/DD icon when playback
 PRODUCT_PROPERTY_OVERRIDES +=  \
-    ro.vendor.platform.support.dolby=false
+    ro.vendor.platform.support.dolby=true
 
 #DTS decoder option
 #display dts icon when playback
@@ -78,7 +79,7 @@ PRODUCT_PROPERTY_OVERRIDES +=  \
 #DTS-HD prop end
 # Enable player buildin
 PRODUCT_PROPERTY_OVERRIDES +=  \
-    media.support.dolbyvision = false
+    media.support.dolbyvision = true
 
 #add for video boot, 1 means use video boot, others not .
 PRODUCT_PROPERTY_OVERRIDES +=  \

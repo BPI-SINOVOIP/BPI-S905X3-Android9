@@ -1427,7 +1427,6 @@ public final class HdmiControlService extends SystemService {
             runOnServiceThreadAtFrontOfQueue(new Runnable() {
                 @Override
                 public void run() {
-                    HdmiLogger.debug("sendKeyEvent deviceType " + deviceType + " keyCode " + keyCode);
                     HdmiMhlLocalDeviceStub device = mMhlController.getLocalDevice(mActivePortId);
                     if (device != null) {
                         device.sendKeyEvent(keyCode, isPressed);
@@ -1982,7 +1981,6 @@ public final class HdmiControlService extends SystemService {
         @Override
         public void binderDied() {
             synchronized (mLock) {
-                Slog.d(TAG, "InputChangeListenerRecord binderDied");
                 if (mInputChangeListenerRecord == this) {
                     mInputChangeListenerRecord = null;
                 }

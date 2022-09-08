@@ -327,8 +327,6 @@ void lcd_mlvds_phy_set(struct lcd_config_s *pconf, int status)
 			preem = 0;
 		}
 		data32 = lvds_vx1_p2p_phy_preem_tl1[preem];
-		if (is_meson_rev_c())
-			data32 |= ((1 << 16) | (1 << 0));
 		lcd_hiu_write(HHI_DIF_CSI_PHY_CNTL14,
 			0xff2027e0 | vswing);
 		lcd_hiu_write(HHI_DIF_CSI_PHY_CNTL15, 0);
@@ -534,16 +532,16 @@ int lcd_phy_probe(void)
 
 	switch (lcd_drv->data->chip_type) {
 	case LCD_CHIP_TL1:
-		if (is_meson_rev_c())
-			phy_ctrl_bit_on = 1;
-		else
+		if (is_meson_rev_a() || is_meson_rev_b())
 			phy_ctrl_bit_on = 0;
+		else
+			phy_ctrl_bit_on = 1;
 		break;
-	case LCD_CHIP_G12B:
-		if (is_meson_rev_b())
-			phy_ctrl_bit_on = 1;
-		else
+	case LCD_CHIP_TM2:
+		if (is_meson_rev_a())
 			phy_ctrl_bit_on = 0;
+		else
+			phy_ctrl_bit_on = 1;
 		break;
 	default:
 		break;

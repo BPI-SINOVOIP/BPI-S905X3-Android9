@@ -824,36 +824,39 @@ public class TunableTvView extends FrameLayout implements StreamInfo, TunableTvV
         mAudioChannelCount = StreamInfo.AUDIO_CHANNEL_COUNT_UNKNOWN;
         mHasClosedCaption = false;
         //keep last rating as may show previous video before next channel video display
-        //mBlockedContentRating = null;
-        TvContentRating[] ratings = mMainActivity.mQuickKeyInfo.getContentRatingsOfCurrentProgram();
         boolean needSendStatus = false;
-        if (mMainActivity.mQuickKeyInfo.getBooleanValue(DroidLogicTvUtils.TV_CURRENT_BLOCK_STATUS, false)) {
-            //keep the rating if previous channel blocked
-            if (ratings != null && ratings.length > 0) {
-                mBlockedContentRating = mParentalControlSettings.getBlockedRating(ratings);
+        boolean resetLock = SystemProperties.USE_DEBUG_RESET_LOCK.getValue();
+        if (!resetLock) {
+             //mBlockedContentRating = null;
+            TvContentRating[] ratings = mMainActivity.mQuickKeyInfo.getContentRatingsOfCurrentProgram();
+            if (mMainActivity.mQuickKeyInfo.getBooleanValue(DroidLogicTvUtils.TV_CURRENT_BLOCK_STATUS, false)) {
+                //keep the rating if previous channel blocked
+                if (ratings != null && ratings.length > 0) {
+                    mBlockedContentRating = mParentalControlSettings.getBlockedRating(ratings);
+                } else {
+                    mBlockedContentRating = null;
+                    needSendStatus = true;
+                }
             } else {
                 mBlockedContentRating = null;
-                needSendStatus = true;
             }
-        } else {
-            mBlockedContentRating = null;
-        }
 
-        boolean newScreenBlocked = mScreenBlocked;
-        if (mMainActivity.mQuickKeyInfo.getBooleanValue(DroidLogicTvUtils.TV_CURRENT_CHANNELBLOCK_STATUS, false)) {
-            if (mCurrentChannel != null && mCurrentChannel.isLocked()) {
-                newScreenBlocked = true;
+            boolean newScreenBlocked = mScreenBlocked;
+            if (mMainActivity.mQuickKeyInfo.getBooleanValue(DroidLogicTvUtils.TV_CURRENT_CHANNELBLOCK_STATUS, false)) {
+                if (mCurrentChannel != null && mCurrentChannel.isLocked()) {
+                    newScreenBlocked = true;
+                } else {
+                    newScreenBlocked = false;
+                    needSendStatus = true;
+                }
             } else {
                 newScreenBlocked = false;
-                needSendStatus = true;
             }
-        } else {
-            newScreenBlocked = false;
+            if (newScreenBlocked != mScreenBlocked) {
+                blockOrUnblockScreen(newScreenBlocked);
+            }
         }
-        if (newScreenBlocked != mScreenBlocked) {
-            blockOrUnblockScreen(newScreenBlocked);
-        }
-        if (needSendStatus) {
+        if ((!resetLock && needSendStatus) || (resetLock && (mBlockedContentRating != null || mScreenBlocked))) {
             Bundle bundle = new Bundle();
             bundle.putBoolean(DroidLogicTvUtils.ACTION_TIF_BEFORE_TUNE, true);
             sendAppPrivateCommand(DroidLogicTvUtils.ACTION_TIF_BEFORE_TUNE, bundle);
@@ -1157,11 +1160,14 @@ public class TunableTvView extends FrameLayout implements StreamInfo, TunableTvV
      */
     public void blockOrUnblockScreen(boolean blockOrUnblock) {
         Log.d(TAG, "blockOrUnblockScreen blockOrUnblock = " + blockOrUnblock);
-        if (!mResetScreenBlocked && mScreenBlocked == blockOrUnblock) {
+        boolean resetLock = SystemProperties.USE_DEBUG_RESET_LOCK.getValue();
+        if (((!resetLock && !mResetScreenBlocked) || resetLock) && mScreenBlocked == blockOrUnblock) {
             Log.d(TAG, "blockOrUnblockScreen same block status");
             return;
         }
-        mResetScreenBlocked = false;
+        if (!resetLock) {
+            mResetScreenBlocked = false;
+        }
         mScreenBlocked = blockOrUnblock;
         mMainActivity.mQuickKeyInfo.saveBooleanValue(DroidLogicTvUtils.TV_CURRENT_CHANNELBLOCK_STATUS, blockOrUnblock);
 
@@ -1764,6 +1770,10 @@ public class TunableTvView extends FrameLayout implements StreamInfo, TunableTvV
     }
 
     public void resetBlockUiStatus() {
+        if (!SystemProperties.USE_DEBUG_RESET_LOCK.getValue()) {
+            Log.d(TAG, "resetBlockUiStatus need reset lock meethod");
+            return;
+        }
         if (mBlockScreenView != null) {
             mBlockScreenView.fadeOut();
             mBlockScreenView.endAnimations();

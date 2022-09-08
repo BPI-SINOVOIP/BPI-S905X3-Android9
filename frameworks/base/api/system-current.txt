@@ -1274,9 +1274,6 @@ package android.hardware.display {
 
 package android.hardware.hdmi {
 
-  public final class HdmiAudioSystemClient extends android.hardware.hdmi.HdmiTvClient {
-  }
-
   public abstract class HdmiClient {
     method public android.hardware.hdmi.HdmiDeviceInfo getActiveSource();
     method public void sendKeyEvent(int, boolean);
@@ -1286,7 +1283,6 @@ package android.hardware.hdmi {
 
   public final class HdmiControlManager {
     method public void addHotplugEventListener(android.hardware.hdmi.HdmiControlManager.HotplugEventListener);
-    method public android.hardware.hdmi.HdmiTvClient getAudioSystemClient();
     method public android.hardware.hdmi.HdmiClient getClient(int);
     method public android.hardware.hdmi.HdmiPlaybackClient getPlaybackClient();
     method public android.hardware.hdmi.HdmiTvClient getTvClient();
@@ -1537,7 +1533,7 @@ package android.hardware.hdmi {
   public static final class HdmiTimerRecordSources.TimerRecordSource {
   }
 
-  public class HdmiTvClient extends android.hardware.hdmi.HdmiClient {
+  public final class HdmiTvClient extends android.hardware.hdmi.HdmiClient {
     method public void clearTimerRecording(int, int, android.hardware.hdmi.HdmiTimerRecordSources.TimerRecordSource);
     method public void deviceSelect(int, android.hardware.hdmi.HdmiTvClient.SelectCallback);
     method public java.util.List<android.hardware.hdmi.HdmiDeviceInfo> getDeviceList();

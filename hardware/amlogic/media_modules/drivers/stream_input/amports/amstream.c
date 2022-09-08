@@ -882,6 +882,16 @@ static void amstream_user_buffer_init(void)
 	pubuf->buf_rp = 0;
 }
 
+#if 1
+/*DDD*/
+struct stream_buf_s *get_vbuf(void)
+{
+	return &bufs[BUF_TYPE_VIDEO];
+}
+
+EXPORT_SYMBOL(get_vbuf);
+#endif
+
 static int amstream_port_init(struct port_priv_s *priv)
 {
 	int r = 0;
@@ -1588,6 +1598,7 @@ static int amstream_open(struct inode *inode, struct file *file)
 	struct stream_port_s *s;
 	struct stream_port_s *port = &ports[iminor(inode)];
 	struct port_priv_s *priv;
+	VDEC_PRINT_FUN_LINENO(__func__, __LINE__);
 #ifdef G12A_BRINGUP_DEBUG
 	if (vdec_get_debug_flags() & 0xff0000) {
 		pr_info("%s force open port %d\n",

@@ -98,9 +98,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
         frameworks/av/media/libeffects/data/audio_effects.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.conf
 
-PRODUCT_COPY_FILES += \
-        device/bananapi/common/ddr/ddr_window_64.ko:$(PRODUCT_OUT)/obj/lib_vendor/ddr_window_64.ko
-
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.carrier=unknown \
     debug.sf.disable_backpressure=1 \
@@ -188,6 +185,7 @@ PRODUCT_PACKAGES += \
     droidlogic.software.core.xml \
     systemcontrol \
     subtitleserver \
+    libSubtitleClient \
     systemcontrol_static \
     libsystemcontrolservice \
     libsystemcontrol_jni  \
@@ -484,12 +482,14 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.miracast.hdcp2=true
 endif
 
+PRODUCT_PACKAGES += \
+    DroidOverlay
+
 ifeq ($(TARGET_BUILD_GOOGLE_ATV), true)
 PRODUCT_IS_ATV := true
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/tutorial-library-google.zip:system/media/tutorial-library-google.zip
 PRODUCT_PACKAGES += \
-    DroidOverlay \
     BlueOverlay
 endif
 
@@ -519,6 +519,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
 #the default af heap size is 1M,it is not enough
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.af.client_heap_size_kbyte=1536
+
+#set AAudio support (AAUDIO_POLICY_AUTO)
+#1 = AAUDIO_POLICY_NEVER, 2 = AAUDIO_POLICY_AUTO, 3 = AAUDIO_POLICY_ALWAYS
+PRODUCT_PROPERTY_OVERRIDES += \
+    aaudio.mmap_policy=2
 
 #fix android.permission2.cts.ProtectedBroadcastsTest
 #PRODUCT_PACKAGES += \

@@ -55,6 +55,8 @@
 #define LOGE(...) printf(__VA_ARGS__)
 #endif
 
+#define VBI_FIRST_LINE_SKIP_SUBPAGE_COLUMNS 6  // 0*/0* subpage
+
 
 #ifndef FPC
 #  define FPC 0
@@ -596,7 +598,7 @@ parse_mip_page(vbi_decoder *vbi, cache_page *vtp,
 		break;
 
 	default:
-		code = code;
+		(void)code;
 		subc = 0;
 		break;
 	}
@@ -1159,7 +1161,7 @@ station_lookup(vbi_cni_type type, int cni, const char **country, const char **na
 static void
 unknown_cni(vbi_decoder *vbi, const char *dl, int cni)
 {
-	vbi = vbi;
+	(void)vbi;
 
 	/* if (cni == 0) */
 		return;
@@ -1437,9 +1439,9 @@ same_header(int cur_pgno, uint8_t *cur,
 	    int *page_num_offsetp)
 {
 	uint8_t buf[3];
-	int i, j = 32 - 3, err = 0, neq = 0;
+	int i, j = 32 - 3 - VBI_FIRST_LINE_SKIP_SUBPAGE_COLUMNS, err = 0, neq = 0;
 
-	ref_pgno = ref_pgno;
+	(void)ref_pgno;
 
 	/* Assumes vbi_is_bcd(cur_pgno) */
 	buf[2] = (cur_pgno & 15) + '0';
@@ -1455,9 +1457,9 @@ same_header(int cur_pgno, uint8_t *cur,
 		    && cur[1] == buf[1]
 		    && cur[2] == buf[2]) {
 			j = i; /* here, once */
-			i += 3;
-			cur += 3;
-			ref += 3;
+			i += 3 + VBI_FIRST_LINE_SKIP_SUBPAGE_COLUMNS;
+			cur += 3 + VBI_FIRST_LINE_SKIP_SUBPAGE_COLUMNS;
+			ref += 3 + VBI_FIRST_LINE_SKIP_SUBPAGE_COLUMNS;
 			continue;
 		}
 
@@ -1467,7 +1469,7 @@ same_header(int cur_pgno, uint8_t *cur,
 		neq |= *cur - *ref;
 	}
 
-	if (err < 0 || j >= 32 - 3) /* parity error, rare */
+	if (err < 0 || j >= (32 - 3 - VBI_FIRST_LINE_SKIP_SUBPAGE_COLUMNS)) /* parity error, rare */
 		return -2; /* inconclusive, useless */
 
 	*page_num_offsetp = j;
@@ -1543,16 +1545,16 @@ store_lop(vbi_decoder *vbi, const cache_page *vtp)
 		int r, c, i;
 		if (vbi->vt.header_page.pgno == 0) {
 			/* First page after channel switch */
-			r = same_header(vtp->pgno, vtp->data.lop.raw[0] + 8,
-					vtp->pgno, vtp->data.lop.raw[0] + 8,
+			r = same_header(vtp->pgno, (uint8_t*)vtp->data.lop.raw[0] + 8,
+					vtp->pgno, (uint8_t*)vtp->data.lop.raw[0] + 8,
 					&event.ev.ttx_page.pn_offset);
 			event.ev.ttx_page.header_update = TRUE;
 			event.ev.ttx_page.clock_update = TRUE;
 		} else {
-			r = same_header(vtp->pgno, vtp->data.lop.raw[0] + 8,
+			r = same_header(vtp->pgno, (uint8_t*)vtp->data.lop.raw[0] + 8,
 					vbi->vt.header_page.pgno, vbi->vt.header + 8,
 					&event.ev.ttx_page.pn_offset);
-			c = !same_clock(vtp->data.lop.raw[0], vbi->vt.header);
+			c = !same_clock((uint8_t*)vtp->data.lop.raw[0], vbi->vt.header);
 			event.ev.ttx_page.clock_update = c;
 			if (c)
 			{
@@ -1689,7 +1691,7 @@ parse_27(vbi_decoder *vbi, uint8_t *p,
 	int designation, control;
 	int i;
 
-	vbi = vbi;
+	(void)vbi;
 
 	if (cvtp->function == PAGE_FUNCTION_DISCARD)
 		return TRUE;
@@ -1784,16 +1786,16 @@ parse_28_29(vbi_decoder *vbi, uint8_t *p,
                   \
 		r = buf;  \
                   \
-		if ((n = count - left) > 0) { \
+		if ((n = (count) - left) > 0) { \
 			r |= (buf = *triplet++) << left; \
 			left = 18; \
 		} else \
-			n = count; \
+			n = (count); \
                         \
 		buf >>= n; \
 		left -= n; \
                     \
-	    r & ((1UL << count) - 1);\
+	    r & ((1UL << (count)) - 1);\
 	})
 
 	if ((designation = vbi_unham8 (*p)) < 0)
@@ -1857,6 +1859,8 @@ parse_28_29(vbi_decoder *vbi, uint8_t *p,
 
 			ext->charset_code[0] = bits(7);
 			ext->charset_code[1] = bits(7);
+			if (vbi->vt.region != ext->charset_code[0])
+			    vbi_teletext_set_default_region(vbi, ext->charset_code[0] );
 
 			left_panel = bits (1);
 			right_panel = bits (1);

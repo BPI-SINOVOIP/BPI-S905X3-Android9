@@ -23,6 +23,18 @@
 #include "aml_audio_types_def.h"
 #include "aml_audio_stream.h"
 
+#define ENUM_TYPE_STR_MAX_LEN                           (100)
+
+#define ENUM_TYPE_TO_STR(x, offset, pStr)                   \
+case x: {                                                   \
+    pStr = #x;                                              \
+    pStr += offset;                                         \
+    if (strlen(#x) - offset > 70) {                         \
+        pStr += 70;                                         \
+    }                                                       \
+    break;                                                  \
+}
+
 int64_t aml_gettime(void);
 int get_sysfs_uint(const char *path, uint *value);
 int sysfs_set_sysfs_str(const char *path, const char *val);
@@ -60,5 +72,6 @@ uint32_t tspec_diff_to_us(struct timespec tval_old,
         struct timespec tval_new);
 int aml_audio_get_dolby_drc_mode(int *drc_mode, int *drc_cut, int *drc_boost);
 void aml_audio_switch_output_mode(int16_t *buf, size_t bytes, AM_AOUT_OutputMode_t mode);
+int aml_set_thread_priority(char *pName, pthread_t threadId);
 
 #endif

@@ -10,6 +10,15 @@ INCLUDE += -I$(OVXLIB_DIR)/include/client -I$(OVXLIB_DIR)/include -I$(OVXLIB_DIR
 INCLUDE += -I$(OVXLIB_DIR)/include/platform
 INCLUDE += -I$(NNRT_ROOT)/ -I./boost/libs/preprocessor/include/
 
+# git head shaid
+HEAD_VERSION=$(shell git log -n 1 --format=%h)
+
+ifneq ($(HEAD_VERSION),)
+DIRTY=$(shell git diff --quiet HEAD || echo '-dirty')
+CFLAGS += -DGIT_STRING='$(HEAD_VERSION)$(DIRTY)'
+$(info "add git head version $(HEAD_VERSION)$(DIRTY)")
+endif
+
 CFLAGS += $(INCLUDE) -std=c++11
 CFLAGS += -D'OVXLIB_API=__attribute__((visibility("default")))'
 CC      = $(CROSS_COMPILE)g++ -pthread
@@ -74,7 +83,7 @@ vpath %.cpp ./dump_model
 OBJECTS += \
         $(OBJ_DIR)/dump_json_model.o \
         $(OBJ_DIR)/jsoncpp.o
-CXXFLAGS+=-D_DUMP_JSON_MODEL_
+CFLAGS+=-D_DUMP_JSON_MODEL_
 endif
 
 # installation directory

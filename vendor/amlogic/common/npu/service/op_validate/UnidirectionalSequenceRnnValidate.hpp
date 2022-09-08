@@ -36,9 +36,9 @@ class UnidirectionalSequenceRnnValidate : public OperationValidate<T_model, T_Op
    public:
     UnidirectionalSequenceRnnValidate(const T_model& model, const T_Operation& operation)
         : OperationValidate<T_model, T_Operation>(model, operation) {}
-    virtual bool SignatureCheck() override {
-        return hal::limitation::nnapi::match("UnidirectionalSequenceRnnInput", this->m_InputArgTypes) &&
-               hal::limitation::nnapi::match("UnidirectionalSequenceRnnOutput", this->m_OutputArgTypes);
+    bool SignatureCheck(std::string& reason) override {
+        return ::hal::limitation::nnapi::match("UnidirectionalSequenceRnnInput", this->InputArgTypes()) &&
+               ::hal::limitation::nnapi::match("UnidirectionalSequenceRnnOutput", this->OutputArgTypes());
     };
 };
 

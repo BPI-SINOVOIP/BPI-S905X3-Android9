@@ -1501,7 +1501,8 @@ static int get_frame_size(aml_audio_dec_t *audec)
             frame_szie  = start_code->buff[3] << 24 | start_code->buff[2] << 16 | start_code->buff[1] << 8 | start_code->buff[0] + extra_data;
             frame_szie  = (frame_szie + 3) & (~3);
             start_code->status = 3; //found frame size
-            return frame_szie;
+			if (frame_szie > 0)
+				return frame_szie;
         }
     }
     return -1;

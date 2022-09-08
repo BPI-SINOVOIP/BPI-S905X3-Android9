@@ -277,6 +277,8 @@ s32 stbuf_init(struct stream_buf_s *buf, struct vdec_s *vdec, bool is_multi)
 	u32 dummy;
 	u32 addr32;
 
+	VDEC_PRINT_FUN_LINENO(__func__, __LINE__);
+
 	if (!buf->buf_start) {
 		r = _stbuf_alloc(buf, (vdec) ?
 			vdec->port_flag & PORT_FLAG_DRM : 0);
@@ -302,10 +304,9 @@ s32 stbuf_init(struct stream_buf_s *buf, struct vdec_s *vdec, bool is_multi)
 	}
 
 	buf->write_thread = 0;
-
-	if ((vdec && !vdec_single(vdec)) || (is_multi))
+	if (((vdec && !vdec_single(vdec)) || (is_multi)) &&
+		(vdec_get_debug_flags() & 0x2) == 0)
 		return 0;
-
 	if (has_hevc_vdec() && buf->type == BUF_TYPE_HEVC) {
 		CLEAR_VREG_MASK(HEVC_STREAM_CONTROL, 1);
 		WRITE_VREG(HEVC_STREAM_START_ADDR, addr32);
@@ -317,6 +318,8 @@ s32 stbuf_init(struct stream_buf_s *buf, struct vdec_s *vdec, bool is_multi)
 	}
 
 	if (buf->type == BUF_TYPE_VIDEO) {
+		VDEC_PRINT_FUN_LINENO(__func__, __LINE__);
+
 		_WRITE_ST_REG(CONTROL, 0);
 		/* reset VLD before setting all pointers */
 		WRITE_VREG(VLD_MEM_VIFIFO_WRAP_COUNT, 0);

@@ -30,6 +30,18 @@ public:
 
 protected:
     int32_t loadDisplayModes();
+    int32_t parseHdrCapabilities();
+    int32_t parseLcdInfo();
+
+    enum {
+        LCD_WIDTH = 0,
+        LCD_HEIGHT,
+        LCD_SYNC_DURATION_NUM,
+        LCD_SYNC_DURATION_DEN,
+        LCD_VALUE_MAX
+    };
+    bool mTabletMode;
+    uint32_t mLcdValues[LCD_VALUE_MAX];
 
     char mName[64];
 };

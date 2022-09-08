@@ -530,6 +530,9 @@ MediaCodec::MediaCodec(const sp<ALooper> &looper, pid_t pid, uid_t uid)
       mDequeueInputReplyID(0),
       mDequeueOutputTimeoutGeneration(0),
       mDequeueOutputReplyID(0),
+      mTunneledInputWidth(0),
+      mTunneledInputHeight(0),
+      mTunneled(false),
       mHaveInputSurface(false),
       mHavePendingInputBuffers(false),
       mCpuBoostRequested(false),
@@ -2459,6 +2462,14 @@ void MediaCodec::onMessageReceived(const sp<AMessage> &msg) {
 
             extractCSD(format);
 
+            int32_t tunneled;
+            if (format->findInt32("feature-tunneled-playback", &tunneled) && tunneled != 0) {
+                ALOGI("Configuring TUNNELED video playback.");
+                mTunneled = true;
+            } else {
+                mTunneled = false;
+            }
+
             mCodec->initiateConfigureComponent(format);
             break;
         }
@@ -3242,7 +3253,18 @@ status_t MediaCodec::onQueueInputBuffer(const sp<AMessage> &msg) {
     if (hasCryptoOrDescrambler()) {
         AString *errorDetailMsg;
         CHECK(msg->findPointer("errorDetailMsg", (void **)&errorDetailMsg));
-
+        // Notify mCrypto of video resolution changes
+        if (mTunneled && mCrypto != NULL) {
+            int32_t width, height;
+            if (mInputFormat->findInt32("width", &width) &&
+                mInputFormat->findInt32("height", &height) && width > 0 && height > 0) {
+                if (width != mTunneledInputWidth || height != mTunneledInputHeight) {
+                    mTunneledInputWidth = width;
+                    mTunneledInputHeight = height;
+                    mCrypto->notifyResolution(width, height);
+                }
+            }
+        }
         err = mBufferChannel->queueSecureInputBuffer(
                 buffer,
                 (mFlags & kFlagIsSecure),

@@ -102,3 +102,5 @@ allow hal_memtrack_default { hal_drm_clearkey imageserver rc_server hal_wifi_sup
 
 allow hal_memtrack_default { miracast_hdcp2 }:dir { search read };
 allow hal_memtrack_default { miracast_hdcp2 }:file { read open getattr };
+
+allow hal_memtrack_default hal_ir_default:dir { search };

@@ -36,9 +36,9 @@ class BidirectionalSequenceRnnValidate : public OperationValidate<T_model, T_Ope
    public:
     BidirectionalSequenceRnnValidate(const T_model& model, const T_Operation& operation)
         : OperationValidate<T_model, T_Operation>(model, operation) {}
-    virtual bool SignatureCheck() override {
-        return hal::limitation::nnapi::match("BidirectionalSequenceRnnInput", this->m_InputArgTypes) &&
-               hal::limitation::nnapi::match("BidirectionalSequenceRnnOutput", this->m_OutputArgTypes);
+    bool SignatureCheck(std::string& reason) override {
+        return ::hal::limitation::nnapi::match("BidirectionalSequenceRnnInput", this->InputArgTypes()) &&
+               ::hal::limitation::nnapi::match("BidirectionalSequenceRnnOutput", this->OutputArgTypes());
     };
 };
 

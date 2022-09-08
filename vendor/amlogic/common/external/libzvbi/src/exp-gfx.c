@@ -208,7 +208,7 @@ unicode_ccfont2(unsigned int c, int italic)
 	if (c < 0x0020)
 		c = 15; /* invalid */
 	else if (c < 0x0080)
-		c = c;
+		(void)c;
 	else {
 		for (i = 0; i < sizeof(specials) / sizeof(specials[0]); i++)
 			if (specials[i] == c) {
@@ -716,11 +716,12 @@ vbi_draw_vt_page_region(vbi_page *pg,
 
 	if (pg->drcs_clut)
 		for (i = 2; i < 2 + 8 + 32; i++)
+		{
 			if (canvas_type == 1)
 				pen.pal8[i] = pg->drcs_clut[i];
 			else
 				pen.rgba[i] = pg->color_map[pg->drcs_clut[i]];
-
+		}
 	//Add extra row to display sub page no.
 	//height = height + 1;
 
@@ -809,6 +810,17 @@ vbi_draw_vt_page_region(vbi_page *pg,
 			if (canvas_type == 1) {
 				pen.pal8[0] = ac->background;
 				pen.pal8[1] = ac->foreground;
+				if (row == 0)
+				{
+					if (pg->subtitleMode == VBI_TELETEXT_BITMAP_SUBTITLE)
+					{
+				        ac->opacity = VBI_OPAQUE;
+						if (width - count <= 7)
+						{
+							unicode = _vbi_to_ascii(page_no_buf[width - count]);
+						}
+					}
+				}
 			}
 			else
 			{
@@ -1103,7 +1115,7 @@ gfx_options[] = {
 	static vbi_option_info *
 option_enum(vbi_export *e, int index)
 {
-	e = e;
+	(void)e;
 
 	if (index < 0 || index >= (int) elements(gfx_options))
 		return NULL;
@@ -1114,7 +1126,7 @@ option_enum(vbi_export *e, int index)
 static vbi_option_info *
 option_enum_ppm(vbi_export *e, int index)
 {
-	e = e;
+	(void)e;
 
 	if (index != 0)
 		return NULL;
@@ -1313,13 +1325,13 @@ ppm_export			(vbi_export *		e,
 
 		if (pg->columns < 40) {
 			vbi_draw_cc_page_region (pg, VBI_PIXFMT_RGBA32_LE,
-					rgba_row_buffer,
+					(void *)rgba_row_buffer,
 					/* rowstride: auto */ -1,
 					/* column */ 0, row,
 					pg->columns, /* rows */ 1);
 		} else {
 			vbi_draw_vt_page_region (pg, VBI_PIXFMT_RGBA32_LE,
-					rgba_row_buffer,
+					(void *)rgba_row_buffer,
 					/* rowstride: auto */ -1,
 					/* column */ 0, row,
 					pg->columns, /* rows */ 1,
@@ -1797,6 +1809,7 @@ xpm_export			(vbi_export *		e,
 	image_width = char_width * pg->columns;
 	image_height = ((char_height * pg->rows) << scale) >> 1;
 
+	memset(title, 0, 80);
 	get_image_title (e, pg, title, sizeof (title));
 
 	if (pg->drcs_clut) {
@@ -1846,14 +1859,13 @@ xpm_export			(vbi_export *		e,
 				<< scale) >> 1;
 		footer_size = 3;	/* closing bracket */
 
-		if (   ((NULL != title) && (0 != title[0]))
-				|| ((NULL != e->creator) && (0 != e->creator[0])) ) {
+		if ((0 != title[0]) || ((NULL != e->creator) && (0 != e->creator[0])) ) {
 			header_size += 7; /* XPMEXT keyword */
 			footer_size += 12; /* XPMENDEXT keyword */
-			if (NULL != title) {
-				/* XPMEXT keywords + label + content */
-				footer_size += 17 + strlen (title);
-			}
+
+			/* XPMEXT keywords + label + content */
+			footer_size += 17 + strlen (title);
+
 			if (NULL != e->creator)
 				footer_size += 20 + strlen (e->creator);
 		}

@@ -452,17 +452,19 @@ write:
     //    aml_audio_start_trigger(stream);
     //    adev->first_apts_flag = false;
     //}
-#if 1
     if (getprop_bool("media.audiohal.outdump")) {
-        aml_audio_dump_audio_bitstreams("/data/alsa_pcm_write.pcm",
+        aml_audio_dump_audio_bitstreams("/data/audio/alsa_pcm_write.pcm",
             buffer, bytes);
      }
-#endif
 
     // SWPL-412, when input source is DTV, and UI set "parental_control_av_mute" command to audio hal
     // we need to mute audio output for PCM output here
-    if (adev->patch_src == SRC_DTV && adev->parental_control_av_mute) {
-        memset(buffer,0x0,bytes);
+    if (adev->patch_src == SRC_DTV && (adev->parental_control_av_mute ||
+        ((adev->passthrough_mute || adev->tv_mute) &&
+        (eDolbyDcvLib == adev->dolby_lib_type) &&
+        (adev->sink_format  == AUDIO_FORMAT_E_AC3 ||
+        adev->sink_format  == AUDIO_FORMAT_AC3)))) {
+        memset(buffer, 0x0, bytes);
     }
 
     if (aml_out->pcm == NULL) {

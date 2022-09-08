@@ -501,6 +501,42 @@ static inline vsi_nn_kernel_dtype_e vsi_nn_kernel_map_dtype
     return I8;
 } /* vsi_nn_kernel_map_dtype() */
 
+static inline  vsi_nn_type_e vsi_nn_dtype_map_kernel
+    (
+    vsi_nn_kernel_dtype_e dtype
+    )
+{
+    switch( dtype )
+    {
+    case I8:
+        return VSI_NN_TYPE_INT8;
+    case BOOL8:
+        return VSI_NN_TYPE_BOOL8;
+    case I16:
+        return VSI_NN_TYPE_INT16;
+    case I32:
+        return VSI_NN_TYPE_INT32;
+    case I64:
+        return VSI_NN_TYPE_INT64;
+    case U8:
+        return VSI_NN_TYPE_UINT8;
+    case U16:
+        return VSI_NN_TYPE_UINT16;
+    case U32:
+        return VSI_NN_TYPE_UINT32;
+    case F16:
+        return VSI_NN_TYPE_FLOAT16;
+    case BF16:
+        return VSI_NN_TYPE_BFLOAT16;
+    case F32:
+        return VSI_NN_TYPE_FLOAT32;
+    default:
+        VSILOGE("error data type %d", dtype);
+        break;
+    }
+    return VSI_NN_TYPE_INT8;
+} /* vsi_nn_kernel_map_dtype() */
+
 static inline size_t vsi_nn_kernel_dtype_get_bytes
     (
     vsi_nn_kernel_dtype_e dtype
@@ -552,6 +588,10 @@ vsi_nn_kernel_node_t  vsi_nn_kernel_create_node
     vsi_nn_graph_t * graph,
     vsi_nn_kernel_t * kernel
     );
+
+vsi_status vsi_nn_kernel_node_set_border
+    (vsi_nn_kernel_node_t node,
+    vx_border_t* border);
 
 vsi_nn_kernel_scalar_t vsi_nn_kernel_scalar_create
     (
@@ -837,6 +877,27 @@ vsi_nn_tensor_t* vsi_nn_merge_input_zeropoint_to_bias
     vsi_nn_tensor_t * weight,
     vsi_nn_tensor_t * bias
     );
+
+static inline const char* vsi_nn_kernel_type_str
+    (
+    vsi_nn_kernel_type_e type
+    )
+{
+    switch( type )
+    {
+    case VSI_NN_KERNEL_TYPE_CPU:
+        return "CPU";
+    case VSI_NN_KERNEL_TYPE_EVIS:
+        return "EVIS";
+    case VSI_NN_KERNEL_TYPE_CL:
+        return "CL";
+    case VSI_NN_KERNEL_TYPE_VX:
+        return "OPENVX";
+    default:
+        break;
+    }
+    return "None";
+} /* vsi_nn_kernel_type_str() */
 
 __END_DECLS
 

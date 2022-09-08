@@ -17,6 +17,9 @@ HwcVsync::HwcVsync() {
     mSoftVsync = true;
     mEnabled = false;
     mPreTimeStamp = 0;
+    mPeriod = 0;
+    mExit = false;
+    mObserver = NULL;
 
     int ret;
     ret = pthread_create(&hw_vsync_thread, NULL, vsyncThread, this);
@@ -43,6 +46,8 @@ int32_t HwcVsync::setSoftwareMode() {
     std::unique_lock<std::mutex> stateLock(mStatLock);
     mSoftVsync = true;
     mCrtc.reset();
+    stateLock.unlock();
+    mStateCondition.notify_all();
     return 0;
 }
 
@@ -50,6 +55,8 @@ int32_t HwcVsync::setHwMode(std::shared_ptr<HwDisplayCrtc> & crtc) {
     std::unique_lock<std::mutex> stateLock(mStatLock);
     mCrtc = crtc;
     mSoftVsync = false;
+    stateLock.unlock();
+    mStateCondition.notify_all();
     return 0;
 }
 
@@ -69,19 +76,21 @@ int32_t HwcVsync::setEnabled(bool enabled) {
 
 void * HwcVsync::vsyncThread(void * data) {
     HwcVsync* pThis = (HwcVsync*)data;
-    MESON_LOGV("HwDisplayVsync: vsyncThread start.");
+    MESON_LOGV("HwDisplayVsync: vsyncThread start - (%p).", pThis);
+    int print_cnt = 10;
 
     while (true) {
-        std::unique_lock<std::mutex> stateLock(pThis->mStatLock);
-        while (!pThis->mEnabled) {
-            pThis->mStateCondition.wait(stateLock);
-            if (pThis->mExit) {
-                pthread_exit(0);
-                MESON_LOGD("exit vsync loop");
-                return NULL;
+        {
+            std::unique_lock<std::mutex> stateLock(pThis->mStatLock);
+            while (!pThis->mEnabled) {
+                pThis->mStateCondition.wait(stateLock);
+                if (pThis->mExit) {
+                    MESON_LOGD("exit vsync loop");
+                    pthread_exit(0);
+                    return NULL;
+                }
             }
         }
-        stateLock.unlock();
 
         nsecs_t timestamp;
         int32_t ret;
@@ -90,17 +99,23 @@ void * HwcVsync::vsyncThread(void * data) {
         } else {
             ret = pThis->mCrtc->waitVBlank(timestamp);
         }
-        bool debug = false;
+        bool debug = true;
         if (debug) {
             nsecs_t period = timestamp - pThis->mPreTimeStamp;
             UNUSED(period);
-            if (pThis->mPreTimeStamp != 0)
-                MESON_LOGD("wait for vsync success, peroid: %lld", period);
+            print_cnt --;
+            if (pThis->mPreTimeStamp != 0 && print_cnt <= 0) {
+                MESON_LOGD("wait for vsync success, (%p) peroid: %lld", pThis, period);
+                print_cnt = 10;
+            }
             pThis->mPreTimeStamp = timestamp;
         }
 
         if ( ret == 0 && pThis->mObserver) {
             pThis->mObserver->onVsync(timestamp);
+        } else {
+            MESON_LOGE("HwcVsync vsync callback fail (%p)-(%d)-(%p)",
+                pThis, ret, pThis->mObserver);
         }
     }
     return NULL;
@@ -111,7 +126,7 @@ int32_t HwcVsync::waitSoftwareVsync(nsecs_t& vsync_timestamp) {
     static nsecs_t old_vsync_period = 0;
     nsecs_t now = systemTime(CLOCK_MONOTONIC);
 
-    mPeriod = (mPeriod == 0) ? SF_VSYNC_DFT_PERIOD : mPeriod;
+    mPeriod = (mPeriod == 0) ? 1e9/SF_VSYNC_DFT_PERIOD : mPeriod;
 
     //cal the last vsync time with old period
     if (mPeriod != old_vsync_period) {

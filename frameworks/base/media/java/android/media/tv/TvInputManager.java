@@ -1104,7 +1104,6 @@ public final class TvInputManager {
             @Override
             public void onInputAdded(String inputId) {
                 synchronized (mLock) {
-                    Log.d(TAG, "onInputAdded inputId " + inputId);
                     mStateMap.put(inputId, INPUT_STATE_CONNECTED);
                     for (TvInputCallbackRecord record : mCallbackRecords) {
                         record.postInputAdded(inputId);

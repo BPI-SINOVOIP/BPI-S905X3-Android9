@@ -54,7 +54,7 @@ namespace alloc{
  * @brief Memory type indentifier
  *
  */
-enum class Type : int{
+enum class Type : int32_t{
     MMP = 0,    //!< memory source is memory mapped file
     NML = 1,    //!< memory source is memory pointer with proper size
     SML = 2,    //!< memory source is memory pointer with relative samll size then @NML

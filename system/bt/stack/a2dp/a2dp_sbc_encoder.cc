@@ -643,10 +643,6 @@ static bool a2dp_sbc_read_feeding(uint32_t* bytes_read) {
         ((uint8_t*)a2dp_sbc_encoder_cb.pcmBuffer) +
             a2dp_sbc_encoder_cb.feeding_state.aa_feed_residue,
         read_size);
-    if (nb_byte_read < read_size) {
-        memset(((uint8_t*)a2dp_sbc_encoder_cb.pcmBuffer+a2dp_sbc_encoder_cb.feeding_state.aa_feed_residue+nb_byte_read), 0, read_size-nb_byte_read);
-        nb_byte_read = read_size;
-    }
     a2dp_sbc_encoder_cb.stats.media_read_total_actual_read_bytes +=
         nb_byte_read;
 

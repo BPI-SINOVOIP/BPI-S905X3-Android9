@@ -57,6 +57,7 @@
 #include "ops/vsi_nn_op_reverse.h"
 #include "ops/vsi_nn_op_space2depth.h"
 #include "ops/vsi_nn_op_depth2space.h"
+#include "ops/vsi_nn_op_depth2space_internal.h"
 #include "ops/vsi_nn_op_maximum.h"
 #include "ops/vsi_nn_op_scale.h"
 #include "ops/vsi_nn_op_slice.h"
@@ -142,8 +143,16 @@
 #include "ops/vsi_nn_op_variable.h"
 #include "ops/vsi_nn_op_rnncell_ovxlib.h"
 #include "ops/vsi_nn_op_l2_normalize.h"
+#include "ops/vsi_nn_op_dataconvert.h"
 #include "ops/vsi_nn_op_swish.h"
+#include "ops/vsi_nn_op_cast.h"
 #include "ops/vsi_nn_op_depthwise_conv1d.h"
+#include "ops/vsi_nn_op_grucell_activation_internal.h"
+#include "ops/vsi_nn_op_grucell_activation_internal_sma.h"
+#include "ops/vsi_nn_op_linear.h"
+#include "ops/vsi_nn_op_batchnorm_single.h"
+#include "ops/vsi_nn_op_moments.h"
+#include "ops/vsi_nn_op_squeeze.h"
 /* custom node head define define */
 #include "custom/vsi_nn_custom_node_type.h"
 
@@ -187,6 +196,7 @@ typedef union _vsi_nn_nn_param
     vsi_nn_reverse_param            reverse;
     vsi_nn_space2depth_param        space2depth;
     vsi_nn_depth2space_param        depth2space;
+    vsi_nn_depth2space_internal_param depth2space_internal;
     vsi_nn_maximum_param            maximum;
     vsi_nn_scale_param              scale;
     vsi_nn_slice_param              slice;
@@ -273,7 +283,15 @@ typedef union _vsi_nn_nn_param
     vsi_nn_rnncell_ovxlib_param     rnncell_ovxlib;
     vsi_nn_l2_normalize_param       l2_normalize;
     vsi_nn_depthwise_conv1d_param   depthwise_conv1d;
+    vsi_nn_cast_param               cast;
     vsi_nn_swish_param              swish;
+    vsi_nn_dataconvert_param        dataconvert;
+    vsi_nn_grucell_activation_internal_param grucell_activation_internal;
+    vsi_nn_grucell_activation_internal_sma_param grucell_activation_internal_sma;
+    vsi_nn_linear_param             linear;
+    vsi_nn_batchnorm_single_param   batchnorm_single;
+    vsi_nn_moments_param             moments;
+    vsi_nn_squeeze_param            squeeze;
     uint8_t                         client_param[128];
 
     /* custom node data struct define */

@@ -21,11 +21,12 @@
 
 #include <inttypes.h>
 
-#define LOG_NDEBUG 0
+//#define LOG_NDEBUG 0
 //#define LOG_NNDEBUG 0
 #define LOG_TAG "EmulatedCamera_FakeCamera3"
+#define ATRACE_TAG (ATRACE_TAG_CAMERA | ATRACE_TAG_HAL | ATRACE_TAG_ALWAYS)
 #include <android/log.h>
-
+#include <utils/Trace.h>
 #include "EmulatedFakeCamera3.h"
 #include "EmulatedCameraFactory.h"
 #include <ui/Fence.h>
@@ -93,7 +94,7 @@ const uint64_t EmulatedFakeCamera3::kAvailableProcessedMinDurations[1] = {
 };
 
 const uint32_t EmulatedFakeCamera3::kAvailableJpegSizesBack[2] = {
-    1280,720 
+    1280,720
     //    Sensor::kResolution[0], Sensor::kResolution[1]
 };
 
@@ -175,6 +176,7 @@ ssize_t EmulatedFakeCamera3::getJpegBufferSize(int width, int height) {
 
 EmulatedFakeCamera3::EmulatedFakeCamera3(int cameraId, struct hw_module_t* module) :
         EmulatedCamera3(cameraId, module) {
+    ATRACE_CALL();
     ALOGI("Constructing emulated fake camera 3 cameraID:%d", mCameraID);
 
     for (size_t i = 0; i < CAMERA3_TEMPLATE_COUNT; i++) {
@@ -211,6 +213,8 @@ EmulatedFakeCamera3::~EmulatedFakeCamera3() {
 }
 
 status_t EmulatedFakeCamera3::Initialize() {
+    ATRACE_CALL();
+
     DBG_LOGB("mCameraID=%d,mStatus=%d,ddd\n", mCameraID, mStatus);
     status_t res;
 
@@ -253,6 +257,7 @@ status_t EmulatedFakeCamera3::Initialize() {
 }
 
 status_t EmulatedFakeCamera3::connectCamera(hw_device_t** device) {
+    ATRACE_CALL();
     ALOGV("%s: E", __FUNCTION__);
     DBG_LOGB("%s, ddd", __FUNCTION__);
     Mutex::Autolock l(mLock);
@@ -264,8 +269,7 @@ status_t EmulatedFakeCamera3::connectCamera(hw_device_t** device) {
                 __FUNCTION__, mStatus, mPlugged);
         return INVALID_OPERATION;
     }
-
-    mSensor = new Sensor();
+    createSensor();
     mSensor->setSensorListener(this);
 
     res = mSensor->startUp(mCameraID);
@@ -310,6 +314,7 @@ status_t EmulatedFakeCamera3::connectCamera(hw_device_t** device) {
 }
 
 status_t EmulatedFakeCamera3::plugCamera() {
+    ATRACE_CALL();
     {
         Mutex::Autolock l(mLock);
 
@@ -343,6 +348,7 @@ camera_device_status_t EmulatedFakeCamera3::getHotplugStatus() {
 
 bool EmulatedFakeCamera3::getCameraStatus()
 {
+    ATRACE_CALL();
     CAMHAL_LOGVB("%s, mCameraStatus = %d",__FUNCTION__,mCameraStatus);
     bool ret = false;
     if (mStatus == STATUS_CLOSED) {
@@ -403,6 +409,7 @@ status_t EmulatedFakeCamera3::closeCamera() {
 }
 
 status_t EmulatedFakeCamera3::getCameraInfo(struct camera_info *info) {
+    ATRACE_CALL();
     char property[PROPERTY_VALUE_MAX];
     info->facing = mFacingBack ? CAMERA_FACING_BACK : CAMERA_FACING_FRONT;
     if (mSensorType == SENSOR_USB) {
@@ -470,6 +477,7 @@ status_t EmulatedFakeCamera3::checkValidJpegSize(uint32_t width, uint32_t height
 
 status_t EmulatedFakeCamera3::configureStreams(
         camera3_stream_configuration *streamList) {
+        ATRACE_CALL();
     Mutex::Autolock l(mLock);
     uint32_t width, height, pixelfmt;
     bool isRestart = false;
@@ -674,6 +682,7 @@ status_t EmulatedFakeCamera3::configureStreams(
 
 status_t EmulatedFakeCamera3::registerStreamBuffers(
         const camera3_stream_buffer_set *bufferSet) {
+        ATRACE_CALL();
     DBG_LOGB("%s: E", __FUNCTION__);
     Mutex::Autolock l(mLock);
 
@@ -727,6 +736,7 @@ status_t EmulatedFakeCamera3::registerStreamBuffers(
 
 const camera_metadata_t* EmulatedFakeCamera3::constructDefaultRequestSettings(
         int type) {
+        ATRACE_CALL();
     DBG_LOGB("%s: E", __FUNCTION__);
     Mutex::Autolock l(mLock);
 
@@ -768,7 +778,7 @@ const camera_metadata_t* EmulatedFakeCamera3::constructDefaultRequestSettings(
     settings.update(ANDROID_LENS_APERTURE, &aperture, 1);
 
 //    static const float focalLength = 5.0f;
-	static const float focalLength = 3.299999952316284f;
+    static const float focalLength = -1.0f;
     settings.update(ANDROID_LENS_FOCAL_LENGTH, &focalLength, 1);
 
     static const float filterDensity = 0;
@@ -806,8 +816,8 @@ const camera_metadata_t* EmulatedFakeCamera3::constructDefaultRequestSettings(
 
     /** android.flash */
 
-	static const uint8_t flashstate = ANDROID_FLASH_STATE_UNAVAILABLE;
-	settings.update(ANDROID_FLASH_STATE, &flashstate, 1);
+    static const uint8_t flashstate = ANDROID_FLASH_STATE_UNAVAILABLE;
+    settings.update(ANDROID_FLASH_STATE, &flashstate, 1);
 
     static const uint8_t flashMode = ANDROID_FLASH_MODE_OFF;
     settings.update(ANDROID_FLASH_MODE, &flashMode, 1);
@@ -1071,8 +1081,8 @@ const camera_metadata_t* EmulatedFakeCamera3::constructDefaultRequestSettings(
     }
     settings.update(ANDROID_CONTROL_AF_MODE, &afMode, 1);
 
-	static const uint8_t afstate = ANDROID_CONTROL_AF_STATE_INACTIVE;
-	settings.update(ANDROID_CONTROL_AF_STATE,&afstate,1);
+    static const uint8_t afstate = ANDROID_CONTROL_AF_STATE_INACTIVE;
+    settings.update(ANDROID_CONTROL_AF_STATE,&afstate,1);
 
 //    settings.update(ANDROID_CONTROL_AF_REGIONS, controlRegions, 5);
 
@@ -1097,6 +1107,7 @@ const camera_metadata_t* EmulatedFakeCamera3::constructDefaultRequestSettings(
 
 status_t EmulatedFakeCamera3::processCaptureRequest(
         camera3_capture_request *request) {
+    ATRACE_CALL();
     status_t res;
     nsecs_t  exposureTime;
     //nsecs_t  frameDuration;
@@ -1664,8 +1675,52 @@ void EmulatedFakeCamera3::updateCameraMetaData(CameraMetadata *info) {
 
 }
 
-status_t EmulatedFakeCamera3::constructStaticInfo() {
+status_t EmulatedFakeCamera3::createSensor() {
+    sp<Sensor> s = new Sensor();
+    status_t ret = s->startUp(mCameraID);
+    if (ret != OK) {
+        s.clear();
+        ALOGE("sensor start up failed");
+        return ret;
+    }
+    mSensorType = s->getSensorType();
+    s->shutDown();
+    s.clear();
 
+    do {
+        char property[PROPERTY_VALUE_MAX];
+        if (mSensorType == SENSOR_MIPI) {
+                ALOGD("MIPISensor,mCameraID=%d",mCameraID);
+                mSensor = new MIPISensor();
+                break;
+        } else if (mSensorType == SENSOR_USB) {
+                property_get("ro.vendor.platform.useswmjpeg", property, "false");
+                if (strstr(property, "true")) {
+                    mSensor = new USBSensor(USBSensor::HW_NONE);
+                    break;
+                }
+                property_get("ro.vendor.platform.usehwmjpeg", property, "false");
+                if (strstr(property, "true")) {
+                    ALOGD("USBSensor,HW_MJPEG decoder");
+                    mSensor = new USBSensor(USBSensor::HW_MJPEG);
+                    break;
+                }
+                property_get("ro.vendor.platform.usehwh264", property, "false");
+                if (strstr(property, "true")) {
+                    mSensor = new USBSensor(USBSensor::HW_H264);
+                    break;
+                }
+                ALOGD("Sensor to do CTS");
+                mSensor = new Sensor();
+        }else {
+            ALOGE("not support this camera:%d",mSensorType);
+        }
+    }while(0);
+    return OK;
+}
+
+status_t EmulatedFakeCamera3::constructStaticInfo() {
+    ATRACE_CALL();
     status_t ret = OK;
     CameraMetadata info;
     uint32_t picSizes[64 * 8];
@@ -1676,14 +1731,11 @@ status_t EmulatedFakeCamera3::constructStaticInfo() {
     unsigned int supportrotate;
     availablejpegsize = ARRAY_SIZE(mAvailableJpegSize);
     memset(mAvailableJpegSize,0,(sizeof(uint32_t))*availablejpegsize);
-    sp<Sensor> s = new Sensor();
-    ret = s->startUp(mCameraID);
-    if (ret != OK) {
-        DBG_LOGA("sensor start up failed");
-        return ret;
-    }
-
-    mSensorType = s->getSensorType();
+    createSensor();
+    if (mSensor)
+        mSensor->startUp(mCameraID);
+    else
+        ALOGE("sensor object can not is NULL");
 
     if ( mSensorType == SENSOR_USB) {
         char property[PROPERTY_VALUE_MAX];
@@ -1695,11 +1747,11 @@ status_t EmulatedFakeCamera3::constructStaticInfo() {
         ALOGI("Setting usb camera cameraID:%d to back camera:%s\n",
                      mCameraID, property);
     } else {
-        if (s->mSensorFace == SENSOR_FACE_FRONT) {
+        if (mSensor->mSensorFace == SENSOR_FACE_FRONT) {
             mFacingBack = 0;
-        } else if (s->mSensorFace == SENSOR_FACE_BACK) {
+        } else if (mSensor->mSensorFace == SENSOR_FACE_BACK) {
             mFacingBack = 1;
-        } else if (s->mSensorFace == SENSOR_FACE_NONE) {
+        } else if (mSensor->mSensorFace == SENSOR_FACE_NONE) {
             if (gEmulatedCameraFactory.getEmulatedCameraNum() == 1) {
                 mFacingBack = 1;
             } else if ( mCameraID == 0) {
@@ -1713,7 +1765,7 @@ status_t EmulatedFakeCamera3::constructStaticInfo() {
                      mCameraID, mFacingBack);
     }
 
-    mSupportCap = s->IoctlStateProbe();
+    mSupportCap = mSensor->IoctlStateProbe();
     if (mSupportCap & IOCTL_MASK_ROTATE) {
         supportrotate = true;
     } else {
@@ -1733,7 +1785,7 @@ status_t EmulatedFakeCamera3::constructStaticInfo() {
     info.update(ANDROID_LENS_INFO_HYPERFOCAL_DISTANCE,
             &minFocusDistance, 1);
 
-    static const float focalLength = 3.30f; // mm
+    static const float focalLength = -1.0f; // mm
     info.update(ANDROID_LENS_INFO_AVAILABLE_FOCAL_LENGTHS,
             &focalLength, 1);
     static const float aperture = 2.8f;
@@ -1884,7 +1936,7 @@ status_t EmulatedFakeCamera3::constructStaticInfo() {
 
     //for version 3.2 ANDROID_SCALER_AVAILABLE_STREAM_CONFIGURATIONS
     count = sizeof(picSizes)/sizeof(picSizes[0]);
-    count = s->getStreamConfigurations(picSizes, kAvailableFormats, count);
+    count = mSensor->getStreamConfigurations(picSizes, kAvailableFormats, count);
 
     info.update(ANDROID_SCALER_AVAILABLE_STREAM_CONFIGURATIONS,
            (int32_t*)picSizes, count);
@@ -1921,12 +1973,12 @@ status_t EmulatedFakeCamera3::constructStaticInfo() {
     } else {
         memset(duration,0,sizeof(int64_t)*count);
     }
-    duration_count = s->getStreamConfigurationDurations(picSizes, duration, count, true);
+    duration_count = mSensor->getStreamConfigurationDurations(picSizes, duration, count, true);
     info.update(ANDROID_SCALER_AVAILABLE_MIN_FRAME_DURATIONS,
             duration, duration_count);
 
     memset(duration,0,sizeof(int64_t)*count);
-    duration_count = s->getStreamConfigurationDurations(picSizes, duration, count, false);
+    duration_count = mSensor->getStreamConfigurationDurations(picSizes, duration, count, false);
     info.update(ANDROID_SCALER_AVAILABLE_STALL_DURATIONS,
             duration, duration_count);
 
@@ -1993,12 +2045,12 @@ status_t EmulatedFakeCamera3::constructStaticInfo() {
     info.update(ANDROID_STATISTICS_LENS_SHADING_MAP_MODE,&lensShadingMapMode, 1);
     // android.control
 
-	static const uint8_t sceneMode = ANDROID_CONTROL_SCENE_MODE_FACE_PRIORITY;
+    static const uint8_t sceneMode = ANDROID_CONTROL_SCENE_MODE_FACE_PRIORITY;
     info.update(ANDROID_CONTROL_SCENE_MODE, &sceneMode, 1);
 
     static const uint8_t availableSceneModes[] = {
       //      ANDROID_CONTROL_SCENE_MODE_DISABLED,
-			ANDROID_CONTROL_SCENE_MODE_FACE_PRIORITY
+            ANDROID_CONTROL_SCENE_MODE_FACE_PRIORITY
     };
     info.update(ANDROID_CONTROL_AVAILABLE_SCENE_MODES,
             availableSceneModes, sizeof(availableSceneModes));
@@ -2029,7 +2081,7 @@ status_t EmulatedFakeCamera3::constructStaticInfo() {
             sizeof(availableTargetFpsRanges)/sizeof(int32_t));
 
     uint8_t awbModes[maxCount];
-    count = s->getAWB(awbModes, maxCount);
+    count = mSensor->getAWB(awbModes, maxCount);
     if (count < 0) {
         static const uint8_t availableAwbModes[] = {
                 ANDROID_CONTROL_AWB_MODE_OFF,
@@ -2047,8 +2099,8 @@ status_t EmulatedFakeCamera3::constructStaticInfo() {
                 awbModes, count);
     }
 
-	static const uint8_t afstate = ANDROID_CONTROL_AF_STATE_INACTIVE;
-	info.update(ANDROID_CONTROL_AF_STATE,&afstate,1);
+    static const uint8_t afstate = ANDROID_CONTROL_AF_STATE_INACTIVE;
+    info.update(ANDROID_CONTROL_AF_STATE,&afstate,1);
 
     static const uint8_t availableAfModesFront[] = {
             ANDROID_CONTROL_AF_MODE_OFF
@@ -2056,7 +2108,7 @@ status_t EmulatedFakeCamera3::constructStaticInfo() {
 
     if (mFacingBack) {
         uint8_t afMode[maxCount];
-        count = s->getAutoFocus(afMode, maxCount);
+        count = mSensor->getAutoFocus(afMode, maxCount);
         if (count < 0) {
             static const uint8_t availableAfModesBack[] = {
                     ANDROID_CONTROL_AF_MODE_OFF,
@@ -2078,7 +2130,7 @@ status_t EmulatedFakeCamera3::constructStaticInfo() {
     }
 
     uint8_t antiBanding[maxCount];
-    count = s->getAntiBanding(antiBanding, maxCount);
+    count = mSensor->getAntiBanding(antiBanding, maxCount);
     if (count < 0) {
         static const uint8_t availableAntibanding[] = {
                 ANDROID_CONTROL_AE_ANTIBANDING_MODE_OFF,
@@ -2093,7 +2145,7 @@ status_t EmulatedFakeCamera3::constructStaticInfo() {
 
     camera_metadata_rational step;
     int maxExp, minExp, def;
-    ret = s->getExposure(&maxExp, &minExp, &def, &step);
+    ret = mSensor->getExposure(&maxExp, &minExp, &def, &step);
     if (ret < 0) {
         static const int32_t aeExpCompensation = 0;
         info.update(ANDROID_CONTROL_AE_EXPOSURE_COMPENSATION, &aeExpCompensation, 1);
@@ -2119,7 +2171,7 @@ status_t EmulatedFakeCamera3::constructStaticInfo() {
         info.update(ANDROID_CONTROL_AE_EXPOSURE_COMPENSATION, &def, 1);
     }
 
-    ret = s->getZoom(&mZoomMin, &mZoomMax, &mZoomStep);
+    ret = mSensor->getZoom(&mZoomMin, &mZoomMax, &mZoomStep);
     if (ret < 0) {
         float maxZoom = 1.0;
         info.update(ANDROID_SCALER_AVAILABLE_MAX_DIGITAL_ZOOM,
@@ -2191,15 +2243,14 @@ status_t EmulatedFakeCamera3::constructStaticInfo() {
     if (duration != NULL) {
         delete [] duration;
     }
-
-    s->shutDown();
-    s.clear();
     mPlugged = true;
-
+    mSensor->shutDown();
+    mSensor.clear();
     return OK;
 }
 
 status_t EmulatedFakeCamera3::process3A(CameraMetadata &settings) {
+    ATRACE_CALL();
     /**
      * Extract top-level 3A controls
      */
@@ -2260,6 +2311,7 @@ status_t EmulatedFakeCamera3::process3A(CameraMetadata &settings) {
 }
 
 status_t EmulatedFakeCamera3::doFakeAE(CameraMetadata &settings) {
+    ATRACE_CALL();
     camera_metadata_entry e;
 
     e = settings.find(ANDROID_CONTROL_AE_MODE);
@@ -2379,6 +2431,7 @@ status_t EmulatedFakeCamera3::doFakeAE(CameraMetadata &settings) {
 }
 
 status_t EmulatedFakeCamera3::doFakeAF(CameraMetadata &settings) {
+    ATRACE_CALL();
     camera_metadata_entry e;
 
     e = settings.find(ANDROID_CONTROL_AF_MODE);
@@ -2619,6 +2672,7 @@ status_t EmulatedFakeCamera3::doFakeAF(CameraMetadata &settings) {
 }
 
 status_t EmulatedFakeCamera3::doFakeAWB(CameraMetadata &settings) {
+    ATRACE_CALL();
     camera_metadata_entry e;
 
     e = settings.find(ANDROID_CONTROL_AWB_MODE);
@@ -2657,6 +2711,7 @@ status_t EmulatedFakeCamera3::doFakeAWB(CameraMetadata &settings) {
 
 
 void EmulatedFakeCamera3::update3A(CameraMetadata &settings) {
+    ATRACE_CALL();
     if (mAeState != ANDROID_CONTROL_AE_STATE_INACTIVE) {
         settings.update(ANDROID_SENSOR_EXPOSURE_TIME,
                 &mAeCurrentExposureTime, 1);
@@ -2678,6 +2733,7 @@ void EmulatedFakeCamera3::update3A(CameraMetadata &settings) {
 }
 
 void EmulatedFakeCamera3::signalReadoutIdle() {
+    ATRACE_CALL();
     Mutex::Autolock l(mLock);
     CAMHAL_LOGVB("%s ,  E" , __FUNCTION__);
     // Need to chek isIdle again because waiting on mLock may have allowed
@@ -2691,6 +2747,7 @@ void EmulatedFakeCamera3::signalReadoutIdle() {
 
 void EmulatedFakeCamera3::onSensorEvent(uint32_t frameNumber, Event e,
         nsecs_t timestamp) {
+        ATRACE_CALL();
     switch(e) {
         case Sensor::SensorListener::EXPOSURE_START: {
             ALOGVV("%s: Frame %d: Sensor started exposure at %lld",
@@ -2734,6 +2791,7 @@ EmulatedFakeCamera3::ReadoutThread::~ReadoutThread() {
 }
 
 status_t EmulatedFakeCamera3::ReadoutThread::flushAllRequest(bool flag) {
+    ATRACE_CALL();
     status_t res;
     mFlushFlag = flag;
     Mutex::Autolock l(mLock);
@@ -2761,6 +2819,7 @@ void EmulatedFakeCamera3::ReadoutThread::setFlushFlag(bool flag) {
 }
 
 void EmulatedFakeCamera3::ReadoutThread::queueCaptureRequest(const Request &r) {
+    ATRACE_CALL();
     Mutex::Autolock l(mLock);
 
     mInFlightQueue.push_back(r);
@@ -2773,6 +2832,7 @@ bool EmulatedFakeCamera3::ReadoutThread::isIdle() {
 }
 
 status_t EmulatedFakeCamera3::ReadoutThread::waitForReadout() {
+    ATRACE_CALL();
     status_t res;
     Mutex::Autolock l(mLock);
     CAMHAL_LOGVB("%s ,  E" , __FUNCTION__);
@@ -2827,6 +2887,7 @@ void EmulatedFakeCamera3::ReadoutThread::sendExitReadoutThreadSignal(void) {
 }
 
 bool EmulatedFakeCamera3::ReadoutThread::threadLoop() {
+    ATRACE_CALL();
     status_t res;
     ALOGVV("%s: ReadoutThread waiting for request", __FUNCTION__);
 
@@ -2879,6 +2940,7 @@ bool EmulatedFakeCamera3::ReadoutThread::threadLoop() {
             __FUNCTION__);
 
     nsecs_t captureTime;
+
     status_t gotFrame =
             mParent->mSensor->waitForNewFrame(kWaitPerLoop, &captureTime);
     if (gotFrame == 0) {
@@ -2983,6 +3045,7 @@ bool EmulatedFakeCamera3::ReadoutThread::threadLoop() {
 
 void EmulatedFakeCamera3::ReadoutThread::onJpegDone(
         const StreamBuffer &jpegBuffer, bool success , CaptureRequest &r) {
+    ATRACE_CALL();
     Mutex::Autolock jl(mJpegLock);
     GraphicBufferMapper::get().unlock(*(jpegBuffer.buffer));
 

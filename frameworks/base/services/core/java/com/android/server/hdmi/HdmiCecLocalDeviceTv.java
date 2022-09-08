@@ -181,7 +181,6 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     @ServiceThreadOnly
     private void addTvInput(String inputId, int deviceId) {
         assertRunOnServiceThread();
-        Slog.d(TAG, "addTvInput inputId " + inputId + " deviceId " + deviceId);
         mTvInputs.put(inputId, deviceId);
     }
 
@@ -388,7 +387,6 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     @ServiceThreadOnly
     void updateActiveInput(int path, boolean notifyInputChange) {
         assertRunOnServiceThread();
-        Slog.d(TAG, "updateActiveInput " + path + " " + notifyInputChange);
         // Seq #15
         setActivePath(path);
         // TODO: Handle PAP/PIP case.
@@ -489,9 +487,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         int logicalAddress = message.getSource();
         int physicalAddress = HdmiUtils.twoBytesToInt(message.getParams());
         HdmiDeviceInfo info = getCecDeviceInfo(logicalAddress);
-        HdmiLogger.debug("handleActiveSource logicalAddress %X physicalAddress %X", logicalAddress, physicalAddress);
         if (info == null) {
-            Slog.d(TAG, "handleActiveSource device info null");
             if (!handleNewDeviceAtTheTailOfActivePath(physicalAddress)) {
                 HdmiLogger.debug("Device info %X not found; buffering the command", logicalAddress);
                 mDelayedMessageBuffer.add(message);
@@ -751,7 +747,6 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         // but only the display is set to blank. Then the command leads to the effect of
         // turning on the display by the invocation of PowerManager.wakeUp().
         if (mService.isPowerStandbyOrTransient() && mAutoWakeup) {
-            Slog.d(TAG, "handleTextViewOn wakeup");
             mService.wakeUp();
         }
         return true;
@@ -1800,6 +1795,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     @ServiceThreadOnly
     void onHotplug(int portId, boolean connected) {
         assertRunOnServiceThread();
+
         if (!connected) {
             removeCecSwitches(portId);
         }

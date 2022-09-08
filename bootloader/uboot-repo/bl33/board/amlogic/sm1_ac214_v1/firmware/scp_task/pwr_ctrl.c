@@ -151,11 +151,11 @@ static unsigned int detect_key(unsigned int suspend_from)
 			exit_reason = RTC_WAKEUP;
 		}
 
-		if (irq[IRQ_GPIO1] == IRQ_GPIO1_NUM) {
-			irq[IRQ_GPIO1] = 0xFFFFFFFF;
-			if (!(readl(PREG_PAD_GPIO2_I) & (0x01 << 18))
-					&& (readl(PREG_PAD_GPIO2_O) & (0x01 << 17))
-					&& !(readl(PREG_PAD_GPIO2_EN_N) & (0x01 << 17)))
+		if (!(readl(PREG_PAD_GPIO2_I) & (0x01 << 18))
+				&& (readl(PREG_PAD_GPIO2_O) & (0x01 << 17))
+				&& !(readl(PREG_PAD_GPIO2_EN_N) & (0x01 << 17))) {
+			_udelay(200*1000);
+			if (!(readl(PREG_PAD_GPIO2_I) & (0x01 << 18)))
 				exit_reason = BT_WAKEUP;
 		}
 

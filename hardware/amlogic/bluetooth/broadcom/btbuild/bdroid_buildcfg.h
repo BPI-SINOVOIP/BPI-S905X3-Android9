@@ -24,7 +24,8 @@
 
 // Turn off BLE_PRIVACY_SPT.  Remote reconnect fails on
 // often if this is enabled.
-#define BLE_PRIVACY_SPT FALSE
+#define BLE_PRIVACY_SPT TRUE
+#define BLE_LOCAL_PRIVACY_ENABLED FALSE
 
 #define BTM_BLE_CONN_INT_MIN_DEF     0x18
 #define BTM_BLE_CONN_INT_MAX_DEF     0x28

@@ -309,7 +309,7 @@ dvb_parameters			(vbi_capture *		cap)
 		.count = { 128, 128 }, /* see dvb_read() */
 	};
 
-	cap = cap; /* unused, no warning please */
+	(void)cap; /* unused, no warning please */
 
 	return &raw;
 }
@@ -322,12 +322,12 @@ dvb_update_services		(vbi_capture *		cap,
 				 int			strict,
 				 char **		errstr)
 {
-	cap = cap; /* unused, no warning please */
-	reset = reset;
-	commit = commit;
-	services = services;
-	strict = strict;
-	errstr = errstr;
+	(void)cap; /* unused, no warning please */
+	(void)reset;
+	(void)commit;
+	(void)services;
+	(void)strict;
+	(void)errstr;
 
 	return (VBI_SLICED_TELETEXT_B |
 		VBI_SLICED_VPS |
@@ -349,7 +349,7 @@ dvb_flush			(vbi_capture *		cap)
 static VBI_CAPTURE_FD_FLAGS
 dvb_get_fd_flags		(vbi_capture *		cap)
 {
-	cap = cap; /* unused, no warning please */
+	(void)cap; /* unused, no warning please */
 
 	return (VBI_FD_HAS_SELECT |
 		VBI_FD_IS_DEVICE);
@@ -566,9 +566,9 @@ vbi_capture_dvb_new		(char *			dev,
 	vbi_capture *cap;
 	vbi_capture_dvb *dvb;
 
-	scanning = scanning; /* unused, no warning please */
-	services = services;
-	strict = strict;
+	(void)scanning; /* unused, no warning please */
+	(void)services;
+	(void)strict;
 
 	if (NULL == errstr)
 		errstr = &error;

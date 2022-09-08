@@ -47,9 +47,9 @@ MAKE_SPEC(log_softmax)
     .beta_(nnrt::OperandType::FLOAT32)
     .axis_(nnrt::OperandType::INT32));
 
-    OVERRIDE_SPEC(log_softmax, float16)
-    .input_(nnrt::OperandType::TENSOR_FLOAT16)
-    .beta_(nnrt::OperandType::FLOAT16));
+    // OVERRIDE_SPEC(log_softmax, float16)
+    // .input_(nnrt::OperandType::TENSOR_FLOAT16)
+    // .beta_(nnrt::OperandType::FLOAT16));
 
 #undef ARG_NAMES
 #undef ARGC
@@ -73,9 +73,9 @@ MAKE_SPEC(output)
     .input_(nnrt::OperandType::TENSOR_FLOAT32)
     .output_(nnrt::OperandType::TENSOR_FLOAT32));
 
-    OVERRIDE_SPEC(output, float16)
-    .input_(nnrt::OperandType::TENSOR_FLOAT16)
-    .output_(nnrt::OperandType::TENSOR_FLOAT16));
+    // OVERRIDE_SPEC(output, float16)
+    // .input_(nnrt::OperandType::TENSOR_FLOAT16)
+    // .output_(nnrt::OperandType::TENSOR_FLOAT16));
 
 #undef ARG_NAMES
 #undef ARGC

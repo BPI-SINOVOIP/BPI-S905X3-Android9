@@ -2489,10 +2489,12 @@ public class NotificationPanelView extends PanelView implements
     }
 
     protected void setVerticalPanelTranslation(float translation) {
-	//Annotate the translation and always expand and display from the middle
-        //to fix qs_frame and NotificationStackScrollLayout in the status bar drop-down is misaligned
-        //mNotificationStackScroller.setTranslationX(translation);
-        //mQsFrame.setTranslationX(translation);
+		/* bpi
+		 * Annotate the translation and always expand and display from the middle
+         * to fix qs_frame and NotificationStackScrollLayout in the status bar drop-down is misaligned
+		 */
+        /* mNotificationStackScroller.setTranslationX(translation); */
+        /* mQsFrame.setTranslationX(translation); */
         int size = mVerticalTranslationListener.size();
         for (int i = 0; i < size; i++) {
             mVerticalTranslationListener.get(i).run();

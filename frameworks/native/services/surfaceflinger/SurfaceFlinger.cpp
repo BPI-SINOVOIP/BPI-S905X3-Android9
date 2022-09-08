@@ -2043,6 +2043,8 @@ void SurfaceFlinger::setUpHWComposer() {
                     "display %zd: %d", displayId, result);
         }
         for (auto& layer : displayDevice->getVisibleLayersSortedByZ()) {
+        /*amlogic soc can handle hdr->sdr, do not use gpu.*/
+        /*
             if (layer->isHdrY410()) {
                 layer->forceClientComposition(hwcId);
             } else if ((layer->getDataSpace() == Dataspace::BT2020_PQ ||
@@ -2054,6 +2056,7 @@ void SurfaceFlinger::setUpHWComposer() {
                     !displayDevice->hasHLGSupport()) {
                 layer->forceClientComposition(hwcId);
             }
+        */
 
             if (layer->getForceClientComposition(hwcId)) {
                 ALOGV("[%s] Requesting Client composition", layer->getName().string());
@@ -3024,8 +3027,12 @@ bool SurfaceFlinger::doComposeSurfaces(const sp<const DisplayDevice>& displayDev
                 to_string(layer->getCompositionType(hwcId)).c_str());
         if (!clip.isEmpty()) {
             switch (layer->getCompositionType(hwcId)) {
-                case HWC2::Composition::Cursor:
                 case HWC2::Composition::Device:
+			if (layer->isVideoOverlay()) {
+				layer->clearWithOpenGL(renderArea);
+				break;
+			}
+                case HWC2::Composition::Cursor:
                 case HWC2::Composition::Sideband:
                 case HWC2::Composition::SolidColor: {
                     const Layer::State& state(layer->getDrawingState());

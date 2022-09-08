@@ -93,7 +93,6 @@ on boot
     chown system mediadrm /sys/class/amhdmitx/amhdmitx0/aud_ch
     chmod 0664 /sys/class/amhdmitx/amhdmitx0/aud_ch
     insmod  /vendor/lib/modules/aml_thermal.ko
-    #insmod  /vendor/lib/modules/ddr_window_64.ko
 
     chown media system /sys/class/tsync/pts_video
     chown mediadrm audio /sys/class/tsync/pts_audio
@@ -357,11 +356,11 @@ on boot
     chown system system /sys/class/freq_limit/limit
     chown system system /sys/devices/system/cpu/cpu1/online
 
-    chmod 664 /sys/class/thermal/thermal_zone0/mode
-    chmod 664 /sys/class/thermal/thermal_zone1/mode
+    chmod 666 /sys/class/thermal/thermal_zone0/mode
+    chmod 666 /sys/class/thermal/thermal_zone1/mode
     chmod 664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
     chmod 664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
-    chmod 664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    chmod 666 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
     chmod 664 /sys/devices/system/cpu/cpu0/cpufreq/hmp_boost
     chmod 664 /sys/devices/system/cpu/cpufreq/conservative/freq_step
     chmod 664 /sys/devices/system/cpu/cpufreq/performance2/sampling_rate
@@ -408,6 +407,13 @@ on boot
     write /sys/class/vfm/map "add default decoder ppmgr deinterlace amvideo"
 
     write /proc/sys/kernel/dmesg_restrict 0
+
+    #loader balance
+    write /proc/sys/kernel/sched_domain/cpu0/domain0/flags 4127
+    write /proc/sys/kernel/sched_domain/cpu1/domain0/flags 4127
+    write /proc/sys/kernel/sched_domain/cpu2/domain0/flags 4127
+    write /proc/sys/kernel/sched_domain/cpu3/domain0/flags 4127
+    write /proc/sys/kernel/sched_migration_cost_ns 1000
 
 # virtual sdcard daemon running as media_rw (1023)
 #service sdcard /system/bin/sdcard -u 1023 -g 1023 /data/media /mnt/shell/emulated
@@ -469,12 +475,6 @@ service hdcp_rx22 /vendor/bin/hdcp_rx22 \
     disabled
     oneshot
     seclabel u:r:hdcp_rx22:s0
-
-#service ddrtest /vendor/bin/ddrtest.sh
-#    class main
-#    user root
-#    group root
-#    oneshot
 
 service factoryreset /vendor/bin/factoryreset.sh
     class main

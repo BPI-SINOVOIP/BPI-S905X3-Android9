@@ -56,7 +56,9 @@ class VsiDriver : public VsiDevice {
     Return<void> getSupportedOperations_1_2( const V1_2::Model& model,
                                                    V1_2::IDevice::getSupportedOperations_1_2_cb cb) ;
 #endif
-    static bool isSupportedOperation(const HalPlatform::Operation &operation, const HalPlatform::Model& model);
+    static bool isSupportedOperation(const HalPlatform::Operation& operation,
+                                     const HalPlatform::Model& model,
+                                     std::string& not_support_reason);
 
     static const uint8_t* getOperandDataPtr( const HalPlatform::Model& model,
                                              const HalPlatform::Operand& hal_operand,
@@ -74,10 +76,12 @@ class VsiDriver : public VsiDevice {
         if (validateModel(model)) {
             const size_t count = model.operations.size();
             std::vector<bool> supported(count, true);
+            std::string notSupportReason = "";
             for (size_t i = 0; i < count; i++) {
                 const auto& operation = model.operations[i];
-                supported[i] = isSupportedOperation(operation, model);
+                supported[i] = isSupportedOperation(operation, model, notSupportReason);
             }
+            LOG(INFO) << notSupportReason;
             cb(ErrorStatus::NONE, supported);
         } else {
             LOG(ERROR) << "invalid model";

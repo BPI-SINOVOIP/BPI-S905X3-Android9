@@ -15,10 +15,13 @@
     <string name="setting_playmode">Play Mode</string>
     <string name="setting_playmode_repeatall">Repeat All</string>
     <string name="setting_playmode_repeatone">Repeat One</string>
+    <string name="setting_playmode_repeatnone">Repeat None</string>
     <string name="setting_audiooption">Audio Option</string>
     <string name="setting_soundtrack">Sound Track</string>
     <string name="setting_audiotrack">Audio Track</string>
     <string name="setting_videotrack">Video Track</string>
+    <string name="setting_audio_offset">Audio Offset</string>
+    <string name="setting_dtsdrc">DTS DRC</string>
     <string name="setting_audiodtsapresent">Audio DTS Apresentation</string>
     <string name="setting_audiodtsasset">Audio DTS Asset</string>
     <string name="setting_soundtrack_stereo">Stereo</string>
@@ -95,9 +98,13 @@
     <string name="str_stereo_auidochannel">Stereo</string>
     <string name="file_have_no_audio">file have no audio</string>
 
-    <string name="setting_audioTuning">setting_audioTuning</string>
-    <string name="delay_range">delay_range</string>
-    <string name="cur_value">cur_value</string>
+
+    <string name="setting_ttPage">Setting_Teletext_Page</string>
+    <string name="gotoPage">Goto_Page</string>
+    <string name="nextPage">NextPage</string>
+    <string name="nextSubPage">NextSubPage</string>
+    <string name="gohome">GoHome</string>
+    <string name="operation_instruciton">Instruction: page range:100-899!</string>
 
     <string name="alertdialog_title">please choose osd picture</string>
     <string name="memory_device_str">Internal Memory </string>

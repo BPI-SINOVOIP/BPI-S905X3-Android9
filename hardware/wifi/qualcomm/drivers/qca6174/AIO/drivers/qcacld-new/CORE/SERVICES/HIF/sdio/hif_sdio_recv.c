@@ -53,7 +53,7 @@
 #include "if_ath_sdio.h"
 
 #define NBUF_ALLOC_FAIL_WAIT_TIME 100
-#define MAX_CREDIT_SIZE 2048
+#define MAX_CREDIT_SIZE 2304
 
 static void HIFDevDumpRegisters(HIF_SDIO_DEVICE *pDev,
         MBOX_IRQ_PROC_REGISTERS *pIrqProcRegs,

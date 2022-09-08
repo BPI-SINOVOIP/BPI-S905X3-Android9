@@ -326,39 +326,17 @@ VX_API_ENTRY vx_node VX_API_CALL vxLaplacianPyramidNode(vx_graph graph, vx_image
  */
 VX_API_ENTRY vx_node VX_API_CALL vxLaplacianReconstructNode(vx_graph graph, vx_pyramid laplacian, vx_image input,
                                        vx_image output);
-
-/*! \brief [Graph] Creates an accumulate node.
+/*! \brief [Graph] Creates a image weighted average node.
  * \param [in] graph The reference to the graph.
- * \param [in] input The input <tt>\ref VX_DF_IMAGE_U8</tt> image.
- * \param [in,out] accum The accumulation image in <tt>\ref VX_DF_IMAGE_S16</tt>, which must have the same dimensions as the input image.
- * \ingroup group_vision_function_accumulate
- * \return <tt>\ref vx_node</tt>.
- * \retval vx_node A node reference. Any possible errors preventing a successful creation should be checked using <tt>\ref vxGetStatus</tt>
- */
-VX_API_ENTRY vx_node VX_API_CALL vxAccumulateImageNode(vx_graph graph, vx_image input, vx_image accum);
-
-/*! \brief [Graph] Creates a weighted accumulate node.
- * \param [in] graph The reference to the graph.
- * \param [in] input The input <tt>\ref VX_DF_IMAGE_U8</tt> image.
+ * \param [in] img1 The first input <tt>\ref VX_DF_IMAGE_U8</tt> image.
  * \param [in] alpha The input <tt>\ref VX_TYPE_FLOAT32</tt> scalar value with a value in the range of \f$ 0.0 \le \alpha \le 1.0 \f$.
- * \param [in,out] accum The <tt>\ref VX_DF_IMAGE_U8</tt> accumulation image, which must have the same dimensions as the input image.
- * \ingroup group_vision_function_accumulate_weighted
+ * \param [in] img2 The second <tt>\ref VX_DF_IMAGE_U8</tt> image, which must have the same dimensions as the img1.
+ * \param [out] output The output <tt>\ref VX_DF_IMAGE_U8</tt> image, which must have the same dimensions as the img1.
+ * \ingroup group_vision_function_weighted_average
  * \return <tt>\ref vx_node</tt>.
  * \retval vx_node A node reference. Any possible errors preventing a successful creation should be checked using <tt>\ref vxGetStatus</tt>
  */
-VX_API_ENTRY vx_node VX_API_CALL vxAccumulateWeightedImageNode(vx_graph graph, vx_image input, vx_scalar alpha, vx_image accum);
-
-/*! \brief [Graph] Creates an accumulate square node.
- * \param [in] graph The reference to the graph.
- * \param [in] input The input <tt>\ref VX_DF_IMAGE_U8</tt> image.
- * \param [in] shift The input <tt>\ref VX_TYPE_UINT32</tt> with a value in the range of \f$ 0 \le shift \le 15 \f$.
- * \param [in,out] accum The accumulation image in <tt>\ref VX_DF_IMAGE_S16</tt>, which must have the same dimensions as the input image.
- * \ingroup group_vision_function_accumulate_square
- * \return <tt>\ref vx_node</tt>.
- * \retval vx_node A node reference. Any possible errors preventing a successful creation should be checked using <tt>\ref vxGetStatus</tt>
- */
-VX_API_ENTRY vx_node VX_API_CALL vxAccumulateSquareImageNode(vx_graph graph, vx_image input, vx_scalar shift, vx_image accum);
-
+VX_API_ENTRY vx_node VX_API_CALL vxWeightedAverageNode(vx_graph graph, vx_image img1, vx_scalar alpha, vx_image img2, vx_image output);
 /*! \brief [Graph] Creates a min,max,loc node.
  * \param [in] graph The reference to create the graph.
  * \param [in] input The input image in <tt>\ref VX_DF_IMAGE_U8</tt> or <tt>\ref VX_DF_IMAGE_S16</tt> format.

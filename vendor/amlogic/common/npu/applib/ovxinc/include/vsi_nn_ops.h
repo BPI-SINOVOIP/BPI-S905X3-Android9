@@ -284,7 +284,7 @@ void vsi_nn_OpGetIoNum
     uint32_t     * output_num
     );
 
-vsi_bool vsi_nn_OpGenerateTensor
+OVXLIB_API vsi_bool vsi_nn_OpGenerateTensor
     (
     vsi_nn_node_t * node,
     vsi_nn_tensor_t ** inputs,

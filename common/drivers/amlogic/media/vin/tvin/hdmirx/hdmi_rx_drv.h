@@ -33,8 +33,8 @@
 //#include "hdmi_rx_pktinfo.h"
 #include "hdmi_rx_edid.h"
 
+#define RX_VER0 "ver.2020/10/26"
 
-#define RX_VER0 "ver.2019/11/18"
 /*
  *
  *

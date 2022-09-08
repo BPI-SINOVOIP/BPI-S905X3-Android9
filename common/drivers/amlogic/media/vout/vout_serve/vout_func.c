@@ -683,3 +683,14 @@ int vout_get_hpd_state(void)
 	return ret;
 }
 EXPORT_SYMBOL(vout_get_hpd_state);
+
+bool vout_get_tv_changed(void)
+{
+	bool ret = false;
+
+#ifdef CONFIG_AMLOGIC_HDMITX
+	ret = is_tv_changed();
+#endif
+
+	return ret;
+}

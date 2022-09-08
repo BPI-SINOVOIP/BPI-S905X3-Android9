@@ -43,8 +43,8 @@ OP_SPEC_END()
 MAKE_SPEC(log)
     .input_(nnrt::OperandType::TENSOR_FLOAT32));
 
-    OVERRIDE_SPEC(log, float16)
-    .input_(nnrt::OperandType::TENSOR_FLOAT16));
+    // OVERRIDE_SPEC(log, float16)
+    // .input_(nnrt::OperandType::TENSOR_FLOAT16));
 
 #undef ARG_NAMES
 #undef ARGC

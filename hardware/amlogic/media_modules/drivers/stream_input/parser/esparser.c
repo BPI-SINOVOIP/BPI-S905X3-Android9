@@ -166,6 +166,7 @@ static ssize_t _esparser_write(const char __user *buf,
 	dma_addr_t dma_addr = 0;
 	u32 type = stbuf->type;
 
+	VDEC_PRINT_FUN_LINENO(__func__, __LINE__);
 	if (type == BUF_TYPE_HEVC)
 		parser_type = PARSER_VIDEO;
 	else if (type == BUF_TYPE_VIDEO)
@@ -250,6 +251,8 @@ static ssize_t _esparser_write(const char __user *buf,
 		audio_data_parsed += len;
 
 	threadrw_update_buffer_level(stbuf, len);
+	VDEC_PRINT_FUN_LINENO(__func__, __LINE__);
+
 	return len;
 }
 
@@ -393,6 +396,8 @@ s32 esparser_init(struct stream_buf_s *buf, struct vdec_s *vdec)
 	u32 parser_sub_rp;
 	bool first_use = false;
 	/* #if MESON_CPU_TYPE >= MESON_CPU_TYPE_MESON8 */
+	VDEC_PRINT_FUN_LINENO(__func__, __LINE__);
+
 	if (has_hevc_vdec() && (buf->type == BUF_TYPE_HEVC))
 		pts_type = PTS_TYPE_HEVC;
 	else
@@ -518,7 +523,9 @@ s32 esparser_init(struct stream_buf_s *buf, struct vdec_s *vdec)
 			vdec->input.start);
 		WRITE_PARSER_REG(PARSER_VIDEO_END_PTR,
 			vdec->input.start + vdec->input.size - 8);
-		if (vdec_single(vdec)) {
+		if (vdec_single(vdec) || (vdec_get_debug_flags() & 0x2)) {
+			if (vdec_get_debug_flags() & 0x2)
+				pr_info("%s %d\n", __func__, __LINE__);
 			CLEAR_PARSER_REG_MASK(PARSER_ES_CONTROL,
 				ES_VID_MAN_RD_PTR);
 
@@ -596,6 +603,7 @@ s32 esparser_init(struct stream_buf_s *buf, struct vdec_s *vdec)
 			pr_info("esparser_init: irq register failed.\n");
 			goto Err_2;
 		}
+		VDEC_PRINT_FUN_LINENO(__func__, __LINE__);
 
 		WRITE_PARSER_REG(PARSER_INT_STATUS, 0xffff);
 		WRITE_PARSER_REG(PARSER_INT_ENABLE,

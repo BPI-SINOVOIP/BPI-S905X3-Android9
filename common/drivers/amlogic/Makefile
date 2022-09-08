@@ -146,4 +146,6 @@ obj-$(CONFIG_AMLOGIC_PIXEL_PROBE) += pixel_probe/
 
 obj-$(CONFIG_AMLOGIC_FIRMWARE) += firmware/
 
+obj-$(CONFIG_AMLOGIC_DVB_COMPAT) += dvb/
+
 obj-$(CONFIG_AMLOGIC_SHUTDOWN_SYSFS) += shutdown_sysfs/

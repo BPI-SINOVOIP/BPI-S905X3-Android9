@@ -124,10 +124,18 @@ JpegCompressor::JpegCompressor():
         mPendingrequest(0),
         mListener(NULL) {
         memset(&mInfo,0,sizeof(struct ExifInfo));
+#ifdef GE2D_ENABLE
+        mION = IONInterface::get_instance();
+#endif
 }
 
 JpegCompressor::~JpegCompressor() {
     Mutex::Autolock lock(mMutex);
+#ifdef GE2D_ENABLE
+    if (mION) {
+        mION->put_instance();
+    }
+#endif
 }
 
 void JpegCompressor::queueRequest(CaptureRequest &r) {
@@ -857,7 +865,12 @@ void JpegCompressor::cleanUp() {
     }
     if (mFoundAux) {
         if (mAuxBuffer.streamId == 0) {
+            //size_t size = mAuxBuffer.width * mAuxBuffer.height * 3;
+#ifdef GE2D_ENABLE
+            mION->free_buffer(mAuxBuffer.share_fd);
+#else
             delete[] mAuxBuffer.img;
+#endif
         } else if (!mSynchronous) {
             mListener->onJpegInputDone(mAuxBuffer);
         }
@@ -1207,9 +1220,9 @@ exif_buffer * JpegCompressor::get_exif_buffer() {
 
     exif_entry_set_short(pEd, EXIF_IFD_EXIF, EXIF_TAG_FLASH, 0);
 
-    sR.numerator = 3299;
-    sR.denominator = 1000;
-    exif_entry_set_rational(pEd, EXIF_IFD_EXIF, EXIF_TAG_FOCAL_LENGTH, sR);
+    //sR.numerator = 3299;
+    //sR.denominator = 1000;
+    //exif_entry_set_rational(pEd, EXIF_IFD_EXIF, EXIF_TAG_FOCAL_LENGTH, sR);
 
     memset(exifcontent, 0, sizeof(exifcontent));
     snprintf(exifcontent, 20, "%06d", (int) sTv.tv_usec);

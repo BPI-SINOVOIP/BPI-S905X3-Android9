@@ -596,27 +596,10 @@ public class DtvkitTvInput extends TvInputService implements SystemControlManage
         public void setTeletextMix(boolean status){
             RectF srcRect, dstRect;
             float scalex, scaley, px, py;
-        if (status) {
-            srcRect = new RectF(0, 0, 1920, 1080);
-            dstRect = new RectF(960, 0, 1920, 1080);
-            scalex = 0.5f;
-            scaley = 1.0f;
-            px = 1920;
-            py = 1080;
-        } else {
-            srcRect = new RectF(0, 0, 1920, 1080);
-            dstRect = new RectF(0, 0, 1920, 1080);
-            scalex = 1.0f;
-            scaley = 1.0f;
-            px = 0;
-            py = 0;
-        }
-            Matrix matrix = new Matrix();
-
-            matrix.setRectToRect(srcRect, dstRect, Matrix.ScaleToFit.CENTER);
-            matrix.setScale(scalex, scaley, px, py);
-
-            //nativeOverlayView.setTransform(matrix);
+            if (status)
+                nativeOverlayView.setSize(1920/2, 0, 1920, 1080);
+            else
+                nativeOverlayView.setSize(0, 0, 1920, 1080);
         }
 
         public void showScrambledText(String text) {
@@ -897,6 +880,10 @@ public class DtvkitTvInput extends TvInputService implements SystemControlManage
 
         public void setSize(int width, int height) {
             dst = new Rect(0, 0, width, height);
+        }
+
+        public void setSize(int left, int top, int right, int bottom) {
+            dst = new Rect(left, top, right, bottom);
         }
 
         @Override
@@ -2606,7 +2593,8 @@ public class DtvkitTvInput extends TvInputService implements SystemControlManage
                             }
                             playerState = PlayerState.STOPPED;
                             if (recordedProgram != null) {
-                                currentPosition = recordedProgram.getEndTimeUtcMillis();
+                                /*trigger the playback exit*/
+                                currentPosition = recordedProgram.getRecordingDurationMillis();
                             }
 
                             break;

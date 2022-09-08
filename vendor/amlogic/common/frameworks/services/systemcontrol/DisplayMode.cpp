@@ -511,6 +511,17 @@ void DisplayMode::setSourceDisplay(output_mode_state state) {
     hdmi_data_t data;
     char outputmode[MODE_LEN] = {0};
 
+    //hdmi edid parse error
+    if ((isHdmiEdidParseOK() == false) &&
+        (isHdmiHpd() == true)) {
+        pSysWrite->writeSysfs(DISPLAY_HDMI_AVMUTE, "1");
+        pSysWrite->writeSysfs(DISPLAY_HDMI_COLOR_ATTR, COLOR_RGB_8BIT);
+        pSysWrite->writeSysfs(SYSFS_DISPLAY_MODE, DEFAULT_OUTPUT_MODE);
+        pSysWrite->writeSysfs(DISPLAY_HDMI_AVMUTE, "-1");
+        SYS_LOGE("EDID parsing error detected\n");
+        return;
+    }
+
     pSysWrite->writeSysfs(SYS_DISABLE_VIDEO, VIDEO_LAYER_DISABLE);
 
     memset(&data, 0, sizeof(hdmi_data_t));
@@ -882,14 +893,12 @@ bool DisplayMode::writeHdcpRXImg(const char *path) {
 
 //get the best hdmi mode by edid
 void DisplayMode::getBestHdmiMode(char* mode, hdmi_data_t* data) {
-    char* pos = strchr(data->edid, '*');
+    char* pos = strchr(data->disp_cap, '*');
     if (pos != NULL) {
         char* findReturn = pos;
-        while (*findReturn != 0x0a && findReturn >= data->edid) {
+        while (*findReturn != 0x0a && findReturn >= data->disp_cap) {
             findReturn--;
         }
-        //*pos = 0;
-        //strcpy(mode, findReturn + 1);
 
         findReturn = findReturn + 1;
         strncpy(mode, findReturn, pos - findReturn);
@@ -899,34 +908,6 @@ void DisplayMode::getBestHdmiMode(char* mode, hdmi_data_t* data) {
     if (strlen(mode) == 0) {
         pSysWrite->getPropertyString(PROP_BEST_OUTPUT_MODE, mode, DEFAULT_OUTPUT_MODE);
     }
-
-  /*
-    char* arrayMode[MAX_STR_LEN] = {0};
-    char* tmp;
-
-    int len = strlen(data->edid);
-    tmp = data->edid;
-    int i = 0;
-
-    do {
-        if (strlen(tmp) == 0)
-            break;
-        char* pos = strchr(tmp, 0x0a);
-        *pos = 0;
-
-        arrayMode[i] = tmp;
-        tmp = pos + 1;
-        i++;
-    } while (tmp <= data->edid + len -1);
-
-    for (int j = 0; j < i; j++) {
-        char* pos = strchr(arrayMode[j], '*');
-        if (pos != NULL) {
-            *pos = 0;
-            strcpy(mode, arrayMode[j]);
-            break;
-        }
-    }*/
 }
 
 //get the highest hdmi mode by edid
@@ -937,7 +918,7 @@ void DisplayMode::getHighestHdmiMode(char* mode, hdmi_data_t* data) {
     char* startpos;
     char* destpos;
 
-    startpos = data->edid;
+    startpos = data->disp_cap;
     strcpy(value, DEFAULT_OUTPUT_MODE);
 
     while (strlen(startpos) > 0) {
@@ -1020,7 +1001,7 @@ void DisplayMode::getHighestPriorityMode(char* mode, hdmi_data_t* data) {
     }
 
     for (int i = 0; i < modeSize; i++) {
-        if (strstr(data->edid, pMode[i]) != NULL) {
+        if (strstr(data->disp_cap, pMode[i]) != NULL) {
             strcpy(mode, pMode[i]);
             return;
         }
@@ -1031,8 +1012,8 @@ void DisplayMode::getHighestPriorityMode(char* mode, hdmi_data_t* data) {
 
 //check if the edid support current hdmi mode
 void DisplayMode::filterHdmiMode(char* mode, hdmi_data_t* data) {
-    char *pCmp = data->edid;
-    while ((pCmp - data->edid) < (int)strlen(data->edid)) {
+    char *pCmp = data->disp_cap;
+    while ((pCmp - data->disp_cap) < (int)strlen(data->disp_cap)) {
         char *pos = strchr(pCmp, 0x0a);
         if (NULL == pos)
             break;
@@ -1048,6 +1029,7 @@ void DisplayMode::filterHdmiMode(char* mode, hdmi_data_t* data) {
         }
         pCmp = pos + step;
     }
+
     if (DISPLAY_TYPE_TV == mDisplayType) {
         #ifdef TEST_UBOOT_MODE
             getBootEnv(UBOOTENV_TESTMODE, mode);
@@ -1055,6 +1037,7 @@ void DisplayMode::filterHdmiMode(char* mode, hdmi_data_t* data) {
                return;
         #endif
     }
+
     //old mode is not support in this TV, so switch to best mode.
 #ifdef USE_BEST_MODE
     getBestHdmiMode(mode, data);
@@ -1090,6 +1073,68 @@ void DisplayMode::getHdmiOutputMode(char* mode, hdmi_data_t* data) {
     //SYS_LOGI("set HDMI mode to %s\n", mode);
 }
 
+void DisplayMode::filterHdmiDispcap(hdmi_data_t* data) {
+    const char *delim = "\n";
+    char filter_dispcap[MAX_STR_LEN] = {0};
+    char supportedColorList[MAX_STR_LEN];
+
+    if (!(pmDeepColor->initColorAttribute(supportedColorList, MAX_STR_LEN))) {
+        SYS_LOGE("initColorAttribute fail\n");
+        return;
+    }
+
+    SYS_LOGI("before filtered HdmiDispcap: %s\n", data->disp_cap);
+
+    char *hdmi_mode = strtok(data->disp_cap, delim);
+    while (hdmi_mode != NULL) {
+        //recommend mode or not
+        bool recomMode = false;
+        int   len = strlen(hdmi_mode);
+        if (hdmi_mode[len - 1] == '*') {
+            hdmi_mode[len - 1] = '\0';
+            recomMode = true;
+        }
+
+        if (pmDeepColor->isSupportHdmiMode(hdmi_mode, supportedColorList)) {
+            strcat(filter_dispcap, hdmi_mode);
+            if (recomMode)
+                strcat(filter_dispcap, "*");
+            strcat(filter_dispcap, delim);
+        }
+
+        hdmi_mode = strtok(NULL, delim);
+    }
+
+    strcpy(data->disp_cap, filter_dispcap);
+
+    SYS_LOGI("after filtered HdmiDispcap: %s\n", data->disp_cap);
+}
+
+bool DisplayMode::isHdmiEdidParseOK(void) {
+    bool ret = true;
+
+    char edidParsing[MODE_LEN] = {0};
+    pSysWrite->readSysfs(DISPLAY_EDID_STATUS, edidParsing);
+
+    if (strcmp(edidParsing, "ok")) {
+        ret = false;
+    }
+
+    return ret;
+}
+
+bool DisplayMode::isHdmiHpd(void) {
+    bool ret = true;
+    char hpd_state[MODE_LEN] = {0};
+    pSysWrite->readSysfs(DISPLAY_HPD_STATE, hpd_state);
+
+    if (strstr(hpd_state, "1") == NULL) {
+        ret = false;
+    }
+
+    return ret;
+}
+
 void DisplayMode::getHdmiData(hdmi_data_t* data) {
     char sinkType[MODE_LEN] = {0};
     char edidParsing[MODE_LEN] = {0};
@@ -1107,16 +1152,16 @@ void DisplayMode::getHdmiData(hdmi_data_t* data) {
     if (HDMI_SINK_TYPE_NONE != data->sinkType) {
         int count = 0;
         while (true) {
-            pSysWrite->readSysfsOriginal(DISPLAY_HDMI_EDID, data->edid);
+            pSysWrite->readSysfsOriginal(DISPLAY_HDMI_DISP_CAP, data->disp_cap);
 			pSysWrite->readSysfsOriginal(DISPLAY_HDMI_EDID_VESA, vesa_edid);
 		    SYS_LOGI("DisplayMode getHdmiData vesa_edid:%s\n",vesa_edid);
-			strcat(data->edid, vesa_edid);
-			SYS_LOGI("DisplayMode getHdmiData data->edid:%s\n",data->edid);
-            if (strlen(data->edid) > 0)
+			strcat(data->disp_cap, vesa_edid);
+			SYS_LOGI("DisplayMode getHdmiData data->edid:%s\n",data->disp_cap);
+            if (strlen(data->disp_cap) > 0)
                 break;
 
             if (count >= 5) {
-                strcpy(data->edid, "null edid");
+                strcpy(data->disp_cap, "null edid");
                 break;
             }
             count++;
@@ -1125,13 +1170,15 @@ void DisplayMode::getHdmiData(hdmi_data_t* data) {
     }
     pSysWrite->readSysfs(SYSFS_DISPLAY_MODE, data->current_mode);
     getBootEnv(UBOOTENV_HDMIMODE, data->ubootenv_hdmimode);
+    //filter hdmi disp_cap mode for compatibility
+    filterHdmiDispcap(data);
 
     //filter mode defined by CDF, default disable this
     if (!strcmp(edidParsing, "ok") && false) {
         const char *delim = "\n";
         char filterEdid[MAX_STR_LEN] = {0};
 
-        char *ptr = strtok(data->edid, delim);
+        char *ptr = strtok(data->disp_cap, delim);
         while (ptr != NULL) {
             //recommend mode or not
             bool recomMode = false;
@@ -1151,9 +1198,9 @@ void DisplayMode::getHdmiData(hdmi_data_t* data) {
         }
 
         //this is the real support edid filter by CDF
-        strcpy(data->edid, filterEdid);
+        strcpy(data->disp_cap, filterEdid);
 
-        SYS_LOGI("CDF filtered modes: %s\n", data->edid);
+        SYS_LOGI("CDF filtered modes: %s\n", data->disp_cap);
     }
 }
 
@@ -1442,7 +1489,6 @@ void DisplayMode::getPosition(const char* curMode, int *position) {
     char ubootvar[100] = {0};
     int defaultWidth = 0;
     int defaultHeight = 0;
-	SYS_LOGI("jason getPosition enter curMode:%s\n",curMode);
     if (strstr(curMode, MODE_480CVBS)) {
         strcpy(keyValue, MODE_480CVBS);
         defaultWidth = FULL_WIDTH_480;
@@ -1451,7 +1497,7 @@ void DisplayMode::getPosition(const char* curMode, int *position) {
         strcpy(keyValue, strstr(curMode, MODE_480P_PREFIX) ? MODE_480P_PREFIX : MODE_480I_PREFIX);
         defaultWidth = FULL_WIDTH_480;
         defaultHeight = FULL_HEIGHT_480;
-    }else if (strstr(curMode, MODE_576CVBS)) {
+    } else if (strstr(curMode, MODE_576CVBS)) {
         strcpy(keyValue, MODE_576CVBS);
         defaultWidth = FULL_WIDTH_576;
         defaultHeight = FULL_HEIGHT_576;
@@ -1479,7 +1525,7 @@ void DisplayMode::getPosition(const char* curMode, int *position) {
         strcpy(keyValue, MODE_768P_PREFIX);
         defaultWidth = FULL_WIDTH_768;
         defaultHeight = FULL_HEIGHT_768;
-     }else if (strstr(curMode, MODE_1080I_PREFIX)) {
+    } else if (strstr(curMode, MODE_1080I_PREFIX)) {
         strcpy(keyValue, MODE_1080I_PREFIX);
         defaultWidth = FULL_WIDTH_1080;
         defaultHeight = FULL_HEIGHT_1080;
@@ -1573,9 +1619,7 @@ void DisplayMode::getPosition(const char* curMode, int *position) {
         defaultWidth = FULL_WIDTH_1280x480;
         defaultHeight = FULL_HEIGHT_1280x480;
 		SYS_LOGI("jason getPosition 1280x480\n");
-    }
-
-	else if (strstr(curMode, MODE_1080P_PREFIX)) {
+    } else if (strstr(curMode, MODE_1080P_PREFIX)) {
         strcpy(keyValue, MODE_1080P_PREFIX);
         defaultWidth = FULL_WIDTH_1080;
         defaultHeight = FULL_HEIGHT_1080;
@@ -2265,6 +2309,24 @@ void DisplayMode::onTxEvent (char* switchName, char* hpdstate, int outputState) 
         setBootEnv(UBOOTENV_REBOOT_MODE, mRebootMode);
     }
 #endif
+
+    if (hpdstate && hpdstate[0] == '0') {
+        char outputmode[MODE_LEN] = {0};
+        getBootEnv(UBOOTENV_CVBSMODE, outputmode);
+        pSysWrite->writeSysfs(SYSFS_DISPLAY_MODE, outputmode);
+        return;
+    }
+
+    //hdmi edid parse error
+    if ((isHdmiEdidParseOK() == false) &&
+        (isHdmiHpd() == true)) {
+        pSysWrite->writeSysfs(DISPLAY_HDMI_AVMUTE, "1");
+        pSysWrite->writeSysfs(DISPLAY_HDMI_COLOR_ATTR, COLOR_RGB_8BIT);
+        pSysWrite->writeSysfs(SYSFS_DISPLAY_MODE, DEFAULT_OUTPUT_MODE);
+        pSysWrite->writeSysfs(DISPLAY_HDMI_AVMUTE, "-1");
+        return;
+    }
+
     setSourceDisplay((output_mode_state)outputState);
 }
 

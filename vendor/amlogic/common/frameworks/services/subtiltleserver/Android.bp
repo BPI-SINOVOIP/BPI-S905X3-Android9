@@ -1,0 +1,215 @@
+cc_binary {
+  name: "subtitleserver",
+  defaults: [
+    "hidl_defaults",
+  ],
+  vendor: true,
+  relative_install_path: "hw",
+  init_rc: [
+    "subtitleserver.rc",
+  ],
+  srcs: [
+    "main_subtitleserver.cpp",
+    "SubtitleService.cpp",
+
+    "SubtitleServer.cpp",
+
+    "ipc/SocketServer.cpp",
+    "ipc/FmqReceiver.cpp",
+
+    "utils/ringbuffer.c",
+    "utils/AndroidCallbackMessageQueue.cpp",
+    "utils/Segment.cpp",
+    "utils/MemoryLeakTrackUtil.cpp",
+    "utils/VideoInfo.cpp",
+    "utils/ExtParserUtils.cpp",
+
+    "io/FileSource.cpp",
+    "io/SocketSource.cpp",
+    "io/DeviceSource.cpp",
+    "io/DataSourceFactory.cpp",
+    "io/ExternalDataSource.cpp",
+    "io/DemuxSource.cpp",
+
+    "display/AndroidDisplay.cpp",
+
+    "subtitle/Subtitle.cpp",
+    "subtitle/Presentation.cpp",
+    "subtitle/parser/ParserFactory.cpp",
+    "subtitle/parser/AssParser.cpp",
+    "subtitle/parser/PgsParser.cpp",
+    "subtitle/parser/DvbParser.cpp",
+    "subtitle/parser/DvdParser.cpp",
+    "subtitle/parser/TeletextParser.cpp",
+    "subtitle/parser/ClosedCaptionParser.cpp",
+    "subtitle/parser/Scte27Parser.cpp",
+    "subtitle/parser/bprint.c",
+    "subtitle/parser/UserDataAfd.cpp",
+    "subtitle/parser/ExtParser/ExtParser.cpp",
+    "subtitle/parser/ExtParser/ExtParserFactory.cpp",
+    "subtitle/parser/ExtParser/Aqtitle.cpp",
+    "subtitle/parser/ExtParser/ExtParserSsa.cpp",
+    "subtitle/parser/ExtParser/Jacosub.cpp",
+    "subtitle/parser/ExtParser/ExtParserLrc.cpp",
+    "subtitle/parser/ExtParser/Mircodvd.cpp",
+    "subtitle/parser/ExtParser/Mplayer1.cpp",
+    "subtitle/parser/ExtParser/Mplayer2.cpp",
+    "subtitle/parser/ExtParser/Mpsub.cpp",
+    "subtitle/parser/ExtParser/ExtParserPjs.cpp",
+    "subtitle/parser/ExtParser/ExtParserRt.cpp",
+    "subtitle/parser/ExtParser/ExtParserSami.cpp",
+    "subtitle/parser/ExtParser/Subrip09.cpp",
+    "subtitle/parser/ExtParser/Subrip.cpp",
+    "subtitle/parser/ExtParser/Vplayer.cpp",
+    "subtitle/parser/ExtParser/ExtParserXml.cpp",
+    "subtitle/parser/ExtParser/Ttml.cpp",
+    "subtitle/parser/ExtParser/SubViewer.cpp",
+    "subtitle/parser/ExtParser/SubViewer2.cpp",
+    "subtitle/parser/ExtParser/SubViewer3.cpp",
+    "subtitle/parser/ExtParser/ExtParserEbuttd.cpp",
+    "subtitle/render/AndroidHidlRemoteRender.cpp",
+
+    "subtitle/parser/tinyxml/tinyxml.cpp",
+    "subtitle/parser/tinyxml/tinystr.cpp",
+    "subtitle/parser/tinyxml/tinyxmlerror.cpp",
+    "subtitle/parser/tinyxml/tinyxmlparser.cpp",
+
+  ],
+
+  include_dirs: [
+    "bionic/libc/private",
+    "system/libhidl/libhidlcache/include",
+    "system/libhidl/libhidlmemory/include",
+    "system/libhidl/transport/token/1.0/utils/include",
+    "hardware/libhardware/include",
+    "frameworks/native/include",
+    "frameworks/native/opengl/include",
+    "frameworks/native/libs/arect/include",
+    "frameworks/native/libs/nativebase/include",
+    "external/icu/icu4c/source/common",
+    "vendor/amlogic/common/external/dvb/include/am_adp",
+    "vendor/amlogic/common/external/dvb/include/am_mw",
+    "vendor/amlogic/common/external/libzvbi/src",
+  ],
+
+
+  local_include_dirs: [
+    "io",
+    "ipc",
+    "utils",
+    "display",
+    "subtitle",
+    "subtitle/parser",
+    "subtitle/render",
+    "subtitle/parser/ExtParser",
+    "subtitle/parser/tinyxml",
+  ],
+
+  cflags: [
+    "-Wall",
+    "-O0",
+    "-Wno-error",
+    "-Wno-unused-function",
+    "-Werror=format-security",
+    "-Werror=array-bounds",
+    "-Wno-unused-variable",
+    "-Wno-unused-parameter",
+    "-v",
+  ],
+
+/*
+  sanitize: {
+    address: true,
+    integer_overflow: true,
+
+    misc_undefined: [
+      "alignment",
+       "bounds",
+       "null",
+       "unreachable",
+       "unsigned-integer-overflow",
+       "signed-integer-overflow",
+       "integer",
+    ],
+
+    diag: {
+       undefined : true
+    },
+  },
+*/
+
+  static_libs: [
+     "libam_mw_prebuilt",
+    "libam_adp_prebuilt",
+    "libzvbi_static",
+    "libicui18n_prebuilt",
+    "libicuuc_prebuilt",
+    "libicuuc_stubdata_prebuilt",
+  ],
+
+  shared_libs: [
+    "libhidlmemory",
+    "libbinder",
+    "liblog",
+    "libcutils",
+    "libutils",
+    "libutilscallstack",
+    "libbase",
+    "libhidlbase",
+    "libhidltransport",
+    "libhwbinder",
+    "libfmq",
+    "vendor.amlogic.hardware.subtitleserver@1.0",
+    "android.hidl.allocator@1.0",
+    "android.hidl.memory@1.0",
+  ],
+}
+
+cc_prebuilt_library_static {
+   name: "libicuuc_prebuilt",
+   vendor: true,
+   srcs: [
+      "prebuilts/libicuuc_product.a",
+   ],
+}
+
+cc_prebuilt_library_static {
+   name: "libicui18n_prebuilt",
+   vendor: true,
+   srcs: [
+      "prebuilts/libicui18n_product.a",
+   ],
+}
+
+cc_prebuilt_library_static {
+   name: "libicuuc_stubdata_prebuilt",
+   vendor: true,
+   srcs: [
+      "prebuilts/libicuuc_stubdata_product.a",
+   ],
+}
+
+cc_prebuilt_library_static {
+   name: "libam_mw_prebuilt",
+   vendor: true,
+   srcs: [
+      "prebuilts/libam_mw.a",
+   ],
+}
+
+cc_prebuilt_library_static {
+   name: "libam_adp_prebuilt",
+   vendor: true,
+   srcs: [
+      "prebuilts/libam_adp.a",
+   ],
+}
+/*
+cc_prebuilt_library_static {
+   name: "libzvbi_prebuilt",
+   vendor: true,
+   srcs: [
+      "prebuilts/libzvbi.a",
+   ],
+}
+*/

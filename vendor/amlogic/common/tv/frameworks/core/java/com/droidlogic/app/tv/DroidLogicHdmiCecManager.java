@@ -12,6 +12,7 @@ package com.droidlogic.app.tv;
 import android.content.Context;
 import android.hardware.hdmi.HdmiControlManager;
 import android.hardware.hdmi.HdmiDeviceInfo;
+import android.hardware.hdmi.HdmiClient;
 import android.hardware.hdmi.HdmiTvClient;
 import android.hardware.hdmi.HdmiTvClient.SelectCallback;
 import android.provider.Settings;
@@ -35,6 +36,7 @@ public class DroidLogicHdmiCecManager {
     private static Context mContext;
     private HdmiControlManager mHdmiControlManager;
     private HdmiTvClient mTvClient = null;
+    private HdmiClient mClient = null;
     private int mSelectDeviceId = -1;
     private int mSelectLogicAddr = -1;
     private int mSelectPhyAddr = -1;
@@ -56,9 +58,7 @@ public class DroidLogicHdmiCecManager {
     private static final int HDMI_PORT_SELECT = 3 << 16;
     private static final int REMOVE_DEVICE_SELECT = 4 << 16;
     private static final int SEND_KEY_EVENT  = 5 << 16;
-    private static final int DEV_TYPE_TV = 0;
-    private static final int DEV_TYPE_TUNER = 3;
-    private static final int DEV_TYPE_AUDIO_SYSTEM = 5;
+
     public static final int POWER_STATUS_UNKNOWN = -1;
     public static final int POWER_STATUS_ON = 0;
     public static final int POWER_STATUS_STANDBY = 1;
@@ -83,12 +83,9 @@ public class DroidLogicHdmiCecManager {
                     portSelect((int)msg.arg1);
                     break;
                 case SEND_KEY_EVENT:
-                    if (mTvClient == null) {
-                        Log.d(TAG, "mHandler sendKeyEvent fail, mTvClient is null ?: " + (mTvClient == null));
-                    }
-                    if (mTvClient != null) {
+                    if (mClient != null) {
                         Log.d(TAG, "mHandler sendKeyEvent, keyCode: " + msg.arg1 + " isPressed: " + msg.arg2);
-                        mTvClient.sendKeyEvent((int)msg.arg1, (((int)msg.arg2 == 1) ?  true : false));
+                        mClient.sendKeyEvent((int)msg.arg1, (((int)msg.arg2 == 1) ?  true : false));
                     }
                     break;
                 case REMOVE_DEVICE_SELECT:
@@ -116,14 +113,13 @@ public class DroidLogicHdmiCecManager {
             List<Integer> mDeviceTypes;
             mDeviceTypes = getIntList(SystemProperties.get(PROPERTY_VENDOR_DEVICE_TYPE));
             for (int type : mDeviceTypes) {
-                if (DEBUG) {
-                    Log.d(TAG, "DroidLogicHdmiCecManager device type " + type);
-                }
+                Log.i(TAG, "DroidLogicHdmiCecManager hdmi device type " + type);
 
-                if (type == DEV_TYPE_TV) {
+                if (type == HdmiDeviceInfo.DEVICE_TV) {
                     mTvClient = mHdmiControlManager.getTvClient();
-                } else if (type == DEV_TYPE_AUDIO_SYSTEM) {
-                    mTvClient = mHdmiControlManager.getAudioSystemClient();
+                    mClient = mHdmiControlManager.getTvClient();
+                } else if (type == HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM) {
+                    mClient = mHdmiControlManager.getClient(HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM);
                 }
             }
         }
@@ -383,7 +379,7 @@ public class DroidLogicHdmiCecManager {
             int id = getPortIdByDeviceId(deviceId);
             for (HdmiDeviceInfo info : mTvClient.getDeviceList()) {
                 /*this only get firt level device logical addr*/
-                if (id == ((int)info.getPortId()) && (info.getLogicalAddress() == DEV_TYPE_AUDIO_SYSTEM)) {
+                if (id == ((int)info.getPortId()) && (info.getLogicalAddress() == HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM)) {
                     return true;
                 }
             }
@@ -413,16 +409,21 @@ public class DroidLogicHdmiCecManager {
         if (deviceId >= DroidLogicTvUtils.DEVICE_ID_HDMI1 && deviceId <= DroidLogicTvUtils.DEVICE_ID_HDMI4) {
             int id = getPortIdByDeviceId(deviceId);
             Log.d(TAG, "hasHdmiCecDevice, portId: " + id);
-            if (mTvClient == null) {
-                Log.e(TAG, "hasHdmiCecDevice TvClient null!");
+            if (mClient == null) {
+                Log.e(TAG, "hasHdmiCecDevice HdmiClient null!");
                 return false;
             }
-            for (HdmiDeviceInfo info : mTvClient.getDeviceList()) {
-                if (DEBUG)
-                    Log.d(TAG, "hasHdmiCecDevice, info: " + info);
-                if (id == ((int)info.getPortId())) {
-                    return true;
+            if (mTvClient != null) {
+                for (HdmiDeviceInfo info : mTvClient.getDeviceList()) {
+                    if (DEBUG)
+                        Log.d(TAG, "hasHdmiCecDevice, info: " + info);
+                    if (id == ((int)info.getPortId())) {
+                        return true;
+                    }
                 }
+            } else {
+                Log.d(TAG, "hasHdmiCecDevice no check devicelist if it's not tv.");
+                return true;
             }
         }
         return false;

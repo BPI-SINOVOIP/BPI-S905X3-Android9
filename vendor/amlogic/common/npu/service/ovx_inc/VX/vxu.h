@@ -332,40 +332,18 @@ VX_API_ENTRY vx_status VX_API_CALL vxuLaplacianPyramid(vx_context context, vx_im
 VX_API_ENTRY vx_status VX_API_CALL vxuLaplacianReconstruct(vx_context context, vx_pyramid laplacian, vx_image input,
                                        vx_image output);
 
-/*! \brief [Immediate] Computes an accumulation.
+/*! \brief [Immediate] Computes a weighted average image.
  * \param [in] context The reference to the overall context.
- * \param [in] input The input <tt>\ref VX_DF_IMAGE_U8</tt> image.
- * \param [in,out] accum The accumulation image in <tt>\ref VX_DF_IMAGE_S16</tt>
- * \ingroup group_vision_function_accumulate
- * \return A <tt>\ref vx_status_e</tt> enumeration.
- * \retval VX_SUCCESS Success
- * \retval * An error occurred. See <tt>\ref vx_status_e</tt>.
- */
-VX_API_ENTRY vx_status VX_API_CALL vxuAccumulateImage(vx_context context, vx_image input, vx_image accum);
-
-/*! \brief [Immediate] Computes a weighted accumulation.
- * \param [in] context The reference to the overall context.
- * \param [in] input The input <tt>\ref VX_DF_IMAGE_U8</tt> image.
+ * \param [in] img1 The first <tt>\ref VX_DF_IMAGE_U8</tt> image.
  * \param [in] alpha A <tt>\ref VX_TYPE_FLOAT32</tt> type, the input value with the range \f$ 0.0 \le \alpha \le 1.0 \f$.
- * \param [in,out] accum The <tt>\ref VX_DF_IMAGE_U8</tt> accumulation image.
- * \ingroup group_vision_function_accumulate_weighted
+ * \param [in] img2 The second <tt>\ref VX_DF_IMAGE_U8</tt> image.
+ * \param [out] output The output <tt>\ref VX_DF_IMAGE_U8</tt> image.
+ * \ingroup group_vision_function_weighted_average
  * \return A <tt>\ref vx_status_e</tt> enumeration.
  * \retval VX_SUCCESS Success
  * \retval * An error occurred. See <tt>\ref vx_status_e</tt>.
  */
-VX_API_ENTRY vx_status VX_API_CALL vxuAccumulateWeightedImage(vx_context context, vx_image input, vx_scalar alpha, vx_image accum);
-
-/*! \brief [Immediate] Computes a squared accumulation.
- * \param [in] context The reference to the overall context.
- * \param [in] input The input <tt>\ref VX_DF_IMAGE_U8</tt> image.
- * \param [in] shift A <tt>\ref VX_TYPE_UINT32</tt> type, the input value with the range \f$ 0 \le shift \le 15 \f$.
- * \param [in,out] accum The accumulation image in <tt>\ref VX_DF_IMAGE_S16</tt>
- * \ingroup group_vision_function_accumulate_square
- * \return A <tt>\ref vx_status_e</tt> enumeration.
- * \retval VX_SUCCESS Success
- * \retval * An error occurred. See <tt>\ref vx_status_e</tt>.
- */
-VX_API_ENTRY vx_status VX_API_CALL vxuAccumulateSquareImage(vx_context context, vx_image input, vx_scalar shift, vx_image accum);
+VX_API_ENTRY vx_status VX_API_CALL vxuWeightedAverage(vx_context context, vx_image img1, vx_scalar alpha, vx_image img2, vx_image output);
 
 /*! \brief [Immediate] Computes the minimum and maximum values of the image.
  * \param [in] context The reference to the overall context.

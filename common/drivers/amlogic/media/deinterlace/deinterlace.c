@@ -118,6 +118,7 @@ static bool mc_mem_alloc;
 static unsigned int di_pre_rdma_enable;
 static struct mutex di_event_mutex;
 static atomic_t di_flag_unreg;	//ary 2019-05-27
+static atomic_t di_clear_unreg;
 static atomic_t di_trig_free_mem;
 
 static unsigned int di_force_bit_mode = 10;
@@ -7464,7 +7465,8 @@ static int di_task_handle(void *data)
 		}
 		#ifdef CONFIG_CMA
 		/* mutex_lock(&de_devp->cma_mutex);*/
-		if (di_pre_stru.cma_release_req) {
+		if (di_pre_stru.cma_release_req &&
+		    (!atomic_read(&di_clear_unreg))) {
 			atomic_set(&devp->mem_flag, 0);
 			di_cma_release(devp);
 			di_pre_stru.cma_release_req = 0;
@@ -8866,6 +8868,7 @@ static int di_probe(struct platform_device *pdev)
 	di_hw_init(pulldown_enable, mcpre_en);
 	set_di_flag();
 	atomic_set(&di_flag_unreg, 0);
+	atomic_set(&di_clear_unreg, 0);
 /* Disable MCDI when code does not surpport MCDI */
 	if (!mcpre_en)
 		DI_VSYNC_WR_MPEG_REG_BITS(MCDI_MC_CRTL, 0, 0, 1);
@@ -9008,6 +9011,7 @@ static void di_clear_for_suspend(struct di_dev_s *di_devp)
 	pr_info("%s\n", __func__);
 
 	atomic_set(&di_flag_unreg, 1);
+	atomic_set(&di_clear_unreg, 1);
 	di_unreg_process();/*have flag*/
 	if (di_pre_stru.unreg_req_flag_irq)
 		di_unreg_process_irq();
@@ -9021,6 +9025,7 @@ static void di_clear_for_suspend(struct di_dev_s *di_devp)
 		di_pre_stru.cma_alloc_done = 0;
 	}
 #endif
+	atomic_set(&di_clear_unreg, 0);
 	#ifdef DI_KEEP_HIS
 	hrtimer_cancel(&di_pre_hrtimer);
 	tasklet_kill(&di_pre_tasklet);	//ary.sui

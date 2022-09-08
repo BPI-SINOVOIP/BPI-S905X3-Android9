@@ -1,16 +1,11 @@
 /*
  *
- * Copyright (C) 2016 Amlogic, Inc. All rights reserved.
+ * Copyright (c) 2015 Amlogic, Inc. All rights reserved.
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * This source code is subject to the terms and conditions defined in the
+ * file 'LICENSE' which is part of this source code package.
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
- * more details.
+ * tb_module related tb detect
  *
 */
 
@@ -189,4 +184,4 @@ module_exit(amlogic_tb_detect_exit);
 
 MODULE_DESCRIPTION("Amlogic TB Detect Driver");
 MODULE_AUTHOR("Amlogic SH MM team");
-MODULE_LICENSE("GPL");
+MODULE_LICENSE("AML");

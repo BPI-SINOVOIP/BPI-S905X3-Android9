@@ -170,6 +170,41 @@ public class HdmiCecLocalDeviceAudioSystem extends HdmiCecLocalDevice {
         return null;
     }
 
+    @ServiceThreadOnly
+    protected boolean handleActiveSource(HdmiCecMessage message) {
+        assertRunOnServiceThread();
+        int logicalAddress = message.getSource();
+        int physicalAddress = HdmiUtils.twoBytesToInt(message.getParams());
+        ActiveSource activeSource = ActiveSource.of(logicalAddress, physicalAddress);
+        if (!getActiveSource().equals(activeSource)) {
+            setActiveSource(activeSource);
+        }
+        updateDevicePowerStatus(logicalAddress, HdmiControlManager.POWER_STATUS_ON);
+        return true;
+    }
+
+    protected void updateDevicePowerStatus(int logicalAddress, int newPowerStatus) {
+        HdmiDeviceInfo info = getCecDeviceInfo(logicalAddress);
+        if (info == null) {
+            Slog.w(TAG, "Can not update power status of non-existing device:" + logicalAddress);
+            return;
+        }
+
+        if (info.getDevicePowerStatus() == newPowerStatus) {
+            return;
+        }
+
+        HdmiDeviceInfo newInfo = HdmiUtils.cloneHdmiDeviceInfo(info, newPowerStatus);
+        // addDeviceInfo replaces old device info with new one if exists.
+        addDeviceInfo(newInfo);
+
+        invokeDeviceEventListener(newInfo, HdmiControlManager.DEVICE_EVENT_UPDATE_DEVICE);
+    }
+
+    private void invokeDeviceEventListener(HdmiDeviceInfo info, int status) {
+        mService.invokeDeviceEventListeners(info, status);
+    }
+
     @Override
     @ServiceThreadOnly
     protected boolean handleReportPhysicalAddress(HdmiCecMessage message) {

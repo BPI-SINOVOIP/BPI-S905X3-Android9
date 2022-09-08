@@ -151,6 +151,12 @@ typedef int32_t vsi_nn_activation_e; enum
     VSI_NN_GRU_ACT_HARD_SIGMOID = 31
 };
 
+typedef enum
+{
+    VSI_NN_DEPTH2SPACE_DCR = 0,
+    VSI_NN_DEPTH2SPACE_CRD
+} vsi_nn_depth2space_mode_e;
+
 
 /** Deprecated */
 typedef uint32_t vsi_nn_size_t;

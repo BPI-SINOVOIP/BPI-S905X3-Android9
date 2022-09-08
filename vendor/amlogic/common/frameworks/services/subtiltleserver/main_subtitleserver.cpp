@@ -26,21 +26,19 @@
 #include <binder/IServiceManager.h>
 #include <cutils/properties.h>
 #include <utils/Log.h>
-//#include "RegisterExtensions.h"
-#include <HidlTransportSupport.h>
-//#include "ImagePlayerService.h"
-#include "SubtitleServerHal.h"
+#include <hidl/HidlTransportSupport.h>
+
+#include "SubtitleServer.h"
 
 using namespace android;
 using ::android::hardware::configureRpcThreadpool;
 using ::android::hardware::joinRpcThreadpool;
-using ::vendor::amlogic::hardware::subtitleserver::V1_0::implementation::SubtitleServerHal;
 using ::vendor::amlogic::hardware::subtitleserver::V1_0::ISubtitleServer;
+using ::vendor::amlogic::hardware::subtitleserver::V1_0::implementation::SubtitleServer;
 
-int main(int argc, char** argv) {
+int main(int argc __unused, char** argv __unused) {
     ALOGE("subtitleserver daemon starting");
     bool treble = true;//property_get_bool("persist.subtitle.treble", true);
-
     if (treble) {
         android::ProcessState::initWithDriver("/dev/vndbinder");
     }
@@ -50,7 +48,7 @@ int main(int argc, char** argv) {
     sp<ProcessState> proc(ProcessState::self());
 
     if (treble) {
-        sp<ISubtitleServer> subtitleServer = new SubtitleServerHal();
+        sp<ISubtitleServer> subtitleServer = new SubtitleServer();
 
         if (subtitleServer == nullptr) {
             ALOGE("Cannot create ISubtitleServer service");
@@ -60,10 +58,10 @@ int main(int argc, char** argv) {
             ALOGI("Treble SubtitleServerHal service created.--");
         }
     }
-    ALOGI("Treble SubtitleServerHal service created end-1-!!");
     ProcessState::self()->startThreadPool();
     ALOGI("Treble SubtitleServerHal service created end-2-!!");
     //IPCThreadState::self()->joinThreadPool();
     joinRpcThreadpool();
     ALOGI("Treble SubtitleServerHal service created end-3-!!");
 }
+

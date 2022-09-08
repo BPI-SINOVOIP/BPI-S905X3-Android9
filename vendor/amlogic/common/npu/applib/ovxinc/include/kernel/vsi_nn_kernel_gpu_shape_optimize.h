@@ -50,4 +50,13 @@ vsi_bool vsi_nn_kernel_optimize_softmax_shape
     int32_t* out_shape_x, uint32_t* out_rank_x,int32_t* out_axis
     );
 
+vsi_bool vsi_nn_kernel_optimize_tile_shape
+    (
+    const int32_t* shape_x,   const size_t rank_x,
+    const int32_t* multiples, const size_t rank,
+    const int32_t* shape_output, const size_t rank_output,
+    int32_t* out_shape_x, int32_t* out_shape_y,
+    int32_t* out_shape_output, uint32_t* out_rank_output
+    );
+
 #endif

@@ -112,6 +112,7 @@
 /dev/wifi_power     			u:object_r:radio_device:s0
 /dev/hidraw[0-3]			u:object_r:hidraw_device:s0
 /dev/galcore                    u:object_r:galcore_device:s0
+/dev/amresource_mgr			u:object_r:codec_device:s0
 
 /sys/devices/platform/bt-dev/rfkill/rfkill0/state	        u:object_r:sysfs_bluetooth_writable:s0
 /sys/devices/platform/bt-dev/rfkill/rfkill0/type	        u:object_r:sysfs_bluetooth_writable:s0
@@ -120,12 +121,15 @@
 
 /sys/class/video/disable_video					u:object_r:sysfs_video:s0
 /sys/class/video/disable_videopip				u:object_r:sysfs_video:s0
+/sys/class/amstream/bufs					u:object_r:sysfs_video:s0
 /sys/class/vfm/map						u:object_r:sysfs_video:s0
 /sys/class/video/axis						u:object_r:sysfs_video:s0
 /sys/class/video/axis_pip					u:object_r:sysfs_video:s0
 /sys/class/video/crop						u:object_r:sysfs_video:s0
 /sys/class/video/crop_pip					u:object_r:sysfs_video:s0
+/sys/class/video/vframe_states					u:object_r:sysfs_video:s0
 /sys/class/ppmgr/angle						u:object_r:sysfs_video:s0
+/sys/class/ppmgr/ppmgr_vframe_states				u:object_r:sysfs_video:s0
 /sys/class/tsync/enable						u:object_r:sysfs_video:s0
 /sys/class/audiodsp/digital_raw					u:object_r:sysfs_audio:s0
 /sys/class/amaudio/debug                                        u:object_r:sysfs_audio:s0
@@ -182,7 +186,7 @@
 /sys/class/unifykeys(/.*)?                                      u:object_r:sysfs_unifykey:s0
 /sys/devices/platform/ffd26000.hdmirx/hdmirx/hdmirx0/key        u:object_r:sysfs_unifykey:s0
 
-/sys/devices/virtual/meson-irblaster/irblaster1(/.*)?           u:object_r:sysfs_ir:s0
+/sys/class/irblaster/irblaster0(/.*)?                           u:object_r:sysfs_ir:s0
 
 /sys/class/aml_store/store_device                               u:object_r:sysfs_store:s0
 /sys/class/defendkey/decrypt_dtb                                u:object_r:sysfs_defendkey:s0
@@ -269,7 +273,7 @@
 /vendor/bin/hdcp_rp22         u:object_r:hdcp_rp22_exec:s0
 /vendor/bin/remotecfg         u:object_r:remotecfg_exec:s0
 /vendor/bin/systemcontrol     u:object_r:system_control_exec:s0
-/vendor/bin/subtitleserver    u:object_r:subtitleserver_exec:s0
+/vendor/bin/hw/subtitleserver    u:object_r:subtitleserver_exec:s0
 /vendor/bin/hdmicecd          u:object_r:hdmicecd_exec:s0
 /vendor/bin/droidvold         u:object_r:droidvold_exec:s0
 /vendor/bin/rc_server         u:object_r:rc_server_exec:s0
@@ -321,6 +325,7 @@
 /vendor/lib(64)?/liboptimization\.so       u:object_r:vendor_app_file:s0
 /vendor/lib(64)?/libsystemcontrolservice\.so  u:object_r:vendor_app_file:s0
 /vendor/lib(64)?/libremotecontrol_jni\.so     u:object_r:vendor_app_file:s0
+/vendor/lib(64)?/libsubtitlemanager_jni\.so u:object_r:vendor_app_file:s0
 /vendor/lib(64)?/libremotecontrolserver\.so    u:object_r:vendor_app_file:s0
 /vendor/lib(64)?/libhdmicec\.so        u:object_r:vendor_app_file:s0
 /vendor/lib(64)?/libhdmicec_jni\.so    u:object_r:vendor_app_file:s0

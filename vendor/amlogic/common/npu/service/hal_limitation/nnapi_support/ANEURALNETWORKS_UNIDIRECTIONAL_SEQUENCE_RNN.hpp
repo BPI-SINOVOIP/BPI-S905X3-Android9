@@ -83,12 +83,13 @@ OP_SPEC_END()
 
 // order of argument is important
 MAKE_SPEC(output)
-    .input_(nnrt::OperandType::TENSOR_FLOAT32)
-    .output_(nnrt::OperandType::TENSOR_FLOAT32));
-
-    OVERRIDE_SPEC(output, float16)
     .input_(nnrt::OperandType::TENSOR_FLOAT16)
     .output_(nnrt::OperandType::TENSOR_FLOAT16));
+
+// Float32 not support temporarily due to accuracy issue
+// OVERRIDE_SPEC(output, float32)
+//     .input_(nnrt::OperandType::TENSOR_FLOAT32)
+//     .output_(nnrt::OperandType::TENSOR_FLOAT32));
 
 #undef ARG_NAMES
 #undef ARGC

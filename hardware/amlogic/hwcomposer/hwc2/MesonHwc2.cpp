@@ -680,14 +680,34 @@ void MesonHwc2::onVsync(hwc2_display_t display, int64_t timestamp) {
 
 void MesonHwc2::onHotplug(hwc2_display_t display, bool connected) {
     if (display == HWC_DISPLAY_PRIMARY && !HwcConfig::primaryHotplugEnabled()) {
-        MESON_LOGD("Primary display not support hotplug.");
+        MESON_LOGD("Primary dont config to support hotplug.");
         return;
     }
 
+    hwc2_connection_t connection =
+        connected ? HWC2_CONNECTION_CONNECTED : HWC2_CONNECTION_DISCONNECTED;
+
+    if (connection == HWC2_CONNECTION_DISCONNECTED) {
+        if (display == HWC_DISPLAY_PRIMARY) {
+            MESON_LOGD("Primary cannot disconnect on android.");
+            return ;
+        } else {
+            /*will remove display, clear display resource now. */
+            std::shared_ptr<Hwc2Display> hwcDisplay;
+            auto it = mDisplays.find(display);
+            if (it != mDisplays.end()) {
+                it->second->cleanupBeforeDestroy();
+            }  else {
+                MESON_LOGE("(%s) met invalid display id (%d)",
+                    __func__, (int)display);
+            }
+        }
+    }
+
     if (mHotplugFn) {
-        MESON_LOGD("On hotplug, Fn: %p, Data: %p, display: %d(%d), connected: %d",
-                mHotplugFn, mHotplugData, (int)display, HWC_DISPLAY_PRIMARY, connected);
-        mHotplugFn(mHotplugData, display, connected);
+        MESON_LOGD("On hotplug, Fn: %p, Data: %p, display: %d, connection: %d",
+                mHotplugFn, mHotplugData, (int)display, connection);
+        mHotplugFn(mHotplugData, display, connection);
     } else {
         MESON_LOGE("No hotplug callback registered.");
     }

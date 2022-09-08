@@ -174,21 +174,6 @@ enum vx_kernel_e {
      */
     VX_KERNEL_GAUSSIAN_PYRAMID = VX_KERNEL_BASE(VX_ID_KHRONOS, VX_LIBRARY_KHR_BASE) + 0x15,
 
-    /*! \brief The accumulation kernel.
-     * \see group_vision_function_accumulate
-     */
-    VX_KERNEL_ACCUMULATE = VX_KERNEL_BASE(VX_ID_KHRONOS, VX_LIBRARY_KHR_BASE) + 0x16,
-
-    /*! \brief The weigthed accumulation kernel.
-     * \see group_vision_function_accumulate_weighted
-     */
-    VX_KERNEL_ACCUMULATE_WEIGHTED = VX_KERNEL_BASE(VX_ID_KHRONOS, VX_LIBRARY_KHR_BASE) + 0x17,
-
-    /*! \brief The squared accumulation kernel.
-     * \see group_vision_function_accumulate_square
-     */
-    VX_KERNEL_ACCUMULATE_SQUARE = VX_KERNEL_BASE(VX_ID_KHRONOS, VX_LIBRARY_KHR_BASE) + 0x18,
-
     /*! \brief The min and max location kernel.
      * \see group_vision_function_minmaxloc
      */
@@ -393,6 +378,11 @@ enum vx_kernel_e {
     */
     VX_KERNEL_MIN = VX_KERNEL_BASE(VX_ID_KHRONOS, VX_LIBRARY_KHR_BASE) + 0x3F,
 
+    /*! \brief The weigthed average kernel.
+     * \see group_vision_function_weighted_average
+     */
+    VX_KERNEL_WEIGHTED_AVERAGE = VX_KERNEL_BASE(VX_ID_KHRONOS, VX_LIBRARY_KHR_BASE) + 0x40,
+
     /* insert new kernels here */
     VX_KERNEL_NN_CONVOLUTION_RELU_POOLING_LAYER = VX_KERNEL_BASE(VX_ID_VIVANTE, VX_LIBRARY_KHR_BASE) + 0x0,
 
@@ -495,6 +485,8 @@ enum vx_kernel_e {
     VX_KERNEL_NN_CONV_LSTM_LAYER      = VX_KERNEL_BASE(VX_ID_VIVANTE, VX_LIBRARY_KHR_BASE) + 0x29,
 
     VX_KERNEL_NN_FULLY_CONNECTED_LAYER = VX_KERNEL_BASE(VX_ID_VIVANTE, VX_LIBRARY_KHR_BASE) + 0x2A,
+
+    VX_KERNEL_NN_L2NORMALIZE_LAYER2    = VX_KERNEL_BASE(VX_ID_VIVANTE, VX_LIBRARY_KHR_BASE) + 0x2B,
 
     VX_KERNEL_MAX_1_2, /*!< \internal Used for VX1.2 bounds checking in the conformance test. */
 };

@@ -413,7 +413,8 @@ void BufferLayer::onDraw(const RenderArea& renderArea, const Region& clip,
         // is probably going to have something visibly wrong.
     }
 
-    bool blackOutLayer = isProtected() || (isSecure() && !renderArea.isSecure());
+    bool blackOutLayer = isProtected() || (isSecure() && !renderArea.isSecure())
+                         || (isVideoOverlay());
 
     auto& engine(mFlinger->getRenderEngine());
 
@@ -934,13 +935,6 @@ bool BufferLayer::isOpaque(const Layer::State& s) const {
         return false;
     }
 
-#ifdef REDUCE_VIDEO_WORKLOAD
-    if (getBE().compositionInfo.mBuffer &&
-        am_gralloc_is_omx_metadata_producer(getBE().compositionInfo.mBuffer->getUsage())) {
-        return true;
-    }
-#endif
-
     // if the layer has the opaque flag, then we're always opaque,
     // otherwise we use the current buffer's format.
     return ((s.flags & layer_state_t::eLayerOpaque) != 0) || mCurrentOpacity;
@@ -1401,6 +1395,17 @@ bool BufferLayer::consumeOmxFrame(status_t &updateResult) {
 }
 
 #endif
+
+bool BufferLayer::isVideoOverlay() const {
+#ifdef REDUCE_VIDEO_WORKLOAD
+	if (getBE().compositionInfo.mBuffer &&
+		am_gralloc_is_omx_metadata_producer(getBE().compositionInfo.mBuffer->getUsage())) {
+		return true;
+	}
+#endif
+	return false;
+}
+
 
 } // namespace android
 

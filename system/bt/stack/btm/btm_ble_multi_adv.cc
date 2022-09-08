@@ -751,7 +751,7 @@ class BleAdvertisingManagerImpl
       uint8_t flags_val = BTM_GENERAL_DISCOVERABLE;
 
       if (p_inst->duration) flags_val = BTM_LIMITED_DISCOVERABLE;
-
+      flags_val |= BTM_BLE_BREDR_NOT_SPT;
       std::vector<uint8_t> flags;
       flags.push_back(2);  // length
       flags.push_back(HCI_EIR_FLAGS_TYPE);

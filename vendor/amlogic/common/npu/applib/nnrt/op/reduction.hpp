@@ -41,23 +41,19 @@ struct ReductionOperation : Operation {
         std::unordered_map<uint32_t, nnrt::layout_inference::IPermuteVectorPtr>&
             next_permute_vectors) {
         auto permuteVector = input_permute_cache_.cached_permutes_[inputs()[0]];
-
+        std::set<int32_t> unique_axies;
         for (uint32_t i = 0; i < axes.size(); ++i) {
             // convert axis to positive number
             if (axes[i] < 0) {
                 axes[i] = permuteVector->rank() + axes[i];
             }
+            unique_axies.insert(axes[i]);
             // Convert axis to org platform format
             axes[i] = nnrt::op::utils::axisMapTo(permuteVector, axes[i]);
         }
         if (keepDim) {
             next_permute_vectors.insert(std::make_pair(outputs()[0], permuteVector));
         } else {
-            std::set<int32_t> unique_axies;
-            for (auto axis : axes) {
-                unique_axies.insert(axis);
-            }
-
             decltype(permuteVector) outputPermVec =
                 layout_inference::make_shared(permuteVector->rank() - unique_axies.size());
 

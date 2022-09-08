@@ -48,3 +48,7 @@ allow mediaserver sysfs_display:lnk_file read;
 allow mediaserver sysfs_display:dir search;
 allow mediaserver systemcontrol_hwservice:hwservice_manager find;
 allow mediaserver system_control:binder { call transfer };
+allow mediaserver subtitleserver_hwservice:hwservice_manager find;
+allow mediaserver subtitleserver:binder { call transfer };
+allow mediaserver subtitle_device:chr_file rw_file_perms;
+allow mediaserver subtitleserver:fd use;
