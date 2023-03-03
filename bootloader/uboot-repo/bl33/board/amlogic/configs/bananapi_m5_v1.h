@@ -720,7 +720,7 @@
 /* Choose One of Ethernet Type */
 #undef CONFIG_ETHERNET_NONE
 #undef ETHERNET_INTERNAL_PHY
-#undef ETHERNET_EXTERNAL_PHY
+#define ETHERNET_EXTERNAL_PHY
 
 #define CONFIG_HIGH_TEMP_COOL 90
 #endif

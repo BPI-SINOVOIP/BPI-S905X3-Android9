@@ -530,7 +530,7 @@
 			key-permit = "read","write","del";
 		};
 		keysn_17:key_17{
-			key-name = "test";// test
+			key-name = "eth_exphy_para";
 			key-device = "normal";
 			key-permit = "read","write","del";
 		};
@@ -937,8 +937,11 @@
 	pinctrl-names = "external_eth_pins";
 	pinctrl-0 = <&external_eth_pins>;
 	mc_val = <0x1621>;
-
 	internal_phy=<0>;
+
+	cali_val = <0x60000>;
+	rx_delay = <1>;
+	auto_cali_idx = <0>;
 
 	/* reset */
         rst_pin-gpios = <&gpio GPIOZ_15 GPIO_ACTIVE_LOW>;
