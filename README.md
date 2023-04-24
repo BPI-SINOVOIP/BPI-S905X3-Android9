@@ -23,6 +23,8 @@ Get source code
 
 Because github limit 100MB size for single file, please download the [oversize files](https://download.banana-pi.dev/d/3ebbfa04265d4dddb81b/files/?p=/Source_Code/m5/android_github_oversize_files.zip) and merge them to correct directory before build.
 
+Another way is get the source code tar archive from [BaiduPan(pincode: 8888)](https://pan.baidu.com/s/1TmmR_075b49lPSt1Phq0ag?pwd=8888) or [GoogleDrive](https://drive.google.com/drive/folders/1RuvazYcr46HKMvNBxSqQftdyWa0tK9f7?usp=share_link)
+
 ----------
 
 **Build**
