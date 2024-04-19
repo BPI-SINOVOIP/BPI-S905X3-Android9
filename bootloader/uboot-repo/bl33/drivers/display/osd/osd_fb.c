@@ -980,6 +980,7 @@ int video_scale_bitmap(void)
 	char *layer_str = NULL;
 	int osd_index = -1;
 	int axis[4] = {};
+	int portrait = 0;
 #ifdef CONFIG_AML_MESON_G12A
 	struct pandata_s disp_data;
 #endif
@@ -1011,21 +1012,29 @@ int video_scale_bitmap(void)
 #else
 	osd_set_free_scale_mode_hw(osd_index, 1);
 #endif
+
 	osd_set_free_scale_axis_hw(osd_index, 0, 0, fb_gdev.fb_width - 1,
 				   fb_gdev.fb_height - 1);
 	osd_set_window_axis_hw(osd_index, axis[0], axis[1], axis[0] + axis[2] - 1,
 			       axis[1] + axis[3] - 1);
-	osd_set_free_scale_enable_hw(osd_index, 0x10001);
+
+	portrait = fb_gdev.fb_width < fb_gdev.fb_height ? 1 : 0;
+	if (portrait)
+		osd_set_free_scale_enable_hw(osd_index, 0);
+	else
+		osd_set_free_scale_enable_hw(osd_index, 0x10001);
 
 no_scale:
+	if (!portrait) {
 #ifdef CONFIG_AML_MESON_G12A
-	disp_data.x_start = axis[0];
-	disp_data.y_start = axis[1];
-	disp_data.x_end = axis[0] + axis[2] - 1;
-	disp_data.y_end = axis[1] + axis[3] - 1;
-	if (osd_hw.osd_ver == OSD_HIGH_ONE && osd_index < VIU2_OSD1)
-		osd_update_blend(&disp_data);
+		disp_data.x_start = axis[0];
+		disp_data.y_start = axis[1];
+		disp_data.x_end = axis[0] + axis[2] - 1;
+		disp_data.y_end = axis[1] + axis[3] - 1;
+		if (osd_hw.osd_ver == OSD_HIGH_ONE && osd_index < VIU2_OSD1)
+			osd_update_blend(&disp_data);
 #endif
+	}
 
 	osd_enable_hw(osd_index, 1);
 

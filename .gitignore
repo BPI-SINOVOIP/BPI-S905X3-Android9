@@ -1,4 +1,3 @@
-/bootloader/uboot-repo/flash-bootloader.sh
 /common/arch/arm/boot/dts/amlogic/overlay/bananapi_m5/custom_ir.dts
 /common/arch/arm/boot/dts/amlogic/overlay/bananapi_m5/ds3231.dts
 /common/arch/arm/boot/dts/amlogic/overlay/bananapi_m5/hifi_pcm5102a.dts

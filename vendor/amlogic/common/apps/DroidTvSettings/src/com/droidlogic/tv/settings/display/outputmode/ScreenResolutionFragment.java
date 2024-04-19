@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemProperties;
@@ -49,8 +50,7 @@ import android.util.Log;
 import com.droidlogic.tv.settings.R;
 import com.droidlogic.app.DolbyVisionSettingManager;
 import com.droidlogic.app.OutputModeManager;
-
-
+import com.droidlogic.app.SystemControlManager;
 
 public class ScreenResolutionFragment extends LeanbackPreferenceFragment implements
         Preference.OnPreferenceChangeListener, OnClickListener {
@@ -59,12 +59,16 @@ public class ScreenResolutionFragment extends LeanbackPreferenceFragment impleme
     private static final String KEY_COLORDEPTH = "colordepth_setting";
     private static final String KEY_DISPLAYMODE = "displaymode_setting";
     private static final String KEY_BEST_RESOLUTION = "best_resolution";
+    private static final String KEY_NATIVEUI_ENABLE = "nativeui_enable";
     private static final String KEY_BEST_DOLBYVISION = "best_dolbyvision";
     private static final String KEY_DOLBYVISION = "dolby_vision";
     private static final String KEY_HDR_POLICY = "hdr_policy";
     private static final String KEY_HDR_PRIORITY = "hdr_priority";
     private static final String KEY_DOLBYVISION_PRIORITY = "dolby_vision_graphics_priority";
     private static final String DEFAULT_VALUE = "444,8bit";
+    private SystemControlManager mSystemControlManager = null;
+    private static final String NATIVE_UI_STATUS_ENV = "ubootenv.var.nativeui";
+    private static final String STRING_NATIVEUI_DISABLE = "disable";
 
     private static final int DV_LL_RGB            = 3;
     private static final int DV_LL_YUV            = 2;
@@ -88,6 +92,7 @@ public class ScreenResolutionFragment extends LeanbackPreferenceFragment impleme
     private OutputModeManager mOutputModeManager;
     private DolbyVisionSettingManager mDolbyVisionSettingManager;
     private Preference mBestResolutionPref;
+    private Preference mNativeUiPref;
     private Preference mBestDolbyVisionPref;
     private Preference mDisplayModePref;
     private Preference mDeepColorPref;
@@ -146,10 +151,13 @@ public class ScreenResolutionFragment extends LeanbackPreferenceFragment impleme
 
         mOutputModeManager = new OutputModeManager((Context) getActivity());
         mDolbyVisionSettingManager = new DolbyVisionSettingManager((Context) getActivity());
+        mSystemControlManager = SystemControlManager.getInstance();
         mBestResolutionPref = findPreference(KEY_BEST_RESOLUTION);
+        mNativeUiPref = findPreference(KEY_NATIVEUI_ENABLE);
         mBestDolbyVisionPref = findPreference(KEY_BEST_DOLBYVISION);
         mBestResolutionPref.setOnPreferenceChangeListener(this);
         mBestDolbyVisionPref.setOnPreferenceChangeListener(this);
+        mNativeUiPref.setOnPreferenceChangeListener(this);
         mDisplayModePref = findPreference(KEY_DISPLAYMODE);
         mDeepColorPref = findPreference(KEY_COLORSPACE);
         mColorDepthPref = findPreference(KEY_COLORDEPTH);
@@ -181,6 +189,12 @@ public class ScreenResolutionFragment extends LeanbackPreferenceFragment impleme
     private void updateScreenResolutionDisplay() {
         mOutputUiManager.updateUiMode();
         ((SwitchPreference)mBestResolutionPref).setChecked(isBestResolution());
+        String mode = mSystemControlManager.getBootenv(NATIVE_UI_STATUS_ENV, STRING_NATIVEUI_DISABLE);
+        if(mode.equals("enable")) {
+              ((SwitchPreference)mNativeUiPref).setChecked(true);
+        } else {
+              ((SwitchPreference)mNativeUiPref).setChecked(false);
+        }
 
         // set best resolution summary.
         if (isBestResolution()) {
@@ -306,6 +320,13 @@ public class ScreenResolutionFragment extends LeanbackPreferenceFragment impleme
             if (isBestResolution()) {
                 showDialog();
             }
+        } else if (TextUtils.equals(preference.getKey(), KEY_NATIVEUI_ENABLE)) {
+            boolean enable = (Boolean) newValue;
+            if (enable) {
+                  mSystemControlManager.setBootenv(NATIVE_UI_STATUS_ENV, "enable");
+            } else  {
+                  mSystemControlManager.setBootenv(NATIVE_UI_STATUS_ENV, "disable");
+            }
         } else if (TextUtils.equals(preference.getKey(), KEY_BEST_DOLBYVISION)) {
             int type = mDolbyVisionSettingManager.getDolbyVisionType();
             String mode = mDolbyVisionSettingManager.isTvSupportDolbyVision();
@@ -409,6 +430,7 @@ public class ScreenResolutionFragment extends LeanbackPreferenceFragment impleme
                 if (mAlertDialog != null) {
                     mAlertDialog.dismiss();
                 }
+                mOutputUiManager.reboot();
                 break;
         }
         task.cancel();

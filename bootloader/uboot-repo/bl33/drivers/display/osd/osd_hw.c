@@ -559,11 +559,13 @@ int osd_set_scan_mode(u32 index)
 		osd_hw.field_out_en = 0;
 		break;
 	default:
-		if (osd_hw.free_scale_mode[index])
+		if (osd_hw.free_scale_mode[index]) {
 			osd_hw.field_out_en = 0;
+			osd_hw.scale_workaround = 1;  //bpi, fix portrait 4k2k logo display issue 
+		}
 		break;
 	}
-	if (osd_hw.free_scale_enable[index])
+	if (osd_hw.free_scale_mode[index])
 		osd_hw.scan_mode = SCAN_MODE_PROGRESSIVE;
 	if (index == OSD2) {
 		if (real_scan_mode == SCAN_MODE_INTERLACE)
@@ -1169,7 +1171,7 @@ static void osd_set_free_scale_enable_mode1(u32 index, u32 enable)
 	osd_hw.free_scale[index].h_enable = h_enable;
 	osd_hw.free_scale[index].v_enable = v_enable;
 	osd_hw.free_scale_enable[index] = enable;
-	if (osd_hw.free_scale_enable[index]) {
+	if (osd_hw.free_scale_mode[index]) {
 		if ((osd_hw.free_scale_data[index].x_end > 0) && h_enable) {
 			osd_hw.free_scale_width[index] =
 				osd_hw.free_scale_data[index].x_end -

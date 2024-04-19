@@ -84,16 +84,11 @@
         android:key="more"
         android:title="@string/system_more_setting" >
         <intent
-            android:targetClass="com.android.tv.settings.MainSettings"
-            android:targetPackage="com.android.tv.settings" />
+            android:targetClass="com.android.settings.Settings"
+            android:targetPackage="com.android.settings" />
     </Preference>
     <Preference
         android:icon="@drawable/ic_settings_tv"
         android:key="channel"
         android:title="@string/tv_channel" />
-    <Preference
-        android:icon="@drawable/ic_settings_more"
-        android:key="tv_settings"
-        android:title="@string/system_setting"
-        android:fragment="com.droidlogic.tv.settings.tvoption.DroidSettingsModeFragment" />
 </PreferenceScreen>

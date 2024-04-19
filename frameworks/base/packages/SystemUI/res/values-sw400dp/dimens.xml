@@ -17,7 +17,7 @@
 <resources>
 
     <!-- The width of the view containing navigation buttons -->
-    <dimen name="navigation_key_width">80dip</dimen>
+    <dimen name="navigation_key_width">60dp</dimen>
 
     <!-- The padding on the side of the navigation bar. Must be greater than or equal to
          navigation_extra_key_width -->

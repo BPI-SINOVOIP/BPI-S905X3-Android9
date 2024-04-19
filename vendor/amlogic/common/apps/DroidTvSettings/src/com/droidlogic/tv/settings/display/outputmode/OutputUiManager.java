@@ -19,6 +19,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.os.Build;
+import android.os.ServiceManager;
+import android.os.PowerManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -69,9 +71,11 @@ public class OutputUiManager {
         "1080i60hz",
         "1080i50hz",
         "576p50hz",
+        "480p60hz",
         "576i50hz",
         "480i60hz",
-        "2560x1080p60hz",
+        "3440x1440p60hz",
+        "2560x1600p60hz",
         "2560x1440p60hz",
         "2560x1080p60hz",
         "1920x1200p60hz",
@@ -79,6 +83,7 @@ public class OutputUiManager {
         "1600x1200p60hz",
         "1600x900p60hz",
         "1440x900p60hz",
+        "1440x2560p60hz",
         "1360x768p60hz",
         "1280x1024p60hz",
         "1280x800p60hz",
@@ -88,7 +93,8 @@ public class OutputUiManager {
         "800x600p60hz",
         "800x480p60hz",
         "640x480p60hz",
-        "480x320p60hz"
+        "480x320p60hz",
+        "custombuilt"
     };
     private static final String[] HDMI_TITLE = {
         "4k2k-60hz",
@@ -105,9 +111,11 @@ public class OutputUiManager {
         "1080i-60hz",
         "1080i-50hz",
         "576p-50hz",
+        "480p-60hz",
         "576i-50hz",
         "480i-60hz",
-        "2560x1080p60hz",
+        "3440x1440p60hz",
+        "2560x1600p60hz",
         "2560x1440p60hz",
         "2560x1080p60hz",
         "1920x1200p60hz",
@@ -115,6 +123,7 @@ public class OutputUiManager {
         "1600x1200p60hz",
         "1600x900p60hz",
         "1440x900p60hz",
+        "1440x2560p60hz",
         "1360x768p60hz",
         "1280x1024p60hz",
         "1280x800p60hz",
@@ -124,7 +133,8 @@ public class OutputUiManager {
         "800x600p60hz",
         "800x480p60hz",
         "640x480p60hz",
-        "480x320p60hz"
+        "480x320p60hz",
+        "custombuilt"
     };
 
     private static final String[] HDMI_COLOR_LIST = {
@@ -203,6 +213,7 @@ public class OutputUiManager {
     private static final int DEFAULT_CVBS_MODE = 1;
     private static String[] mHdmiValueList;
     private static String[] mHdmiTitleList;
+	private static boolean showAll = false;
 
     private static String[] mHdmiColorValueList;
     private static String[] mHdmiColorTitleList;
@@ -222,10 +233,14 @@ public class OutputUiManager {
     private static String tvSupportDolbyVisionMode;
     private static String tvSupportDolbyVisionType;
 
+    private PowerManager mPowerManager;
+
     public OutputUiManager(Context context){
         mContext = context;
         mOutputModeManager = new OutputModeManager(mContext);
         mDolbyVisionSettingManager = new DolbyVisionSettingManager(mContext);
+
+        mPowerManager = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
 
         mUiMode = getUiMode();
         initModeValues(mUiMode);
@@ -430,6 +445,10 @@ public class OutputUiManager {
         return mValueList;
     }
 
+    public void setShowAll(Boolean value) {
+        showAll = value;
+    }
+
     public void  filterOutputMode() {
         List<String> listValue = new ArrayList<String>();
         List<String> listTitle = new ArrayList<String>();
@@ -466,7 +485,7 @@ public class OutputUiManager {
         } else {
             Edid = strEdid;
         }
-        if (Edid != null && Edid.length() != 0 && !Edid.contains("null")) {
+        if (!showAll && Edid != null && Edid.length() != 0 && !Edid.contains("null")) {
             List<String> listHdmiMode = new ArrayList<String>();
             List<String> listHdmiTitle = new ArrayList<String>();
             for (int i = 0; i < listValue.size(); i++) {
@@ -582,5 +601,10 @@ public class OutputUiManager {
                 || (!getCurrentColorAttribute().equals("444,8bit"))) {
             changeColorAttribte("444,8bit");
         }
+    }
+
+    public void reboot() {
+        String reason = PowerManager.REBOOT_REQUESTED_BY_DEVICE_OWNER;
+        mPowerManager.reboot(reason);
     }
 }

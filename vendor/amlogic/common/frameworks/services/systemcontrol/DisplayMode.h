@@ -268,6 +268,7 @@ using namespace android;
 #define UBOOTENV_HDMIMODE               "ubootenv.var.hdmimode"
 #define UBOOTENV_TESTMODE               "ubootenv.var.testmode"
 #define UBOOTENV_CVBSMODE               "ubootenv.var.cvbsmode"
+#define UBOOTENV_CVBSCABLE              "ubootenv.var.cvbscable"
 #define UBOOTENV_OUTPUTMODE             "ubootenv.var.outputmode"
 #define UBOOTENV_ISBESTMODE             "ubootenv.var.is.bestmode"
 #define UBOOTENV_BESTDOLBYVISION        "ubootenv.var.bestdolbyvision"
@@ -278,6 +279,9 @@ using namespace android;
 #define UBOOTENV_HDR_POLICY             "ubootenv.var.hdr_policy"
 
 #define UBOOTENV_REBOOT_MODE           "ubootenv.var.reboot_mode_android"
+
+#define UBOOTENV_CUSTOMWIDTH            "ubootenv.var.customwidth"
+#define UBOOTENV_CUSTOMHEIGHT           "ubootenv.var.customheight"
 
 #define UBOOTENV_SDR2HDR               "ubootenv.var.sdr2hdr"
 #define PROP_DEEPCOLOR_CTL              "persist.sys.open.deepcolor" // 8, 10, 12
@@ -300,51 +304,46 @@ using namespace android;
 #define FULL_WIDTH_PANEL                1024
 #define FULL_HEIGHT_PANEL               600
 //vesa mode
-#define FULL_WIDTH_1024x768             1024
-#define FULL_HEIGHT_1024x768            768
-#define FULL_WIDTH_1440x900             1440
-#define FULL_HEIGHT_1440x900            900
+#define FULL_WIDTH_480x320              480
+#define FULL_HEIGHT_480x320             320
 #define FULL_WIDTH_640x480              640
 #define FULL_HEIGHT_640x480             480
-#define FULL_WIDTH_1280x1024            1280
-#define FULL_HEIGHT_1280x1024           1024
+#define FULL_WIDTH_800x480              800
+#define FULL_HEIGHT_800x480             480
 #define FULL_WIDTH_800x600              800
 #define FULL_HEIGHT_800x600             600
+#define FULL_WIDTH_1024x600             1024
+#define FULL_HEIGHT_1024x600            600
+#define FULL_WIDTH_1024x768             1024
+#define FULL_HEIGHT_1024x768            768
+#define FULL_WIDTH_1280x480             1280
+#define FULL_HEIGHT_1280x480            480
+#define FULL_WIDTH_1280x800             1280
+#define FULL_HEIGHT_1280x800            800
+#define FULL_WIDTH_1280x1024            1280
+#define FULL_HEIGHT_1280x1024           1024
+#define FULL_WIDTH_1360x768             1360
+#define FULL_HEIGHT_1360x768            768
+#define FULL_WIDTH_1440x900             1440
+#define FULL_HEIGHT_1440x900            900
+#define FULL_WIDTH_1440x2560            1440
+#define FULL_HEIGHT_1440x2560           2560
+#define FULL_WIDTH_1600x900             1600
+#define FULL_HEIGHT_1600x900            900
+#define FULL_WIDTH_1600x1200            1600
+#define FULL_HEIGHT_1600x1200           1200
 #define FULL_WIDTH_1680x1050            1680
 #define FULL_HEIGHT_1680x1050           1050
-
-#define FULL_WIDTH_1024x600             1024
-#define FULL_HEIGHT_1024x600           600
-#define FULL_WIDTH_2560x1600              2560
-#define FULL_HEIGHT_2560x1600             1600
-#define FULL_WIDTH_2560x1440            2560
-#define FULL_HEIGHT_2560x1440           1440
-#define FULL_WIDTH_2560x1080              2560
-#define FULL_HEIGHT_2560x1080             1080
 #define FULL_WIDTH_1920x1200            1920
 #define FULL_HEIGHT_1920x1200           1200
-
-#define FULL_WIDTH_1600x1200             1600
-#define FULL_HEIGHT_1600x1200           1200
-#define FULL_WIDTH_1600x900              1600
-#define FULL_HEIGHT_1600x900             900
-#define FULL_WIDTH_1360x768           1360
-#define FULL_HEIGHT_1360x768           768
-#define FULL_WIDTH_1280x800              1280
-#define FULL_HEIGHT_1280x800             800
-#define FULL_WIDTH_480x320            480
-#define FULL_HEIGHT_480x320           320
-#define FULL_WIDTH_800x480            800
-#define FULL_HEIGHT_800x480           480
-#define FULL_WIDTH_1280x480            1280
-#define FULL_HEIGHT_1280x480           480
-
-
-
-
-
-
-
+#define FULL_WIDTH_2560x1080            2560
+#define FULL_HEIGHT_2560x1080           1080
+#define FULL_WIDTH_2560x1440            2560
+#define FULL_HEIGHT_2560x1440           1440
+#define FULL_WIDTH_2560x1600            2560
+#define FULL_HEIGHT_2560x1600           1600
+#define FULL_WIDTH_3440x1440            3440
+#define FULL_HEIGHT_3440x1440           1440
 
 enum {
     EVENT_OUTPUT_MODE_CHANGE            = 0,
@@ -389,33 +388,28 @@ enum {
 #define MODE_PANEL                      "panel"
 #define MODE_PAL_M                      "pal_m"
 #define MODE_PAL_N                      "pal_n"
-#define MODE_NTSC_M                     "ntsc_m"
+#define MODE_NTSC_M                      "ntsc_m"
 //vesa mode
-#define MODE_1024x768P                  "1024x768phz"
-#define MODE_1440x900P                  "1440x900phz"
-#define MODE_640x480P                   "640x480phz"
-#define MODE_1280x1024P                 "1280x1024phz"
-#define MODE_800x600P                   "800x600phz" 
-#define MODE_1680x1050P                 "1680x1050phz"
-
-#define MODE_1024x600P           "1024x600phz"
-#define MODE_2560x1600P          "2560x1600phz"
-#define MODE_2560x1440P         "2560x1440phz"
-#define MODE_2560x1080P          "2560x1080phz"
-#define MODE_1920x1200P          "1920x1200phz"
-
-#define MODE_1600x1200P           "1600x1200phz"
-#define MODE_1600x900P            "1600x900phz"
-#define MODE_1360x768P            "1360x768phz"
-#define MODE_1280x800P            "1280x800phz"
-#define MODE_480x320P             "480x320phz"
-
-
-#define MODE_800x480P             "800x480phz"
-#define MODE_1280x480P            "1280x480phz"
-
-
-
+#define MODE_480x320P                   "480x320p60hz"
+#define MODE_640x480P                   "640x480p60hz"
+#define MODE_800x480P                   "800x480p60hz"
+#define MODE_800x600P                   "800x600p60hz"
+#define MODE_1024x600P                  "1024x600p60hz"
+#define MODE_1024x768P                  "1024x768p60hz"
+#define MODE_1280x480P                  "1280x480p60hz"
+#define MODE_1280x800P                  "1280x800p60hz"
+#define MODE_1280x1024P                 "1280x1024p60hz"
+#define MODE_1360x768P                  "1360x768p60hz"
+#define MODE_1440x900P                  "1440x900p60hz"
+#define MODE_1440x2560P                 "1440x2560p60hz"
+#define MODE_1600x900P                  "1600x900p60hz"
+#define MODE_1600x1200P                 "1600x1200p60hz"
+#define MODE_1680x1050P                 "1680x1050p60hz"
+#define MODE_1920x1200P                 "1920x1200p60hz"
+#define MODE_2560x1080P                 "2560x1080p60hz"
+#define MODE_2560x1440P                 "2560x1440p60hz"
+#define MODE_2560x1600P                 "2560x1600p60hz"
+#define MODE_3440x1440P                 "3440x1440p60hz"
 
 #define MODE_480I_PREFIX                "480i"
 #define MODE_480P_PREFIX                "480p"
@@ -428,31 +422,27 @@ enum {
 #define MODE_4K2K_PREFIX                "2160p"
 #define MODE_4K2KSMPTE_PREFIX           "smpte"
 //vesa mode
-#define MODE_1024x768P_PREFIX           "1024x768p"
-#define MODE_1440x900P_PREFIX           "1440x900p"
+#define MODE_480x320P_PREFIX            "480x320p"
 #define MODE_640x480P_PREFIX            "640x480p"
-#define MODE_1280x1024P_PREFIX          "1280x1024p"
+#define MODE_800x480P_PREFIX            "800x480p"
 #define MODE_800x600P_PREFIX            "800x600p"
-#define MODE_1680x1050P_PREFIX          "1680x1050p"
-
 #define MODE_1024x600P_PREFIX           "1024x600p"
-#define MODE_2560x1600P_PREFIX          "2560x1600p"
-#define MODE_2560x1440P_PREFIX          "2560x1440p"
-#define MODE_2560x1080P_PREFIX          "2560x1080p"
+#define MODE_1024x768P_PREFIX           "1024x768p"
+#define MODE_1280x480P_PREFIX           "1280x480p"
+#define MODE_1280x800P_PREFIX           "1280x800p"
+#define MODE_1280x1024P_PREFIX          "1280x1024p"
+#define MODE_1360x768P_PREFIX           "1360x768p"
+#define MODE_1440x900P_PREFIX           "1440x900p"
+#define MODE_1440x2560P_PREFIX          "1440x2560p"
+#define MODE_1600x900P_PREFIX           "1600x900p"
+#define MODE_1600x1200P_PREFIX          "1600x1200p"
+#define MODE_1680x1050P_PREFIX          "1680x1050p"
 #define MODE_1920x1200P_PREFIX          "1920x1200p"
-
-#define MODE_1600x1200P_PREFIX           "1600x1200p"
-#define MODE_1600x900P_PREFIX            "1600x900p"
-#define MODE_1360x768P_PREFIX            "1360x768p"
-#define MODE_1280x800P_PREFIX            "1280x800p"
-#define MODE_480x320P_PREFIX             "480x320p"
-#define MODE_800x480P_PREFIX             "800x480p"
-#define MODE_1280x480P_PREFIX            "1280x480p"
-
-
-
-
-
+#define MODE_2560x1080P_PREFIX          "2560x1080p"
+#define MODE_2560x1440P_PREFIX          "2560x1440p"
+#define MODE_2560x1600P_PREFIX          "2560x1600p"
+#define MODE_3440x1440P_PREFIX          "3440x1440p"
+#define MODE_CUSTOMBUILT_PREFIX         "custombuilt"
 
 //DOLBY_VISION_HDR10_POLICY : /sys/module/amdolby_vision/parameters/dolby_vision_hdr10_policy
 #define DV_HDR_SINK_SOURCE_BYPASS       "0"
@@ -493,25 +483,27 @@ enum {
     DISPLAY_MODE_PAL_M                  = 24,
     DISPLAY_MODE_PAL_N                  = 25,
     DISPLAY_MODE_NTSC_M                 = 26,
-    DISPLAY_MODE_1024x768P              = 27,
-    DISPLAY_MODE_1440x900P              = 28,
-    DISPLAY_MODE_640x480P               = 29,
-    DISPLAY_MODE_1280x1024P             = 30,
-    DISPLAY_MODE_800x600P               = 31,
-    DISPLAY_MODE_1680x1050P             = 32,
-	DISPLAY_MODE_1024x600P              = 33,
-    DISPLAY_MODE_2560x1600P               = 34,
-    DISPLAY_MODE_2560x1440P             = 35,
-    DISPLAY_MODE_2560x1080P               = 36,
-    DISPLAY_MODE_1920x1200P             = 37,    
-	DISPLAY_MODE_1600x1200P              = 38,
-    DISPLAY_MODE_1600x900P               = 39,
-    DISPLAY_MODE_1360x768P             = 40,
-    DISPLAY_MODE_1280x800P               = 41,
-    DISPLAY_MODE_480x320P             = 42,
-    DISPLAY_MODE_800x480P             = 43,
-    DISPLAY_MODE_1280x480P             = 44,
-    DISPLAY_MODE_TOTAL                  = 45
+    DISPLAY_MODE_480x320P               = 27,
+    DISPLAY_MODE_640x480P               = 28,
+    DISPLAY_MODE_800x480P               = 29,
+    DISPLAY_MODE_800x600P               = 30,
+    DISPLAY_MODE_1024x600P              = 31,
+    DISPLAY_MODE_1024x768P              = 32,
+    DISPLAY_MODE_1280x480P              = 33,
+    DISPLAY_MODE_1280x800P              = 34,
+    DISPLAY_MODE_1280x1024P             = 35,
+    DISPLAY_MODE_1360x768P              = 36,
+    DISPLAY_MODE_1440x900P              = 37,
+    DISPLAY_MODE_1440x2560P             = 38,
+    DISPLAY_MODE_1600x900P              = 39,
+    DISPLAY_MODE_1600x1200P             = 40,
+    DISPLAY_MODE_1680x1050P             = 41,
+    DISPLAY_MODE_1920x1200P             = 42,
+    DISPLAY_MODE_2560x1080P             = 43,
+    DISPLAY_MODE_2560x1440P             = 44,
+    DISPLAY_MODE_2560x1600P             = 45,
+    DISPLAY_MODE_3440x1440P             = 46,
+    DISPLAY_MODE_TOTAL                  = 47
 };
 
 typedef enum {
@@ -587,15 +579,13 @@ public:
 
     void setVideoPlayingAxis();
     void getHdmiData(hdmi_data_t* data);
-    bool isHdmiEdidParseOK(void);
-    bool isHdmiHpd(void);
-    bool doblyEnabled();
-    bool doblyFilterEdid(char *edid);
+
     int readHdcpRX22Key(char *value, int size);
     bool writeHdcpRX22Key(const char *value, const int size);
     int readHdcpRX14Key(char *value, int size);
     bool writeHdcpRX14Key(const char *value, const int size);
     bool writeHdcpRXImg(const char *path);
+
     HDCPTxAuth *geTxAuth();
 #ifndef RECOVERY_MODE
     void notifyEvent(int event);
@@ -612,6 +602,7 @@ public:
     bool getPrefHdmiDispMode(char* mode);
     void getHdrStrategy(char* value);
     void setHdrStrategy(const char* type);
+    void setDvHdrPolicy(const char* policy);
 
 private:
 
@@ -626,8 +617,6 @@ private:
     void filterHdmiMode(char * mode, hdmi_data_t* data);
     void getHdmiOutputMode(char *mode, hdmi_data_t* data);
     void setAutoSwitchFrameRate(int state);
-    //void setAutoSwitchFrameRate(int state);
-    void filterHdmiDispcap(hdmi_data_t* data);
     void updateDefaultUI();
     void updateDeepColor(bool cvbsMode, output_mode_state state, const char* outputmode);
     void updateFreeScaleAxis();

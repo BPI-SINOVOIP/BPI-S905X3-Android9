@@ -17,7 +17,7 @@
 <resources>
 
     <!-- The width of the view containing navigation buttons -->
-    <dimen name="navigation_key_width">80dip</dimen>
+    <dimen name="navigation_key_width">50dip</dimen>
 
     <!-- The width of the view containing the menu/ime navigation bar icons -->
     <dimen name="navigation_extra_key_width">40dip</dimen>

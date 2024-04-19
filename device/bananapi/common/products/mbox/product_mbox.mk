@@ -98,8 +98,12 @@ PRODUCT_PACKAGES += \
 endif
 
 #Tvsettings
+ifeq ($(TARGET_BUILD_GOOGLE_ATV), true)
 PRODUCT_PACKAGES += \
-    TvSettings \
+    TvSettings
+endif
+
+PRODUCT_PACKAGES += \
     DroidTvSettings
 
 #Browser

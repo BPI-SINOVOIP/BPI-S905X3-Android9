@@ -12,7 +12,7 @@
     <string name="system_more_setting">"更多设置"</string>
     <string name="upgrade_bluetooth_remote">"蓝牙遥控升级"</string>
     <string name="device_display">"显示"</string>
-    <string name="device_outputmode">"屏幕分辨率"</string>
+    <string name="device_outputmode">"HDMI 分辨率"</string>
     <string name="device_displaymode">输出制式</string>
     <string name="device_color">"色彩"</string>
     <string name="device_colorattribute">"格式和色深"</string>
@@ -24,7 +24,7 @@
     <string name="device_outputmode_deepcolor">"深色模式"</string>
     <string name="device_outputmode_confirm_mode">"确认关闭深色模式"</string>
     <string name="device_outputmode_confirm_deepcolor">"确认打开深色模式"</string>
-    <string name="device_outputmode_change">"确认切换至模式："</string>
+    <string name="device_outputmode_change">"重启切换至模式："</string>
     <string name="device_outputmode_countdown">"秒后恢复原来制式"</string>
     <string name="device_position_zoomout">"缩小屏幕"</string>
     <string name="device_position_zoomin">"放大屏幕"</string>

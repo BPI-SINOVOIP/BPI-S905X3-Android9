@@ -241,19 +241,21 @@ bool FormatColorDepth::isFilterEdid() {
 }
 
 void FormatColorDepth::setFilterEdidList(std::map<int, std::string> filterEdidList) {
-     SYS_LOGI("FormatColorDepth setFilterEdidList size = %d",filterEdidList.size());
+     SYS_LOGI("FormatColorDepth setFilterEdidList size = %d\n",filterEdidList.size());
      mFilterEdid = filterEdidList;
 }
 
 bool FormatColorDepth::isModeSupportDeepColorAttr(const char *mode, const char * color) {
     char valueStr[10] = {0};
     char outputmode[MODE_LEN] = {0};
-
+    SYS_LOGI("isModeSupportDeepColorAttr mode = %s, color = %s\n",mode,color);
     strcpy(outputmode, mode);
     strcat(outputmode, color);
-
+    // custombuilt mode avoid the routine.
+    if(!strcmp(mode, "custombuilt"))
+        return true;
     if (isFilterEdid() && !strstr(color,"8bit")) {
-        SYS_LOGI("this mode has been filtered");
+        SYS_LOGI("this mode has been filtered\n");
         return false;
     }
 
@@ -292,7 +294,7 @@ bool FormatColorDepth::getBootEnv(const char* key, char* value) {
     const char* p_value = mUbootenv->getValue(key);
 
     if (p_value) {
-        SYS_LOGI("getBootEnv key:%s value:%s", key, p_value);
+        SYS_LOGI("getBootEnv key:%s value:%s\n", key, p_value);
         strcpy(value, p_value);
         return true;
     }

@@ -349,25 +349,27 @@ static struct hdmi_support_mode gxbb_modes[] = {
 	{HDMI_720x480p60_16x9, "480p60hz", 0},
 	{HDMI_720x576i50_16x9, "576i50hz", 0},
 	{HDMI_720x480i60_16x9, "480i60hz", 0},
-	{HDMIV_1440x2560p60hz, "1440x2560p60hz", 0},
-	{HDMIV_1024x768p60hz, "1024x768p60hz", 0},
-	{HDMIV_1440x900p60hz, "1440x900p60hz", 0},
-	{HDMIV_640x480p60hz, "640x480p60hz", 0},
-	{HDMIV_1280x1024p60hz, "1280x1024p60hz", 0},
-	{HDMIV_800x600p60hz, "800x600p60hz", 0},
-	{HDMIV_1680x1050p60hz, "1680x1050p60hz", 0},
-	{HDMIV_1024x600p60hz, "1024x600p60hz", 0},
-	{HDMIV_2560x1600p60hz, "2560x1600p60hz", 0},
-	{HDMIV_2560x1440p60hz, "2560x1440p60hz", 0},
-	{HDMIV_2560x1080p60hz, "2560x1080p60hz", 0},
-	{HDMIV_1920x1200p60hz, "1920x1200p60hz", 0},
-	{HDMIV_1600x1200p60hz, "1600x1200p60hz", 0},
-	{HDMIV_1600x900p60hz, "1600x900p60hz", 0},
-	{HDMIV_1360x768p60hz, "1360x768p60hz", 0},
-	{HDMIV_1280x800p60hz, "1280x800p60hz", 0},
 	{HDMIV_480x320p60hz,  "480x320p60hz", 0},
+	{HDMIV_640x480p60hz, "640x480p60hz", 0},
 	{HDMIV_800x480p60hz,  "800x480p60hz", 0},
+	{HDMIV_800x600p60hz, "800x600p60hz", 0},
+	{HDMIV_1024x600p60hz, "1024x600p60hz", 0},
+	{HDMIV_1024x768p60hz, "1024x768p60hz", 0},
 	{HDMIV_1280x480p60hz,  "1280x480p60hz", 0},
+	{HDMIV_1280x800p60hz, "1280x800p60hz", 0},
+	{HDMIV_1280x1024p60hz, "1280x1024p60hz", 0},
+	{HDMIV_1360x768p60hz, "1360x768p60hz", 0},
+	{HDMIV_1440x900p60hz, "1440x900p60hz", 0},
+	{HDMIV_1440x2560p60hz, "1440x2560p60hz", 0},
+	{HDMIV_1600x900p60hz, "1600x900p60hz", 0},
+	{HDMIV_1600x1200p60hz, "1600x1200p60hz", 0},
+	{HDMIV_1680x1050p60hz, "1680x1050p60hz", 0},
+	{HDMIV_1920x1200p60hz, "1920x1200p60hz", 0},
+	{HDMIV_2560x1080p60hz, "2560x1080p60hz", 0},
+	{HDMIV_2560x1440p60hz, "2560x1440p60hz", 0},
+	{HDMIV_2560x1600p60hz, "2560x1600p60hz", 0},
+	{HDMIV_3440x1440p60hz, "3440x1440p60hz", 0},
+	{HDMIV_CUSTOMBUILT, "custombuilt", 0},
 };
 
 static void hdmitx_list_support_modes(void)
@@ -442,7 +444,6 @@ void hdmi_tx_init(void)
 void hdmi_tx_set(struct hdmitx_dev *hdev)
 {
 	unsigned char checksum[11];
-	char *p_tmp;
 
 	aml_audio_init(); /* Init audio hw firstly */
 	hdmitx_hw_init();
@@ -452,12 +453,9 @@ void hdmi_tx_set(struct hdmitx_dev *hdev)
 	hdmitx_set_audmode(hdev);
 	hdmitx_debug();
 	//kernel will determine output mode on its own
-	p_tmp = getenv("outputmode");
-	if (NULL != p_tmp)
-		setenv("hdmimode", p_tmp);
+	setenv("hdmimode", getenv("outputmode"));
 
-	/* null char needed to terminate the string
-	   otherwise garbage in checksum logopara */
+	//null char needed to terminate the string otherwise garbage in checksum logopara
 	memcpy(checksum, hdev->RXCap.checksum, 10);
 	checksum[10] = '\0';
 	setenv("hdmichecksum", (const char*)checksum);
@@ -1307,10 +1305,10 @@ static void config_hdmi20_tx ( enum hdmi_vic vic, struct hdmi_format_para *para,
 } /* config_hdmi20_tx */
 
 /* Set TV encoder for HDMI */
-static void hdmitx_enc(enum hdmi_vic vic)
+static void hdmitx_enc(struct hdmitx_dev *hdev)
 {
-	set_vmode_enc_hw(vic);
-	hdmi_tvenc_set(vic);
+	set_vmode_enc_hw(hdev);
+	hdmi_tvenc_set(hdev->vic);
 	return;
 }
 
@@ -3103,7 +3101,7 @@ static void hdmitx_set_hw(struct hdmitx_dev* hdev)
 		return;
 	}
 	hdmitx_set_pll(hdev);
-	hdmitx_enc(hdev->vic);
+	hdmitx_enc(hdev);
 	hdmitx_set_dith(hdev);
 	hdmitx_set_phy(hdev);
 	hdmitx_set_vdac(0);

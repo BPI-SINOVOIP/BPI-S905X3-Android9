@@ -144,6 +144,13 @@ static char emptychecksum[11] = {0};
  */
 int hdr_status_pos;
 
+static struct hdmi_cea_timing custom_timing;
+struct hdmi_cea_timing *get_custom_timing(void)
+{
+	return &custom_timing;
+}
+EXPORT_SYMBOL(get_custom_timing);
+
 static inline void hdmitx_notify_hpd(int hpd)
 {
 	if (hpd)

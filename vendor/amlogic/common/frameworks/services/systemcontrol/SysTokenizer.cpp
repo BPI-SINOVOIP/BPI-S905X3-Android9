@@ -59,12 +59,12 @@ int SysTokenizer::open(const char*filename, SysTokenizer** outTokenizer) {
     int fd = ::open(filename, O_RDONLY);
     if (fd < 0) {
         result = -errno;
-        SYS_LOGE("Error opening file '%s', %s.", filename, strerror(errno));
+        SYS_LOGE("Error opening file '%s', %s.\n", filename, strerror(errno));
     } else {
         struct stat stat;
         if (fstat(fd, &stat)) {
             result = -errno;
-            SYS_LOGE("Error getting size of file '%s', %s.", filename, strerror(errno));
+            SYS_LOGE("Error getting size of file '%s', %s.\n", filename, strerror(errno));
         } else {
             size_t length = size_t(stat.st_size);
             bool ownBuffer = false;
@@ -78,7 +78,7 @@ int SysTokenizer::open(const char*filename, SysTokenizer** outTokenizer) {
             ssize_t nrd = read(fd, buffer, length);
             if (nrd < 0) {
                 result = -errno;
-                SYS_LOGE("Error reading file '%s', %s.", filename, strerror(errno));
+                SYS_LOGE("Error reading file '%s', %s.\n", filename, strerror(errno));
                 delete[] buffer;
                 buffer = NULL;
             } else {
@@ -150,7 +150,7 @@ char* SysTokenizer::nextToken(const char* delimiters) {
 
 void SysTokenizer::nextLine() {
 #if DEBUG_TOKENIZER
-    SYS_LOGV("nextLine");
+    SYS_LOGV("nextLine\n");
 #endif
     const char* end = getEnd();
     while (mCurrent != end) {
@@ -164,7 +164,7 @@ void SysTokenizer::nextLine() {
 
 void SysTokenizer::skipDelimiters(const char* delimiters) {
 #if DEBUG_TOKENIZER
-    SYS_LOGV("skipDelimiters");
+    SYS_LOGV("skipDelimiters\n");
 #endif
     const char* end = getEnd();
     while (mCurrent != end) {

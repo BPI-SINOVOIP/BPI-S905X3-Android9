@@ -66,7 +66,7 @@ public class MainFragment extends LeanbackPreferenceFragment {
     private static final String KEY_DISPLAY = "display";
     private static final String KEY_MBOX_SOUNDS = "mbox_sound";
     private static final String KEY_POWERKEY = "powerkey_action";
-    private static final String MORE_SETTINGS_APP_PACKAGE = "com.android.tv.settings";
+    private static final String MORE_SETTINGS_APP_PACKAGE = "com.android.settings";
     private static final String KEY_POWERONMODE = "poweronmode_action";
     private static final String KEY_UPGRADE_BLUTOOTH_REMOTE = "upgrade_bluetooth_remote";
     private static final String KEY_PLAYBACK_SETTINGS = "playback_settings";
@@ -77,7 +77,6 @@ public class MainFragment extends LeanbackPreferenceFragment {
     private static final String KEY_PICTURE = "pictrue_mode";
     private static final String KEY_TV_OPTION = "tv_option";
     private static final String KEY_TV_CHANNEL = "channel";
-    private static final String KEY_TV_SETTINGS = "tv_settings";
     private static final String KEY_HDMI_CEC_CONTROL = "hdmicec";
     private static final String DTVKIT_PACKAGE = "org.dtvkit.inputsource";
     private boolean mTvUiMode;
@@ -152,7 +151,6 @@ public class MainFragment extends LeanbackPreferenceFragment {
         final Preference picturePref = findPreference(KEY_PICTURE);
         final Preference mTvOption = findPreference(KEY_TV_OPTION);
         final Preference channelPref = findPreference(KEY_TV_CHANNEL);
-        final Preference settingsPref = findPreference(KEY_TV_SETTINGS);
 
         if (is_from_live_tv) {
             mainPref.setTitle(R.string.settings_menu);
@@ -178,11 +176,11 @@ public class MainFragment extends LeanbackPreferenceFragment {
                 DroidUtils.store(getActivity(), DroidUtils.KEY_HIDE_STARTUP, DroidUtils.VALUE_SHOW_STARTUP);
             }
         } else {
-            picturePref.setVisible(!SettingsConstant.needDroidlogicTvFeature(getContext()));
+            picturePref.setVisible(false);
+            keyStone.setVisible(false);
             mTvOption.setVisible(SettingsConstant.needDroidlogicTvFeature(getContext()));
             mSoundsPref.setVisible(false);
             channelPref.setVisible(false);
-            settingsPref.setVisible(false);
             if (!mTvUiMode) {
                 powerKeyOnModePref.setVisible(false);
             }

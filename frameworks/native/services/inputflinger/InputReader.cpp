@@ -57,6 +57,7 @@
 #include <android-base/stringprintf.h>
 #include <input/Keyboard.h>
 #include <input/VirtualKeyMap.h>
+#include <cutils/properties.h>
 
 #define INDENT "  "
 #define INDENT2 "    "
@@ -3548,6 +3549,28 @@ void TouchInputMapper::configureSurface(nsecs_t when, bool* outResetNeeded) {
     bool viewportChanged = mViewport != newViewport;
     if (viewportChanged) {
         mViewport = newViewport;
+
+	//tp rotation
+        char val[PROPERTY_VALUE_MAX];
+        if (property_get("ro.sf.primary_tp_orientation", val, "")) {
+            int sfOrientation = atoi(val) ;
+            switch (sfOrientation) {
+                case 0:
+                    mViewport.orientation = DISPLAY_ORIENTATION_0;
+                    break;
+                case 90:
+                    mViewport.orientation = DISPLAY_ORIENTATION_90;
+                    break;
+                case 180:
+                    mViewport.orientation = DISPLAY_ORIENTATION_180;
+                    break;
+                case 270:
+                    mViewport.orientation = DISPLAY_ORIENTATION_270;
+                    break;
+                default:
+                    ALOGW(INDENT "Invalid sf orientation %d", sfOrientation);
+            }
+        }
 
         if (mDeviceMode == DEVICE_MODE_DIRECT || mDeviceMode == DEVICE_MODE_POINTER) {
             // Convert rotated viewport to natural surface coordinates.

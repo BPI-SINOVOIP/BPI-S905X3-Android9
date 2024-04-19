@@ -192,6 +192,29 @@ static void set_hpll_hclk_dongle_5940m(void)
 	pr_info("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
 }
 
+#define XTAL_FREQ		24000
+#define HDMI_FRAC_MAX_G12A	131072
+
+unsigned int get_g12a_pll_get_frac(unsigned int m, unsigned int pll_freq)
+{
+	unsigned int parent_freq = XTAL_FREQ;
+	unsigned int frac_max = HDMI_FRAC_MAX_G12A;
+	unsigned int frac_m;
+	unsigned int frac;
+
+	if (pll_freq / m == parent_freq &&
+	    pll_freq % m == 0)
+		return 0;
+
+	frac = div_u64((u64)pll_freq * (u64)frac_max, parent_freq);
+	frac_m = m * frac_max;
+	if (frac_m > frac)
+		return frac_max;
+	frac -= frac_m;
+
+	return min((u16)frac, (u16)(frac_max - 1));
+}
+
 void set_g12a_hpll_clk_out(unsigned int frac_rate, unsigned int clk)
 {
 	struct hdmitx_dev *hdev = get_hdmitx_device();
@@ -323,216 +346,6 @@ void set_g12a_hpll_clk_out(unsigned int frac_rate, unsigned int clk)
 		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
 		pr_info("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
 		break;
-	case 650000:
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b0004d8);
-		if (frac_rate)
-			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x0001ffff);
-		else
-			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00018000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
-		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
-		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
-		pr_info("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
-		break;
-   case 1065000:
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b0004b1);
-		if (frac_rate)
-			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x0001ffff);
-		else
-			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00018000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
-		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
-		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
-		pr_info("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
-		break;
-	case 251750:
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b0004a7);
-		if (frac_rate)
-			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x0001ffff);
-		else
-			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00018000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
-		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
-		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
-		pr_info("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
-		break;
-   case 1080000://1600x900  1280x1024
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b0004b3);
-		if (frac_rate)
-			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x0001ffff);
-		else
-			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00018000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
-		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
-		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
-		pr_info("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
-		break;
-	case 400000:
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b000485);//133
-		if (frac_rate)
-			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x0001ffff);
-		else
-			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00018000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
-		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
-		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
-		pr_info("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
-		break;
-	case 1190000:
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b0004C6);//198
-		if (frac_rate)
-			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x0001ffff);
-		else
-			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00018000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
-		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
-		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
-		pr_info("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
-		break;
-	case 504000://1024x600
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b0004A7);
-		if (frac_rate)
-			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x0001ffff);
-		else
-			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00018000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
-		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
-		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
-		pr_info("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
-		break;
-   case 3485000://2560x1600
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b000491);
-		if (frac_rate)
-			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x0001ffff);
-		else
-			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00018000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
-		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
-		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
-		pr_info("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
-		break;
-    case 2415000:
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b0004C8);//2560x1440
-		if (frac_rate)
-			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x0001ffff);
-		else
-			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00018000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
-		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
-		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
-		pr_info("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
-		break;
-	case 1980000://2560x1080
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b0004A5);
-		if (frac_rate)
-			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x0001ffff);
-		else
-			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00018000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
-		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
-		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
-		pr_info("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
-		break;
-	case 1932500://1920x1200
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b0004A1);
-		if (frac_rate)
-			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x0001ffff);
-		else
-			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00018000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
-		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
-		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
-		pr_info("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
-		break;
-	case 1620000://1600x1200
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b000486);
-		if (frac_rate)
-			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x0001ffff);
-		else
-			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00018000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
-		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
-		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
-		pr_info("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
-		break;
-	case 855000://1360x768
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b00048E);
-		if (frac_rate)
-			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x0001ffff);
-		else
-			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00018000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
-		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
-		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
-		pr_info("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
-		break;
-	case 835000:
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b00048B);//1280x800
-		if (frac_rate)
-			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x0001ffff);
-		else
-			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00018000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
-		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
-		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
-		pr_info("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
-		break;
 	case 252000:
 		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b0004A8);//480X320
 		if (frac_rate)
@@ -546,10 +359,25 @@ void set_g12a_hpll_clk_out(unsigned int frac_rate, unsigned int clk)
 		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
 		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
 		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
-		pr_info("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
+		printk("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
 		break;
-	case 297600:
-		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b0004C6);//800x480
+	case 251750:
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b0004a7);//640x480
+		if (frac_rate)
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x0001ffff);
+		else
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00018000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
+		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
+		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
+		printk("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
+		break;
+	case 292300:
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b0004C2);//800x480
 		if (frac_rate)
 			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x0001cccc);
 		else
@@ -561,7 +389,52 @@ void set_g12a_hpll_clk_out(unsigned int frac_rate, unsigned int clk)
 		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
 		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
 		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
-		pr_info("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
+		printk("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
+		break;
+	case 400000:
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b000485);//800x600
+		if (frac_rate)
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x0001ffff);
+		else
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00018000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
+		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
+		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
+		printk("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
+		break;
+	case 445800:
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b0004A3);//1024x600
+		if (frac_rate)
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x0001ffff);
+		else
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00018000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
+		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
+		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
+		printk("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
+		break;
+	case 6500000:
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b0004d8);//1024x768
+		if (frac_rate)
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x0001ffff);
+		else
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00018000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
+		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
+		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
+		printk("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
 		break;
 	case 432000:
 		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b000490);//1280x480
@@ -576,10 +449,229 @@ void set_g12a_hpll_clk_out(unsigned int frac_rate, unsigned int clk)
 		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
 		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
 		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
+		printk("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
+		break;
+	case 835000:
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b00048B);//1280x800
+		if (frac_rate)
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x0001554c);
+		else
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00018000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
+		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
+		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
+		printk("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
+		break;
+	case 1080000:
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b0004b3);//1280x1024
+		if (frac_rate)
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x0001ffff);
+		else
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00018000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
+		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
+		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
+		printk("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
+		break;
+	case 855000:
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b00048E);//1360x768
+		if (frac_rate)
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x0001ffff);
+		else
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00018000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
+		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
+		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
+		printk("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
+		break;
+	case 1065000:
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b0004b1);//1440x900
+		if (frac_rate)
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x0001ffff);
+		else
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00018000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
+		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
+		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
+		printk("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
+		break;
+	case 4320000:
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b0004b4);//1600x900
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00000000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
+		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
+		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
+		printk("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
+		break;
+	case 1620000:
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b000486);//1600x1200
+		if (frac_rate)
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x0001ffff);
+		else
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00018000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
+		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
+		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
+		printk("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
+		break;
+	case 1190000:
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b0004C6);//1680x1050
+		if (frac_rate)
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x0001ffff);
+		else
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00018000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
+		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
+		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
+		printk("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
+		break;
+	case 1932500:
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b0004A1);//1920x1200
+		if (frac_rate)
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x0001ffff);
+		else
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00018000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
+		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
+		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
+		printk("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
+		break;
+	case 1980000:
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b0004A5);//2560x1080
+		if (frac_rate)
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x0001ffff);
+		else
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00018000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
+		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
+		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
+		printk("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
+		break;
+	case 2415000:
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b0004C9);//2560x1440
+		if (frac_rate)
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00008000);
+		else
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00018000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
+		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
+		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
+		printk("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
+		break;
+	case 3485000:
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b0004DF);//2560x1600
+		if (frac_rate)
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x0001ffff);
+		else
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00018000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
+		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
+		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
+		printk("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
+		break;
+	case 3197500:
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL0, 0x3b000485);//3440x1440
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL1, 0x00007555);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270008);
+		hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
+		hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
+		WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
 		pr_info("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
 		break;
 	default:
 		pr_info("error hpll clk: %d\n", clk);
+
+		{
+			unsigned int m;
+			unsigned int ret;
+			unsigned int frac;
+
+			/* calculate m */
+			m = clk / XTAL_FREQ;
+			m &= 0xff;
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL0, (m | 0x3b000400));
+			pr_info("m 0x%x\n", m);
+
+			/* calculate frac */
+			frac = get_g12a_pll_get_frac(m, clk);
+			pr_info("m 0x%x, frac 0x%x\n", m, frac);
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL1, frac);
+			hd_write_reg(P_HHI_HDMI_PLL_CNTL2, 0x00000000);
+
+			if (m >= 0xf7) {
+				if (frac < 0x10000) {
+					hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x6a685c00);
+					hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x11551293);
+				} else {
+					hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0xea68dc00);
+					hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x65771290);
+				}
+				hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
+				hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x55540000);
+			} else {
+				hd_write_reg(P_HHI_HDMI_PLL_CNTL3, 0x0a691c00);
+				hd_write_reg(P_HHI_HDMI_PLL_CNTL4, 0x33771290);
+				hd_write_reg(P_HHI_HDMI_PLL_CNTL5, 0x39270000);
+				hd_write_reg(P_HHI_HDMI_PLL_CNTL6, 0x50540000);
+			}
+
+			hd_set_reg_bits(P_HHI_HDMI_PLL_CNTL0, 0x0, 29, 1);
+			WAIT_FOR_PLL_LOCKED(P_HHI_HDMI_PLL_CNTL0);
+			pr_info("HPLL: 0x%x\n", hd_read_reg(P_HHI_HDMI_PLL_CNTL0));
+
+			ret = (((hd_read_reg(P_HHI_HDMI_PLL_CNTL0) >> 30) & 0x3) == 0x3);
+			if (ret)
+				pr_info("[%s] HPLL set OK!\n", __func__);
+			else
+				pr_info("[%s] Error! Check HPLL track!\n", __func__);
+		}
 		break;
 	}
 }

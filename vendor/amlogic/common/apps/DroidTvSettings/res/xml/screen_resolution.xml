@@ -22,6 +22,11 @@
         android:key="best_resolution"
         android:persistent="false"
         android:title="@string/device_outputmode_auto"/>
+    <SwitchPreference
+	android:key="nativeui_enable"
+        android:persistent="false"
+	android:title="@string/device_nativeui_context"
+	android:summary="@string/device_nativeui_enable"/>
     <Preference android:key="displaymode_setting"
         android:persistent="false"
         android:title="@string/device_displaymode"

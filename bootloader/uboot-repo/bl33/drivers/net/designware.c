@@ -477,6 +477,9 @@ int designware_initialize(ulong base_addr, u32 interface)
 		sprintf(cmd, "fdt set /ethernet@%08x auto_cali_idx <%d>", (unsigned int)base_addr, bestwindow);
 		run_command("fdt addr $dtb_mem_addr", 0);
 		run_command(cmd, 0);
+#ifdef CONFIG_ETHADDR
+		memset (dev->enetaddr, 0, 6);
+#endif
 	}
 #endif
 	return ret;

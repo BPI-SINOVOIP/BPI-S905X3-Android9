@@ -844,7 +844,7 @@ static int remote_probe(struct platform_device *pdev)
 	chip->set_register_config = ir_register_default_config;
 	platform_set_drvdata(pdev, chip);
 
-	ir_input_device_init(dev->input_device, &pdev->dev, "aml_keypad");
+	ir_input_device_init(dev->input_device, &pdev->dev, "aml_remote");
 
 	ret = ir_hardware_init(pdev);
 	if (ret < 0)

@@ -2399,8 +2399,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         int shortSizeDp = shortSize * DisplayMetrics.DENSITY_DEFAULT / density;
         int longSizeDp = longSize * DisplayMetrics.DENSITY_DEFAULT / density;
 
-        // Allow the navigation bar to move on non-square small devices (phones).
-        mNavigationBarCanMove = width != height && shortSizeDp < 600;
+		//bpi, navigationbar always at bottom
+		if (SystemProperties.get("persist.sys.navigationbarcanmove", "false").equals("true")) {
+            // Allow the navigation bar to move on non-square small devices (phones).
+            mNavigationBarCanMove = width != height && shortSizeDp < 600;
+		}
 
         mHasNavigationBar = res.getBoolean(com.android.internal.R.bool.config_showNavigationBar);
 

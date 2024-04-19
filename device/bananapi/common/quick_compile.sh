@@ -68,7 +68,7 @@ if [ $# -eq 1 ]; then
     || [ $1 == "vendorimage" ] \
     || [ $1 == "odm_image" ] \
     || [ $1 == "dtbimage" ] ; then
-        make $1 -j8
+        make $1 -j20
         exit
     fi
 fi
@@ -77,6 +77,6 @@ cd bootloader/uboot-repo
 compile_uboot
 
 cd ../../
-make otapackage -j8
+make otapackage -j20
 
 

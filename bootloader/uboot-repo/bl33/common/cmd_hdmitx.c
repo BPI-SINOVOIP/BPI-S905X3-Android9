@@ -27,6 +27,7 @@
 #include <asm/byteorder.h>
 #include <amlogic/hdmi.h>
 #include <amlogic/dolby_vision.h>
+#include <amlogic/edid-decode.h>
 #ifdef CONFIG_AML_LCD
 #include <amlogic/aml_lcd.h>
 #endif
@@ -147,32 +148,68 @@ static void dump_full_edid(const unsigned char *buf)
 	}
 }
 
+/* 500ms for each retry, total 10 retry */
+#define EDID_RETRY_WAITTIME 500
 static int do_edid(cmd_tbl_t *cmdtp, int flag, int argc, char *const argv[])
 {
-	unsigned int tmp_addr = 0;
-	unsigned char edid_addr = 0;
-	unsigned char st = 0;
+	unsigned int byte_num = 0;
+	unsigned char blk_no = 1;
+	unsigned char count = 0;
+	struct hdmitx_dev *hdev = &hdmitx_device;
+	int width = 0, height = 0;
 
-	memset(edid_raw_buf, 0, ARRAY_SIZE(edid_raw_buf));
-	if (argc < 2)
-		return cmd_usage(cmdtp);
-	if (strcmp(argv[1], "read") == 0) {
-		tmp_addr = simple_strtoul(argv[2], NULL, 16);
-		if (tmp_addr > 0xff)
-			return cmd_usage(cmdtp);
-		edid_addr = tmp_addr;
-		/* read edid raw data */
-		/* current only support read 1 byte edid data */
-		st = hdmitx_device.HWOp.read_edid(
-			&edid_raw_buf[edid_addr & 0xf8], edid_addr & 0xf8, 8);
-		printf("edid[0x%02x]: 0x%02x\n", edid_addr,
-			edid_raw_buf[edid_addr]);
-		if (0) /* Debug only */
-			dump_edid_raw_8bytes(&edid_raw_buf[edid_addr & 0xf8]);
-		if (!st)
-			printf("edid read failed\n");
+	if (!hdev) {
+		printf("null hdmitx dev\n");
+		return CMD_RET_FAILURE;
 	}
-	return st;
+	memset(edid_raw_buf, 0, ARRAY_SIZE(edid_raw_buf));
+	if (argc < 1)
+		return cmd_usage(cmdtp);
+	if (!hdev->HWOp.get_hpd_state()) {
+		printf("HDMI cable is NOT connected\n");
+		return CMD_RET_FAILURE;
+	}
+READ_EDID:
+	/* get edid data */
+	while (byte_num < 128 * blk_no) {
+		hdev->HWOp.read_edid(&edid_raw_buf[byte_num], byte_num & 0x7f, byte_num / 128);
+		if (byte_num == 120) {
+			blk_no = edid_raw_buf[126] + 1;
+			if (blk_no > 4)
+				blk_no = 4; /* MAX Read Blocks 4 */
+			}
+		byte_num += 8;
+	}
+
+	if (0)
+		printf("edid read failed\n");
+	else {
+#ifdef DEBUG_DUMPEDID
+		/* dump all raw data */
+		dump_full_edid(edid_raw_buf);
+#endif
+		/* parsing edid data */
+		if (-EDID_ERR_RETRY == parse_edid(edid_raw_buf, blk_no, count)) {
+			printf("hdmitx: read edid fails.. retry..\n");
+			mdelay(EDID_RETRY_WAITTIME);
+			count++;
+			goto READ_EDID;
+		}
+
+		if (!strcmp("false", getenv("is.bestmode"))) {
+			printf("hdmitx: skip edid bestmode\n");
+		} else {
+			/* select best resolution */
+			setenv("hdmimode", select_best_resolution(&width, &height));
+			/* bpi, set real fb_width and fb_height */
+			setenv_ulong("fb_width", width);
+			setenv_ulong("fb_height", height);
+		}
+
+		setenv("vout", getenv("hdmimode"));
+		setenv("outputmode", getenv("hdmimode"));
+	}
+	return CMD_RET_SUCCESS;
 }
 
 static int do_rx_det(cmd_tbl_t * cmdtp, int flag, int argc, char * const argv[])
@@ -333,12 +370,12 @@ static int do_output(cmd_tbl_t *cmdtp, int flag, int argc, char *const argv[])
 				hdmitx_device.para->cs = HDMI_COLOR_FORMAT_444;
 				printf("set cs as %d\n", HDMI_COLOR_FORMAT_444);
 			}
-			break;
 			/* For VESA modes, should be RGB format */
 			if (hdmitx_device.vic >= HDMITX_VESA_OFFSET) {
 				hdmitx_device.para->cs = HDMI_COLOR_FORMAT_RGB;
 				hdmitx_device.para->cd = HDMI_COLOR_DEPTH_24B;
 			}
+			break;
 		}
 		hdmi_tx_set(&hdmitx_device);
 	}
@@ -488,7 +525,7 @@ static int getBestHdmiColorAttributes(struct rx_cap *pRXCap,
 		//2.user request LL mdoe && sink support LL mode
 		} else if (request_ll_mode() && (pRXCap->dv_info.ver == 1) &&
 			(pRXCap->dv_info.length == 0xB) && pRXCap->dv_info.low_latency == 1) {
-			printf("getBestHdmiColorAttributes: 4k LL dovi, COLOR_ATTR_YCBCR422_12BIT\n");
+			printf("getBestHdmiColorAttributes: non-4k LL dovi, COLOR_ATTR_YCBCR422_12BIT\n");
 			return COLOR_ATTR_YCBCR422_12BIT;
 		}
 		//std dovi
@@ -515,6 +552,7 @@ static int getBestHdmiColorAttributes(struct rx_cap *pRXCap,
 			printf("getBestHdmiColorAttributes: COLOR_ATTR_RGB_12BIT\n");
 			return COLOR_ATTR_RGB_12BIT;
 		}
+		break;
 	case HDMI_COLOR_DEPTH_30B:
 		if (inColorSpace == HDMI_COLOR_FORMAT_444) {
 			if ((pRXCap->dc_y444) && (pRXCap->dc_30bit)) {
@@ -531,6 +569,7 @@ static int getBestHdmiColorAttributes(struct rx_cap *pRXCap,
 			printf("getBestHdmiColorAttributes: COLOR_ATTR_RGB_10BIT\n");
 			return COLOR_ATTR_RGB_10BIT;
 		};
+		break;
 	default:
 		if (inColorSpace == HDMI_COLOR_FORMAT_444) {
 			if (pRXCap->support_ycbcr444_flag) {
@@ -546,10 +585,11 @@ static int getBestHdmiColorAttributes(struct rx_cap *pRXCap,
 				return COLOR_ATTR_YCBCR420_8BIT;
 			}
 		}
-		//default to rgb,8 bits always
-		printf("getBestHdmiColorAttributes: COLOR_ATTR_RGB_8BIT\n");
-		return COLOR_ATTR_RGB_8BIT;
 	}
+
+	//default to rgb,8 bits always
+	printf("getBestHdmiColorAttributes: COLOR_ATTR_RGB_8BIT\n");
+	return COLOR_ATTR_RGB_8BIT;
 }
 
 bool isYuv4kSink(struct rx_cap *pRXCap)
@@ -570,13 +610,13 @@ bool isYuv4kSink(struct rx_cap *pRXCap)
 	for (i = 0; i < pRXCap->VIC_count; i++) {
 		VIC = pRXCap->VIC[i];
 		if ((VIC == HDMI_3840x2160p60_16x9_Y420 ||
-		     VIC == HDMI_3840x2160p60_16x9_Y420) &&
+			VIC == HDMI_3840x2160p50_16x9_Y420) &&
 			maxTMDSRate >= 297) {
 			printf("isYuv4kSink: true, maxTMDSRate=%d\n", maxTMDSRate);
 			return true;
 		}
 		if ((VIC == HDMI_3840x2160p60_16x9  ||
-		     VIC == HDMI_3840x2160p60_16x9) &&
+			VIC == HDMI_3840x2160p50_16x9) &&
 			maxTMDSRate > 594) {
 			printf("isYuv4kSink: true, maxTMDSRate=%d\n", maxTMDSRate);
 			return true;
@@ -690,13 +730,42 @@ static int selectBestMode(struct rx_cap *pRXCap, bool isAuto, int manualMode)
 	return HDMI_1920x1080p60_16x9; //default
 }
 
+static void get_parse_edid_data(struct hdmitx_dev *hdev)
+{
+	unsigned char *edid = hdev->rawedid;
+	unsigned int byte_num = 0;
+	unsigned char blk_no = 1;
+	char *hdr_priority = getenv("hdr_priority");
+
+	/* get edid data */
+	while (byte_num < 128 * blk_no) {
+		hdev->HWOp.read_edid(&edid[byte_num], byte_num & 0x7f, byte_num / 128);
+		if (byte_num == 120) {
+			blk_no = edid[126] + 1;
+			if (blk_no > 4)
+				blk_no = 4; /* MAX Read Blocks 4 */
+		}
+		byte_num += 8;
+	}
+
+	if (0)
+		dump_full_edid(hdev->rawedid);
+
+	/* parse edid data */
+	hdmi_edid_parsing(hdev->rawedid, &hdev->RXCap);
+
+	/* if hdr_priority is 1, then mark dv_info */
+	if (hdr_priority && (strcmp(hdr_priority, "1") == 0)) {
+		memset(&hdev->RXCap.dv_info, 0, sizeof(struct dv_info));
+		pr_info("hdr_priority: %s and clear dv_info\n", hdr_priority);
+	}
+}
+
 static int do_get_parse_edid(cmd_tbl_t * cmdtp, int flag, int argc,
 	char * const argv[])
 {
 	struct hdmitx_dev *hdev = &hdmitx_device;
-	unsigned int byte_num = 0;
 	unsigned char *edid = hdev->rawedid;
-	unsigned char blk_no = 1;
 	unsigned char *store_checkvalue;
 	memset(edid, 0, EDID_BLK_SIZE * EDID_BLK_NO);
 	unsigned int i;
@@ -713,19 +782,7 @@ static int do_get_parse_edid(cmd_tbl_t * cmdtp, int flag, int argc,
 	int inColorSpace = -1, inColorDepth = -1;
 	int bestColorAttributes = -1;
 
-	while (byte_num < 128 * blk_no) {
-		hdmitx_device.HWOp.read_edid(&edid[byte_num], byte_num & 0x7f, byte_num / 128);
-		if (byte_num == 120) {
-			blk_no = edid[126] + 1;
-			if (blk_no > 4)
-				blk_no = 4; /* MAX Read Blocks 4 */
-		}
-		byte_num += 8;
-	}
-
-	if (hdmi_edid_parsing(hdev->rawedid, &hdev->RXCap) == 0) {
-		dump_full_edid(hdev->rawedid);
-	}
+	get_parse_edid_data(hdev);
 
 	/*check if the tv has changed or anything wrong*/
 	//store_checkvalue = (unsigned char*)get_logoparam_value("logoparam.var.hdmi_crcvalue");
@@ -868,9 +925,7 @@ static int do_get_preferred_mode(cmd_tbl_t * cmdtp, int flag, int argc,
 	char * const argv[])
 {
 	struct hdmitx_dev *hdev = &hdmitx_device;
-	unsigned int byte_num = 0;
 	unsigned char *edid = hdev->rawedid;
-	unsigned char blk_no = 1;
 	struct hdmi_format_para *para;
 	char pref_mode[64];
 	char color_attr[64];
@@ -898,21 +953,8 @@ static int do_get_preferred_mode(cmd_tbl_t * cmdtp, int flag, int argc,
 		goto bypass_edid_read;
 	}
 
-	/* Read complete EDID data sequentially */
-	while (byte_num < 128 * blk_no) {
-		hdmitx_device.HWOp.read_edid(&edid[byte_num], byte_num & 0x7f, byte_num / 128);
-		if (byte_num == 120) {
-			blk_no = edid[126] + 1;
-			if (blk_no > 4)
-				blk_no = 4; /* MAX Read Blocks 4 */
-		}
-		byte_num += 8;
-	}
+	get_parse_edid_data(hdev);
 
-	if (hdmi_edid_parsing(hdev->rawedid, &hdev->RXCap) == 0) {
-		if (0)
-			dump_full_edid(hdev->rawedid);
-	}
 	para = hdmi_get_fmt_paras(hdev->RXCap.preferred_mode);
 
 	if (para) {
@@ -929,6 +971,7 @@ static int do_get_preferred_mode(cmd_tbl_t * cmdtp, int flag, int argc,
 		sprintf(pref_mode, "setenv hdmimode %s", para->sname);
 		sprintf(color_attr, "setenv colorattribute %s", "444,8bit");
 	}
+
 	printk("sink preferred_mode is %s[%d]\n", para->sname, hdev->RXCap.preferred_mode);
 
 bypass_edid_read:

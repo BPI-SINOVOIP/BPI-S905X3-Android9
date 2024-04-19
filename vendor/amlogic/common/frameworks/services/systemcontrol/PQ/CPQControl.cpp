@@ -5597,7 +5597,16 @@ output_type_t CPQControl::CheckOutPutMode(void)
                 } else {
                     memset(tempBuf,0, sizeof(tempBuf));
                     strncpy(tempBuf, outputModeBuf, (outputModeStrSize - 5));//delete "pxxhz"
-                    outputFrameHeight = atoi(tempBuf);
+		    outputFrameHeight = atoi(tempBuf);
+                    if (strcmp(outputModeBuf, "custombuilt") == 0) {
+                        char value[PROPERTY_VALUE_MAX];
+                        property_get("vendor.display-size", value, "1920x1080");
+                        char* ptr = strtok(value, "x");
+                        ptr = strtok(NULL, "x");
+                        outputFrameHeight = atoi(ptr);
+                    } else {
+                        outputFrameHeight = atoi(tempBuf);
+		    }
                 }
                 SYS_LOGD("%s: inputFrameHeight: %d, outputFrameHeight: %d!\n", __FUNCTION__, inputFrameHeight, outputFrameHeight);
                 //check outputmode

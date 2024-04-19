@@ -82,6 +82,7 @@ import com.android.systemui.statusbar.policy.TintedKeyButtonDrawable;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.function.Consumer;
+import android.util.DisplayMetrics;
 
 import static com.android.systemui.shared.system.NavigationBarCompat.FLAG_DISABLE_QUICK_SCRUB;
 import static com.android.systemui.shared.system.NavigationBarCompat.FLAG_SHOW_OVERVIEW_BUTTON;
@@ -998,7 +999,19 @@ public class NavigationBarView extends FrameLayout implements PluginListener<Nav
     }
 
     private void updateCurrentView() {
-        final int rot = mDisplay.getRotation();
+        int rot = mDisplay.getRotation();
+        int width = mDisplay.getWidth();
+        int heigth = mDisplay.getHeight();
+        int shortSize = width > heigth ? heigth : width;
+        int dp = shortSize * DisplayMetrics.DENSITY_DEFAULT / DisplayMetrics.DENSITY_DEVICE;
+        Log.d(TAG, "NavigationBar shortSize:"+ shortSize +"DisplayMetrics.DENSITY_DEFAULT:"+ DisplayMetrics.DENSITY_DEFAULT +"DENSITY_DEVICE:"+DisplayMetrics.DENSITY_DEVICE);
+        // mNavigationBarCanMove = width != height && shortSizeDp < 600; from PhoneWindowManager.java
+        // this situation, NavigationBar will be moved to LEFT/RIGHT side to show.
+        if (dp < 600 && width != heigth && rot!= 0 && rot !=2) {
+        rot = (rot + 1) % 4;
+            Log.d(TAG, "NavigationBar orient is workaround displayed");
+        }
+
         for (int i=0; i<4; i++) {
             mRotatedViews[i].setVisibility(View.GONE);
         }

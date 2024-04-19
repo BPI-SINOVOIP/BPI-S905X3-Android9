@@ -17,7 +17,32 @@
 
 #include <linux/kernel.h>
 #include <linux/amlogic/media/vout/hdmi_tx/hdmi_common.h>
+#include <linux/amlogic/media/vout/hdmi_tx/hdmi_tx_module.h>
 #include <linux/string.h>
+
+struct modeline_table {
+	/* resolutions */
+	unsigned int horpixels;
+	unsigned int verpixels;
+	/* clock and frequency */
+	unsigned int pixel_clock;
+	unsigned int hor_freq;
+	unsigned int ver_freq;
+	/* htimings */
+	unsigned int hdisp;
+	unsigned int hsyncstart;
+	unsigned int hsyncend;
+	unsigned int htotal;
+	/* vtiminigs */
+	unsigned int vdisp;
+	unsigned int vsyncstart;
+	unsigned int vsyncend;
+	unsigned int vtotal;
+	/* polarity and scan mode */
+	unsigned int hsync_polarity; /* 1:+hsync, 0:-hsync */
+	unsigned int vsync_polarity; /* 1:+vsync, 0:-vsync */
+	unsigned int progress_mode; /* 1:progress, 0:interlaced */
+};
 
 static struct hdmi_format_para fmt_para_1920x1080p60_16x9 = {
 	.vic = HDMI_1920x1080p60_16x9,
@@ -1333,6 +1358,27 @@ static struct hdmi_format_para fmt_para_4096x2160p60_256x135_y420 = {
 	},
 };
 
+static struct hdmi_format_para fmt_para_custombuilt = {
+	.vic = HDMI_CUSTOMBUILT,
+	.name = "custombuilt",
+	.sname = "custombuilt",
+	.pixel_repetition_factor = 0,
+	.scrambler_en = 0,
+	.tmds_clk_div40 = 0,
+	.timing = {
+		.v_sync_ln = 1,
+	},
+	.hdmitx_vinfo = {
+		.name = "custombuilt",
+		.mode = VMODE_HDMI,
+		.aspect_ratio_num = 16,
+		.aspect_ratio_den = 9,
+		.sync_duration_den = 1,
+		.viu_color_fmt = COLOR_FMT_YUV444,
+		.viu_mux = VIU_MUX_ENCP,
+	},
+};
+
 static struct hdmi_format_para fmt_para_non_hdmi_fmt = {
 	.vic = HDMI_Unknown,
 	.name = "invalid",
@@ -1432,7 +1478,7 @@ static struct hdmi_format_para fmt_para_2560x1080p50_64x27 = {
 	},
 };
 
-static struct hdmi_format_para fmt_para_vesa_2560x1080p60_64x27 = {
+static struct hdmi_format_para fmt_para_2560x1080p60_64x27 = {
 	.vic = HDMI_2560x1080p60_64x27,
 	.name = "2560x1080p60hz",
 	.sname = "2560x1080p60hz",
@@ -1482,6 +1528,54 @@ static struct hdmi_format_para fmt_para_vesa_2560x1080p60_64x27 = {
 /*
  * VESA timing describe
  */
+static struct hdmi_format_para fmt_para_vesa_480x320p60_4x3 = {
+	.vic = HDMIV_480x320p60hz,
+	.name = "480x320p60hz",
+	.sname = "480x320p60hz",
+	.pixel_repetition_factor = 0,
+	.progress_mode = 1,
+	.scrambler_en = 0,
+	.tmds_clk_div40 = 0,
+	.tmds_clk = 25200,
+	.timing = {
+		.pixel_freq = 25200,
+		.frac_freq = 25200,
+		.h_freq = 31500,
+		.v_freq = 60000,
+		.vsync_polarity = 0, /* -VSync */
+		.hsync_polarity = 0, /* -HSync */
+		.h_active = 480,
+		.h_total = 800,
+		.h_blank = 320,
+		.h_front = 120,
+		.h_sync = 100,
+		.h_back = 100,
+		.v_active = 320,
+		.v_total = 525,
+		.v_blank = 205,
+		.v_front = 8,
+		.v_sync = 8,
+		.v_back = 189,
+		.v_sync_ln = 1,
+	},
+	.hdmitx_vinfo = {
+		.name              = "480x320p60hz",
+		.mode              = VMODE_HDMI,
+		.width             = 480,
+		.height            = 320,
+		.field_height      = 320,
+		.aspect_ratio_num  = 4,
+		.aspect_ratio_den  = 3,
+		.sync_duration_num = 60,
+		.sync_duration_den = 1,
+		.video_clk         = 25200000,
+		.htotal            = 800,
+		.vtotal            = 525,
+		.viu_color_fmt     = COLOR_FMT_YUV444,
+		.viu_mux           = VIU_MUX_ENCP,
+	},
+};
+
 static struct hdmi_format_para fmt_para_vesa_640x480p60_4x3 = {
 	.vic = HDMIV_640x480p60hz,
 	.name = "640x480p60hz",
@@ -1539,26 +1633,26 @@ static struct hdmi_format_para fmt_para_vesa_800x480p60_4x3 = {
 	.progress_mode = 1,
 	.scrambler_en = 0,
 	.tmds_clk_div40 = 0,
-	.tmds_clk = 29760,
+	.tmds_clk = 29230,
 	.timing = {
-		.pixel_freq = 29760,
+		.pixel_freq = 29230,
 		.h_freq = 30000,
 		.v_freq = 60000,
 		.vsync = 60,
 		.vsync_polarity = 1,
 		.hsync_polarity = 1,
 		.h_active = 800,
-		.h_total = 992,
-		.h_blank = 192,
-		.h_front = 24,
-		.h_sync = 72,
-		.h_back = 96,
+		.h_total = 928,
+		.h_blank = 128,
+		.h_front = 40,
+		.h_sync = 48,
+		.h_back = 40,
 		.v_active = 480,
-		.v_total = 500,
-		.v_blank = 20,
-		.v_front = 3,
-		.v_sync = 7,
-		.v_back = 10,
+		.v_total = 525,
+		.v_blank = 45,
+		.v_front = 13,
+		.v_sync = 3,
+		.v_back = 29,
 		.v_sync_ln = 1,
 	},
 	.hdmitx_vinfo = {
@@ -1571,9 +1665,302 @@ static struct hdmi_format_para fmt_para_vesa_800x480p60_4x3 = {
 		.aspect_ratio_den  = 3,
 		.sync_duration_num = 60,
 		.sync_duration_den = 1,
-		.video_clk         = 29760000,
-		.htotal            = 992,
-		.vtotal            = 500,
+		.video_clk         = 29230000,
+		.htotal            = 928,
+		.vtotal            = 525,
+		.fr_adj_type       = VOUT_FR_ADJ_HDMI,
+		.viu_color_fmt     = COLOR_FMT_YUV444,
+		.viu_mux           = VIU_MUX_ENCP,
+	},
+};
+
+static struct hdmi_format_para fmt_para_vesa_800x600p60_4x3 = {
+	.vic = HDMIV_800x600p60hz,
+	.name = "800x600p60hz",
+	.sname = "800x600p60hz",
+	.pixel_repetition_factor = 0,
+	.progress_mode = 1,
+	.scrambler_en = 0,
+	.tmds_clk_div40 = 0,
+	.tmds_clk = 40000,
+	.timing = {
+		.pixel_freq = 40000,
+		.h_freq = 37879,
+		.v_freq = 60317,
+		.vsync = 60,
+		.vsync_polarity = 1,
+		.hsync_polarity = 1,
+		.h_active = 800,
+		.h_total = 1056,
+		.h_blank = 256,
+		.h_front = 40,
+		.h_sync = 128,
+		.h_back = 88,
+		.v_active = 600,
+		.v_total = 628,
+		.v_blank = 28,
+		.v_front = 1,
+		.v_sync = 4,
+		.v_back = 23,
+		.v_sync_ln = 1,
+	},
+	.hdmitx_vinfo = {
+		.name              = "800x600p60hz",
+		.mode              = VMODE_HDMI,
+		.width             = 800,
+		.height            = 600,
+		.field_height      = 600,
+		.aspect_ratio_num  = 4,
+		.aspect_ratio_den  = 3,
+		.sync_duration_num = 60,
+		.sync_duration_den = 1,
+		.video_clk         = 40000000,
+		.htotal            = 1056,
+		.vtotal            = 628,
+		.fr_adj_type       = VOUT_FR_ADJ_HDMI,
+		.viu_color_fmt     = COLOR_FMT_YUV444,
+		.viu_mux           = VIU_MUX_ENCP,
+	},
+};
+
+static struct hdmi_format_para fmt_para_vesa_852x480p60_213x120 = {
+	.vic = HDMIV_852x480p60hz,
+	.name = "852x480p60hz",
+	.sname = "852x480p60hz",
+	.pixel_repetition_factor = 0,
+	.progress_mode = 1,
+	.scrambler_en = 0,
+	.tmds_clk_div40 = 0,
+	.tmds_clk = 30240,
+	.timing = {
+		.pixel_freq = 30240,
+		.h_freq = 31900,
+		.v_freq = 59960,
+		.vsync = 60,
+		.vsync_polarity = 1,
+		.hsync_polarity = 1,
+		.h_active = 852,
+		.h_total = 948,
+		.h_blank = 96,
+		.h_front = 40,
+		.h_sync = 16,
+		.h_back = 40,
+		.v_active = 480,
+		.v_total = 532,
+		.v_blank = 52,
+		.v_front = 10,
+		.v_sync = 2,
+		.v_back = 40,
+		.v_sync_ln = 1,
+	},
+	.hdmitx_vinfo = {
+		.name              = "852x480p60hz",
+		.mode              = VMODE_HDMI,
+		.width             = 852,
+		.height            = 480,
+		.field_height      = 480,
+		.aspect_ratio_num  = 213,
+		.aspect_ratio_den  = 120,
+		.sync_duration_num = 60,
+		.sync_duration_den = 1,
+		.video_clk         = 30240000,
+		.htotal            = 948,
+		.vtotal            = 532,
+		.fr_adj_type       = VOUT_FR_ADJ_HDMI,
+		.viu_color_fmt     = COLOR_FMT_YUV444,
+		.viu_mux           = VIU_MUX_ENCP,
+	},
+};
+
+static struct hdmi_format_para fmt_para_vesa_854x480p60_427x240 = {
+	.vic = HDMIV_854x480p60hz,
+	.name = "854x480p60hz",
+	.sname = "854x480p60hz",
+	.pixel_repetition_factor = 0,
+	.progress_mode = 1,
+	.scrambler_en = 0,
+	.tmds_clk_div40 = 0,
+	.tmds_clk = 30240,
+	.timing = {
+		.pixel_freq = 30240,
+		.h_freq = 31830,
+		.v_freq = 59950,
+		.vsync = 60,
+		.vsync_polarity = 1,
+		.hsync_polarity = 1,
+		.h_active = 854,
+		.h_total = 950,
+		.h_blank = 96,
+		.h_front = 40,
+		.h_sync = 16,
+		.h_back = 40,
+		.v_active = 480,
+		.v_total = 531,
+		.v_blank = 51,
+		.v_front = 10,
+		.v_sync = 2,
+		.v_back = 39,
+		.v_sync_ln = 1,
+	},
+	.hdmitx_vinfo = {
+		.name              = "854x480p60hz",
+		.mode              = VMODE_HDMI,
+		.width             = 854,
+		.height            = 480,
+		.field_height      = 480,
+		.aspect_ratio_num  = 427,
+		.aspect_ratio_den  = 240,
+		.sync_duration_num = 60,
+		.sync_duration_den = 1,
+		.video_clk         = 30240000,
+		.htotal            = 950,
+		.vtotal            = 531,
+		.fr_adj_type       = VOUT_FR_ADJ_HDMI,
+		.viu_color_fmt     = COLOR_FMT_YUV444,
+		.viu_mux           = VIU_MUX_ENCP,
+	},
+};
+
+static struct hdmi_format_para fmt_para_vesa_1024x600p60_17x10 = {
+	.vic = HDMIV_1024x600p60hz,
+	.name = "1024x600p60hz",
+	.sname = "1024x600p60hz",
+	.pixel_repetition_factor = 0,
+	.progress_mode = 1,
+	.scrambler_en = 0,
+	.tmds_clk_div40 = 0,
+	.tmds_clk = 44580,
+	.timing = {
+		.pixel_freq = 44580,
+		.h_freq = 37320,
+		.v_freq = 60000,
+		.vsync = 60,
+		.vsync_polarity = 1,
+		.hsync_polarity = 1,
+		.h_active = 1024,
+		.h_total = 1152,
+		.h_blank = 128,
+		.h_front = 40,
+		.h_sync = 48,
+		.h_back = 40,
+		.v_active = 600,
+		.v_total = 645,
+		.v_blank = 45,
+		.v_front = 13,
+		.v_sync = 3,
+		.v_back = 29,
+		.v_sync_ln = 1,
+	},
+	.hdmitx_vinfo = {
+		.name              = "1024x600p60hz",
+		.mode              = VMODE_HDMI,
+		.width             = 1024,
+		.height            = 600,
+		.field_height      = 600,
+		.aspect_ratio_num  = 17,
+		.aspect_ratio_den  = 10,
+		.sync_duration_num = 60,
+		.sync_duration_den = 1,
+		.video_clk         = 44580000,
+		.htotal            = 1152,
+		.vtotal            = 645,
+		.fr_adj_type       = VOUT_FR_ADJ_HDMI,
+		.viu_color_fmt     = COLOR_FMT_YUV444,
+		.viu_mux           = VIU_MUX_ENCP,
+	},
+};
+
+static struct hdmi_format_para fmt_para_vesa_1024x768p60_4x3 = {
+	.vic = HDMIV_1024x768p60hz,
+	.name = "1024x768p60hz",
+	.sname = "1024x768p60hz",
+	.pixel_repetition_factor = 0,
+	.progress_mode = 1,
+	.scrambler_en = 0,
+	.tmds_clk_div40 = 0,
+	.tmds_clk = 65000,
+	.timing = {
+		.pixel_freq = 65000,
+		.h_freq = 48360,
+		.v_freq = 60004,
+		.vsync = 60,
+		.vsync_polarity = 1,
+		.hsync_polarity = 1,
+		.h_active = 1024,
+		.h_total = 1344,
+		.h_blank = 320,
+		.h_front = 24,
+		.h_sync = 136,
+		.h_back = 160,
+		.v_active = 768,
+		.v_total = 806,
+		.v_blank = 38,
+		.v_front = 3,
+		.v_sync = 6,
+		.v_back = 29,
+		.v_sync_ln = 1,
+	},
+	.hdmitx_vinfo = {
+		.name              = "1024x768p60hz",
+		.mode              = VMODE_HDMI,
+		.width             = 1024,
+		.height            = 768,
+		.field_height      = 768,
+		.aspect_ratio_num  = 4,
+		.aspect_ratio_den  = 3,
+		.sync_duration_num = 60,
+		.sync_duration_den = 1,
+		.video_clk         = 79500000,
+		.htotal            = 1344,
+		.vtotal            = 806,
+		.fr_adj_type       = VOUT_FR_ADJ_HDMI,
+		.viu_color_fmt     = COLOR_FMT_YUV444,
+		.viu_mux           = VIU_MUX_ENCP,
+	},
+};
+
+static struct hdmi_format_para fmt_para_vesa_1152x864p75_4x3 = {
+	.vic = HDMIV_1152x864p75hz,
+	.name = "1152x864p75hz",
+	.sname = "1152x864p75hz",
+	.pixel_repetition_factor = 0,
+	.progress_mode = 1,
+	.scrambler_en = 0,
+	.tmds_clk_div40 = 0,
+	.tmds_clk = 108000,
+	.timing = {
+		.pixel_freq = 108000,
+		.h_freq = 67500,
+		.v_freq = 75000,
+		.vsync = 75,
+		.vsync_polarity = 1,
+		.hsync_polarity = 1,
+		.h_active = 1152,
+		.h_total = 1600,
+		.h_blank = 448,
+		.h_front = 64,
+		.h_sync = 128,
+		.h_back = 256,
+		.v_active = 864,
+		.v_total = 900,
+		.v_blank = 36,
+		.v_front = 1,
+		.v_sync = 3,
+		.v_back = 32,
+	},
+	.hdmitx_vinfo = {
+		.name              = "1152x864p75hz",
+		.mode              = VMODE_HDMI,
+		.width             = 1152,
+		.height            = 864,
+		.field_height      = 864,
+		.aspect_ratio_num  = 4,
+		.aspect_ratio_den  = 3,
+		.sync_duration_num = 75,
+		.sync_duration_den = 1,
+		.video_clk         = 108000000,
+		.htotal            = 1600,
+		.vtotal            = 900,
 		.fr_adj_type       = VOUT_FR_ADJ_HDMI,
 		.viu_color_fmt     = COLOR_FMT_YUV444,
 		.viu_mux           = VIU_MUX_ENCP,
@@ -1628,300 +2015,10 @@ static struct hdmi_format_para fmt_para_vesa_1280x480p60_8x3 = {
 	},
 };
 
-
-static struct hdmi_format_para fmt_para_vesa_800x600p60_4x3 = {
-	.vic = HDMIV_800x600p60hz,
-	.name = "800x600p60hz",
-	.sname = "800x600p60hz",
-	.pixel_repetition_factor = 0,
-	.progress_mode = 1,
-	.scrambler_en = 0,
-	.tmds_clk_div40 = 0,
-	.tmds_clk = 40000,
-	.timing = {
-		.pixel_freq = 40000,
-		.h_freq = 37879,
-		.v_freq = 60317,
-		.vsync = 60,
-		.vsync_polarity = 1,
-		.hsync_polarity = 1,
-		.h_active = 800,
-		.h_total = 1056,
-		.h_blank = 256,
-		.h_front = 40,
-		.h_sync = 128,
-		.h_back = 88,
-		.v_active = 600,
-		.v_total = 628,
-		.v_blank = 28,
-		.v_front = 1,
-		.v_sync = 4,
-		.v_back = 23,
-		.v_sync_ln = 1,
-	},
-	.hdmitx_vinfo = {
-		.name              = "800x600p60hz",
-		.mode              = VMODE_HDMI,
-		.width             = 800,
-		.height            = 600,
-		.field_height      = 600,
-		.aspect_ratio_num  = 4,
-		.aspect_ratio_den  = 3,
-		.sync_duration_num = 60,
-		.sync_duration_den = 1,
-		.video_clk         = 40000000,
-		.htotal            = 1056,
-		.vtotal            = 628,
-		.fr_adj_type       = VOUT_FR_ADJ_HDMI,
-		.viu_color_fmt     = COLOR_FMT_YUV444,
-		.viu_mux           = VIU_MUX_ENCP,
-	},
-};
-
-static struct hdmi_format_para fmt_para_vesa_852x480p60_213x120 = {
-	.vic = HDMIV_852x480p60hz,
-	.name = "852x480p60hz",
-	.pixel_repetition_factor = 0,
-	.progress_mode = 1,
-	.scrambler_en = 0,
-	.tmds_clk_div40 = 0,
-	.tmds_clk = 30240,
-	.timing = {
-		.pixel_freq = 30240,
-		.h_freq = 31900,
-		.v_freq = 59960,
-		.vsync = 60,
-		.vsync_polarity = 1,
-		.hsync_polarity = 1,
-		.h_active = 852,
-		.h_total = 948,
-		.h_blank = 96,
-		.h_front = 40,
-		.h_sync = 16,
-		.h_back = 40,
-		.v_active = 480,
-		.v_total = 532,
-		.v_blank = 52,
-		.v_front = 10,
-		.v_sync = 2,
-		.v_back = 40,
-		.v_sync_ln = 1,
-	},
-	.hdmitx_vinfo = {
-		.name              = "852x480p60hz",
-		.mode              = VMODE_HDMI,
-		.width             = 852,
-		.height            = 480,
-		.field_height      = 480,
-		.aspect_ratio_num  = 213,
-		.aspect_ratio_den  = 120,
-		.sync_duration_num = 60,
-		.sync_duration_den = 1,
-		.video_clk         = 30240000,
-		.htotal            = 948,
-		.vtotal            = 532,
-		.fr_adj_type       = VOUT_FR_ADJ_HDMI,
-		.viu_color_fmt     = COLOR_FMT_YUV444,
-		.viu_mux           = VIU_MUX_ENCP,
-	},
-};
-
-static struct hdmi_format_para fmt_para_vesa_854x480p60_427x240 = {
-	.vic = HDMIV_854x480p60hz,
-	.name = "854x480p60hz",
-	.pixel_repetition_factor = 0,
-	.progress_mode = 1,
-	.scrambler_en = 0,
-	.tmds_clk_div40 = 0,
-	.tmds_clk = 30240,
-	.timing = {
-		.pixel_freq = 30240,
-		.h_freq = 31830,
-		.v_freq = 59950,
-		.vsync = 60,
-		.vsync_polarity = 1,
-		.hsync_polarity = 1,
-		.h_active = 854,
-		.h_total = 950,
-		.h_blank = 96,
-		.h_front = 40,
-		.h_sync = 16,
-		.h_back = 40,
-		.v_active = 480,
-		.v_total = 531,
-		.v_blank = 51,
-		.v_front = 10,
-		.v_sync = 2,
-		.v_back = 39,
-		.v_sync_ln = 1,
-	},
-	.hdmitx_vinfo = {
-		.name              = "854x480p60hz",
-		.mode              = VMODE_HDMI,
-		.width             = 854,
-		.height            = 480,
-		.field_height      = 480,
-		.aspect_ratio_num  = 427,
-		.aspect_ratio_den  = 240,
-		.sync_duration_num = 60,
-		.sync_duration_den = 1,
-		.video_clk         = 30240000,
-		.htotal            = 950,
-		.vtotal            = 531,
-		.fr_adj_type       = VOUT_FR_ADJ_HDMI,
-		.viu_color_fmt     = COLOR_FMT_YUV444,
-		.viu_mux           = VIU_MUX_ENCP,
-	},
-};
-
-static struct hdmi_format_para fmt_para_vesa_1024x600p60_17x10 = {
-	.vic = HDMIV_1024x600p60hz,
-	.name = "1024x600p60hz",
-	.sname = "1024x600p60hz",
-	.pixel_repetition_factor = 0,
-	.progress_mode = 1,
-	.scrambler_en = 0,
-	.tmds_clk_div40 = 0,
-	.tmds_clk = 50400,
-	.timing = {
-		.pixel_freq = 50400,
-		.h_freq = 38280,
-		.v_freq = 60000,
-		.vsync = 60,
-		.vsync_polarity = 1,
-		.hsync_polarity = 1,
-		.h_active = 1024,
-		.h_total = 1344,
-		.h_blank = 320,
-		.h_front = 24,
-		.h_sync = 136,
-		.h_back = 160,
-		.v_active = 600,
-		.v_total = 638,
-		.v_blank = 38,
-		.v_front = 3,
-		.v_sync = 6,
-		.v_back = 29,
-		.v_sync_ln = 1,
-	},
-	.hdmitx_vinfo = {
-		.name              = "1024x600p60hz",
-		.mode              = VMODE_HDMI,
-		.width             = 1024,
-		.height            = 600,
-		.field_height      = 600,
-		.aspect_ratio_num  = 17,
-		.aspect_ratio_den  = 10,
-		.sync_duration_num = 60,
-		.sync_duration_den = 1,
-		.video_clk         = 50400000,
-		.htotal            = 1344,
-		.vtotal            = 638,
-		.fr_adj_type       = VOUT_FR_ADJ_HDMI,
-		.viu_color_fmt     = COLOR_FMT_YUV444,
-		.viu_mux           = VIU_MUX_ENCP,
-	},
-};
-
-static struct hdmi_format_para fmt_para_vesa_1024x768p60_4x3 = {
-	.vic = HDMIV_1024x768p60hz,
-	.name = "1024x768p60hz",
-	.sname = "1024x768p60hz",
-	.pixel_repetition_factor = 0,
-	.progress_mode = 1,
-	.scrambler_en = 0,
-	.tmds_clk_div40 = 0,
-	.tmds_clk = 65000,
-	.timing = {
-		.pixel_freq = 65000,
-		.h_freq = 48360,
-		.v_freq = 60004,
-		.vsync = 60,
-		.vsync_polarity = 1,
-		.hsync_polarity = 1,
-		.h_active = 1024,
-		.h_total = 1344,
-		.h_blank = 320,
-		.h_front = 24,
-		.h_sync = 136,
-		.h_back = 160,
-		.v_active = 768,
-		.v_total = 806,
-		.v_blank = 38,
-		.v_front = 3,
-		.v_sync = 6,
-		.v_back = 29,
-		.v_sync_ln = 1,
-	},
-	.hdmitx_vinfo = {
-		.name              = "1024x768p60hz",
-		.mode              = VMODE_HDMI,
-		.width             = 1024,
-		.height            = 768,
-		.field_height      = 768,
-		.aspect_ratio_num  = 4,
-		.aspect_ratio_den  = 3,
-		.sync_duration_num = 60,
-		.sync_duration_den = 1,
-		.video_clk         = 65000000,
-		.htotal            = 1344,
-		.vtotal            = 806,
-		.fr_adj_type       = VOUT_FR_ADJ_HDMI,
-		.viu_color_fmt     = COLOR_FMT_YUV444,
-		.viu_mux           = VIU_MUX_ENCP,
-	},
-};
-
-static struct hdmi_format_para fmt_para_vesa_1152x864p75_4x3 = {
-	.vic = HDMIV_1152x864p75hz,
-	.name = "1152x864p75hz",
-	.pixel_repetition_factor = 0,
-	.progress_mode = 1,
-	.scrambler_en = 0,
-	.tmds_clk_div40 = 0,
-	.tmds_clk = 108000,
-	.timing = {
-		.pixel_freq = 108000,
-		.h_freq = 67500,
-		.v_freq = 75000,
-		.vsync = 75,
-		.vsync_polarity = 1,
-		.hsync_polarity = 1,
-		.h_active = 1152,
-		.h_total = 1600,
-		.h_blank = 448,
-		.h_front = 64,
-		.h_sync = 128,
-		.h_back = 256,
-		.v_active = 864,
-		.v_total = 900,
-		.v_blank = 36,
-		.v_front = 1,
-		.v_sync = 3,
-		.v_back = 32,
-	},
-	.hdmitx_vinfo = {
-		.name              = "1152x864p75hz",
-		.mode              = VMODE_HDMI,
-		.width             = 1152,
-		.height            = 864,
-		.field_height      = 864,
-		.aspect_ratio_num  = 4,
-		.aspect_ratio_den  = 3,
-		.sync_duration_num = 75,
-		.sync_duration_den = 1,
-		.video_clk         = 108000000,
-		.htotal            = 1600,
-		.vtotal            = 900,
-		.fr_adj_type       = VOUT_FR_ADJ_HDMI,
-		.viu_color_fmt     = COLOR_FMT_YUV444,
-		.viu_mux           = VIU_MUX_ENCP,
-	},
-};
-
 static struct hdmi_format_para fmt_para_vesa_1280x768p60_5x3 = {
 	.vic = HDMIV_1280x768p60hz,
 	.name = "1280x768p60hz",
+	.sname = "1280x768p60hz",
 	.pixel_repetition_factor = 0,
 	.progress_mode = 1,
 	.scrambler_en = 0,
@@ -2018,6 +2115,7 @@ static struct hdmi_format_para fmt_para_vesa_1280x800p60_8x5 = {
 static struct hdmi_format_para fmt_para_vesa_1280x960p60_4x3 = {
 	.vic = HDMIV_1280x960p60hz,
 	.name = "1280x960p60hz",
+	.sname = "1280x960p60hz",
 	.pixel_repetition_factor = 0,
 	.progress_mode = 1,
 	.scrambler_en = 0,
@@ -2163,6 +2261,7 @@ static struct hdmi_format_para fmt_para_vesa_1360x768p60_16x9 = {
 static struct hdmi_format_para fmt_para_vesa_1366x768p60_16x9 = {
 	.vic = HDMIV_1366x768p60hz,
 	.name = "1366x768p60hz",
+	.sname = "1366x768p60hz",
 	.pixel_repetition_factor = 0,
 	.progress_mode = 1,
 	.scrambler_en = 0,
@@ -2211,6 +2310,7 @@ static struct hdmi_format_para fmt_para_vesa_1366x768p60_16x9 = {
 static struct hdmi_format_para fmt_para_vesa_1400x1050p60_4x3 = {
 	.vic = HDMIV_1400x1050p60hz,
 	.name = "1400x1050p60hz",
+	.sname = "1400x1050p60hz",
 	.pixel_repetition_factor = 0,
 	.progress_mode = 1,
 	.scrambler_en = 0,
@@ -2354,105 +2454,6 @@ static struct hdmi_format_para fmt_para_vesa_1440x2560p60_9x16 = {
 	},
 };
 
-#if 1
-static struct hdmi_format_para fmt_para_vesa_2560x1440p60_16x9 = {
-        .vic = HDMIV_2560x1440p60hz,
-        .name = "2560x1440p60hz",
-        .sname = "2560x1440p60hz",
-        .pixel_repetition_factor = 0,
-        .progress_mode = 1,
-        .scrambler_en = 0,
-        .tmds_clk_div40 = 0,
-        .tmds_clk =  241500,
-        .timing = {
-                .pixel_freq = 241500,
-                .h_freq = 88790,
-                .v_freq = 60000,
-                .vsync = 60,
-                .vsync_polarity = 1,
-                .hsync_polarity = 1,
-                .h_active = 2560,
-                .h_total = 2720,
-                .h_blank = 160,
-                .h_front = 48,
-                .h_sync = 32,
-                .h_back = 80,
-                .v_active = 1440,
-                .v_total = 1481,
-                .v_blank = 41,
-                .v_front = 2,
-                .v_sync = 5,
-                .v_back = 34,
-                .v_sync_ln = 1,
-        },
-        .hdmitx_vinfo = {
-                .name              = "2560x1440p60hz",
-                .mode              = VMODE_HDMI,
-                .width             = 2560,
-                .height            = 1440,
-                .field_height      = 1440,
-                .aspect_ratio_num  = 16,
-                .aspect_ratio_den  = 9,
-                .sync_duration_num = 60,
-                .sync_duration_den = 1,
-                .video_clk         = 241500000,
-                .htotal            = 2720,
-                .vtotal            = 1481,
-                .viu_color_fmt     = COLOR_FMT_YUV444,
-                .viu_mux           = VIU_MUX_ENCP,
-        },
-};
-#endif
-
-static struct hdmi_format_para fmt_para_vesa_480x320p60_4x3 = {
-        .vic = HDMIV_480x320p60hz,
-        .name = "480x320p60hz",
-        .sname = "480x320p60hz",
-        .pixel_repetition_factor = 0,
-        .progress_mode = 1,
-        .scrambler_en = 0,
-        .tmds_clk_div40 = 0,
-        .tmds_clk = 25200,
-        .timing = {
-                .pixel_freq = 25200,
-                .frac_freq = 25200,
-                .h_freq = 31500,
-                .v_freq = 60000,
-                .vsync_polarity = 0, /* -VSync */
-                .hsync_polarity = 0, /* -HSync */
-                .h_active = 480,
-                .h_total = 800,
-                .h_blank = 320,
-                .h_front = 120,
-                .h_sync = 100,
-                .h_back = 100,
-                .v_active = 320,
-                .v_total = 525,
-                .v_blank = 205,
-                .v_front = 8,
-                .v_sync = 8,
-                .v_back = 189,
-                .v_sync_ln = 1,
-        },
-        .hdmitx_vinfo = {
-                .name              = "480x320p60hz",
-                .mode              = VMODE_HDMI,
-                .width             = 480,
-                .height            = 320,
-                .field_height      = 320,
-                .aspect_ratio_num  = 4,
-                .aspect_ratio_den  = 3,
-                .sync_duration_num = 60,
-                .sync_duration_den = 1,
-                .video_clk         = 25200000,
-                .htotal            = 800,
-                .vtotal            = 525,
-                .viu_color_fmt     = COLOR_FMT_YUV444,
-                .viu_mux           = VIU_MUX_ENCP,
-        },
-};
-
-
 static struct hdmi_format_para fmt_para_vesa_1600x900p60_16x9 = {
 	.vic = HDMIV_1600x900p60hz,
 	.name = "1600x900p60hz",
@@ -2570,7 +2571,7 @@ static struct hdmi_format_para fmt_para_vesa_1680x1050p60_8x5 = {
 		.h_active = 1680,
 		.h_total = 1840,
 		.h_blank = 160,
-		.h_front = 48,
+		.h_front = 160,
 		.h_sync = 32,
 		.h_back = 80,
 		.v_active = 1050,
@@ -2652,6 +2653,7 @@ static struct hdmi_format_para fmt_para_vesa_1920x1200p60_8x5 = {
 static struct hdmi_format_para fmt_para_vesa_2160x1200p90_9x5 = {
 	.vic = HDMIV_2160x1200p90hz,
 	.name = "2160x1200p90hz",
+	.sname = "2160x1200p90hz",
 	.pixel_repetition_factor = 0,
 	.progress_mode = 1,
 	.scrambler_en = 0,
@@ -2697,7 +2699,102 @@ static struct hdmi_format_para fmt_para_vesa_2160x1200p90_9x5 = {
 	},
 };
 
-static struct hdmi_format_para fmt_para_vesa_2560x1600p60_8x5 = {
+static struct hdmi_format_para fmt_para_vesa_2560x1080p60_64x27 = {
+	.vic = HDMI_2560x1080p60_64x27,
+	.name = "2560x1080p60hz",
+	.sname = "2560x1080p60hz",
+	.pixel_repetition_factor = 0,
+	.progress_mode = 1,
+	.scrambler_en = 0,
+	.tmds_clk_div40 = 0,
+	.tmds_clk = 198000,
+	.timing = {
+		.pixel_freq = 198000,
+		.h_freq = 66000,
+		.v_freq = 60000,
+		.vsync_polarity = 1,
+		.hsync_polarity = 1,
+		.h_active = 2560,
+		.h_total = 3000,
+		.h_blank = 440,
+		.h_front = 248,
+		.h_sync = 44,
+		.h_back = 148,
+		.v_active = 1080,
+		.v_total = 1100,
+		.v_blank = 20,
+		.v_front = 4,
+		.v_sync = 5,
+		.v_back = 11,
+		.v_sync_ln = 1,
+	},
+	.hdmitx_vinfo = {
+		.name              = "2560x1080p60hz",
+		.mode              = VMODE_HDMI,
+		.width             = 2560,
+		.height            = 1080,
+		.field_height      = 1080,
+		.aspect_ratio_num  = 64,
+		.aspect_ratio_den  = 27,
+		.sync_duration_num = 60,
+		.sync_duration_den = 1,
+		.video_clk         = 198000000,
+		.htotal            = 3000,
+		.vtotal            = 1100,
+		.viu_color_fmt     = COLOR_FMT_YUV444,
+		.viu_mux           = VIU_MUX_ENCP,
+	},
+};
+
+static struct hdmi_format_para fmt_para_vesa_2560x1440p60_16x9 = {
+	.vic = HDMIV_2560x1440p60hz,
+	.name = "2560x1440p60hz",
+	.sname = "2560x1440p60hz",
+	.pixel_repetition_factor = 0,
+	.progress_mode = 1,
+	.scrambler_en = 0,
+	.tmds_clk_div40 = 0,
+	.tmds_clk =  241500,
+	.timing = {
+		.pixel_freq = 241500,
+		.h_freq = 88790,
+		.v_freq = 60000,
+		.vsync = 60,
+		.vsync_polarity = 1,
+		.hsync_polarity = 1,
+		.h_active = 2560,
+		.h_total = 2720,
+		.h_blank = 160,
+		.h_front = 48,
+		.h_sync = 32,
+		.h_back = 80,
+		.v_active = 1440,
+		.v_total = 1481,
+		.v_blank = 41,
+		.v_front = 2,
+		.v_sync = 5,
+		.v_back = 34,
+		.v_sync_ln = 1,
+	},
+	.hdmitx_vinfo = {
+		.name              = "2560x1440p60hz",
+		.mode              = VMODE_HDMI,
+		.width             = 2560,
+		.height            = 1440,
+		.field_height      = 1440,
+		.aspect_ratio_num  = 16,
+		.aspect_ratio_den  = 9,
+		.sync_duration_num = 60,
+		.sync_duration_den = 1,
+		.video_clk         = 241500000,
+		.htotal            = 2720,
+		.vtotal            = 1481,
+		.viu_color_fmt     = COLOR_FMT_YUV444,
+		.viu_mux           = VIU_MUX_ENCP,
+	},
+};
+
+static struct hdmi_format_para fmt_para_vesa_2560x1600p60_16x9 = {
 	.vic = HDMIV_2560x1600p60hz,
 	.name = "2560x1600p60hz",
 	.sname = "2560x1600p60hz",
@@ -2705,26 +2802,26 @@ static struct hdmi_format_para fmt_para_vesa_2560x1600p60_8x5 = {
 	.progress_mode = 1,
 	.scrambler_en = 0,
 	.tmds_clk_div40 = 0,
-	.tmds_clk = 348500,
+	.tmds_clk = 297000,
 	.timing = {
-		.pixel_freq = 348500,
-		.h_freq = 99458,
-		.v_freq = 59987,
+		.pixel_freq = 297000,
+		.h_freq = 99664,
+		.v_freq = 60000,
 		.vsync = 60,
-		.vsync_polarity = 1,
-		.hsync_polarity = 1,
+		.vsync_polarity = 0,
+		.hsync_polarity = 0,
 		.h_active = 2560,
-		.h_total = 3504,
-		.h_blank = 944,
-		.h_front = 192,
-		.h_sync = 280,
-		.h_back = 472,
+		.h_total = 2980,
+		.h_blank = 420,
+		.h_front = 120,
+		.h_sync = 32,
+		.h_back = 268,
 		.v_active = 1600,
-		.v_total = 1658,
-		.v_blank = 58,
-		.v_front = 3,
-		.v_sync = 6,
-		.v_back = 49,
+		.v_total = 1652,
+		.v_blank = 52,
+		.v_front = 32,
+		.v_sync = 10,
+		.v_back = 10,
 		.v_sync_ln = 1,
 	},
 	.hdmitx_vinfo = {
@@ -2733,16 +2830,64 @@ static struct hdmi_format_para fmt_para_vesa_2560x1600p60_8x5 = {
 		.width             = 2560,
 		.height            = 1600,
 		.field_height      = 1600,
-		.aspect_ratio_num  = 8,
-		.aspect_ratio_den  = 5,
+		.aspect_ratio_num  = 16,
+		.aspect_ratio_den  = 9,
 		.sync_duration_num = 60,
 		.sync_duration_den = 1,
-		.video_clk         = 348500000,
-		.htotal            = 3504,
-		.vtotal            = 1658,
+		.video_clk         = 297000000,
+		.htotal            = 2980,
+		.vtotal            = 1652,
 		.fr_adj_type       = VOUT_FR_ADJ_HDMI,
 		.viu_color_fmt     = COLOR_FMT_YUV444,
 		.viu_mux           = VIU_MUX_ENCP,
+	},
+};
+
+static struct hdmi_format_para fmt_para_vesa_3440x1440p60_43x18 = {
+	.vic = HDMIV_3440x1440p60hz,
+	.name = "3440x1440p60hz",
+	.sname = "3440x1440p60hz",
+	.pixel_repetition_factor = 0,
+	.progress_mode = 1,
+	.scrambler_en = 0,
+	.tmds_clk_div40 = 0,
+	.tmds_clk = 319750,
+	.timing = {
+		.pixel_freq = 319750,
+		.h_freq = 88819,
+		.v_freq = 59973,
+		.vsync_polarity = 1, /* +VSync */
+		.hsync_polarity = 1, /* +HSync */
+		.h_active = 3440,
+		.h_total = 3600,
+		.h_blank = 160,
+		.h_front = 48,
+		.h_sync = 32,
+		.h_back = 80,
+		.v_active = 1440,
+		.v_total = 1481,
+		.v_blank = 41,
+		.v_front = 3,
+		.v_sync = 10,
+		.v_back = 28,
+		.v_sync_ln = 1,
+	},
+	.hdmitx_vinfo = {
+		.name 				= "3440x1440p60hz",
+		.mode 				= VMODE_HDMI,
+		.width 				= 3440,
+		.height 			= 1440,
+		.field_height 		= 1440,
+		.aspect_ratio_num 	= 43,
+		.aspect_ratio_den 	= 18,
+		.sync_duration_num 	= 60,
+		.sync_duration_den 	= 1,
+		.video_clk 			= 319750000,
+		.htotal				= 3600,
+		.vtotal 			= 1481,
+		.fr_adj_type 		= VOUT_FR_ADJ_HDMI,
+		.viu_color_fmt 		= COLOR_FMT_YUV444,
+		.viu_mux 			= VIU_MUX_ENCP,
 	},
 };
 
@@ -2775,18 +2920,17 @@ static struct hdmi_format_para *all_fmt_paras[] = {
 	&fmt_para_3840x2160p50_16x9_y420,
 	&fmt_para_4096x2160p50_256x135_y420,
 	&fmt_para_2560x1080p50_64x27,
-	&fmt_para_vesa_2560x1080p60_64x27,
-	&fmt_para_vesa_2560x1440p60_16x9,
+	&fmt_para_2560x1080p60_64x27,
 	&fmt_para_vesa_480x320p60_4x3,
 	&fmt_para_vesa_640x480p60_4x3,
 	&fmt_para_vesa_800x480p60_4x3,
-	&fmt_para_vesa_1280x480p60_8x3,
 	&fmt_para_vesa_800x600p60_4x3,
 	&fmt_para_vesa_852x480p60_213x120,
 	&fmt_para_vesa_854x480p60_427x240,
 	&fmt_para_vesa_1024x600p60_17x10,
 	&fmt_para_vesa_1024x768p60_4x3,
 	&fmt_para_vesa_1152x864p75_4x3,
+	&fmt_para_vesa_1280x480p60_8x3,
 	&fmt_para_vesa_1280x768p60_5x3,
 	&fmt_para_vesa_1280x800p60_8x5,
 	&fmt_para_vesa_1280x960p60_4x3,
@@ -2801,7 +2945,11 @@ static struct hdmi_format_para *all_fmt_paras[] = {
 	&fmt_para_vesa_1680x1050p60_8x5,
 	&fmt_para_vesa_1920x1200p60_8x5,
 	&fmt_para_vesa_2160x1200p90_9x5,
-	&fmt_para_vesa_2560x1600p60_8x5,
+	&fmt_para_vesa_2560x1080p60_64x27,
+	&fmt_para_vesa_2560x1440p60_16x9,
+	&fmt_para_vesa_2560x1600p60_16x9,
+	&fmt_para_vesa_3440x1440p60_43x18,
+	&fmt_para_custombuilt,
 	&fmt_para_null_hdmi_fmt,
 	&fmt_para_non_hdmi_fmt,
 	NULL,
@@ -2817,6 +2965,137 @@ struct hdmi_format_para *hdmi_get_fmt_paras(enum hdmi_vic vic)
 	}
 	return &fmt_para_non_hdmi_fmt;
 }
+void debug_hdmi_fmt_param(struct hdmi_format_para param)
+{
+	/* timing */
+	pr_info("fmt_para.timing\n");
+	pr_info("   - pixel_freq %d, frac_freq %d\n",
+			param.timing.pixel_freq, param.timing.frac_freq);
+	pr_info("   - h_freq %d, v_freq %d\n",
+			param.timing.h_freq, param.timing.v_freq);
+	pr_info("   - hsync_polarity %d, vsync_polarity %d\n",
+			param.timing.hsync_polarity,
+			param.timing.vsync_polarity);
+	pr_info("   - h_active %d, h_total %d\n",
+			param.timing.h_active, param.timing.h_total);
+	pr_info("   - h_blank %d, h_front %d, h_sync %d, h_back %d\n",
+			param.timing.h_blank, param.timing.h_front,
+			param.timing.h_sync, param.timing.h_back);
+	pr_info("   - v_active %d, v_total %d\n",
+			param.timing.v_active, param.timing.v_total);
+	pr_info("   - v_blank %d, v_front %d, v_sync %d, v_back %d\n",
+			param.timing.v_blank, param.timing.v_front,
+			param.timing.v_sync, param.timing.v_back);
+	pr_info("   - v_sync_ln %d\n", param.timing.v_sync_ln);
+
+	/* hdmitx_vinfo */
+	pr_info("fmt_para.hdmitx_vinfo\n");
+	pr_info("   - name %s, mode %d\n",
+			param.hdmitx_vinfo.name, param.hdmitx_vinfo.mode);
+	pr_info("   - width %d, height %d, field_height %d\n",
+			param.hdmitx_vinfo.width, param.hdmitx_vinfo.height,
+			param.hdmitx_vinfo.field_height);
+	pr_info("   - aspect_ratio_num %d, aspect_ratio_den %d\n",
+			param.hdmitx_vinfo.aspect_ratio_num,
+			param.hdmitx_vinfo.aspect_ratio_den);
+	pr_info("   - video_clk %d\n", param.hdmitx_vinfo.video_clk);
+	pr_info("   - htotal %d, vtotal %d\n",
+			param.hdmitx_vinfo.htotal, param.hdmitx_vinfo.vtotal);
+	pr_info("   - viu_color_fmt %d, viu_mux %d\n",
+			param.hdmitx_vinfo.viu_color_fmt,
+			param.hdmitx_vinfo.viu_mux);
+}
+
+/*
+ * assuming modeline information from command line is as following.
+ * setenv modeline
+ * "horpixels,verpixels,pixel_clock,hor_freq,ver_freq
+ * ,hdisp,hsyncstart,hsyncend,htotal,vdisp,vsyncstart,vsyncend,vtotal
+ * ,hsync_polarity,vsync_polarity,progress_mode"
+ */
+static int __init setup_modeline(char *s)
+{
+	struct hdmi_cea_timing *custom_timing;
+	struct modeline_table tbl;
+	unsigned int *buf;
+	char *item = NULL;
+	unsigned long temp = 0;
+	int ret;
+	int i = 0;
+
+	/* 1. parsing modeline information from command line */
+	buf = (unsigned int *)&(tbl.horpixels);
+
+	while (s != NULL) {
+		item = strsep(&s, ",");
+		ret = kstrtoul(item, 0, &temp);
+		*(buf + i) = temp;
+		i++;
+	}
+
+	/* 2. build hdmi_format_para */
+	fmt_para_custombuilt.progress_mode = tbl.progress_mode;
+	fmt_para_custombuilt.tmds_clk = tbl.pixel_clock;
+
+	/* timing */
+	fmt_para_custombuilt.timing.pixel_freq = tbl.pixel_clock;
+	fmt_para_custombuilt.timing.frac_freq = tbl.pixel_clock;
+	fmt_para_custombuilt.timing.h_freq = tbl.hor_freq;
+	fmt_para_custombuilt.timing.v_freq = (tbl.ver_freq * 1000);
+	fmt_para_custombuilt.timing.hsync_polarity = tbl.hsync_polarity;
+	fmt_para_custombuilt.timing.vsync_polarity = tbl.vsync_polarity;
+	/* h_active = hdisp */
+	fmt_para_custombuilt.timing.h_active = tbl.hdisp;
+	/* h_total = htotal */
+	fmt_para_custombuilt.timing.h_total =  tbl.htotal;
+	/* h_blank = htotal - hdisp */
+	fmt_para_custombuilt.timing.h_blank = tbl.htotal - tbl.hdisp;
+	/* h_front = hsyncstart - hdisp */
+	fmt_para_custombuilt.timing.h_front = tbl.hsyncstart - tbl.hdisp;
+	/* h_sync = hsyncend - hsyncstart */
+	fmt_para_custombuilt.timing.h_sync = tbl.hsyncend - tbl.hsyncstart;
+	/* h_back = (h_blank - (h_front + h_sync))*/
+	fmt_para_custombuilt.timing.h_back
+		= fmt_para_custombuilt.timing.h_blank
+		- fmt_para_custombuilt.timing.h_front
+		- fmt_para_custombuilt.timing.h_sync;
+	/* v_active = vdisp */
+	fmt_para_custombuilt.timing.v_active = tbl.vdisp;
+	/* v_total = vtotal */
+	fmt_para_custombuilt.timing.v_total = tbl.vtotal;
+	/* v_blank = vtotal - vdisp */
+	fmt_para_custombuilt.timing.v_blank = tbl.vtotal - tbl.vdisp;
+	/* v_front = vsyncstart - vdisp */
+	fmt_para_custombuilt.timing.v_front = tbl.vsyncstart - tbl.vdisp;
+	/* v_sync = vsyncend - vsyncstart */
+	fmt_para_custombuilt.timing.v_sync = tbl.vsyncend - tbl.vsyncstart;
+	/* v_back = (v_blank - (v_front + v_sync)) */
+	fmt_para_custombuilt.timing.v_back
+		= fmt_para_custombuilt.timing.v_blank
+		- fmt_para_custombuilt.timing.v_front
+		- fmt_para_custombuilt.timing.v_sync;
+	fmt_para_custombuilt.timing.v_sync_ln = 1;
+
+	/* hdmitx_vinfo */
+	fmt_para_custombuilt.hdmitx_vinfo.width = tbl.hdisp;
+	fmt_para_custombuilt.hdmitx_vinfo.height = tbl.vdisp;
+	fmt_para_custombuilt.hdmitx_vinfo.field_height = tbl.vdisp;
+	fmt_para_custombuilt.hdmitx_vinfo.sync_duration_num = tbl.ver_freq;
+	fmt_para_custombuilt.hdmitx_vinfo.video_clk = (tbl.pixel_clock * 1000);
+	fmt_para_custombuilt.hdmitx_vinfo.htotal = tbl.htotal;
+	fmt_para_custombuilt.hdmitx_vinfo.vtotal = tbl.vtotal;
+
+	/* check parameters */
+	debug_hdmi_fmt_param(fmt_para_custombuilt);
+
+	/* 3. copy custom-built timing information for backup */
+	custom_timing = get_custom_timing();
+	memcpy(custom_timing, &fmt_para_custombuilt.timing,
+		sizeof(fmt_para_custombuilt.timing));
+
+	return 0;
+}
+__setup("modeline=", setup_modeline);
 
 struct hdmi_format_para *hdmi_match_dtd_paras(struct dtd *t)
 {
@@ -2845,6 +3124,7 @@ struct hdmi_format_para *hdmi_match_dtd_paras(struct dtd *t)
 struct hdmi_format_para *hdmi_get_vesa_paras(struct vesa_standard_timing *t)
 {
 	int i;
+
 	if (!t)
 		return NULL;
 	for (i = 0; all_fmt_paras[i] != NULL; i++) {
@@ -3091,6 +3371,7 @@ struct vinfo_s *hdmi_get_valid_vinfo(char *mode)
 	int i;
 	struct vinfo_s *info = NULL;
 	char mode_[32];
+
 	if (strlen(mode)) {
 		/* the string of mode contains char NF */
 		memset(mode_, 0, sizeof(mode_));
@@ -3116,6 +3397,7 @@ struct vinfo_s *hdmi_get_valid_vinfo(char *mode)
 		for (i = 0; i < sizeof(mode_); i++)
 			if (mode_[i] == 10)
 				mode_[i] = 0;
+
 		for (i = 0; all_fmt_paras[i]; i++) {
 			if (all_fmt_paras[i]->hdmitx_vinfo.mode == VMODE_MAX)
 				continue;

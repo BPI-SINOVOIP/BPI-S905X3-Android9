@@ -40,6 +40,6 @@ struct enc_reg_map {
 	struct enc_reg_set *set;
 };
 
-void set_vmode_enc_hw(enum hdmi_vic vic);
+void set_vmode_enc_hw(struct hdmitx_dev *hdev);
 
 #endif

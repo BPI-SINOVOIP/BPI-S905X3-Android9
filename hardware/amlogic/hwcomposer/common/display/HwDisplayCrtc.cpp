@@ -160,6 +160,15 @@ int32_t HwDisplayCrtc::update() {
         if (displayMode.empty()) {
              MESON_LOGE("displaymode should not null when connected.");
         } else {
+            struct vinfo_base_s info;
+            int ret = read_vout_info(0, &info);
+            if (ret == 0) {
+                mCurModeInfo.pixelW = info.width;
+                mCurModeInfo.pixelH = info.height;
+                mCurModeInfo.refreshRate =
+                    (float)info.sync_duration_num / info.sync_duration_den;
+                strcpy(mCurModeInfo.name, displayMode.c_str());
+            }
             for (auto it = mModes.begin(); it != mModes.end(); it ++) {
                 MESON_LOGD("update: (%s) mode (%s)", displayMode.c_str(), it->second.name);
                 if (strcmp(it->second.name, displayMode.c_str()) == 0

@@ -72,27 +72,29 @@ static const char* DISPLAY_MODE_LIST[DISPLAY_MODE_TOTAL] = {
     MODE_4K2KSMPTE60HZ,
     MODE_768P,
     MODE_PANEL,
-    MODE_1024x768P,
-    MODE_1440x900P,
-    MODE_640x480P,
-    MODE_1280x1024P,
-    MODE_800x600P,
-    MODE_1680x1050P,
-	MODE_1024x600P,
-	MODE_2560x1600P,
-	MODE_2560x1440P,
-	MODE_2560x1080P,
-	MODE_1920x1200P,
-	MODE_1600x1200P,
-	MODE_1600x900P,
-	MODE_1360x768P,
-	MODE_1280x800P,
-	MODE_480x320P,
-	MODE_800x480P,
-	MODE_1280x480P,
     MODE_PAL_M,
     MODE_PAL_N,
     MODE_NTSC_M,
+    MODE_480x320P,
+    MODE_640x480P,
+    MODE_800x480P,
+    MODE_800x600P,
+    MODE_1024x600P,
+    MODE_1024x768P,
+    MODE_1280x480P,
+    MODE_1280x800P,
+    MODE_1280x1024P,
+    MODE_1360x768P,
+    MODE_1440x900P,
+    MODE_1440x2560P,
+    MODE_1600x900P,
+    MODE_1600x1200P,
+    MODE_1680x1050P,
+    MODE_1920x1200P,
+    MODE_2560x1080P,
+    MODE_2560x1440P,
+    MODE_2560x1600P,
+    MODE_3440x1440P,
 };
 static const char* MODE_RESOLUTION_FIRST[] = {
     MODE_480I,
@@ -141,24 +143,26 @@ static const char* MODES_SINK[] = {
     "720p50hz",
     "480p60hz",
     "576p50hz",
-    "1024x768p60hz",
-    "1440x900p60hz",
-    "640x480p60hz",
-    "1280x1024p60hz",
-    "800x600p60hz",
-    "1680x1050p60hz",
-    "1024x600p60hz",
-    "2560x1600p60hz",
-    "2560x1440p60hz",
-    "2560x1080p60hz",
-    "1920x1200p60hz",
-    "1600x1200p60hz",
-    "1600x900p60hz",
-    "1360x768p60hz",
-    "1280x800p60hz",
     "480x320p60hz",
+    "640x480p60hz",
     "800x480p60hz",
+    "800x600p60hz",
+    "1024x600p60hz",
+    "1024x768p60hz",
     "1280x480p60hz",
+    "1280x800p60hz",
+    "1280x1024p60hz",
+    "1360x768p60hz",
+    "1440x900p60hz",
+    "1440x2560p60hz",
+    "1600x900p60hz",
+    "1600x1200p60hz",
+    "1680x1050p60hz",
+    "1920x1200p60hz",
+    "2560x1080p60hz",
+    "2560x1440p60hz",
+    "2560x1600p60hz",
+    "3440x1440p60hz",
 };
 
 // Repeater reference table, sorted by priority, per CDF
@@ -172,24 +176,26 @@ static const char* MODES_REPEATER[] = {
     "720p50hz",
     "480p60hz",
     "576p50hz",
-    "1024x768p60hz",
-    "1440x900p60hz",
-    "640x480p60hz",
-    "1280x1024p60hz",
-    "800x600p60hz",
-    "1680x1050p60hz",
-    "1024x600p60hz",
-    "2560x1600p60hz",
-    "2560x1440p60hz",
-    "2560x1080p60hz",
-    "1920x1200p60hz",
-    "1600x1200p60hz",
-    "1600x900p60hz",
-    "1360x768p60hz",
-    "1280x800p60hz",
     "480x320p60hz",
+    "640x480p60hz",
     "800x480p60hz",
+    "800x600p60hz",
+    "1024x600p60hz",
+    "1024x768p60hz",
     "1280x480p60hz",
+    "1280x800p60hz",
+    "1280x1024p60hz",
+    "1360x768p60hz",
+    "1440x900p60hz",
+    "1440x2560p60hz",
+    "1600x900p60hz",
+    "1600x1200p60hz",
+    "1680x1050p60hz",
+    "1920x1200p60hz",
+    "2560x1080p60hz",
+    "2560x1440p60hz",
+    "2560x1600p60hz",
+    "3440x1440p60hz",
 };
 
 static const char* DV_MODE_TYPE[] = {
@@ -276,7 +282,7 @@ DisplayMode::DisplayMode(const char *path, Ubootenv *ubootenv)
         mUbootenv = ubootenv;
     pmDeepColor = new FormatColorDepth(mUbootenv);
 
-    SYS_LOGI("display mode config path: %s", pConfigPath);
+    SYS_LOGI("display mode config path: %s\n", pConfigPath);
     pSysWrite = new SysWrite();
 }
 
@@ -293,7 +299,7 @@ void DisplayMode::init() {
     getBootEnv(UBOOTENV_REBOOT_MODE, mRebootMode);
     SYS_LOGI("reboot_mode :%s\n", mRebootMode);
 
-    SYS_LOGI("display mode init type: %d [0:none 1:tablet 2:mbox 3:tv], soc type:%s, default UI:%s",
+    SYS_LOGI("display mode init type: %d [0:none 1:tablet 2:mbox 3:tv], soc type:%s, default UI:%s\n",
         mDisplayType, mSocType, mDefaultUI);
 
     if ((pSysWrite->getPropertyBoolean(PROP_DOLBY_VISION_FEATURE, false))
@@ -349,7 +355,7 @@ void DisplayMode::reInit() {
      */
     pSysWrite->readSysfs(SYSFS_BOOT_TYPE, boot_type);
     if (strcmp(boot_type, "snapshotted")) {
-        SYS_LOGI("display mode reinit type: %d [0:none 1:tablet 2:mbox 3:tv], soc type:%s, default UI:%s",
+        SYS_LOGI("display mode reinit type: %d [0:none 1:tablet 2:mbox 3:tv], soc type:%s, default UI:%s\n",
             mDisplayType, mSocType, mDefaultUI);
         if ((DISPLAY_TYPE_MBOX == mDisplayType) || (DISPLAY_TYPE_REPEATER == mDisplayType)) {
             setSourceDisplay(OUPUT_MODE_STATE_POWER);
@@ -371,6 +377,7 @@ void DisplayMode::setTvModelName() {
 }
 
 void DisplayMode::setRecoveryMode(bool isRecovery) {
+    SYS_LOGI("setRecoveryMode true\n");
     mIsRecovery = isRecovery;
 }
 
@@ -386,7 +393,7 @@ bool DisplayMode::getBootEnv(const char* key, char* value) {
     const char* p_value = mUbootenv->getValue(key);
 
     //if (mLogLevel > LOG_LEVEL_1)
-        SYS_LOGI("getBootEnv key:%s value:%s", key, p_value);
+        SYS_LOGI("getBootEnv key:%s value:%s\n", key, p_value);
 
 	if (p_value) {
         strcpy(value, p_value);
@@ -397,7 +404,7 @@ bool DisplayMode::getBootEnv(const char* key, char* value) {
 
 void DisplayMode::setBootEnv(const char* key, char* value) {
     if (mLogLevel > LOG_LEVEL_1)
-        SYS_LOGI("setBootEnv key:%s value:%s", key, value);
+        SYS_LOGI("setBootEnv key:%s value:%s\n", key, value);
 
     mUbootenv->updateValue(key, value);
 }
@@ -408,12 +415,12 @@ int DisplayMode::parseConfigFile(){
     SysTokenizer* tokenizer;
     int status = SysTokenizer::open(pConfigPath, &tokenizer);
     if (status) {
-        SYS_LOGE("Error %d opening display config file %s.", status, pConfigPath);
+        SYS_LOGE("Error %d opening display config file %s\n", status, pConfigPath);
     } else {
         while (!tokenizer->isEof()) {
 
             if(mLogLevel > LOG_LEVEL_1)
-                SYS_LOGI("Parsing %s: %s", tokenizer->getLocation(), tokenizer->peekRemainderOfLine());
+                SYS_LOGI("Parsing %s: %s\n", tokenizer->getLocation(), tokenizer->peekRemainderOfLine());
 
             tokenizer->skipDelimiters(WHITESPACE);
 
@@ -442,7 +449,7 @@ int DisplayMode::parseConfigFile(){
                     tokenizer->skipDelimiters(WHITESPACE);
                     strcpy(mDefaultUI, tokenizer->nextToken(WHITESPACE));
                 }else {
-                    SYS_LOGE("%s: Expected keyword, got '%s'.", tokenizer->getLocation(), token);
+                    SYS_LOGE("%s: Expected keyword, got '%s'.\n", tokenizer->getLocation(), token);
                     break;
                 }
             }
@@ -464,19 +471,19 @@ int DisplayMode::parseFilterEdidConfigFile(){
     std::string edid;
     int status = SysTokenizer::open(FILTER_EDID_CFG_FILE, &tokenizer);
     if (status) {
-        SYS_LOGE("Error %d opening display config file %s.", status, pConfigPath);
+        SYS_LOGE("Error %d opening display config file %s.\n", status, pConfigPath);
     } else {
         while (!tokenizer->isEof()) {
 
             if (mLogLevel > LOG_LEVEL_1)
-                SYS_LOGI("Parsing %s: %s", tokenizer->getLocation(), tokenizer->peekRemainderOfLine());
+                SYS_LOGI("Parsing %s: %s\n", tokenizer->getLocation(), tokenizer->peekRemainderOfLine());
 
             tokenizer->skipDelimiters(WHITESPACE);
             if (tokenizer->peekChar() == '*') {
                 mFilterEdid = edid;
                 mFilterEdidList[u32EdidCount++] = mFilterEdid;
                 edid = "";
-                SYS_LOGI("parseFilterEdidConfigFile EdidCount = %d, mFilterEdid = %s",u32EdidCount,mFilterEdid.c_str());
+                SYS_LOGI("parseFilterEdidConfigFile EdidCount = %d, mFilterEdid = %s\n",u32EdidCount,mFilterEdid.c_str());
             }
             if (!tokenizer->isEol() && tokenizer->peekChar() != '*' && tokenizer->peekChar() != '#') {
                 char *token = tokenizer->nextToken(WHITESPACE);
@@ -494,6 +501,7 @@ void DisplayMode::setTvRecoveryDisplay() {
     SYS_LOGI("setTvRecoveryDisplay\n");
     char outputmode[MODE_LEN] = {0};
     pSysWrite->readSysfs(SYSFS_DISPLAY_MODE,outputmode);
+    strcpy(mDefaultUI, outputmode);
     updateDefaultUI();
 
     usleep(1000000LL);
@@ -510,17 +518,6 @@ void DisplayMode::setTvRecoveryDisplay() {
 void DisplayMode::setSourceDisplay(output_mode_state state) {
     hdmi_data_t data;
     char outputmode[MODE_LEN] = {0};
-
-    //hdmi edid parse error
-    if ((isHdmiEdidParseOK() == false) &&
-        (isHdmiHpd() == true)) {
-        pSysWrite->writeSysfs(DISPLAY_HDMI_AVMUTE, "1");
-        pSysWrite->writeSysfs(DISPLAY_HDMI_COLOR_ATTR, COLOR_RGB_8BIT);
-        pSysWrite->writeSysfs(SYSFS_DISPLAY_MODE, DEFAULT_OUTPUT_MODE);
-        pSysWrite->writeSysfs(DISPLAY_HDMI_AVMUTE, "-1");
-        SYS_LOGE("EDID parsing error detected\n");
-        return;
-    }
 
     pSysWrite->writeSysfs(SYS_DISABLE_VIDEO, VIDEO_LAYER_DISABLE);
 
@@ -553,6 +550,24 @@ void DisplayMode::setSourceDisplay(output_mode_state state) {
         pSysWrite->writeSysfs(H265_DOUBLE_WRITE_MODE, "0");
     }
 
+    //bpi, set default outputmode from ubootenv, 
+    char value[64];
+    char cvbs_buf[64];
+    getBootEnv(UBOOTENV_CVBSCABLE, value);
+    getBootEnv(UBOOTENV_CVBSMODE, cvbs_buf);
+    if (strcmp(value, "1") == 0 && strlen(cvbs_buf) >= 7) {
+        getBootEnv(UBOOTENV_CVBSMODE, value);
+        SYS_LOGI("getBootEnv(%s, %s)\n", UBOOTENV_CVBSMODE, value);
+    } else {
+        getBootEnv(UBOOTENV_HDMIMODE, value);
+        if (strlen(value) == 0) {
+            strcpy(value, "1080p60hz");
+        }
+        SYS_LOGI("getBootEnv(%s, %s)\n", UBOOTENV_HDMIMODE, value);
+    }
+    strcpy(outputmode, value);
+    strcpy(mDefaultUI, value);
+
     SYS_LOGI("display sink type:%d [0:none, 1:sink, 2:repeater], old outputmode:%s, new outputmode:%s\n",
             data.sinkType,
             data.current_mode,
@@ -580,7 +595,7 @@ void DisplayMode::setSourceDisplay(output_mode_state state) {
 bool DisplayMode::getModeSupportDeepColorAttr(const char* outputmode,const char * color){
     bool ret;
     if (outputmode == NULL || color == NULL) {
-        SYS_LOGI("outputmode or color is NULL");
+        SYS_LOGI("outputmode or color is NULL\n");
         return false;
     }
     ret = pmDeepColor->isModeSupportDeepColorAttr(outputmode,color);
@@ -918,6 +933,8 @@ void DisplayMode::getHighestHdmiMode(char* mode, hdmi_data_t* data) {
     char* startpos;
     char* destpos;
 
+    int resolution_num = 0;
+    int index = 0;
     startpos = data->disp_cap;
     strcpy(value, DEFAULT_OUTPUT_MODE);
 
@@ -929,6 +946,7 @@ void DisplayMode::getHighestHdmiMode(char* mode, hdmi_data_t* data) {
         memset(tempMode, 0, MODE_LEN);
         strncpy(tempMode, startpos, destpos - startpos);
         startpos = destpos + 1;
+	    resolution_num ++;
         if (!pSysWrite->getPropertyBoolean(PROP_SUPPORT_4K, true)
             &&(strstr(tempMode, "2160") || strstr(tempMode, "smpte"))) {
                 SYS_LOGE("This platform not support : %s\n", tempMode);
@@ -952,6 +970,39 @@ void DisplayMode::getHighestHdmiMode(char* mode, hdmi_data_t* data) {
     }
 
     strcpy(mode, value);
+    strcpy(mode, value);
+    if(resolution_num == 1) {
+    index = modeToIndex(tempMode);
+    switch(index)
+    {
+        case DISPLAY_MODE_480x320P:
+        case DISPLAY_MODE_640x480P:
+        case DISPLAY_MODE_800x480P:
+        case DISPLAY_MODE_800x600P:
+        case DISPLAY_MODE_1024x600P:
+        case DISPLAY_MODE_1024x768P:
+        case DISPLAY_MODE_1280x480P:
+        case DISPLAY_MODE_1280x800P:
+        case DISPLAY_MODE_1280x1024P:
+        case DISPLAY_MODE_1360x768P:
+        case DISPLAY_MODE_1440x900P:
+        case DISPLAY_MODE_1440x2560P:
+        case DISPLAY_MODE_1600x900P:
+        case DISPLAY_MODE_1600x1200P:
+        case DISPLAY_MODE_1680x1050P:
+        case DISPLAY_MODE_1920x1200P:
+        case DISPLAY_MODE_2560x1080P:
+        case DISPLAY_MODE_2560x1440P:
+        case DISPLAY_MODE_2560x1600P:
+        case DISPLAY_MODE_3440x1440P:
+        strcpy(mode, tempMode);
+        SYS_LOGI("set single HDMI mode to highest edid mode: %s\n", mode);
+        break;
+        default:
+        strcpy(mode, value);
+        break;
+    }
+    }
     SYS_LOGI("set HDMI to highest edid mode: %s\n", mode);
 }
 
@@ -1073,68 +1124,6 @@ void DisplayMode::getHdmiOutputMode(char* mode, hdmi_data_t* data) {
     //SYS_LOGI("set HDMI mode to %s\n", mode);
 }
 
-void DisplayMode::filterHdmiDispcap(hdmi_data_t* data) {
-    const char *delim = "\n";
-    char filter_dispcap[MAX_STR_LEN] = {0};
-    char supportedColorList[MAX_STR_LEN];
-
-    if (!(pmDeepColor->initColorAttribute(supportedColorList, MAX_STR_LEN))) {
-        SYS_LOGE("initColorAttribute fail\n");
-        return;
-    }
-
-    SYS_LOGI("before filtered HdmiDispcap: %s\n", data->disp_cap);
-
-    char *hdmi_mode = strtok(data->disp_cap, delim);
-    while (hdmi_mode != NULL) {
-        //recommend mode or not
-        bool recomMode = false;
-        int   len = strlen(hdmi_mode);
-        if (hdmi_mode[len - 1] == '*') {
-            hdmi_mode[len - 1] = '\0';
-            recomMode = true;
-        }
-
-        if (pmDeepColor->isSupportHdmiMode(hdmi_mode, supportedColorList)) {
-            strcat(filter_dispcap, hdmi_mode);
-            if (recomMode)
-                strcat(filter_dispcap, "*");
-            strcat(filter_dispcap, delim);
-        }
-
-        hdmi_mode = strtok(NULL, delim);
-    }
-
-    strcpy(data->disp_cap, filter_dispcap);
-
-    SYS_LOGI("after filtered HdmiDispcap: %s\n", data->disp_cap);
-}
-
-bool DisplayMode::isHdmiEdidParseOK(void) {
-    bool ret = true;
-
-    char edidParsing[MODE_LEN] = {0};
-    pSysWrite->readSysfs(DISPLAY_EDID_STATUS, edidParsing);
-
-    if (strcmp(edidParsing, "ok")) {
-        ret = false;
-    }
-
-    return ret;
-}
-
-bool DisplayMode::isHdmiHpd(void) {
-    bool ret = true;
-    char hpd_state[MODE_LEN] = {0};
-    pSysWrite->readSysfs(DISPLAY_HPD_STATE, hpd_state);
-
-    if (strstr(hpd_state, "1") == NULL) {
-        ret = false;
-    }
-
-    return ret;
-}
-
 void DisplayMode::getHdmiData(hdmi_data_t* data) {
     char sinkType[MODE_LEN] = {0};
     char edidParsing[MODE_LEN] = {0};
@@ -1170,8 +1159,6 @@ void DisplayMode::getHdmiData(hdmi_data_t* data) {
     }
     pSysWrite->readSysfs(SYSFS_DISPLAY_MODE, data->current_mode);
     getBootEnv(UBOOTENV_HDMIMODE, data->ubootenv_hdmimode);
-    //filter hdmi disp_cap mode for compatibility
-    filterHdmiDispcap(data);
 
     //filter mode defined by CDF, default disable this
     if (!strcmp(edidParsing, "ok") && false) {
@@ -1242,16 +1229,16 @@ void* DisplayMode::bootanimDetect(void* data) {
     char bootvideo[MODE_LEN] = {0};
 
     if (pThiz->mIsRecovery) {
-        SYS_LOGI("this is recovery mode");
+        SYS_LOGI("this is recovery mode\n");
         usleep(1000000LL);
-        pThiz->pSysWrite->writeSysfs(DISPLAY_FB0_BLANK, "1");
+        //pThiz->pSysWrite->writeSysfs(DISPLAY_FB0_BLANK, "1");
         //need close fb1, because uboot logo show in fb1
-        pThiz->pSysWrite->writeSysfs(DISPLAY_FB1_BLANK, "1");
-        pThiz->pSysWrite->writeSysfs(DISPLAY_FB1_FREESCALE, "0");
-        pThiz->pSysWrite->writeSysfs(DISPLAY_FB0_FREESCALE, "0x10001");
-        pThiz->pSysWrite->writeSysfs(DISPLAY_FB0_BLANK, "0");
+        //pThiz->pSysWrite->writeSysfs(DISPLAY_FB1_BLANK, "1");
+        //pThiz->pSysWrite->writeSysfs(DISPLAY_FB1_FREESCALE, "0");
+        //pThiz->pSysWrite->writeSysfs(DISPLAY_FB0_FREESCALE, "0");
+        //pThiz->pSysWrite->writeSysfs(DISPLAY_FB0_BLANK, "0");
     } else {
-        SYS_LOGI("this is android mode");
+        SYS_LOGI("this is android mode\n");
     }
 
     return NULL;
@@ -1269,7 +1256,7 @@ void* DisplayMode::bootvideoDetect(void* data) {
     DisplayMode *pThiz = (DisplayMode*)data;
     int timeout = 1200;
     char value[MODE_LEN] = {0};
-    SYS_LOGI("Need to setBootanimStatus 1 after bootvideo complete");
+    SYS_LOGI("Need to setBootanimStatus 1 after bootvideo complete\n");
     while (timeout > 0) {
         pThiz->pSysWrite->getProperty("init.svc.bootvideo", value);
         if (strstr(value, "stopped") != NULL) {
@@ -1386,25 +1373,104 @@ void DisplayMode::setAutoSwitchFrameRate(int state) {
 }
 
 void DisplayMode::updateDefaultUI() {
-    if (!strncmp(mDefaultUI, "720", 3)) {
-        mDisplayWidth= FULL_WIDTH_720;
-        mDisplayHeight = FULL_HEIGHT_720;
-        //pSysWrite->setProperty(PROP_LCD_DENSITY, DESITY_720P);
-        //pSysWrite->setProperty(PROP_WINDOW_WIDTH, "1280");
-        //pSysWrite->setProperty(PROP_WINDOW_HEIGHT, "720");
+    SYS_LOGI("%s, mDefaultUI = %s\n", __func__, mDefaultUI);
+    if (!strncmp(mDefaultUI, "480x320", 7)) {
+        mDisplayWidth = 480;
+        mDisplayHeight = 320;
+    } else if (!strncmp(mDefaultUI, "640x480", 7)) {
+        mDisplayWidth = 640;
+        mDisplayHeight = 480;
+    } else if (!strncmp(mDefaultUI, "480", 3)) {
+        mDisplayWidth = 720;
+        mDisplayHeight = 480;
+    } else if (!strncmp(mDefaultUI, "800x480", 7)) {
+        mDisplayWidth = 800;
+        mDisplayHeight = 480;
+    } else if (!strncmp(mDefaultUI, "576", 3)) {
+        mDisplayWidth = 720;
+        mDisplayHeight = 576;
+    } else if (!strncmp(mDefaultUI, "800x600", 7)) {
+        mDisplayWidth = 800;
+        mDisplayHeight = 600;
+    } else if (!strncmp(mDefaultUI, "1024x600", 8)) {
+        mDisplayWidth = 1024;
+        mDisplayHeight = 600;
+    } else if (!strncmp(mDefaultUI, "1024x768", 8)) {
+        mDisplayWidth = 1024;
+        mDisplayHeight = 768;
+    } else if (!strncmp(mDefaultUI, "720", 3)) {
+        mDisplayWidth = 1280;
+        mDisplayHeight = 720;
+    } else if (!strncmp(mDefaultUI, "1280x800", 8)) {
+        mDisplayWidth = 1280;
+        mDisplayHeight = 800;
+    } else if (!strncmp(mDefaultUI, "1360x768", 8)) {
+        mDisplayWidth = 1360;
+        mDisplayHeight = 768;
+    } else if (!strncmp(mDefaultUI, "1440x900", 8)) {
+        mDisplayWidth = 1440;
+        mDisplayHeight = 900;
+    } else if (!strncmp(mDefaultUI, "1440x2560", 9)) {
+        mDisplayWidth = 1440;
+        mDisplayHeight = 2560;
+    } else if (!strncmp(mDefaultUI, "1280x1024", 9)) {
+        mDisplayWidth = 1280;
+        mDisplayHeight = 1024;
+    } else if (!strncmp(mDefaultUI, "1600x900", 8)) {
+        mDisplayWidth = 1600;
+        mDisplayHeight = 900;
+    } else if (!strncmp(mDefaultUI, "1680x1050", 9)) {
+        mDisplayWidth = 1680;
+        mDisplayHeight = 1050;
+    } else if (!strncmp(mDefaultUI, "1600x1200", 9)) {
+        mDisplayWidth = 1600;
+        mDisplayHeight = 1200;
     } else if (!strncmp(mDefaultUI, "1080", 4)) {
-        mDisplayWidth = FULL_WIDTH_1080;
-        mDisplayHeight = FULL_HEIGHT_1080;
-        //pSysWrite->setProperty(PROP_LCD_DENSITY, DESITY_1080P);
-        //pSysWrite->setProperty(PROP_WINDOW_WIDTH, "1920");
-        //pSysWrite->setProperty(PROP_WINDOW_HEIGHT, "1080");
-    } else if (!strncmp(mDefaultUI, "4k2k", 4)) {
-        mDisplayWidth = FULL_WIDTH_4K2K;
-        mDisplayHeight = FULL_HEIGHT_4K2K;
-        //pSysWrite->setProperty(PROP_LCD_DENSITY, DESITY_2160P);
-        //pSysWrite->setProperty(PROP_WINDOW_WIDTH, "3840");
-        //pSysWrite->setProperty(PROP_WINDOW_HEIGHT, "2160");
+        mDisplayWidth = 1920;
+        mDisplayHeight = 1080;
+    } else if (!strncmp(mDefaultUI, "1920x1200", 9)) {
+        mDisplayWidth = 1920;
+        mDisplayHeight = 1200;
+    } else if (!strncmp(mDefaultUI, "2560x1080", 9)) {
+        mDisplayWidth = 2560;
+        mDisplayHeight = 1080;
+    } else if (!strncmp(mDefaultUI, "2560x1440", 9)) {
+        mDisplayWidth = 2560;
+        mDisplayHeight = 1440;
+    } else if (!strncmp(mDefaultUI, "2560x1600", 9)) {
+        mDisplayWidth = 2560;
+        mDisplayHeight = 1600;
+    } else if (!strncmp(mDefaultUI, "3440x1440", 9)) {
+        /* 3440x1440 - scaling with 21:9 ratio */
+        mDisplayWidth = 2560;
+        mDisplayHeight = 1080;
+    }  else if (!strncmp(mDefaultUI, "2160", 4)) {
+        /* FIXME: real 4K framebuffer is too slow, so using 1080p
+         * fbset(3840, 2160, 32);
+         */
+        mDisplayWidth = 3840;  //1920;
+        mDisplayHeight = 2160;  //1080;
+    } else if (!strncmp(mDefaultUI, "custombuilt", 11)) {
+        char value[64];
+        getBootEnv(UBOOTENV_CUSTOMWIDTH, value);
+        mDisplayWidth = atoi(value);
+
+        memset(value, strlen(value), '\0');
+        getBootEnv(UBOOTENV_CUSTOMHEIGHT, value);
+        mDisplayHeight = atoi(value);
+
+        SYS_LOGI("%s custombuilt mDisplayWidth = %d mDisplayHeight = %d", __func__, mDisplayWidth, mDisplayHeight);
     }
+#if 0
+    /* bpi, fix recovery display */
+    if (mIsRecovery) {
+        SYS_LOGI("recovery mode, force display to 1920x1080\n");
+        if (mDisplayWidth > 1920)
+            mDisplayWidth = 1920;
+        if (mDisplayHeight > 1080)
+            mDisplayHeight = 1080;
+    }
+#endif
 }
 
 void DisplayMode::updateDeepColor(bool cvbsMode, output_mode_state state, const char* outputmode) {
@@ -1493,7 +1559,7 @@ void DisplayMode::getPosition(const char* curMode, int *position) {
         strcpy(keyValue, MODE_480CVBS);
         defaultWidth = FULL_WIDTH_480;
         defaultHeight = FULL_HEIGHT_480;
-    }else if (strstr(curMode, "480")&& !strstr(curMode, "640x480p")) {
+    } else if (strstr(curMode, "480") && !strstr(curMode, "640x480p") && !strstr(curMode, "800x480p")) {
         strcpy(keyValue, strstr(curMode, MODE_480P_PREFIX) ? MODE_480P_PREFIX : MODE_480I_PREFIX);
         defaultWidth = FULL_WIDTH_480;
         defaultHeight = FULL_HEIGHT_480;
@@ -1506,22 +1572,22 @@ void DisplayMode::getPosition(const char* curMode, int *position) {
         defaultWidth = FULL_WIDTH_576;
         defaultHeight = FULL_HEIGHT_576;
     } else if (strstr(curMode, MODE_PAL_M)) {
-	strcpy(keyValue, MODE_PAL_M);
-	defaultWidth = FULL_WIDTH_480;
-	defaultHeight = FULL_HEIGHT_480;
+		strcpy(keyValue, MODE_PAL_M);
+		defaultWidth = FULL_WIDTH_480;
+		defaultHeight = FULL_HEIGHT_480;
     } else if (strstr(curMode, MODE_PAL_N)) {
-	strcpy(keyValue, MODE_PAL_N);
-	defaultWidth = FULL_WIDTH_576;
-	defaultHeight = FULL_HEIGHT_576;
+		strcpy(keyValue, MODE_PAL_N);
+		defaultWidth = FULL_WIDTH_576;
+		defaultHeight = FULL_HEIGHT_576;
     } else if (strstr(curMode, MODE_NTSC_M)) {
-	strcpy(keyValue, MODE_NTSC_M);
-	defaultWidth = FULL_WIDTH_480;
-	defaultHeight = FULL_HEIGHT_480;
+		strcpy(keyValue, MODE_NTSC_M);
+		defaultWidth = FULL_WIDTH_480;
+		defaultHeight = FULL_HEIGHT_480;
     } else if (strstr(curMode, MODE_720P_PREFIX)) {
         strcpy(keyValue, MODE_720P_PREFIX);
         defaultWidth = FULL_WIDTH_720;
         defaultHeight = FULL_HEIGHT_720;
-    } else if (strstr(curMode, MODE_768P_PREFIX)&& !strstr(curMode, "1024x768p")) {
+    } else if (strstr(curMode, MODE_768P_PREFIX) && !strstr(curMode, "1024x768p")&& !strstr(curMode, "1360x768p")) {
         strcpy(keyValue, MODE_768P_PREFIX);
         defaultWidth = FULL_WIDTH_768;
         defaultHeight = FULL_HEIGHT_768;
@@ -1529,97 +1595,7 @@ void DisplayMode::getPosition(const char* curMode, int *position) {
         strcpy(keyValue, MODE_1080I_PREFIX);
         defaultWidth = FULL_WIDTH_1080;
         defaultHeight = FULL_HEIGHT_1080;
-    } else if (strstr(curMode, MODE_1024x768P_PREFIX)) {
-        strcpy(keyValue, MODE_1024x768P_PREFIX);
-        defaultWidth = FULL_WIDTH_1024x768;
-        defaultHeight = FULL_HEIGHT_1024x768;
-		SYS_LOGI("jason getPosition 1024x768\n");
-    } else if (strstr(curMode, MODE_1440x900P_PREFIX)) {
-        strcpy(keyValue, MODE_1440x900P_PREFIX);
-        defaultWidth = FULL_WIDTH_1440x900;
-        defaultHeight = FULL_HEIGHT_1440x900;
-		SYS_LOGI("jason getPosition 1440x900\n");
-    } else if (strstr(curMode, MODE_640x480P_PREFIX)) {
-        strcpy(keyValue, MODE_640x480P_PREFIX);
-        defaultWidth = FULL_WIDTH_640x480;
-        defaultHeight = FULL_HEIGHT_640x480;
-		SYS_LOGI("jason getPosition 640x480\n");
-    } else if (strstr(curMode, MODE_1280x1024P_PREFIX)) {
-        strcpy(keyValue, MODE_1280x1024P_PREFIX);
-        defaultWidth = FULL_WIDTH_1280x1024;
-        defaultHeight = FULL_HEIGHT_1280x1024;
-		SYS_LOGI("jason getPosition 1280x1024\n");
-    }else if (strstr(curMode, MODE_800x600P_PREFIX)) {
-        strcpy(keyValue, MODE_800x600P_PREFIX);
-        defaultWidth = FULL_WIDTH_800x600;
-        defaultHeight = FULL_HEIGHT_800x600;
-		SYS_LOGI("jason getPosition 800x600\n");
-    } else if (strstr(curMode, MODE_1680x1050P_PREFIX)) {
-        strcpy(keyValue, MODE_1680x1050P_PREFIX);
-        defaultWidth = FULL_WIDTH_1680x1050;
-        defaultHeight = FULL_HEIGHT_1680x1050;
-		SYS_LOGI("jason getPosition 1680x1050\n");
-    } else if (strstr(curMode, MODE_1024x600P_PREFIX)) {
-        strcpy(keyValue, MODE_1024x600P_PREFIX);
-        defaultWidth = FULL_WIDTH_1024x600;
-        defaultHeight = FULL_HEIGHT_1024x600;
-		SYS_LOGI("jason getPosition 1024x600\n");
-    } else if (strstr(curMode, MODE_2560x1600P_PREFIX)) {
-        strcpy(keyValue, MODE_2560x1600P_PREFIX);
-        defaultWidth = FULL_WIDTH_2560x1600;
-        defaultHeight = FULL_HEIGHT_2560x1600;
-		SYS_LOGI("jason getPosition 2560x1600\n");
-    } else if (strstr(curMode, MODE_2560x1440P_PREFIX)) {
-        strcpy(keyValue, MODE_2560x1440P_PREFIX);
-        defaultWidth = FULL_WIDTH_2560x1440;
-        defaultHeight = FULL_HEIGHT_2560x1440;
-		SYS_LOGI("jason getPosition 2560x1440\n");
-    } else if (strstr(curMode, MODE_2560x1080P_PREFIX)) {
-        strcpy(keyValue, MODE_2560x1080P_PREFIX);
-        defaultWidth = FULL_WIDTH_2560x1080;
-        defaultHeight = FULL_HEIGHT_2560x1080;
-		SYS_LOGI("jason getPosition 2560x1080\n");
-    } else if (strstr(curMode, MODE_1920x1200P_PREFIX)) {
-        strcpy(keyValue, MODE_1920x1200P_PREFIX);
-        defaultWidth = FULL_WIDTH_1920x1200;
-        defaultHeight = FULL_HEIGHT_1920x1200;
-		SYS_LOGI("jason getPosition 1920x1200\n");
-    } else if (strstr(curMode, MODE_1600x1200P_PREFIX)) {
-        strcpy(keyValue, MODE_1600x1200P_PREFIX);
-        defaultWidth = FULL_WIDTH_1600x1200;
-        defaultHeight = FULL_HEIGHT_1600x1200;
-		SYS_LOGI("jason getPosition 1600x1200\n");
-    } else if (strstr(curMode, MODE_1600x900P_PREFIX)) {
-        strcpy(keyValue, MODE_1600x900P_PREFIX);
-        defaultWidth = FULL_WIDTH_1600x900;
-        defaultHeight = FULL_HEIGHT_1600x900;
-		SYS_LOGI("jason getPosition 1600x900\n");
-    } else if (strstr(curMode, MODE_1360x768P_PREFIX)) {
-        strcpy(keyValue, MODE_1360x768P_PREFIX);
-        defaultWidth = FULL_WIDTH_1360x768;
-        defaultHeight = FULL_HEIGHT_1360x768;
-		SYS_LOGI("jason getPosition 1360x768\n");
-    } else if (strstr(curMode, MODE_1280x800P_PREFIX)) {
-        strcpy(keyValue, MODE_1280x800P_PREFIX);
-        defaultWidth = FULL_WIDTH_1280x800;
-        defaultHeight = FULL_HEIGHT_1280x800;
-		SYS_LOGI("jason getPosition 1280x800\n");
-    } else if (strstr(curMode, MODE_480x320P_PREFIX)) {
-        strcpy(keyValue, MODE_480x320P_PREFIX);
-        defaultWidth = FULL_WIDTH_480x320;
-        defaultHeight = FULL_HEIGHT_480x320;
-		SYS_LOGI("jason getPosition 480x320\n");
-    } else if (strstr(curMode, MODE_800x480P_PREFIX)) {
-        strcpy(keyValue, MODE_800x480P_PREFIX);
-        defaultWidth = FULL_WIDTH_800x480;
-        defaultHeight = FULL_HEIGHT_800x480;
-		SYS_LOGI("jason getPosition 800x480\n");
-    } else if (strstr(curMode, MODE_1280x480P_PREFIX)) {
-        strcpy(keyValue, MODE_1280x480P_PREFIX);
-        defaultWidth = FULL_WIDTH_1280x480;
-        defaultHeight = FULL_HEIGHT_1280x480;
-		SYS_LOGI("jason getPosition 1280x480\n");
-    } else if (strstr(curMode, MODE_1080P_PREFIX)) {
+	} else if (strstr(curMode, MODE_1080P_PREFIX)) {
         strcpy(keyValue, MODE_1080P_PREFIX);
         defaultWidth = FULL_WIDTH_1080;
         defaultHeight = FULL_HEIGHT_1080;
@@ -1631,6 +1607,90 @@ void DisplayMode::getPosition(const char* curMode, int *position) {
         strcpy(keyValue, "4k2ksmpte");
         defaultWidth = FULL_WIDTH_4K2KSMPTE;
         defaultHeight = FULL_HEIGHT_4K2KSMPTE;
+    } else if (strstr(curMode, MODE_480x320P_PREFIX)) {
+        strcpy(keyValue, MODE_480x320P_PREFIX);
+        defaultWidth = FULL_WIDTH_480x320;
+        defaultHeight = FULL_HEIGHT_480x320;
+    } else if (strstr(curMode, MODE_640x480P_PREFIX)) {
+        strcpy(keyValue, MODE_640x480P_PREFIX);
+        defaultWidth = FULL_WIDTH_640x480;
+        defaultHeight = FULL_HEIGHT_640x480;
+    } else if (strstr(curMode, MODE_800x480P_PREFIX)) {
+        strcpy(keyValue, MODE_800x480P_PREFIX);
+        defaultWidth = FULL_WIDTH_800x480;
+        defaultHeight = FULL_HEIGHT_800x480;
+    } else if (strstr(curMode, MODE_800x600P_PREFIX)) {
+        strcpy(keyValue, MODE_800x600P_PREFIX);
+        defaultWidth = FULL_WIDTH_800x600;
+        defaultHeight = FULL_HEIGHT_800x600;
+    } else if (strstr(curMode, MODE_1024x600P_PREFIX)) {
+        strcpy(keyValue, MODE_1024x600P_PREFIX);
+        defaultWidth = FULL_WIDTH_1024x600;
+        defaultHeight = FULL_HEIGHT_1024x600;
+    } else if (strstr(curMode, MODE_1024x768P_PREFIX)) {
+        strcpy(keyValue, MODE_1024x768P_PREFIX);
+        defaultWidth = FULL_WIDTH_1024x768;
+        defaultHeight = FULL_HEIGHT_1024x768;
+    } else if (strstr(curMode, MODE_1280x480P_PREFIX)) {
+        strcpy(keyValue, MODE_1280x480P_PREFIX);
+        defaultWidth = FULL_WIDTH_1280x480;
+        defaultHeight = FULL_HEIGHT_1280x480;
+    } else if (strstr(curMode, MODE_1280x800P_PREFIX)) {
+        strcpy(keyValue, MODE_1280x800P_PREFIX);
+        defaultWidth = FULL_WIDTH_1280x800;
+        defaultHeight = FULL_HEIGHT_1280x800;
+    } else if (strstr(curMode, MODE_1280x1024P_PREFIX)) {
+        strcpy(keyValue, MODE_1280x1024P_PREFIX);
+        defaultWidth = FULL_WIDTH_1280x1024;
+        defaultHeight = FULL_HEIGHT_1280x1024;
+    } else if (strstr(curMode, MODE_1360x768P_PREFIX)) {
+        strcpy(keyValue, MODE_1360x768P_PREFIX);
+        defaultWidth = FULL_WIDTH_1360x768;
+        defaultHeight = FULL_HEIGHT_1360x768;
+    } else if (strstr(curMode, MODE_1440x900P_PREFIX)) {
+        strcpy(keyValue, MODE_1440x900P_PREFIX);
+        defaultWidth = FULL_WIDTH_1440x900;
+        defaultHeight = FULL_HEIGHT_1440x900;
+    } else if (strstr(curMode, MODE_1440x2560P_PREFIX)) {
+        strcpy(keyValue, MODE_1440x2560P_PREFIX);
+        defaultWidth = FULL_WIDTH_1440x2560;
+        defaultHeight = FULL_HEIGHT_1440x2560;
+    } else if (strstr(curMode, MODE_1600x900P_PREFIX)) {
+        strcpy(keyValue, MODE_1600x900P_PREFIX);
+        defaultWidth = FULL_WIDTH_1600x900;
+        defaultHeight = FULL_HEIGHT_1600x900;
+    } else if (strstr(curMode, MODE_1600x1200P_PREFIX)) {
+        strcpy(keyValue, MODE_1600x1200P_PREFIX);
+        defaultWidth = FULL_WIDTH_1600x1200;
+        defaultHeight = FULL_HEIGHT_1600x1200;
+    } else if (strstr(curMode, MODE_1680x1050P_PREFIX)) {
+        strcpy(keyValue, MODE_1680x1050P_PREFIX);
+        defaultWidth = FULL_WIDTH_1680x1050;
+        defaultHeight = FULL_HEIGHT_1680x1050;
+    } else if (strstr(curMode, MODE_1920x1200P_PREFIX)) {
+        strcpy(keyValue, MODE_1920x1200P_PREFIX);
+        defaultWidth = FULL_WIDTH_1920x1200;
+        defaultHeight = FULL_HEIGHT_1920x1200;
+    } else if (strstr(curMode, MODE_2560x1080P_PREFIX)) {
+        strcpy(keyValue, MODE_2560x1080P_PREFIX);
+        defaultWidth = FULL_WIDTH_2560x1080;
+        defaultHeight = FULL_HEIGHT_2560x1080;
+    } else if (strstr(curMode, MODE_2560x1440P_PREFIX)) {
+        strcpy(keyValue, MODE_2560x1440P_PREFIX);
+        defaultWidth = FULL_WIDTH_2560x1440;
+        defaultHeight = FULL_HEIGHT_2560x1440;
+    } else if (strstr(curMode, MODE_2560x1600P_PREFIX)) {
+        strcpy(keyValue, MODE_2560x1600P_PREFIX);
+        defaultWidth = FULL_WIDTH_2560x1600;
+        defaultHeight = FULL_HEIGHT_2560x1600;
+    } else if (strstr(curMode, MODE_3440x1440P_PREFIX)) {
+        strcpy(keyValue, MODE_3440x1440P_PREFIX);
+        defaultWidth = FULL_WIDTH_3440x1440;
+        defaultHeight = FULL_HEIGHT_3440x1440;
+    } else if (strstr(curMode, MODE_CUSTOMBUILT_PREFIX)) {
+		strcpy(keyValue, MODE_CUSTOMBUILT_PREFIX);
+        defaultWidth = mDisplayWidth;
+        defaultHeight = mDisplayHeight;
     } else if (strstr(curMode, MODE_PANEL)) {
         strcpy(keyValue, MODE_PANEL);
         defaultWidth = FULL_WIDTH_PANEL;
@@ -1640,7 +1700,15 @@ void DisplayMode::getPosition(const char* curMode, int *position) {
         defaultWidth = FULL_WIDTH_1080;
         defaultHeight = FULL_HEIGHT_1080;
     }
-
+#if 0
+	/*bpi, recovery mode force 1920x1080 */
+    if (mIsRecovery) {
+        SYS_LOGI("recovery mode, force display to 1920x1080\n");
+        strcpy(keyValue, MODE_1080P_PREFIX);
+        defaultWidth = FULL_WIDTH_1080;
+        defaultHeight = FULL_HEIGHT_1080;
+    }
+#endif
     mutex_lock(&mEnvLock);
     sprintf(ubootvar, "ubootenv.var.%s_x", keyValue);
     position[0] = getBootenvInt(ubootvar, 0);
@@ -1678,11 +1746,11 @@ void DisplayMode::setPosition(int left, int top, int width, int height) {
     } else if (strstr(curMode, "576")) {
         strcpy(keyValue, strstr(curMode, MODE_576P_PREFIX) ? MODE_576P_PREFIX : MODE_576I_PREFIX);
     } else if (strstr(curMode, MODE_PAL_M)) {
-	strcpy(keyValue, MODE_PAL_M);
+		strcpy(keyValue, MODE_PAL_M);
     } else if (strstr(curMode, MODE_PAL_N)) {
-	strcpy(keyValue, MODE_PAL_N);
+		strcpy(keyValue, MODE_PAL_N);
     } else if (strstr(curMode, MODE_NTSC_M)) {
-	strcpy(keyValue, MODE_NTSC_M);
+		strcpy(keyValue, MODE_NTSC_M);
     } else if (strstr(curMode, MODE_720P_PREFIX)) {
         strcpy(keyValue, MODE_720P_PREFIX);
     } else if (strstr(curMode, MODE_768P_PREFIX)) {
@@ -1695,8 +1763,51 @@ void DisplayMode::setPosition(int left, int top, int width, int height) {
         strcpy(keyValue, MODE_4K2K_PREFIX);
     } else if (strstr(curMode, MODE_4K2KSMPTE_PREFIX)) {
         strcpy(keyValue, "4k2ksmpte");
+    } else if (strstr(curMode, MODE_480x320P_PREFIX)) {
+        strcpy(keyValue, MODE_480x320P_PREFIX);
+    } else if (strstr(curMode, MODE_640x480P_PREFIX)) {
+        strcpy(keyValue, MODE_640x480P_PREFIX);
+    } else if (strstr(curMode, MODE_800x480P_PREFIX)) {
+        strcpy(keyValue, MODE_800x480P_PREFIX);
+    } else if (strstr(curMode, MODE_800x600P_PREFIX)) {
+        strcpy(keyValue, MODE_800x600P_PREFIX);
+    } else if (strstr(curMode, MODE_1024x600P_PREFIX)) {
+        strcpy(keyValue, MODE_1024x600P_PREFIX);
+    } else if (strstr(curMode, MODE_1024x768P_PREFIX)) {
+        strcpy(keyValue, MODE_1024x768P_PREFIX);
+    } else if (strstr(curMode, MODE_1280x480P_PREFIX)) {
+        strcpy(keyValue, MODE_1280x480P_PREFIX);
+    } else if (strstr(curMode, MODE_1280x800P_PREFIX)) {
+        strcpy(keyValue, MODE_1280x800P_PREFIX);
+    } else if (strstr(curMode, MODE_1280x1024P_PREFIX)) {
+        strcpy(keyValue, MODE_1280x1024P_PREFIX);
+    } else if (strstr(curMode, MODE_1360x768P_PREFIX)) {
+        strcpy(keyValue, MODE_1360x768P_PREFIX);
+    } else if (strstr(curMode, MODE_1440x900P_PREFIX)) {
+        strcpy(keyValue, MODE_1440x900P_PREFIX);
+    } else if (strstr(curMode, MODE_1440x2560P_PREFIX)) {
+        strcpy(keyValue, MODE_1440x2560P_PREFIX);
+    } else if (strstr(curMode, MODE_1600x900P_PREFIX)) {
+        strcpy(keyValue, MODE_1600x900P_PREFIX);
+    } else if (strstr(curMode, MODE_1600x1200P_PREFIX)) {
+        strcpy(keyValue, MODE_1600x1200P_PREFIX);
+    } else if (strstr(curMode, MODE_1680x1050P_PREFIX)) {
+        strcpy(keyValue, MODE_1680x1050P_PREFIX);
+    } else if (strstr(curMode, MODE_1920x1200P_PREFIX)) {
+        strcpy(keyValue, MODE_1920x1200P_PREFIX);
+    } else if (strstr(curMode, MODE_2560x1080P_PREFIX)) {
+        strcpy(keyValue, MODE_2560x1080P_PREFIX);
+    } else if (strstr(curMode, MODE_2560x1440P_PREFIX)) {
+        strcpy(keyValue, MODE_2560x1440P_PREFIX);
+    } else if (strstr(curMode, MODE_2560x1600P_PREFIX)) {
+        strcpy(keyValue, MODE_2560x1600P_PREFIX);
+    } else if (strstr(curMode, MODE_3440x1440P_PREFIX)) {
+        strcpy(keyValue, MODE_3440x1440P_PREFIX);
+    } else if (strstr(curMode, MODE_CUSTOMBUILT_PREFIX)) {
+        strcpy(keyValue, MODE_CUSTOMBUILT_PREFIX);
     } else if (strstr(curMode, MODE_PANEL)) {
         strcpy(keyValue, MODE_PANEL);
+		return;
     }
 
     mutex_lock(&mEnvLock);
@@ -1709,7 +1820,6 @@ void DisplayMode::setPosition(int left, int top, int width, int height) {
     sprintf(ubootvar, "ubootenv.var.%s_h", keyValue);
     setBootEnv(ubootvar, h);
     mutex_unlock(&mEnvLock);
-
 }
 
 void DisplayMode::saveDeepColorAttr(const char* mode, const char* dcValue) {
@@ -1724,7 +1834,7 @@ void DisplayMode::getDeepColorAttr(const char* mode, char* value) {
     if (!getBootEnv(ubootvar, value)) {
         //strcpy(value, (strstr(mode, "420") != NULL) ? DEFAULT_420_DEEP_COLOR_ATTR : DEFAULT_DEEP_COLOR_ATTR);
     }
-    SYS_LOGI(": getDeepColorAttr [%s]", value);
+    SYS_LOGI(": getDeepColorAttr [%s]\n", value);
 }
 
 /* *
@@ -1758,7 +1868,7 @@ bool DisplayMode::isTvSupportDolbyVision(char *mode) {
             strcat(mode, ",");
         }
     }
-    SYS_LOGI("Current Tv Support DV type [%s]", mode);
+    SYS_LOGI("Current Tv Support DV type [%s]\n", mode);
     return true;
 }
 
@@ -1805,7 +1915,7 @@ void DisplayMode::setDolbyVisionEnable(int state,  output_mode_state mode_state)
         if ((DISPLAY_TYPE_MBOX == mDisplayType) || (DISPLAY_TYPE_REPEATER == mDisplayType)) {
             char mode[MAX_STR_LEN] = {0};
             if (isTvSupportDolbyVision(mode)) {
-                SYS_LOGI("Tv is Support DolbyVision, highest mode is [%s]", mode);
+                SYS_LOGI("Tv is Support DolbyVision, highest mode is [%s]\n", mode);
                 if (((value_state == 2) && (strstr(mode, DV_MODE_TYPE[2]) == NULL))
                         || ((value_state == 3) && (strstr(mode, DV_MODE_TYPE[3]) == NULL)
                             && (strstr(mode, DV_MODE_TYPE[4]) == NULL))) {
@@ -1826,10 +1936,10 @@ void DisplayMode::setDolbyVisionEnable(int state,  output_mode_state mode_state)
                     case DOLBY_VISION_SET_ENABLE_LL_RGB:
                         pSysWrite->writeSysfs(DOLBY_VISION_LL_POLICY, "0");
                         if (strstr(mode, "LL_RGB_444_12BIT") != NULL) {
-                            SYS_LOGI("Dolby Vision set Mode [LL_RGB_444_12BIT]");
+                            SYS_LOGI("Dolby Vision set Mode [LL_RGB_444_12BIT]\n");
                             setBootEnv(UBOOTENV_COLORATTRIBUTE, "444,12bit");
                         } else if (strstr(mode, "LL_RGB_444_10BIT") != NULL) {
-                            SYS_LOGI("Dolby Vision set Mode [LL_RGB_444_10BIT]");
+                            SYS_LOGI("Dolby Vision set Mode [LL_RGB_444_10BIT]\n");
                             setBootEnv(UBOOTENV_COLORATTRIBUTE, "444,10bit");
                         }
                         pSysWrite->writeSysfs(DOLBY_VISION_LL_POLICY, "2");
@@ -1908,7 +2018,7 @@ void DisplayMode::setDolbyVisionEnable(int state,  output_mode_state mode_state)
             setHdrMode(HDR_MODE_AUTO);
         }
         initGraphicsPriority();
-        SYS_LOGI("setDolbyVisionEnable Enable [%d]", isDolbyVisionEnable());
+        SYS_LOGI("setDolbyVisionEnable Enable [%d]\n", isDolbyVisionEnable());
     } else {
         char tvmode[MODE_LEN] = {0};
         if (isTvSupportDolbyVision(tvmode)) {
@@ -1935,7 +2045,7 @@ void DisplayMode::setDolbyVisionEnable(int state,  output_mode_state mode_state)
                 }
             }
         }
-        SYS_LOGI("dvstatus %s, check_status_count [%d]", dvstatus, check_status_count);
+        SYS_LOGI("dvstatus %s, check_status_count [%d]\n", dvstatus, check_status_count);
         pSysWrite->writeSysfs(DOLBY_VISION_ENABLE_OLD, DV_DISABLE);
         pSysWrite->writeSysfs(DOLBY_VISION_ENABLE, DV_DISABLE);
 
@@ -1957,7 +2067,7 @@ void DisplayMode::setDolbyVisionEnable(int state,  output_mode_state mode_state)
             setSourceOutputMode(outputmode);
             setDolbyVisionState = true;
         }
-        SYS_LOGI("setDolbyVisionEnable Enable [%d]", isDolbyVisionEnable());
+        SYS_LOGI("setDolbyVisionEnable Enable [%d]\n", isDolbyVisionEnable());
     }
     if (dvStatusChanged) {
         usleep(300000);//300ms
@@ -1980,11 +2090,11 @@ void DisplayMode::getHdrStrategy(char* value) {
     } else {
         strcpy(value, HDR_POLICY_SINK);
     }
-    SYS_LOGI("getHdrStrategy is [%s]", value);
+    SYS_LOGI("getHdrStrategy is [%s]\n", value);
 }
 
 void DisplayMode::setHdrStrategy(const char* type) {
-    SYS_LOGI("setHdrStrategy is [%s]",type);
+    SYS_LOGI("setHdrStrategy is [%s]\n",type);
     char dv_mode[MAX_STR_LEN];
     if (strstr(type, HDR_POLICY_SINK)) {
         pSysWrite->writeSysfs(HDR_POLICY, HDR_POLICY_SINK);
@@ -2184,19 +2294,19 @@ void DisplayMode::DetectDolbyVisionOutputMode(output_mode_state state, char* out
  * */
 void DisplayMode::setGraphicsPriority(const char* mode) {
     if (NULL != mode) {
-        SYS_LOGI("setGraphicsPriority [%s]", mode);
+        SYS_LOGI("setGraphicsPriority [%s]\n", mode);
     }
     if ((NULL != mode) && (atoi(mode) == 0 || atoi(mode) == 1)) {
         pSysWrite->writeSysfs(DOLBY_VISION_GRAPHICS_PRIORITY_OLD, mode);
         pSysWrite->writeSysfs(DOLBY_VISION_GRAPHICS_PRIORITY, mode);
         pSysWrite->setProperty(PROP_DOLBY_VISION_PRIORITY, mode);
-        SYS_LOGI("setGraphicsPriority [%s]",
+        SYS_LOGI("setGraphicsPriority [%s]\n",
                 atoi(mode) == 0 ? "Video Priority" : "Graphics Priority");
     } else {
         pSysWrite->writeSysfs(DOLBY_VISION_GRAPHICS_PRIORITY_OLD, "0");
         pSysWrite->writeSysfs(DOLBY_VISION_GRAPHICS_PRIORITY, "0");
         pSysWrite->setProperty(PROP_DOLBY_VISION_PRIORITY, "0");
-        SYS_LOGI("setGraphicsPriority default [Video Priority]");
+        SYS_LOGI("setGraphicsPriority default [Video Priority]\n");
     }
 }
 
@@ -2206,7 +2316,7 @@ void DisplayMode::setGraphicsPriority(const char* mode) {
  * */
 void DisplayMode::getGraphicsPriority(char* mode) {
     pSysWrite->getPropertyString(PROP_DOLBY_VISION_PRIORITY, mode, "0");
-    SYS_LOGI("getGraphicsPriority [%s]",
+    SYS_LOGI("getGraphicsPriority [%s]\n",
         atoi(mode) == 0 ? "Video Priority" : "Graphics Priority");
 }
 
@@ -2274,7 +2384,7 @@ int DisplayMode::modeToIndex(const char *mode) {
         }
     }
 
-    //SYS_LOGI("modeToIndex mode:%s index:%d", mode, index);
+    //SYS_LOGI("modeToIndex mode:%s index:%d\n", mode, index);
     return index;
 }
 
@@ -2309,24 +2419,6 @@ void DisplayMode::onTxEvent (char* switchName, char* hpdstate, int outputState) 
         setBootEnv(UBOOTENV_REBOOT_MODE, mRebootMode);
     }
 #endif
-
-    if (hpdstate && hpdstate[0] == '0') {
-        char outputmode[MODE_LEN] = {0};
-        getBootEnv(UBOOTENV_CVBSMODE, outputmode);
-        pSysWrite->writeSysfs(SYSFS_DISPLAY_MODE, outputmode);
-        return;
-    }
-
-    //hdmi edid parse error
-    if ((isHdmiEdidParseOK() == false) &&
-        (isHdmiHpd() == true)) {
-        pSysWrite->writeSysfs(DISPLAY_HDMI_AVMUTE, "1");
-        pSysWrite->writeSysfs(DISPLAY_HDMI_COLOR_ATTR, COLOR_RGB_8BIT);
-        pSysWrite->writeSysfs(SYSFS_DISPLAY_MODE, DEFAULT_OUTPUT_MODE);
-        pSysWrite->writeSysfs(DISPLAY_HDMI_AVMUTE, "-1");
-        return;
-    }
-
     setSourceDisplay((output_mode_state)outputState);
 }
 
@@ -2357,7 +2449,7 @@ void DisplayMode::dumpCap(const char * path, const char * hint, char *result) {
     pSysWrite->readSysfsOriginal(path, logBuf);
 
     if (mLogLevel > LOG_LEVEL_0)
-        SYS_LOGI("%s%s", hint, logBuf);
+        SYS_LOGI("%s%s\n", hint, logBuf);
 
     if (NULL != result) {
         strcat(result, hint);

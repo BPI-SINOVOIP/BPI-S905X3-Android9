@@ -47,6 +47,8 @@ public class DensityFragment extends LeanbackPreferenceFragment {
 	private static final String ACTION_DENSITY_240 = "240";
 	private static final String ACTION_DENSITY_280 = "280";
 	private static final String ACTION_DENSITY_320 = "320";
+	private static final String ACTION_DENSITY_360 = "360";
+	private static final String ACTION_DENSITY_420 = "420";
 	private static final int DEFAULT_DISPLAY = 0;
 
 
@@ -119,6 +121,10 @@ public class DensityFragment extends LeanbackPreferenceFragment {
 				.checked(density == 280).build());
 		actions.add(new Action.Builder().key(ACTION_DENSITY_320).title(getString(R.string.screen_density_320))
 				.checked(density == 320).build());
+		actions.add(new Action.Builder().key(ACTION_DENSITY_360).title(getString(R.string.screen_density_360))
+				.checked(density == 360).build());
+		actions.add(new Action.Builder().key(ACTION_DENSITY_420).title(getString(R.string.screen_density_420))
+				.checked(density == 420).build());
 		return actions;
 	}
 
@@ -167,6 +173,12 @@ public class DensityFragment extends LeanbackPreferenceFragment {
 				}
 				if (key.equals(ACTION_DENSITY_320)) {
 					setDensity(320);
+				}
+				if (key.equals(ACTION_DENSITY_360)) {
+					setDensity(360);
+				}
+				if (key.equals(ACTION_DENSITY_420)) {
+					setDensity(420);
 				}
 			} else {
 				radioPreference.setChecked(true);

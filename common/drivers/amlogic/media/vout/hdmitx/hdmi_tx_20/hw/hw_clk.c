@@ -820,19 +820,23 @@ static struct hw_enc_clk_val_group setting_enc_clk_val_24[] = {
 	  HDMI_3840x2160p50_16x9_Y420,
 	  HDMI_VIC_END},
 		5940000, 2, 1, 1, VID_PLL_DIV_5, 1, 2, 1, -1},
+	{{HDMI_CUSTOMBUILT,
+	  HDMI_VIC_END},
+		/* default 1080p60hz */
+		5940000, 4, 1, 2, VID_PLL_DIV_5, 1, 1, 1, -1},
 	{{HDMI_VIC_FAKE,
 	  HDMI_VIC_END},
 		3450000, 1, 2, 2, VID_PLL_DIV_5, 1, 1, 1, -1},
 	/* pll setting for VESA modes */
+	{{HDMIV_480x320p60hz,
+	  HDMI_VIC_END},
+		252000, 4, 4, 1, VID_PLL_DIV_5, 2, 1, 1, -1},
 	{{HDMIV_640x480p60hz, /* 4.028G / 16 = 251.75M */
 	  HDMI_VIC_END},
 		251750, 4, 4, 1, VID_PLL_DIV_5, 2, 1, 1, -1},
 	{{HDMIV_800x480p60hz,
 	  HDMI_VIC_END},
-		297600, 4, 4, 1, VID_PLL_DIV_5, 2, 1, 1, -1},
-	{{HDMIV_1280x480p60hz,
-	  HDMI_VIC_END},
-		432000, 4, 2, 1, VID_PLL_DIV_5, 2, 1, 1, -1},
+		292300, 4, 4, 1, VID_PLL_DIV_5, 2, 1, 1, -1},
 	{{HDMIV_800x600p60hz,
 	  HDMI_VIC_END},
 		400000, 4, 2, 1, VID_PLL_DIV_5, 2, 1, 1, -1},
@@ -842,22 +846,25 @@ static struct hw_enc_clk_val_group setting_enc_clk_val_24[] = {
 		4838400, 4, 4, 1, VID_PLL_DIV_5, 2, 1, 1, -1},
 	{{HDMIV_1024x600p60hz,
 	  HDMI_VIC_END},
-		504000, 4, 2, 1, VID_PLL_DIV_5, 2, 1, 1, -1},
+		445800, 4, 2, 1, VID_PLL_DIV_5, 2, 1, 1, -1},
 	{{HDMIV_1024x768p60hz,
 	  HDMI_VIC_END},
-		650000, 4, 2, 1, VID_PLL_DIV_5, 2, 1, 1, -1},
+		6500000, 4, 2, 1, VID_PLL_DIV_5, 2, 1, 1, -1},
+	{{HDMIV_1280x480p60hz,
+	  HDMI_VIC_END},
+		432000, 4, 2, 1, VID_PLL_DIV_5, 2, 1, 1, -1},
 	{{HDMIV_1280x768p60hz,
 	  HDMI_VIC_END},
 		3180000, 4, 1, 1, VID_PLL_DIV_5, 2, 1, 1, -1},
 	{{HDMIV_1280x800p60hz,
 	  HDMI_VIC_END},
-		835000, 4, 1, 1, VID_PLL_DIV_5, 2, 1, 1, -1},
+		835000, 4, 2, 1, VID_PLL_DIV_5, 2, 1, 1, -1},
 	{{HDMIV_1152x864p75hz,
 	  HDMIV_1280x960p60hz,
 	  HDMIV_1280x1024p60hz,
 	  HDMIV_1600x900p60hz,
 	  HDMI_VIC_END},
-		1080000, 4, 1, 1, VID_PLL_DIV_5, 2, 1, 1, -1},
+		4320000, 4, 1, 1, VID_PLL_DIV_5, 2, 1, 1, -1},
 	{{HDMIV_1600x1200p60hz,
 	  HDMI_VIC_END},
 		1620000, 2, 1, 1, VID_PLL_DIV_5, 2, 1, 1, -1},
@@ -883,18 +890,18 @@ static struct hw_enc_clk_val_group setting_enc_clk_val_24[] = {
 	{{HDMIV_2160x1200p90hz,
 	  HDMI_VIC_END},
 		5371100, 1, 2, 2, VID_PLL_DIV_5, 1, 1, 1, -1},
-	{{HDMIV_2560x1600p60hz,
-	  HDMI_VIC_END},
-		3485000, 1, 1, 1, VID_PLL_DIV_5, 2, 1, 1, -1},
 	{{HDMIV_2560x1080p60hz,
 	  HDMI_VIC_END},
 		1980000, 2, 1, 1, VID_PLL_DIV_5, 2, 1, 1, -1},
 	{{HDMIV_2560x1440p60hz,
 	  HDMI_VIC_END},
 		2415000, 2, 1, 1, VID_PLL_DIV_5, 2, 1, 1, -1},
-	{{HDMIV_480x320p60hz,
+	{{HDMIV_2560x1600p60hz,
 	  HDMI_VIC_END},
-		252000, 4, 4, 1, VID_PLL_DIV_5, 2, 1, 1, -1},
+		2970000, 1, 1, 2, VID_PLL_DIV_5, 1, 1, 1, -1},
+	{{HDMIV_3440x1440p60hz,
+	  HDMI_VIC_END},
+		3197500, 1, 1, 1, VID_PLL_DIV_5, 2, 1, 1, -1},
 };
 
 /* For colordepth 10bits */
@@ -1031,6 +1038,7 @@ static void hdmitx_set_clk_(struct hdmitx_dev *hdev)
 	enum hdmi_vic vic = hdev->cur_VIC;
 	enum hdmi_color_space cs = hdev->para->cs;
 	enum hdmi_color_depth cd = hdev->para->cd;
+	struct hdmi_cea_timing *custom_timing;
 
 	/* YUV 422 always use 24B mode */
 	if (cs == COLORSPACE_YUV422)
@@ -1101,6 +1109,37 @@ static void hdmitx_set_clk_(struct hdmitx_dev *hdev)
 		return;
 	}
 next:
+	if (vic == HDMI_CUSTOMBUILT) {
+		custom_timing = get_custom_timing();
+		p_enc[j].hpll_clk_out = (custom_timing->frac_freq * 10);
+		pr_info("[%s] vic == HDMI_CUSTOMBUILT, frac_freq %d\n",
+				__func__, custom_timing->frac_freq);
+		if (p_enc[j].hpll_clk_out > 2800000) {
+			p_enc[j].od1 = 1;
+			p_enc[j].od2 = 1;
+			p_enc[j].od3 = 2;
+		} else if (p_enc[j].hpll_clk_out <= 2800000
+				&& p_enc[j].hpll_clk_out > 1400000) {
+			p_enc[j].hpll_clk_out *= 2;
+			p_enc[j].od1 = 2;
+			p_enc[j].od2 = 1;
+			p_enc[j].od3 = 2;
+		} else if (p_enc[j].hpll_clk_out <= 1400000
+				&& p_enc[j].hpll_clk_out > 700000) {
+			p_enc[j].hpll_clk_out *= 4;
+			p_enc[j].od1 = 4;
+			p_enc[j].od2 = 1;
+			p_enc[j].od3 = 2;
+		} else {
+			p_enc[j].hpll_clk_out *= 8;
+			p_enc[j].od1 = 4;
+			p_enc[j].od2 = 2;
+			p_enc[j].od3 = 2;
+		}
+		pr_info("hpll_clk_out %d, od1 %d, od2 %d, od3 %d\n",
+			p_enc[j].hpll_clk_out,
+			p_enc[j].od1, p_enc[j].od2, p_enc[j].od3);
+	}
 	hdmitx_set_cts_sys_clk(hdev);
 	set_hpll_clk_out(p_enc[j].hpll_clk_out);
 	if ((cd == COLORDEPTH_24B) && (hdev->sspll))
