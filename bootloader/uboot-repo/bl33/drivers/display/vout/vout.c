@@ -653,8 +653,6 @@ static void vout_axis_init(ulong w, ulong h)
 
 	setenv_ulong("display_width", width);
 	setenv_ulong("display_height", height);
-	setenv_ulong("fb_width", width);
-	setenv_ulong("fb_height", height);
 }
 
 static void vout_vmode_init(void)
